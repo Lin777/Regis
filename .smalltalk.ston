@@ -1,0 +1,10 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'ESUGApp',
+      #directory : 'src',
+      #platforms : [ #pharo]
+    }
+  ]
+}
+
