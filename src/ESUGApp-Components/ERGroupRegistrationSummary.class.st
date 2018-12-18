@@ -1,31 +1,38 @@
 Class {
-	#name : #ERTabGroupRegistrationSummary,
+	#name : #ERGroupRegistrationSummary,
 	#superclass : #ERTabContainerPage,
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> generateInvoice [
+ERGroupRegistrationSummary >> generateInvoice [
 	Transcript show: 'invoice...'
 ]
 
-{ #category : #rendering }
-ERTabGroupRegistrationSummary >> modifyAffiliation [
-	Transcript show: 'modify /......'
+{ #category : #'as yet unclassified' }
+ERGroupRegistrationSummary >> getRegisterAttendee [
+	| tabs |
+	tabs := ERAttendeeRegistrationView new tabs.
+	tabs do: [ :each | each attendee: attendee  ]
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> pay [
+ERGroupRegistrationSummary >> modifyAffiliation [
+	content := self
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> pay [
 	Transcript show: 'pay.....'
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> registerAttendee [
-	Transcript show: 'register attendee....'
+ERGroupRegistrationSummary >> registerAttendee [
+	content := ERTabsView tabs: (ERAttendeeRegistrationView new tabs)
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> renderButtons: html [
+ERGroupRegistrationSummary >> renderButtons: html [
 	html render: ( self createButtonField: 'Modify Affiliation' with: [ self modifyAffiliation ] id: 'modifyAffiliation') forContentButton.
 	html render: (self createButtonField: 'Register Attendee' with: [ self registerAttendee ] id: 'registerAttendee') forContentButton.
 	html render: (self createButtonField: 'Pay' with: [ self pay ] id: 'pay') forContentButton.
@@ -33,7 +40,7 @@ ERTabGroupRegistrationSummary >> renderButtons: html [
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> renderContainer: html [
+ERGroupRegistrationSummary >> renderContainer: html [
 	html horizontalRule.
 	self renderOrganizationName: html.
 	self renderPaymentStatus: html.
@@ -41,7 +48,7 @@ ERTabGroupRegistrationSummary >> renderContainer: html [
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> renderFormButtons: html [
+ERGroupRegistrationSummary >> renderFormButtons: html [
 html form
 		method: 'post';
 		id: 'groupManagerFunctions';
@@ -49,26 +56,26 @@ html form
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> renderOrganizationName: html [
+ERGroupRegistrationSummary >> renderOrganizationName: html [
 	html render: (self createTextStrong: 'Organization Name: ' text: attendee orgName)
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationSummary >> renderPaymentStatus: html [
+ERGroupRegistrationSummary >> renderPaymentStatus: html [
 	html render: (self createTextStrong: 'Payment Status: ' text: 'No status avaliable. The group has no mmebers ').
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationSummary >> tabId [
-	^ 'members'
+ERGroupRegistrationSummary >> tabId [
+	^ 'summary'
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationSummary >> tabName [
-	^ 'Members'
+ERGroupRegistrationSummary >> tabName [
+	^ 'Summary'
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationSummary >> title [
+ERGroupRegistrationSummary >> title [
 	^ 'Group Manager Short Description'
 ]

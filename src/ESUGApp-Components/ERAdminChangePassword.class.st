@@ -1,7 +1,8 @@
 Class {
-	#name : #ERTabAdminChangePassword,
+	#name : #ERAdminChangePassword,
 	#superclass : #ERTabContainerPage,
 	#instVars : [
+		'messageComponent',
 		'password',
 		'passwordChanged',
 		'passwordChangedConfirm'
@@ -10,19 +11,27 @@ Class {
 }
 
 { #category : #rendering }
-ERTabAdminChangePassword >> cancel [
+ERAdminChangePassword >> cancel [
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> changePassword [
+ERAdminChangePassword >> changePassword [
 	self validateCurrentPassword
 		ifTrue: [ attendee
 				password: (ERUserAccount hashPassword: passwordChanged) asString.
 			attendee save ]
+		ifFalse: [ messageComponent
+				errorMessage: 'The current password is incorrect' ]
+]
+
+{ #category : #initialization }
+ERAdminChangePassword >> initialize [
+	super initialize.
+	messageComponent := (ERComponentAlert warningAlert id: 'adminChangePasswordAlert').
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> renderButtons: html [
+ERAdminChangePassword >> renderButtons: html [
 	html render: (self createButtonField: 'Accept'
 							with: [ self changePassword ]
 							id: 'accept-changePassword') forAcceptButton.
@@ -32,47 +41,45 @@ ERTabAdminChangePassword >> renderButtons: html [
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> renderContainer: html [
+ERAdminChangePassword >> renderContainer: html [
 	html horizontalRule .
 	self renderFormOn: html
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> renderFields: html [
+ERAdminChangePassword >> renderFields: html [
 	html render: (self createTextField: 'Current Password: ' callback: [:value | password := value ]) forPassword.
 	html render: (self createTextField: 'Password: ' callback: [:value |  passwordChanged := value ]) forPassword.
 	html render: (self createTextField: 'Confirm password: ' callback: [:value | passwordChangedConfirm := value ]) forPassword.
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> renderFormOn: html [
-
-html form
+ERAdminChangePassword >> renderFormOn: html [
+	html form
 		method: 'post';
 		id: 'groupManagerFunctions';
-		with: [
+		with: [ 
+			html render: messageComponent .
 			self renderFields: html.
-			self renderButtons: html.
-			].
-	
+			self renderButtons: html ]
 ]
 
 { #category : #accessing }
-ERTabAdminChangePassword >> tabId [
+ERAdminChangePassword >> tabId [
 	^ 'changePassword'
 ]
 
 { #category : #accessing }
-ERTabAdminChangePassword >> tabName [
+ERAdminChangePassword >> tabName [
 	^ 'Change Password'
 ]
 
 { #category : #accessing }
-ERTabAdminChangePassword >> title [
+ERAdminChangePassword >> title [
 	^ 'Modify Password'
 ]
 
 { #category : #rendering }
-ERTabAdminChangePassword >> validateCurrentPassword [
+ERAdminChangePassword >> validateCurrentPassword [
 	^ attendee password = (ERUserAccount hashPassword: password) asString
 ]

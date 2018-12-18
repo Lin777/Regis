@@ -1,26 +1,11 @@
 Class {
-	#name : #ERTestModels,
+	#name : #ERTestControllers,
 	#superclass : #TestCase,
-	#instVars : [
-		'database',
-		'store',
-		'user1',
-		'user2',
-		'invoiceWithCoupon',
-		'invoiceWtihoutCoupon',
-		'couponGold',
-		'couponPlatinum',
-		'conference',
-		'daysAssist',
-		'affiliation',
-		'price1',
-		'price2'
-	],
 	#category : #'ESUGApp-Test'
 }
 
 { #category : #tests }
-ERTestModels class >> testAttendee [
+ERTestControllers class >> testAttendee [
 	^ ERAttendee new
 		userAccount: self testUserAccount;
 		orgName: 'testOrgName';
@@ -61,7 +46,22 @@ ERTestModels class >> testAttendee [
 ]
 
 { #category : #tests }
-ERTestModels class >> testUserAccount [
+ERTestControllers class >> testGroupManager [
+	^ ERAttendee new
+		userAccount: self testUserAccount;
+		orgName: 'testOrgName';
+		orgAddrees1: 'testAddress1';
+		orgAddrees2: 'testAddress2';
+		orgCity: 'testCity';
+		orgCountry: 'Bolivia';
+		orgProvince: 'testProvince';
+		orgPostal: '0000';
+		membershipType: 'Student';
+		yourself
+]
+
+{ #category : #tests }
+ERTestControllers class >> testUserAccount [
 	^ ERUserAccount new
 		email: 'test@gmail.com';
 		firstName: 'Test';
@@ -71,23 +71,20 @@ ERTestModels class >> testUserAccount [
 ]
 
 { #category : #tests }
-ERTestModels >> defaultStore [
+ERTestControllers >> defaultStore [
 	^ SDMemoryStore new
 ]
 
 { #category : #tests }
-ERTestModels >> setUp [
+ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
-	SDFooObject warmUp.
-	database := ERSandstoneDatabase new.
-	ERAttendee warmUp .
-	ERUserAccount warmUp .
-	
+	ERAttendee warmUp.
+	ERUserAccount warmUp
 ]
 
 { #category : #running }
-ERTestModels >> tearDown [
+ERTestControllers >> tearDown [
 	ERAttendee do: [ :each | [each delete] on: Error do: [] ].
 	ERAttendee coolDown .
 	
@@ -95,22 +92,4 @@ ERTestModels >> tearDown [
 	ERUserAccount coolDown .
 	
 	Smalltalk garbageCollectMost 
-]
-
-{ #category : #tests }
-ERTestModels >> testAddAttendee [
-	|anAttende|
-	
-	anAttende := (ERAttendeeRegistrationController attendee: ERTestModels testAttendee) save.
-	
-	self deny: (ERUserAccount findUserByEmail: ERTestModels testAttendee email) isNil .
-]
-
-{ #category : #tests }
-ERTestModels >> testAddExitentAttendee [
-	|anAttende|
-	
-	anAttende := (ERAttendeeRegistrationController attendee: ERTestModels testAttendee) save.
-	
-	self assert: anAttende isNil .
 ]

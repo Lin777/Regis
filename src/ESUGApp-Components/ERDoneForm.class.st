@@ -1,6 +1,6 @@
 Class {
-	#name : #ERDoneTabForm,
-	#superclass : #ERAttendeeRegistrationTabForm,
+	#name : #ERDoneForm,
+	#superclass : #ERAttendeeRegistrationForm,
 	#instVars : [
 		'callback'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #callbacks }
-ERDoneTabForm class >> callback: aBlock [
+ERDoneForm class >> callback: aBlock [
 	| instance |
 	instance := self new.
 	instance callback: aBlock.
@@ -16,7 +16,7 @@ ERDoneTabForm class >> callback: aBlock [
 ]
 
 { #category : #callbacks }
-ERDoneTabForm class >> on: anAttendee callback: aBlock [
+ERDoneForm class >> on: anAttendee callback: aBlock [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
@@ -25,17 +25,24 @@ ERDoneTabForm class >> on: anAttendee callback: aBlock [
 ]
 
 { #category : #accessing }
-ERDoneTabForm >> callback [
+ERDoneForm >> callback [
 	^ callback
 ]
 
 { #category : #accessing }
-ERDoneTabForm >> callback: anObject [
+ERDoneForm >> callback: anObject [
 	callback := anObject
 ]
 
+{ #category : #initialization }
+ERDoneForm >> initialize [
+	super initialize.
+	nextTabFrom := ''.
+	previousTabFrom := 'paymentInfoForm'
+]
+
 { #category : #'as yet unclassified' }
-ERDoneTabForm >> registerAttendee [
+ERDoneForm >> registerAttendee [
 	|user|
 	user :=attendee userAccount save.
 	attendee userAccount: user.
@@ -44,19 +51,27 @@ ERDoneTabForm >> registerAttendee [
 ]
 
 { #category : #rendering }
-ERDoneTabForm >> renderFormOn: html [
-   html html:' <h2>Complete</h2><br>
+ERDoneForm >> renderFormOn: html [
+	html
+		html:
+			' <h2>Complete</h2><br>
                    <p>You have successfully completed all steps.</p><br>'.
-	html render: (self createButtonField: 'Save Information' with: self callback id: 'registerButton').
-	html html: '<br><br><br><br><br><br><br><br><br>'
+	html
+		render:
+			(self
+				createButtonField: 'Save Information'
+				with: self callback
+				id: 'registerButton').
+	html html: '<br><br><br><br><br><br><br><br><br>'.
+	self renderPreviousTabFromOn: html
 ]
 
 { #category : #accessing }
-ERDoneTabForm >> tabId [
+ERDoneForm >> tabId [
 	^ 'doneInfoForm'
 ]
 
 { #category : #accessing }
-ERDoneTabForm >> tabName [
+ERDoneForm >> tabName [
 	^ 'Done'
 ]

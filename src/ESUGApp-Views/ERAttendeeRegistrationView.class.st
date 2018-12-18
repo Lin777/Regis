@@ -31,22 +31,12 @@ ERAttendeeRegistrationView >> initialize [
 
 { #category : #initialize }
 ERAttendeeRegistrationView >> initializeTabForms [
-	self
-		addTab: (ERBasicInformationTabForm on: self controller attendee).
-	self
-		addTab: (ERContactInformationTabForm on: self controller attendee).
-	self
-		addTab: (ERConferenceOptionsTabForm on: self controller attendee).
-	self
-		addTab: (ERAffiliationInformationTabForm on: self controller attendee).
-	self
-		addTab: (ERAdditionalInformationTabForm on: self controller attendee).
-	self
-		addTab: (ERPaymentInformationTabForm on: self controller attendee).
-	self
-		addTab:
-			(ERDoneTabForm
-				on: self controller attendee
-				callback: [ self register ]).
+	self addTab: (ERBasicInformationForm on: self controller attendee).
+	self addTab: (ERContactInformationForm on: self controller attendee).
+	self addTab: (ERConferenceOptionsForm on: self controller attendee).
+	self addTab: (ERAffiliationInformationForm on: self controller attendee).
+	self addTab: (ERAdditionalInformationForm on: self controller attendee).
+	self addTab: (ERPaymentInformationForm on: self controller attendee).
+	self addTab: (ERDoneForm on: self controller attendee callback: [ self register ]).
 	(self tabs at: 1) activate
 ]

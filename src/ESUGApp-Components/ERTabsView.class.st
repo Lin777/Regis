@@ -1,5 +1,5 @@
 Class {
-	#name : #ERTabs,
+	#name : #ERTabsView,
 	#superclass : #ERComponent,
 	#instVars : [
 		'tabs'
@@ -7,14 +7,22 @@ Class {
 	#category : #'ESUGApp-Components'
 }
 
+{ #category : #accessing }
+ERTabsView class >> tabs: aList [
+	| instance |
+	instance := self new.
+	instance tabs: aList .
+	^ instance 
+]
+
 { #category : #rendering }
-ERTabs >> renderContentOn: html [
+ERTabsView >> renderContentOn: html [
 			self renderTabNames: html.
 			self renderTabs: html
 ]
 
 { #category : #rendering }
-ERTabs >> renderTabNames: html [
+ERTabsView >> renderTabNames: html [
 	html div
 		class: 'mdl-tabs__tab-bar';
 		with: [ self tabs
@@ -29,7 +37,7 @@ ERTabs >> renderTabNames: html [
 ]
 
 { #category : #rendering }
-ERTabs >> renderTabs: html [
+ERTabsView >> renderTabs: html [
 	self tabs
 		do: [ :tab | 
 			|activeClass |		
@@ -43,11 +51,11 @@ ERTabs >> renderTabs: html [
 ]
 
 { #category : #accessing }
-ERTabs >> tabs [
+ERTabsView >> tabs [
 	^ tabs
 ]
 
 { #category : #accessing }
-ERTabs >> tabs: anObject [
+ERTabsView >> tabs: anObject [
 	tabs := anObject
 ]

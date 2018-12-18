@@ -60,14 +60,28 @@ ERPageLoggedView >> initializeNabvar [
 ERPageLoggedView >> itemList [
 	| anAttendee |
 	anAttendee := pageController getAttendee.
-	^ Dictionary new 
-		at: 'home' put: [ self content: (ERContainerHomeView attendee: anAttendee )  ];
-		at: 'admin' put: [ self content: (ERContainerAdminView attendee: anAttendee )];
-		at: 'logout' put: [ self session logout. self answer: true ];
-		at: 'groupRegistration' put: [ self content: (ERContainerGroupRegistrationView attendee: anAttendee)];
-		at: 'myRegistration' put: [ self content: (ERContainerMyRegistrationView attendee: anAttendee )];
-		at: 'configuration' put: [ self content: (ERContainerHomeView attendee: anAttendee )];
-		yourself 
+	^ Dictionary new
+		at: 'home'
+			put: [ self
+				content: ((ERContainerHomeView attendee: anAttendee) content: content) ];
+		at: 'admin'
+			put: [ self
+				content:
+					((ERContainerAdminView attendee: anAttendee) content: content) ];
+		at: 'logout'
+			put: [ self session logout.
+			self answer: true ];
+		at: 'groupRegistration'
+			put: [ self
+				content:
+					((ERContainerGroupRegistrationView attendee: anAttendee)
+						content: content) ];
+		at: 'myRegistration'
+			put: [ self
+				content: ((ERContainerMyRegistrationView attendee: anAttendee)content: content ) ];
+		at: 'configuration'
+			put: [ self content: ((ERContainerHomeView attendee: anAttendee) content: content )];
+		yourself
 ]
 
 { #category : #accessing }

@@ -1,28 +1,25 @@
 Class {
-	#name : #ERTabGroupRegistrationMembers,
+	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERTabContainerPage,
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> attends [
+ERGroupRegistrationMembers >> attends [
 	^ OrderedCollection new
 		add:
 			(ERAttendee
-				find: [ :each | each userAccount email = 'ana@gmail.com' ]);
-		add:
-			(ERAttendee
-				find: [ :each | each userAccount email = 'cusi@gmail.com' ]);
+				find: [ :each | each userAccount email = 'jorge@gmail.com' ]);
 		yourself
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> headers [
+ERGroupRegistrationMembers >> headers [
 	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderAnAttendee: anAttendee at: html [
+ERGroupRegistrationMembers >> renderAnAttendee: anAttendee at: html [
 	html mdlTableHeading: anAttendee firstName.
 	html mdlTableHeading: anAttendee userAccount email.
 	html mdlTableHeading: '660.00 Euros'.
@@ -32,14 +29,14 @@ ERTabGroupRegistrationMembers >> renderAnAttendee: anAttendee at: html [
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderBody: html [
+ERGroupRegistrationMembers >> renderBody: html [
 	html
 		tableBody: [ self attends
 				do: [ :anAttendee | html tableRow: [ self renderAnAttendee: anAttendee at: html ] ]]
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderButtons: html [
+ERGroupRegistrationMembers >> renderButtons: html [
 	html html: '<button class="mdl-button mdl-js-button mdl-button--colored">
                     Register Attendee
                   </button>
@@ -49,7 +46,7 @@ ERTabGroupRegistrationMembers >> renderButtons: html [
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
+ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
 	html render: ((self createButtonField: 'Modify' with: [  ] id: (anAttendee id,'-modify') ) forTableButton).
 	html render: ((self createButtonField: 'Delete' with: [  ] id: (anAttendee id,'-delete') ) forTableButton).
 	html render: ((self createButtonField: 'Delete' with: [  ] id: (anAttendee id,'-delete') ) forTableButton).
@@ -60,7 +57,7 @@ ERTabGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html 
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderContainer: html [
+ERGroupRegistrationMembers >> renderContainer: html [
 	self renderButtons: html.
 	html horizontalRule .
 	self renderTableOfAttends: html.
@@ -68,14 +65,14 @@ ERTabGroupRegistrationMembers >> renderContainer: html [
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderHeaders: html [
+ERGroupRegistrationMembers >> renderHeaders: html [
 	html
 		tableHead: [ html
 				tableRow: [ self headers do: [ :each | html mdlTableHeading: each ] ] ]
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> renderTableOfAttends: html [
+ERGroupRegistrationMembers >> renderTableOfAttends: html [
 	html div
 		style: 'overflow-x:auto;';
 		with: [ html mdlTable
@@ -86,16 +83,16 @@ ERTabGroupRegistrationMembers >> renderTableOfAttends: html [
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> tabId [
-	^ 'summary'
+ERGroupRegistrationMembers >> tabId [
+	^ 'members'
 ]
 
 { #category : #accessing }
-ERTabGroupRegistrationMembers >> tabName [
-	^ 'Summary'
+ERGroupRegistrationMembers >> tabName [
+	^ 'Members'
 ]
 
 { #category : #rendering }
-ERTabGroupRegistrationMembers >> title [
+ERGroupRegistrationMembers >> title [
 	^ 'Attends'
 ]

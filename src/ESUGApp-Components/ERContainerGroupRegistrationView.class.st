@@ -6,9 +6,7 @@ Class {
 
 { #category : #rendering }
 ERContainerGroupRegistrationView >> initializeTabForms [
-	self
-		addTab: (ERTabGroupRegistrationSummary on: attendee).
-	self
-		addTab: (ERTabGroupRegistrationMembers on: attendee).
+	self addTab: ((ERGroupRegistrationSummary on: attendee)content: content ).
+	self addTab: ((ERGroupRegistrationMembers on: attendee)content: content).
 	(self tabs at: 1) activate
 ]

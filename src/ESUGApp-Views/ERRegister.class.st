@@ -11,9 +11,21 @@ Class {
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
 	self tabs
-		ifNotEmpty: [ aAttendeeTabForm previousTabFrom: self tabs last.
-			self tabs last nextTabFrom: aAttendeeTabForm ].
+		ifNotEmpty: [ aAttendeeTabForm "previousTabFrom: self tabs last.
+			self tabs last nextTabFrom: aAttendeeTabForm" ].
 	self tabs add: aAttendeeTabForm
+]
+
+{ #category : #rendering }
+ERRegister >> backButton [
+	| tabActive |
+	tabActive := self tabActive.
+	tabActive
+		ifNotNil: [ self deactivateAllTabs.
+			self tabs
+				do: [ :each | 
+					each tabId = tabActive previousTabFrom
+						ifTrue: [ each activate ] ] ]
 ]
 
 { #category : #initialization }
@@ -21,12 +33,17 @@ ERRegister >> convertToGroupManager [
 	self attendee userAccount role: 'groupManager'
 ]
 
+{ #category : #rendering }
+ERRegister >> deactivateAllTabs [
+	self tabs do: [ :each | each deactivate ].
+]
+
 { #category : #initialization }
 ERRegister >> initialize [
 	super initialize .
 	icon := 'assignment'.
 	messageComponent := (ERComponentAlert warningAlert id: 'registerAlert').
-	pageController := ERAttendeeRegistrationController new.
+	pageController := ERRegistrationController new.
 	id := 'register'.
 	self initializeTabForms.
 ]
@@ -34,6 +51,18 @@ ERRegister >> initialize [
 { #category : #initialization }
 ERRegister >> initializeTabForms [
 	self subclassResponsibility 
+]
+
+{ #category : #rendering }
+ERRegister >> nextButton [
+	| tabActive |
+	tabActive := self tabActive.
+	tabActive
+		ifNotNil: [ self deactivateAllTabs.
+			self tabs
+				do: [ :each | 
+					each tabId = tabActive nextTabFrom
+						ifTrue: [ each activate ] ] ]
 ]
 
 { #category : #'tools registry' }
@@ -69,13 +98,20 @@ ERRegister >> renderPageOn: html [
 	html form
 		method: 'post';
 		id: 'formRegister';
-		with: [
-			html render: messageComponent.
-			html render: (ERTabs new tabs: self tabs)].
-			 
+		with: [ html render: messageComponent.
+			html render: (ERTabsView tabs: self tabs) ].
 	html html: '</div> </div>'.
-	html form: [ 
-	self renderBackLoginButtonOn: html]
+	html
+		form: [ self renderBackLoginButtonOn: html ]
+]
+
+{ #category : #rendering }
+ERRegister >> tabActive [
+	tabs
+		do: [ :each | 
+			each isActive
+				ifTrue: [ ^ each ].
+			^ nil ]
 ]
 
 { #category : #accessing }

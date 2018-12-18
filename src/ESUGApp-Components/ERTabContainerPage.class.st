@@ -1,8 +1,21 @@
 Class {
 	#name : #ERTabContainerPage,
 	#superclass : #ERTab,
+	#instVars : [
+		'content'
+	],
 	#category : #'ESUGApp-Components'
 }
+
+{ #category : #accessing }
+ERTabContainerPage >> content [
+	^ content
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> content: anObject [
+	content := anObject
+]
 
 { #category : #rendering }
 ERTabContainerPage >> renderContainer: html [

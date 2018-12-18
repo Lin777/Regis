@@ -1,31 +1,32 @@
 Class {
-	#name : #ERTabProposedAwards,
+	#name : #ERProposedTalks,
 	#superclass : #ERTabContainerPage,
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
-ERTabProposedAwards >> renderContainer: html [ 	
+ERProposedTalks >> renderContainer: html [ 	
 	html horizontalRule .
 	self renderTable: html.
 ]
 
 { #category : #rendering }
-ERTabProposedAwards >> renderTable: html [
-]
-
-{ #category : #accessing }
-ERTabProposedAwards >> tabId [
-	^ 'proposedAwards'
+ERProposedTalks >> renderTable: html [
 
 ]
 
 { #category : #accessing }
-ERTabProposedAwards >> tabName [
-	^ 'Proposed Talks'
+ERProposedTalks >> tabId [
+	^ 'proposedTalks'
+
 ]
 
 { #category : #accessing }
-ERTabProposedAwards >> title [
-	^ 'Submitted Awards'
+ERProposedTalks >> tabName [
+	^ 'Proposed Awards'
+]
+
+{ #category : #accessing }
+ERProposedTalks >> title [
+	^ 'Submitted Talks'
 ]

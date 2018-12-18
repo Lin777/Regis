@@ -7,8 +7,8 @@ Class {
 { #category : #initialization }
 ERContainerAdminView >> initializeTabForms [
 	self
-		addTab: (ERTabAdminUser on: attendee).
+		addTab: (ERAdminUser on: attendee).
 	self
-		addTab: (ERTabAdminChangePassword on: attendee).
+		addTab: (ERAdminChangePassword on: attendee).
 	(self tabs at: 1) activate
 ]

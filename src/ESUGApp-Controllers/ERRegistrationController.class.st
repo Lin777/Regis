@@ -1,5 +1,5 @@
 Class {
-	#name : #ERAttendeeRegistrationController,
+	#name : #ERRegistrationController,
 	#superclass : #Object,
 	#instVars : [
 		'attendee'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-ERAttendeeRegistrationController class >> attendee: anAtteendee [
+ERRegistrationController class >> attendee: anAtteendee [
 	|controller|
 	controller := self new.
 	controller attendee: anAtteendee .
@@ -16,28 +16,28 @@ ERAttendeeRegistrationController class >> attendee: anAtteendee [
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationController >> attendee [
+ERRegistrationController >> attendee [
 	^ attendee
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationController >> attendee: anObject [
+ERRegistrationController >> attendee: anObject [
 	attendee := anObject 
 ]
 
 { #category : #action }
-ERAttendeeRegistrationController >> convertToGroupManager [
+ERRegistrationController >> convertToGroupManager [
 	self attendee userAccount role: 'groupManager'
 ]
 
 { #category : #initialize }
-ERAttendeeRegistrationController >> initialize [
+ERRegistrationController >> initialize [
 	super initialize.
 	attendee := ERAttendee new.
 ]
 
 { #category : #action }
-ERAttendeeRegistrationController >> save [
+ERRegistrationController >> save [
 	| attendeeResult |
 	attendeeResult := ERUserAccount findUserByEmail: attendee userAccount email.
 	attendeeResult
@@ -50,7 +50,7 @@ ERAttendeeRegistrationController >> save [
 ]
 
 { #category : #action }
-ERAttendeeRegistrationController >> saveAsGroupManager [
+ERRegistrationController >> saveAsGroupManager [
 "	| attendeeResult group |"
 	self convertToGroupManager .
 	"attendeeResult := ERUserAccount findUserByEmail: attendee userAccount email.

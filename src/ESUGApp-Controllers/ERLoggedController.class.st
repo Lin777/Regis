@@ -7,6 +7,14 @@ Class {
 	#category : #'ESUGApp-Controllers'
 }
 
+{ #category : #accessing }
+ERLoggedController class >> user: anUser [
+	| controller |
+	controller := self new.
+	controller user: anUser.
+	^ controller
+]
+
 { #category : #'as yet unclassified' }
 ERLoggedController >> getAttendee [
 	^ ERAttendee find: [ :each | each userAccount = user ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #ERAttendeeRegistrationTabForm,
+	#name : #ERAttendeeRegistrationForm,
 	#superclass : #ERTab,
 	#instVars : [
 		'nextTabFrom',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #scripting }
-ERAttendeeRegistrationTabForm class >> on: anAttendee [
+ERAttendeeRegistrationForm class >> on: anAttendee [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
@@ -17,86 +17,105 @@ ERAttendeeRegistrationTabForm class >> on: anAttendee [
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createCheckboxField: aName [
+ERAttendeeRegistrationForm >> createCheckboxField: aName [
 	^  ERCheckboxFieldLabel label: aName callback: [ :value |]
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createCheckboxField: aName for: aSymbol [
+ERAttendeeRegistrationForm >> createCheckboxField: aName for: aSymbol [
 	^  ERCheckboxFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString ]
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createPasswordField: aName [
+ERAttendeeRegistrationForm >> createPasswordField: aName [
 		^ (self createTextField: aName) forPassword.
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createPasswordField: aName for: aSymbol [
+ERAttendeeRegistrationForm >> createPasswordField: aName for: aSymbol [
 	^ (ERTextFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: (ERUserAccount hashPassword: value asString)] id: (self idFromSymbol: aSymbol) ) forPassword
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createRadioField: aName for: aSymbol list: aList listValues: aListValues [
+ERAttendeeRegistrationForm >> createRadioField: aName for: aSymbol list: aList listValues: aListValues [
 	^  ERRadioFieldLabel label: aName list: aList listValues: aListValues id: (self idFromSymbol: aSymbol )
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createSelectField: aName for: aSymbol list: aList [
+ERAttendeeRegistrationForm >> createSelectField: aName for: aSymbol list: aList [
 	^  ERSelectFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString .] list: aList id: (self idFromSymbol: aSymbol) 
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createSelectField: aName for: aSymbol list: aList percent: aNumber [
+ERAttendeeRegistrationForm >> createSelectField: aName for: aSymbol list: aList percent: aNumber [
 	^  ERSelectFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString .] list: aList id: (self idFromSymbol: aSymbol) percent: aNumber  
 ]
 
 { #category : #building }
-ERAttendeeRegistrationTabForm >> createTextAreaField: aName for: aSymbol [
+ERAttendeeRegistrationForm >> createTextAreaField: aName for: aSymbol [
 	^  ERTextAreaFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString .] id: (self idFromSymbol: aSymbol )
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> id [
+ERAttendeeRegistrationForm >> id [
 	^ id
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> id: anObject [
+ERAttendeeRegistrationForm >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #building }
-ERAttendeeRegistrationTabForm >> idFromSymbol: aSymbol [
-	^ (aSymbol substrings: ':') first 
+{ #category : #initialization }
+ERAttendeeRegistrationForm >> initialize [
+	super initialize.
+	
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> nextTabFrom [
+ERAttendeeRegistrationForm >> nextTabFrom [
 	^ nextTabFrom
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> nextTabFrom: anObject [
+ERAttendeeRegistrationForm >> nextTabFrom: anObject [
 	nextTabFrom := anObject
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> previousTabFrom [
+ERAttendeeRegistrationForm >> previousTabFrom [
 	^ previousTabFrom
 ]
 
 { #category : #accessing }
-ERAttendeeRegistrationTabForm >> previousTabFrom: anObject [
+ERAttendeeRegistrationForm >> previousTabFrom: anObject [
 	previousTabFrom := anObject
 ]
 
 { #category : #rendering }
-ERAttendeeRegistrationTabForm >> renderContentOn: html [
+ERAttendeeRegistrationForm >> renderContentOn: html [
 	self renderFormOn: html
 ]
 
 { #category : #rendering }
-ERAttendeeRegistrationTabForm >> renderFormOn: html [
+ERAttendeeRegistrationForm >> renderFormOn: html [
 	self subclassResponsibility.
+]
+
+{ #category : #rendering }
+ERAttendeeRegistrationForm >> renderNextTabFromOn: html [
+	html mdlButton
+		bePush;
+		primaryColor;
+		class: 'btnNext';
+		with: 'Next'
+]
+
+{ #category : #rendering }
+ERAttendeeRegistrationForm >> renderPreviousTabFromOn: html [
+	html mdlButton
+		bePush;
+		primaryColor;
+		class: 'btnPrevious';
+		with: 'Previous'
 ]

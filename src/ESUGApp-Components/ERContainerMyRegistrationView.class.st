@@ -7,10 +7,10 @@ Class {
 { #category : #initialization }
 ERContainerMyRegistrationView >> initializeTabForms [
 	self
-		addTab: (ERTabMyRegistrationSummary on: attendee).
+		addTab: (ERMyRegistrationSummary on: attendee).
 	self
-		addTab: (ERTabProposedTalks on: attendee).
+		addTab: (ERProposedTalks on: attendee).
 	self
-		addTab: (ERTabProposedAwards on: attendee).
+		addTab: (ERProposedAwards on: attendee).
 	(self tabs at: 1) activate
 ]

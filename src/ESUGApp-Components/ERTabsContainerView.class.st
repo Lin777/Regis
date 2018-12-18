@@ -29,7 +29,7 @@ ERTabsContainerView >> initializeTabForms [
 { #category : #rendering }
 ERTabsContainerView >> renderContentPage: html [ 
 	html div class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect'; with: [ 
-		html render: (ERTabs new tabs: self tabs ) ]
+		html render: (ERTabsView new tabs: self tabs ) ]
 	  
 ]
 

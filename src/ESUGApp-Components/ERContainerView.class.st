@@ -2,7 +2,8 @@ Class {
 	#name : #ERContainerView,
 	#superclass : #WAComponent,
 	#instVars : [
-		'attendee'
+		'attendee',
+		'content'
 	],
 	#category : #'ESUGApp-Components'
 }

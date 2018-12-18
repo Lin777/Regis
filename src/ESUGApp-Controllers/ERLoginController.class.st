@@ -7,6 +7,14 @@ Class {
 	#category : #'ESUGApp-Controllers'
 }
 
+{ #category : #accessing }
+ERLoginController class >> user: anUser [
+	| controller |
+	controller := self new.
+	controller user: anUser .
+	^ controller
+]
+
 { #category : #initialization }
 ERLoginController >> initialize [
 	super initialize.
