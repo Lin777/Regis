@@ -2,7 +2,9 @@ Class {
 	#name : #ERTabContainerPage,
 	#superclass : #ERTab,
 	#instVars : [
-		'content'
+		'messageComponent',
+		'content',
+		'controller'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -15,6 +17,16 @@ ERTabContainerPage >> content [
 { #category : #accessing }
 ERTabContainerPage >> content: anObject [
 	content := anObject
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> controller [
+	^ controller
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> controller: anObject [
+	controller := anObject
 ]
 
 { #category : #rendering }

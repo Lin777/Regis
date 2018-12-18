@@ -61,11 +61,6 @@ ERButtonLabel >> class: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-ERButtonLabel >> forAcceptButton [
-	self class: 'mdl-button mdl-js-button mdl-button--colored'
-]
-
-{ #category : #'as yet unclassified' }
 ERButtonLabel >> forContentButton [
 	self class: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect'
 ]
@@ -78,11 +73,6 @@ ERButtonLabel >> forContentButtonAccent [
 { #category : #'as yet unclassified' }
 ERButtonLabel >> forContentButtonColored [
 	self class: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'
-]
-
-{ #category : #'as yet unclassified' }
-ERButtonLabel >> forLoginButton [
-	self class: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-button--accent mdl-color-text--white'
 ]
 
 { #category : #'as yet unclassified' }

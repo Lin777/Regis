@@ -21,6 +21,16 @@ ERContainerView >> attendee: anObject [
 	attendee := anObject
 ]
 
+{ #category : #accessing }
+ERContainerView >> content [
+	^ content
+]
+
+{ #category : #accessing }
+ERContainerView >> content: anObject [
+	content := anObject
+]
+
 { #category : #rendering }
 ERContainerView >> renderContentOn: html [
 	html html: '<main class="mdl-layout__content mdl-color--grey-100">

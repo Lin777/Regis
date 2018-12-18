@@ -381,14 +381,14 @@ ERLibrary >> tabsCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> tabsJs [
-	^ ' $().ready(function() {$(".btnNext").click(function(){
+	^ '$().ready(function() {$(''.btnNext'').click(function(){
 	console.log("next");
-  $(".mdl-tabs__tab-bar > .is-active").next("a").trigger("click");
+	$(''.mdl-tabs__tab-bar > .is-active'').next(''a'').trigger(''click'');
 });
 
-  $(".btnPrevious").click(function(){
+  $(''.btnPrevious'').click(function(){
 console.log("prev");
-  $(".mdl-tabs__tab-bar > .is-active").prev("a").trigger("click");}); });'
+  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
 ]
 
 { #category : #updating }

@@ -2,7 +2,6 @@ Class {
 	#name : #ERAdminChangePassword,
 	#superclass : #ERTabContainerPage,
 	#instVars : [
-		'messageComponent',
 		'password',
 		'passwordChanged',
 		'passwordChangedConfirm'
@@ -21,7 +20,7 @@ ERAdminChangePassword >> changePassword [
 				password: (ERUserAccount hashPassword: passwordChanged) asString.
 			attendee save ]
 		ifFalse: [ messageComponent
-				errorMessage: 'The current password is incorrect' ]
+				errorMessage: 'The password entered does not match the current password' ]
 ]
 
 { #category : #initialization }
@@ -31,13 +30,27 @@ ERAdminChangePassword >> initialize [
 ]
 
 { #category : #rendering }
+ERAdminChangePassword >> renderAcceptButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'accept-change-password';
+		callback: [ self changePassword ];
+		with: 'Accept'
+]
+
+{ #category : #rendering }
 ERAdminChangePassword >> renderButtons: html [
-	html render: (self createButtonField: 'Accept'
-							with: [ self changePassword ]
-							id: 'accept-changePassword') forAcceptButton.
-	html render:(self createButtonField: 'Cancel'
-							with: [ self cancel ]
-							id: 'cancel-changePassword') forAcceptButton
+	self renderAcceptButtonOn: html.
+	self renderCancelButtonOn: html
+]
+
+{ #category : #rendering }
+ERAdminChangePassword >> renderCancelButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'cancel-change-password';
+		callback: [ self cancel ];
+		with: 'Cancel'
 ]
 
 { #category : #rendering }

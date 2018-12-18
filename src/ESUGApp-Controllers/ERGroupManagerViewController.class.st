@@ -10,16 +10,24 @@ Class {
 
 { #category : #adding }
 ERGroupManagerViewController >> addAttendee: anAttendee to: aGroupManager [
-	| group |
-	group := self getGroupOfAttendee: aGroupManager .
+	| group anAttendeeSaved |
+	(ERUserAccount findUserByEmail: anAttendee email) ifNil: [ 
+		anAttendeeSaved := anAttendee save.
+	group := self groupOfAttendee: aGroupManager.
+	group listAttends add: anAttendeeSaved.
+	^ group save
+		 ].
+	^ nil
 	
 ]
 
 { #category : #adding }
-ERGroupManagerViewController >> getGroupOfAttendee: aGroupManager [
+ERGroupManagerViewController >> groupOfAttendee: aGroupManager [
 	| group |
-	group := ERGroup find: [ :each | each groupManager = aGroupManager ].
-	group ifNil: [ group := ERGroup groupManager: aGroupManager.
-	^ group save ].
-	
+	group := ERGroup
+		find: [ :each | each groupManager = aGroupManager ].
+	group
+		ifNil: [ group := ERGroup groupManager: aGroupManager.
+			group := group save ].
+	^ group 
 ]

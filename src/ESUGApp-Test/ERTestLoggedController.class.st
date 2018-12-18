@@ -7,10 +7,9 @@ Class {
 { #category : #tests }
 ERTestLoggedController >> testGetAttendeeWhenUserExist [
 	| anUserAccounRegistered anUser |
-	anUserAccounRegistered := (ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
-	anUser := (ERLoggedController
-		user: anUserAccounRegistered) getAttendee.
+	anUserAccounRegistered := self registerAttendee .
+	anUser := (ERLoggedController user: anUserAccounRegistered)
+		getAttendee.
 	self deny: anUser isNil
 ]
 

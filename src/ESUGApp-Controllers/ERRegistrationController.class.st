@@ -51,17 +51,6 @@ ERRegistrationController >> save [
 
 { #category : #action }
 ERRegistrationController >> saveAsGroupManager [
-"	| attendeeResult group |"
-	self convertToGroupManager .
-	"attendeeResult := ERUserAccount findUserByEmail: attendee userAccount email.
-	attendeeResult
-		ifNil: [ | user |
-			user := self attendee userAccount save.
-			self attendee userAccount: user.
-			attendeeResult := self attendee save.
-			group := ERGroup groupManager: attendeeResult .
-			group save.
-			^ attendeeResult userAccount ].
-	^ nil"
+	self convertToGroupManager.
 	^ self save
 ]

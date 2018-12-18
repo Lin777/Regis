@@ -23,7 +23,9 @@ ERAttendeeRegistrationForm >> createCheckboxField: aName [
 
 { #category : #building }
 ERAttendeeRegistrationForm >> createCheckboxField: aName for: aSymbol [
-	^  ERCheckboxFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString ]
+	^ ERCheckboxFieldLabel
+		label: aName
+		callback: [ :value | attendee perform: aSymbol with: value asString]
 ]
 
 { #category : #building }

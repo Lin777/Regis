@@ -17,8 +17,7 @@ ERConferenceOptionsForm >> renderFormOn: html [
 	html
 		render: (self createCheckboxField: 'Monday (dd/mm/aa)' for: #monday:).
 	html
-		render:
-			(self createCheckboxField: 'Tuesday (dd/mm/aa)' for: #tuesday:).
+		render: (self createCheckboxField: 'Tuesday (dd/mm/aa)' for: #tuesday:).
 	html
 		render:
 			(self
@@ -31,28 +30,25 @@ ERConferenceOptionsForm >> renderFormOn: html [
 				for: #thursday:).
 	html
 		render: (self createCheckboxField: 'Friday (dd/mm/aa)' for: #friday:).
-	html html: '<br><br>Gender:'.
+	html html: '<br><br>'.
 	html
 		render:
 			(self
-				createRadioField: 'Gender'
+				createSelectField: 'Gender:'
 				for: #gender:
-				list: ERAttendee genders
-				listValues: #(true false)).
+				list: ERAttendee genders).
 	html
 		render:
 			(self
 				createSelectField: 'Tshirt Size'
 				for: #tshirtSize:
 				list: ERAttendee tShirtSizes).
-	html html: 'Food:'.
 	html
 		render:
 			(self
-				createRadioField: 'Food: '
+				createSelectField: 'Food:'
 				for: #foodPreference:
-				list: ERAttendee foodPreferences
-				listValues: #(false false true)).
+				list: ERAttendee foodPreferences).
 	html
 		render:
 			(self

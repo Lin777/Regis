@@ -28,15 +28,15 @@ ERGroupRegistrationSummary >> pay [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> registerAttendee [
-	content := ERTabsView tabs: (ERAttendeeRegistrationView new tabs)
+	content content:( ERTabsView tabs: ERAttendeeRegistrationView new tabs)
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderButtons: html [
-	html render: ( self createButtonField: 'Modify Affiliation' with: [ self modifyAffiliation ] id: 'modifyAffiliation') forContentButton.
-	html render: (self createButtonField: 'Register Attendee' with: [ self registerAttendee ] id: 'registerAttendee') forContentButton.
-	html render: (self createButtonField: 'Pay' with: [ self pay ] id: 'pay') forContentButton.
-	html render: (self createButtonField:'GENERATE INVOICE'  with: [ self generateInvoice ]  id: 'generateInvoice') forContentButtonColored
+	self renderModifyAffiliationButtonOn: html.
+	self renderRegisterAttendeeButtonOn: html.
+	self renderPayButtonOn: html.
+	self renderGenerateInvoiceButtonOn: html.
 ]
 
 { #category : #rendering }
@@ -56,13 +56,53 @@ html form
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummary >> renderGenerateInvoiceButtonOn: html [
+		html
+		render:
+			(self
+				createButtonField: 'GENERATE INVOICE'
+				with: [ self generateInvoice ]
+				id: 'generateInvoice') forContentButtonColored
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> renderModifyAffiliationButtonOn: html [
+	html
+		render:
+			(self
+				createButtonField: 'Modify Affiliation'
+				with: [ self modifyAffiliation ]
+				id: 'modifyAffiliation') forContentButton.
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummary >> renderOrganizationName: html [
 	html render: (self createTextStrong: 'Organization Name: ' text: attendee orgName)
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummary >> renderPayButtonOn: html [
+	html
+		render:
+			(self createButtonField: 'Pay' with: [ self pay ] id: 'pay')
+				forContentButton.
+
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummary >> renderPaymentStatus: html [
 	html render: (self createTextStrong: 'Payment Status: ' text: 'No status avaliable. The group has no mmebers ').
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> renderRegisterAttendeeButtonOn: html. [
+	html
+		render:
+			(self
+				createButtonField: 'Register Attendee'
+				with: [ self registerAttendee ]
+				id: 'registerAttendee') forContentButton.
+
 ]
 
 { #category : #accessing }

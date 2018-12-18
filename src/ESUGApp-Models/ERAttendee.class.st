@@ -75,7 +75,7 @@ ERAttendee class >> currencyTypes [
 
 { #category : #'as yet unclassified' }
 ERAttendee class >> foodPreferences [
-	^ #('Vegan' 'Vegetarian' 'Normal')
+	^ #('Normal' 'Vegan' 'Vegetarian')
 ]
 
 { #category : #'as yet unclassified' }
@@ -261,8 +261,17 @@ ERAttendee >> homePage: anObject [
 { #category : #initialization }
 ERAttendee >> initialize [
 	super initialize.
+	gender := 'Male'.
 	userAccount := ERUserAccount new.
-	self attendance: (Dictionary newFrom: {'monday'->true . 'tuesday' -> true . 'wednesday' -> true . 'thursday' -> true . 'friday' -> true})
+	self
+		attendance:
+			(Dictionary
+				newFrom:
+					{('monday' -> true).
+					('tuesday' -> true).
+					('wednesday' -> true).
+					('thursday' -> true).
+					('friday' -> true)})
 ]
 
 { #category : #accessing }

@@ -47,7 +47,6 @@ ERLoginView >> loginUser [
 
 { #category : #rendering }
 ERLoginView >> registerUser [
-	Transcript show: 'Pass' .
 	self answer: #registerUser
 ]
 

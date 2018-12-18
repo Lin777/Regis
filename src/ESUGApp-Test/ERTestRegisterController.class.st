@@ -9,8 +9,7 @@ ERTestRegisterController >> testARegisteredAttendeeHasTheRoleOfAttendee [
 	"check if the record has the role of attendee"
 
 	| anAttendee |
-	anAttendee := (ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
+	anAttendee := self registerAttendee .
 	self assert: anAttendee role = 'attendee'
 ]
 
@@ -41,8 +40,7 @@ ERTestRegisterController >> testAddAttendee [
 	"when an attendee is successfully registered the same attendee is returned as a result"
 
 	| anAttende |
-	anAttende := (ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
+	anAttende := self registerAttendee .
 	self deny: anAttende isNil
 ]
 
@@ -51,9 +49,18 @@ ERTestRegisterController >> testAddExitentAttendee [
 	"When an assistant's email has already been registered it can not be registered again, therefore a nil is returned "
 
 	| anAttende |
-	(ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
-	anAttende := (ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
+	self registerAttendee.
+	anAttende := self registerAttendee .
+	self assert: anAttende isNil
+]
+
+{ #category : #tests }
+ERTestRegisterController >> testAddExitentGroupManager [
+	"When an group manager's email has already been registered it can not be registered again, therefore a nil is returned "
+	| anAttende |
+	self registerAttendee.
+	anAttende :=  (ERRegistrationController
+		attendee: ERTestControllers testGroupManager)
+		saveAsGroupManager.
 	self assert: anAttende isNil
 ]

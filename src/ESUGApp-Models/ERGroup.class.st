@@ -32,6 +32,7 @@ ERGroup >> groupManager: anObject [
 
 { #category : #accessing }
 ERGroup >> initialize [
+	super initialize .
 	listAttends := OrderedCollection new
 ]
 

@@ -23,6 +23,11 @@ ERPageLoggedView class >> asGroupManager [
 ]
 
 { #category : #accessing }
+ERPageLoggedView >> content [
+	^ content
+]
+
+{ #category : #accessing }
 ERPageLoggedView >> content: anObject [
 	content := anObject
 ]
@@ -66,8 +71,7 @@ ERPageLoggedView >> itemList [
 				content: ((ERContainerHomeView attendee: anAttendee) content: content) ];
 		at: 'admin'
 			put: [ self
-				content:
-					((ERContainerAdminView attendee: anAttendee) content: content) ];
+				content: ((ERContainerAdminView attendee: anAttendee) content: content) ];
 		at: 'logout'
 			put: [ self session logout.
 			self answer: true ];
@@ -75,18 +79,26 @@ ERPageLoggedView >> itemList [
 			put: [ self
 				content:
 					((ERContainerGroupRegistrationView attendee: anAttendee)
-						content: content) ];
+						content: self) ];
 		at: 'myRegistration'
 			put: [ self
-				content: ((ERContainerMyRegistrationView attendee: anAttendee)content: content ) ];
+				content:
+					((ERContainerMyRegistrationView attendee: anAttendee)
+						content: content) ];
 		at: 'configuration'
-			put: [ self content: ((ERContainerHomeView attendee: anAttendee) content: content )];
+			put: [ self
+				content: ((ERContainerHomeView attendee: anAttendee) content: content) ];
 		yourself
 ]
 
 { #category : #accessing }
 ERPageLoggedView >> navbar: anObject [
 	navbar := anObject
+]
+
+{ #category : #accessing }
+ERPageLoggedView >> pageController [
+	^ pageController
 ]
 
 { #category : #rendering }

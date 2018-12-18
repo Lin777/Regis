@@ -7,8 +7,7 @@ Class {
 { #category : #tests }
 ERTestLoginController >> testFindUserByEmailWhenUserExist [
 	| anUser |
-	(ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
+	self registerAttendee.
 	anUser := ERUserAccount
 		findUserByEmail: ERTestControllers testAttendee email.
 	self deny: anUser isNil
@@ -26,8 +25,7 @@ ERTestLoginController >> testFindUserByEmailWhenUserNotExist [
 { #category : #tests }
 ERTestLoginController >> testValidateLoginIfUserExist [
 	| anUser |
-	(ERRegistrationController
-		attendee: ERTestControllers testAttendee) save.
+	self registerAttendee.
 	anUser := (ERLoginController
 		user: ERTestControllers testUserAccount) validateLogin.
 	self deny: anUser isNil

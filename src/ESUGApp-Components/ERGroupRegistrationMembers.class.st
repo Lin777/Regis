@@ -6,11 +6,8 @@ Class {
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> attends [
-	^ OrderedCollection new
-		add:
-			(ERAttendee
-				find: [ :each | each userAccount email = 'jorge@gmail.com' ]);
-		yourself
+	^ (ERGroupManagerViewController new
+		groupOfAttendee: attendee userAccount) listAttends
 ]
 
 { #category : #accessing }

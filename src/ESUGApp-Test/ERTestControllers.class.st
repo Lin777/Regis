@@ -1,6 +1,9 @@
 Class {
 	#name : #ERTestControllers,
 	#superclass : #TestCase,
+	#instVars : [
+		'store'
+	],
 	#category : #'ESUGApp-Test'
 }
 
@@ -21,6 +24,47 @@ ERTestControllers class >> testAttendee [
 		address: 'testAddress';
 		address2: 'testAddress2';
 		city: 'testCity';
+		country: 'Bolivia';
+		postal: '0000';
+		facebookURL: '';
+		twitterURL: '';
+		homePage: '';
+		foodPreference: 'Normal';
+		attendSocialEvent: true;
+		addedToMainList: true;
+		tshirtSize: 'XL';
+		attendance:
+			(Dictionary
+				newFrom:
+					{('monday' -> true).
+					('tuesday' -> true).
+					('wednesday' -> false).
+					('thursday' -> false).
+					('friday' -> true)});
+		gender: 'Male';
+		paymentType: 'Bank transfer';
+		paymentCurrency: 'Dollar';
+		coupon: '';
+		yourself
+]
+
+{ #category : #tests }
+ERTestControllers class >> testExampleAttendee [
+	^ ERAttendee new
+		userAccount: self testUserExampleAccount;
+		orgName: 'exampleOrgName';
+		orgAddrees1: 'exampleAddress1';
+		orgAddrees2: 'exampleAddress2';
+		orgCity: 'exampleCity';
+		orgCountry: 'Bolivia';
+		orgProvince: 'exampleProvince';
+		orgPostal: '0000';
+		membershipType: 'Student';
+		keywords: 'example example example';
+		additionalText: 'example example example';
+		address: 'exampleAddress';
+		address2: 'exampleAddress2';
+		city: 'exampletCity';
 		country: 'Bolivia';
 		postal: '0000';
 		facebookURL: '';
@@ -71,8 +115,30 @@ ERTestControllers class >> testUserAccount [
 ]
 
 { #category : #tests }
+ERTestControllers class >> testUserExampleAccount [
+	^ ERUserAccount new
+		email: 'example@gmail.com';
+		firstName: 'Example';
+		lastName: 'Example';
+		password: (ERUserAccount hashPassword: '12345678') asString;
+		yourself
+]
+
+{ #category : #tests }
 ERTestControllers >> defaultStore [
 	^ SDMemoryStore new
+]
+
+{ #category : #rendering }
+ERTestControllers >> registerAttendee [
+	^ (ERRegistrationController
+		attendee: ERTestControllers testAttendee) save
+]
+
+{ #category : #rendering }
+ERTestControllers >> registerAttendee: anAttendee [
+	^ (ERRegistrationController attendee: anAttendee)
+		save
 ]
 
 { #category : #tests }
@@ -80,16 +146,29 @@ ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
 	ERAttendee warmUp.
-	ERUserAccount warmUp
+	ERUserAccount warmUp.
+	ERGroup warmUp.
 ]
 
 { #category : #running }
 ERTestControllers >> tearDown [
-	ERAttendee do: [ :each | [each delete] on: Error do: [] ].
-	ERAttendee coolDown .
-	
-	ERUserAccount  do: [ :each | [each delete] on: Error do: [] ].
-	ERUserAccount coolDown .
-	
-	Smalltalk garbageCollectMost 
+	ERAttendee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAttendee coolDown.
+	ERUserAccount
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERUserAccount coolDown.
+	ERGroup 
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERGroup coolDown.
+	Smalltalk garbageCollectMost
 ]
