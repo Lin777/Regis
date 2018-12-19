@@ -1,8 +1,7 @@
 Class {
 	#name : #ERGroupManagerViewController,
-	#superclass : #Object,
+	#superclass : #ERLoggedController,
 	#instVars : [
-		'user',
 		'attendee'
 	],
 	#category : #'ESUGApp-Controllers'
@@ -19,6 +18,16 @@ ERGroupManagerViewController >> addAttendee: anAttendee to: aGroupManager [
 		 ].
 	^ nil
 	
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> attendee [
+	^ attendee
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> attendee: anObject [
+	attendee := anObject
 ]
 
 { #category : #adding }

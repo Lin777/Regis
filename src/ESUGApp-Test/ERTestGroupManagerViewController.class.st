@@ -1,18 +1,28 @@
 Class {
 	#name : #ERTestGroupManagerViewController,
 	#superclass : #ERTestControllers,
+	#instVars : [
+		'controller'
+	],
 	#category : #'ESUGApp-Test'
 }
 
+{ #category : #initialization }
+ERTestGroupManagerViewController >> setUp [
+	| anUser |
+	super setUp.
+	anUser := self registerAttendee.
+	controller := ERGroupManagerViewController new.
+	controller attendee: (controller attendeeFromUser: anUser)
+]
+
 { #category : #tests }
 ERTestGroupManagerViewController >> testAddAttendeeTo [
-	| user1 user2 group |
-	user1 := self registerAttendee.
-	user2 := self registerAttendee: ERTestControllers testExampleAttendee.
-	group := ERGroupManagerViewController new
-		addAttendee: user1
-		to: user2.
-	self deny: group isNil 
+	|  user2 group |
+	user2 := self
+		registerAttendee: ERTestControllers testExampleAttendee.
+	group := controller addAttendee: controller attendee userAccount to: user2.
+	self deny: group isNil
 ]
 
 { #category : #tests }

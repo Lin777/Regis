@@ -7,8 +7,6 @@ Class {
 { #category : #initialization }
 ERPaymentInformationForm >> initialize [
 	super initialize.
-	nextTabFrom := 'doneInfoForm'.
-	previousTabFrom := 'additionalInfoForm'
 ]
 
 { #category : #rendering }

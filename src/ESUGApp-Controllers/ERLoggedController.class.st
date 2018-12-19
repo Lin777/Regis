@@ -16,8 +16,13 @@ ERLoggedController class >> user: anUser [
 ]
 
 { #category : #'as yet unclassified' }
-ERLoggedController >> getAttendee [
+ERLoggedController >> attendeeFromUser [
 	^ ERAttendee find: [ :each | each userAccount = user ]
+]
+
+{ #category : #'as yet unclassified' }
+ERLoggedController >> attendeeFromUser: anUser [
+	^ ERAttendee find: [ :each | each userAccount = anUser ]
 ]
 
 { #category : #accessing }

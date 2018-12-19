@@ -1,6 +1,6 @@
 Class {
 	#name : #ERAdminChangePassword,
-	#superclass : #ERTabContainerPage,
+	#superclass : #ERAdmin,
 	#instVars : [
 		'password',
 		'passwordChanged',
@@ -15,18 +15,19 @@ ERAdminChangePassword >> cancel [
 
 { #category : #rendering }
 ERAdminChangePassword >> changePassword [
-	self validateCurrentPassword
-		ifTrue: [ attendee
-				password: (ERUserAccount hashPassword: passwordChanged) asString.
-			attendee save ]
-		ifFalse: [ messageComponent
+	(controller
+		changePasswordFrom: password
+		to: passwordChanged)
+		ifNil: [ messageComponent
 				errorMessage: 'The password entered does not match the current password' ]
+
 ]
 
 { #category : #initialization }
 ERAdminChangePassword >> initialize [
 	super initialize.
-	messageComponent := (ERComponentAlert warningAlert id: 'adminChangePasswordAlert').
+	messageComponent := ERComponentAlert warningAlert
+		id: 'adminChangePasswordAlert'
 ]
 
 { #category : #rendering }
@@ -90,9 +91,4 @@ ERAdminChangePassword >> tabName [
 { #category : #accessing }
 ERAdminChangePassword >> title [
 	^ 'Modify Password'
-]
-
-{ #category : #rendering }
-ERAdminChangePassword >> validateCurrentPassword [
-	^ attendee password = (ERUserAccount hashPassword: password) asString
 ]

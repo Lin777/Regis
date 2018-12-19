@@ -37,7 +37,7 @@ ERPageLoggedView >> content: anObject [
 ERPageLoggedView >> initialize [
 	super initialize.
 	pageController := ERLoggedController new user: self session user.
-	attendee := pageController getAttendee.
+	attendee := pageController attendeeFromUser.
 	content := ERContent new.
 	(ERContainerHomeView attendee: attendee) content: content.
 	self initializeNabvar

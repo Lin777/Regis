@@ -8,23 +8,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #testing }
-ERLoginView class >> canBeRoot [ 
-    ^ true
-]
-
-{ #category : #initialization }
-ERLoginView class >> initialize [
-	"self initialize"
-
-	(WAAdmin register: self asApplicationAt: 'Login')
-		addLibrary: JQDeploymentLibrary;
-		addLibrary: MDLLibrary;
-		addLibrary: CssForLoginMDL;
-		addLibrary: CssForRegisterFormsMDL;
-		preferenceAt: #sessionClass put: ERSession
-]
-
 { #category : #rendering }
 ERLoginView >> initialize [
 	super initialize .

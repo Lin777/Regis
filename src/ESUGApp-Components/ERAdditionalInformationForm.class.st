@@ -7,8 +7,6 @@ Class {
 { #category : #initialization }
 ERAdditionalInformationForm >> initialize [
 	super initialize.
-	nextTabFrom := 'paymentInfoForm'.
-	previousTabFrom := 'affiliationInfoForm'
 ]
 
 { #category : #rendering }

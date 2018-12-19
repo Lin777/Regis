@@ -37,8 +37,6 @@ ERDoneForm >> callback: anObject [
 { #category : #initialization }
 ERDoneForm >> initialize [
 	super initialize.
-	nextTabFrom := ''.
-	previousTabFrom := 'paymentInfoForm'
 ]
 
 { #category : #'as yet unclassified' }

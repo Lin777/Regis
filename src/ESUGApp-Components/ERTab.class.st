@@ -34,7 +34,8 @@ ERTab >> createButtonField: aName with: aBlock id: anId [
 
 { #category : #building }
 ERTab >> createTextField: aName [
-	^ ERTextFieldLabel label: aName callback: [ :value |  ] 
+	
+	^ ERTextFieldLabel label: aName callback: [ :value |  ]
 ]
 
 { #category : #building }
@@ -45,6 +46,20 @@ ERTab >> createTextField: aName callback: aBlock [
 { #category : #building }
 ERTab >> createTextField: aName for: aSymbol [
 	^  ERTextFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString . ] id: (self idFromSymbol: aSymbol )
+]
+
+{ #category : #building }
+ERTab >> createTextField: aName for: aSymbol on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width: 100%';
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextFieldInput
+				id: (self idFromSymbol: aSymbol);
+				type: 'text';
+				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #building }

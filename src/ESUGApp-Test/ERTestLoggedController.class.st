@@ -9,7 +9,7 @@ ERTestLoggedController >> testGetAttendeeWhenUserExist [
 	| anUserAccounRegistered anUser |
 	anUserAccounRegistered := self registerAttendee .
 	anUser := (ERLoggedController user: anUserAccounRegistered)
-		getAttendee.
+		attendeeFromUser.
 	self deny: anUser isNil
 ]
 
@@ -17,6 +17,6 @@ ERTestLoggedController >> testGetAttendeeWhenUserExist [
 ERTestLoggedController >> testGetAttendeeWhenUserNotExist [
 	|anUser|
 	anUser := (ERLoggedController
-		user: ERTestControllers testUserAccount) getAttendee.
+		user: ERTestControllers testUserAccount) attendeeFromUser.
 	self assert: anUser isNil
 ]

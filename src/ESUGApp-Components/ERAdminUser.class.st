@@ -1,20 +1,16 @@
 Class {
 	#name : #ERAdminUser,
-	#superclass : #ERTabContainerPage,
+	#superclass : #ERAdmin,
 	#instVars : [
-		'newFirstName',
-		'newLastName',
-		'newEmail'
+		'modifiedUser'
 	],
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
 ERAdminUser >> acceptUser [
-	((ERUserAccount findUserByEmail: newEmail) isNil
-		or: attendee email = newEmail)
-		ifTrue: [ ^ self updateAttendee ]
-		ifFalse: [ messageComponent
+	(controller updateUserFields: modifiedUser)
+		ifNil: [ messageComponent
 				errorMessage:
 					'This email is already registered, change the email for continue with your updating' ]
 ]
@@ -26,7 +22,9 @@ ERAdminUser >> cancel [
 { #category : #initialization }
 ERAdminUser >> initialize [
 	super initialize.
-	messageComponent := (ERComponentAlert warningAlert id: 'adminUserAlert').
+	modifiedUser := ERUserAccount new.
+	messageComponent := ERComponentAlert warningAlert
+		id: 'adminUserAlert'
 ]
 
 { #category : #rendering }
@@ -62,13 +60,7 @@ ERAdminUser >> renderContainer: html [
 
 { #category : #rendering }
 ERAdminUser >> renderEmailInputTextOn: html [
-	"html
-		render:
-			(self
-				createTextField: 'Email: '
-				for: #email:
-				withValue: attendee email)"
-		html mdlTextFieldContainer
+	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
 				for: 'email';
@@ -77,7 +69,7 @@ ERAdminUser >> renderEmailInputTextOn: html [
 				id: 'email';
 				type: 'text';
 				value: attendee email;
-				callback: [ :value | newEmail := value ] ]
+				callback: [ :value | modifiedUser email: value ] ]
 ]
 
 { #category : #rendering }
@@ -89,13 +81,6 @@ ERAdminUser >> renderFields: html [
 
 { #category : #rendering }
 ERAdminUser >> renderFirstNameInputTextOn: html [
-	"html
-		render:
-			(self
-				createTextField: 'First Name: '
-				for: #firstName:
-				withValue: attendee firstName).
-				"
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -105,7 +90,7 @@ ERAdminUser >> renderFirstNameInputTextOn: html [
 				id: 'firstName';
 				type: 'text';
 				value: attendee firstName;
-				callback: [:value | newFirstName := value] ]
+				callback: [ :value | modifiedUser firstName: value ] ]
 ]
 
 { #category : #rendering }
@@ -120,12 +105,6 @@ ERAdminUser >> renderFormOn: html [
 
 { #category : #rendering }
 ERAdminUser >> renderLastNameInputTextOn: html [
-	"html
-		render:
-			(self
-				createTextField: 'Last Name: '
-				for: #lastName:
-				withValue: attendee lastName)"
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -135,7 +114,7 @@ ERAdminUser >> renderLastNameInputTextOn: html [
 				id: 'lastName';
 				type: 'text';
 				value: attendee lastName;
-				callback: [ :value | newLastName := value ] ]
+				callback: [ :value | modifiedUser lastName: value ] ]
 ]
 
 { #category : #accessing }
@@ -151,13 +130,4 @@ ERAdminUser >> tabName [
 { #category : #accessing }
 ERAdminUser >> title [
 	^ 'User'
-]
-
-{ #category : #rendering }
-ERAdminUser >> updateAttendee [
-	^ (attendee
-				email: newEmail;
-				firstName: newFirstName;
-				lastName: newLastName;
-				userAccount) save
 ]

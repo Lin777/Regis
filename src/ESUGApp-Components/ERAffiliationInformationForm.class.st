@@ -7,8 +7,6 @@ Class {
 { #category : #initialization }
 ERAffiliationInformationForm >> initialize [
 	super initialize.
-	nextTabFrom := ''.
-	previousTabFrom := ''
 ]
 
 { #category : #rendering }

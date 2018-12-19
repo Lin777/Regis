@@ -105,6 +105,15 @@ ERTestControllers class >> testGroupManager [
 ]
 
 { #category : #tests }
+ERTestControllers class >> testModifyUser [
+	^ ERUserAccount new
+		firstName: 'userModify';
+		lastName: 'usermodify';
+		email: 'userModify@gmail.com';
+		yourself 
+]
+
+{ #category : #tests }
 ERTestControllers class >> testUserAccount [
 	^ ERUserAccount new
 		email: 'test@gmail.com';

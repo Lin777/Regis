@@ -7,8 +7,6 @@ Class {
 { #category : #initialization }
 ERConferenceOptionsForm >> initialize [
 	super initialize.
-	nextTabFrom := 'affiliationInfoForm'.
-	previousTabFrom := 'contactInfoForm'
 ]
 
 { #category : #rendering }

@@ -51,14 +51,18 @@ ERCardView >> iconPage: anObject [
 ]
 
 { #category : #rendering }
-ERCardView >> renderContentOn: html [ 
-	html html: '<br><br><br>      
-<div id="', self id,'" class="mdl-card mdl-shadow--16dp">
+ERCardView >> renderContentOn: html [
+	html
+		html:
+			'<br><br><br>      
+<div id="' , self id,'" class="mdl-card mdl-shadow--16dp">
   <div class="mdl-card__supporting-text">'.
-     self renderIconCard: html.   
-				html html: '<div id="card-heading">', self title ,'</div>'.
-		self content value.
-	html html: '</div>
+	self renderIconCard: html.
+	html html: '<div id="card-heading">' , self title , '</div>'.
+	self content value.
+	html
+		html:
+			'</div>
 	</div>'
 ]
 

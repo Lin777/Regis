@@ -4,25 +4,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #'options-generated' }
-ERAttendeeRegistrationView class >> canBeRoot [ 
-    ^ true
-]
-
-{ #category : #'options-generated' }
-ERAttendeeRegistrationView class >> initialize [
-	"self initialize"
-
-	(WAAdmin register: self asApplicationAt: 'Reg')
-		addLibrary: JQDeploymentLibrary;
-		addLibrary: MDLLibrary;
-		addLibrary: ERMaterialBlueRedMinCss ;
-		addLibrary: CssForRegisterFormsMDL;
-		addLibrary: ERJQValidateForm ;
-		addLibrary: ERLibrary ;
-		preferenceAt: #sessionClass put: ERSession
-]
-
 { #category : #initialization }
 ERAttendeeRegistrationView >> initialize [
 	super initialize.
