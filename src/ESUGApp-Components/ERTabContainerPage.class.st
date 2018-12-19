@@ -9,6 +9,15 @@ Class {
 	#category : #'ESUGApp-Components'
 }
 
+{ #category : #'as yet unclassified' }
+ERTabContainerPage class >> on: anAttendee withContent: aContent [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form content: aContent .
+	^ form
+]
+
 { #category : #accessing }
 ERTabContainerPage >> content [
 	^ content

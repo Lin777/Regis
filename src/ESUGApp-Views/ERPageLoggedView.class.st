@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'pageController',
 		'navbar',
-		'content'
+		'content',
+		'attendee'
 	],
 	#category : #'ESUGApp-Views'
 }
@@ -32,18 +33,14 @@ ERPageLoggedView >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #hooks }
-ERPageLoggedView >> forChildenFuture [
-"children
-	Array with: navbar; with: content "
-]
-
 { #category : #rendering }
 ERPageLoggedView >> initialize [
 	super initialize.
-	pageController := ERLoggedController new user: (self session user).
-	content := ERContainerHomeView attendee: pageController getAttendee .
-	self initializeNabvar.
+	pageController := ERLoggedController new user: self session user.
+	attendee := pageController getAttendee.
+	content := ERContent new.
+	(ERContainerHomeView attendee: attendee) content: content.
+	self initializeNabvar
 ]
 
 { #category : #rendering }
@@ -63,31 +60,22 @@ ERPageLoggedView >> initializeNabvar [
 
 { #category : #rendering }
 ERPageLoggedView >> itemList [
-	| anAttendee |
-	anAttendee := pageController getAttendee.
 	^ Dictionary new
 		at: 'home'
-			put: [ self
-				content: ((ERContainerHomeView attendee: anAttendee) content: content) ];
+			put: [ (ERContainerHomeView attendee: attendee) content: content ];
 		at: 'admin'
-			put: [ self
-				content: ((ERContainerAdminView attendee: anAttendee) content: content) ];
+			put: [ ERContainerAdminView attendee: attendee content: content ];
 		at: 'logout'
 			put: [ self session logout.
 			self answer: true ];
 		at: 'groupRegistration'
-			put: [ self
-				content:
-					((ERContainerGroupRegistrationView attendee: anAttendee)
-						content: self) ];
+			put: [ ERContainerGroupRegistrationView attendee: attendee
+				content: content ];
 		at: 'myRegistration'
-			put: [ self
-				content:
-					((ERContainerMyRegistrationView attendee: anAttendee)
-						content: content) ];
+			put: [ ERContainerMyRegistrationView attendee: attendee
+				content: content ];
 		at: 'configuration'
-			put: [ self
-				content: ((ERContainerHomeView attendee: anAttendee) content: content) ];
+			put: [ (ERContainerHomeView attendee: attendee) content: content ];
 		yourself
 ]
 

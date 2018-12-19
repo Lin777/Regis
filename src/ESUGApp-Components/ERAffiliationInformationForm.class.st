@@ -65,5 +65,5 @@ ERAffiliationInformationForm >> tabId [
 
 { #category : #accessing }
 ERAffiliationInformationForm >> tabName [
-	^ 'Affiliation Information'
+	^ 'Affiliation'
 ]

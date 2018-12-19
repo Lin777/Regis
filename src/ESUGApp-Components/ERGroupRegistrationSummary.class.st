@@ -28,7 +28,8 @@ ERGroupRegistrationSummary >> pay [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> registerAttendee [
-	content content:( ERTabsView tabs: ERAttendeeRegistrationView new tabs)
+	content
+		state: (ERContainerTabsView new tabView: (ERTabsView tabs: ERAttendeeRegistrationView new tabs))
 ]
 
 { #category : #rendering }

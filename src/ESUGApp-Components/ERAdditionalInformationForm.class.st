@@ -31,5 +31,5 @@ ERAdditionalInformationForm >> tabId [
 
 { #category : #accessing }
 ERAdditionalInformationForm >> tabName [
-	^ 'Additional Information'
+	^ 'Additional'
 ]

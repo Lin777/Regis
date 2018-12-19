@@ -9,32 +9,43 @@ Class {
 
 { #category : #accessing }
 ERTabsContainerView class >> attendee: anAttendee [
-	|instance|
+	| instance |
 	instance := self new.
-	instance attendee: anAttendee .
-	instance initializeTabForms .
-	^ instance 
+	instance attendee: anAttendee.
+	instance initializeTabForms.
+	^ instance
+]
+
+{ #category : #accessing }
+ERTabsContainerView class >> attendee: anAttendee content: aContent [
+	| instance |
+	instance := self new.
+	instance attendee: anAttendee.
+	instance content: aContent .
+	instance initializeTabForms.
+	^ instance
 ]
 
 { #category : #adding }
 ERTabsContainerView >> addTab: aAttendeeTabForm [
 	self tabs add: aAttendeeTabForm
+	
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 ERTabsContainerView >> initializeTabForms [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
-{ #category : #rendering }
-ERTabsContainerView >> renderContentPage: html [ 
-	html div class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect'; with: [ 
-		html render: (ERTabsView new tabs: self tabs ) ]
-	  
+{ #category : #adding }
+ERTabsContainerView >> renderContentPage: html [
+	html div
+		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
+		with: [ html render: (ERTabsView new tabs: self tabs) ]
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
 ERTabsContainerView >> tabs [
-	tabs ifNil: [ tabs:= OrderedCollection new].
-	^ tabs.
+	tabs ifNil: [ tabs := OrderedCollection new ].
+	^ tabs
 ]

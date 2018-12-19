@@ -70,5 +70,5 @@ ERConferenceOptionsForm >> tabId [
 
 { #category : #accessing }
 ERConferenceOptionsForm >> tabName [
-	^ 'Conference Options'
+	^ 'Conference'
 ]

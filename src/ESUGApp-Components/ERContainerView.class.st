@@ -1,34 +1,20 @@
 Class {
 	#name : #ERContainerView,
-	#superclass : #WAComponent,
-	#instVars : [
-		'attendee',
-		'content'
-	],
+	#superclass : #ERStateContent,
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #accessing }
 ERContainerView class >> attendee: anAttendee [
-	|instance|
+	| instance |
 	instance := self new.
-	instance attendee: anAttendee .
-	^ instance 
+	instance attendee: anAttendee.
+	^ instance
 ]
 
 { #category : #accessing }
 ERContainerView >> attendee: anObject [
 	attendee := anObject
-]
-
-{ #category : #accessing }
-ERContainerView >> content [
-	^ content
-]
-
-{ #category : #accessing }
-ERContainerView >> content: anObject [
-	content := anObject
 ]
 
 { #category : #rendering }

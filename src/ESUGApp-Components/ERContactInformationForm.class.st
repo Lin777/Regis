@@ -63,5 +63,5 @@ ERContactInformationForm >> tabId [
 
 { #category : #accessing }
 ERContactInformationForm >> tabName [
-	^ 'Personal Information'
+	^ 'Contact'
 ]

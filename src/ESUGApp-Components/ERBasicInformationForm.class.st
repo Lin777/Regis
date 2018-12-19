@@ -35,5 +35,5 @@ ERBasicInformationForm >> tabId [
 
 { #category : #accessing }
 ERBasicInformationForm >> tabName [
-	^ 'Registration'
+	^ 'User'
 ]

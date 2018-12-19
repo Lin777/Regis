@@ -44,5 +44,5 @@ ERPaymentInformationForm >> tabId [
 
 { #category : #accessing }
 ERPaymentInformationForm >> tabName [
-	^ 'Payment Information'
+	^ 'Payment'
 ]
