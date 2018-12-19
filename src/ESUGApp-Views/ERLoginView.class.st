@@ -10,11 +10,11 @@ Class {
 
 { #category : #rendering }
 ERLoginView >> initialize [
-	super initialize .
+	super initialize.
 	title := 'User Login'.
 	icon := 'person'.
-	messageComponent := (ERComponentAlert warningAlert id: 'loginAlert').
-	id := 'login'.
+	messageComponent := ERComponentAlert warningAlert id: 'loginAlert'.
+	id := 'body'.
 	pageController := ERLoginController new
 ]
 
@@ -98,6 +98,7 @@ ERLoginView >> renderRegisterButtonOn: html [
 	html mdlButton
 		beSubmit;
 		mdlTextColorAccent;
+		class: 'login-button';
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'

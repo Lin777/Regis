@@ -14,14 +14,15 @@ EREsugWebApp class >> initialize [
 	"self initialize"
 
 	(WAAdmin register: self asApplicationAt: 'ESUG')
+	
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
-		addLibrary: ERMaterialBlueRedMinCss ;
+		addLibrary: ERMaterialBlueRedMinCss;
+		addLibrary: ERJQValidateForm;
 		addLibrary: CssForLoginMDL;
-		addLibrary: CssForRegisterFormsMDL;
-		addLibrary: ERJQValidateForm ;
-		addLibrary: ERLibrary ;
-		preferenceAt: #sessionClass put: ERSession
+		addLibrary: ERLibrary;
+		preferenceAt: #sessionClass
+		put: ERSession
 ]
 
 { #category : #running }

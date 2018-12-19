@@ -10,22 +10,8 @@ Class {
 
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
-	self tabs
-		ifNotEmpty: [ aAttendeeTabForm "previousTabFrom: self tabs last.
-			self tabs last nextTabFrom: aAttendeeTabForm" ].
+	"self tabs ifNotEmpty: [ aAttendeeTabForm ]."
 	self tabs add: aAttendeeTabForm
-]
-
-{ #category : #rendering }
-ERRegister >> backButton [
-	| tabActive |
-	tabActive := self tabActive.
-	tabActive
-		ifNotNil: [ self deactivateAllTabs.
-			self tabs
-				do: [ :each | 
-					each tabId = tabActive previousTabFrom
-						ifTrue: [ each activate ] ] ]
 ]
 
 { #category : #initialization }
@@ -40,29 +26,19 @@ ERRegister >> deactivateAllTabs [
 
 { #category : #initialization }
 ERRegister >> initialize [
-	super initialize .
+	super initialize.
 	icon := 'assignment'.
-	messageComponent := (ERComponentAlert warningAlert id: 'registerAlert').
+	messageComponent := ERComponentAlert warningAlert
+		id: 'messageAlertLogin'.
 	pageController := ERRegistrationController new.
-	id := 'register'.
-	self initializeTabForms.
+	id := 'all body-all'.
+	classContainer := 'mdl-card-register'.
+	self initializeTabForms
 ]
 
 { #category : #initialization }
 ERRegister >> initializeTabForms [
 	self subclassResponsibility 
-]
-
-{ #category : #rendering }
-ERRegister >> nextButton [
-	| tabActive |
-	tabActive := self tabActive.
-	tabActive
-		ifNotNil: [ self deactivateAllTabs.
-			self tabs
-				do: [ :each | 
-					each tabId = tabActive nextTabFrom
-						ifTrue: [ each activate ] ] ]
 ]
 
 { #category : #'tools registry' }

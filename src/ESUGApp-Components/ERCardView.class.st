@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'content',
 		'title',
-		'iconPage'
+		'iconPage',
+		'classContainer'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -31,6 +32,16 @@ ERCardView class >> title: aString icon: anIcon content: aBlock id: anId [
 ]
 
 { #category : #accessing }
+ERCardView >> classContainer [
+	^ classContainer
+]
+
+{ #category : #accessing }
+ERCardView >> classContainer: anObject [
+	classContainer := anObject
+]
+
+{ #category : #accessing }
 ERCardView >> content [
 	^ content
 ]
@@ -50,20 +61,26 @@ ERCardView >> iconPage: anObject [
 	iconPage := anObject
 ]
 
+{ #category : #initialization }
+ERCardView >> initialize [
+	super initialize.
+	classContainer := ''
+]
+
 { #category : #rendering }
 ERCardView >> renderContentOn: html [
 	html
 		html:
-			'<br><br><br>      
-<div id="' , self id,'" class="mdl-card mdl-shadow--16dp">
-  <div class="mdl-card__supporting-text">'.
+			'<div class="' , self id
+				,
+					'">
+	<div  class="mdl-layout mdl-js-layout">
+        <div id="login-conatiner" class="mdl-card ',self classContainer, ' mdl-shadow--16dp">
+            <div class="mdl-card__supporting-text">'.
 	self renderIconCard: html.
 	html html: '<div id="card-heading">' , self title , '</div>'.
 	self content value.
-	html
-		html:
-			'</div>
-	</div>'
+	html html: '</div></div></div></div>'
 ]
 
 { #category : #rendering }

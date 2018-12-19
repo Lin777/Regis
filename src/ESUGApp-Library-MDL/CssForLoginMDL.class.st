@@ -102,5 +102,5 @@ CssForLoginMDL >> profilecityJpg [
 
 { #category : #accessing }
 CssForLoginMDL >> selectorsToInclude [
-	^ Array with: 'esugLoginCss'
+	^ Array with: 'profilecityJpg'
 ]

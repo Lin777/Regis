@@ -14,19 +14,10 @@ ERLibrary class >> applicationName [
 { #category : #updating }
 ERLibrary >> alertCss [
 	^ '
-.alert {
+.error {
   color: red
   }
   '
-]
-
-{ #category : #updating }
-ERLibrary >> closeAlertJs [
-	^ '
-	$(".close-alert").click(function(e){
-  		$(this).parent().remove();
-		e.preventDefault();
-	});'
 ]
 
 { #category : #updating }
@@ -94,13 +85,12 @@ ERLibrary >> cssForHomePage [
 
 { #category : #updating }
 ERLibrary >> esugCss [
-	^ self cssForHomePage , self alertCss 
+	^ self alertCss
 ]
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self validatorOfRegister , self validatorForLogin
-		, self closeAlertJs, self tabsJs 
+	^ self validatorOfRegister , self validatorForLogin, self tabsJs
 ]
 
 { #category : #updating }
@@ -192,7 +182,7 @@ html, body {
 ERLibrary >> loginCss [
 	^ '
 .body {
-	background-image: url(''/files/CssForRegisterFormsMDL/profile_city.jpg'');
+	background-image: url(''/files/CssForLoginMDL/profile_city.jpg'');
 	background-size: cover;
 	background-position: top center;
 	overflow-x: hidden;
@@ -257,7 +247,7 @@ ERLibrary >> loginCss [
 { #category : #updating }
 ERLibrary >> registerCss [
 	^ '.body-all {
-	background-image: url(''/files/CssForRegisterFormsMDL/profile_city.jpg'');
+	background-image: url(''/files/CssForLoginMDL/profile_city.jpg'');
 	background-size: cover;
 	background-position: center;
 }
@@ -318,7 +308,7 @@ ERLibrary >> registerCss [
 
 { #category : #updating }
 ERLibrary >> selectorsToInclude [
-	^ Array with: 'esugJs' with: 'esugCss'
+	^ Array with: 'registerCss' with: 'tabsCss' with: 'loginCss' with: 'generalCss' with: 'esugJs' with: 'esugCss'
 ]
 
 { #category : #updating }

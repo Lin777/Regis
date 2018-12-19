@@ -5,7 +5,8 @@ Class {
 		'pageController',
 		'title',
 		'icon',
-		'id'
+		'id',
+		'classContainer'
 	],
 	#category : #'ESUGApp-Views'
 }
@@ -17,6 +18,11 @@ ERPageView class >> using: aPageController [
 	instance controller: aPageController.
 	^ instance.
 	
+]
+
+{ #category : #accessing }
+ERPageView >> classContainer: anObject [
+	classContainer := anObject
 ]
 
 { #category : #accessing }
@@ -35,18 +41,14 @@ ERPageView >> icon: anObject [
 ]
 
 { #category : #accessing }
-ERPageView >> id [
-	^ id
-]
-
-{ #category : #accessing }
 ERPageView >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #accessing }
-ERPageView >> pageController [
-	^ pageController
+{ #category : #initialization }
+ERPageView >> initialize [
+	super initialize.
+	classContainer:= ''
 ]
 
 { #category : #accessing }
@@ -58,25 +60,18 @@ ERPageView >> pageController: anObject [
 ERPageView >> renderContentOn: html [
 	html
 		render:
-			(ERCardView
-				title: self title
-				icon: self icon
-				content: [self renderPageOn: html]
-				id: self id).
-	html render: ERFooterView new
-
-	
+			((ERCardView
+				title: title
+				icon: icon
+				content: [ self renderPageOn: html ]
+				id: id) classContainer: classContainer)
+	"html render: ERFooterView new"
 ]
 
 { #category : #rendering }
 ERPageView >> renderPageOn: html [
 	self subclassResponsibility.
 	
-]
-
-{ #category : #accessing }
-ERPageView >> title [
-	^ title
 ]
 
 { #category : #accessing }
