@@ -11,26 +11,13 @@ Class {
 ERGroupManagerViewController >> addAttendee: anAttendee [
 	| group anAttendeeSaved |
 	(ERUserAccount findUserByEmail: anAttendee email)
-		ifNil: [ |userSaved|
+		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
-			anAttendeeSaved := (anAttendee userAccount: userSaved ) save.
-			group := self groupOfAttendee: attendee userAccount.
+			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+			group := self groupGroupManager"self groupOfAttendee: attendee userAccount".
 			group listAttends add: anAttendeeSaved.
 			^ group save ].
 	^ nil
-]
-
-{ #category : #adding }
-ERGroupManagerViewController >> addAttendee: anAttendee to: aGroupManager [
-	| group anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee email) ifNil: [ 
-		anAttendeeSaved := anAttendee save.
-	group := self groupOfAttendee: aGroupManager.
-	group listAttends add: anAttendeeSaved.
-	^ group save
-		 ].
-	^ nil
-	
 ]
 
 { #category : #accessing }
@@ -41,6 +28,32 @@ ERGroupManagerViewController >> attendee [
 { #category : #accessing }
 ERGroupManagerViewController >> attendee: anObject [
 	attendee := anObject
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> deleteAttendee: anAttendee [
+	|userOfAttendee|
+	userOfAttendee := anAttendee userAccount.
+					anAttendee delete.
+					userOfAttendee delete
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> deleteAttendeeFromGroup: anAttendee [
+	| group |
+	group := self groupGroupManager.
+	group listAttends
+		do: [ :each | 
+			each userAccount email = anAttendee userAccount email
+				ifTrue: [ 
+					group listAttends remove: each ifAbsent: [  ].
+					self deleteAttendee: each ] ].
+	group save
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> groupGroupManager [
+	^ self groupOfAttendee: attendee userAccount
 ]
 
 { #category : #adding }
