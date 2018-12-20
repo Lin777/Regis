@@ -80,16 +80,17 @@ ERRegister >> renderBackLoginButtonOn: html [
 
 { #category : #rendering }
 ERRegister >> renderPageOn: html [
-	html
-		html:
-			'<div class=''mdl-tabs mdl-js-tabs mdl-js-ripple-effect''>
-                      <div class=''mdl-grid mdl-grid--no-spacing''>'.
-	html form
-		method: 'post';
-		id: 'formRegister';
-		with: [ html render: messageComponent.
-			html render: (ERTabsView tabs: self tabs) ].
-	html html: '</div> </div>'.
+	html mdlTabs class: 'mdl-js-ripple-effect';
+	with: [ 
+		html mdlGrid noSpacing 
+		with: [ 
+			html form
+			method: 'post';
+			id: 'formRegister';
+			with: [ html render: messageComponent.
+				html render: (ERTabsView tabs: self tabs) ].
+			]
+	].
 	html
 		form: [ self renderBackLoginButtonOn: html ]
 ]

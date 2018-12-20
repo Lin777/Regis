@@ -80,7 +80,9 @@ ERLoginView >> renderPageOn: html [
 			self renderLoginButtonOn: html.
 			self renderRegisterButtonOn: html.
 			self renderRegisterAsGroupManagerButtonOn: html.
-	html html: '<button class="mdl-button mdl-js-button mdl-button--primary">Forgot Password</button> </div>']
+			html mdlButton class: 'mdl-button--primary';
+			with: 'Forgot Password'.
+	]
 ]
 
 { #category : #rendering }

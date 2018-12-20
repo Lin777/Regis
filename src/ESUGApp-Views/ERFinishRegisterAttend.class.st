@@ -23,6 +23,11 @@ ERFinishRegisterAttend class >> initialize [
         preferenceAt: #sessionClass put: ERSession
 ]
 
+{ #category : #'as yet unclassified' }
+ERFinishRegisterAttend >> colorIcon [
+	^ 'mdl-color--green'
+]
+
 { #category : #initialization }
 ERFinishRegisterAttend >> initialize [
 	super initialize.
@@ -131,8 +136,8 @@ ERFinishRegisterAttend >> renderStrong: html with: aString1 and: aString2 [
 
 { #category : #rendering }
 ERFinishRegisterAttend >> renderTitle: html with: aString [
-	html html: '<h6>'.
-	self renderStrong: html with: aString and: nil.
-	html html: '</h6>'.
+	html heading level6 with: [
+		self renderStrong: html with: aString and: nil.
+	].
 	html horizontalRule.
 ]

@@ -34,21 +34,25 @@ ERNavView >> renderContentOn: html [
 
 { #category : #rendering }
 ERNavView >> renderHeader: html [
-	html html: '<header class="demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">',title,'</span>
-          <div class="mdl-layout-spacer"></div>
-        </div>
-</header>'.
+	html header class: 'demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white';
+	with: [ 
+		html mdlLayoutHeaderRow with: [ 
+			html span class: 'mdl-layout-title';
+			with: title.
+			html mdlLayoutSpacer.
+		]	
+	].
 ]
 
 { #category : #rendering }
 ERNavView >> renderHeaderESUG: html [
-	html html: '<header class="demo-drawer-header">
-          <div class="demo-avatar-dropdown">
-            <h4>ESUG</h4>
-          </div>
-        </header>'.
+	html header class: 'demo-drawer-header';
+	with: [ 
+		html div class: 'demo-avatar-dropdown';
+		with: [ 
+			html heading level4 with: 'ESUG'	
+		]	
+	]
 ]
 
 { #category : #accessing }
