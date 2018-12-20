@@ -1,6 +1,6 @@
 Class {
 	#name : #ERGroupRegistrationMembers,
-	#superclass : #ERTabContainerPage,
+	#superclass : #ERGroupRegistration,
 	#category : #'ESUGApp-Components'
 }
 
@@ -8,6 +8,11 @@ Class {
 ERGroupRegistrationMembers >> attends [
 	^ (ERGroupManagerViewController new
 		groupOfAttendee: attendee userAccount) listAttends
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
+	controller deleteAttendeeFromGroup: anAttendee 
 ]
 
 { #category : #accessing }
@@ -34,31 +39,63 @@ ERGroupRegistrationMembers >> renderBody: html [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
-	html html: '<button class="mdl-button mdl-js-button mdl-button--colored">
-                    Register Attendee
-                  </button>
-                  <button class="mdl-button mdl-js-button mdl-button--colored">
+	self renderRegisterAttendee: html.
+	html
+		html:
+			'<button class="mdl-button mdl-js-button mdl-button--colored">
                     Register Myself as Attendee
                   </button>'
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
-	html render: ((self createButtonField: 'Modify' with: [  ] id: (anAttendee id,'-modify') ) forTableButton).
-	html render: ((self createButtonField: 'Delete' with: [  ] id: (anAttendee id,'-delete') ) forTableButton).
-	html render: ((self createButtonField: 'Delete' with: [  ] id: (anAttendee id,'-delete') ) forTableButton).
-	html render: ((self createButtonField: 'Modify User' with: [  ] id: (anAttendee id,'-modifyUser') ) forTableButton).
-	html render: ((self createButtonField: 'Reset Password' with: [  ] id: (anAttendee id,'-resetPassword') ) forTableButton).
-	html render: ((self createButtonField: 'Apply Reduction' with: [  ] id: (anAttendee id,'-applyReduction') ) forTableButton).
-	html render: ((self createButtonField: 'Invoice' with: [  ] id: (anAttendee id,'-invoice') ) forTableButton).
+	html
+		render:
+			(self
+				createButtonField: 'Modify'
+				with: [  ]
+				id: anAttendee id , '-modify') forTableButton.
+	html
+		render:
+			(self
+				createButtonField: 'Delete'
+				with: [ self deleteAttendeeFromGroup: anAttendee ]
+				id: anAttendee id , '-delete') forTableButton.
+	html
+		render:
+			(self
+				createButtonField: 'Modify User'
+				with: [  ]
+				id: anAttendee id , '-modifyUser') forTableButton.
+	html
+		render:
+			(self
+				createButtonField: 'Reset Password'
+				with: [  ]
+				id: anAttendee id , '-resetPassword') forTableButton.
+	html
+		render:
+			(self
+				createButtonField: 'Apply Reduction'
+				with: [  ]
+				id: anAttendee id , '-applyReduction') forTableButton.
+	html
+		render:
+			(self
+				createButtonField: 'Invoice'
+				with: [  ]
+				id: anAttendee id , '-invoice') forTableButton
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderContainer: html [
+	html form
+		method: 'post';
+		id: 'formMembers';
+		with: [
 	self renderButtons: html.
-	html horizontalRule .
-	self renderTableOfAttends: html.
-	
+	html horizontalRule.
+	self renderTableOfAttends: html]
 ]
 
 { #category : #accessing }
@@ -66,6 +103,16 @@ ERGroupRegistrationMembers >> renderHeaders: html [
 	html
 		tableHead: [ html
 				tableRow: [ self headers do: [ :each | html mdlTableHeading: each ] ] ]
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> renderRegisterAttendee: html [
+	html
+		render:
+			(self
+				createButtonField: 'Register Attendee'
+				with: [ self registerAttendee ]
+				id: 'registerAttendee') forTableButton.
 ]
 
 { #category : #accessing }

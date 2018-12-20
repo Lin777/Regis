@@ -17,12 +17,21 @@ ERTestGroupManagerViewController >> setUp [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testAddAttendeeTo [
-	|  user2 group |
-	user2 := self
-		registerAttendee: ERTestControllers testExampleAttendee.
-	group := controller addAttendee: controller attendee userAccount to: user2.
-	self deny: group isNil
+ERTestGroupManagerViewController >> testAddAttendee [
+	| result |
+	result := controller
+		addAttendee: ERTestControllers testExampleAttendee..
+	self deny: result isNil
+]
+
+{ #category : #tests }
+ERTestGroupManagerViewController >> testDeleteAnAttendee [
+	| user attendee result |
+	user := self registerAttendee: ERTestControllers testExampleAttendee.
+	attendee := controller attendeeFromUser: user.
+	controller deleteAttendee: attendee .
+	result := controller groupGroupManager listAttends isEmpty . 
+	self assert: result .
 ]
 
 { #category : #tests }

@@ -14,9 +14,8 @@ ERContent >> initialize [
 ]
 
 { #category : #rendering }
-ERContent >> renderContentOn: html [ 
-	state ifNotNil: [ 
-		html render: state ]
+ERContent >> renderContentOn: html [
+	state ifNotNil: [ html render: state ]
 ]
 
 { #category : #accessing }
