@@ -5,7 +5,8 @@ Class {
 		'content',
 		'title',
 		'iconPage',
-		'classContainer'
+		'classContainer',
+		'classColorIcon'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -29,6 +30,28 @@ ERCardView class >> title: aString icon: anIcon content: aBlock id: anId [
 	instance content: aBlock .
 	instance id: anId .
 	^ instance
+]
+
+{ #category : #'as yet unclassified' }
+ERCardView class >> title: aString icon: anIcon content: aBlock id: anId colorIcon: anColor [
+	| instance |
+	instance := self new.
+	instance title: aString.
+	instance iconPage: anIcon .
+	instance content: aBlock .
+	instance id: anId .
+	instance classColorIcon: anColor.
+	^ instance
+]
+
+{ #category : #accessing }
+ERCardView >> classColorIcon [
+	^ classColorIcon
+]
+
+{ #category : #accessing }
+ERCardView >> classColorIcon: anObject [
+	classColorIcon := anObject
 ]
 
 { #category : #accessing }
@@ -64,30 +87,40 @@ ERCardView >> iconPage: anObject [
 { #category : #initialization }
 ERCardView >> initialize [
 	super initialize.
-	classContainer := ''
+	classContainer := ''.
+	classColorIcon := 'mdl-color--red'.
 ]
 
 { #category : #rendering }
 ERCardView >> renderContentOn: html [
-	html
-		html:
-			'<div class="' , self id
-				,
-					'">
-	<div  class="mdl-layout mdl-js-layout">
-        <div id="login-conatiner" class="mdl-card ',self classContainer, ' mdl-shadow--16dp">
-            <div class="mdl-card__supporting-text">'.
-	self renderIconCard: html.
-	html html: '<div id="card-heading">' , self title , '</div>'.
-	self content value.
-	html html: '</div></div></div></div>'
+	html div class: self id;
+	with: [ 
+		html mdlLayout with: [ 
+			html mdlCard 
+			class: classContainer, ' mdl-shadow--16dp';
+			id: 'login-conatiner';
+			with: [ 
+				html mdlCardTextContainer 
+				with: [ 
+					self renderIconCard: html.
+					html div id: 'card-heading';
+					with: self title.
+					self content value.
+				]
+			]
+		]
+	].
 ]
 
 { #category : #rendering }
 ERCardView >> renderIconCard: html [
-	html html: '<div id="login-fab" class="mdl-color--red mdl-color-text--white">
-					<i id="lock-icon" class="material-icons">', self iconPage,'</i>
-				</div>'
+	html div id: 'login-fab';
+	class: self classColorIcon, ' mdl-color-text--white';
+	with: [ 
+		html icon id: 'lock-icon';
+		class: 'material-icons';
+		with: self iconPage
+	].
 ]
 
 { #category : #accessing }

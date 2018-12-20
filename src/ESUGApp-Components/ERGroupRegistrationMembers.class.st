@@ -34,12 +34,8 @@ ERGroupRegistrationMembers >> renderBody: html [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
-	html html: '<button class="mdl-button mdl-js-button mdl-button--colored">
-                    Register Attendee
-                  </button>
-                  <button class="mdl-button mdl-js-button mdl-button--colored">
-                    Register Myself as Attendee
-                  </button>'
+	html mdlButton colored with: 'Register Attendee'.
+	html mdlButton colored with: 'Register Myself as Attendee'.
 ]
 
 { #category : #accessing }

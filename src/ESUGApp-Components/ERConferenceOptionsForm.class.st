@@ -11,7 +11,9 @@ ERConferenceOptionsForm >> initialize [
 
 { #category : #rendering }
 ERConferenceOptionsForm >> renderFormOn: html [
-	html html: '<br> <label>Days:</label> <br>'.
+	html break.
+	html label: 'Days:'.
+	html break.
 	html
 		render: (self createCheckboxField: 'Monday (dd/mm/aa)' for: #monday:).
 	html
@@ -28,7 +30,8 @@ ERConferenceOptionsForm >> renderFormOn: html [
 				for: #thursday:).
 	html
 		render: (self createCheckboxField: 'Friday (dd/mm/aa)' for: #friday:).
-	html html: '<br><br>'.
+	html break. 
+	html break.
 	html
 		render:
 			(self

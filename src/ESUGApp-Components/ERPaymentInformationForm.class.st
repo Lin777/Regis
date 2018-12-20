@@ -11,11 +11,12 @@ ERPaymentInformationForm >> initialize [
 
 { #category : #rendering }
 ERPaymentInformationForm >> renderFormOn: html [
-	html
-		html:
-			'<br><p>Pay by transfer or pay/card. Pay in euros</p>
-                    <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
-                    <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>'.
+	html break.
+	html paragraph: 'Pay by transfer or pay/card. Pay in euros'.
+	html paragraph  with: [ 
+		html strong: 'IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")'
+	].
+	html paragraph: 'Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)'.
 	html
 		render:
 			(self

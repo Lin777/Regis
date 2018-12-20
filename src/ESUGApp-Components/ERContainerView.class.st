@@ -19,11 +19,13 @@ ERContainerView >> attendee: anObject [
 
 { #category : #rendering }
 ERContainerView >> renderContentOn: html [
-	html html: '<main class="mdl-layout__content mdl-color--grey-100">
-          <div class="mdl-card mdl-card__supporting-text mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">'.
-  self renderContentPage: html.
-  html html: '</div>
-      </main>'.
+	html main class: 'mdl-layout__content mdl-color--grey-100';
+	with: [ 
+		html mdlCard class: 'mdl-card__supporting-text mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col';
+		with: [ 
+			self renderContentPage: html.	
+		]
+	].
 ]
 
 { #category : #rendering }

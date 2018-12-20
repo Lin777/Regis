@@ -19,17 +19,20 @@ ERContainerTabsView >> renderCancelButton: html [
 
 { #category : #rendering }
 ERContainerTabsView >> renderContentPage: html [
-	html
-		html:
-			'<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-              <div style="overflow-x:auto;">
-                  <div class="mdl-grid mdl-grid--no-spacing">'.
-html form
-		method: 'post';
-		id: 'formRegister';
-		with: [
-	html render: tabView].
-	html html: '</div> </div> </div>'.
+	html mdlTabs rippleEffect 
+	with: [ 
+		html div style: 'overflow-x:auto;';
+		with: [ 
+			html mdlGrid noSpacing 
+			with: [ 
+				html form
+				method: 'post';
+				id: 'formRegister';
+				with: [
+					html render: tabView].
+			]
+		]	
+	].
 	self renderCancelButton: html
 ]
 
