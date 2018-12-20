@@ -3,10 +3,24 @@ Class {
 	#superclass : #ERPageView,
 	#instVars : [
 		'tabs',
+		'actionRegister',
 		'messageComponent'
 	],
 	#category : #'ESUGApp-Views'
 }
+
+{ #category : #initialization }
+ERRegister class >> initializeForm [
+	| form |
+	form := self new.
+	form initializeTabForms.
+	^ form
+]
+
+{ #category : #accessing }
+ERRegister >> actionRegister: anObject [
+	actionRegister := anObject
+]
 
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
@@ -33,7 +47,6 @@ ERRegister >> initialize [
 	pageController := ERRegistrationController new.
 	id := 'all body-all'.
 	classContainer := 'mdl-card-register'.
-	self initializeTabForms
 ]
 
 { #category : #initialization }

@@ -12,7 +12,7 @@ ERLibrary class >> applicationName [
 ]
 
 { #category : #updating }
-ERLibrary >> alertCss [
+ERLibrary >> errorCss [
 	^ '
 .error {
   color: red
@@ -21,71 +21,8 @@ ERLibrary >> alertCss [
 ]
 
 { #category : #updating }
-ERLibrary >> cssForHomePage [
-	^ 'html, body {
-  font-family: ''Roboto'', ''Helvetica'', sans-serif;
-}
-
-.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
-  color: white;
-}
-
-.demo-drawer {
-  border: none;
-}
-
-.demo-drawer-header {
-  box-sizing: border-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding: 16px;
-  height: 151px;
-}
-
-.demo-navigation {
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-}
-.demo-layout .demo-navigation .mdl-navigation__link {
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: white;
-  font-weight: 500;
-}
-.demo-layout .demo-navigation .mdl-navigation__link:hover {
-  background-color: #0b7bfc;
-  color: white;
-}
-.active-link{
-  background-color: #0b7bfc;
-  color: white;
-}
-.demo-navigation .mdl-navigation__link .material-icons {
-  font-size: 24px;
-  color: white;
-  margin-right: 32px;
-}
-'
-]
-
-{ #category : #updating }
 ERLibrary >> esugCss [
-	^ self alertCss
+	^ self errorCss
 ]
 
 { #category : #updating }

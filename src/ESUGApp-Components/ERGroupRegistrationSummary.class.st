@@ -1,8 +1,38 @@
 Class {
 	#name : #ERGroupRegistrationSummary,
 	#superclass : #ERTabContainerPage,
+	#instVars : [
+		'formRegister',
+		'attenteeRegisterForm'
+	],
 	#category : #'ESUGApp-Components'
 }
+
+{ #category : #'as yet unclassified' }
+ERGroupRegistrationSummary class >> on: anAttendee withContent: aContent [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form content: aContent.
+	form initializeController.
+	form initializeFormRegister.
+	^ form
+]
+
+{ #category : #accessing }
+ERGroupRegistrationSummary >> attenteeRegisterForm: anObject [
+	attenteeRegisterForm := anObject
+]
+
+{ #category : #accessing }
+ERGroupRegistrationSummary >> formRegister [
+	^ formRegister
+]
+
+{ #category : #accessing }
+ERGroupRegistrationSummary >> formRegister: anObject [
+	formRegister := anObject
+]
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> generateInvoice [
@@ -12,8 +42,24 @@ ERGroupRegistrationSummary >> generateInvoice [
 { #category : #'as yet unclassified' }
 ERGroupRegistrationSummary >> getRegisterAttendee [
 	| tabs |
-	tabs := ERAttendeeRegistrationView new tabs.
+	tabs := ERAttendeeRegistrationView initializeForm tabs.
 	tabs do: [ :each | each attendee: attendee  ]
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> initialize [
+	super initialize
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> initializeController [
+	controller := ERGroupManagerViewController new attendee: attendee .
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> initializeFormRegister [
+	formRegister := ERContainerTabsView new
+		tabView: (ERTabsView tabs: self tabs)
 ]
 
 { #category : #rendering }
@@ -29,7 +75,14 @@ ERGroupRegistrationSummary >> pay [
 { #category : #rendering }
 ERGroupRegistrationSummary >> registerAttendee [
 	content
-		state: (ERContainerTabsView new tabView: (ERTabsView tabs: ERAttendeeRegistrationView new tabs))
+		state:formRegister
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> registerAttendeeToGroupManager [
+	| result |
+	result := controller
+		addAttendee: attenteeRegisterForm controller attendee
 ]
 
 { #category : #rendering }
@@ -114,6 +167,14 @@ ERGroupRegistrationSummary >> tabId [
 { #category : #accessing }
 ERGroupRegistrationSummary >> tabName [
 	^ 'Summary'
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> tabs [
+	attenteeRegisterForm
+		ifNil: [ attenteeRegisterForm := ERAttendeeRegistrationView
+				withAction: [ self registerAttendeeToGroupManager ] ].
+	^ attenteeRegisterForm tabs
 ]
 
 { #category : #accessing }

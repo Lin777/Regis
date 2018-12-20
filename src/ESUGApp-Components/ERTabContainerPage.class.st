@@ -14,7 +14,7 @@ ERTabContainerPage class >> on: anAttendee withContent: aContent [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
-	form content: aContent .
+	form content: aContent.
 	^ form
 ]
 

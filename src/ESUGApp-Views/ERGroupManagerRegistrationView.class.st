@@ -6,20 +6,26 @@ Class {
 
 { #category : #initialization }
 ERGroupManagerRegistrationView >> initialize [
+	actionRegister := [ self registerAsGroupManager ].
 	super initialize.
 	title := 'Group Manager'.
+	
 ]
 
 { #category : #initialization }
 ERGroupManagerRegistrationView >> initializeTabForms [
 	self
-		addTab: ((ERBasicInformationForm on: self controller attendee) nextTabFrom: 'affiliationInfoForm' ).
-	self
-		addTab: ((ERAffiliationInformationForm on: self controller attendee)nextTabFrom: 'doneInfoForm'; previousTabFrom: 'basicInfoForm').
+		addTab:
+			((ERBasicInformationForm on: self controller attendee)
+				nextTabFrom: 'affiliationInfoForm').
 	self
 		addTab:
-			((ERDoneForm
-				on: self controller attendee
-				callback: [ self registerAsGroupManager ])previousTabFrom: 'affiliationInfoForm').
+			((ERAffiliationInformationForm on: self controller attendee)
+				nextTabFrom: 'doneInfoForm';
+				previousTabFrom: 'basicInfoForm').
+	self
+		addTab:
+			((ERDoneForm on: self controller attendee callback: actionRegister)
+				previousTabFrom: 'affiliationInfoForm').
 	(self tabs at: 1) activate
 ]

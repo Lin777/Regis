@@ -8,6 +8,19 @@ Class {
 }
 
 { #category : #adding }
+ERGroupManagerViewController >> addAttendee: anAttendee [
+	| group anAttendeeSaved |
+	(ERUserAccount findUserByEmail: anAttendee email)
+		ifNil: [ |userSaved|
+			userSaved := anAttendee userAccount save.
+			anAttendeeSaved := (anAttendee userAccount: userSaved ) save.
+			group := self groupOfAttendee: attendee userAccount.
+			group listAttends add: anAttendeeSaved.
+			^ group save ].
+	^ nil
+]
+
+{ #category : #adding }
 ERGroupManagerViewController >> addAttendee: anAttendee to: aGroupManager [
 	| group anAttendeeSaved |
 	(ERUserAccount findUserByEmail: anAttendee email) ifNil: [ 
