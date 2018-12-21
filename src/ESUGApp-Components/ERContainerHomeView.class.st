@@ -6,10 +6,12 @@ Class {
 
 { #category : #rendering }
 ERContainerHomeView >> renderContentPage: html [
-	html
-		html:
-			'<h3>Welcome to the ESUG Registration System</h3>
-                <hr>
-                <h6><strong>Conference Home Page: </strong><a href="#"> http://exmple.exaomeosmdfsdkfm..xkmdkfm </a></h6>'.
 
+	html heading level3 with: 'Welcome to the ESUG Registration System'.
+	html horizontalRule.
+	html heading level6 with: [ 
+		html strong: 'Conference Home Page: '.
+		html anchor url: '#';
+		with: 'http://exmple.exaomeosmdfsdkfm..xkmdkfm'.
+	].
 ]

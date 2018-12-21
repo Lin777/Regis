@@ -43,7 +43,6 @@ ERTabsView >> renderTabs: html [
 			|activeClass |		
 			activeClass := ''.
 			tab isActive ifTrue: [ activeClass := ' is-active' ].
-			
 			html div
 				class: 'mdl-tabs__panel', activeClass ;
 				id: 'tab-',tab tabId;

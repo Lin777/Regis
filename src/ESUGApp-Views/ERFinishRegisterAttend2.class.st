@@ -27,6 +27,11 @@ ERFinishRegisterAttend2 class >> initialize [
         preferenceAt: #sessionClass put: ERSession
 ]
 
+{ #category : #'as yet unclassified' }
+ERFinishRegisterAttend2 >> colorIcon [
+	^ 'mdl-color--green'
+]
+
 { #category : #accessing }
 ERFinishRegisterAttend2 >> headers [
 	^ #('Bank Code' 'Counter Code' 'Account Number' 'RIB Key' 'Bank Address')

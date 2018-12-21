@@ -25,6 +25,11 @@ ERPageView >> classContainer: anObject [
 	classContainer := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERPageView >> colorIcon [
+	^ 'mdl-color--red' 
+]
+
 { #category : #accessing }
 ERPageView >> controller [
 	^ pageController
@@ -64,7 +69,8 @@ ERPageView >> renderContentOn: html [
 				title: title
 				icon: icon
 				content: [ self renderPageOn: html ]
-				id: id) classContainer: classContainer)
+				id: id
+				colorIcon: self colorIcon) classContainer: classContainer)
 	"html render: ERFooterView new"
 ]
 

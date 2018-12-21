@@ -11,7 +11,6 @@ ERConferenceOptionsForm >> initialize [
 
 { #category : #rendering }
 ERConferenceOptionsForm >> renderFormOn: html [
-	
 	html render: (ERConferenceOptions on: attendee)
 ]
 

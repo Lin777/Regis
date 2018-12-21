@@ -50,17 +50,17 @@ ERDoneForm >> registerAttendee [
 
 { #category : #rendering }
 ERDoneForm >> renderFormOn: html [
-	html
-		html:
-			' <h2>Complete</h2><br>
-                   <p>You have successfully completed all steps.</p><br>'.
+	html heading level2 with: 'Complete'.
+	html break.
+	html paragraph: 'You have successfully completed all steps.'.
+	html break.
 	html
 		render:
 			(self
 				createButtonField: 'Save Information'
 				with: self callback
 				id: 'registerButton').
-	html html: '<br><br><br><br><br><br><br><br><br>'.
+	1 to: 9 do: [:i | html break ].
 	self renderPreviousTabFromOn: html
 ]
 
