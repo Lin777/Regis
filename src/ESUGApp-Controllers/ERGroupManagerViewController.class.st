@@ -66,3 +66,7 @@ ERGroupManagerViewController >> groupOfAttendee: aGroupManager [
 			group := group save ].
 	^ group 
 ]
+
+{ #category : #adding }
+ERGroupManagerViewController >> modifyAffiliation: anAttendee [
+]

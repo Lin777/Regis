@@ -29,7 +29,11 @@ ERTab >> attendee: anObject [
 
 { #category : #building }
 ERTab >> createButtonField: aName with: aBlock id: anId [
-	^  ERButtonLabel label: aName callback: aBlock id: anId type: 'submit'
+	^ ERButtonLabel
+		label: aName
+		callback: aBlock
+		id: anId
+		type: 'submit'
 ]
 
 { #category : #building }

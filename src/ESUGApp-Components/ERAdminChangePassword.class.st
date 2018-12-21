@@ -49,7 +49,7 @@ ERAdminChangePassword >> renderButtons: html [
 ERAdminChangePassword >> renderCancelButtonOn: html [
 	html mdlButton
 		colored;
-		id: 'cancel-change-password';
+		id: 'cancel-user';
 		callback: [ self cancel ];
 		with: 'Cancel'
 ]
