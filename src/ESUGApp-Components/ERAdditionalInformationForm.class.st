@@ -11,15 +11,8 @@ ERAdditionalInformationForm >> initialize [
 
 { #category : #rendering }
 ERAdditionalInformationForm >> renderFormOn: html [
-	html
-		render: (self createTextField: 'Keywords ' for: #keywords:).
-	html
-		render:
-			(self
-				createTextAreaField: 'Additional text'
-				for: #additionalText:).
-	self renderPreviousTabFromOn: html.
-	self renderNextTabFromOn: html
+	
+	html render: (ERAdditionalInformation on: attendee)
 ]
 
 { #category : #accessing }

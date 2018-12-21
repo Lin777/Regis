@@ -1,6 +1,9 @@
 Class {
 	#name : #ERGroupRegistrationSummary,
 	#superclass : #ERGroupRegistration,
+	#instVars : [
+		'formMofidyAffiliation'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -12,6 +15,7 @@ ERGroupRegistrationSummary class >> on: anAttendee withContent: aContent [
 	form content: aContent.
 	form initializeController.
 	form initializeFormRegister.
+	form initializeModifyAffiliationForm.
 	^ form
 ]
 
@@ -26,8 +30,16 @@ ERGroupRegistrationSummary >> initialize [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummary >> initializeModifyAffiliationForm [
+	formMofidyAffiliation := ERContainerModifyAffiliationView
+		attendee: attendee
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummary >> modifyAffiliation [
-	"content := self"
+	content
+		state:
+			formMofidyAffiliation
 ]
 
 { #category : #rendering }

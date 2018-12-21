@@ -24,16 +24,6 @@ ERGroupRegistration >> attenteeRegisterForm: anObject [
 	^ attenteeRegisterForm := anObject
 ]
 
-{ #category : #accessing }
-ERGroupRegistration >> formRegister [
-	^ formRegister
-]
-
-{ #category : #accessing }
-ERGroupRegistration >> formRegister: anObject [
-	formRegister := anObject
-]
-
 { #category : #initialization }
 ERGroupRegistration >> initializeController [
 	controller := ERGroupManagerViewController new attendee: attendee

@@ -8,14 +8,6 @@ Class {
 	#category : #'ESUGApp-Components'
 }
 
-{ #category : #scripting }
-ERAttendeeRegistrationForm class >> on: anAttendee [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	^ form
-]
-
 { #category : #building }
 ERAttendeeRegistrationForm >> createCheckboxField: aName [
 	^  ERCheckboxFieldLabel label: aName callback: [ :value |]

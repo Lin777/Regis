@@ -1,7 +1,7 @@
 Class {
 	#name : #ERLibrary,
 	#superclass : #WAFileLibrary,
-	#category : #'ESUGApp-Library-MDL'
+	#category : #'ESUGApp-Library-MDL-ESUGApp-Library-MDL'
 }
 
 { #category : #'as yet unclassified' }
@@ -119,7 +119,7 @@ html, body {
 ERLibrary >> loginCss [
 	^ '
 .body {
-	background-image: url(''/files/CssForLoginMDL/profile_city.jpg'');
+	background-image: url("../CssForLoginMDL/profile_city.jpg");
 	background-size: cover;
 	background-position: top center;
 	overflow-x: hidden;
@@ -184,7 +184,7 @@ ERLibrary >> loginCss [
 { #category : #updating }
 ERLibrary >> registerCss [
 	^ '.body-all {
-	background-image: url(''/files/CssForLoginMDL/profile_city.jpg'');
+	background-image: url("../CssForLoginMDL/profile_city.jpg");
 	background-size: cover;
 	background-position: center;
 }
