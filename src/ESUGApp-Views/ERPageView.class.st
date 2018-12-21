@@ -20,6 +20,11 @@ ERPageView class >> using: aPageController [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+ERPageView >> actionsBody: html [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 ERPageView >> classContainer: anObject [
 	classContainer := anObject
@@ -62,16 +67,26 @@ ERPageView >> pageController: anObject [
 ]
 
 { #category : #rendering }
+ERPageView >> renderBody: html with: aBlock [
+	self subclassResponsibility 
+]
+
+{ #category : #rendering }
 ERPageView >> renderContentOn: html [
-	html
+	| block |
+	block := [
+		html
 		render:
 			((ERCardView
 				title: title
 				icon: icon
 				content: [ self renderPageOn: html ]
 				id: id
-				colorIcon: self colorIcon) classContainer: classContainer)
+				colorIcon: self colorIcon
+				actions: (self actionsBody: html)) classContainer: classContainer)
 	"html render: ERFooterView new"
+	].
+	self renderBody: html with: block.
 ]
 
 { #category : #rendering }

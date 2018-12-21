@@ -22,6 +22,15 @@ ERRegister >> actionRegister: anObject [
 	actionRegister := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERRegister >> actionsBody: html [
+	^ [
+	html mdlCardActions border with: [	
+			self renderBackLoginButtonOn: html
+		]
+	]
+]
+
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
 	"self tabs ifNotEmpty: [ aAttendeeTabForm ]."
@@ -45,7 +54,7 @@ ERRegister >> initialize [
 	messageComponent := ERComponentAlert warningAlert
 		id: 'messageAlertLogin'.
 	pageController := ERRegistrationController new.
-	id := 'all body-all'.
+	id := 'login-conatiner'.
 	classContainer := 'mdl-card-register'.
 ]
 
@@ -70,7 +79,7 @@ ERRegister >> registerAsGroupManager [
 
 { #category : #rendering }
 ERRegister >> renderBackLoginButtonOn: html [
-	html mdlButton
+	html mdlAnchorButton 
 		colored;
 		rippleEffect;
 		id: 'backLogin';
@@ -79,20 +88,20 @@ ERRegister >> renderBackLoginButtonOn: html [
 ]
 
 { #category : #rendering }
-ERRegister >> renderPageOn: html [
-	html mdlTabs class: 'mdl-js-ripple-effect';
+ERRegister >> renderBody: html with: aBlock [
+	html div class: 'all body-all';
 	with: [ 
-		html mdlGrid noSpacing 
-		with: [ 
-			html form
-			method: 'post';
-			id: 'formRegister';
-			with: [ html render: messageComponent.
-				html render: (ERTabsView tabs: self tabs) ].
-			]
+		html break. html break. html break. 
+		aBlock value	
+	]
+]
+
+{ #category : #rendering }
+ERRegister >> renderPageOn: html [
+	html mdlTabs rippleEffect
+	with: [ 
+		html render: (ERTabsView tabs: self tabs) 
 	].
-	html
-		form: [ self renderBackLoginButtonOn: html ]
 ]
 
 { #category : #rendering }

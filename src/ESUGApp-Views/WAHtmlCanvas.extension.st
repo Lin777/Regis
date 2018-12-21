@@ -6,10 +6,3 @@ WAHtmlCanvas >> icon [
 
 	^ self tag: 'i'
 ]
-
-{ #category : #'*ESUGApp-Views' }
-WAHtmlCanvas >> main [
-	"Defines a section in a document."
-
-	^ self tag: 'main'
-]
