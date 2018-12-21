@@ -17,7 +17,7 @@ BaselineOfESUGApp >> baseline: spec [
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite') ];
 				package: 'ESUGApp-Form'
 					with: [ spec
-						requires: #('Seaside3' 'MaterialDesignLite' 'ESUG-Library-MDL') ];
+						requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library-MDL') ];
 				package: 'ESUGApp-Components'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite') ];
 				package: 'ESUGApp-Controllers'
