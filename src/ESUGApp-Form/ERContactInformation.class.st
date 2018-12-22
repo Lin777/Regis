@@ -27,6 +27,7 @@ ERContactInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Country'
 		for: #country:
+		with: #country
 		list: ERAttendee countries
 		percent: 49
 		on: html.
@@ -58,5 +59,5 @@ ERContactInformation >> renderContentOn: html [
 		createTextField: 'Home Page URL'
 		for: #homePage:
 		with: #homePage
-		on: html.
+		on: html
 ]

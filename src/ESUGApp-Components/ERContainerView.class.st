@@ -13,6 +13,11 @@ ERContainerView class >> attendee: anAttendee [
 ]
 
 { #category : #accessing }
+ERContainerView >> attendee [
+	^ attendee
+]
+
+{ #category : #accessing }
 ERContainerView >> attendee: anObject [
 	attendee := anObject
 ]

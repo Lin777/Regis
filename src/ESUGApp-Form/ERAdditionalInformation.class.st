@@ -27,7 +27,8 @@ ERAdditionalInformation class >> initialize [
 ERAdditionalInformation >> initialize [
 	super initialize.
 	"attendee := ERAttendee
-		find: [ :each | each email = 'jorge@gmail.com' ]"
+		find: [ :each | each email = 'cusi@gmail.com' ].
+	attendee := ERAttendee new"
 ]
 
 { #category : #rendering }

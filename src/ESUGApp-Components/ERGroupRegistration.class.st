@@ -31,7 +31,9 @@ ERGroupRegistration >> initializeController [
 
 { #category : #initialization }
 ERGroupRegistration >> initializeFormRegister [
-	formRegister := ERContainerTabsView new tabView: (ERTabsView tabs: self tabs)
+	formRegister := (ERContainerTabsView
+		content: content)
+		tabView: (ERTabsView tabs: self tabs)
 ]
 
 { #category : #rendering }
@@ -42,8 +44,11 @@ ERGroupRegistration >> registerAttendee [
 { #category : #rendering }
 ERGroupRegistration >> registerAttendeeToGroupManager [
 	| result |
-	result := controller addAttendee: attenteeRegisterForm controller attendee.
-	result ifNil: [ Transcript show: 'This email already registered' ]
+	result := controller
+		addAttendee: attenteeRegisterForm controller attendee.
+	result
+		ifNil: [ Transcript show: 'This email already registered' ]
+		ifNotNil: [ content state: content lastState ]
 ]
 
 { #category : #accessing }

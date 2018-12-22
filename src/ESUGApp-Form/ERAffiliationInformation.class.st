@@ -32,6 +32,7 @@ ERAffiliationInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Country'
 		for: #orgCountry:
+		with: #orgCountry
 		list: ERAttendee countries
 		percent: 49
 		on: html.
@@ -50,6 +51,7 @@ ERAffiliationInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Membership Type'
 		for: #membershipType:
+		with: #membershipType
 		list: ERAttendee membershipTypes
-		on: html.
+		on: html
 ]

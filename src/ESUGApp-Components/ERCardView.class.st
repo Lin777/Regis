@@ -93,23 +93,18 @@ ERCardView >> initialize [
 
 { #category : #rendering }
 ERCardView >> renderContentOn: html [
-	html div class: self id;
-	with: [ 
-		html mdlLayout with: [ 
-			html mdlCard 
-			class: classContainer, ' mdl-shadow--16dp';
-			id: 'login-conatiner';
-			with: [ 
-				html mdlCardTextContainer 
-				with: [ 
-					self renderIconCard: html.
-					html div id: 'card-heading';
-					with: self title.
-					self content value.
-				]
-			]
-		]
-	].
+	html div
+		class: self id;
+		with: [ html mdlLayout
+				with: [ html mdlCard
+						class: classContainer , ' mdl-shadow--16dp';
+						id: 'login-conatiner';
+						with: [ html mdlCardTextContainer
+								with: [ self renderIconCard: html.
+									html div
+										id: 'card-heading';
+										with: self title.
+									self content value ] ] ] ]
 ]
 
 { #category : #rendering }

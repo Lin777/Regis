@@ -1,42 +1,17 @@
 Class {
 	#name : #ERContainerModifyAffiliationView,
-	#superclass : #ERContainerView,
-	#instVars : [
-		'attendeModified',
-		'form'
-	],
+	#superclass : #ERGeneralContainerView,
 	#category : #'ESUGApp-Components'
 }
 
-{ #category : #'as yet unclassified' }
-ERContainerModifyAffiliationView class >> on: anAttendee withContent: aContent [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form attendeModified: anAttendee copy.
-	form initializeForm.
-	^ form
+{ #category : #rendering }
+ERContainerModifyAffiliationView >> cancel [
+	content state: content lastState
 ]
 
 { #category : #accessing }
-ERContainerModifyAffiliationView >> attendeModified: anObject [
-	attendeModified := anObject
-]
-
-{ #category : #rendering }
-ERContainerModifyAffiliationView >> cancel [
-	
-]
-
-{ #category : #initialization }
-ERContainerModifyAffiliationView >> initializeForm [
-	form := ERAffiliationInformationForm on: attendeModified
-]
-
-{ #category : #'as yet unclassified' }
-ERContainerModifyAffiliationView >> intitialize [
-	super initialize.
+ERContainerModifyAffiliationView >> content: anObject [
+	content := anObject
 ]
 
 { #category : #rendering }
@@ -49,6 +24,12 @@ ERContainerModifyAffiliationView >> renderAcceptButtonOn: html [
 ]
 
 { #category : #rendering }
+ERContainerModifyAffiliationView >> renderButtons: html [
+	self renderAcceptButtonOn: html.
+			self renderCancelButtonOn: html 
+]
+
+{ #category : #rendering }
 ERContainerModifyAffiliationView >> renderCancelButtonOn: html [
 	html mdlButton
 		colored;
@@ -58,21 +39,26 @@ ERContainerModifyAffiliationView >> renderCancelButtonOn: html [
 ]
 
 { #category : #rendering }
-ERContainerModifyAffiliationView >> renderContentPage: html [
-	html heading
-		level3;
-		with: 'Affiliation Information'.
-	html horizontalRule.
-	self renderFormOn: html.
-	self renderAcceptButtonOn: html.
-	self renderCancelButtonOn: html.
-]
-
-{ #category : #rendering }
 ERContainerModifyAffiliationView >> renderFormOn: html [
 	html render: (ERAffiliationInformation on: attendee)
 ]
 
 { #category : #rendering }
+ERContainerModifyAffiliationView >> renderPageOn: html [
+	html form
+		method: 'post';
+		id: 'formModifyAffiliation';
+		with: [ self renderFormOn: html.
+			self renderButtons: html ]
+]
+
+{ #category : #rendering }
+ERContainerModifyAffiliationView >> title [
+	^ 'Affiliation Information'
+]
+
+{ #category : #rendering }
 ERContainerModifyAffiliationView >> updateAffiliationInformation [
+	attendee save.
+	self cancel
 ]

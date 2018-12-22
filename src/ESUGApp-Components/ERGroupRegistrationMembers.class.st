@@ -1,6 +1,9 @@
 Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
+	#instVars : [
+		'mofidyUserForm'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -18,6 +21,17 @@ ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> headers [
 	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
+]
+
+{ #category : #initialization }
+ERGroupRegistrationMembers >> initializeModifyUserForm [
+	mofidyUserForm := ERContainerModifyUserView
+		on: attendee
+		withContent: content
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
 ]
 
 { #category : #accessing }
@@ -40,8 +54,7 @@ ERGroupRegistrationMembers >> renderBody: html [
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
-	html mdlButton colored with: 'Register Attendee'.
-   html mdlButton colored with: 'Register Myself as Attendee'.
+	html mdlButton colored with: 'Register Myself as Attendee'
 ]
 
 { #category : #accessing }
@@ -50,7 +63,7 @@ ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
 		render:
 			(self
 				createButtonField: 'Modify'
-				with: [  ]
+				with: [ self modifyUserFormGroup: anAttendee ]
 				id: anAttendee id , '-modify') forTableButton.
 	html
 		render:

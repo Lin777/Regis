@@ -60,8 +60,7 @@ ERDoneForm >> renderFormOn: html [
 				createButtonField: 'Save Information'
 				with: self callback
 				id: 'registerButton').
-	1 to: 9 do: [:i | html break ].
-	self renderPreviousTabFromOn: html
+	1 to: 9 do: [ :i | html break ].
 ]
 
 { #category : #accessing }

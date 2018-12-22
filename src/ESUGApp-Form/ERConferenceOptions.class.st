@@ -31,16 +31,19 @@ ERConferenceOptions >> renderContentOn: html [
 	self
 		createSelectField: 'Gender:'
 		for: #gender:
+		with: #gender
 		list: ERAttendee genders
 		on: html.
 	self
 		createSelectField: 'Tshirt Size'
 		for: #tshirtSize:
+		with: #tshirtSize
 		list: ERAttendee tShirtSizes
 		on: html.
 	self
 		createSelectField: 'Food:'
 		for: #foodPreference:
+		with: #foodPreference
 		list: ERAttendee foodPreferences
 		on: html.
 	self
@@ -50,5 +53,5 @@ ERConferenceOptions >> renderContentOn: html [
 	self
 		createCheckboxField: 'Check if you want to be added to the Mailling List'
 		for: #addedToMainList:
-		on: html.
+		on: html
 ]

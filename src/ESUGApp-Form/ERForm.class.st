@@ -57,21 +57,22 @@ ERForm >> createPasswordField: aName for: aSymbol on: html [
 				id: (self idFromSymbol: aSymbol);
 				type: 'password';
 				callback: [ :value | 
-			attendee
-				perform: aSymbol
-				with: (ERUserAccount hashPassword: value asString) ] ]
+					attendee
+						perform: aSymbol
+						with: (ERUserAccount hashPassword: value asString) ] ]
 ]
 
 { #category : #'as yet unclassified' }
 ERForm >> createSelectField: aName for: aSymbol list: aList on: html [
-html mdlTextFieldContainer
+	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel with: aName.
 			html select
 				class: 'mdl-textfield__input';
 				id: (self idFromSymbol: aSymbol);
 				list: aList;
-				callback: [ :value | attendee perform: aSymbol with: value asString ] ].
+				callback: [ :value | 
+					attendee perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -85,6 +86,34 @@ ERForm >> createSelectField: aName for: aSymbol list: aList percent: aNumber on:
 				id: (self idFromSymbol: aSymbol);
 				list: aList;
 				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERForm >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				class: 'mdl-textfield__input';
+				id: (self idFromSymbol: aSymbol);
+				list: aList;
+				selected: (attendee perform: anotherSymbol);
+				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERForm >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList percent: aNumber on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width:' , aNumber asString , '%';
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				class: 'mdl-textfield__input';
+				id: (self idFromSymbol: aSymbol);
+				list: aList;
+				selected: (attendee perform: anotherSymbol);
+				callback: [ :value | 
+					attendee perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -124,7 +153,8 @@ ERForm >> createTextField: aName for: aSymbol with: anotherSymbol on: html [
 			html mdlTextFieldInput
 				id: (self idFromSymbol: aSymbol);
 				value: (attendee perform: anotherSymbol);
-				callback: [ :value | attendee perform: aSymbol with: value asString ] ].
+				callback: [ :value | 
+					attendee perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #'as yet unclassified' }
