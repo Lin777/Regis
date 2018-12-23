@@ -1,6 +1,9 @@
 Class {
 	#name : #ERMyRegistrationSummary,
 	#superclass : #ERTabContainerPage,
+	#instVars : [
+		'formWithoutBasicInfo'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -10,13 +13,34 @@ ERMyRegistrationSummary >> getInvoice [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> modifyRegistration [
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: attendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> pay [
 ]
 
 { #category : #rendering }
 ERMyRegistrationSummary >> renderButtons: html [
-	html render: (self createButtonField: 'Modify Registration Information' with: [ self modifyRegistration ] id: 'modifyRegistration' ) forContentButton.
-	html render: (self createButtonField: 'Pay' with: [ self pay ] id: 'pay' ) forContentButton.
-	html render: (self createButtonField: 'Get my invoice' with: [ self getInvoice ] id: 'invoice' ) forContentButtonColored 
+	self
+		createRaisedRippleEffectAnchorButton: 'Modify Registration Information'
+		with: [ self modifyRegistration ]
+		id: 'modifyRegistration'
+		on: html.
+	self
+		createRaisedRippleEffectAnchorButton: 'Pay'
+		with: [ self pay ]
+		id: 'pay'
+		on: html.
+	self
+		createRaisedColoredRippleEffectAnchorButton: 'Get my invoice'
+		with: [ self getInvoice ]
+		id: 'invoice'
+		on: html
 ]
 
 { #category : #rendering }

@@ -2,7 +2,8 @@ Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
 	#instVars : [
-		'mofidyUserForm'
+		'mofidyUserForm',
+		'formWithoutBasicInfo'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -18,6 +19,22 @@ ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
 	controller deleteAttendeeFromGroup: anAttendee 
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroupRegistrationMembers >> formWithoutBasicInformationFor: anAttendee [
+	^ OrderedCollection new
+		add:
+			(ERTabForAForm form: (ERContactInformation on: anAttendee))
+				activate;
+		add: (ERTabForAForm form: (ERConferenceOptions on: anAttendee));
+		add:
+			(ERTabForAForm form: (ERAffiliationInformation on: anAttendee));
+		add:
+			(ERTabForAForm form: (ERAdditionalInformation on: anAttendee));
+		add: (ERTabForAForm form: (ERPaymentInformation on: anAttendee));
+		add: (ERDoneForm on: anAttendee callback: [ nil ]);
+			yourself
+]
+
 { #category : #accessing }
 ERGroupRegistrationMembers >> headers [
 	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
@@ -27,11 +44,36 @@ ERGroupRegistrationMembers >> headers [
 ERGroupRegistrationMembers >> initializeModifyUserForm [
 	mofidyUserForm := ERContainerModifyUserView
 		on: attendee
-		withContent: content
+		withContent: content.
+	
+	content state: mofidyUserForm
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> modifyRegistrationInformation: anAttendee [
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	
+	content state: formWithoutBasicInfo
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
+	mofidyUserForm := ERContainerModifyUserView
+		on: anAttendee
+		withContent: content.
+	content state: mofidyUserForm
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> registerMyselfAsAttendee [
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: attendee)).
+	content state: formWithoutBasicInfo
 ]
 
 { #category : #accessing }
@@ -54,7 +96,8 @@ ERGroupRegistrationMembers >> renderBody: html [
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
-	html mdlButton colored with: 'Register Myself as Attendee'
+	self renderRegisterMyselfAsAttendee: html.
+	"html mdlButton colored with: 'Register Myself as Attendee'"
 ]
 
 { #category : #accessing }
@@ -63,7 +106,7 @@ ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
 		render:
 			(self
 				createButtonField: 'Modify'
-				with: [ self modifyUserFormGroup: anAttendee ]
+				with: [ self modifyRegistrationInformation: anAttendee ]
 				id: anAttendee id , '-modify') forTableButton.
 	html
 		render:
@@ -75,7 +118,7 @@ ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
 		render:
 			(self
 				createButtonField: 'Modify User'
-				with: [  ]
+				with: [ self modifyUserFormGroup: anAttendee ]
 				id: anAttendee id , '-modifyUser') forTableButton.
 	html
 		render:
@@ -123,6 +166,16 @@ ERGroupRegistrationMembers >> renderRegisterAttendee: html [
 				createButtonField: 'Register Attendee'
 				with: [ self registerAttendee ]
 				id: 'registerAttendee') forTableButton.
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> renderRegisterMyselfAsAttendee: html [
+	html
+		render:
+			(self
+				createButtonField: 'Register Myself as Attendee'
+				with: [ self registerMyselfAsAttendee ]
+				id: 'registerMyselfAsAttendee') forTableButton
 ]
 
 { #category : #accessing }

@@ -24,7 +24,6 @@ ERRegister >> actionRegister: anObject [
 
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
-	"self tabs ifNotEmpty: [ aAttendeeTabForm ]."
 	self tabs add: aAttendeeTabForm
 ]
 

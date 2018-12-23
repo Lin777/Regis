@@ -1,6 +1,6 @@
 Class {
 	#name : #ERForm,
-	#superclass : #ERFactoryComponent,
+	#superclass : #ERComponentFactory,
 	#category : #'ESUGApp-Form'
 }
 

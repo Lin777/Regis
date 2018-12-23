@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTab,
-	#superclass : #ERFactoryComponent,
+	#superclass : #ERComponentFactory,
 	#instVars : [
 		'active',
 		'id'

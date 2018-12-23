@@ -16,11 +16,12 @@ ERContainerModifyAffiliationView >> content: anObject [
 
 { #category : #rendering }
 ERContainerModifyAffiliationView >> renderAcceptButtonOn: html [
-	html mdlButton
-		colored;
-		id: 'accept-change-affiliation';
-		callback: [ self updateAffiliationInformation ];
-		with: 'Accept'
+	self
+		createColoredButton: 'Accept'
+		with: [ self updateAffiliationInformation ]
+		id: 'accept-change-affiliation'
+		on: html
+	
 ]
 
 { #category : #rendering }
@@ -31,11 +32,12 @@ ERContainerModifyAffiliationView >> renderButtons: html [
 
 { #category : #rendering }
 ERContainerModifyAffiliationView >> renderCancelButtonOn: html [
-	html mdlButton
-		colored;
-		id: 'cancel-change-affiliation';
-		callback: [ self cancel ];
-		with: 'Cancel'
+	self
+		createColoredButton: 'Cancel'
+		with: [ self cancel ]
+		id: 'cancel-change-affiliation'
+		on: html
+	
 ]
 
 { #category : #rendering }

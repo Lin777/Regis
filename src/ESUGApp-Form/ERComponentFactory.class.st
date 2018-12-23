@@ -1,5 +1,5 @@
 Class {
-	#name : #ERFactoryComponent,
+	#name : #ERComponentFactory,
 	#superclass : #WAComponent,
 	#instVars : [
 		'attendee'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ERFactoryComponent class >> on: anAttendee [
+ERComponentFactory class >> on: anAttendee [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
@@ -16,17 +16,17 @@ ERFactoryComponent class >> on: anAttendee [
 ]
 
 { #category : #accessing }
-ERFactoryComponent >> attendee [
+ERComponentFactory >> attendee [
 	^ attendee
 ]
 
 { #category : #accessing }
-ERFactoryComponent >> attendee: anObject [
+ERComponentFactory >> attendee: anObject [
 	attendee := anObject
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createButtonField: aName with: aBlock id: anId on: html [
+ERComponentFactory >> createButtonField: aName with: aBlock id: anId on: html [
 	html mdlButton
 		beSubmit;
 		id: anId;
@@ -36,7 +36,7 @@ ERFactoryComponent >> createButtonField: aName with: aBlock id: anId on: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createCheckboxField: aName for: aSymbol on: html [
+ERComponentFactory >> createCheckboxField: aName for: aSymbol on: html [
     html mdlCheckboxContainer
 		rippleEffect;
 		for: (self idFromSymbol: aSymbol);
@@ -46,8 +46,17 @@ ERFactoryComponent >> createCheckboxField: aName for: aSymbol on: html [
 			html mdlCheckboxLabel: aName ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html [
+	html mdlButton
+		colored;
+		id: anId ;
+		callback: aBlock;
+		with: aName
+]
+
 { #category : #building }
-ERFactoryComponent >> createPasswordField: aName for: aSymbol on: html [
+ERComponentFactory >> createPasswordField: aName for: aSymbol on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -63,7 +72,7 @@ ERFactoryComponent >> createPasswordField: aName for: aSymbol on: html [
 ]
 
 { #category : #building }
-ERFactoryComponent >> createPasswordField: aName id: anId callback: aBlock on: html [
+ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -76,7 +85,7 @@ ERFactoryComponent >> createPasswordField: aName id: anId callback: aBlock on: h
 ]
 
 { #category : #building }
-ERFactoryComponent >> createPasswordField: aName withCallback: aBlock on: html [
+ERComponentFactory >> createPasswordField: aName withCallback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -87,7 +96,38 @@ ERFactoryComponent >> createPasswordField: aName withCallback: aBlock on: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createSelectField: aName for: aSymbol list: aList on: html [
+ERComponentFactory >> createRaisedColoredRippleEffectAnchorButton: aName with: aBlock id: anId on: html [
+	html mdlAnchorButton
+		raised;
+		colored;
+		rippleEffect;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRaisedRippleEffectAnchorButton: aName with: aBlock id: anId on: html [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRaisedRippleEffectButton: aName with: aBlock id: anId on: html [
+	html mdlButton
+		raised;
+		rippleEffect;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName for: aSymbol list: aList on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel with: aName.
@@ -100,7 +140,7 @@ ERFactoryComponent >> createSelectField: aName for: aSymbol list: aList on: html
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createSelectField: aName for: aSymbol list: aList percent: aNumber on: html [
+ERComponentFactory >> createSelectField: aName for: aSymbol list: aList percent: aNumber on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		style: 'width:' , aNumber asString , '%';
@@ -113,7 +153,7 @@ ERFactoryComponent >> createSelectField: aName for: aSymbol list: aList percent:
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList on: html [
+ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel with: aName.
@@ -126,7 +166,7 @@ ERFactoryComponent >> createSelectField: aName for: aSymbol with: anotherSymbol 
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList percent: aNumber on: html [
+ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList percent: aNumber on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		style: 'width:' , aNumber asString , '%';
@@ -141,7 +181,7 @@ ERFactoryComponent >> createSelectField: aName for: aSymbol with: anotherSymbol 
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createTextAreaField: aName for: aSymbol on: html [
+ERComponentFactory >> createTextAreaField: aName for: aSymbol on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -154,7 +194,7 @@ ERFactoryComponent >> createTextAreaField: aName for: aSymbol on: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createTextAreaField: aName for: aSymbol with: anotherSymbol on: html [
+ERComponentFactory >> createTextAreaField: aName for: aSymbol with: anotherSymbol on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -168,7 +208,7 @@ ERFactoryComponent >> createTextAreaField: aName for: aSymbol with: anotherSymbo
 ]
 
 { #category : #building }
-ERFactoryComponent >> createTextField: aName for: aSymbol with: anotherSymbol on: html [
+ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -182,7 +222,7 @@ ERFactoryComponent >> createTextField: aName for: aSymbol with: anotherSymbol on
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createTextField: aName for: aSymbol with: anotherSymbol percent: aNumber on: html [
+ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol percent: aNumber on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		style: 'width:' , aNumber asString , '%';
@@ -196,7 +236,7 @@ ERFactoryComponent >> createTextField: aName for: aSymbol with: anotherSymbol pe
 ]
 
 { #category : #building }
-ERFactoryComponent >> createTextField: aName id: anId callback: aBlock on: html [
+ERComponentFactory >> createTextField: aName id: anId callback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -208,7 +248,7 @@ ERFactoryComponent >> createTextField: aName id: anId callback: aBlock on: html 
 ]
 
 { #category : #building }
-ERFactoryComponent >> createTextField: aName withCallback: aBlock on: html [
+ERComponentFactory >> createTextField: aName withCallback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -218,20 +258,20 @@ ERFactoryComponent >> createTextField: aName withCallback: aBlock on: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createTextStrong: aString with: aSymbol on: html [
+ERComponentFactory >> createTextStrong: aString with: aSymbol on: html [
 	html
 		paragraph: [ html strong: aString.
 			html text: (attendee perform: aSymbol) ]
 ]
 
 { #category : #'as yet unclassified' }
-ERFactoryComponent >> createTextStrong: aString withText: aText on: html [
+ERComponentFactory >> createTextStrong: aString withText: aText on: html [
 	html
 		paragraph: [ html strong: aString.
 			html text: aText ]
 ]
 
 { #category : #building }
-ERFactoryComponent >> idFromSymbol: aSymbol [
+ERComponentFactory >> idFromSymbol: aSymbol [
 	^ (aSymbol substrings: ':') first
 ]
