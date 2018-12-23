@@ -93,7 +93,7 @@ ERGroupRegistrationSummary >> renderModifyAffiliationButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderOrganizationName: html [
-	html render: (self createTextStrong: 'Organization Name: ' text: attendee orgName)
+	self createTextStrong: 'Organization Name: ' with: #orgName on: html
 ]
 
 { #category : #rendering }
@@ -107,7 +107,7 @@ ERGroupRegistrationSummary >> renderPayButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderPaymentStatus: html [
-	html render: (self createTextStrong: 'Payment Status: ' text: 'No status avaliable. The group has no mmebers ').
+	self createTextStrong: 'Payment Status: ' withText: 'No status avaliable. The group has no mmebers ' on: html 
 ]
 
 { #category : #rendering }

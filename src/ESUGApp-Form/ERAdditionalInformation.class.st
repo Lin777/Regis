@@ -23,6 +23,16 @@ ERAdditionalInformation class >> initialize [
 		preferenceAt: #sessionClass put: ERSession
 ]
 
+{ #category : #'as yet unclassified' }
+ERAdditionalInformation >> formId [
+	^ 'additionalInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERAdditionalInformation >> formName [
+	^ 'Additional'
+]
+
 { #category : #initialization }
 ERAdditionalInformation >> initialize [
 	super initialize.

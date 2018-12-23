@@ -19,11 +19,6 @@ ERContainerModifyUserView >> content: anObject [
 ]
 
 { #category : #actions }
-ERContainerModifyUserView >> initializeForm [
-	form := ERAffiliationInformationForm on: attendee
-]
-
-{ #category : #actions }
 ERContainerModifyUserView >> renderAcceptButtonOn: html [
 	html mdlButton
 		colored;

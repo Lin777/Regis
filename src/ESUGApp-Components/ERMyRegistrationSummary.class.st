@@ -28,9 +28,8 @@ ERMyRegistrationSummary >> renderContainer: html [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> renderLabelsSummary: html [
-	html render: (self createTextStrong: 'Attendace Date(s): ' text: 'Monday 10, Tuesday 11, Wednesday 12, Thursday 13 and Friday 14').
-	html render: (self createTextStrong: 'Payment Status: ' text: 'Payment no registered yet. Amount due: 660.00 Euros (NOTE: you could have paid but we could have not registered it yet)').
-	
+	self createTextStrong: 'Attendace Date(s): ' withText: 'Monday 10, Tuesday 11, Wednesday 12, Thursday 13 and Friday 14' on: html.
+	self createTextStrong: 'Payment Status: ' withText: 'Payment no registered yet. Amount due: 660.00 Euros (NOTE: you could have paid but we could have not registered it yet)' on: html
 ]
 
 { #category : #accessing }

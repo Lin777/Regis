@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> formId [
+	^ 'paymentInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> formName [
+	^ 'Payment'
+]
+
 { #category : #rendering }
 ERPaymentInformation >> renderContentOn: html [
 	html

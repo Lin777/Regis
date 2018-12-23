@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERConferenceOptions >> formId [
+	^ 'conferenceOptionsForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceOptions >> formName [
+	^ 'Conference'
+]
+
 { #category : #rendering }
 ERConferenceOptions >> renderContentOn: html [
 	html html: '<br> <label>Days:</label> <br>'.

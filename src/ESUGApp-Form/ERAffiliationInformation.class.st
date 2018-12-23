@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERAffiliationInformation >> formId [
+	^ 'affiliationInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERAffiliationInformation >> formName [
+	^ 'Affiliation'
+]
+
 { #category : #rendering }
 ERAffiliationInformation >> renderContentOn: html [
 	self

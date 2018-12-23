@@ -1,8 +1,7 @@
 Class {
 	#name : #ERTab,
-	#superclass : #WAComponent,
+	#superclass : #ERFactoryComponent,
 	#instVars : [
-		'attendee',
 		'active',
 		'id'
 	],
@@ -34,51 +33,6 @@ ERTab >> createButtonField: aName with: aBlock id: anId [
 		callback: aBlock
 		id: anId
 		type: 'submit'
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName [
-	
-	^ ERTextFieldLabel label: aName callback: [ :value |  ]
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName callback: aBlock [
-	^ ERTextFieldLabel label: aName callback: aBlock
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName for: aSymbol [
-	^  ERTextFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString . ] id: (self idFromSymbol: aSymbol )
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName for: aSymbol on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		style: 'width: 100%';
-		with: [ html mdlTextFieldLabel
-				for: (self idFromSymbol: aSymbol);
-				with: aName.
-			html mdlTextFieldInput
-				id: (self idFromSymbol: aSymbol);
-				type: 'text';
-				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName for: aSymbol percent: aNumber [
-	^  ERTextFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString .] id: (self idFromSymbol: aSymbol ) percent: aNumber 
-]
-
-{ #category : #building }
-ERTab >> createTextField: aName for: aSymbol withValue: aString [
-	^  ERTextFieldLabel label: aName callback: [ :value | attendee perform: aSymbol with: value asString . ] id: (self idFromSymbol: aSymbol ) value: aString 
-]
-
-{ #category : #building }
-ERTab >> createTextStrong: aString text: aText [
-	^  ERTextStrongByValue label: aString text: aText 
 ]
 
 { #category : #private }

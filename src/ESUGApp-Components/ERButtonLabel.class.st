@@ -1,7 +1,8 @@
 Class {
 	#name : #ERButtonLabel,
-	#superclass : #ERComponentLabel,
+	#superclass : #ERComponent,
 	#instVars : [
+		'label',
 		'callback',
 		'class',
 		'type',
@@ -96,6 +97,16 @@ ERButtonLabel >> initialize [
 	class := ''.
 	type := 'submit'.
 	style := [  ].
+]
+
+{ #category : #accessing }
+ERButtonLabel >> label [
+	^ label
+]
+
+{ #category : #accessing }
+ERButtonLabel >> label: anObject [
+	label := anObject
 ]
 
 { #category : #rendering }

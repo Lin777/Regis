@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERContactInformation >> formId [
+	^ 'contactInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERContactInformation >> formName [
+	^ 'Contact'
+]
+
 { #category : #rendering }
 ERContactInformation >> renderContentOn: html [
 	self
