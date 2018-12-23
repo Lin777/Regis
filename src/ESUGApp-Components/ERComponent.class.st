@@ -2,8 +2,7 @@ Class {
 	#name : #ERComponent,
 	#superclass : #WAComponent,
 	#instVars : [
-		'id',
-		'percent'
+		'id'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -21,15 +20,4 @@ ERComponent >> id: anObject [
 { #category : #initialization }
 ERComponent >> initialize [
 	super initialize.
-	self percent: 100
-]
-
-{ #category : #accessing }
-ERComponent >> percent [
-	^ percent
-]
-
-{ #category : #accessing }
-ERComponent >> percent: anObject [
-	percent := ('width:',anObject asString ,'%')
 ]

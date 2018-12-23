@@ -47,6 +47,15 @@ ERComponentFactory >> createCheckboxField: aName for: aSymbol on: html [
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredAnchorButton: aName with: aBlock id: anId on: html [
+	html mdlAnchorButton
+		colored;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html [
 	html mdlButton
 		colored;
@@ -120,6 +129,28 @@ ERComponentFactory >> createRaisedRippleEffectAnchorButton: aName with: aBlock i
 ERComponentFactory >> createRaisedRippleEffectButton: aName with: aBlock id: anId on: html [
 	html mdlButton
 		raised;
+		rippleEffect;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRaisedRippleEffectPrimaryAnchorButton: aName with: aBlock id: anId on: html [
+	html mdlAnchorButton
+		raised;
+		primaryColor;
+		rippleEffect;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRaisedRippleEffectPrimaryButton: aName with: aBlock id: anId on: html [
+	html mdlButton
+		raised;
+		primaryColor;
 		rippleEffect;
 		id: anId;
 		callback: aBlock;

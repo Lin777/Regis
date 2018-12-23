@@ -65,30 +65,25 @@ ERGroupRegistrationSummary >> renderContainer: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderFormButtons: html [
-html form
-		method: 'post';
-		id: 'groupManagerFunctions';
-		with: [ self renderButtons: html]
+	self renderButtons: html
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderGenerateInvoiceButtonOn: html [
-		html
-		render:
-			(self
-				createButtonField: 'GENERATE INVOICE'
-				with: [ self generateInvoice ]
-				id: 'generateInvoice') forContentButtonColored
+	self
+		createRaisedColoredRippleEffectAnchorButton: 'GENERATE INVOICE'
+		with: [ self generateInvoice ]
+		id: 'generateInvoice'
+		on: html
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderModifyAffiliationButtonOn: html [
-	html
-		render:
-			(self
-				createButtonField: 'Modify Affiliation'
-				with: [ self modifyAffiliation ]
-				id: 'modifyAffiliation') forContentButton.
+	self
+		createRaisedRippleEffectAnchorButton: 'Modify Affiliation'
+		with: [ self modifyAffiliation ]
+		id: 'modifyAffiliation'
+		on: html
 ]
 
 { #category : #rendering }
@@ -98,11 +93,11 @@ ERGroupRegistrationSummary >> renderOrganizationName: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderPayButtonOn: html [
-	html
-		render:
-			(self createButtonField: 'Pay' with: [ self pay ] id: 'pay')
-				forContentButton.
-
+	self
+		createRaisedRippleEffectAnchorButton: 'Pay'
+		with: [ self pay ]
+		id: 'pay'
+		on: html
 ]
 
 { #category : #rendering }
@@ -111,14 +106,12 @@ ERGroupRegistrationSummary >> renderPaymentStatus: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummary >> renderRegisterAttendeeButtonOn: html. [
-	html
-		render:
-			(self
-				createButtonField: 'Register Attendee'
-				with: [ self registerAttendee ]
-				id: 'registerAttendee') forContentButton.
-
+ERGroupRegistrationSummary >> renderRegisterAttendeeButtonOn: html [
+	self
+		createRaisedRippleEffectAnchorButton: 'Register Attendee'
+		with: [ self registerAttendee ]
+		id: 'registerAttendee'
+		on: html
 ]
 
 { #category : #accessing }

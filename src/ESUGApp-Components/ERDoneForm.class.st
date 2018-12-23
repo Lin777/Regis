@@ -54,12 +54,7 @@ ERDoneForm >> renderFormOn: html [
 	html break.
 	html paragraph: 'You have successfully completed all steps.'.
 	html break.
-	html
-		render:
-			(self
-				createButtonField: 'Save Information'
-				with: self callback
-				id: 'registerButton').
+	self createRaisedRippleEffectPrimaryButton: 'Save Information' with: self callback id: 'registerButton' on: html.
 	1 to: 9 do: [ :i | html break ].
 ]
 

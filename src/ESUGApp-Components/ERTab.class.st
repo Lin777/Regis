@@ -26,15 +26,6 @@ ERTab >> attendee: anObject [
 	attendee := anObject
 ]
 
-{ #category : #building }
-ERTab >> createButtonField: aName with: aBlock id: anId [
-	^ ERButtonLabel
-		label: aName
-		callback: aBlock
-		id: anId
-		type: 'submit'
-]
-
 { #category : #private }
 ERTab >> deactivate [
 	active := false.
