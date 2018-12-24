@@ -6,6 +6,7 @@ Class {
 
 { #category : #rendering }
 ERContainerModifyAffiliationView >> cancel [
+	attendee abortChanges.
 	content state: content lastState
 ]
 

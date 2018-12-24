@@ -32,7 +32,7 @@ ERGroupRegistrationSummary >> initialize [
 { #category : #rendering }
 ERGroupRegistrationSummary >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := ERContainerModifyAffiliationView
-		on: attendee deepCopy 
+		on: attendee 
 		withContent: content
 ]
 

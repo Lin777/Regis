@@ -10,6 +10,7 @@ Class {
 
 { #category : #actions }
 ERContainerModifyUserView >> cancel [
+	attendee abortChanges.
 	content state: content lastState
 ]
 
@@ -22,7 +23,7 @@ ERContainerModifyUserView >> content: anObject [
 ERContainerModifyUserView >> renderAcceptButtonOn: html [
 	self
 		createColoredButton: 'Accept'
-		with: [ self updateAffiliationInformation ]
+		with: [ self updateUserInformation ]
 		id: 'accept-change-affiliation'
 		on: html
 ]
@@ -59,4 +60,10 @@ ERContainerModifyUserView >> renderPageOn: html [
 { #category : #rendering }
 ERContainerModifyUserView >> title [
 	^ 'User'.
+]
+
+{ #category : #rendering }
+ERContainerModifyUserView >> updateUserInformation [
+	attendee save.
+	self cancel
 ]

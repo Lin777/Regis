@@ -21,6 +21,6 @@ ERAdmin >> initialize [
 
 { #category : #initialization }
 ERAdmin >> initializeController [
-	controller := ERLoggedAdminContainerController
+	controller := ERAdminViewController
 		attendee: attendee
 ]

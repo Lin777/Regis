@@ -13,6 +13,7 @@ ERMyRegistrationSummary >> getInvoice [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> modifyRegistration [
+	callback := [self updateMyRegistration].
 	formWithoutBasicInfo := (ERContainerTabsView content: content)
 		tabView:
 			(ERTabsView
@@ -69,4 +70,11 @@ ERMyRegistrationSummary >> tabName [
 { #category : #accessing }
 ERMyRegistrationSummary >> title [
 	^ 'Registration Summary'
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> updateMyRegistration [
+	attendee save.
+	
+	content state: content lastState
 ]

@@ -16,8 +16,3 @@ ERComponent >> id [
 ERComponent >> id: anObject [
 	id := anObject
 ]
-
-{ #category : #initialization }
-ERComponent >> initialize [
-	super initialize.
-]

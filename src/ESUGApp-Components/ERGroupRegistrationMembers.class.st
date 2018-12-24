@@ -19,25 +19,15 @@ ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
 	controller deleteAttendeeFromGroup: anAttendee 
 ]
 
-{ #category : #'as yet unclassified' }
-ERGroupRegistrationMembers >> formWithoutBasicInformationFor: anAttendee [
-	^ OrderedCollection new
-		add:
-			(ERTabForAForm form: (ERContactInformation on: anAttendee))
-				activate;
-		add: (ERTabForAForm form: (ERConferenceOptions on: anAttendee));
-		add:
-			(ERTabForAForm form: (ERAffiliationInformation on: anAttendee));
-		add:
-			(ERTabForAForm form: (ERAdditionalInformation on: anAttendee));
-		add: (ERTabForAForm form: (ERPaymentInformation on: anAttendee));
-		add: (ERDoneForm on: anAttendee callback: [ nil ]);
-			yourself
-]
-
 { #category : #accessing }
 ERGroupRegistrationMembers >> headers [
 	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> initialize [
+	super initialize .
+	callback := nil
 ]
 
 { #category : #initialization }
@@ -51,11 +41,11 @@ ERGroupRegistrationMembers >> initializeModifyUserForm [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> modifyRegistrationInformation: anAttendee [
+	callback := [ self updateRegistrationInformation: anAttendee ].
 	formWithoutBasicInfo := (ERContainerTabsView content: content)
 		tabView:
 			(ERTabsView
 				tabs: (self formWithoutBasicInformationFor: anAttendee)).
-	
 	content state: formWithoutBasicInfo
 ]
 
@@ -68,7 +58,15 @@ ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
 ]
 
 { #category : #accessing }
+ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
+	"Add function to add attendee role to group manager"
+	attendee save.
+	content state: content lastState
+]
+
+{ #category : #accessing }
 ERGroupRegistrationMembers >> registerMyselfAsAttendee [
+	callback := [self registerGroupManagerAsAttendee].
 	formWithoutBasicInfo := (ERContainerTabsView content: content)
 		tabView:
 			(ERTabsView
@@ -193,4 +191,10 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> updateRegistrationInformation: anAttendee [
+	anAttendee save.
+	content state: content lastState
 ]

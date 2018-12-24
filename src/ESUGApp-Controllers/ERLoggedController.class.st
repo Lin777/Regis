@@ -2,7 +2,8 @@ Class {
 	#name : #ERLoggedController,
 	#superclass : #Object,
 	#instVars : [
-		'user'
+		'user',
+		'attendee'
 	],
 	#category : #'ESUGApp-Controllers'
 }
@@ -13,6 +14,16 @@ ERLoggedController class >> user: anUser [
 	controller := self new.
 	controller user: anUser.
 	^ controller
+]
+
+{ #category : #accessing }
+ERLoggedController >> attendee [
+	^ attendee
+]
+
+{ #category : #accessing }
+ERLoggedController >> attendee: anObject [
+	attendee := anObject
 ]
 
 { #category : #'as yet unclassified' }
@@ -29,6 +40,11 @@ ERLoggedController >> attendeeFromUser: anUser [
 ERLoggedController >> initialize [
 	super initialize .
 	user := ERUserAccount new
+]
+
+{ #category : #accessing }
+ERLoggedController >> user [
+	^ user
 ]
 
 { #category : #accessing }
