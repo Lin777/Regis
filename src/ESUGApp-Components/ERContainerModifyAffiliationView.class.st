@@ -6,7 +6,6 @@ Class {
 
 { #category : #rendering }
 ERContainerModifyAffiliationView >> cancel [
-	attendee abortChanges.
 	content state: content lastState
 ]
 
@@ -19,10 +18,9 @@ ERContainerModifyAffiliationView >> content: anObject [
 ERContainerModifyAffiliationView >> renderAcceptButtonOn: html [
 	self
 		createColoredButton: 'Accept'
-		with: [ self updateAffiliationInformation ]
+		with: acceptCallback 
 		id: 'accept-change-affiliation'
 		on: html
-	
 ]
 
 { #category : #rendering }
@@ -58,10 +56,4 @@ ERContainerModifyAffiliationView >> renderPageOn: html [
 { #category : #rendering }
 ERContainerModifyAffiliationView >> title [
 	^ 'Affiliation Information'
-]
-
-{ #category : #rendering }
-ERContainerModifyAffiliationView >> updateAffiliationInformation [
-	attendee save.
-	self cancel
 ]

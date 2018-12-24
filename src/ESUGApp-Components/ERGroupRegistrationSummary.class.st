@@ -31,9 +31,9 @@ ERGroupRegistrationSummary >> initialize [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := ERContainerModifyAffiliationView
+	formMofidyAffiliation := (ERContainerModifyAffiliationView
 		on: attendee 
-		withContent: content
+		withContent: content) acceptCallback: [ self updateAffiliation ]
 ]
 
 { #category : #rendering }
@@ -127,4 +127,11 @@ ERGroupRegistrationSummary >> tabName [
 { #category : #accessing }
 ERGroupRegistrationSummary >> title [
 	^ 'Group Manager Short Description'
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummary >> updateAffiliation [
+	attendee save.
+	
+	content state: content lastState
 ]

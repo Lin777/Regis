@@ -2,7 +2,8 @@ Class {
 	#name : #ERGeneralContainerView,
 	#superclass : #ERContainerView,
 	#instVars : [
-		'title'
+		'title',
+		'acceptCallback'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -16,6 +17,11 @@ ERGeneralContainerView class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
+{ #category : #accessing }
+ERGeneralContainerView >> acceptCallback: anObject [
+	acceptCallback := anObject
+]
+
 { #category : #rendering }
 ERGeneralContainerView >> renderContentPage: html [
 	html heading level3 with: self title.
@@ -26,4 +32,9 @@ ERGeneralContainerView >> renderContentPage: html [
 { #category : #rendering }
 ERGeneralContainerView >> renderPageOn: html [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERGeneralContainerView >> title: anObject [
+	title := anObject
 ]
