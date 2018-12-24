@@ -64,6 +64,14 @@ ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html 
 		with: aName
 ]
 
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createHeadingStrong: aString level: aNumber withValue: aValue on: html [
+	html heading
+		level: aNumber;
+		with: [ html strong: aString.
+			html text: aValue ]
+]
+
 { #category : #building }
 ERComponentFactory >> createPasswordField: aName for: aSymbol on: html [
 	html mdlTextFieldContainer
