@@ -62,9 +62,9 @@ ERAdminChangePassword >> renderContainer: html [
 
 { #category : #rendering }
 ERAdminChangePassword >> renderFields: html [
-	html render: (self createTextField: 'Current Password: ' callback: [:value | password := value ]) forPassword.
-	html render: (self createTextField: 'Password: ' callback: [:value |  passwordChanged := value ]) forPassword.
-	html render: (self createTextField: 'Confirm password: ' callback: [:value | passwordChangedConfirm := value ]) forPassword.
+	self createPasswordField: 'Current Password: ' withCallback: [:value | password := value ] on: html.
+	self createPasswordField: 'Password: ' withCallback: [:value |  passwordChanged := value ] on: html.
+	self createPasswordField: 'Confirm password: ' withCallback: [:value | passwordChangedConfirm := value ] on: html.
 ]
 
 { #category : #rendering }

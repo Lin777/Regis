@@ -1,17 +1,19 @@
 Class {
 	#name : #ERContainerHomeView,
-	#superclass : #ERContainerView,
+	#superclass : #ERGeneralContainerView,
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
-ERContainerHomeView >> renderContentPage: html [
+ERContainerHomeView >> renderPageOn: html [
+	html heading level6
+		with: [ html strong: 'Conference Home Page: '.
+			html anchor
+				url: '#';
+				with: 'http://exmple.exaomeosmdfsdkfm..xkmdkfm' ]
+]
 
-	html heading level3 with: 'Welcome to the ESUG Registration System'.
-	html horizontalRule.
-	html heading level6 with: [ 
-		html strong: 'Conference Home Page: '.
-		html anchor url: '#';
-		with: 'http://exmple.exaomeosmdfsdkfm..xkmdkfm'.
-	].
+{ #category : #rendering }
+ERContainerHomeView >> title [
+	^ 'Welcome to the ESUG Registration System'
 ]

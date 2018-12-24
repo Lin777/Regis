@@ -23,11 +23,22 @@ ERAdditionalInformation class >> initialize [
 		preferenceAt: #sessionClass put: ERSession
 ]
 
+{ #category : #'as yet unclassified' }
+ERAdditionalInformation >> formId [
+	^ 'additionalInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERAdditionalInformation >> formName [
+	^ 'Additional'
+]
+
 { #category : #initialization }
 ERAdditionalInformation >> initialize [
 	super initialize.
 	"attendee := ERAttendee
-		find: [ :each | each email = 'jorge@gmail.com' ]"
+		find: [ :each | each email = 'cusi@gmail.com' ].
+	attendee := ERAttendee new"
 ]
 
 { #category : #rendering }

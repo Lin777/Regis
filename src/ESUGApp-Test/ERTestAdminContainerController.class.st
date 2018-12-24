@@ -12,7 +12,7 @@ ERTestAdminContainerController >> setUp [
 	| user |
 	super setUp.
 	user := self registerAttendee.
-	controller := ERLoggedAdminContainerController new.
+	controller := ERAdminViewController new.
 	controller attendee: (controller attendeeFromUser: user)
 ]
 

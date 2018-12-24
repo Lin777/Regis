@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERBasicInformation >> formId [
+	^ 'basicInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERBasicInformation >> formName [
+	^ 'User'
+]
+
 { #category : #rendering }
 ERBasicInformation >> renderContentOn: html [
 	self

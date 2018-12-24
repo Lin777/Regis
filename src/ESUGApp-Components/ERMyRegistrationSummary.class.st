@@ -1,6 +1,9 @@
 Class {
 	#name : #ERMyRegistrationSummary,
 	#superclass : #ERTabContainerPage,
+	#instVars : [
+		'formWithoutBasicInfo'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -10,13 +13,35 @@ ERMyRegistrationSummary >> getInvoice [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> modifyRegistration [
+	callback := [self updateMyRegistration].
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: attendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> pay [
 ]
 
 { #category : #rendering }
 ERMyRegistrationSummary >> renderButtons: html [
-	html render: (self createButtonField: 'Modify Registration Information' with: [ self modifyRegistration ] id: 'modifyRegistration' ) forContentButton.
-	html render: (self createButtonField: 'Pay' with: [ self pay ] id: 'pay' ) forContentButton.
-	html render: (self createButtonField: 'Get my invoice' with: [ self getInvoice ] id: 'invoice' ) forContentButtonColored 
+	self
+		createRaisedRippleEffectAnchorButton: 'Modify Registration Information'
+		with: [ self modifyRegistration ]
+		id: 'modifyRegistration'
+		on: html.
+	self
+		createRaisedRippleEffectAnchorButton: 'Pay'
+		with: [ self pay ]
+		id: 'pay'
+		on: html.
+	self
+		createRaisedColoredRippleEffectAnchorButton: 'Get my invoice'
+		with: [ self getInvoice ]
+		id: 'invoice'
+		on: html
 ]
 
 { #category : #rendering }
@@ -28,9 +53,8 @@ ERMyRegistrationSummary >> renderContainer: html [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> renderLabelsSummary: html [
-	html render: (self createTextStrong: 'Attendace Date(s): ' text: 'Monday 10, Tuesday 11, Wednesday 12, Thursday 13 and Friday 14').
-	html render: (self createTextStrong: 'Payment Status: ' text: 'Payment no registered yet. Amount due: 660.00 Euros (NOTE: you could have paid but we could have not registered it yet)').
-	
+	self createTextStrong: 'Attendace Date(s): ' withText: 'Monday 10, Tuesday 11, Wednesday 12, Thursday 13 and Friday 14' on: html.
+	self createTextStrong: 'Payment Status: ' withText: 'Payment no registered yet. Amount due: 660.00 Euros (NOTE: you could have paid but we could have not registered it yet)' on: html
 ]
 
 { #category : #accessing }
@@ -46,4 +70,11 @@ ERMyRegistrationSummary >> tabName [
 { #category : #accessing }
 ERMyRegistrationSummary >> title [
 	^ 'Registration Summary'
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> updateMyRegistration [
+	attendee save.
+	
+	content state: content lastState
 ]

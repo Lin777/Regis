@@ -2,7 +2,8 @@ Class {
 	#name : #ERContent,
 	#superclass : #WAComponent,
 	#instVars : [
-		'state'
+		'state',
+		'lastState'
 	],
 	#category : #'ESUGApp-Views'
 }
@@ -11,6 +12,11 @@ Class {
 ERContent >> initialize [
 	super initialize.
 	state := nil
+]
+
+{ #category : #accessing }
+ERContent >> lastState [
+	^ lastState
 ]
 
 { #category : #rendering }
@@ -25,5 +31,6 @@ ERContent >> state [
 
 { #category : #accessing }
 ERContent >> state: anObject [
+	lastState := state.
 	state := anObject
 ]

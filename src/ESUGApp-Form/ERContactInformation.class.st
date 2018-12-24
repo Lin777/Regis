@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERContactInformation >> formId [
+	^ 'contactInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERContactInformation >> formName [
+	^ 'Contact'
+]
+
 { #category : #rendering }
 ERContactInformation >> renderContentOn: html [
 	self
@@ -27,6 +37,7 @@ ERContactInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Country'
 		for: #country:
+		with: #country
 		list: ERAttendee countries
 		percent: 49
 		on: html.
@@ -58,5 +69,5 @@ ERContactInformation >> renderContentOn: html [
 		createTextField: 'Home Page URL'
 		for: #homePage:
 		with: #homePage
-		on: html.
+		on: html
 ]

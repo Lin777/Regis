@@ -1,9 +1,6 @@
 Class {
 	#name : #ERGroupManagerViewController,
 	#superclass : #ERLoggedController,
-	#instVars : [
-		'attendee'
-	],
 	#category : #'ESUGApp-Controllers'
 }
 
@@ -18,16 +15,6 @@ ERGroupManagerViewController >> addAttendee: anAttendee [
 			group listAttends add: anAttendeeSaved.
 			^ group save ].
 	^ nil
-]
-
-{ #category : #accessing }
-ERGroupManagerViewController >> attendee [
-	^ attendee
-]
-
-{ #category : #accessing }
-ERGroupManagerViewController >> attendee: anObject [
-	attendee := anObject
 ]
 
 { #category : #accessing }

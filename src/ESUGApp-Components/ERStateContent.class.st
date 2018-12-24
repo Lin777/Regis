@@ -1,9 +1,8 @@
 Class {
 	#name : #ERStateContent,
-	#superclass : #WAComponent,
+	#superclass : #ERComponentFactory,
 	#instVars : [
-		'content',
-		'attendee'
+		'content'
 	],
 	#category : #'ESUGApp-Components'
 }
