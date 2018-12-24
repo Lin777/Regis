@@ -11,7 +11,7 @@ Class {
 { #category : #actions }
 ERContainerModifyUserView >> cancel [
 	attendee abortChanges.
-	content state: content lastState
+	self returnToThePreviousState 
 ]
 
 { #category : #rendering }
@@ -37,7 +37,7 @@ ERContainerModifyUserView >> renderButtons: html [
 { #category : #rendering }
 ERContainerModifyUserView >> renderCancelButtonOn: html [
 	self
-		createColoredButton: 'Cancel'
+		createColoredAnchorButton: 'Cancel'
 		with: [ self cancel ]
 		id: 'cancel-change-affiliation'
 		on: html
@@ -65,5 +65,5 @@ ERContainerModifyUserView >> title [
 { #category : #rendering }
 ERContainerModifyUserView >> updateUserInformation [
 	attendee save.
-	self cancel
+	self returnToThePreviousState .
 ]

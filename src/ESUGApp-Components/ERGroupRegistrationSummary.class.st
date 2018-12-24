@@ -32,8 +32,10 @@ ERGroupRegistrationSummary >> initialize [
 { #category : #rendering }
 ERGroupRegistrationSummary >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERContainerModifyAffiliationView
-		on: attendee 
-		withContent: content) acceptCallback: [ self updateAffiliation ]
+		on: attendee
+		withContent: content)
+		cancelCallback: [ self cancel ];
+		yourself
 ]
 
 { #category : #rendering }
@@ -131,7 +133,7 @@ ERGroupRegistrationSummary >> title [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> updateAffiliation [
+	attendee := formMofidyAffiliation attendee.
 	attendee save.
-	
-	content state: content lastState
+	self returnToThePreviousState
 ]

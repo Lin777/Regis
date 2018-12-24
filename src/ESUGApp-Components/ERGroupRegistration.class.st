@@ -24,6 +24,11 @@ ERGroupRegistration >> attenteeRegisterForm: anObject [
 	^ attenteeRegisterForm := anObject
 ]
 
+{ #category : #actions }
+ERGroupRegistration >> cancel [
+	self returnToThePreviousState
+]
+
 { #category : #initialization }
 ERGroupRegistration >> initializeController [
 	controller := ERGroupManagerViewController new attendee: attendee
@@ -49,6 +54,11 @@ ERGroupRegistration >> registerAttendeeToGroupManager [
 	result
 		ifNil: [ Transcript show: 'This email already registered' ]
 		ifNotNil: [ content state: content lastState ]
+]
+
+{ #category : #rendering }
+ERGroupRegistration >> returnToThePreviousState [
+	content state: content lastState
 ]
 
 { #category : #accessing }
