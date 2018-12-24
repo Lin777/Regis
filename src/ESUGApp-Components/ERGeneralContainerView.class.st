@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERContainerView,
 	#instVars : [
 		'title',
-		'acceptCallback'
+		'acceptCallback',
+		'cancelCallback'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -20,6 +21,11 @@ ERGeneralContainerView class >> on: anAttendee withContent: aContent [
 { #category : #accessing }
 ERGeneralContainerView >> acceptCallback: anObject [
 	acceptCallback := anObject
+]
+
+{ #category : #accessing }
+ERGeneralContainerView >> cancelCallback: anObject [
+	cancelCallback := anObject
 ]
 
 { #category : #rendering }

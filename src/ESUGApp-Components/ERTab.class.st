@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTab,
-	#superclass : #ERComponentFactory,
+	#superclass : #ERStateContent,
 	#instVars : [
 		'active',
 		'id'
@@ -29,11 +29,6 @@ ERTab >> attendee: anObject [
 { #category : #private }
 ERTab >> deactivate [
 	active := false.
-]
-
-{ #category : #building }
-ERTab >> idFromSymbol: aSymbol [
-	^ (aSymbol substrings: ':') first 
 ]
 
 { #category : #initialization }

@@ -30,3 +30,8 @@ ERStateContent >> content: anObject [
 ERStateContent >> renderContentOn: html [
 	self subclassResponsibility 
 ]
+
+{ #category : #rendering }
+ERStateContent >> returnToThePreviousState [
+	content state: content lastState
+]

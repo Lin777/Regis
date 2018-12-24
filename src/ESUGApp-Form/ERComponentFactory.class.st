@@ -212,6 +212,24 @@ ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol 
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				class: 'mdl-textfield__input';
+				id: (self idFromSymbol: aSymbol);
+				list: aList;
+				selected: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createStrongText: aString to: html [
+	html paragraph: [ html strong: aString]
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createTextAreaField: aName for: aSymbol on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -236,6 +254,34 @@ ERComponentFactory >> createTextAreaField: aName for: aSymbol with: anotherSymbo
 				rows: 13;
 				value: (attendee perform: anotherSymbol);
 				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createTextAreaField: aName for: aSymbol with: anotherSymbol to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextArea
+				id: (self idFromSymbol: aSymbol);
+				rows: 13;
+				value: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createTextAreaField: aName for: aSymbol with: anotherSymbol withRows: cantOfRows to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextArea
+				id: (self idFromSymbol: aSymbol);
+				rows: cantOfRows;
+				value: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #building }
@@ -264,6 +310,33 @@ ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol pe
 				id: (self idFromSymbol: aSymbol);
 				value: (attendee perform: anotherSymbol);
 				callback: [ :value | attendee perform: aSymbol with: value asString ]].
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol percent: aNumber to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width:' , aNumber asString , '%';
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextFieldInput
+				id: (self idFromSymbol: aSymbol);
+				value: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #building }
+ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextFieldInput
+				id: (self idFromSymbol: aSymbol);
+				value: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #building }
