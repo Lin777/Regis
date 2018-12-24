@@ -3,7 +3,6 @@ Class {
 	#superclass : #ERTab,
 	#instVars : [
 		'messageComponent',
-		'content',
 		'controller',
 		'callback'
 	],
@@ -27,11 +26,6 @@ ERTabContainerPage >> callback [
 { #category : #accessing }
 ERTabContainerPage >> callback: anObject [
 	callback := anObject
-]
-
-{ #category : #accessing }
-ERTabContainerPage >> content [
-	^ content
 ]
 
 { #category : #accessing }
