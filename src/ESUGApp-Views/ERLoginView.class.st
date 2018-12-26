@@ -8,13 +8,24 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
+{ #category : #'as yet unclassified' }
+ERLoginView >> actionsBody: html [
+	^ [
+	html mdlCardActions with: [	
+		self renderRegisterAsGroupManagerButtonOn: html.
+		html mdlAnchorButton primaryColor;
+		with: 'Forgot Password'
+		]
+	]
+]
+
 { #category : #rendering }
 ERLoginView >> initialize [
 	super initialize.
 	title := 'User Login'.
 	icon := 'person'.
 	messageComponent := ERComponentAlert warningAlert id: 'loginAlert'.
-	id := 'body'.
+	id := 'login-conatiner'.
 	pageController := ERLoginController new
 ]
 
@@ -34,6 +45,12 @@ ERLoginView >> registerUser [
 ]
 
 { #category : #rendering }
+ERLoginView >> renderBody: html with: aBlock [
+	html div class: 'body';
+	with: [ 
+		html mdlLayout with: aBlock 
+	]
+]
 ERLoginView >> renderEmailField: html [
 	self
 		createTextField: 'Email'
@@ -76,9 +93,6 @@ ERLoginView >> renderPageOn: html [
 			self renderFieldsLoginOn:html.
 			self renderLoginButtonOn: html.
 			self renderRegisterButtonOn: html.
-			self renderRegisterAsGroupManagerButtonOn: html.
-			html mdlButton class: 'mdl-button--primary';
-			with: 'Forgot Password'.
 	]
 ]
 
@@ -95,8 +109,7 @@ ERLoginView >> renderPasswordField: html [
 
 { #category : #rendering }
 ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
-	html mdlButton
-		beSubmit;
+	html mdlAnchorButton
 		primaryColor ;
 		id: 'register-button-as-group-manager';
 		callback: [ self answer: #registerUserAsGroupManager ];
