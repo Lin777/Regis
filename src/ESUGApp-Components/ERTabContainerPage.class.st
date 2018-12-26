@@ -3,8 +3,8 @@ Class {
 	#superclass : #ERTab,
 	#instVars : [
 		'messageComponent',
-		'content',
-		'controller'
+		'controller',
+		'callback'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -19,8 +19,13 @@ ERTabContainerPage class >> on: anAttendee withContent: aContent [
 ]
 
 { #category : #accessing }
-ERTabContainerPage >> content [
-	^ content
+ERTabContainerPage >> callback [
+	^ callback
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> callback: anObject [
+	callback := anObject
 ]
 
 { #category : #accessing }
@@ -36,6 +41,21 @@ ERTabContainerPage >> controller [
 { #category : #accessing }
 ERTabContainerPage >> controller: anObject [
 	controller := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
+	^ OrderedCollection new
+		add:
+			(ERTabForAForm form: (ERContactInformation on: anAttendee))
+				activate;
+		add: (ERTabForAForm form: (ERConferenceOptions on: anAttendee));
+		add:
+			(ERTabForAForm form: (ERAffiliationInformation on: anAttendee));
+		add: (ERTabForAForm form: (ERAdditionalInformation on: anAttendee));
+		add: (ERTabForAForm form: (ERPaymentInformation on: anAttendee));
+		add: (ERDoneForm on: anAttendee callback: callback);
+		yourself
 ]
 
 { #category : #rendering }

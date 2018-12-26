@@ -50,24 +50,18 @@ ERLoginView >> renderBody: html with: aBlock [
 	with: [ 
 		html mdlLayout with: aBlock 
 	]
+ERLoginView >> renderEmailField: html [
+	self
+		createTextField: 'Email'
+		id: 'emailLogin'
+		callback: [ :value | self controller user email: value asString ]
+		on: html.
 ]
 
 { #category : #rendering }
 ERLoginView >> renderFieldsLoginOn: html [
-	html
-		render:
-			(ERTextFieldLabel
-				label: 'Email'
-				callback: [ :value | self controller user email: value asString ]
-				id: 'emailLogin').
-	html
-		render:
-			(ERTextFieldLabel
-				label: 'Password'
-				callback: [ :value | 
-					self controller user
-						password: (ERUserAccount hashPassword: value) asString ]
-				id: 'passwordLogin') forPassword
+	self renderEmailField: html.
+	self renderPasswordField: html
 ]
 
 { #category : #rendering }
@@ -99,6 +93,17 @@ ERLoginView >> renderPageOn: html [
 			self renderLoginButtonOn: html.
 			self renderRegisterButtonOn: html.
 	]
+]
+
+{ #category : #rendering }
+ERLoginView >> renderPasswordField: html [
+	self
+		createPasswordField: 'Password'
+		id: 'passwordLogin'
+		callback: [ :value | 
+			self controller user
+				password: (ERUserAccount hashPassword: value) asString ]
+		on: html
 ]
 
 { #category : #rendering }

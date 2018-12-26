@@ -62,20 +62,25 @@ ERPageLoggedView >> initializeNabvar [
 ERPageLoggedView >> itemList [
 	^ Dictionary new
 		at: 'home'
-			put: [ (ERContainerHomeView attendee: attendee) content: content ];
+			put: [ (ERContainerHomeView attendee: attendee)
+				content: content ];
 		at: 'admin'
-			put: [ ERContainerAdminView attendee: attendee content: content ];
+			put:
+				[ ERContainerAdminView attendee: attendee content: content ];
 		at: 'logout'
 			put: [ self session logout.
 			self answer: true ];
 		at: 'groupRegistration'
-			put: [ ERContainerGroupRegistrationView attendee: attendee
+			put: [ ERContainerGroupRegistrationView
+				attendee: attendee
 				content: content ];
 		at: 'myRegistration'
-			put: [ ERContainerMyRegistrationView attendee: attendee
+			put: [ ERContainerMyRegistrationView
+				attendee: attendee
 				content: content ];
 		at: 'configuration'
-			put: [ (ERContainerHomeView attendee: attendee) content: content ];
+			put: [ (ERContainerConfigurationView attendee: attendee)
+				content: content ];
 		yourself
 ]
 

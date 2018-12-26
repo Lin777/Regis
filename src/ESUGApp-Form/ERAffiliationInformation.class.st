@@ -4,6 +4,16 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERAffiliationInformation >> formId [
+	^ 'affiliationInfoForm'
+]
+
+{ #category : #'as yet unclassified' }
+ERAffiliationInformation >> formName [
+	^ 'Affiliation'
+]
+
 { #category : #rendering }
 ERAffiliationInformation >> renderContentOn: html [
 	self
@@ -32,6 +42,7 @@ ERAffiliationInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Country'
 		for: #orgCountry:
+		with: #orgCountry
 		list: ERAttendee countries
 		percent: 49
 		on: html.
@@ -50,6 +61,7 @@ ERAffiliationInformation >> renderContentOn: html [
 	self
 		createSelectField: 'Membership Type'
 		for: #membershipType:
+		with: #membershipType
 		list: ERAttendee membershipTypes
-		on: html.
+		on: html
 ]

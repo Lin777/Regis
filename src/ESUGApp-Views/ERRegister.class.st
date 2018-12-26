@@ -33,7 +33,6 @@ ERRegister >> actionsBody: html [
 
 { #category : #adding }
 ERRegister >> addTab: aAttendeeTabForm [
-	"self tabs ifNotEmpty: [ aAttendeeTabForm ]."
 	self tabs add: aAttendeeTabForm
 ]
 

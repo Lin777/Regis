@@ -24,6 +24,11 @@ ERGroupRegistration >> attenteeRegisterForm: anObject [
 	^ attenteeRegisterForm := anObject
 ]
 
+{ #category : #actions }
+ERGroupRegistration >> cancel [
+	self returnToThePreviousState
+]
+
 { #category : #initialization }
 ERGroupRegistration >> initializeController [
 	controller := ERGroupManagerViewController new attendee: attendee
@@ -31,7 +36,9 @@ ERGroupRegistration >> initializeController [
 
 { #category : #initialization }
 ERGroupRegistration >> initializeFormRegister [
-	formRegister := ERContainerTabsView new tabView: (ERTabsView tabs: self tabs)
+	formRegister := (ERContainerTabsView
+		content: content)
+		tabView: (ERTabsView tabs: self tabs)
 ]
 
 { #category : #rendering }
@@ -42,8 +49,16 @@ ERGroupRegistration >> registerAttendee [
 { #category : #rendering }
 ERGroupRegistration >> registerAttendeeToGroupManager [
 	| result |
-	result := controller addAttendee: attenteeRegisterForm controller attendee.
-	result ifNil: [ Transcript show: 'This email already registered' ]
+	result := controller
+		addAttendee: attenteeRegisterForm controller attendee.
+	result
+		ifNil: [ Transcript show: 'This email already registered' ]
+		ifNotNil: [ content state: content lastState ]
+]
+
+{ #category : #rendering }
+ERGroupRegistration >> returnToThePreviousState [
+	content state: content lastState
 ]
 
 { #category : #accessing }

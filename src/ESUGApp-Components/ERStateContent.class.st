@@ -1,9 +1,8 @@
 Class {
 	#name : #ERStateContent,
-	#superclass : #WAComponent,
+	#superclass : #ERComponentFactory,
 	#instVars : [
-		'content',
-		'attendee'
+		'content'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -30,4 +29,9 @@ ERStateContent >> content: anObject [
 { #category : #rendering }
 ERStateContent >> renderContentOn: html [
 	self subclassResponsibility 
+]
+
+{ #category : #rendering }
+ERStateContent >> returnToThePreviousState [
+	content state: content lastState
 ]

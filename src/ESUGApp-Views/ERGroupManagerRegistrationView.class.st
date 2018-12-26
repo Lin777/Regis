@@ -14,18 +14,10 @@ ERGroupManagerRegistrationView >> initialize [
 
 { #category : #initialization }
 ERGroupManagerRegistrationView >> initializeTabForms [
+self addTab: (ERTabForAForm form: (ERBasicInformation on: self controller attendee)).
+	self addTab: (ERTabForAForm form: (ERAffiliationInformation on: self controller attendee)).
 	self
 		addTab:
-			((ERBasicInformationForm on: self controller attendee)
-				nextTabFrom: 'affiliationInfoForm').
-	self
-		addTab:
-			((ERAffiliationInformationForm on: self controller attendee)
-				nextTabFrom: 'doneInfoForm';
-				previousTabFrom: 'basicInfoForm').
-	self
-		addTab:
-			((ERDoneForm on: self controller attendee callback: actionRegister)
-				previousTabFrom: 'affiliationInfoForm').
+			(ERDoneForm on: self controller attendee callback: actionRegister).
 	(self tabs at: 1) activate
 ]

@@ -1,8 +1,7 @@
 Class {
 	#name : #ERComponentAlert,
-	#superclass : #WAComponent,
+	#superclass : #ERComponent,
 	#instVars : [
-		'id',
 		'message',
 		'class',
 		'role',
@@ -35,16 +34,6 @@ ERComponentAlert >> errorMessage: aString [
  self
   message: aString;
   wasShown: false.
-]
-
-{ #category : #accessing }
-ERComponentAlert >> id [
-	^ id
-]
-
-{ #category : #accessing }
-ERComponentAlert >> id: anObject [
-	id := anObject
 ]
 
 { #category : #initialization }

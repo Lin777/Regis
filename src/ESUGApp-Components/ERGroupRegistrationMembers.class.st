@@ -1,6 +1,10 @@
 Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
+	#instVars : [
+		'mofidyUserForm',
+		'formWithoutBasicInfo'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -18,6 +22,56 @@ ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> headers [
 	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> initialize [
+	super initialize .
+	callback := nil
+]
+
+{ #category : #initialization }
+ERGroupRegistrationMembers >> initializeModifyUserForm [
+	mofidyUserForm := ERContainerModifyUserView
+		on: attendee
+		withContent: content.
+	
+	content state: mofidyUserForm
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> modifyRegistrationInformation: anAttendee [
+	callback := [ self updateRegistrationInformation: anAttendee ].
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
+	mofidyUserForm := ERContainerModifyUserView
+		on: anAttendee
+		withContent: content.
+	content state: mofidyUserForm
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
+	"Add function to add attendee role to group manager"
+	attendee save.
+	content state: content lastState
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> registerMyselfAsAttendee [
+	callback := [self registerGroupManagerAsAttendee].
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView
+				tabs: (self formWithoutBasicInformationFor: attendee)).
+	content state: formWithoutBasicInfo
 ]
 
 { #category : #accessing }
@@ -40,48 +94,41 @@ ERGroupRegistrationMembers >> renderBody: html [
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
-	html mdlButton colored with: 'Register Attendee'.
-   html mdlButton colored with: 'Register Myself as Attendee'.
+	self renderRegisterMyselfAsAttendee: html
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
-	html
-		render:
-			(self
-				createButtonField: 'Modify'
-				with: [  ]
-				id: anAttendee id , '-modify') forTableButton.
-	html
-		render:
-			(self
-				createButtonField: 'Delete'
-				with: [ self deleteAttendeeFromGroup: anAttendee ]
-				id: anAttendee id , '-delete') forTableButton.
-	html
-		render:
-			(self
-				createButtonField: 'Modify User'
-				with: [  ]
-				id: anAttendee id , '-modifyUser') forTableButton.
-	html
-		render:
-			(self
-				createButtonField: 'Reset Password'
-				with: [  ]
-				id: anAttendee id , '-resetPassword') forTableButton.
-	html
-		render:
-			(self
-				createButtonField: 'Apply Reduction'
-				with: [  ]
-				id: anAttendee id , '-applyReduction') forTableButton.
-	html
-		render:
-			(self
-				createButtonField: 'Invoice'
-				with: [  ]
-				id: anAttendee id , '-invoice') forTableButton
+	self
+		createColoredButton: 'Modify'
+		with: [ self modifyRegistrationInformation: anAttendee ]
+		id: anAttendee id , '-modify'
+		on: html.
+	self
+		createColoredButton: 'Delete'
+		with: [ self deleteAttendeeFromGroup: anAttendee ]
+		id: anAttendee id , '-delete'
+		on: html.
+	self
+		createColoredButton: 'Modify User'
+		with: [ self modifyUserFormGroup: anAttendee ]
+		id: anAttendee id , '-modifyUser'
+		on: html.
+	self
+		createColoredButton: 'Reset Password'
+		with: [ nil ]
+		id: anAttendee id , '-resetPassword'
+		on: html.
+	self
+		createColoredButton: 'Apply Reduction'
+		with: [ nil ]
+		id: anAttendee id , '-applyReduction'
+		on: html.
+	self
+		createColoredButton: 'Invoice'
+		with: [ nil ]
+		id: anAttendee id , '-invoice'
+		on: html.
 ]
 
 { #category : #accessing }
@@ -104,12 +151,20 @@ ERGroupRegistrationMembers >> renderHeaders: html [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderRegisterAttendee: html [
-	html
-		render:
-			(self
-				createButtonField: 'Register Attendee'
-				with: [ self registerAttendee ]
-				id: 'registerAttendee') forTableButton.
+	self
+		createColoredAnchorButton: 'Register Attendee'
+		with: [ self registerAttendee ]
+		id: 'registerAttendee'
+		on: html
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> renderRegisterMyselfAsAttendee: html [
+	self
+		createColoredAnchorButton: 'Register Myself as Attendee'
+		with: [ self registerMyselfAsAttendee ]
+		id: 'registerMyselfAsAttendee'
+		on: html
 ]
 
 { #category : #accessing }
@@ -136,4 +191,10 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> updateRegistrationInformation: anAttendee [
+	anAttendee save.
+	content state: content lastState
 ]
