@@ -37,9 +37,11 @@ ERLoginView >> registerUser [
 ERLoginView >> renderEmailField: html [
 	self
 		createTextField: 'Email'
-		id: 'emailLogin'
+		id: 'email-login'
 		callback: [ :value | self controller user email: value asString ]
-		on: html.
+		pattern: ERComponentFactory regularExpressionForEmail
+		textError: ERComponentFactory textErrorForEmail
+		on: html
 ]
 
 { #category : #rendering }
@@ -90,6 +92,8 @@ ERLoginView >> renderPasswordField: html [
 		callback: [ :value | 
 			self controller user
 				password: (ERUserAccount hashPassword: value) asString ]
+		pattern: ERComponentFactory regularExpressionForRequiredField
+		textError: ERComponentFactory textErrorForRequiredField
 		on: html
 ]
 

@@ -15,6 +15,36 @@ ERComponentFactory class >> on: anAttendee [
 	^ form
 ]
 
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> regularExpressionForEmail [
+	^ '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$'
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> regularExpressionForPasswordField [
+	^ '^[a-z0-9_-]{8,80}$'
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> regularExpressionForRequiredField [
+	^ '/^[-a-z0-9_ ()]+$|^$/i'
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> textErrorForEmail [
+	^ 'The format of email is incorrect'
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> textErrorForPassword [
+	^ 'The number of characters allowed is between 8 and 80 characters'
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory class >> textErrorForRequiredField [
+	^ 'This field is required'
+]
+
 { #category : #accessing }
 ERComponentFactory >> attendee [
 	^ attendee
@@ -99,6 +129,21 @@ ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock on: h
 				id: anId ;
 				type: 'password';
 				callback: aBlock]
+]
+
+{ #category : #building }
+ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock pattern: aRegularExpression textError: aTextFieldError on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				type: 'password';
+				pattern: aRegularExpression;
+				callback: aBlock.
+			html mdlTextFieldError: aTextFieldError ]
 ]
 
 { #category : #building }
@@ -357,6 +402,20 @@ ERComponentFactory >> createTextField: aName id: anId callback: aBlock on: html 
 			html mdlTextFieldInput
 				id: anId ;
 				callback: aBlock]
+]
+
+{ #category : #building }
+ERComponentFactory >> createTextField: aName id: anId callback: aBlock pattern: aRegularExpression textError: aTextFieldError on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				pattern: aRegularExpression;
+				callback: aBlock.
+			html mdlTextFieldError: aTextFieldError ]
 ]
 
 { #category : #building }

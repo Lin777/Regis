@@ -45,10 +45,9 @@ ERContainerTabsView >> renderContentPage: html [
 				with: [ html mdlGrid noSpacing
 						with: [ html form
 								method: 'post';
-								id: 'formRegister';
+								id: 'formRegisterInTabs';
 								with: [ html render: tabView.
-									self renderCancelButton: html ] ] ] ].
-	
+									self renderCancelButton: html ] ] ] ]
 ]
 
 { #category : #accessing }
