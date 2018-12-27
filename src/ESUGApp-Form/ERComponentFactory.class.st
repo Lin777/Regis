@@ -66,17 +66,6 @@ ERComponentFactory >> createButtonField: aName with: aBlock id: anId on: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERComponentFactory >> createCheckboxField: aName for: aSymbol on: html [
-    html mdlCheckboxContainer
-		rippleEffect;
-		for: (self idFromSymbol: aSymbol);
-		with: [ html mdlCheckbox
-				value: true;
-				id: (self idFromSymbol: aSymbol).
-			html mdlCheckboxLabel: aName ]
-]
-
-{ #category : #'as yet unclassified' }
 ERComponentFactory >> createCheckboxField: aName for: aSymbol with: anotherSymbol on: html [
 	html mdlCheckboxContainer
 		rippleEffect;

@@ -6,7 +6,7 @@ Class {
 		'description',
 		'homePageUrl',
 		'earlyRegistrationDeadline',
-		'dhateSubmissionDeadline',
+		'dateSubmissionDeadline',
 		'emailConfiguration',
 		'organizer',
 		'dateFrom',
@@ -23,6 +23,16 @@ ERConferenceConfigurationModel >> dateFrom [
 { #category : #accessing }
 ERConferenceConfigurationModel >> dateFrom: anObject [
 	dateFrom := anObject
+]
+
+{ #category : #accessing }
+ERConferenceConfigurationModel >> dateSubmissionDeadline [
+	^ dateSubmissionDeadline
+]
+
+{ #category : #accessing }
+ERConferenceConfigurationModel >> dateSubmissionDeadline: anObject [
+	dateSubmissionDeadline := anObject
 ]
 
 { #category : #accessing }
@@ -43,16 +53,6 @@ ERConferenceConfigurationModel >> description [
 { #category : #accessing }
 ERConferenceConfigurationModel >> description: anObject [
 	description := anObject
-]
-
-{ #category : #accessing }
-ERConferenceConfigurationModel >> dhateSubmissionDeadline [
-	^ dhateSubmissionDeadline
-]
-
-{ #category : #accessing }
-ERConferenceConfigurationModel >> dhateSubmissionDeadline: anObject [
-	dhateSubmissionDeadline := anObject
 ]
 
 { #category : #accessing }
