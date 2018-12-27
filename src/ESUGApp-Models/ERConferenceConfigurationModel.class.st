@@ -15,6 +15,25 @@ Class {
 	#category : #'ESUGApp-Models'
 }
 
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel class >> conferenceConfiguration [
+"	|email organizer conference|
+
+email := ERConferenceEmailConfiguration new 
+senderEmailAddress: 'registration@esug.org';
+		smptServerAddress: 'localhost';
+		smptClient: 'PatSmtpToPostMarkClientAdapter';
+		welcomeText: 'Welcome to this great conference'; save.
+organizer := ERConferenceOrganizer new 
+		name: 'ESUG' ;
+		fisicalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
+		webPageUrl: 'http://www.esug.org';
+		addressString: 'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'; save.
+	conference := ERConferenceConfigurationModel new name: 'ESUG'; description: 'ESUG International Smalltalk Conference'; homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/'; earlyRegistrationDeadline: '01/01/2018';
+	dateSubmissionDeadline: '01/01/2018';emailConfiguration: email ; organizer: organizer; save.
+	"
+]
+
 { #category : #accessing }
 ERConferenceConfigurationModel >> dateFrom [
 	^ dateFrom
