@@ -21,7 +21,6 @@ ERFinishRegisterAttend2 class >> initialize [
         addLibrary: MDLLibrary;
         addLibrary: ERMaterialBlueRedMinCss;
         addLibrary: CssForLoginMDL;
-        addLibrary: CssForRegisterFormsMDL;
         addLibrary: ERJQValidateForm;
         addLibrary: ERLibrary;
         preferenceAt: #sessionClass put: ERSession
