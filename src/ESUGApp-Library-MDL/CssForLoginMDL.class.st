@@ -13,7 +13,7 @@ CssForLoginMDL >> esugLoginCss [
 }
 
 body {
-	background-image: url(''/files/CssForRegisterFormsMDL/profile_city.jpg'');
+	background-image: url(''/files/CssForLoginMDL/profile_city.jpg'');
 	background-size: cover;
 	background-position: top center;
 }
