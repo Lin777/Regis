@@ -2,21 +2,15 @@ Class {
 	#name : #ERConference,
 	#superclass : #SDActiveRecord,
 	#instVars : [
-		'name',
-		'description',
-		'homePage',
-		'dateFrom',
-		'dateTo',
-		'dateSubmissionDeadline',
-		'earlygistrationDeadline',
-		'senderEmailAddress',
-		'smptServerAddress',
-		'smptClient',
-		'welcomeText',
-		'nameOrganizer',
-		'fisicalSituation',
-		'webPageUrl',
-		'addressString'
+		'attendees',
+		'fees',
+		'reductionTickets',
+		'submittedTalks',
+		'submittedAwards',
+		'payments',
+		'groups',
+		'users',
+		'configuration'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -29,6 +23,26 @@ ERConference >> addressString [
 { #category : #accessing }
 ERConference >> addressString: anObject [
 	addressString := anObject
+]
+
+{ #category : #accessing }
+ERConference >> attendees [
+	^ attendees
+]
+
+{ #category : #accessing }
+ERConference >> attendees: anObject [
+	attendees := anObject
+]
+
+{ #category : #accessing }
+ERConference >> configuration [
+	^ configuration
+]
+
+{ #category : #accessing }
+ERConference >> configuration: anObject [
+	configuration := anObject
 ]
 
 { #category : #accessing }
@@ -82,6 +96,16 @@ ERConference >> earlygistrationDeadline: anObject [
 ]
 
 { #category : #accessing }
+ERConference >> fees [
+	^ fees
+]
+
+{ #category : #accessing }
+ERConference >> fees: anObject [
+	fees := anObject
+]
+
+{ #category : #accessing }
 ERConference >> fisicalSituation [
 	^ fisicalSituation
 ]
@@ -89,6 +113,16 @@ ERConference >> fisicalSituation [
 { #category : #accessing }
 ERConference >> fisicalSituation: anObject [
 	fisicalSituation := anObject
+]
+
+{ #category : #accessing }
+ERConference >> groups [
+	^ groups
+]
+
+{ #category : #accessing }
+ERConference >> groups: anObject [
+	groups := anObject
 ]
 
 { #category : #accessing }
@@ -119,6 +153,26 @@ ERConference >> nameOrganizer [
 { #category : #accessing }
 ERConference >> nameOrganizer: anObject [
 	nameOrganizer := anObject
+]
+
+{ #category : #accessing }
+ERConference >> payments [
+	^ payments
+]
+
+{ #category : #accessing }
+ERConference >> payments: anObject [
+	payments := anObject
+]
+
+{ #category : #accessing }
+ERConference >> reductionTickets [
+	^ reductionTickets
+]
+
+{ #category : #accessing }
+ERConference >> reductionTickets: anObject [
+	reductionTickets := anObject
 ]
 
 { #category : #accessing }
@@ -159,6 +213,36 @@ ERConference >> smptServerAddress [
 { #category : #accessing }
 ERConference >> smptServerAddress: anObject [
 	smptServerAddress := anObject
+]
+
+{ #category : #accessing }
+ERConference >> submittedAwards [
+	^ submittedAwards
+]
+
+{ #category : #accessing }
+ERConference >> submittedAwards: anObject [
+	submittedAwards := anObject
+]
+
+{ #category : #accessing }
+ERConference >> submittedTalks [
+	^ submittedTalks
+]
+
+{ #category : #accessing }
+ERConference >> submittedTalks: anObject [
+	submittedTalks := anObject
+]
+
+{ #category : #accessing }
+ERConference >> users [
+	^ users
+]
+
+{ #category : #accessing }
+ERConference >> users: anObject [
+	users := anObject
 ]
 
 { #category : #accessing }

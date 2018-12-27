@@ -175,7 +175,13 @@ ERGroupRegistrationMembers >> renderTableOfAttends: html [
 				class: 'mdl-shadow--2dp';
 				style: 'width:100%;';
 				with: [ self renderHeaders: html.
-						  self renderBody: html] ]
+					self renderBody: html ] ].
+	self renderTotalRows: html
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> renderTotalRows: html [
+	self createHeadingStrong: 'Total: '  level: 6 withValue: (self attends size) asString  on: html
 ]
 
 { #category : #accessing }

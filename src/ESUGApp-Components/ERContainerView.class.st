@@ -24,7 +24,7 @@ ERContainerView >> attendee: anObject [
 
 { #category : #rendering }
 ERContainerView >> renderContentOn: html [
-	html mdlLayoutContent
+	html mdlLayoutContent 
 		class: ' mdl-color--grey-100';
 		with: [ html mdlCard
 				class:

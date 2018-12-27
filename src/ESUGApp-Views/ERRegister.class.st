@@ -72,7 +72,6 @@ ERRegister >> register [
 { #category : #initialization }
 ERRegister >> registerAsGroupManager [
 	| user |
-	self halt.
 	user := pageController saveAsGroupManager.
 	self validateRegister: user
 ]
