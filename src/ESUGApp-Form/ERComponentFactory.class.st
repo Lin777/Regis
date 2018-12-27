@@ -149,6 +149,7 @@ ERComponentFactory >> createRaisedRippleEffectPrimaryAnchorButton: aName with: a
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createRaisedRippleEffectPrimaryButton: aName with: aBlock id: anId on: html [
 	html mdlButton
+		beSubmit;
 		raised;
 		primaryColor;
 		rippleEffect;

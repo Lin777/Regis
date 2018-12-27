@@ -4,6 +4,11 @@ Class {
 	#category : #'ESUGApp-Library-MDL'
 }
 
+{ #category : #accessing }
+ERLibrary class >> applicationName [ 
+	^ 'ESUG app'
+]
+
 { #category : #updating }
 ERLibrary >> errorCss [
 	^ '

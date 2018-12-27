@@ -8,8 +8,7 @@ Class {
 ERGroupManagerRegistrationView >> initialize [
 	super initialize.
 	title := 'Group Manager'.
-	actionRegister := [ self registerAsGroupManager ].
-	
+	actionRegister := [ self registerAsGroupManager ]
 ]
 
 { #category : #initialization }

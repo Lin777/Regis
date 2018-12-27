@@ -52,10 +52,15 @@ ERDoneForm >> registerAttendee [
 ERDoneForm >> renderFormOn: html [
 	html heading level2 with: 'Complete'.
 	html break.
-	html paragraph: 'You have successfully completed all steps.'.
+	html
+		paragraph: 'You have successfully completed all steps.'.
 	html break.
-	self createRaisedRippleEffectPrimaryButton: 'Save Information' with: self callback id: 'registerButton' on: html.
-	1 to: 9 do: [ :i | html break ].
+	self
+		createRaisedRippleEffectPrimaryButton: 'Save Information'
+		with: self callback
+		id: 'registerButton'
+		on: html.
+	1 to: 9 do: [ :i | html break ]
 ]
 
 { #category : #accessing }
