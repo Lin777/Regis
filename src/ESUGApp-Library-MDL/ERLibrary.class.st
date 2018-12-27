@@ -1,15 +1,8 @@
 Class {
 	#name : #ERLibrary,
 	#superclass : #WAFileLibrary,
-	#category : #'ESUGApp-Library-MDL-ESUGApp-Library-MDL'
+	#category : #'ESUGApp-Library-MDL'
 }
-
-{ #category : #'as yet unclassified' }
-ERLibrary class >> applicationName [
-
- ^ 'ESUG Application'
-
-]
 
 { #category : #updating }
 ERLibrary >> errorCss [

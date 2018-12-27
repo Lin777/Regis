@@ -51,6 +51,8 @@ ERLoginView >> renderBody: html with: aBlock [
 		html mdlLayout with: aBlock 
 	]
 ]
+
+{ #category : #'' }
 ERLoginView >> renderEmailField: html [
 	self
 		createTextField: 'Email'
