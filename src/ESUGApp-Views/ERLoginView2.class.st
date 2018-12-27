@@ -1,5 +1,5 @@
 Class {
-	#name : #ERLoginView,
+	#name : #ERLoginView2,
 	#superclass : #ERPageView,
 	#instVars : [
 		'tabs',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERLoginView >> actionsBody: html [
+ERLoginView2 >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
@@ -19,8 +19,8 @@ ERLoginView >> actionsBody: html [
 	]
 ]
 
-{ #category : #rendering }
-ERLoginView >> initialize [
+{ #category : #initialization }
+ERLoginView2 >> initialize [
 	super initialize.
 	title := 'User Login'.
 	icon := 'person'.
@@ -30,7 +30,7 @@ ERLoginView >> initialize [
 ]
 
 { #category : #rendering }
-ERLoginView >> loginUser [
+ERLoginView2 >> loginUser [
 	| userValidate  |
 	userValidate := self controller validateLogin.
 	userValidate notNil
@@ -40,20 +40,21 @@ ERLoginView >> loginUser [
 ]
 
 { #category : #rendering }
-ERLoginView >> registerUser [
+ERLoginView2 >> registerUser [
 	self answer: #registerUser
+
 ]
 
 { #category : #rendering }
-ERLoginView >> renderBody: html with: aBlock [
+ERLoginView2 >> renderBody: html with: aBlock [
 	html div class: 'body';
 	with: [ 
 		html mdlLayout with: aBlock 
 	]
 ]
 
-{ #category : #'' }
-ERLoginView >> renderEmailField: html [
+{ #category : #rendering }
+ERLoginView2 >> renderEmailField: html [
 	self
 		createTextField: 'Email'
 		id: 'emailLogin'
@@ -62,13 +63,13 @@ ERLoginView >> renderEmailField: html [
 ]
 
 { #category : #rendering }
-ERLoginView >> renderFieldsLoginOn: html [
+ERLoginView2 >> renderFieldsLoginOn: html [
 	self renderEmailField: html.
 	self renderPasswordField: html
 ]
 
 { #category : #rendering }
-ERLoginView >> renderLoginButtonOn: html [
+ERLoginView2 >> renderLoginButtonOn: html [
 	html mdlButton
 		beSubmit ;
 		raised;
@@ -82,12 +83,12 @@ ERLoginView >> renderLoginButtonOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView >> renderMessageComponent: html [
+ERLoginView2 >> renderMessageComponent: html [
 	html render: messageComponent 
 ]
 
 { #category : #rendering }
-ERLoginView >> renderPageOn: html [
+ERLoginView2 >> renderPageOn: html [
 	html form
 		id: 'loginForm';
 		with: [ 
@@ -99,7 +100,7 @@ ERLoginView >> renderPageOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView >> renderPasswordField: html [
+ERLoginView2 >> renderPasswordField: html [
 	self
 		createPasswordField: 'Password'
 		id: 'passwordLogin'
@@ -110,7 +111,7 @@ ERLoginView >> renderPasswordField: html [
 ]
 
 { #category : #rendering }
-ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
+ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
 		primaryColor ;
 		id: 'register-button-as-group-manager';
@@ -119,7 +120,7 @@ ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView >> renderRegisterButtonOn: html [
+ERLoginView2 >> renderRegisterButtonOn: html [
 	html mdlButton
 		beSubmit;
 		mdlTextColorAccent;
