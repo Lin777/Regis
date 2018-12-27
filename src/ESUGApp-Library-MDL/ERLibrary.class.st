@@ -15,9 +15,12 @@ ERLibrary class >> applicationName [
 ERLibrary >> errorCss [
 	^ '
 .error {
-  color: red
-  }
-  '
+    color: #d50000;
+    position: absolute;
+    font-size: 12px;
+    margin-top: 3px;
+    display: block;
+}'
 ]
 
 { #category : #updating }
@@ -340,7 +343,7 @@ ERLibrary >> validatorForLogin [
             messages:
             {
                 required: "Please enter your password"
-            } 
+            }
         });
     });
 	});

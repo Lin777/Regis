@@ -77,6 +77,18 @@ ERComponentFactory >> createCheckboxField: aName for: aSymbol on: html [
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createCheckboxField: aName for: aSymbol with: anotherSymbol on: html [
+	html mdlCheckboxContainer
+		rippleEffect;
+		for: (self idFromSymbol: aSymbol);
+		with: [ html mdlCheckbox
+				value: (attendee perform: anotherSymbol);
+				callback: [ :value | attendee perform: aSymbol with: value ];
+				id: (self idFromSymbol: aSymbol).
+			html mdlCheckboxLabel: aName ]
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createColoredAnchorButton: aName with: aBlock id: anId on: html [
 	html mdlAnchorButton
 		colored;
@@ -155,6 +167,20 @@ ERComponentFactory >> createPasswordField: aName withCallback: aBlock on: html [
 			html mdlTextFieldInput
 				type: 'password';
 				callback: aBlock]
+]
+
+{ #category : #building }
+ERComponentFactory >> createPasswordRequiredField: aName id: anId callback: aBlock on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				class: 'validate'; required;
+				type: 'password';
+				callback: aBlock ]
 ]
 
 { #category : #'as yet unclassified' }

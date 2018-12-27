@@ -52,16 +52,17 @@ ERLoginView >> renderFieldsLoginOn: html [
 
 { #category : #rendering }
 ERLoginView >> renderLoginButtonOn: html [
+
 	html mdlButton
-		beSubmit ;
+		beSubmit;
 		raised;
 		colored;
 		rippleEffect;
 		accentColor;
 		id: 'login-button';
 		class: 'login-button mdl-color-text--white';
-		callback: [ self loginUser  ];
-		with: 'Login'.
+		callback: [ self loginUser ];
+		with: 'Login'
 ]
 
 { #category : #rendering }
@@ -73,27 +74,24 @@ ERLoginView >> renderMessageComponent: html [
 ERLoginView >> renderPageOn: html [
 	html form
 		id: 'loginForm';
-		with: [ 
-			self renderMessageComponent: html.
-			self renderFieldsLoginOn:html.
-			self renderLoginButtonOn: html.
+		with: [ self renderMessageComponent: html.
+			self renderFieldsLoginOn: html.
+			self renderLoginButtonOn: html].
 			self renderRegisterButtonOn: html.
 			self renderRegisterAsGroupManagerButtonOn: html.
-			html mdlButton class: 'mdl-button--primary';
-			with: 'Forgot Password'.
-	]
+			html mdlButton
+				class: 'mdl-button--primary';
+				with: 'Forgot Password'
 ]
 
 { #category : #rendering }
 ERLoginView >> renderPasswordField: html [
 	self
 		createPasswordField: 'Password'
-		id: 'passwordLogin'
+		id: 'password-login'
 		callback: [ :value | 
 			self controller user
 				password: (ERUserAccount hashPassword: value) asString ]
-		pattern: ERComponentFactory regularExpressionForRequiredField
-		textError: ERComponentFactory textErrorForRequiredField
 		on: html
 ]
 
@@ -109,8 +107,7 @@ ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
 
 { #category : #rendering }
 ERLoginView >> renderRegisterButtonOn: html [
-	html mdlButton
-		beSubmit;
+	html mdlAnchorButton
 		mdlTextColorAccent;
 		class: 'login-button';
 		id: 'register-button';

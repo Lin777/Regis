@@ -20,22 +20,27 @@ ERConferenceOptions >> renderContentOn: html [
 	self
 		createCheckboxField: 'Monday (dd/mm/aa)'
 		for: #monday:
+		with: #monday
 		on: html.
 	self
 		createCheckboxField: 'Tuesday (dd/mm/aa)'
 		for: #tuesday:
+		with: #tuesday
 		on: html.
 	self
 		createCheckboxField: 'Wednesday (dd/mm/aa)'
 		for: #wednesday:
+		with: #wednesday
 		on: html.
 	self
 		createCheckboxField: 'Thursday (dd/mm/aa)'
 		for: #thursday:
+		with: #thursday
 		on: html.
 	self
 		createCheckboxField: 'Friday (dd/mm/aa)'
 		for: #friday:
+		with: #friday
 		on: html.
 	html html: '<br><br>'.
 	self
@@ -59,9 +64,11 @@ ERConferenceOptions >> renderContentOn: html [
 	self
 		createCheckboxField: 'Check if you will you go to the social Event'
 		for: #attendSocialEvent:
+		with: #attendSocialEvent
 		on: html.
 	self
 		createCheckboxField: 'Check if you want to be added to the Mailling List'
 		for: #addedToMainList:
+		with: #addedToMainList
 		on: html
 ]

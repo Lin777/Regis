@@ -209,8 +209,13 @@ ERAttendee >> foodPreference: anObject [
 ]
 
 { #category : #initialization }
+ERAttendee >> friday [
+	^ self attendance at: 'friday'
+]
+
+{ #category : #initialization }
 ERAttendee >> friday: aBoolean [
-	self attendance at: #friday put: aBoolean 
+	self attendance at: 'friday' put: aBoolean
 ]
 
 { #category : #accessing }
@@ -237,6 +242,8 @@ ERAttendee >> homePage: anObject [
 ERAttendee >> initialize [
 	super initialize.
 	userAccount := ERUserAccount new.
+	self attendSocialEvent: true.
+	self addedToMainList: true.
 	self
 		attendance:
 			(Dictionary
@@ -279,8 +286,13 @@ ERAttendee >> membershipType: anObject [
 ]
 
 { #category : #initialization }
+ERAttendee >> monday [
+	^ self attendance at: 'monday'
+]
+
+{ #category : #initialization }
 ERAttendee >> monday: aBoolean [
-	self attendance at: #monday put: aBoolean 
+	self attendance at: 'monday' put: aBoolean
 ]
 
 { #category : #accessing }
@@ -404,8 +416,13 @@ ERAttendee >> province: anObject [
 ]
 
 { #category : #initialization }
+ERAttendee >> thursday [
+	^ self attendance at: 'thursday'
+]
+
+{ #category : #initialization }
 ERAttendee >> thursday: aBoolean [
-	self attendance at: #thursday put: aBoolean 
+	self attendance at: 'thursday' put: aBoolean
 ]
 
 { #category : #accessing }
@@ -419,8 +436,13 @@ ERAttendee >> tshirtSize: anObject [
 ]
 
 { #category : #initialization }
+ERAttendee >> tuesday [
+	^ self attendance at: 'tuesday'
+]
+
+{ #category : #initialization }
 ERAttendee >> tuesday: aBoolean [
-	self attendance at: #tuesday put: aBoolean 
+	self attendance at: 'tuesday' put: aBoolean
 ]
 
 { #category : #accessing }
@@ -444,6 +466,11 @@ ERAttendee >> userAccount: aUserAccount [
 ]
 
 { #category : #initialization }
+ERAttendee >> wednesday [
+	^ self attendance at: 'wednesday'
+]
+
+{ #category : #initialization }
 ERAttendee >> wednesday: aBoolean [
-	self attendance at: #wednesday put: aBoolean 
+	self attendance at: 'wednesday' put: aBoolean
 ]
