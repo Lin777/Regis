@@ -43,15 +43,16 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 
 ## Roles
 
-* [ ] Admin / Organizer
-* [ ] Attendee
-* [ ] Team Manager / Secretary
+* [x] Admin / Organizer
+* [x] Attendee
+* [x] Team Manager / Secretary
 * [ ] Student Volunter
 
 ## Attendee
 
-* [ ] create an account
-* [ ] register: days, participate to social dinner, vegetarian/vegans/..., polo gender/size (Man XS, Woman XS, M/W M, M/W L, M/W XL, => M/W 4XL), social networks info, coupon to pay less/free
+* [x] create an account
+* [x] register: days, participate to social dinner, vegetarian/vegans/..., polo gender/size (Man XS, Woman XS, M/W M, M/W L, M/W XL, => M/W 4XL), social networks info
+* [ ] coupon to pay less/free
 * [ ] can get its invoice -> unique invoice number
 * [ ] add an extra person to the social diner
 * [ ] get a *pdf* invoice (current Patagonia send it in HTML...) re-ask me a template
@@ -60,13 +61,13 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 
 ## Team Manager-Secretary
 
-* [ ] registers/manages multiple attendees
+* [x] registers/manages multiple attendees
 * [ ] get one bill for registered people -> unique invoice number (all these attendees will have this number)
 
 ## Admin-Organizer
 
 * [ ] setup infos (cf. PatagoniaForESUG-Example.st) :
-* [ ] admin credentials (login/password)
+* [x] admin credentials (login/password)
 * [ ] ESUG dates : start & stop
 * [ ] prices : early 1 day, early full, late 1 day, late full
 * [ ] price for extra person to the social dinner
@@ -74,7 +75,7 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 * [ ] Open / close registration
 * [ ] create coupons : percentage discount, fixed reduction, limited usage
 	cf. https://esug.github.io/become_sponsor.html when clicking on a coupon -> see all registrations that used it 
-* [ ] modify a registration
+* [x] modify a registration
 * [ ] apply a coupon on a registration
 * [ ] Report to see who paid 
 * [ ] mark a bill as paid => all registration of this bill are marked as paid
@@ -94,4 +95,3 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 
 * [ ] check that a participant has been registered
 * [ ] add an extra person to the social diner to an attendee -> email to pay extra fee + invoice?
-
