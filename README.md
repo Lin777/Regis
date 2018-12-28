@@ -41,14 +41,14 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 
 ## Features
 
-## Roles
+### Roles
 
 * [x] Admin / Organizer
 * [x] Attendee
 * [x] Team Manager / Secretary
 * [ ] Student Volunter
 
-## Attendee
+### Attendee
 
 * [x] create an account
 * [x] register: days, participate to social dinner, vegetarian/vegans/..., polo gender/size (Man XS, Woman XS, M/W M, M/W L, M/W XL, => M/W 4XL), social networks info
@@ -59,12 +59,12 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 * [ ] pay using paypal URL (cf. PatagoniaForESUG-Example.st)
 * [ ] submit an ESUG Award	
 
-## Team Manager-Secretary
+### Team Manager-Secretary
 
 * [x] registers/manages multiple attendees
 * [ ] get one bill for registered people -> unique invoice number (all these attendees will have this number)
 
-## Admin-Organizer
+### Admin-Organizer
 
 * [ ] setup infos (cf. PatagoniaForESUG-Example.st) :
 * [x] admin credentials (login/password)
@@ -80,12 +80,12 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 * [ ] Report to see who paid 
 * [ ] mark a bill as paid => all registration of this bill are marked as paid
 
-## CVS export 
+### CVS export 
 
 * [ ] full export (for us)
 * [ ] attendees list should only contain: names, mail, Organisation, Country
 
-## Statistics to organize
+### Statistics to organize
 * [ ] number of participants to lunches per day and per types. Example: Monday: 120 normal attendees, 10 vegetarians, 3 vegans ... 	Tuesday: ...
 * [ ] polos: 40 Man S, 10 Woman S, 10 Woman M, 10 Man M, 30 Man XL, 4 Man 3XL, ...
 * [ ] number of participants to social dinner (same)
