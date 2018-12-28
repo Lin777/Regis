@@ -14,6 +14,17 @@ ERGroupRegistrationMembers >> attends [
 		groupOfAttendee: attendee userAccount) listAttends
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroupRegistrationMembers >> blockTableToExecute [
+	^ [:user | OrderedCollection new
+		add: ([ :att | att firstName ] value: user);
+		add: ([ :att | att userAccount email ] value: user);
+		add: '660.00 Euros';
+		add: 'No';
+		yourself
+	]
+]
+
 { #category : #accessing }
 ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
 	controller deleteAttendeeFromGroup: anAttendee 
@@ -37,6 +48,30 @@ ERGroupRegistrationMembers >> initializeModifyUserForm [
 		withContent: content.
 	
 	content state: mofidyUserForm
+]
+
+{ #category : #'as yet unclassified' }
+ERGroupRegistrationMembers >> listDataToRenderButton [
+	^ OrderedCollection new 
+	add: (Array with: 'Modify' 
+	with: [ :user | self modifyRegistrationInformation: user ] 
+	with: [:user | user id, '-modify']);
+	add: (Array with: 'Delete' 
+	with: [ :user | self deleteAttendeeFromGroup: user ] 
+	with: [:user | user id, '-delete']);
+	add: (Array with: 'Modify User' 
+	with: [ :user | self modifyUserFormGroup: user ] 
+	with: [:user | user id, '-modifyUser']);
+	add: (Array with: 'Reset Password' 
+	with: [ nil ] 
+	with: [:user | user id, '-resetPassword']);
+	add: (Array with: 'Apply Reduction' 
+	with: [ nil ] 
+	with: [:user | user id, '-applyReduction']);
+	add: (Array with: 'Invoice' 
+	with: [ nil ] 
+	with: [:user | user id, '-invoice']);
+	yourself
 ]
 
 { #category : #accessing }
@@ -75,60 +110,9 @@ ERGroupRegistrationMembers >> registerMyselfAsAttendee [
 ]
 
 { #category : #accessing }
-ERGroupRegistrationMembers >> renderAnAttendee: anAttendee at: html [
-	html mdlTableHeading: anAttendee firstName.
-	html mdlTableHeading: anAttendee userAccount email.
-	html mdlTableHeading: '660.00 Euros'.
-	html mdlTableHeading: 'No'.
-	html
-		mdlTableHeading: [ self renderButtonsOfAnAttendee: anAttendee at: html ]
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> renderBody: html [
-	html
-		tableBody: [ self attends
-				do: [ :anAttendee | html tableRow: [ self renderAnAttendee: anAttendee at: html ] ]]
-]
-
-{ #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
 	self renderRegisterMyselfAsAttendee: html
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> renderButtonsOfAnAttendee: anAttendee at: html [
-	self
-		createColoredButton: 'Modify'
-		with: [ self modifyRegistrationInformation: anAttendee ]
-		id: anAttendee id , '-modify'
-		on: html.
-	self
-		createColoredButton: 'Delete'
-		with: [ self deleteAttendeeFromGroup: anAttendee ]
-		id: anAttendee id , '-delete'
-		on: html.
-	self
-		createColoredButton: 'Modify User'
-		with: [ self modifyUserFormGroup: anAttendee ]
-		id: anAttendee id , '-modifyUser'
-		on: html.
-	self
-		createColoredButton: 'Reset Password'
-		with: [ nil ]
-		id: anAttendee id , '-resetPassword'
-		on: html.
-	self
-		createColoredButton: 'Apply Reduction'
-		with: [ nil ]
-		id: anAttendee id , '-applyReduction'
-		on: html.
-	self
-		createColoredButton: 'Invoice'
-		with: [ nil ]
-		id: anAttendee id , '-invoice'
-		on: html.
 ]
 
 { #category : #accessing }
@@ -140,13 +124,6 @@ ERGroupRegistrationMembers >> renderContainer: html [
 	self renderButtons: html.
 	html horizontalRule.
 	self renderTableOfAttends: html]
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> renderHeaders: html [
-	html
-		tableHead: [ html
-				tableRow: [ self headers do: [ :each | html mdlTableHeading: each ] ] ]
 ]
 
 { #category : #accessing }
@@ -167,21 +144,16 @@ ERGroupRegistrationMembers >> renderRegisterMyselfAsAttendee: html [
 		on: html
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERGroupRegistrationMembers >> renderTableOfAttends: html [
-	html div
-		style: 'overflow-x:auto;';
-		with: [ html mdlTable
-				class: 'mdl-shadow--2dp';
-				style: 'width:100%;';
-				with: [ self renderHeaders: html.
-					self renderBody: html ] ].
-	self renderTotalRows: html
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> renderTotalRows: html [
-	self createHeadingStrong: 'Total: '  level: 6 withValue: (self attends size) asString  on: html
+	| table |
+	table := ERTableGenericData new 
+	headers: self headers;
+	levelTotal: 6;
+	listObject: self attends;
+	blockToExecute: self blockTableToExecute;
+	listToRenderButton: self listDataToRenderButton.
+	html render: table.
 ]
 
 { #category : #accessing }
