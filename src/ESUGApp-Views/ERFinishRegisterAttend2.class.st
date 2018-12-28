@@ -27,6 +27,10 @@ ERFinishRegisterAttend2 class >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+ERFinishRegisterAttend2 >> actionsBody: html [
+]
+
+{ #category : #'as yet unclassified' }
 ERFinishRegisterAttend2 >> colorIcon [
 	^ 'mdl-color--green'
 ]
@@ -80,6 +84,11 @@ ERFinishRegisterAttend2 >> renderBody: html [
 			]
 		]		
 	]
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttend2 >> renderBody: html with: aBlock [
+	html mdlLayout with: aBlock
 ]
 
 { #category : #rendering }

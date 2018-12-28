@@ -74,8 +74,7 @@ ERPageView >> renderBody: html with: aBlock [
 { #category : #rendering }
 ERPageView >> renderContentOn: html [
 	| block |
-	block := [
-		html
+	block := [ html
 		render:
 			((ERCardView
 				title: title
@@ -83,10 +82,9 @@ ERPageView >> renderContentOn: html [
 				content: [ self renderPageOn: html ]
 				id: id
 				colorIcon: self colorIcon
-				actions: (self actionsBody: html)) classContainer: classContainer)
-	"html render: ERFooterView new"
-	].
-	self renderBody: html with: block.
+				actions: (self actionsBody: html))
+				classContainer: classContainer)].
+	self renderBody: html with: block
 ]
 
 { #category : #rendering }
