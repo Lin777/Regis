@@ -14,14 +14,14 @@ ERConferenceConfiguration class >> conference: aConference [
 
 { #category : #rendering }
 ERConferenceConfiguration >> cancel [
-	
+	conference := conference abortChanges .
 ]
 
 { #category : #rendering }
 ERConferenceConfiguration >> initialize [
 	super initialize.
 	conference := ERConferenceConfigurationModel
-		find: [ :each | each name1 = 'ESUG' ]
+		find: [ :each | each name1 = 'ESUG Conference' ]
 ]
 
 { #category : #rendering }
@@ -204,4 +204,5 @@ ERConferenceConfiguration >> title [
 
 { #category : #rendering }
 ERConferenceConfiguration >> updateOrCreateConference [
+	conference := conference save.
 ]

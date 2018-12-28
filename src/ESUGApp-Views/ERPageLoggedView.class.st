@@ -23,7 +23,7 @@ ERPageLoggedView class >> asGroupManager [
 	^ self new 
 ]
 
-{ #category : #initialization }
+{ #category : #converting }
 ERPageLoggedView class >> initialize [
 	|email organizer conference|
 
