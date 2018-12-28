@@ -27,7 +27,10 @@ ERMenuFactory >> createAdminItem [
 
 { #category : #'as yet unclassified' }
 ERMenuFactory >> createConfigurationItem [
-	^ ERItemNav label: 'Configuration' icon: 'home' callback: (availableItemsOfMenu at: 'configuration')
+	^ ERItemNav
+		label: 'Configuration'
+		icon: 'settings'
+		callback: (availableItemsOfMenu at: 'configuration')
 ]
 
 { #category : #'as yet unclassified' }
