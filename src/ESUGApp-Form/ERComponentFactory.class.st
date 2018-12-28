@@ -47,6 +47,18 @@ ERComponentFactory >> createCheckboxField: aName for: aSymbol on: html [
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createCheckboxField: aName for: aSymbol with: anotherSymbol on: html [
+	html mdlCheckboxContainer
+		rippleEffect;
+		for: (self idFromSymbol: aSymbol);
+		with: [ html mdlCheckbox
+				value: (attendee perform: anotherSymbol);
+				callback: [ :value | attendee perform: aSymbol with: value ];
+				id: (self idFromSymbol: aSymbol).
+			html mdlCheckboxLabel: aName ]
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createColoredAnchorButton: aName with: aBlock id: anId on: html [
 	html mdlAnchorButton
 		colored;
@@ -62,6 +74,14 @@ ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html 
 		id: anId ;
 		callback: aBlock;
 		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createHeadingStrong: aString level: aNumber withValue: aValue on: html [
+	html heading
+		level: aNumber;
+		with: [ html strong: aString.
+			html text: aValue ]
 ]
 
 { #category : #building }
@@ -94,6 +114,21 @@ ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock on: h
 ]
 
 { #category : #building }
+ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock pattern: aRegularExpression textError: aTextFieldError on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				type: 'password';
+				pattern: aRegularExpression;
+				callback: aBlock.
+			html mdlTextFieldError: aTextFieldError ]
+]
+
+{ #category : #building }
 ERComponentFactory >> createPasswordField: aName withCallback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -102,6 +137,20 @@ ERComponentFactory >> createPasswordField: aName withCallback: aBlock on: html [
 			html mdlTextFieldInput
 				type: 'password';
 				callback: aBlock]
+]
+
+{ #category : #building }
+ERComponentFactory >> createPasswordRequiredField: aName id: anId callback: aBlock on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				required;
+				type: 'password';
+				callback: aBlock ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -155,6 +204,50 @@ ERComponentFactory >> createRaisedRippleEffectPrimaryButton: aName with: aBlock 
 		id: anId;
 		callback: aBlock;
 		with: aName
+]
+
+{ #category : #building }
+ERComponentFactory >> createRequiredField: aName id: anId type: aType callback: aBlock on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				required;
+				type: aType;
+				callback: aBlock ]
+]
+
+{ #category : #building }
+ERComponentFactory >> createRequiredTextField: aName for: aSymbol with: anotherSymbol on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextFieldInput
+				required;
+				id: (self idFromSymbol: aSymbol);
+				value: (attendee perform: anotherSymbol);
+				callback: [ :value | 
+					attendee perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRequiredTextField: aName for: aSymbol with: anotherSymbol percent: aNumber on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width:' , aNumber asString , '%';
+		with: [ html mdlTextFieldLabel
+				for: (self idFromSymbol: aSymbol);
+				with: aName.
+			html mdlTextFieldInput
+				required;
+				id: (self idFromSymbol: aSymbol);
+				value: (attendee perform: anotherSymbol);
+				callback: [ :value | attendee perform: aSymbol with: value asString ]].
 ]
 
 { #category : #'as yet unclassified' }
@@ -352,6 +445,20 @@ ERComponentFactory >> createTextField: aName id: anId callback: aBlock on: html 
 ]
 
 { #category : #building }
+ERComponentFactory >> createTextField: aName id: anId callback: aBlock pattern: aRegularExpression textError: aTextFieldError on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: anId;
+				with: aName.
+			html mdlTextFieldInput
+				id: anId;
+				pattern: aRegularExpression;
+				callback: aBlock.
+			html mdlTextFieldError: aTextFieldError ]
+]
+
+{ #category : #building }
 ERComponentFactory >> createTextField: aName withCallback: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -373,6 +480,20 @@ ERComponentFactory >> createTextStrong: aString withText: aText on: html [
 	html
 		paragraph: [ html strong: aString.
 			html text: aText ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createTextStrongWithoutParagraph: aString with: aSymbol on: html [
+	html strong: aString.
+			html text: (attendee perform: aSymbol).
+	html break.
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createTextStrongWithoutParagraph: aString withText: aText on: html [
+	html strong: aString.
+			html text: aText.
+	html break .
 ]
 
 { #category : #building }

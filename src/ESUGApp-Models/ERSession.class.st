@@ -3,7 +3,6 @@ Class {
 	#superclass : #WASession,
 	#instVars : [
 		'user',
-		'database',
 		'account'
 	],
 	#category : #'ESUGApp-Models'
@@ -38,10 +37,7 @@ ERSession >> findUserByEmail: anEmail [
 
 { #category : #actions }
 ERSession >> initialize [
- 
- super initialize.
- self database: ERSandstoneDatabase new.
-
+	super initialize.
 ]
 
 { #category : #actions }
@@ -63,18 +59,13 @@ ERSession >> logout [
 
 { #category : #actions }
 ERSession >> responseForRequest: aRequest [
-
- self database connectionFailed
-  ifTrue: [^ WAResponse new nextPutAll: 'No Database Connection'].
- ^ super responseForRequest: aRequest
-
+	
+	^ super responseForRequest: aRequest
 ]
 
 { #category : #'parent/child' }
 ERSession >> unregistered [
-
- self database disconnect.
- super unregistered.
+	super unregistered
 ]
 
 { #category : #updating }

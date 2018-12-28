@@ -64,14 +64,14 @@ ERRegister >> initializeTabForms [
 
 { #category : #'tools registry' }
 ERRegister >> register [
-	|user|
+	| user |
 	user := pageController save.
 	self validateRegister: user
 ]
 
 { #category : #initialization }
 ERRegister >> registerAsGroupManager [
-	|user|
+	| user |
 	user := pageController saveAsGroupManager.
 	self validateRegister: user
 ]
@@ -97,10 +97,11 @@ ERRegister >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERRegister >> renderPageOn: html [
+	html form
+		id: 'registerForm';
+		with: [ 
 	html mdlTabs rippleEffect
-	with: [ 
-		html render: (ERTabsView tabs: self tabs) 
-	].
+		with: [ html render: (ERTabsView tabs: self tabs) ]]
 ]
 
 { #category : #rendering }

@@ -19,8 +19,9 @@ ERConferenceConfiguration >> cancel [
 
 { #category : #rendering }
 ERConferenceConfiguration >> initialize [
-	super initialize .
-	conference := ERConference new.
+	super initialize.
+	conference := ERConferenceConfigurationModel
+		find: [ :each | each name1 = 'ESUG' ]
 ]
 
 { #category : #rendering }
@@ -84,8 +85,8 @@ ERConferenceConfiguration >> renderFormConferenceConfiguration: html [
 		on: html.
 	self
 		createTextField: 'Home Page: '
-		for: #homePage:
-		with: #homePage
+		for: #homePageUrl:
+		with: #homePageUrl
 		to: conference
 		on: html.
 	self createStrongText: 'Dates: ' to: html.
@@ -112,11 +113,11 @@ ERConferenceConfiguration >> renderFormConferenceConfiguration: html [
 		on: html.
 	self
 		createTextField: 'Early Registration Deadline: '
-		for: #earlygistrationDeadline:
-		with: #earlygistrationDeadline
+		for: #earlyRegistrationDeadline:
+		with: #earlyRegistrationDeadline
 		percent: 49
 		to: conference
-		on: html.
+		on: html
 ]
 
 { #category : #rendering }
@@ -129,27 +130,27 @@ ERConferenceConfiguration >> renderFormEmailConfiguration: html [
 		createTextField: 'Sender Email Address: '
 		for: #senderEmailAddress:
 		with: #senderEmailAddress
-		to: conference
+		to: conference emailConfiguration
 		on: html.
 	self
 		createTextField: 'Smpt Server Address: '
 		for: #smptServerAddress:
 		with: #smptServerAddress
-		to: conference
+		to: conference emailConfiguration
 		on: html.
 	self
 		createSelectField: 'Smpt Client: '
 		for: #smptClient:
 		with: #smptClient
 		list: #('PatSmtpToPPostMarkClientAdapter')
-		to: conference
+		to: conference emailConfiguration
 		on: html.
 	self
 		createTextAreaField: 'Welcome Text'
 		for: #welcomeText:
 		with: #welcomeText
 		withRows: 5
-		to: conference
+		to: conference emailConfiguration
 		on: html
 ]
 
@@ -161,28 +162,28 @@ ERConferenceConfiguration >> renderFormOrganizer: html [
 	html horizontalRule.
 	self
 		createTextField: 'Name: '
-		for: #nameOrganizer:
-		with: #nameOrganizer
-		to: conference
+		for: #name:
+		with: #name1
+		to: conference organizer
 		on: html.
 	self
 		createTextField: 'Fisical Situacion: '
 		for: #fisicalSituation:
 		with: #fisicalSituation
-		to: conference
+		to: conference organizer
 		on: html.
 	self
 		createTextField: 'Web Page URL: '
 		for: #webPageUrl:
 		with: #webPageUrl
-		to: conference
+		to: conference organizer
 		on: html.
 	self
 		createTextAreaField: 'Address String: '
 		for: #addressString:
 		with: #addressString
 		withRows: 5
-		to: conference
+		to: conference organizer
 		on: html
 ]
 

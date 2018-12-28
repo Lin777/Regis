@@ -56,10 +56,12 @@ ERLoginView2 >> renderBody: html with: aBlock [
 { #category : #rendering }
 ERLoginView2 >> renderEmailField: html [
 	self
+	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self controller user email: value asString ] on: html.
+"
 		createTextField: 'Email'
-		id: 'emailLogin'
+		id: 'email-login'
 		callback: [ :value | self controller user email: value asString ]
-		on: html.
+		on: html."
 ]
 
 { #category : #rendering }
@@ -102,8 +104,8 @@ ERLoginView2 >> renderPageOn: html [
 { #category : #rendering }
 ERLoginView2 >> renderPasswordField: html [
 	self
-		createPasswordField: 'Password'
-		id: 'passwordLogin'
+		createPasswordRequiredField: 'Password'
+		id: 'password-login'
 		callback: [ :value | 
 			self controller user
 				password: (ERUserAccount hashPassword: value) asString ]

@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 ERLibrary class >> applicationName [ 
-    ^ 'ESUG app'
+	^ 'ESUG app'
 ]
 
 { #category : #updating }
@@ -25,7 +25,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self validatorOfRegister , self validatorForLogin, self tabsJs
+	^ "self validatorOfRegister , "self tabsJs", self validatorForLogin"
 ]
 
 { #category : #updating }
@@ -236,7 +236,7 @@ ERLibrary >> registerCss [
 
 { #category : #updating }
 ERLibrary >> selectorsToInclude [
-	^ Array with: 'registerCss' with: 'tabsCss' with: 'loginCss' with: 'generalCss' with: 'esugJs' with: 'esugCss'
+	^ Array with: 'registerCss' with: 'tabsCss' with: 'loginCss' with: 'generalCss' with: 'esugJs' "with: 'esugCss'"
 ]
 
 { #category : #updating }

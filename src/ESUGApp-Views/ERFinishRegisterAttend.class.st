@@ -23,6 +23,10 @@ ERFinishRegisterAttend class >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+ERFinishRegisterAttend >> actionsBody: html [
+]
+
+{ #category : #'as yet unclassified' }
 ERFinishRegisterAttend >> colorIcon [
 	^ 'mdl-color--green'
 ]
@@ -34,6 +38,7 @@ ERFinishRegisterAttend >> initialize [
 	icon := 'done'.
 	id := 'finishRegisterAttend'.
 	classContainer := 'mdl-card-register'.
+	attendee := (ERAttendee find: [:each | each email = 'cusi@gmail.com'])
 ]
 
 { #category : #rendering }
@@ -59,47 +64,53 @@ ERFinishRegisterAttend >> renderAffiliation: html [
 	html mdlCell class: 'mdl-cell--4-col';
 	with: [ 
 	self renderTitle: html with: 'Affiliation'.
-	self renderStrong: html with: 'Organization Name:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Address Line 1:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Address Line 2:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'City:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Province/States:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Postal/Zip Code:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Country:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'MemberShip Type:' and: 'Lorem Ipsum'.
+	self createTextStrongWithoutParagraph:'Organization Name: ' with: #orgName on: html.
+	self createTextStrongWithoutParagraph:'Address Line 1: ' with: #orgAddrees1 on: html.
+	self createTextStrongWithoutParagraph:'Address Line 2: ' with: #orgAddrees2 on: html.
+	self createTextStrongWithoutParagraph:'City: ' with: #orgCity on: html.
+	self createTextStrongWithoutParagraph:'Province/States: ' with: #orgProvince on: html.
+	self createTextStrongWithoutParagraph:'Postal/Zip Code: ' with: #orgPostal on: html.
+	self createTextStrongWithoutParagraph:'Country: ' with: #orgCountry on: html.
+	self createTextStrongWithoutParagraph:'MemberShip Type: ' with: #membershipType on: html.
 	self renderTitle: html with: 'Additional Information'.
-	self renderStrong: html with: 'Additional Text:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Keywords:' and: 'Yes'.
+	self createTextStrongWithoutParagraph:'Additional Text: ' with: #additionalText on: html.
+	self createTextStrongWithoutParagraph:'Keywords: ' with: #keywords on: html.
 	]
 ]
 
 { #category : #rendering }
+ERFinishRegisterAttend >> renderBody: html with: aBlock [
+	html mdlLayout with: aBlock
+]
+
+{ #category : #rendering }
 ERFinishRegisterAttend >> renderContactInformation: html [
-	html mdlCell class: 'mdl-cell--4-col';
-	with: [ 
-	self renderTitle: html with: 'Contact Information'.
-	self renderStrong: html with: 'First Name:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Last Name:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Email:' and: ''.
-	self renderStrong: html with: 'Facebook:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Twitter:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Home Page:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Address Line 1:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Address Line 2:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'City:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Province/States:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Postal/Zip Code:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Country:' and: 'Lorem Ipsum'.
-	self renderTitle: html with: 'Conference Options'.
-	self renderStrong: html with: 'Day(s) to attend:' and: 'Monday dd, Friday dd'.
-	self renderStrong: html with: 'Last Name:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'TShirt:' and: 'Small'.
-	self renderStrong: html with: 'Type Food:' and: 'Lorem Ipsum'.
-	self renderStrong: html with: 'Goes Social Event:' and: 'Yes'.
-	self renderStrong: html with: 'Add mailling list:' and: 'No'.
-	html break
-	].
+	html mdlCell
+		class: 'mdl-cell--4-col';
+		with: [ self renderTitle: html with: 'Contact Information'.
+			self createTextStrongWithoutParagraph: 'First Name: ' with: #firstName on: html.
+			self createTextStrongWithoutParagraph: 'Last Name: ' with: #lastName on: html.
+			self createTextStrongWithoutParagraph: 'Email: ' with: #email on: html.
+			self createTextStrongWithoutParagraph: 'Facebook: ' with: #facebookURL on: html.
+			self createTextStrongWithoutParagraph: 'Twitter: ' with: #twitterURL on: html.
+			self createTextStrongWithoutParagraph: 'Home Page: ' with: #homePage on: html.
+			
+			self createTextStrongWithoutParagraph: 'Address Line 1: ' with: #address on: html.
+			self createTextStrongWithoutParagraph: 'Address Line 2: ' with: #address2 on: html.
+			self createTextStrongWithoutParagraph: 'City: ' with: #city on: html.
+			self createTextStrongWithoutParagraph: 'Province/States: ' with: #province on: html.
+			self createTextStrongWithoutParagraph: 'Postal/Zip Code: ' with: #postal on: html.
+			self createTextStrongWithoutParagraph: 'Country: ' with: #country on: html.
+			self renderTitle: html with: 'Conference Options'.
+			self createTextStrongWithoutParagraph: 'Day(s) to attend: ' withText: self stringOfDays on: html.
+			self createTextStrongWithoutParagraph: 'Gender: ' with: #gender on: html.
+			self createTextStrongWithoutParagraph: 'TShirt: ' with: #tshirtSize on: html.
+			self createTextStrongWithoutParagraph: 'Type Food: ' with: #foodPreference on: html.
+			self createTextStrongWithoutParagraph: 'Goes Social Event: ' withText: (self stringForBooleanForASymbol: #attendSocialEvent) on: html.
+			self createTextStrongWithoutParagraph: 'Add mailling list: ' withText: (self stringForBooleanForASymbol: #addedToMainList) on: html.
+			html break
 	
+			 ]
 ]
 
 { #category : #rendering }
@@ -118,9 +129,9 @@ ERFinishRegisterAttend >> renderPaymentInformation: html [
 	html mdlCell class: 'mdl-cell--4-col';
 	with: [ 
 	self renderTitle: html with: 'Payment Information'.
-	self renderStrong: html with: 'Payment Type:' and: 'Bank Transfer'.
-	self renderStrong: html with: 'Payment Currency:' and: 'Euro'.
-	self renderStrong: html with: 'Conference Fee:' and: '666.00'.
+	self createTextStrongWithoutParagraph:'Payment Type: ' with: #paymentType on: html.
+	self createTextStrongWithoutParagraph:'Payment Currency: ' with: #paymentCurrency on: html.
+	self createTextStrongWithoutParagraph:'Conference Fee: ' withText: '666.00' on: html.
 	]
 ]
 
@@ -139,4 +150,18 @@ ERFinishRegisterAttend >> renderTitle: html with: aString [
 		self renderStrong: html with: aString and: nil.
 	].
 	html horizontalRule.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttend >> stringForBooleanForASymbol: aSymbol [
+	(attendee perform: aSymbol) ifTrue: [ ^ 'Yes' ] ifFalse: [ ^ 'No' ] 
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttend >> stringOfDays [
+	|result listOfDays|
+	listOfDays := attendee attendance.
+	result := ''.
+	listOfDays keys do: [ :each | (listOfDays at: each) ifTrue: [ result := result , ' ',  each capitalized  ] ].
+	^ result 
 ]
