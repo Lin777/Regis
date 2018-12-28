@@ -21,7 +21,7 @@ ERConferenceConfiguration >> cancel [
 ERConferenceConfiguration >> initialize [
 	super initialize.
 	conference := ERConferenceConfigurationModel
-		find: [ :each | each name1 = 'ESUG Conference' ]
+		find: [ :each | each name1 = 'ESUG' ]
 ]
 
 { #category : #rendering }

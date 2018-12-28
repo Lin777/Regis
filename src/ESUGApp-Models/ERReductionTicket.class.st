@@ -2,61 +2,50 @@ Class {
 	#name : #ERReductionTicket,
 	#superclass : #SDActiveRecord,
 	#instVars : [
-		'name',
-		'currency',
-		'percentage',
-		'type',
-		'limit'
+		'ticketId',
+		'discountStrategy',
+		'limitStrategy',
+		'usersOfTickets'
 	],
 	#category : #'ESUGApp-Models'
 }
 
 { #category : #accessing }
-ERReductionTicket >> currency [
-	^ currency
+ERReductionTicket >> discountStrategy [
+	^ discountStrategy
 ]
 
 { #category : #accessing }
-ERReductionTicket >> currency: anObject [
-	currency := anObject
+ERReductionTicket >> discountStrategy: anObject [
+	discountStrategy := anObject
 ]
 
 { #category : #accessing }
-ERReductionTicket >> limit [
-	^ limit
+ERReductionTicket >> limitStrategy [
+	^ limitStrategy
 ]
 
 { #category : #accessing }
-ERReductionTicket >> limit: anObject [
-	limit := anObject
+ERReductionTicket >> limitStrategy: anObject [
+	limitStrategy := anObject
 ]
 
 { #category : #accessing }
-ERReductionTicket >> name1 [
-	^ name
+ERReductionTicket >> ticketId [
+	^ ticketId
 ]
 
 { #category : #accessing }
-ERReductionTicket >> name: anObject [
-	name := anObject
+ERReductionTicket >> ticketId: anObject [
+	ticketId := anObject
 ]
 
 { #category : #accessing }
-ERReductionTicket >> percentage [
-	^ percentage
+ERReductionTicket >> usersOfTickets [
+	^ usersOfTickets
 ]
 
 { #category : #accessing }
-ERReductionTicket >> percentage: anObject [
-	percentage := anObject
-]
-
-{ #category : #accessing }
-ERReductionTicket >> type [
-	^ type
-]
-
-{ #category : #accessing }
-ERReductionTicket >> type: anObject [
-	type := anObject
+ERReductionTicket >> usersOfTickets: anObject [
+	usersOfTickets := anObject
 ]

@@ -1,8 +1,28 @@
 Class {
 	#name : #ERContainerConfigurationView,
 	#superclass : #ERTabsContainerView,
+	#instVars : [
+		'conference'
+	],
 	#category : #'ESUGApp-Components'
 }
+
+{ #category : #accessing }
+ERContainerConfigurationView >> conference [
+	^ conference
+]
+
+{ #category : #accessing }
+ERContainerConfigurationView >> conference: anObject [
+	conference := anObject
+]
+
+{ #category : #initialization }
+ERContainerConfigurationView >> initialize [
+	super initialize.
+	conference := ERConferenceConfigurationModel
+		find: [ :each | each name1 = 'ESUG 2018' ]
+]
 
 { #category : #initialization }
 ERContainerConfigurationView >> initializeTabForms [
