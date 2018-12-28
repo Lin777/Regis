@@ -96,9 +96,9 @@ ERLoginView2 >> renderPageOn: html [
 		with: [ 
 			self renderMessageComponent: html.
 			self renderFieldsLoginOn:html.
-			self renderLoginButtonOn: html.
+			self renderLoginButtonOn: html.].
 			self renderRegisterButtonOn: html.
-	]
+
 ]
 
 { #category : #rendering }
@@ -123,8 +123,7 @@ ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 
 { #category : #rendering }
 ERLoginView2 >> renderRegisterButtonOn: html [
-	html mdlButton
-		beSubmit;
+	html mdlAnchorButton
 		mdlTextColorAccent;
 		class: 'login-button';
 		id: 'register-button';

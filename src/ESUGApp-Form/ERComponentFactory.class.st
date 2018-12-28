@@ -77,6 +77,23 @@ ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html 
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createDivCell6ColWith: aBlock on: html [
+    html div class: 'mdl-cell mdl-cell--6-col'; with: [ aBlock value ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createDivGridWith: aBlock on: html [
+    html div class: 'mdl-grid'; with: [ aBlock value ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createHeadingStrong: aString level: aNumber on: html [
+	html heading
+		level: aNumber;
+		with: [ html strong: aString]
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createHeadingStrong: aString level: aNumber withValue: aValue on: html [
 	html heading
 		level: aNumber;
@@ -198,6 +215,7 @@ ERComponentFactory >> createRaisedRippleEffectPrimaryAnchorButton: aName with: a
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createRaisedRippleEffectPrimaryButton: aName with: aBlock id: anId on: html [
 	html mdlButton
+		beSubmit;
 		raised;
 		primaryColor;
 		rippleEffect;
