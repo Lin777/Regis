@@ -47,9 +47,9 @@ ERLoginView2 >> registerUser [
 
 { #category : #rendering }
 ERLoginView2 >> renderBody: html with: aBlock [
-	html div class: 'body';
+	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
 	with: [ 
-		html mdlLayout with: aBlock 
+		html mdlLayout	with: aBlock
 	]
 ]
 

@@ -116,13 +116,6 @@ html, body {
 { #category : #updating }
 ERLibrary >> loginCss [
 	^ '
-.body {
-	background-image: url("../CssForLoginMDL/profile_city.jpg");
-	background-size: cover;
-	background-position: top center;
-	overflow-x: hidden;
-}
-
 #login-conatiner{
 	margin: auto;
 }

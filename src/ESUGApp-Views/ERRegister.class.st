@@ -88,7 +88,7 @@ ERRegister >> renderBackLoginButtonOn: html [
 
 { #category : #rendering }
 ERRegister >> renderBody: html with: aBlock [
-	html div class: 'all body-all';
+	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
 	with: [ 
 		html break. html break. html break. 
 		aBlock value	

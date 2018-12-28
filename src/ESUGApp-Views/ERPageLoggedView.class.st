@@ -82,8 +82,8 @@ ERPageLoggedView >> initializeNabvar [
 ERPageLoggedView >> itemList [
 	^ Dictionary new
 		at: 'home'
-			put: [ (ERContainerHomeView attendee: attendee)
-				content: content ];
+			put: [(ERContainerHomeView attendee: attendee) content: content.
+			];
 		at: 'admin'
 			put:
 				[ ERContainerAdminView attendee: attendee content: content ];
