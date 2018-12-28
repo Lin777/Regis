@@ -39,7 +39,7 @@ and now you can run the tests.
 
 If you have any inconvenience with parasol, you can check the [Parasol github](https://github.com/SeasideSt/Parasol)
 
-## Features
+## Progress Status
 
 ### Roles
 
