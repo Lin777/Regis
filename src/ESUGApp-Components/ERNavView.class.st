@@ -48,10 +48,7 @@ ERNavView >> renderHeader: html [
 ERNavView >> renderHeaderESUG: html [
 	html header class: 'demo-drawer-header';
 	with: [ 
-		html div class: 'demo-avatar-dropdown';
-		with: [ 
 			html heading level4 with: 'ESUG'	
-		]	
 	]
 ]
 
