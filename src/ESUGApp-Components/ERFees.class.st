@@ -1,11 +1,16 @@
 Class {
 	#name : #ERFees,
 	#superclass : #ERConfiguration,
+	#instVars : [
+		'formAddFee'
+	],
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
 ERFees >> addFee [
+	self initializeFormAddFee  .
+	content state: formAddFee 
 ]
 
 { #category : #rendering }
@@ -16,6 +21,11 @@ ERFees >> fees [
 { #category : #rendering }
 ERFees >> headers [
 	^ #('Currency(D)' 'Early Days' 'Early One Day' 'Late All Days' 'Late One Day' '')
+]
+
+{ #category : #rendering }
+ERFees >> initializeFormAddFee [
+	formAddFee := (ERContainerAddFee on: attendee withContent: content)
 ]
 
 { #category : #rendering }

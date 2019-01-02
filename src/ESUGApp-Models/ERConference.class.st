@@ -16,6 +16,21 @@ Class {
 }
 
 { #category : #accessing }
+ERConference >> addAttendee: anAttendee [
+	attendees add: anAttendee 
+]
+
+{ #category : #accessing }
+ERConference >> addFee: aFee [
+	fees add: aFee
+]
+
+{ #category : #accessing }
+ERConference >> addReductionTickets: aTicket [
+	reductionTickets add: aTicket 
+]
+
+{ #category : #accessing }
 ERConference >> addressString [
 	^ addressString
 ]
@@ -133,6 +148,19 @@ ERConference >> homePage [
 { #category : #accessing }
 ERConference >> homePage: anObject [
 	homePage := anObject
+]
+
+{ #category : #accessing }
+ERConference >> initialize [
+	super initialize .
+	attendees := OrderedCollection new.
+	groups := OrderedCollection new.
+	fees := OrderedCollection new.
+	reductionTickets := OrderedCollection new.
+	submittedTalks := OrderedCollection new.
+	submittedAwards := OrderedCollection new.
+	payments := OrderedCollection new.
+	users := OrderedCollection new
 ]
 
 { #category : #accessing }
