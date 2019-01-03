@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 ERGroupRegistrationMembers >> attends [
 	^ (ERGroupManagerViewController new
-		groupOfAttendee: attendee userAccount) listAttends
+		groupOfAttendee: attendee ) listAttends
 ]
 
 { #category : #'as yet unclassified' }
@@ -149,7 +149,7 @@ ERGroupRegistrationMembers >> renderTableOfAttends: html [
 	| table |
 	table := ERTableGenericData new
 		headers: self headers;
-		levelTotal: self attends size;
+		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.

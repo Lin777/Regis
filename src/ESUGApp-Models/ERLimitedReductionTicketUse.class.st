@@ -13,6 +13,11 @@ ERLimitedReductionTicketUse class >> of: aLimitNumber [
 ]
 
 { #category : #accessing }
+ERLimitedReductionTicketUse >> description [
+	^ 'Used limited to ' , limit asString 
+]
+
+{ #category : #accessing }
 ERLimitedReductionTicketUse >> limit [
 	^ limit
 ]

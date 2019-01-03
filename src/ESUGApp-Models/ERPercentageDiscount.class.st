@@ -14,6 +14,11 @@ ERPercentageDiscount class >> of: aPercentage [
 		yourself
 ]
 
+{ #category : #accessing }
+ERPercentageDiscount >> description [
+	^ 'Discount of ' , percentage asString , ' %'
+]
+
 { #category : #initialization }
 ERPercentageDiscount >> initialize [
 	super initialize.

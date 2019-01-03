@@ -11,26 +11,25 @@ BaselineOfESUGApp >> baseline: spec [
 		for: #common
 		do: [ self setUpDependencies: spec.
 			spec
-				package: 'ESUGApp-Models'
-					with: [ spec requires: #('SandstoneDb') ];
+				package: 'ESUGApp-Models' with: [ spec requires: #('SandstoneDb') ];
 				package: 'ESUGApp-Library-MDL'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite') ];
 				package: 'ESUGApp-Form'
-					with: [ spec
-						requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library-MDL') ];
+					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library-MDL') ];
 				package: 'ESUGApp-Components'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite') ];
-				package: 'ESUGApp-Controllers'
-					with: [ spec requires: #('Seaside3') ];
-				package: 'ESUGApp-DB'
-					with: [ spec requires: #('SandstoneDb' 'ESUGApp-Models') ];
+				package: 'ESUGApp-Controllers' with: [ spec requires: #('Seaside3') ];
+				package: 'ESUGApp-DB' with: [ spec requires: #('SandstoneDb' 'ESUGApp-Models') ];
 				package: 'ESUGApp-Views'
 					with: [ spec
 						requires:
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library-MDL' 'ESUGApp-Controllers' 'ESUGApp-Components') ];
-				package: 'ESUGApp-Test'
+				package: 'ESUGApp-SetUp'
 					with: [ spec
-						requires: #('SandstoneDb' 'ESUGApp-Views' 'ESUGApp-DB' 'ESUGApp-Models') ] ]
+						requires:
+							#('ESUGApp-Views') ];
+				package: 'ESUGApp-Test'
+					with: [ spec requires: #('SandstoneDb' 'ESUGApp-Views' 'ESUGApp-DB' 'ESUGApp-Models') ] ]
 ]
 
 { #category : #baselines }

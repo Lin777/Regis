@@ -15,7 +15,7 @@ ERConfigurationViewController >> fees [
 ]
 
 { #category : #accessing }
-ERConfigurationViewController >> groupManagers [
+ERConfigurationViewController >> groups [
 	^ conference groups 
 ]
 

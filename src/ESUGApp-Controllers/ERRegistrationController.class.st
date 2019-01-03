@@ -39,14 +39,12 @@ ERRegistrationController >> initialize [
 { #category : #action }
 ERRegistrationController >> save [
 	| attendeeResult |
-	attendeeResult := ERUserAccount findUserByEmail: attendee userAccount email.
+	attendeeResult := ERUserAccount
+		findUserByEmail: attendee userAccount email.
 	attendeeResult
-		ifNil: [ | user |
-			user := self attendee userAccount save.
-			conference addUser: user.
-			self attendee userAccount: user.
-			attendeeResult := self attendee save.
-			conference addAttendee: attendeeResult.
+		ifNil: [ attendeeResult := self saveAttendee.
+			attendeeResult userAccount isAttendee ifTrue: 
+			[conference addAttendee: attendeeResult].
 			conference save.
 			^ attendeeResult userAccount ].
 	^ nil
@@ -62,6 +60,15 @@ ERRegistrationController >> saveAsGroupManager [
 ERRegistrationController >> saveAsGroupManagerOn: aConference [
 	self convertToGroupManager.
 	^ self saveOn: aConference 
+]
+
+{ #category : #action }
+ERRegistrationController >> saveAttendee [
+	| user |
+	user := self attendee userAccount save.
+	conference addUser: user.
+	self attendee userAccount: user.
+	^ self attendee save
 ]
 
 { #category : #action }

@@ -10,9 +10,12 @@ ERGroupManagerViewController >> addAttendee: anAttendee [
 	(ERUserAccount findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
+			conference addUser: userSaved .
 			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+			conference addAttendee: anAttendeeSaved.
 			group := self groupForGroupManager.
 			group addAttendee: anAttendeeSaved.
+			conference save.
 			^ group save ].
 	^ nil
 ]
@@ -59,7 +62,7 @@ ERGroupManagerViewController >> deleteAttendeeFromGroup: anAttendee [
 
 { #category : #accessing }
 ERGroupManagerViewController >> groupForGroupManager [
-	^ self groupOfAttendee: attendee userAccount
+	^ self groupOfAttendee: attendee
 ]
 
 { #category : #adding }

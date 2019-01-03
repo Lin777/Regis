@@ -14,8 +14,24 @@ ERFees >> addFee [
 ]
 
 { #category : #rendering }
+ERFees >> blockTableToExecute [
+	^ [ :aFee | 
+	OrderedCollection new
+		add: ([ :att | att currency ] value: aFee);
+		add: ([ :att | att erfAllDaysFee ] value: aFee);
+		add: ([ :att | att erfOneDayFee ] value: aFee);
+		add: ([ :att | att lrfAllDaysFee ] value: aFee);
+		add: ([ :att | att lrfOneDayFee ] value: aFee);
+		yourself ]
+]
+
+{ #category : #rendering }
+ERFees >> deleteFee: aFee [
+]
+
+{ #category : #rendering }
 ERFees >> fees [
-	^ OrderedCollection new
+	^ controller fees
 ]
 
 { #category : #rendering }
@@ -29,22 +45,23 @@ ERFees >> initializeFormAddFee [
 ]
 
 { #category : #rendering }
-ERFees >> renderAnAttendee: aFee at: html [
-	html mdlTableHeading: aFee currency.
-	html mdlTableHeading: aFee erfAllDaysFee.
-	html mdlTableHeading: aFee erfOneDayFee.
-	html mdlTableHeading: aFee lrfAllDaysFee.
-	html mdlTableHeading: aFee lrfOneDayFee.
-	html
-		mdlTableHeading: [ self renderButtonsOfAFee: aFee at: html ]
+ERFees >> listDataToRenderButton [
+	^ OrderedCollection new
+		add:
+			(Array
+				with: 'Modify'
+				with: [ :aFee | self modifyFee: aFee ]
+				with: [ :aFee | aFee id , '-modify' ]);
+		add:
+			(Array
+				with: 'Delete'
+				with: [ :aFee | self deleteFee: aFee ]
+				with: [ :aFee | aFee id , '-delete' ]);
+		yourself
 ]
 
 { #category : #rendering }
-ERFees >> renderBody: html [
-	html
-		tableBody: [ self fees
-				do:
-					[ :anAttendee | html tableRow: [ self renderAnAttendee: anAttendee at: html ] ] ]
+ERFees >> modifyFee: aFee [
 ]
 
 { #category : #rendering }
@@ -68,31 +85,25 @@ ERFees >> renderContainer: html [
 		with: [ self addFee ]
 		id: 'addFee'
 		on: html.
-	html horizontalRule .
-	self renderTable: html
+	html horizontalRule.
+	self renderTableOfFees: html
 ]
 
 { #category : #rendering }
-ERFees >> renderHeaders: html [
-	html
-		tableHead: [ html
-				tableRow: [ self headers do: [ :each | html mdlTableHeading: each ] ] ]
-]
-
-{ #category : #rendering }
-ERFees >> renderTable: html [
-	html div
-		style: 'overflow-x:auto;';
-		with: [ html mdlTable
-				class: 'mdl-shadow--2dp';
-				style: 'width:100%;';
-				with: [ self renderHeaders: html.
-					self renderBody: html ] ]
+ERFees >> renderTableOfFees: html [
+	| table |
+	table := ERTableGenericData new
+		headers: self headers;
+		levelTotal: 6;
+		listObject: self fees;
+		blockToExecute: self blockTableToExecute;
+		listToRenderButton: self listDataToRenderButton.
+	html render: table
 ]
 
 { #category : #accessing }
-ERFees >> tabId [
-	^ 'fees'
+ERFees >> tabId [ 
+	^ 'tabFees'
 ]
 
 { #category : #accessing }

@@ -28,7 +28,9 @@ ERUserAccount class >> adminRole [
 
 { #category : #'as yet unclassified' }
 ERUserAccount class >> attendeeRole [
-	^ 'attendee'
+	^ Heap new
+		add: 'attendee';
+		yourself
 ]
 
 { #category : #actions }
@@ -48,7 +50,9 @@ ERUserAccount class >> groupManager [
 
 { #category : #'as yet unclassified' }
 ERUserAccount class >> groupManagerRole [
-	^ 'groupManager'
+	^ Heap new
+		add: 'groupManager';
+		yourself
 ]
 
 { #category : #'as yet unclassified' }
@@ -154,4 +158,12 @@ ERUserAccount >> role: anObject [
 { #category : #accessing }
 ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount >> rolesAsString [
+	| roles |
+	roles := ''.
+	role do: [ :each | roles := roles , ' ' , each ].
+	^ roles
 ]

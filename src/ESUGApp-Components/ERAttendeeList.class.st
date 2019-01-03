@@ -25,6 +25,10 @@ ERAttendeeList >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERAttendeeList >> exportAttends [
+]
+
+{ #category : #rendering }
 ERAttendeeList >> headers [
 	^ #(
 '#Invoice (D)'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?'	'Checked?' '')
@@ -60,9 +64,37 @@ ERAttendeeList >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
+ERAttendeeList >> registerAttendee [
+]
+
+{ #category : #rendering }
+ERAttendeeList >> registerMyselfAsAttendee [
+]
+
+{ #category : #rendering }
+ERAttendeeList >> renderButtons: html [
+	self
+		createColoredAnchorButton: 'REGISTER ATTENDEE'
+		with: [ self registerAttendee ]
+		id: 'registerAttendee'
+		on: html.
+	self
+		createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
+		with: [ self registerMyselfAsAttendee ]
+		id: 'registerMyseflAsAttendee'
+		on: html.
+	self
+		createColoredAnchorButton: 'EXPORT'
+		with: [ self exportAttends ]
+		id: 'exportAttends'
+		on: html
+]
+
+{ #category : #rendering }
 ERAttendeeList >> renderContainer: html [
+	self renderButtons: html.
 	html horizontalRule.
-	self renderTableOfAttends: html.
+	self renderTableOfAttends: html
 ]
 
 { #category : #rendering }
@@ -70,7 +102,7 @@ ERAttendeeList >> renderTableOfAttends: html [
 	| table |
 	table := ERTableGenericData new
 		headers: self headers;
-		levelTotal: self attends size;
+		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
