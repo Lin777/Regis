@@ -10,7 +10,8 @@ Class {
 		'emailConfiguration',
 		'organizer',
 		'dateFrom',
-		'dateTo'
+		'dateTo',
+		'openRegistration'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -106,6 +107,12 @@ ERConferenceConfigurationModel >> homePageUrl: anObject [
 	homePageUrl := anObject
 ]
 
+{ #category : #initialization }
+ERConferenceConfigurationModel >> initialize [
+	super initialize.
+	self openRegistration: false.
+]
+
 { #category : #accessing }
 ERConferenceConfigurationModel >> name1 [
 	^ name
@@ -114,6 +121,16 @@ ERConferenceConfigurationModel >> name1 [
 { #category : #accessing }
 ERConferenceConfigurationModel >> name: anObject [
 	name := anObject
+]
+
+{ #category : #accessing }
+ERConferenceConfigurationModel >> openRegistration [
+	^ openRegistration
+]
+
+{ #category : #accessing }
+ERConferenceConfigurationModel >> openRegistration: anObject [
+	openRegistration := anObject
 ]
 
 { #category : #accessing }

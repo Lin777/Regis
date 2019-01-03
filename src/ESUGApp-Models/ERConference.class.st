@@ -10,10 +10,21 @@ Class {
 		'payments',
 		'groups',
 		'users',
-		'configuration'
+		'configuration',
+		'active'
 	],
 	#category : #'ESUGApp-Models'
 }
+
+{ #category : #accessing }
+ERConference >> active [
+	^ active
+]
+
+{ #category : #accessing }
+ERConference >> active: anObject [
+	active := anObject
+]
 
 { #category : #accessing }
 ERConference >> addAttendee: anAttendee [
@@ -26,8 +37,18 @@ ERConference >> addFee: aFee [
 ]
 
 { #category : #accessing }
+ERConference >> addGroup: aGroup [
+	groups add: aGroup
+]
+
+{ #category : #accessing }
 ERConference >> addReductionTickets: aTicket [
 	reductionTickets add: aTicket 
+]
+
+{ #category : #accessing }
+ERConference >> addUser: anUser [
+	users add: anUser  
 ]
 
 { #category : #accessing }
@@ -41,13 +62,13 @@ ERConference >> addressString: anObject [
 ]
 
 { #category : #accessing }
-ERConference >> attendees [
-	^ attendees
+ERConference >> attendees: anObject [
+	attendees := anObject
 ]
 
 { #category : #accessing }
-ERConference >> attendees: anObject [
-	attendees := anObject
+ERConference >> attends [
+	^ attendees
 ]
 
 { #category : #accessing }
@@ -160,7 +181,9 @@ ERConference >> initialize [
 	submittedTalks := OrderedCollection new.
 	submittedAwards := OrderedCollection new.
 	payments := OrderedCollection new.
-	users := OrderedCollection new
+	users := OrderedCollection new.
+	active := false.
+	
 ]
 
 { #category : #accessing }

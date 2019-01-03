@@ -27,3 +27,8 @@ ERFixDiscount >> currency [
 ERFixDiscount >> currency: anObject [
 	currency := anObject
 ]
+
+{ #category : #initialization }
+ERFixDiscount >> initialize [
+	super initialize.
+]

@@ -11,10 +11,29 @@ ERGroupManagerViewController >> addAttendee: anAttendee [
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-			group := self groupGroupManager"self groupOfAttendee: attendee userAccount".
-			group listAttends add: anAttendeeSaved.
+			group := self groupForGroupManager.
+			group addAttendee: anAttendeeSaved.
 			^ group save ].
 	^ nil
+]
+
+{ #category : #adding }
+ERGroupManagerViewController >> addMyselfToGroup [
+	|group|
+	group := self groupForGroupManager.
+	group addAttendee: attendee.
+	group save.
+]
+
+{ #category : #adding }
+ERGroupManagerViewController >> createGroup: aGroupManager [
+	|group|
+	group := ERGroup groupManager: aGroupManager.
+			group := group save.
+			conference
+				addGroup: group;
+				save.
+	^ group
 ]
 
 { #category : #accessing }
@@ -28,7 +47,7 @@ ERGroupManagerViewController >> deleteAttendee: anAttendee [
 { #category : #accessing }
 ERGroupManagerViewController >> deleteAttendeeFromGroup: anAttendee [
 	| group |
-	group := self groupGroupManager.
+	group := self groupForGroupManager.
 	group listAttends
 		do: [ :each | 
 			each userAccount email = anAttendee userAccount email
@@ -39,7 +58,7 @@ ERGroupManagerViewController >> deleteAttendeeFromGroup: anAttendee [
 ]
 
 { #category : #accessing }
-ERGroupManagerViewController >> groupGroupManager [
+ERGroupManagerViewController >> groupForGroupManager [
 	^ self groupOfAttendee: attendee userAccount
 ]
 
@@ -49,11 +68,24 @@ ERGroupManagerViewController >> groupOfAttendee: aGroupManager [
 	group := ERGroup
 		find: [ :each | each groupManager = aGroupManager ].
 	group
-		ifNil: [ group := ERGroup groupManager: aGroupManager.
-			group := group save ].
-	^ group 
+		ifNil: [ 
+			group := self createGroup: aGroupManager .
+			 ].
+	^ group
 ]
 
 { #category : #adding }
 ERGroupManagerViewController >> modifyAffiliation: anAttendee [
+]
+
+{ #category : #adding }
+ERGroupManagerViewController >> registerAsAttendee [
+	attendee userAccount
+		roleAdd: 'attendee';
+		save.
+	attendee save.
+	conference addAttendee: attendee.
+	self addMyselfToGroup.
+	conference save.
+	^ attendee
 ]

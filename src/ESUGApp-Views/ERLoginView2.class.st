@@ -40,9 +40,17 @@ ERLoginView2 >> loginUser [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> registerUser [
-	self answer: #registerUser
+ERLoginView2 >> registerAsGroupManager [
+	pageController conferenceIsOpenRegistration
+		ifTrue: [ self answer: #registerUserAsGroupManager ]
+		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
+]
 
+{ #category : #rendering }
+ERLoginView2 >> registerUser [
+	pageController conferenceIsOpenRegistration
+		ifTrue: [ self answer: #registerUser ]
+		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
@@ -115,9 +123,9 @@ ERLoginView2 >> renderPasswordField: html [
 { #category : #rendering }
 ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
-		primaryColor ;
+		primaryColor;
 		id: 'register-button-as-group-manager';
-		callback: [ self answer: #registerUserAsGroupManager ];
+		callback: [ self registerAsGroupManager ];
 		with: 'Group Manager'
 ]
 

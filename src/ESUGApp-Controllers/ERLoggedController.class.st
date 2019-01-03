@@ -1,6 +1,6 @@
 Class {
 	#name : #ERLoggedController,
-	#superclass : #Object,
+	#superclass : #ERController,
 	#instVars : [
 		'user',
 		'attendee'

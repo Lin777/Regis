@@ -30,7 +30,7 @@ ERTestGroupManagerViewController >> testDeleteAnAttendee [
 	user := self registerAttendee: ERTestControllers testExampleAttendee.
 	attendee := controller attendeeFromUser: user.
 	controller deleteAttendee: attendee .
-	result := controller groupGroupManager listAttends isEmpty . 
+	result := controller groupForGroupManager listAttends isEmpty . 
 	self assert: result .
 ]
 

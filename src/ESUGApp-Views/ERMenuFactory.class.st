@@ -87,6 +87,13 @@ ERMenuFactory >> createMenuForGroupManager [
 ]
 
 { #category : #'as yet unclassified' }
+ERMenuFactory >> createMenuWith: aList [
+	^ ERNavView new
+		listOptions: aList;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERMenuFactory >> createMyRegistrationItem [
 	^ ERItemNav label: 'My Registration' icon: 'assignment' callback: (availableItemsOfMenu at: 'myRegistration')
 ]

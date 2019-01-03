@@ -7,6 +7,18 @@ Class {
 	#category : #'ESUGApp-Models'
 }
 
+{ #category : #'instance creation' }
+ERPercentageDiscount class >> of: aPercentage [
+	^ self new
+		percentage: aPercentage;
+		yourself
+]
+
+{ #category : #initialization }
+ERPercentageDiscount >> initialize [
+	super initialize.
+]
+
 { #category : #accessing }
 ERPercentageDiscount >> percentage [
 	^ percentage

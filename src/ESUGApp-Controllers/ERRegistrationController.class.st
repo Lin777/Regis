@@ -1,6 +1,6 @@
 Class {
 	#name : #ERRegistrationController,
-	#superclass : #Object,
+	#superclass : #ERController,
 	#instVars : [
 		'attendee'
 	],
@@ -27,7 +27,7 @@ ERRegistrationController >> attendee: anObject [
 
 { #category : #action }
 ERRegistrationController >> convertToGroupManager [
-	self attendee userAccount role: 'groupManager'
+	self attendee userAccount role: (Heap new add: 'groupManager'; yourself )
 ]
 
 { #category : #initialize }
@@ -43,8 +43,11 @@ ERRegistrationController >> save [
 	attendeeResult
 		ifNil: [ | user |
 			user := self attendee userAccount save.
+			conference addUser: user.
 			self attendee userAccount: user.
 			attendeeResult := self attendee save.
+			conference addAttendee: attendeeResult.
+			conference save.
 			^ attendeeResult userAccount ].
 	^ nil
 ]
@@ -53,4 +56,27 @@ ERRegistrationController >> save [
 ERRegistrationController >> saveAsGroupManager [
 	self convertToGroupManager.
 	^ self save
+]
+
+{ #category : #action }
+ERRegistrationController >> saveAsGroupManagerOn: aConference [
+	self convertToGroupManager.
+	^ self saveOn: aConference 
+]
+
+{ #category : #action }
+ERRegistrationController >> saveOn: aConference [
+	| attendeeResult |
+	attendeeResult := ERUserAccount
+		findUserByEmail: attendee userAccount email.
+	attendeeResult
+		ifNil: [ | user |
+			user := self attendee userAccount save.
+			aConference addUser: user.
+			self attendee userAccount: user.
+			attendeeResult := self attendee save.
+			aConference addAttendee: attendeeResult .
+			aConference save.
+			^ attendeeResult userAccount ].
+	^ nil
 ]

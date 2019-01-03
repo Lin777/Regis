@@ -69,15 +69,7 @@ ERPageLoggedView >> initialize [
 ERPageLoggedView >> initializeNabvar [
 	| menu |
 	menu := ERMenuFactory availableItemsOfMenu: self itemList.
-	self session user isAttendee
-		ifTrue: [ navbar := menu createMenuForAttendee ].
-	self session user isGroupManager
-		ifTrue: [ navbar := menu createMenuForGroupManager ].
-	self session user isAdmin
-		ifTrue: [ navbar := menu createMenuForAdmin ].
-	self session user isStudent 
-		ifTrue: [ navbar := menu createMenuForAdmin  ].
-	
+	navbar := menu createMenuWith: (self listOptionsFor: menu).
 ]
 
 { #category : #rendering }
@@ -104,6 +96,24 @@ ERPageLoggedView >> itemList [
 			put: [ ERContainerConfigurationView attendee: attendee
 				content: content ];
 		yourself
+]
+
+{ #category : #rendering }
+ERPageLoggedView >> listOptionsFor: aMenuFactory [
+	| list |
+	list := OrderedCollection new.
+	list add: aMenuFactory createHomeItem.
+	self session user isAttendee
+		ifTrue: [ list add: aMenuFactory createMyRegistrationItem ].
+	self session user isGroupManager
+		ifTrue: [ list add: aMenuFactory createGroupManagerItem ].
+	self session user isAdmin
+		ifTrue: [ list add: aMenuFactory createConfigurationItem ].
+	self session user isStudent
+		ifTrue: [  ].
+	list add: aMenuFactory createAdminItem.
+	list add: aMenuFactory createLogoutItem .
+	^ list
 ]
 
 { #category : #accessing }

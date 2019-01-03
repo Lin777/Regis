@@ -19,12 +19,23 @@ ERUserAccount class >> admin [
 	^ instance
 ]
 
+{ #category : #'as yet unclassified' }
+ERUserAccount class >> adminRole [
+	^ Heap new
+		add: 'admin';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount class >> attendeeRole [
+	^ 'attendee'
+]
+
 { #category : #actions }
-ERUserAccount class >> findUserByEmail: aString [ 
-	|anAttendee|
- 	anAttendee := (ERAttendee find: [ :each | each userAccount email = aString]).
-	anAttendee ifNotNil: [ ^ anAttendee userAccount ].
-	^ nil
+ERUserAccount class >> findUserByEmail: aString [
+	| userAccount |
+	userAccount := ERUserAccount find: [ :each | each email = aString ].
+	^ userAccount
 ]
 
 { #category : #accessing }
@@ -33,6 +44,11 @@ ERUserAccount class >> groupManager [
 	instance := self new.
 	instance role: 'groupManager'.
 	^ instance
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount class >> groupManagerRole [
+	^ 'groupManager'
 ]
 
 { #category : #'as yet unclassified' }
@@ -67,28 +83,42 @@ ERUserAccount >> firstName: anObject [
 { #category : #initialization }
 ERUserAccount >> initialize [
 	super initialize.
-	role := 'attendee'
-	
+	role := Heap new
+		add: 'attendee';
+		yourself
 ]
 
 { #category : #testing }
 ERUserAccount >> isAdmin [
-	^ self role = 'admin'
+	self role
+		do: [ :each | 
+			each = 'admin'
+				ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
 ERUserAccount >> isAttendee [
-	^ self role = 'attendee'
+	self role do: [ :each | each = 'attendee' ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
 ERUserAccount >> isGroupManager [
-	^ self role = 'groupManager'
+	self role
+		do: [ :each | 
+			each = 'groupManager'
+				ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
 ERUserAccount >> isStudent [
-	^ self role = 'student'
+	self role
+		do: [ :each | 
+			each = 'student'
+				ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #accessing }
@@ -119,4 +149,9 @@ ERUserAccount >> role [
 { #category : #accessing }
 ERUserAccount >> role: anObject [
 	role := anObject
+]
+
+{ #category : #accessing }
+ERUserAccount >> roleAdd: anObject [
+	role add: anObject 
 ]

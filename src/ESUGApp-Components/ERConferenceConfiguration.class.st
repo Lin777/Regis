@@ -167,9 +167,9 @@ ERConferenceConfiguration >> renderFormOrganizer: html [
 		to: conference organizer
 		on: html.
 	self
-		createTextField: 'Fisical Situacion: '
-		for: #fisicalSituation:
-		with: #fisicalSituation
+		createTextField: 'Fiscal Situacion: '
+		for: #fiscalSituation:
+		with: #fiscalSituation
 		to: conference organizer
 		on: html.
 	self

@@ -1,18 +1,40 @@
 Class {
 	#name : #ERConfigurationViewController,
 	#superclass : #ERLoggedController,
-	#instVars : [
-		'conference'
-	],
 	#category : #'ESUGApp-Controllers'
 }
 
 { #category : #accessing }
-ERConfigurationViewController >> conference [
-	^ conference
+ERConfigurationViewController >> attends [
+	^ conference attends 
 ]
 
 { #category : #accessing }
-ERConfigurationViewController >> conference: anObject [
-	conference := anObject
+ERConfigurationViewController >> fees [
+	^ conference fees
+]
+
+{ #category : #accessing }
+ERConfigurationViewController >> groupManagers [
+	^ conference groups 
+]
+
+{ #category : #accessing }
+ERConfigurationViewController >> reductionTickets [
+	^ conference reductionTickets
+]
+
+{ #category : #accessing }
+ERConfigurationViewController >> submittedAwards [
+	^ conference submittedAwards
+]
+
+{ #category : #accessing }
+ERConfigurationViewController >> submittedTalks [
+	^ conference submittedTalks
+]
+
+{ #category : #accessing }
+ERConfigurationViewController >> users [
+	^ conference users
 ]

@@ -95,7 +95,7 @@ ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 	"Add function to add attendee role to group manager"
-	attendee save.
+	controller registerAsAttendee.
 	content state: content lastState
 ]
 
@@ -147,13 +147,13 @@ ERGroupRegistrationMembers >> renderRegisterMyselfAsAttendee: html [
 { #category : #rendering }
 ERGroupRegistrationMembers >> renderTableOfAttends: html [
 	| table |
-	table := ERTableGenericData new 
-	headers: self headers;
-	levelTotal: 6;
-	listObject: self attends;
-	blockToExecute: self blockTableToExecute;
-	listToRenderButton: self listDataToRenderButton.
-	html render: table.
+	table := ERTableGenericData new
+		headers: self headers;
+		levelTotal: self attends size;
+		listObject: self attends;
+		blockToExecute: self blockTableToExecute;
+		listToRenderButton: self listDataToRenderButton.
+	html render: table
 ]
 
 { #category : #accessing }
