@@ -4,6 +4,20 @@ Class {
 	#category : #'ESUGApp-Controllers'
 }
 
+{ #category : #adding }
+ERConfigurationViewController >> addAttendee: anAttendee [
+	| anAttendeeSaved |
+	(ERUserAccount findUserByEmail: anAttendee email)
+		ifNil: [ | userSaved |
+			userSaved := anAttendee userAccount save.
+			conference addUser: userSaved.
+			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+			conference addAttendee: anAttendeeSaved.
+			conference save.
+			^ anAttendeeSaved ].
+	^ nil
+]
+
 { #category : #accessing }
 ERConfigurationViewController >> attends [
 	^ conference attends 

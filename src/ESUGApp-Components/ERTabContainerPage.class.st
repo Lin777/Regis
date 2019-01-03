@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'messageComponent',
 		'controller',
-		'callback'
+		'callback',
+		'mofidyUserForm',
+		'formWithoutBasicInfo',
+		'formRegister',
+		'attenteeRegisterForm'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -58,6 +62,29 @@ ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
 		yourself
 ]
 
+{ #category : #initialization }
+ERTabContainerPage >> initializeFormRegister [
+	formRegister := (ERContainerTabsView content: content)
+		tabView: (ERTabsView tabs: self tabs)
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> modifyRegistrationInformation: anAttendee [
+	callback := [ self updateRegistrationInformation: anAttendee ].
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView:
+			(ERTabsView tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> modifyUserFormGroup: anAttendee [
+	mofidyUserForm := ERContainerModifyUserView
+		on: anAttendee
+		withContent: content.
+	content state: mofidyUserForm
+]
+
 { #category : #rendering }
 ERTabContainerPage >> renderContainer: html [
 	self subclassResponsibility 
@@ -69,7 +96,18 @@ ERTabContainerPage >> renderContentOn: html [
 	self renderContainer: html
 ]
 
+{ #category : #initialization }
+ERTabContainerPage >> tabs [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 ERTabContainerPage >> title [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> updateRegistrationInformation: anAttendee [
+	anAttendee save.
+	content state: content lastState
 ]

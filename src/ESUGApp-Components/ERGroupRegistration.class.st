@@ -1,10 +1,6 @@
 Class {
 	#name : #ERGroupRegistration,
 	#superclass : #ERTabContainerPage,
-	#instVars : [
-		'formRegister',
-		'attenteeRegisterForm'
-	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -43,6 +39,7 @@ ERGroupRegistration >> initializeFormRegister [
 
 { #category : #rendering }
 ERGroupRegistration >> registerAttendee [
+	self initializeFormRegister.
 	content state: formRegister
 ]
 

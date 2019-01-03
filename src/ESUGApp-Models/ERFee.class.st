@@ -63,6 +63,13 @@ ERFee >> erfOneDayFee: anObject [
 	erfOneDayFee := anObject
 ]
 
+{ #category : #initialization }
+ERFee >> initialize [
+	super initialize.
+	bankAccountInformation := ERBankAccountInformation new.
+	
+]
+
 { #category : #accessing }
 ERFee >> lrfAllDaysFee [
 	^ lrfAllDaysFee

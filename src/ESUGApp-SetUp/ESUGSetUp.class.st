@@ -106,15 +106,20 @@ ESUGSetUp class >> configureESUGReductionCodesForConference: conference [
 ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceConfiguration atEntryPoint: entryPoint [
 	| conference adminPassword adminUser |
 	conference := ERConference new
-		configuration: esugConferenceConfiguration; save.
+		configuration: esugConferenceConfiguration;
+		save.
 	adminPassword := '12345678'.
 	adminUser := ERUserAccount new
 		firstName: 'Admin';
 		lastName: 'Admin';
 		password: (ERUserAccount hashPassword: adminPassword) asString;
 		email: 'admin@esug.org';
-		role: ERUserAccount adminRole; save.
-	conference addUser: adminUser; save.
+		role: ERUserAccount adminRole;
+		save.
+	ERAttendee new userAccount: adminUser; save.
+	conference
+		addUser: adminUser;
+		save.
 	^ conference
 ]
 

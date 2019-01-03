@@ -24,6 +24,6 @@ ERController >> conferenceIsOpenRegistration [
 
 { #category : #accessing }
 ERController >> initialize [
-	super initialize .
+	super initialize.
 	conference := ERConference find: [ :each | each active ]
 ]

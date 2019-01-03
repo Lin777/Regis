@@ -38,7 +38,7 @@ ERLoggedController >> attendeeFromUser: anUser [
 
 { #category : #accessing }
 ERLoggedController >> initialize [
-	super initialize .
+	super initialize.
 	user := ERUserAccount new
 ]
 

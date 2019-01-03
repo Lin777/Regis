@@ -10,41 +10,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #converting }
-ERPageLoggedView class >> asAdmin [
-]
-
-{ #category : #converting }
-ERPageLoggedView class >> asAttendee [
-]
-
-{ #category : #converting }
-ERPageLoggedView class >> asGroupManager [
-	^ self new 
-]
-
-{ #category : #converting }
-ERPageLoggedView class >> initialize [
-	|email organizer conferenceConfiguration conference|
-
-	super initialize.
-email := ERConferenceEmailConfiguration new 
-senderEmailAddress: 'registration@esug.org';
-		smptServerAddress: 'localhost';
-		smptClient: 'PatSmtpToPostMarkClientAdapter';
-		welcomeText: 'Welcome to this great conference'; save.
-organizer := ERConferenceOrganizer new 
-		name: 'ESUG 2018' ;
-		fisicalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
-		webPageUrl: 'http://www.esug.org';
-		addressString: 'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'; save.
-	conferenceConfiguration := ERConferenceConfigurationModel new name: 'ESUG'; description: 'ESUG International Smalltalk Conference'; homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/'; earlyRegistrationDeadline: '01/01/2018';
-	dateSubmissionDeadline: '01/01/2018';
-	emailConfiguration: email ; organizer: organizer; save.
-	conference := ERConference new configuration: conferenceConfiguration; save
-
-]
-
 { #category : #accessing }
 ERPageLoggedView >> content [
 	^ content
@@ -61,7 +26,10 @@ ERPageLoggedView >> initialize [
 	pageController := ERLoggedController new user: self session user.
 	attendee := pageController attendeeFromUser.
 	content := ERContent new.
-	(ERContainerHomeView attendee: attendee) content: content.
+	(ERContainerHomeView
+				on: attendee
+				withContent: content
+				withController: pageController).
 	self initializeNabvar
 ]
 
@@ -69,18 +37,19 @@ ERPageLoggedView >> initialize [
 ERPageLoggedView >> initializeNabvar [
 	| menu |
 	menu := ERMenuFactory availableItemsOfMenu: self itemList.
-	navbar := menu createMenuWith: (self listOptionsFor: menu).
+	navbar := menu createMenuWith: (self listOptionsFor: menu)
 ]
 
 { #category : #rendering }
 ERPageLoggedView >> itemList [
 	^ Dictionary new
 		at: 'home'
-			put: [(ERContainerHomeView attendee: attendee) content: content.
-			];
+			put: [ ERContainerHomeView
+				on: attendee
+				withContent: content
+				withController: pageController ];
 		at: 'admin'
-			put:
-				[ ERContainerAdminView attendee: attendee content: content ];
+			put: [ ERContainerAdminView attendee: attendee content: content ];
 		at: 'logout'
 			put: [ self session logout.
 			self answer: true ];
@@ -93,7 +62,8 @@ ERPageLoggedView >> itemList [
 				attendee: attendee
 				content: content ];
 		at: 'configuration'
-			put: [ ERContainerConfigurationView attendee: attendee
+			put: [ ERContainerConfigurationView
+				attendee: attendee
 				content: content ];
 		yourself
 ]

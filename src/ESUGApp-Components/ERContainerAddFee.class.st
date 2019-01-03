@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERContainerView,
 	#instVars : [
 		'conference',
-		'fee'
+		'fee',
+		'controller'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -30,6 +31,11 @@ ERContainerAddFee >> content: anObject [
 	content := anObject
 ]
 
+{ #category : #accessing }
+ERContainerAddFee >> controller: anObject [
+	controller := anObject
+]
+
 { #category : #rendering }
 ERContainerAddFee >> initialize [
 	super initialize .
@@ -44,7 +50,13 @@ ERContainerAddFee >> renderAcceptButton: html [
 
 { #category : #rendering }
 ERContainerAddFee >> renderAddressString: html [
-	self createTextAreaField: 'Address String' for: #bankAddressString: with: #bankAddressString withRows: 5 to: fee on: html
+	self
+		createTextAreaField: 'Address String'
+		for: #addressString:
+		with: #addressString
+		withRows: 5
+		to: fee bankAccountInformation bankInformation
+		on: html
 ]
 
 { #category : #rendering }
@@ -68,34 +80,88 @@ ERContainerAddFee >> renderContentPage: html [
 
 { #category : #rendering }
 ERContainerAddFee >> renderFormBankAccountInformation: html [
-	self createHeadingStrong: 'Bank Account Information:' level: 5 on: html.
-	html horizontalRule .
-	self createDivGridWith: [ 
-		self createDivCell6ColWith: [ 
-			self createTextField: 'Owner:' for: #bankAccountOwner: with: #bankAccountOwner percent: 49 to: fee on: html.
-			self createTextField: 'Number:' for: #bankAccountNumber: with: #bankAccountNumber percent: 49 to: fee on: html.
-			 ] on: html.
-		self createDivCell6ColWith: [
-			self createTextField: 'IBAN:' for: #bankAccountIBAN: with: #bankAccountIBAN percent: 49 to: fee on: html.
-			self createTextField: 'Rib Key:' for: #bankAccountRibKey: with: #bankAccountRibKey percent: 49 to: fee on: html.
-			 ] on: html.
-	] on: html.
+	self
+		createHeadingStrong: 'Bank Account Information:'
+		level: 5
+		on: html.
+	html horizontalRule.
+	self
+		createDivGridWith: [ self
+				createDivCell6ColWith: [ self
+						createTextField: 'Owner:'
+						for: #owner:
+						with: #owner
+						percent: 49
+						to: fee bankAccountInformation
+						on: html.
+					self
+						createTextField: 'Number:'
+						for: #number:
+						with: #number
+						percent: 49
+						to: fee bankAccountInformation
+						on: html ]
+				on: html.
+			self
+				createDivCell6ColWith: [ self
+						createTextField: 'IBAN:'
+						for: #iban:
+						with: #iban
+						percent: 49
+						to: fee bankAccountInformation
+						on: html.
+					self
+						createTextField: 'Rib Key:'
+						for: #ribKey:
+						with: #ribKey
+						percent: 49
+						to: fee bankAccountInformation
+						on: html ]
+				on: html ]
+		on: html
 ]
 
 { #category : #rendering }
 ERContainerAddFee >> renderFormBankInformation: html [
-	self createHeadingStrong: 'Bank Information:' level: 5 on: html.
-	html horizontalRule .
-	self createDivGridWith: [ 
-		self createDivCell6ColWith: [ 
-			self createTextField: 'Name:' for: #bankName: with: #bankName percent: 49 to: fee on: html.
-			self createTextField: 'Code:' for: #bankCode: with: #bankCode percent: 49 to: fee on: html.
-			 ] on: html.
-		self createDivCell6ColWith: [
-			self createTextField: 'Counter Code:' for: #bankCounterCode: with: #bankCounterCode percent: 49 to: fee on: html.
-			self createTextField: 'BIC:' for: #bankBIC: with: #bankBIC percent: 49 to: fee on: html.
-			 ] on: html.
-	] on: html.
+	self
+		createHeadingStrong: 'Bank Information:'
+		level: 5
+		on: html.
+	html horizontalRule.
+	self
+		createDivGridWith: [ self
+				createDivCell6ColWith: [ self
+						createTextField: 'Name:'
+						for: #name:
+						with: #name1
+						percent: 49
+						to: fee bankAccountInformation bankInformation
+						on: html.
+					self
+						createTextField: 'Code:'
+						for: #code:
+						with: #code
+						percent: 49
+						to: fee bankAccountInformation bankInformation
+						on: html ]
+				on: html.
+			self
+				createDivCell6ColWith: [ self
+						createTextField: 'Counter Code:'
+						for: #counterCode:
+						with: #counterCode
+						percent: 49
+						to: fee bankAccountInformation bankInformation
+						on: html.
+					self
+						createTextField: 'BIC:'
+						for: #bic:
+						with: #bic
+						percent: 49
+						to: fee bankAccountInformation bankInformation
+						on: html ]
+				on: html ]
+		on: html
 ]
 
 { #category : #rendering }

@@ -46,7 +46,7 @@ ERGroupManagerList >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'Modify User'
-				with: [ :user | self modifyUserFormGroup: user ]
+				with: [ :user | self modifyUserFormGroup: user groupManager ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
@@ -90,9 +90,13 @@ ERGroupManagerList >> renderButtons: html [
 
 { #category : #rendering }
 ERGroupManagerList >> renderContainer: html [
+	html form
+		method: 'post';
+		id: 'formAllGroups';
+		with: [
 	self renderButtons: html.
 	html horizontalRule.
-	self renderTableOfGroups: html
+	self renderTableOfGroups: html]
 ]
 
 { #category : #accessing }

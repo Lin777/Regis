@@ -41,7 +41,7 @@ ERFees >> headers [
 
 { #category : #rendering }
 ERFees >> initializeFormAddFee [
-	formAddFee := (ERContainerAddFee on: attendee withContent: content)
+	formAddFee := (ERContainerAddFee on: attendee withContent: content) controller: controller 
 ]
 
 { #category : #rendering }

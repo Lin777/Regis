@@ -31,6 +31,12 @@ ERBankAccountInformation >> iban: anObject [
 	iban := anObject
 ]
 
+{ #category : #initialization }
+ERBankAccountInformation >> initialize [
+	super initialize.
+	bankInformation := ERBankInformation new.
+]
+
 { #category : #accessing }
 ERBankAccountInformation >> number [
 	^ number

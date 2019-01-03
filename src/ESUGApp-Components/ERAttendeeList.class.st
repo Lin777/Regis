@@ -63,8 +63,14 @@ ERAttendeeList >> listDataToRenderButton [
 		yourself
 ]
 
-{ #category : #rendering }
-ERAttendeeList >> registerAttendee [
+{ #category : #initialization }
+ERAttendeeList >> registerAttendeeToConference [
+	| result |
+	result := controller
+		addAttendee: attenteeRegisterForm controller attendee.
+	result
+		ifNil: [ Transcript show: 'This email already registered' ]
+		ifNotNil: [ content state: content lastState ]
 ]
 
 { #category : #rendering }
@@ -92,9 +98,13 @@ ERAttendeeList >> renderButtons: html [
 
 { #category : #rendering }
 ERAttendeeList >> renderContainer: html [
+	html form
+		method: 'post';
+		id: 'formAllAttends';
+		with: [ 
 	self renderButtons: html.
 	html horizontalRule.
-	self renderTableOfAttends: html
+	self renderTableOfAttends: html]
 ]
 
 { #category : #rendering }
@@ -117,6 +127,14 @@ ERAttendeeList >> tabId [
 { #category : #accessing }
 ERAttendeeList >> tabName [
 	^ 'Attendees'
+]
+
+{ #category : #initialization }
+ERAttendeeList >> tabs [
+	attenteeRegisterForm
+		ifNil: [ attenteeRegisterForm := ERAttendeeRegistrationView
+				withAction: [ self registerAttendeeToConference ] ].
+	^ attenteeRegisterForm tabs
 ]
 
 { #category : #accessing }

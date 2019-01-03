@@ -2,8 +2,7 @@ Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
 	#instVars : [
-		'mofidyUserForm',
-		'formWithoutBasicInfo'
+		'mofidyUserForm'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -72,24 +71,6 @@ ERGroupRegistrationMembers >> listDataToRenderButton [
 	with: [ nil ] 
 	with: [:user | user id, '-invoice']);
 	yourself
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> modifyRegistrationInformation: anAttendee [
-	callback := [ self updateRegistrationInformation: anAttendee ].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView
-				tabs: (self formWithoutBasicInformationFor: anAttendee)).
-	content state: formWithoutBasicInfo
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
-	mofidyUserForm := ERContainerModifyUserView
-		on: anAttendee
-		withContent: content.
-	content state: mofidyUserForm
 ]
 
 { #category : #accessing }
@@ -169,10 +150,4 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> updateRegistrationInformation: anAttendee [
-	anAttendee save.
-	content state: content lastState
 ]

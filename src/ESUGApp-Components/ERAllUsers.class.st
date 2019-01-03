@@ -37,7 +37,7 @@ ERAllUsers >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'Modify'
-				with: [ :user | self modifyUser: user ]
+				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
@@ -50,10 +50,6 @@ ERAllUsers >> listDataToRenderButton [
 				with: [ :user | self resetPassword: user ]
 				with: [ :user | user id , '-resetPassword' ]);
 		yourself
-]
-
-{ #category : #rendering }
-ERAllUsers >> modifyUser: user [
 ]
 
 { #category : #rendering }
@@ -72,9 +68,12 @@ ERAllUsers >> renderButtons: html [
 
 { #category : #rendering }
 ERAllUsers >> renderContainer: html [
-	self renderButtons: html.
-	html horizontalRule.
-	self renderTableOfUsers: html
+	html form
+		method: 'post';
+		id: 'formAllUsers';
+		with: [ self renderButtons: html.
+			html horizontalRule.
+			self renderTableOfUsers: html ]
 ]
 
 { #category : #rendering }
