@@ -49,7 +49,9 @@ ERPageLoggedView >> itemList [
 				withContent: content
 				withController: pageController ];
 		at: 'admin'
-			put: [ ERContainerAdminView attendee: attendee content: content ];
+			put: [ ERContainerAdminView on: attendee
+				withContent: content
+				withController: pageController ];
 		at: 'logout'
 			put: [ self session logout.
 			self answer: true ];

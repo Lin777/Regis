@@ -26,10 +26,9 @@ ERDialog >> message: anObject [
 
 { #category : #rendering }
 ERDialog >> renderContentOn: html [
-	| idButtonOpen idButtonClose |
+	"| idButtonClose |
 	html mdlDialog
 		id: self id;
-		openButtonId: idButtonOpen;
 		closeButtonId: (idButtonClose := html nextId);
 		with: [ html mdlDialogTitle: title.
 			html mdlDialogContent: [ html paragraph: message ].
@@ -38,7 +37,15 @@ ERDialog >> renderContentOn: html [
 					html mdlButton
 						id: idButtonClose;
 						bePush;
-						with: 'Cancel' ] ]
+						with: 'Cancel' ] ]"
+	html div
+      id: self id;
+      script: (html jQuery new dialog
+         title: title;
+         autoOpen: false;
+         addButton: 'Close' do: html jQuery new dialog close);
+      with: [ html paragraph: message ].
+ 
 ]
 
 { #category : #accessing }

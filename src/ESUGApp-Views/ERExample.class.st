@@ -1,6 +1,9 @@
 Class {
 	#name : #ERExample,
-	#superclass : #ERComponent,
+	#superclass : #ERComponentFactory,
+	#instVars : [
+		'message'
+	],
 	#category : #'ESUGApp-Views'
 }
 
@@ -12,35 +15,41 @@ ERExample class >> canBeRoot [
 { #category : #initialization }
 ERExample class >> initialize [
 	"self initialize"
-    (WAAdmin register: self asApplicationAt: 'classVerify')
-        addLibrary: JQDeploymentLibrary;
-        addLibrary: MDLLibrary;
-        addLibrary: ERMaterialBlueRedMinCss;
-        addLibrary: CssForLoginMDL;
-        addLibrary: ERJQValidateForm;
-        addLibrary: ERLibrary;
-        preferenceAt: #sessionClass put: ERSession
+
+	(WAAdmin register: self asApplicationAt: 'classVerify')
+		addLibrary: JQDeploymentLibrary;
+		addLibrary: MDLLibrary;
+		addLibrary: JQUiDeploymentLibrary;
+		addLibrary: ERMaterialBlueRedMinCss;
+		addLibrary: CssForLoginMDL;
+		addLibrary: ERJQValidateForm;
+		addLibrary: ERLibrary;
+		preferenceAt: #sessionClass put: ERSession
+]
+
+{ #category : #initialization }
+ERExample >> initialize [
+	super initialize.
+	message := ERDialog new id: 'error'; title: 'Error'; message: 'asd sfgd'.
+]
+
+{ #category : #accessing }
+ERExample >> message [
+	^ message
+]
+
+{ #category : #accessing }
+ERExample >> message: anObject [
+	message := anObject
 ]
 
 { #category : #rendering }
 ERExample >> renderContentOn: html [
-	html mdlButton
-		id: 'button';
-		bePush;
-		raised;
-		rippleEffect;
-		with: 'Show dialog'.
-		
-	html mdlDialog
-		openButtonId: 'button';
-		closeButtonId: 'close';
-		with: [ 
-			html mdlDialogTitle: 'Good job !'.
-			html mdlDialogContent: [ html paragraph: 'You have not managed to click the button' ].
-			html
-				mdlDialogActions: [ html mdlButton: 'Agree'.
-					html mdlButton
-						id: 'close';
-						bePush;
-						with: 'Disagree' ] ]
+	self
+		createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
+		id: 'registerMyseflAsAttendee'
+		dialogId: 'error'
+		condition: true
+		on: html.
+	html render: message
 ]

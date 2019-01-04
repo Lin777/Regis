@@ -89,7 +89,8 @@ ERGroupRegistrationMembers >> registerMyselfAsAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
-	self renderRegisterMyselfAsAttendee: html
+	self alreadyRegisteredAsAttendee ifFalse:[
+	self renderRegisterMyselfAsAttendee: html]
 ]
 
 { #category : #accessing }

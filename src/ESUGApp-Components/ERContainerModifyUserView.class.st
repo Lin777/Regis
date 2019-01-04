@@ -2,7 +2,6 @@ Class {
 	#name : #ERContainerModifyUserView,
 	#superclass : #ERGeneralContainerView,
 	#instVars : [
-		'attendeModified',
 		'form'
 	],
 	#category : #'ESUGApp-Components'
@@ -11,7 +10,8 @@ Class {
 { #category : #actions }
 ERContainerModifyUserView >> cancel [
 	attendee abortChanges.
-	self returnToThePreviousState 
+	self returnToThePreviousState
+	
 ]
 
 { #category : #rendering }

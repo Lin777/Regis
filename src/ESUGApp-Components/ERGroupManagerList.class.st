@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #rendering }
+ERGroupManagerList >> alreadyRegisteredAsGroupManager [
+	^ attendee userAccount isGroupManager
+]
+
+{ #category : #rendering }
 ERGroupManagerList >> blockTableToExecute [
 	^ [ :group | 
 	OrderedCollection new
@@ -87,11 +92,12 @@ ERGroupManagerList >> renderButtons: html [
 		with: [ self registerGroupManager ]
 		id: 'registerGroupManager'
 		on: html.
+	self alreadyRegisteredAsGroupManager ifFalse: [
 	self
 		createColoredAnchorButton: 'REGISTER MYSELF AS GROUP MANAGER'
 		with: [ self registerMyselfAsGroupManager ]
 		id: 'registerMyselfAsGroupManager'
-		on: html.
+		on: html].
 	self
 		createColoredAnchorButton: 'Export'
 		with: [ self exportGroups ]

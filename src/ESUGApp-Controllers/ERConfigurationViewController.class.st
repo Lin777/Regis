@@ -18,6 +18,16 @@ ERConfigurationViewController >> addAttendee: anAttendee [
 	^ nil
 ]
 
+{ #category : #adding }
+ERConfigurationViewController >> addUser: anAttendee [
+	(ERUserAccount findUserByEmail: anAttendee email)
+		ifNil: [ | userSaved |
+			userSaved := anAttendee userAccount save.
+			conference addUser: userSaved.
+			^ userSaved ].
+	^ nil
+]
+
 { #category : #accessing }
 ERConfigurationViewController >> attends [
 	^ conference attends 

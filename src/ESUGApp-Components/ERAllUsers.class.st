@@ -1,11 +1,27 @@
 Class {
 	#name : #ERAllUsers,
 	#superclass : #ERConfiguration,
+	#instVars : [
+		'formUser',
+		'newUser'
+	],
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
 ERAllUsers >> addUser [
+	self initializeFormAddUser.
+	content state: formUser
+	
+]
+
+{ #category : #rendering }
+ERAllUsers >> addUserToConference [
+	| result |
+	result := controller addUser: newUser.
+	result
+		ifNil: [ Transcript show: 'This email already registered' ]
+		ifNotNil: [ content state: content lastState ]
 ]
 
 { #category : #rendering }
@@ -29,6 +45,15 @@ ERAllUsers >> exportUsers [
 { #category : #rendering }
 ERAllUsers >> headers [
 	^ #('Name' 'Admin Role' 'Email' '')
+]
+
+{ #category : #rendering }
+ERAllUsers >> initializeFormAddUser [
+	newUser := ERAttendee new.
+	formUser := ERContainerBasicInformation
+		on: newUser
+		withContent: content
+		withAction: [ self addUserToConference ]
 ]
 
 { #category : #rendering }

@@ -22,6 +22,11 @@ ERTabContainerPage class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
+{ #category : #rendering }
+ERTabContainerPage >> alreadyRegisteredAsAttendee [
+	^ attendee userAccount isAttendee
+]
+
 { #category : #accessing }
 ERTabContainerPage >> callback [
 	^ callback

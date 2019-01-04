@@ -81,12 +81,8 @@ ERAttendeeList >> registerAttendeeToConference [
 
 { #category : #rendering }
 ERAttendeeList >> registerMyselfAsAttendee [
-	attendee userAccount isAttendee
-		ifFalse: [ callback := [ self registerAdminAsAttendee ].
-			self initializeFormWithoutBasicInformationFor: attendee ]
-		ifTrue: [ messageComponent
-				title: 'Error';
-				message: 'Your already register as attendee' ]
+	callback := [ self registerAdminAsAttendee ].
+			self initializeFormWithoutBasicInformationFor: attendee
 ]
 
 { #category : #rendering }
@@ -96,11 +92,12 @@ ERAttendeeList >> renderButtons: html [
 		with: [ self registerAttendee ]
 		id: 'registerAttendee'
 		on: html.
-	self
-		createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
-		with: [ self registerMyselfAsAttendee ]
-		id: 'registerMyseflAsAttendee'
-		on: html.
+	self alreadyRegisteredAsAttendee
+		ifFalse: [ self
+				createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
+				with: [ self registerMyselfAsAttendee ]
+				id: 'registerMyseflAsAttendee'
+				on: html ].
 	self
 		createColoredAnchorButton: 'EXPORT'
 		with: [ self exportAttends ]
@@ -110,13 +107,14 @@ ERAttendeeList >> renderButtons: html [
 
 { #category : #rendering }
 ERAttendeeList >> renderContainer: html [
+	html render: dialog.
 	html form
 		method: 'post';
 		id: 'formAllAttends';
-		with: [ 
-	self renderButtons: html.
-	html horizontalRule.
-	self renderTableOfAttends: html]
+		with: [ self renderButtons: html.
+			html horizontalRule.
+			self renderTableOfAttends: html ].
+	
 ]
 
 { #category : #rendering }
