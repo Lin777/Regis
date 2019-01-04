@@ -23,6 +23,10 @@ ERGroupManagerList >> blockTableToExecute [
 
 { #category : #rendering }
 ERGroupManagerList >> exportGroups [
+	(File named: 'groupManagers') exists
+		ifFalse: [ controller exportGroupManagers
+	 ]
+		ifTrue: [ Transcript show: 'File Exist' ]
 ]
 
 { #category : #accessing }

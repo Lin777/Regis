@@ -26,6 +26,9 @@ ERAttendeeList >> blockTableToExecute [
 
 { #category : #rendering }
 ERAttendeeList >> exportAttends [
+	(File named: 'attends') exists
+		ifFalse: [ controller exportAttends ]
+		ifTrue: [ Transcript show: 'File Exist' ]
 ]
 
 { #category : #rendering }

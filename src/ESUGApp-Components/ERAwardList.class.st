@@ -20,6 +20,9 @@ ERAwardList >> blockTableToExecute [
 
 { #category : #rendering }
 ERAwardList >> exportAwards [
+	(File named: 'awards') exists
+		ifFalse: [ controller exportAwards ]
+		ifTrue: [ Transcript show: 'File Exist' ]
 ]
 
 { #category : #rendering }
