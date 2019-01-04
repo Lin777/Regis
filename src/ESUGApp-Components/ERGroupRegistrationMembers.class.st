@@ -82,12 +82,8 @@ ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerMyselfAsAttendee [
-	callback := [self registerGroupManagerAsAttendee].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView
-				tabs: (self formWithoutBasicInformationFor: attendee)).
-	content state: formWithoutBasicInfo
+	callback := [ self registerGroupManagerAsAttendee ].
+	self initializeFormWithoutBasicInformationFor: attendee
 ]
 
 { #category : #accessing }

@@ -63,18 +63,29 @@ ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
 ]
 
 { #category : #initialization }
+ERTabContainerPage >> initialize [
+	super initialize.
+	messageComponent := ERDialog new id: 'error'
+]
+
+{ #category : #initialization }
 ERTabContainerPage >> initializeFormRegister [
 	formRegister := (ERContainerTabsView content: content)
 		tabView: (ERTabsView tabs: self tabs)
 ]
 
 { #category : #accessing }
+ERTabContainerPage >> initializeFormWithoutBasicInformationFor: anAttendee [
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView: (ERTabsView tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #accessing }
 ERTabContainerPage >> modifyRegistrationInformation: anAttendee [
 	callback := [ self updateRegistrationInformation: anAttendee ].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView tabs: (self formWithoutBasicInformationFor: anAttendee)).
-	content state: formWithoutBasicInfo
+	
+	self initializeFormWithoutBasicInformationFor: anAttendee
 ]
 
 { #category : #accessing }
@@ -83,6 +94,12 @@ ERTabContainerPage >> modifyUserFormGroup: anAttendee [
 		on: anAttendee
 		withContent: content.
 	content state: mofidyUserForm
+]
+
+{ #category : #rendering }
+ERTabContainerPage >> registerAttendee [
+	self initializeFormRegister.
+	content state: formRegister
 ]
 
 { #category : #rendering }

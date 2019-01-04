@@ -38,6 +38,28 @@ ERConfigurationViewController >> reductionTickets [
 	^ conference reductionTickets
 ]
 
+{ #category : #adding }
+ERConfigurationViewController >> registerAsAttendee [
+	attendee userAccount
+		roleAdd: 'attendee';
+		save.
+	attendee save.
+	conference addAttendee: attendee.
+	conference save.
+	^ attendee
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> registerAsGroupManager [
+	attendee userAccount
+		roleAdd: 'groupManager';
+		save.
+	attendee save.
+	conference addAttendee: attendee.
+	conference save.
+	^ attendee
+]
+
 { #category : #accessing }
 ERConfigurationViewController >> submittedAwards [
 	^ conference submittedAwards

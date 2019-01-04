@@ -63,6 +63,12 @@ ERAttendeeList >> listDataToRenderButton [
 		yourself
 ]
 
+{ #category : #rendering }
+ERAttendeeList >> registerAdminAsAttendee [
+	controller registerAsAttendee.
+	content state: content lastState
+]
+
 { #category : #initialization }
 ERAttendeeList >> registerAttendeeToConference [
 	| result |
@@ -75,6 +81,12 @@ ERAttendeeList >> registerAttendeeToConference [
 
 { #category : #rendering }
 ERAttendeeList >> registerMyselfAsAttendee [
+	attendee userAccount isAttendee
+		ifFalse: [ callback := [ self registerAdminAsAttendee ].
+			self initializeFormWithoutBasicInformationFor: attendee ]
+		ifTrue: [ messageComponent
+				title: 'Error';
+				message: 'Your already register as attendee' ]
 ]
 
 { #category : #rendering }

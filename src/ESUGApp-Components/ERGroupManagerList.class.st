@@ -61,12 +61,23 @@ ERGroupManagerList >> listDataToRenderButton [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroupManagerList >> registerAdminAsGroupManager [
+	controller registerAsGroupManager.
+	content state: content lastState
+]
+
 { #category : #rendering }
 ERGroupManagerList >> registerGroupManager [
 ]
 
 { #category : #rendering }
 ERGroupManagerList >> registerMyselfAsGroupManager [
+	attendee userAccount isGroupManager 
+		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
+	self initializeFormWithoutBasicInformationFor: attendee ]
+		ifTrue: [  ]
+	
 ]
 
 { #category : #rendering }
