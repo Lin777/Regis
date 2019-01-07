@@ -47,5 +47,4 @@ ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 	modifyUser := controller
 		updateUserFields: ERTestControllers testExampleAttendee userAccount.
 	self assert: modifyUser isNil
-	"modificacion"
 ]

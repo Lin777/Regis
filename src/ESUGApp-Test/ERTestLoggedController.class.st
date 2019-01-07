@@ -6,9 +6,9 @@ Class {
 
 { #category : #tests }
 ERTestLoggedController >> testGetAttendeeWhenUserExist [
-	| anUserAccounRegistered anUser |
-	anUserAccounRegistered := self registerAttendee .
-	anUser := (ERLoggedController user: anUserAccounRegistered)
+	| anUserAccountRegistered anUser |
+	anUserAccountRegistered := self registerAttendee.
+	anUser := (ERLoggedController user: anUserAccountRegistered)
 		attendeeFromUser.
 	self deny: anUser isNil
 ]

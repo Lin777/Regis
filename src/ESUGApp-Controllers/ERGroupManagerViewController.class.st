@@ -41,10 +41,10 @@ ERGroupManagerViewController >> createGroup: aGroupManager [
 
 { #category : #accessing }
 ERGroupManagerViewController >> deleteAttendee: anAttendee [
-	|userOfAttendee|
+	| userOfAttendee |
 	userOfAttendee := anAttendee userAccount.
-					anAttendee delete.
-					userOfAttendee delete
+	anAttendee delete.
+	userOfAttendee delete
 ]
 
 { #category : #accessing }
@@ -75,10 +75,6 @@ ERGroupManagerViewController >> groupOfAttendee: aGroupManager [
 			group := self createGroup: aGroupManager .
 			 ].
 	^ group
-]
-
-{ #category : #adding }
-ERGroupManagerViewController >> modifyAffiliation: anAttendee [
 ]
 
 { #category : #adding }

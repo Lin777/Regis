@@ -11,7 +11,7 @@ Class {
 ERTestGroupManagerViewController >> setUp [
 	| anUser |
 	super setUp.
-	anUser := self registerAttendee.
+	anUser := self registerAsGroupManager.
 	controller := ERGroupManagerViewController new.
 	controller attendee: (controller attendeeFromUser: anUser)
 ]
@@ -25,13 +25,30 @@ ERTestGroupManagerViewController >> testAddAttendee [
 ]
 
 { #category : #tests }
+ERTestGroupManagerViewController >> testAddMyselfToGroup [
+	controller addMyselfToGroup .
+	self
+		assert:
+			(controller groupForGroupManager listAttends
+				find: controller attendee) isNotNil
+]
+
+{ #category : #tests }
+ERTestGroupManagerViewController >> testCreateGRoupForGroupManager [
+	|group|
+	group := controller groupForGroupManager .
+	self assert: (group groupManager = controller attendee )
+]
+
+{ #category : #tests }
 ERTestGroupManagerViewController >> testDeleteAnAttendee [
-	| user attendee result |
-	user := self registerAttendee: ERTestControllers testExampleAttendee.
+	"| user attendee result |
+	user := self
+		registerAttendee: ERTestControllers testExampleAttendee.
 	attendee := controller attendeeFromUser: user.
-	controller deleteAttendee: attendee .
-	result := controller groupForGroupManager listAttends isEmpty . 
-	self assert: result .
+	controller deleteAttendee: attendee.
+	result := controller groupForGroupManager listAttends isEmpty.
+	self assert: result"
 ]
 
 { #category : #tests }
@@ -41,4 +58,13 @@ ERTestGroupManagerViewController >> testGroupOfAttendee [
 	group := ERGroupManagerViewController new
 		groupOfAttendee: user.
 	self assert: (group isKindOf: ERGroup )
+]
+
+{ #category : #tests }
+ERTestGroupManagerViewController >> testRegisterAsAttendee [
+	controller registerAsAttendee.
+	self
+		assert:
+			((controller attendee userAccount isAttendee) and: (controller
+				attendee userAccount isGroupManager))
 ]
