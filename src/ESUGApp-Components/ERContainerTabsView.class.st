@@ -2,7 +2,8 @@ Class {
 	#name : #ERContainerTabsView,
 	#superclass : #ERContainerView,
 	#instVars : [
-		'tabView'
+		'tabView',
+		'dialog'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -27,27 +28,38 @@ ERContainerTabsView >> content: anObject [
 	content := anObject
 ]
 
+{ #category : #initialization }
+ERContainerTabsView >> initializeDialog [
+	dialog := ERDialog new
+		title: 'Cancel Register Attendee';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancel-register-attendee';
+		okCallback: [ self cancel ]
+]
+
 { #category : #rendering }
 ERContainerTabsView >> renderCancelButton: html [
-	html mdlAnchorButton
-		colored;
-		rippleEffect;
-		id: 'cancelRegisterUser';
-		callback: [ self cancel ];
-		with: 'Cancel'
+	self initializeDialog .
+	self
+		createColoredAnchorButton: 'Cancel'
+		id: 'cancel-register-attendee'
+		on: html
 ]
 
 { #category : #rendering }
 ERContainerTabsView >> renderContentPage: html [
 	html mdlTabs rippleEffect
-		with: [ html div
+		with:
+			[ html div
 				style: 'overflow-x:auto;';
 				with: [ html mdlGrid noSpacing
 						with: [ html form
 								method: 'post';
 								id: 'formRegisterInTabs';
 								with: [ html render: tabView.
-									self renderCancelButton: html ] ] ] ]
+									self renderCancelButton: html ] ] ] ].
+	html render: dialog
 ]
 
 { #category : #accessing }

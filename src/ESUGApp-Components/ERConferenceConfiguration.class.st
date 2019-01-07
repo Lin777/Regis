@@ -2,7 +2,8 @@ Class {
 	#name : #ERConferenceConfiguration,
 	#superclass : #ERConfiguration,
 	#instVars : [
-		'conference'
+		'conference',
+		'dialog'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -20,8 +21,14 @@ ERConferenceConfiguration >> cancel [
 { #category : #rendering }
 ERConferenceConfiguration >> initialize [
 	super initialize.
-	self initializeController .
-	conference := controller conference
+	self initializeController.
+	conference := controller conference.
+	dialog := ERDialog new
+		title: 'Cancel Modify Conference';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancel-modify-conference';
+		okCallback: [ self cancel ]
 ]
 
 { #category : #rendering }
@@ -43,7 +50,6 @@ ERConferenceConfiguration >> renderButtons: html [
 ERConferenceConfiguration >> renderCancelButtonOn: html [
 	self
 		createColoredAnchorButton: 'Cancel'
-		with: [ self cancel ]
 		id: 'cancel-modify-conference'
 		on: html
 ]
@@ -56,13 +62,13 @@ ERConferenceConfiguration >> renderContainer: html [
 { #category : #rendering }
 ERConferenceConfiguration >> renderContentOn: html [
 	html form
-						method: 'post';
-						id: 'formConference';
-						with:[
-	self renderFormConferenceConfiguration: html.
-	self renderFormEmailConfiguration: html.
-	self renderFormOrganizer: html.
-	self renderButtons: html]
+		method: 'post';
+		id: 'formConference';
+		with: [ self renderFormConferenceConfiguration: html.
+			self renderFormEmailConfiguration: html.
+			self renderFormOrganizer: html.
+			self renderButtons: html ].
+	html render: dialog
 ]
 
 { #category : #rendering }

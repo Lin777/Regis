@@ -65,6 +65,11 @@ ERUserAccount class >> hashPassword: aString [
 ]
 
 { #category : #accessing }
+ERUserAccount >> deleteRole: anObject [
+	role removeAllSuchThat: [ :each | each = anObject  ]
+]
+
+{ #category : #accessing }
 ERUserAccount >> email [
 	^ email
 ]

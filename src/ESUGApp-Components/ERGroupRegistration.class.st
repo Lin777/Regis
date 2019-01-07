@@ -26,6 +26,11 @@ ERGroupRegistration >> cancel [
 ]
 
 { #category : #initialization }
+ERGroupRegistration >> initialize [
+	super initialize.
+]
+
+{ #category : #initialization }
 ERGroupRegistration >> initializeController [
 	controller := ERGroupManagerViewController new attendee: attendee
 ]

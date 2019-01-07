@@ -2,7 +2,8 @@ Class {
 	#name : #ERContainerModifyAffiliationView,
 	#superclass : #ERGeneralContainerView,
 	#instVars : [
-		'formAffiliation'
+		'formAffiliation',
+		'dialog'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -10,6 +11,16 @@ Class {
 { #category : #accessing }
 ERContainerModifyAffiliationView >> content: anObject [
 	content := anObject
+]
+
+{ #category : #initialization }
+ERContainerModifyAffiliationView >> initializeDialog [
+	dialog := ERDialog new
+		title: 'Cancel Modify Affiliation';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancel-change-affiliation';
+		okCallback: cancelCallback
 ]
 
 { #category : #initialization }
@@ -34,11 +45,8 @@ ERContainerModifyAffiliationView >> renderButtons: html [
 
 { #category : #rendering }
 ERContainerModifyAffiliationView >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		with: cancelCallback
-		id: 'cancel-change-affiliation'
-		on: html
+	self initializeDialog .
+	self createColoredAnchorButton: 'Cancel' id: 'cancel-change-affiliation' on: html
 ]
 
 { #category : #rendering }
@@ -53,7 +61,8 @@ ERContainerModifyAffiliationView >> renderPageOn: html [
 		method: 'post';
 		id: 'formUpdateAffiliation';
 		with: [ self renderFormOn: html.
-			self renderButtons: html ]
+			self renderButtons: html ].
+	html render: dialog 
 ]
 
 { #category : #rendering }

@@ -38,6 +38,20 @@ ERConfigurationViewController >> createFile: aNameFile [
 	^ FileStream newFileNamed: aNameFile.
 ]
 
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> deleteReductionTicket: aReductionTicket [
+	aReductionTicket usersOfTickets size > 0 ifTrue: [ 
+		^ nil ]
+	ifFalse: [ conference reductionTickets removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId  ] ]
+]
+
+{ #category : #rendering }
+ERConfigurationViewController >> deleteUser: anUser [
+	"The admin user can not be deleted"
+	anUser isAdmin ifFalse: [  ]
+	ifTrue: [ ^ nil ]
+]
+
 { #category : #rendering }
 ERConfigurationViewController >> exportAttends [
 	| file cvs |

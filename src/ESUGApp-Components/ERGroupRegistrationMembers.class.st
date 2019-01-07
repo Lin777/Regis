@@ -26,7 +26,7 @@ ERGroupRegistrationMembers >> blockTableToExecute [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
-	controller deleteAttendeeFromGroup: anAttendee 
+	controller deleteAttendee: anAttendee
 ]
 
 { #category : #accessing }

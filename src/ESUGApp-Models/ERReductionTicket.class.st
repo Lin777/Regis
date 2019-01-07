@@ -21,6 +21,12 @@ ERReductionTicket >> discountStrategy: anObject [
 ]
 
 { #category : #accessing }
+ERReductionTicket >> initialize [
+	super initialize .
+	usersOfTickets := OrderedCollection new
+]
+
+{ #category : #accessing }
 ERReductionTicket >> limitStrategy [
 	^ limitStrategy
 ]

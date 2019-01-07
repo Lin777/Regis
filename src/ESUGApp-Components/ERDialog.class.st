@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'message',
 		'title',
-		'callback'
+		'callback',
+		'idOpen',
+		'idClose',
+		'okCallback'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -20,32 +23,40 @@ ERDialog >> callback: anObject [
 ]
 
 { #category : #accessing }
+ERDialog >> idClose: anObject [
+	idClose := anObject
+]
+
+{ #category : #accessing }
+ERDialog >> idOpen: anObject [
+	idOpen := anObject
+]
+
+{ #category : #accessing }
 ERDialog >> message: anObject [
 	message := anObject
 ]
 
+{ #category : #accessing }
+ERDialog >> okCallback: anObject [
+	okCallback := anObject
+]
+
 { #category : #rendering }
 ERDialog >> renderContentOn: html [
-	"| idButtonClose |
 	html mdlDialog
-		id: self id;
-		closeButtonId: (idButtonClose := html nextId);
+		openButtonId: idOpen;
+		closeButtonId: idClose;
 		with: [ html mdlDialogTitle: title.
 			html mdlDialogContent: [ html paragraph: message ].
 			html
-				mdlDialogActions: [ html mdlButton: 'Ok'.
+				mdlDialogActions: [ html mdlAnchorButton
+						callback: okCallback;
+						with: 'Ok'.
 					html mdlButton
-						id: idButtonClose;
+						id: idClose;
 						bePush;
-						with: 'Cancel' ] ]"
-	html div
-      id: self id;
-      script: (html jQuery new dialog
-         title: title;
-         autoOpen: false;
-         addButton: 'Close' do: html jQuery new dialog close);
-      with: [ html paragraph: message ].
- 
+						with: 'Cancel' ] ]
 ]
 
 { #category : #accessing }

@@ -21,6 +21,8 @@ ERContainerAddFee class >> on: anAttendee withContent: aContent [
 { #category : #rendering }
 ERContainerAddFee >> addFee [
 	|aFee|
+	fee bankAccountInformation bankInformation save.
+	fee bankAccountInformation save.
 	aFee := fee save.
 	conference addFee: aFee .
 	conference save.
@@ -38,8 +40,9 @@ ERContainerAddFee >> controller: anObject [
 
 { #category : #rendering }
 ERContainerAddFee >> initialize [
-	super initialize .
-	fee := ERFee new.
+	super initialize.
+	controller := ERConfigurationViewController new.
+	fee := ERFee new
 ]
 
 { #category : #rendering }
@@ -167,22 +170,60 @@ ERContainerAddFee >> renderFormBankInformation: html [
 { #category : #rendering }
 ERContainerAddFee >> renderFormConferenceFee: html [
 	self createHeadingStrong: 'Conference Fee:' level: 5 on: html.
-	html horizontalRule .
-	self createSelectField: 'Currency:' for: #currency: with: #currency list: ERAttendee currencyTypes to: fee on: html.
-	self createDivGridWith: [ 
-		self createDivCell6ColWith: [ 
-			html strong: 'Early Registration Fee:' .
-			html break .
-			self createTextField: 'All days Fee:' for: #erfAllDaysFee: with: #erfAllDaysFee percent: 49 to: fee on: html.
-			self createTextField: 'One day Fee:' for: #erfOneDayFee: with: #erfOneDayFee percent: 49 to: fee on: html.
-			 ] on: html.
-		self createDivCell6ColWith: [
-			html strong: 'Late Registration Fee:'.
-			html break .
-			self createTextField: 'All days Fee:' for: #lrfAllDaysFee: with: #lrfAllDaysFee percent: 49 to: fee on: html.
-			self createTextField: 'One day Fee:' for: #lrfOneDayFee: with: #lrfOneDayFee percent: 49 to: fee on: html.
-			 ] on: html.
-	] on: html.
+	html horizontalRule.
+	self
+		createSelectField: 'Currency:'
+		for: #currency:
+		with: #currency
+		list: ERAttendee currencyTypes
+		percent: 49
+		to: fee
+		on: html.
+	self
+		createTextField: 'Price for add a person to the Social Dinner:'
+		for: #extraPersonSD:
+		with: #extraPersonSD
+		percent: 49
+		to: fee
+		on: html.
+	self
+		createDivGridWith: [ self
+				createDivCell6ColWith: [ html strong: 'Early Registration Fee:'.
+					html break.
+					self
+						createTextField: 'All days Fee:'
+						for: #erfAllDaysFee:
+						with: #erfAllDaysFee
+						percent: 49
+						to: fee
+						on: html.
+					self
+						createTextField: 'One day Fee:'
+						for: #erfOneDayFee:
+						with: #erfOneDayFee
+						percent: 49
+						to: fee
+						on: html ]
+				on: html.
+			self
+				createDivCell6ColWith: [ html strong: 'Late Registration Fee:'.
+					html break.
+					self
+						createTextField: 'All days Fee:'
+						for: #lrfAllDaysFee:
+						with: #lrfAllDaysFee
+						percent: 49
+						to: fee
+						on: html.
+					self
+						createTextField: 'One day Fee:'
+						for: #lrfOneDayFee:
+						with: #lrfOneDayFee
+						percent: 49
+						to: fee
+						on: html ]
+				on: html ]
+		on: html
 ]
 
 { #category : #rendering }

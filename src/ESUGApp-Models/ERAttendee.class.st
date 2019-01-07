@@ -28,6 +28,7 @@ Class {
 		'foodPreference',
 		'attendSocialEvent',
 		'addedToMainList',
+		'addPersonToSocialDinner',
 		'tshirtSize',
 		'attendance',
 		'gender',
@@ -71,6 +72,16 @@ ERAttendee class >> paymentTypes [
 { #category : #'as yet unclassified' }
 ERAttendee class >> tShirtSizes [
 	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
+]
+
+{ #category : #accessing }
+ERAttendee >> addPersonToSocialDinner [
+	^ addPersonToSocialDinner
+]
+
+{ #category : #accessing }
+ERAttendee >> addPersonToSocialDinner: anObject [
+	addPersonToSocialDinner := anObject
 ]
 
 { #category : #accessing }
@@ -244,6 +255,7 @@ ERAttendee >> initialize [
 	userAccount := ERUserAccount new.
 	self attendSocialEvent: true.
 	self addedToMainList: true.
+	self addPersonToSocialDinner: false.
 	self
 		attendance:
 			(Dictionary

@@ -8,7 +8,8 @@ Class {
 		'lrfAllDaysFee',
 		'lrfOneDayFee',
 		'bankAccountInformation',
-		'bankPayPalUrl'
+		'bankPayPalUrl',
+		'extraPersonSD'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -61,6 +62,16 @@ ERFee >> erfOneDayFee [
 { #category : #accessing }
 ERFee >> erfOneDayFee: anObject [
 	erfOneDayFee := anObject
+]
+
+{ #category : #accessing }
+ERFee >> extraPersonSD [
+	^ extraPersonSD
+]
+
+{ #category : #accessing }
+ERFee >> extraPersonSD: anObject [
+	extraPersonSD := anObject
 ]
 
 { #category : #initialization }

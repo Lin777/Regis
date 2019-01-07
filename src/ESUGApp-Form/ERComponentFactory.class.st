@@ -69,13 +69,11 @@ ERComponentFactory >> createColoredAnchorButton: aName id: anId dialogId: aDialo
 ]
 
 { #category : #'as yet unclassified' }
-ERComponentFactory >> createColoredAnchorButton: aName with: aBlock id: anId dialogId: aDialogId condition: aCondition on: html [
-	html mdlAnchorButton
-		onClick:  (html jQuery id: aDialogId) dialog open if: aCondition ; 
+ERComponentFactory >> createColoredAnchorButton: aName id: anId on: html [
+	html mdlAnchorButton 
+		openDialogWithId: anId; 
 		colored;
-		id: anId;
-		callback: aBlock;
-		with: aName
+		with: aName.
 ]
 
 { #category : #'as yet unclassified' }
@@ -340,6 +338,20 @@ ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol 
 				selected: (attendee perform: anotherSymbol);
 				callback: [ :value | 
 					attendee perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList percent: aNumber to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width:' , aNumber asString , '%';
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				class: 'mdl-textfield__input';
+				id: (self idFromSymbol: aSymbol);
+				list: aList;
+				selected: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
 ]
 
 { #category : #'as yet unclassified' }

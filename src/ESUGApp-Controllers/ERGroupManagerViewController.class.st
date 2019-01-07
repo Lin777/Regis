@@ -40,11 +40,47 @@ ERGroupManagerViewController >> createGroup: aGroupManager [
 ]
 
 { #category : #accessing }
+ERGroupManagerViewController >> deleteAllFieldsOfAttendeeExceptAffiliationInformation [
+	attendee keywords: ''.
+	attendee additionalText: ''.
+	attendee address: ''.
+	attendee address2: ''.
+	attendee city: ''.
+	attendee country: 'Select Country'.
+	attendee province: ''.
+	attendee postal: ''.
+	attendee facebookURL: ''.
+	attendee twitterURL: ''.
+	attendee homePage: ''.
+	attendee foodPreference: 'Normal'.
+	attendee attendSocialEvent: true.
+	attendee addedToMainList: true.
+	attendee addPersonToSocialDinner: false.
+	attendee tshirtSize: 'XS'.
+	attendee
+		attendance:
+			(Dictionary
+				newFrom:
+					{('monday' -> true).
+					('tuesday' -> true).
+					('wednesday' -> true).
+					('thursday' -> true).
+					('friday' -> true)}).
+	attendee gender: 'Male'.
+	attendee paymentType: 'Bank transfer'.
+	attendee paymentCurrency: 'Euro'.
+	attendee coupon: ''.
+	attendee userAccount deleteRole: 'attendee'.
+	user save.
+	attendee save.
+]
+
+{ #category : #accessing }
 ERGroupManagerViewController >> deleteAttendee: anAttendee [
-	| userOfAttendee |
-	userOfAttendee := anAttendee userAccount.
-	anAttendee delete.
-	userOfAttendee delete
+	self deleteAttendeeFromGroupAndConference: anAttendee.
+	anAttendee userAccount = attendee userAccount
+		ifFalse: [ self deleteAttendeeAndRemoveUserForConference: anAttendee ]
+		ifTrue: [ self deleteAllFieldsOfAttendeeExceptAffiliationInformation ]
 ]
 
 { #category : #accessing }
@@ -58,6 +94,16 @@ ERGroupManagerViewController >> deleteAttendeeFromGroup: anAttendee [
 					group listAttends remove: each ifAbsent: [  ].
 					self deleteAttendee: each ] ].
 	group save
+]
+
+{ #category : #accessing }
+ERGroupManagerViewController >> deleteAttendeeFromGroupAndConference: anAttendee [
+	(self groupForGroupManager listAttends)
+		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self groupForGroupManager save.
+	(self conference attends)
+		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self conference save.
 ]
 
 { #category : #accessing }

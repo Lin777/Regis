@@ -25,6 +25,7 @@ ERReductionTickets >> blockTableToExecute [
 
 { #category : #rendering }
 ERReductionTickets >> deleteTicket: ticket [
+	controller deleteReductionTicket: ticket 
 ]
 
 { #category : #accessing }

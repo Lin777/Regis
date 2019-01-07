@@ -2,7 +2,8 @@ Class {
 	#name : #ERContainerModifyUserView,
 	#superclass : #ERGeneralContainerView,
 	#instVars : [
-		'form'
+		'form',
+		'dialog'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -17,6 +18,16 @@ ERContainerModifyUserView >> cancel [
 { #category : #rendering }
 ERContainerModifyUserView >> content: anObject [
 	content := anObject
+]
+
+{ #category : #initialization }
+ERContainerModifyUserView >> initializeDialog [ 
+	dialog := ERDialog new
+		title: 'Cancel Modify User';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancel-modify-user';
+		okCallback: [ self cancel ]
 ]
 
 { #category : #rendering }
@@ -36,10 +47,10 @@ ERContainerModifyUserView >> renderButtons: html [
 
 { #category : #rendering }
 ERContainerModifyUserView >> renderCancelButtonOn: html [
+	self initializeDialog .
 	self
 		createColoredAnchorButton: 'Cancel'
-		with: [ self cancel ]
-		id: 'cancel-change-affiliation'
+		id: 'cancel-modify-user'
 		on: html
 ]
 
@@ -54,7 +65,8 @@ ERContainerModifyUserView >> renderPageOn: html [
 		method: 'post';
 		id: 'formModifyUser';
 		with: [ self renderFormOn: html.
-			self renderButtons: html ]
+			self renderButtons: html ].
+	html render: dialog 
 ]
 
 { #category : #rendering }

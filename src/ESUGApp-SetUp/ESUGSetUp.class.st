@@ -58,6 +58,7 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 		erfOneDayFee: 170;
 		lrfAllDaysFee: 660;
 		lrfOneDayFee: 210;
+		extraPersonSD: 50;
 		currency: 'Euro';
 		bankAccountInformation: esugEuroBankAccountInformation;
 		bankPayPalUrl:

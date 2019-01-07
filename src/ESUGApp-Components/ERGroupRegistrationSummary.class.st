@@ -63,6 +63,7 @@ ERGroupRegistrationSummary >> renderContainer: html [
 	self renderOrganizationName: html.
 	self renderPaymentStatus: html.
 	self renderFormButtons: html.
+	html render: dialogGroupRegistration .
 ]
 
 { #category : #rendering }

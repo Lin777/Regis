@@ -77,23 +77,33 @@ ERClassToVerity >> initialize [
 
 { #category : #rendering }
 ERClassToVerity >> renderContentOn: html [
-	html div class: self id;
-	with: [ 
-		html mdlLayout with: [ 
-			html mdlCard 
-			class: classContainer, ' mdl-shadow--16dp';
-			id: 'login-conatiner';
-			with: [ 
-				html mdlCardTextContainer 
-				with: [ 
-					self renderIconCard: html.
-					html div id: 'card-heading';
-					with: self title.
-					self content value.
-				]
-			]
-		]
-	].
+	"html div
+		class: self id;
+		with: [ html mdlLayout
+				with: [ html mdlCard
+						class: classContainer , ' mdl-shadow--16dp';
+						id: 'login-conatiner';
+						with: [ html mdlCardTextContainer
+								with: [ self renderIconCard: html.
+									html div
+										id: 'card-heading';
+										with: self title.
+									self content value ] ] ] ]"
+
+	html mdlButton
+		openDialogWithId: 'buttonOpen';
+		bePush;
+		raised;
+		rippleEffect;
+		with: 'Show dialog'.
+	html
+		render:
+			(ERDialog new
+				title: 'Error';
+				message: 'This is a error';
+				idClose: 'buttonClose';
+				idOpen: 'buttonOpen';
+				okCallback: [Transcript show: 'Push OK'])
 ]
 
 { #category : #rendering }
