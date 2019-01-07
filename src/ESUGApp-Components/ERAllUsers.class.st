@@ -40,7 +40,7 @@ ERAllUsers >> deleteUser: user [
 
 { #category : #rendering }
 ERAllUsers >> exportUsers [
-	(File named: 'users') exists
+	(self fileExists: 'users.cvs')
 		ifFalse: [ controller exportUsers ]
 		ifTrue: [ Transcript show: 'File Exist' ]
 ]

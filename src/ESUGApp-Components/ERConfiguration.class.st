@@ -14,6 +14,12 @@ ERConfiguration class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
+{ #category : #'file library' }
+ERConfiguration >> fileExists: fileName [ 
+	^ (File named: ((FileSystem workingDirectory asString splitOn: '@ ') at:2),'/fileName') exists.
+
+]
+
 { #category : #initialization }
 ERConfiguration >> initializeController [
 	controller := ERConfigurationViewController new attendee: attendee

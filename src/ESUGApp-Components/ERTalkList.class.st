@@ -16,10 +16,10 @@ ERTalkList >> blockTableToExecute [
 
 { #category : #rendering }
 ERTalkList >> exportTalks [
-	(File named: 'talks') exists
+	
+	(self fileExists: 'talks.cvs')
 		ifFalse: [ controller exportTalks ]
 		ifTrue: [ Transcript show: 'File Exist' ]
-	
 ]
 
 { #category : #accessing }

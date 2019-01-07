@@ -23,9 +23,8 @@ ERGroupManagerList >> blockTableToExecute [
 
 { #category : #rendering }
 ERGroupManagerList >> exportGroups [
-	(File named: 'groupManagers') exists
-		ifFalse: [ controller exportGroupManagers
-	 ]
+	(self fileExists: 'groupManagers.cvs')
+		ifFalse: [ controller exportGroupManagers ]
 		ifTrue: [ Transcript show: 'File Exist' ]
 ]
 

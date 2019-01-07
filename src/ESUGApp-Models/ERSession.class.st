@@ -18,16 +18,6 @@ ERSession >> account: anObject [
 	account := anObject
 ]
 
-{ #category : #accessing }
-ERSession >> database [
-	^ database
-]
-
-{ #category : #accessing }
-ERSession >> database: anObject [
-	database := anObject
-]
-
 { #category : #actions }
 ERSession >> findUserByEmail: anEmail [
 
