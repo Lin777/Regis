@@ -13,7 +13,8 @@ ERLoginView2 >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
-		html mdlAnchorButton primaryColor;
+		html mdlAnchorButton 
+		class: 'mdl-color-text--blue'"primaryColor";
 		with: 'Forgot Password'
 		]
 	]
@@ -83,11 +84,11 @@ ERLoginView2 >> renderLoginButtonOn: html [
 	html mdlButton
 		beSubmit ;
 		raised;
-		colored;
+		"colored;"
 		rippleEffect;
 		accentColor;
 		id: 'login-button';
-		class: 'login-button mdl-color-text--white';
+		class: 'login-button mdl-color--blue-700 mdl-color-text--white';
 		callback: [ self loginUser  ];
 		with: 'Login'.
 ]
@@ -123,7 +124,8 @@ ERLoginView2 >> renderPasswordField: html [
 { #category : #rendering }
 ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
-		primaryColor;
+		class: 'mdl-color-text--blue';
+		"primaryColor ;"
 		id: 'register-button-as-group-manager';
 		callback: [ self registerAsGroupManager ];
 		with: 'Group Manager'
@@ -132,8 +134,8 @@ ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 { #category : #rendering }
 ERLoginView2 >> renderRegisterButtonOn: html [
 	html mdlAnchorButton
-		mdlTextColorAccent;
-		class: 'login-button';
+		"mdlTextColorAccent;"
+		class: 'login-button mdl-color-text-colored';
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
