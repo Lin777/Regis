@@ -9,7 +9,8 @@ Class {
 
 { #category : #rendering }
 ERReductionTickets >> addTicket [
-	
+	self initializeFormAddFee.
+	content state: formAddTicket
 ]
 
 { #category : #rendering }
@@ -35,7 +36,7 @@ ERReductionTickets >> headers [
 
 { #category : #rendering }
 ERReductionTickets >> initializeFormAddFee [
-	formAddTicket := (ERContainerAddTicket on: attendee withContent: content)
+	formAddTicket := (ERContainerFormTicket on: attendee withContent: content)
 ]
 
 { #category : #rendering }

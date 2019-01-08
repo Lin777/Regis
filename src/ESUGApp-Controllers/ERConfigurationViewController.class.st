@@ -38,11 +38,19 @@ ERConfigurationViewController >> createFile: aNameFile [
 	^ FileStream newFileNamed: aNameFile.
 ]
 
+{ #category : #rendering }
+ERConfigurationViewController >> deleteFee: aFee [
+	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
+	^ aFee delete.
+]
+
 { #category : #'as yet unclassified' }
 ERConfigurationViewController >> deleteReductionTicket: aReductionTicket [
-	aReductionTicket usersOfTickets size > 0 ifTrue: [ 
-		^ nil ]
-	ifFalse: [ conference reductionTickets removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId  ] ]
+	aReductionTicket usersOfTickets size > 0
+		ifTrue: [ ^ nil ]
+		ifFalse: [ conference reductionTickets
+				removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
+				aReductionTicket delete ]
 ]
 
 { #category : #rendering }

@@ -2,15 +2,28 @@ Class {
 	#name : #ERFees,
 	#superclass : #ERConfiguration,
 	#instVars : [
-		'formAddFee'
+		'formFee',
+		'fee'
 	],
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #rendering }
 ERFees >> addFee [
-	self initializeFormAddFee  .
-	content state: formAddFee 
+	self initializeFormAddFee.
+	content state: formFee
+]
+
+{ #category : #rendering }
+ERFees >> addFeeToConference [
+	| aFee |
+	fee bankAccountInformation bankInformation save.
+	fee bankAccountInformation save.
+	aFee := fee save.
+	controller conference addFee: aFee.
+	controller conference save.
+	self returnToThePreviousState.
+	^ aFee
 ]
 
 { #category : #rendering }
@@ -27,6 +40,7 @@ ERFees >> blockTableToExecute [
 
 { #category : #rendering }
 ERFees >> deleteFee: aFee [
+	controller deleteFee: aFee
 ]
 
 { #category : #rendering }
@@ -40,8 +54,28 @@ ERFees >> headers [
 ]
 
 { #category : #rendering }
+ERFees >> initialize [
+	super initialize.
+]
+
+{ #category : #rendering }
 ERFees >> initializeFormAddFee [
-	formAddFee := (ERContainerAddFee on: attendee withContent: content) controller: controller 
+	
+	fee := ERFee new.
+	callback := [ self addFeeToConference ].
+	formFee := ERContainerFormFee
+		on: fee
+		callback: callback
+		withContent: content
+]
+
+{ #category : #rendering }
+ERFees >> initializeFormModifyFee: aFee [
+	callback := [ self modifyFeeOfConference: aFee ].
+	formFee := ERContainerFormFee
+		on: aFee
+		callback: callback
+		withContent: content
 ]
 
 { #category : #rendering }
@@ -62,6 +96,16 @@ ERFees >> listDataToRenderButton [
 
 { #category : #rendering }
 ERFees >> modifyFee: aFee [
+	
+	self initializeFormModifyFee: aFee.
+	content state: formFee
+]
+
+{ #category : #rendering }
+ERFees >> modifyFeeOfConference: aFee [
+	self returnToThePreviousState.
+	^ aFee save.
+	
 ]
 
 { #category : #rendering }

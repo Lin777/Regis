@@ -1,58 +1,69 @@
 Class {
-	#name : #ERContainerAddFee,
+	#name : #ERContainerFormFee,
 	#superclass : #ERContainerView,
 	#instVars : [
-		'conference',
 		'fee',
-		'controller'
+		'callback'
 	],
 	#category : #'ESUGApp-Components'
 }
 
 { #category : #'as yet unclassified' }
-ERContainerAddFee class >> on: anAttendee withContent: aContent [
+ERContainerFormFee class >> on: aFee callback: aBlock withContent: aContent [
 	| form |
 	form := self new.
-	form attendee: anAttendee.
+	form fee: aFee.
+	form callback: aBlock.
+   form content: aContent.
+	^ form
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerFormFee class >> on: aFee withContent: aContent [
+	| form |
+	form := self new.
+	form fee: aFee.
 	form content: aContent.
 	^ form
 ]
 
-{ #category : #rendering }
-ERContainerAddFee >> addFee [
-	|aFee|
-	fee bankAccountInformation bankInformation save.
-	fee bankAccountInformation save.
-	aFee := fee save.
-	conference addFee: aFee .
-	conference save.
+{ #category : #accessing }
+ERContainerFormFee >> callback: anObject [
+	callback := anObject
 ]
 
 { #category : #accessing }
-ERContainerAddFee >> content: anObject [
+ERContainerFormFee >> content: anObject [
 	content := anObject
 ]
 
 { #category : #accessing }
-ERContainerAddFee >> controller: anObject [
-	controller := anObject
+ERContainerFormFee >> fee [
+	^ fee 
+]
+
+{ #category : #accessing }
+ERContainerFormFee >> fee: anObject [
+	fee := anObject
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> initialize [
+ERContainerFormFee >> initialize [
 	super initialize.
-	controller := ERConfigurationViewController new.
 	fee := ERFee new
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderAcceptButton: html [
-	self createColoredAnchorButton: 'Accept' with: [ self addFee ] id: 'acceptAddFee' on: html
-	
+ERContainerFormFee >> renderAcceptButton: html [
+	self
+		createColoredButtonAsSubmit: 'Accept'
+		with: callback
+		id: 'acceptAddFee'
+		on: html
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderAddressString: html [
+ERContainerFormFee >> renderAddressString: html [
 	self
 		createTextAreaField: 'Address String'
 		for: #addressString:
@@ -63,26 +74,29 @@ ERContainerAddFee >> renderAddressString: html [
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderCancelButton: html [
+ERContainerFormFee >> renderCancelButton: html [
 	self createColoredAnchorButton: 'Cancel' with: [ self returnToThePreviousState ] id: 'cancelAddFee' on: html
 	
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderContentPage: html [
-	html div class: 'mdl-js-ripple-effect'; with: [ 
-		self renderFormConferenceFee: html.
-		self renderFormBankAccountInformation: html.
-		self renderFormBankInformation: html.
-		self renderAddressString: html.
-		self renderPayPALUrl: html.
-		self renderAcceptButton: html.
-		self renderCancelButton: html.
-		 ]
+ERContainerFormFee >> renderContentPage: html [
+	html div
+		class: 'mdl-js-ripple-effect';
+		with: [ html form
+		method: 'post';
+		id: 'formFee';
+		with: [self renderFormConferenceFee: html.
+			self renderFormBankAccountInformation: html.
+			self renderFormBankInformation: html.
+			self renderAddressString: html.
+			self renderPayPALUrl: html.
+			self renderAcceptButton: html.
+			self renderCancelButton: html ]]
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderFormBankAccountInformation: html [
+ERContainerFormFee >> renderFormBankAccountInformation: html [
 	self
 		createHeadingStrong: 'Bank Account Information:'
 		level: 5
@@ -125,7 +139,7 @@ ERContainerAddFee >> renderFormBankAccountInformation: html [
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderFormBankInformation: html [
+ERContainerFormFee >> renderFormBankInformation: html [
 	self
 		createHeadingStrong: 'Bank Information:'
 		level: 5
@@ -168,7 +182,7 @@ ERContainerAddFee >> renderFormBankInformation: html [
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderFormConferenceFee: html [
+ERContainerFormFee >> renderFormConferenceFee: html [
 	self createHeadingStrong: 'Conference Fee:' level: 5 on: html.
 	html horizontalRule.
 	self
@@ -227,6 +241,6 @@ ERContainerAddFee >> renderFormConferenceFee: html [
 ]
 
 { #category : #rendering }
-ERContainerAddFee >> renderPayPALUrl: html [
+ERContainerFormFee >> renderPayPALUrl: html [
 	self createTextField: 'Pay Pal URL:' for: #bankPayPalUrl: with: #bankPayPalUrl to: fee on: html
 ]

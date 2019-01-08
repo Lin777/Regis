@@ -34,7 +34,8 @@ Class {
 		'gender',
 		'paymentType',
 		'paymentCurrency',
-		'coupon'
+		'coupon',
+		'paymentAmount'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -385,6 +386,16 @@ ERAttendee >> password [
 { #category : #accessing }
 ERAttendee >> password: anObject [
 	userAccount password: anObject
+]
+
+{ #category : #accessing }
+ERAttendee >> paymentAmount [
+	^ paymentAmount
+]
+
+{ #category : #accessing }
+ERAttendee >> paymentAmount: anObject [
+	paymentAmount := anObject
 ]
 
 { #category : #accessing }

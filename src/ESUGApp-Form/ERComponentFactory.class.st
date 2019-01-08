@@ -95,6 +95,16 @@ ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html 
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredButtonAsSubmit: aName with: aBlock id: anId on: html [
+	html mdlButton
+		colored;
+		beSubmit;
+		id: anId;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createDivCell6ColWith: aBlock on: html [
     html div class: 'mdl-cell mdl-cell--6-col'; with: [ aBlock value ]
 ]
@@ -287,32 +297,6 @@ ERComponentFactory >> createRequiredTextField: aName for: aSymbol with: anotherS
 ]
 
 { #category : #'as yet unclassified' }
-ERComponentFactory >> createSelectField: aName for: aSymbol list: aList on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel with: aName.
-			html select
-				class: 'mdl-textfield__input';
-				id: (self idFromSymbol: aSymbol);
-				list: aList;
-				callback: [ :value | 
-					attendee perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createSelectField: aName for: aSymbol list: aList percent: aNumber on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		style: 'width:' , aNumber asString , '%';
-		with: [ html mdlTextFieldLabel with: aName.
-			html select
-				class: 'mdl-textfield__input';
-				id: (self idFromSymbol: aSymbol);
-				list: aList;
-				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #'as yet unclassified' }
 ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -365,6 +349,19 @@ ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol 
 				list: aList;
 				selected: (anObject perform: anotherSymbol);
 				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName list: aList callback: aBlock withId: anId on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				dispatchCallback;
+				class: 'mdl-textfield__input';
+				id: anId;
+				list: aList;
+				callback: aBlock ]
 ]
 
 { #category : #'as yet unclassified' }

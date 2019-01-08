@@ -22,8 +22,9 @@ ERReductionTicket >> discountStrategy: anObject [
 
 { #category : #accessing }
 ERReductionTicket >> initialize [
-	super initialize .
-	usersOfTickets := OrderedCollection new
+	super initialize.
+	usersOfTickets := OrderedCollection new.
+	discountStrategy := ERPercentageDiscount new.
 ]
 
 { #category : #accessing }
@@ -34,6 +35,16 @@ ERReductionTicket >> limitStrategy [
 { #category : #accessing }
 ERReductionTicket >> limitStrategy: anObject [
 	limitStrategy := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> strategyIsFixDiscount [
+	^ discountStrategy isMemberOf: ERFixDiscount 
+]
+
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> strategyIsPercentageDiscount [
+	^ discountStrategy isMemberOf: ERPercentageDiscount 
 ]
 
 { #category : #accessing }
