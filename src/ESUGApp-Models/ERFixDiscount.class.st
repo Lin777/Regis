@@ -27,3 +27,13 @@ ERFixDiscount >> currency [
 ERFixDiscount >> currency: anObject [
 	currency := anObject
 ]
+
+{ #category : #accessing }
+ERFixDiscount >> description [ 
+	^ 'Discount of ', amount asString , ' ', currency
+]
+
+{ #category : #initialization }
+ERFixDiscount >> initialize [
+	super initialize.
+]

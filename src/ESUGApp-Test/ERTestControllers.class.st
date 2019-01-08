@@ -139,6 +139,12 @@ ERTestControllers >> defaultStore [
 ]
 
 { #category : #rendering }
+ERTestControllers >> registerAsGroupManager [
+	^ (ERRegistrationController
+		attendee: ERTestControllers testAttendee) saveAsGroupManager
+]
+
+{ #category : #rendering }
 ERTestControllers >> registerAttendee [
 	^ (ERRegistrationController
 		attendee: ERTestControllers testAttendee) save
@@ -154,9 +160,27 @@ ERTestControllers >> registerAttendee: anAttendee [
 ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
-	ERAttendee warmUp.
 	ERUserAccount warmUp.
+	ERAttendee warmUp.
+	ERAward warmUp.
+	ERBankInformation warmUp.
+	ERBankAccountInformation warmUp.
+	ERDiscountStrategy warmUp.
+	ERFixDiscount warmUp.
+	ERPercentageDiscount warmUp.
+	ERLimitStrategy warmUp.
+	ERLimitedReductionTicketUse warmUp.
+	ERUnlimitedReductionTicketUse warmUp.
+	ERReductionTicket warmUp.
+	ERFee warmUp.
 	ERGroup warmUp.
+	ERTalk warmUp.
+	ERConferenceOrganizer warmUp.
+	ERConferenceEmailConfiguration warmUp.
+	ERConferenceConfigurationModel warmUp.
+	ERConference warmUp.
+	ERSandstoneDatabase initialize.
+	ESUGSetUp start
 ]
 
 { #category : #running }
@@ -167,17 +191,115 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERAttendee coolDown.
+	ERAward
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAward coolDown.
+	ERBankInformation
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERBankInformation coolDown.
+	ERBankAccountInformation
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERBankAccountInformation coolDown.
+	ERDiscountStrategy
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERDiscountStrategy coolDown.
+	ERFixDiscount
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERFixDiscount coolDown.
+	ERPercentageDiscount
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERPercentageDiscount coolDown.
+	ERLimitStrategy
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERLimitStrategy coolDown.
+	ERLimitedReductionTicketUse
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERLimitedReductionTicketUse coolDown.
+	ERUnlimitedReductionTicketUse
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERUnlimitedReductionTicketUse coolDown.
+	
+	ERFee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERFee coolDown.
+	ERGroup
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERGroup coolDown.
+	ERReductionTicket
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERReductionTicket coolDown.
+	ERTalk
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERTalk coolDown.
 	ERUserAccount
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
 	ERUserAccount coolDown.
-	ERGroup 
+	ERConferenceOrganizer
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERGroup coolDown.
+	ERConferenceOrganizer coolDown.
+	ERConferenceEmailConfiguration
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERConferenceEmailConfiguration coolDown.
+	ERConferenceConfigurationModel
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERConferenceConfigurationModel coolDown.
+	ERConference
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERConference coolDown.
+	ESUGSetUp stop.
 	Smalltalk garbageCollectMost
 ]

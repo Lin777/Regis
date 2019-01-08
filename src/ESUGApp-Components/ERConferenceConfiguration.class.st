@@ -2,7 +2,8 @@ Class {
 	#name : #ERConferenceConfiguration,
 	#superclass : #ERConfiguration,
 	#instVars : [
-		'conference'
+		'conference',
+		'dialog'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -20,8 +21,14 @@ ERConferenceConfiguration >> cancel [
 { #category : #rendering }
 ERConferenceConfiguration >> initialize [
 	super initialize.
-	conference := ERConferenceConfigurationModel
-		find: [ :each | each name1 = 'ESUG' ]
+	self initializeController.
+	conference := controller conference.
+	dialog := ERDialog new
+		title: 'Cancel Modify Conference';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancel-modify-conference';
+		okCallback: [ self cancel ]
 ]
 
 { #category : #rendering }
@@ -43,7 +50,6 @@ ERConferenceConfiguration >> renderButtons: html [
 ERConferenceConfiguration >> renderCancelButtonOn: html [
 	self
 		createColoredAnchorButton: 'Cancel'
-		with: [ self cancel ]
 		id: 'cancel-modify-conference'
 		on: html
 ]
@@ -56,13 +62,13 @@ ERConferenceConfiguration >> renderContainer: html [
 { #category : #rendering }
 ERConferenceConfiguration >> renderContentOn: html [
 	html form
-						method: 'post';
-						id: 'formConference';
-						with:[
-	self renderFormConferenceConfiguration: html.
-	self renderFormEmailConfiguration: html.
-	self renderFormOrganizer: html.
-	self renderButtons: html]
+		method: 'post';
+		id: 'formConference';
+		with: [ self renderFormConferenceConfiguration: html.
+			self renderFormEmailConfiguration: html.
+			self renderFormOrganizer: html.
+			self renderButtons: html ].
+	html render: dialog
 ]
 
 { #category : #rendering }
@@ -75,19 +81,19 @@ ERConferenceConfiguration >> renderFormConferenceConfiguration: html [
 		createTextField: 'Name: '
 		for: #name:
 		with: #name1
-		to: conference
+		to: conference configuration
 		on: html.
 	self
 		createTextField: 'Description: '
 		for: #description:
 		with: #description
-		to: conference
+		to: conference configuration
 		on: html.
 	self
 		createTextField: 'Home Page: '
 		for: #homePageUrl:
 		with: #homePageUrl
-		to: conference
+		to: conference configuration
 		on: html.
 	self createStrongText: 'Dates: ' to: html.
 	self
@@ -95,28 +101,28 @@ ERConferenceConfiguration >> renderFormConferenceConfiguration: html [
 		for: #dateFrom:
 		with: #dateFrom
 		percent: 49
-		to: conference
+		to: conference configuration
 		on: html.
 	self
 		createTextField: 'To: '
 		for: #dateTo:
 		with: #dateTo
 		percent: 49
-		to: conference
+		to: conference configuration 
 		on: html.
 	self
 		createTextField: 'Submission Deadline: '
 		for: #dateSubmissionDeadline:
 		with: #dateSubmissionDeadline
 		percent: 49
-		to: conference
+		to: conference configuration 
 		on: html.
 	self
 		createTextField: 'Early Registration Deadline: '
 		for: #earlyRegistrationDeadline:
 		with: #earlyRegistrationDeadline
 		percent: 49
-		to: conference
+		to: conference configuration 
 		on: html
 ]
 
@@ -130,27 +136,27 @@ ERConferenceConfiguration >> renderFormEmailConfiguration: html [
 		createTextField: 'Sender Email Address: '
 		for: #senderEmailAddress:
 		with: #senderEmailAddress
-		to: conference emailConfiguration
+		to: conference configuration emailConfiguration
 		on: html.
 	self
 		createTextField: 'Smpt Server Address: '
 		for: #smptServerAddress:
 		with: #smptServerAddress
-		to: conference emailConfiguration
+		to: conference configuration emailConfiguration
 		on: html.
 	self
 		createSelectField: 'Smpt Client: '
 		for: #smptClient:
 		with: #smptClient
 		list: #('PatSmtpToPPostMarkClientAdapter')
-		to: conference emailConfiguration
+		to: conference configuration emailConfiguration
 		on: html.
 	self
 		createTextAreaField: 'Welcome Text'
 		for: #welcomeText:
 		with: #welcomeText
 		withRows: 5
-		to: conference emailConfiguration
+		to: conference configuration emailConfiguration
 		on: html
 ]
 
@@ -164,26 +170,26 @@ ERConferenceConfiguration >> renderFormOrganizer: html [
 		createTextField: 'Name: '
 		for: #name:
 		with: #name1
-		to: conference organizer
+		to: conference configuration organizer
 		on: html.
 	self
-		createTextField: 'Fisical Situacion: '
-		for: #fisicalSituation:
-		with: #fisicalSituation
-		to: conference organizer
+		createTextField: 'Fiscal Situacion: '
+		for: #fiscalSituation:
+		with: #fiscalSituation
+		to: conference configuration organizer
 		on: html.
 	self
 		createTextField: 'Web Page URL: '
 		for: #webPageUrl:
 		with: #webPageUrl
-		to: conference organizer
+		to: conference configuration organizer
 		on: html.
 	self
 		createTextAreaField: 'Address String: '
 		for: #addressString:
 		with: #addressString
 		withRows: 5
-		to: conference organizer
+		to: conference configuration organizer
 		on: html
 ]
 

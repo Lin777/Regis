@@ -1,6 +1,6 @@
 Class {
 	#name : #ERLoginController,
-	#superclass : #Object,
+	#superclass : #ERController,
 	#instVars : [
 		'user'
 	],

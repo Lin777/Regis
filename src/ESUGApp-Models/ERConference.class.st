@@ -2,7 +2,7 @@ Class {
 	#name : #ERConference,
 	#superclass : #SDActiveRecord,
 	#instVars : [
-		'attendees',
+		'attends',
 		'fees',
 		'reductionTickets',
 		'submittedTalks',
@@ -10,44 +10,70 @@ Class {
 		'payments',
 		'groups',
 		'users',
-		'configuration'
+		'configuration',
+		'active'
 	],
 	#category : #'ESUGApp-Models'
 }
 
 { #category : #accessing }
+ERConference >> active [
+	^ active
+]
+
+{ #category : #accessing }
+ERConference >> active: anObject [
+	active := anObject
+]
+
+{ #category : #initialization }
 ERConference >> addAttendee: anAttendee [
-	attendees add: anAttendee 
+	attends add: anAttendee 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERConference >> addFee: aFee [
-	fees add: aFee
+	fees add: aFee 
+]
+
+{ #category : #initialization }
+ERConference >> addGroup: aGroup [
+	groups add: aGroup 
+]
+
+{ #category : #initialization }
+ERConference >> addPayment: aPayment [
+	payments add: aPayment 
 ]
 
 { #category : #accessing }
-ERConference >> addReductionTickets: aTicket [
-	reductionTickets add: aTicket 
+ERConference >> addReductionTicket: aReductionTicket [
+	reductionTickets add: aReductionTicket 
 ]
 
 { #category : #accessing }
-ERConference >> addressString [
-	^ addressString
+ERConference >> addSubmittedAward: aSubmittedAward [
+	submittedAwards add: aSubmittedAward 
 ]
 
 { #category : #accessing }
-ERConference >> addressString: anObject [
-	addressString := anObject
+ERConference >> addSubmittedTalk: aSubmittedTalk [
+	submittedTalks add: aSubmittedTalk 
 ]
 
 { #category : #accessing }
-ERConference >> attendees [
-	^ attendees
+ERConference >> addUser: anUser [
+	users add: anUser 
 ]
 
 { #category : #accessing }
-ERConference >> attendees: anObject [
-	attendees := anObject
+ERConference >> attends [
+	^ attends
+]
+
+{ #category : #accessing }
+ERConference >> attends: anObject [
+	attends := anObject
 ]
 
 { #category : #accessing }
@@ -61,56 +87,6 @@ ERConference >> configuration: anObject [
 ]
 
 { #category : #accessing }
-ERConference >> dateFrom [
-	^ dateFrom
-]
-
-{ #category : #accessing }
-ERConference >> dateFrom: anObject [
-	dateFrom := anObject
-]
-
-{ #category : #accessing }
-ERConference >> dateSubmissionDeadline [
-	^ dateSubmissionDeadline
-]
-
-{ #category : #accessing }
-ERConference >> dateSubmissionDeadline: anObject [
-	dateSubmissionDeadline := anObject
-]
-
-{ #category : #accessing }
-ERConference >> dateTo [
-	^ dateTo
-]
-
-{ #category : #accessing }
-ERConference >> dateTo: anObject [
-	dateTo := anObject
-]
-
-{ #category : #accessing }
-ERConference >> description [
-	^ description
-]
-
-{ #category : #accessing }
-ERConference >> description: anObject [
-	description := anObject
-]
-
-{ #category : #accessing }
-ERConference >> earlygistrationDeadline [
-	^ earlygistrationDeadline
-]
-
-{ #category : #accessing }
-ERConference >> earlygistrationDeadline: anObject [
-	earlygistrationDeadline := anObject
-]
-
-{ #category : #accessing }
 ERConference >> fees [
 	^ fees
 ]
@@ -118,16 +94,6 @@ ERConference >> fees [
 { #category : #accessing }
 ERConference >> fees: anObject [
 	fees := anObject
-]
-
-{ #category : #accessing }
-ERConference >> fisicalSituation [
-	^ fisicalSituation
-]
-
-{ #category : #accessing }
-ERConference >> fisicalSituation: anObject [
-	fisicalSituation := anObject
 ]
 
 { #category : #accessing }
@@ -140,47 +106,18 @@ ERConference >> groups: anObject [
 	groups := anObject
 ]
 
-{ #category : #accessing }
-ERConference >> homePage [
-	^ homePage
-]
-
-{ #category : #accessing }
-ERConference >> homePage: anObject [
-	homePage := anObject
-]
-
-{ #category : #accessing }
+{ #category : #initialization }
 ERConference >> initialize [
-	super initialize .
-	attendees := OrderedCollection new.
-	groups := OrderedCollection new.
+	super initialize.
+	attends := OrderedCollection new.
 	fees := OrderedCollection new.
-	reductionTickets := OrderedCollection new.
-	submittedTalks := OrderedCollection new.
-	submittedAwards := OrderedCollection new.
+	groups := OrderedCollection new.
 	payments := OrderedCollection new.
-	users := OrderedCollection new
-]
-
-{ #category : #accessing }
-ERConference >> name1 [
-	^ name
-]
-
-{ #category : #accessing }
-ERConference >> name: anObject [
-	name := anObject
-]
-
-{ #category : #accessing }
-ERConference >> nameOrganizer [
-	^ nameOrganizer
-]
-
-{ #category : #accessing }
-ERConference >> nameOrganizer: anObject [
-	nameOrganizer := anObject
+	reductionTickets := OrderedCollection new.
+	submittedAwards := OrderedCollection new.
+	submittedTalks := OrderedCollection new.
+	users := OrderedCollection new.
+	active := false
 ]
 
 { #category : #accessing }
@@ -201,46 +138,6 @@ ERConference >> reductionTickets [
 { #category : #accessing }
 ERConference >> reductionTickets: anObject [
 	reductionTickets := anObject
-]
-
-{ #category : #accessing }
-ERConference >> resenderEmailAddress [
-	^ senderEmailAddress
-]
-
-{ #category : #accessing }
-ERConference >> resenderEmailAddress: anObject [
-	senderEmailAddress := anObject
-]
-
-{ #category : #accessing }
-ERConference >> senderEmailAddress [
-	^ senderEmailAddress
-]
-
-{ #category : #accessing }
-ERConference >> senderEmailAddress: anObject [
-	senderEmailAddress := anObject
-]
-
-{ #category : #accessing }
-ERConference >> smptClient [
-	^ smptClient
-]
-
-{ #category : #accessing }
-ERConference >> smptClient: anObject [
-	smptClient := anObject
-]
-
-{ #category : #accessing }
-ERConference >> smptServerAddress [
-	^ smptServerAddress
-]
-
-{ #category : #accessing }
-ERConference >> smptServerAddress: anObject [
-	smptServerAddress := anObject
 ]
 
 { #category : #accessing }
@@ -271,24 +168,4 @@ ERConference >> users [
 { #category : #accessing }
 ERConference >> users: anObject [
 	users := anObject
-]
-
-{ #category : #accessing }
-ERConference >> webPageUrl [
-	^ webPageUrl
-]
-
-{ #category : #accessing }
-ERConference >> webPageUrl: anObject [
-	webPageUrl := anObject
-]
-
-{ #category : #accessing }
-ERConference >> welcomeText [
-	^ welcomeText
-]
-
-{ #category : #accessing }
-ERConference >> welcomeText: anObject [
-	welcomeText := anObject
 ]

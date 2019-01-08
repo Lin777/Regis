@@ -7,108 +7,21 @@ Class {
 		'erfOneDayFee',
 		'lrfAllDaysFee',
 		'lrfOneDayFee',
-		'bankAccountOwner',
-		'bankAccountNumber',
-		'bankAccountIBAN',
-		'bankAccountRibKey',
-		'bankName',
-		'bankCode',
-		'bankCounterCode',
-		'bankBIC',
-		'bankAddressString',
-		'bankPayPalUrl'
+		'bankAccountInformation',
+		'bankPayPalUrl',
+		'extraPersonSD'
 	],
 	#category : #'ESUGApp-Models'
 }
 
 { #category : #accessing }
-ERFee >> bankAccountIBAN [
-	^ bankAccountIBAN
+ERFee >> bankAccountInformation [
+	^ bankAccountInformation
 ]
 
 { #category : #accessing }
-ERFee >> bankAccountIBAN: anObject [
-	bankAccountIBAN := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountNumber [
-	^ bankAccountNumber
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountNumber: anObject [
-	bankAccountNumber := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountOwner [
-	^ bankAccountOwner
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountOwner: anObject [
-	bankAccountOwner := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountRibKey [
-	^ bankAccountRibKey
-]
-
-{ #category : #accessing }
-ERFee >> bankAccountRibKey: anObject [
-	bankAccountRibKey := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankAddressString [
-	^ bankAddressString
-]
-
-{ #category : #accessing }
-ERFee >> bankAddressString: anObject [
-	bankAddressString := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankBIC [
-	^ bankBIC
-]
-
-{ #category : #accessing }
-ERFee >> bankBIC: anObject [
-	bankBIC := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankCode [
-	^ bankCode
-]
-
-{ #category : #accessing }
-ERFee >> bankCode: anObject [
-	bankCode := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankCounterCode [
-	^ bankCounterCode
-]
-
-{ #category : #accessing }
-ERFee >> bankCounterCode: anObject [
-	bankCounterCode := anObject
-]
-
-{ #category : #accessing }
-ERFee >> bankName [
-	^ bankName
-]
-
-{ #category : #accessing }
-ERFee >> bankName: anObject [
-	bankName := anObject
+ERFee >> bankAccountInformation: anObject [
+	bankAccountInformation := anObject
 ]
 
 { #category : #accessing }
@@ -149,6 +62,23 @@ ERFee >> erfOneDayFee [
 { #category : #accessing }
 ERFee >> erfOneDayFee: anObject [
 	erfOneDayFee := anObject
+]
+
+{ #category : #accessing }
+ERFee >> extraPersonSD [
+	^ extraPersonSD
+]
+
+{ #category : #accessing }
+ERFee >> extraPersonSD: anObject [
+	extraPersonSD := anObject
+]
+
+{ #category : #initialization }
+ERFee >> initialize [
+	super initialize.
+	bankAccountInformation := ERBankAccountInformation new.
+	
 ]
 
 { #category : #accessing }

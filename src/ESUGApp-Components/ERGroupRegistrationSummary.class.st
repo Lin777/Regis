@@ -62,7 +62,7 @@ ERGroupRegistrationSummary >> renderContainer: html [
 	html horizontalRule.
 	self renderOrganizationName: html.
 	self renderPaymentStatus: html.
-	self renderFormButtons: html.
+	self renderFormButtons: html
 ]
 
 { #category : #rendering }

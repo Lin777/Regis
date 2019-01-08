@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'messageComponent',
 		'controller',
-		'callback'
+		'callback',
+		'mofidyUserForm',
+		'formWithoutBasicInfo',
+		'formRegister',
+		'attenteeRegisterForm'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -16,6 +20,11 @@ ERTabContainerPage class >> on: anAttendee withContent: aContent [
 	form attendee: anAttendee.
 	form content: aContent.
 	^ form
+]
+
+{ #category : #rendering }
+ERTabContainerPage >> alreadyRegisteredAsAttendee [
+	^ attendee userAccount isAttendee
 ]
 
 { #category : #accessing }
@@ -58,6 +67,46 @@ ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
 		yourself
 ]
 
+{ #category : #initialization }
+ERTabContainerPage >> initialize [
+	super initialize.
+	messageComponent := ERDialog new id: 'error'
+]
+
+{ #category : #initialization }
+ERTabContainerPage >> initializeFormRegister [
+	formRegister := (ERContainerTabsView content: content)
+		tabView: (ERTabsView tabs: self tabs)
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> initializeFormWithoutBasicInformationFor: anAttendee [
+	formWithoutBasicInfo := (ERContainerTabsView content: content)
+		tabView: (ERTabsView tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> modifyRegistrationInformation: anAttendee [
+	callback := [ self updateRegistrationInformation: anAttendee ].
+	
+	self initializeFormWithoutBasicInformationFor: anAttendee
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> modifyUserFormGroup: anAttendee [
+	mofidyUserForm := ERContainerModifyUserView
+		on: anAttendee
+		withContent: content.
+	content state: mofidyUserForm
+]
+
+{ #category : #rendering }
+ERTabContainerPage >> registerAttendee [
+	self initializeFormRegister.
+	content state: formRegister
+]
+
 { #category : #rendering }
 ERTabContainerPage >> renderContainer: html [
 	self subclassResponsibility 
@@ -69,7 +118,18 @@ ERTabContainerPage >> renderContentOn: html [
 	self renderContainer: html
 ]
 
+{ #category : #initialization }
+ERTabContainerPage >> tabs [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 ERTabContainerPage >> title [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERTabContainerPage >> updateRegistrationInformation: anAttendee [
+	anAttendee save.
+	content state: content lastState
 ]

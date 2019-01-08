@@ -35,10 +35,7 @@ ERAdditionalInformation >> formName [
 
 { #category : #initialization }
 ERAdditionalInformation >> initialize [
-	super initialize.
-	"attendee := ERAttendee
-		find: [ :each | each email = 'cusi@gmail.com' ].
-	attendee := ERAttendee new"
+	super initialize
 ]
 
 { #category : #rendering }

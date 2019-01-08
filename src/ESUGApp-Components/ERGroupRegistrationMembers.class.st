@@ -2,8 +2,7 @@ Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
 	#instVars : [
-		'mofidyUserForm',
-		'formWithoutBasicInfo'
+		'mofidyUserForm'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -11,7 +10,7 @@ Class {
 { #category : #accessing }
 ERGroupRegistrationMembers >> attends [
 	^ (ERGroupManagerViewController new
-		groupOfAttendee: attendee userAccount) listAttends
+		groupOfAttendee: attendee ) listAttends
 ]
 
 { #category : #'as yet unclassified' }
@@ -27,7 +26,7 @@ ERGroupRegistrationMembers >> blockTableToExecute [
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> deleteAttendeeFromGroup: anAttendee [
-	controller deleteAttendeeFromGroup: anAttendee 
+	controller deleteAttendee: anAttendee
 ]
 
 { #category : #accessing }
@@ -75,44 +74,23 @@ ERGroupRegistrationMembers >> listDataToRenderButton [
 ]
 
 { #category : #accessing }
-ERGroupRegistrationMembers >> modifyRegistrationInformation: anAttendee [
-	callback := [ self updateRegistrationInformation: anAttendee ].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView
-				tabs: (self formWithoutBasicInformationFor: anAttendee)).
-	content state: formWithoutBasicInfo
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> modifyUserFormGroup: anAttendee [
-	mofidyUserForm := ERContainerModifyUserView
-		on: anAttendee
-		withContent: content.
-	content state: mofidyUserForm
-]
-
-{ #category : #accessing }
 ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 	"Add function to add attendee role to group manager"
-	attendee save.
+	controller registerAsAttendee.
 	content state: content lastState
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerMyselfAsAttendee [
-	callback := [self registerGroupManagerAsAttendee].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView
-				tabs: (self formWithoutBasicInformationFor: attendee)).
-	content state: formWithoutBasicInfo
+	callback := [ self registerGroupManagerAsAttendee ].
+	self initializeFormWithoutBasicInformationFor: attendee
 ]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> renderButtons: html [
 	self renderRegisterAttendee: html.
-	self renderRegisterMyselfAsAttendee: html
+	self alreadyRegisteredAsAttendee ifFalse:[
+	self renderRegisterMyselfAsAttendee: html]
 ]
 
 { #category : #accessing }
@@ -147,13 +125,13 @@ ERGroupRegistrationMembers >> renderRegisterMyselfAsAttendee: html [
 { #category : #rendering }
 ERGroupRegistrationMembers >> renderTableOfAttends: html [
 	| table |
-	table := ERTableGenericData new 
-	headers: self headers;
-	levelTotal: 6;
-	listObject: self attends;
-	blockToExecute: self blockTableToExecute;
-	listToRenderButton: self listDataToRenderButton.
-	html render: table.
+	table := ERTableGenericData new
+		headers: self headers;
+		levelTotal: 6;
+		listObject: self attends;
+		blockToExecute: self blockTableToExecute;
+		listToRenderButton: self listDataToRenderButton.
+	html render: table
 ]
 
 { #category : #accessing }
@@ -169,10 +147,4 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
-]
-
-{ #category : #accessing }
-ERGroupRegistrationMembers >> updateRegistrationInformation: anAttendee [
-	anAttendee save.
-	content state: content lastState
 ]

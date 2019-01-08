@@ -3,7 +3,7 @@ Class {
 	#superclass : #SDActiveRecord,
 	#instVars : [
 		'name',
-		'fisicalSituation',
+		'fiscalSituation',
 		'webPageUrl',
 		'addressString'
 	],
@@ -21,13 +21,13 @@ ERConferenceOrganizer >> addressString: anObject [
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer >> fisicalSituation [
-	^ fisicalSituation
+ERConferenceOrganizer >> fiscalSituation [
+	^ fiscalSituation
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer >> fisicalSituation: anObject [
-	fisicalSituation := anObject
+ERConferenceOrganizer >> fiscalSituation: anObject [
+	fiscalSituation := anObject
 ]
 
 { #category : #accessing }
