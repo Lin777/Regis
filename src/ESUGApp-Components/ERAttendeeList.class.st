@@ -110,14 +110,12 @@ ERAttendeeList >> renderButtons: html [
 
 { #category : #rendering }
 ERAttendeeList >> renderContainer: html [
-	html render: dialog.
 	html form
 		method: 'post';
 		id: 'formAllAttends';
 		with: [ self renderButtons: html.
 			html horizontalRule.
-			self renderTableOfAttends: html ].
-	
+			self renderTableOfAttends: html ]
 ]
 
 { #category : #rendering }

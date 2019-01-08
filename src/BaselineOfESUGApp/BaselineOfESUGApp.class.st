@@ -36,7 +36,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 		baseline: 'Seaside3'
 		with: [ spec
 				loads: #('Core' 'JQuery' 'Zinc');
-				repository: 'github://SeasideSt/Seaside:v3.2.5/repository' ].
+				repository: 'github://SeasideSt/Seaside:master/repository' ].
 	"spec
 		baseline: 'Parasol'
 		with: [ spec
@@ -44,15 +44,13 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 				repository: 'github://SeasideSt/Parasol/repository' ]."
 	spec
 		baseline: 'MaterialDesignLite'
-		with: [ spec
-				repository: 'github://DuneSt/MaterialDesignLite:master/src' ].
+		with: [ spec repository: 'github://DuneSt/MaterialDesignLite:master/src' ].
 	spec
 		project: 'SandstoneDb'
 		with: [ spec
 				className: 'ConfigurationOfSandstoneDb';
 				version: #stable;
 				repository: 'http://smalltalkhub.com/mc/gnaritas/SandstoneDb/main' ].
-	
 	spec
 		project: 'NeoCSV'
 		with: [ spec

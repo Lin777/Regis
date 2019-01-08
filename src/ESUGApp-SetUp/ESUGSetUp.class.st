@@ -193,7 +193,6 @@ ESUGSetUp class >> startAndCleanSeaside [
 		at: 'files'.
 	WAAdmin register: WADispatcherBrowser asApplicationAt: 'browse'.
 
-	"add /config"
 	WAConfigurationTool initialize
 ]
 
