@@ -32,7 +32,7 @@ ERPageView >> classContainer: anObject [
 
 { #category : #'as yet unclassified' }
 ERPageView >> colorIcon [
-	^ 'mdl-color--red' 
+	^ 'mdl-color--blue-700' 
 ]
 
 { #category : #accessing }

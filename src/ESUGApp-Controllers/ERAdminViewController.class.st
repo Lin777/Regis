@@ -22,6 +22,12 @@ ERAdminViewController >> changePasswordFrom: confirmPassword to: passwordChanged
 ]
 
 { #category : #'as yet unclassified' }
+ERAdminViewController >> changePasswordTo: aString [
+	attendee password: (ERUserAccount hashPassword: aString) asString.
+	^ attendee save.
+]
+
+{ #category : #'as yet unclassified' }
 ERAdminViewController >> updateAttendee: modifiedUser [
 	^ (attendee
 		email: modifiedUser email;
@@ -41,6 +47,17 @@ ERAdminViewController >> updateUserFields: anUser [
 ERAdminViewController >> validateCurrentPassword: confirmPassword [
 	^ attendee password
 		= (ERUserAccount hashPassword: confirmPassword) asString
+]
+
+{ #category : #'as yet unclassified' }
+ERAdminViewController >> validateNewPassword: aString1 with: aString2 [
+	^ aString1 = aString2
+]
+
+{ #category : #'as yet unclassified' }
+ERAdminViewController >> validatePatternPassword: aString [
+	^ (aString matchesRegex: '[A-Za-z0-9._]{8,}') 
+	and: [aString size >= 8].
 ]
 
 { #category : #'as yet unclassified' }
