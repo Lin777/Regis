@@ -7,8 +7,25 @@ Class {
 	#category : #'ESUGApp-Components'
 }
 
+{ #category : #'as yet unclassified' }
+ERContainerFormTicket class >> on: aTicket withContent: aContent [
+	| form |
+	form := self new.
+	form ticket: aTicket.
+	form content: aContent.
+	^ form
+]
+
 { #category : #rendering }
 ERContainerFormTicket >> addTicket [
+]
+
+{ #category : #rendering }
+ERContainerFormTicket >> changeDiscountStrategy: value [
+	(ERDiscountStrategy isPercentageStrategy: value)
+		ifTrue: [ Transcript show: value.ticket discountStrategy: ERPercentageDiscount new ].
+	(ERDiscountStrategy isFixStrategy: value)
+		ifTrue: [ Transcript show: value.ticket discountStrategy: ERFixDiscount new ]
 ]
 
 { #category : #rendering }
@@ -18,8 +35,7 @@ ERContainerFormTicket >> content: anObject [
 
 { #category : #rendering }
 ERContainerFormTicket >> initialize [
-	super initialize .
-	ticket := ERReductionTicket new.
+	super initialize.
 ]
 
 { #category : #rendering }
@@ -45,64 +61,61 @@ ERContainerFormTicket >> renderFormOn: html [
 				to: ticket
 				on: html.
 			self createStrongText: 'Discount Strategy' to: html.
-			html anchor
-				
-				with: [ "self createStrongText: 'Use Limit Strategy' to: html."
-					"For strategy limited use"
-					"self
-				createSelectField: 'Strategy'
-				for: #limitStrategy:
-				with: #limitStrategy
-				list: ERLimitStrategy
-				to: ticket
-				on: html.
-			self
-				createTextField: 'Limit'
-				for: #limit:
-				with: #limit
-				to: ticket
-				on: html."
-					"For strategy unlimit"
-					"self
-				createSelectField: 'Strategy'
-				for: #limitStrategy:
-				with: #limitStrategy
-				list: ERLimitStrategy
-				to: ticket
-				on: html "
-					self
-						createSelectField: 'Strategy'
-						list: ERDiscountStrategy typesDiscount
-						callback: [ Transcript show: 'dfsasdgf' ]
+			html
+				form: [ self
+						createSelectField: 'Discount Strategy'
+						list: (ERDiscountStrategy typesDiscount: html)
+						callback: [ :value | self changeDiscountStrategy: value ]
 						withId: 'selectStrategy'
-						on: html ] ].
-	ticket strategyIsFixDiscount
-		ifTrue: [ self
-				createTextField: 'Amount'
-				for: #amount:
-				with: #amount
-				to: ticket discountStrategy
-				on: html.
+						on: html ].
+			ticket strategyIsFixDiscount
+				ifTrue: [ self
+						createTextField: 'Amount'
+						for: #amount:
+						with: #amount
+						to: ticket discountStrategy
+						on: html.
+					self
+						createSelectField: 'Currency'
+						for: #currency:
+						with: #currency
+						list: ERAttendee currencyTypes
+						to: ticket discountStrategy
+						on: html ].
+			ticket strategyIsPercentageDiscount
+				ifTrue: [ self
+						createTextField: 'Percentage'
+						for: #percentage:
+						with: #percentage
+						to: ticket discountStrategy
+						on: html ].
+			self createStrongText: 'Use Limit Strategy' to: html.
 			self
-				createSelectField: 'Currency'
-				for: #currency:
-				with: #currency
-				list: ERAttendee currencyTypes
-				to: ticket discountStrategy
-				on: html ].
-	ticket strategyIsPercentageDiscount
-		ifTrue: [ self
-				createTextField: 'Percentage'
-				for: #percentage:
-				with: #percentage
-				to: ticket discountStrategy
-				on: html ]
+				createSelectField: 'Strategy'
+				list: ERLimitStrategy typesLimitStrategy
+				callback: [ Transcript show: 'Strategy Limit' ]
+				withId: 'selectLimitStrategy'
+				on: html.
+			ticket limitStrategyIsLimited
+				ifTrue: [ self
+						createTextField: 'Limit'
+						for: #limit:
+						with: #limit
+						to: ticket limitStrategy
+						on: html ].
+			ticket limitStrategyIsUnlimited
+				ifTrue: [ html paragraph: 'Is unlimited' ] ]
 ]
 
 { #category : #rendering }
 ERContainerFormTicket >> renderPageOn: html [
 	self renderFormOn: html.
 	
+]
+
+{ #category : #accessing }
+ERContainerFormTicket >> ticket: anObject [
+	ticket := anObject
 ]
 
 { #category : #accessing }

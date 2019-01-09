@@ -357,7 +357,7 @@ ERComponentFactory >> createSelectField: aName list: aList callback: aBlock with
 		floatingLabel;
 		with: [ html mdlTextFieldLabel with: aName.
 			html select
-				dispatchCallback;
+				onChange: 'submit()';
 				class: 'mdl-textfield__input';
 				id: anId;
 				list: aList;
