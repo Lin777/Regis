@@ -1,11 +1,15 @@
 Class {
 	#name : #ERGroupRegistrationMembers,
 	#superclass : #ERGroupRegistration,
-	#instVars : [
-		'mofidyUserForm'
-	],
 	#category : #'ESUGApp-Components'
 }
+
+{ #category : #rendering }
+ERGroupRegistrationMembers >> applyReductionTicketTo: user [
+	|tickets|
+	tickets := controller conference tickets .
+	
+]
 
 { #category : #accessing }
 ERGroupRegistrationMembers >> attends [
@@ -49,28 +53,40 @@ ERGroupRegistrationMembers >> initializeModifyUserForm [
 	content state: mofidyUserForm
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERGroupRegistrationMembers >> listDataToRenderButton [
-	^ OrderedCollection new 
-	add: (Array with: 'Modify' 
-	with: [ :user | self modifyRegistrationInformation: user ] 
-	with: [:user | user id, '-modify']);
-	add: (Array with: 'Delete' 
-	with: [ :user | self deleteAttendeeFromGroup: user ] 
-	with: [:user | user id, '-delete']);
-	add: (Array with: 'Modify User' 
-	with: [ :user | self modifyUserFormGroup: user ] 
-	with: [:user | user id, '-modifyUser']);
-	add: (Array with: 'Reset Password' 
-	with: [ nil ] 
-	with: [:user | user id, '-resetPassword']);
-	add: (Array with: 'Apply Reduction' 
-	with: [ nil ] 
-	with: [:user | user id, '-applyReduction']);
-	add: (Array with: 'Invoice' 
-	with: [ nil ] 
-	with: [:user | user id, '-invoice']);
-	yourself
+	^ OrderedCollection new
+		add:
+			(Array
+				with: 'Modify'
+				with: [ :user | self modifyRegistrationInformation: user ]
+				with: [ :user | user id , '-modify' ]);
+		add:
+			(Array
+				with: 'Delete'
+				with: [ :user | self deleteAttendeeFromGroup: user ]
+				with: [ :user | user id , '-delete' ]);
+		add:
+			(Array
+				with: 'Modify User'
+				with: [ :user | self modifyUserFormGroup: user ]
+				with: [ :user | user id , '-modifyUser' ]);
+		add:
+			(Array
+				with: 'Reset Password'
+				with: [ nil ]
+				with: [ :user | user id , '-resetPassword' ]);
+		add:
+			(Array
+				with: 'Apply Reduction'
+				with: [ :user | self applyReductionTicketTo: user  ]
+				with: [ :user | user id , '-applyReduction' ]);
+		add:
+			(Array
+				with: 'Invoice'
+				with: [ nil ]
+				with: [ :user | user id , '-invoice' ]);
+		yourself
 ]
 
 { #category : #accessing }

@@ -2,7 +2,8 @@ Class {
 	#name : #ERReductionTickets,
 	#superclass : #ERConfiguration,
 	#instVars : [
-		'formAddTicket'
+		'formAddTicket',
+		'ticket'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -36,7 +37,8 @@ ERReductionTickets >> headers [
 
 { #category : #rendering }
 ERReductionTickets >> initializeFormAddFee [
-	formAddTicket := (ERContainerFormTicket on: attendee withContent: content)
+	ticket := ERReductionTicket new.
+	formAddTicket := (ERContainerFormTicket on: ticket withContent: content)
 ]
 
 { #category : #rendering }
