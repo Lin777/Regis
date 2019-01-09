@@ -49,41 +49,10 @@ ERMenuFactory >> createLogoutItem [
 ]
 
 { #category : #'as yet unclassified' }
-ERMenuFactory >> createMenuForAdmin [
+ERMenuFactory >> createMenuWith: aList [
 	^ ERNavView new
-		listOptions:
-			(OrderedCollection new
-				add: self createHomeItem;
-				add: self createConfigurationItem ;
-				add: self createAdminItem;
-				add: self createLogoutItem;
-				yourself);
+		listOptions: aList;
 		yourself
-]
-
-{ #category : #'as yet unclassified' }
-ERMenuFactory >> createMenuForAttendee [
-	^ ERNavView new
-		listOptions:
-			(OrderedCollection new
-				add: self createHomeItem;
-				add: self createMyRegistrationItem;
-				add: self createAdminItem;
-				add: self createLogoutItem;
-				yourself);
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-ERMenuFactory >> createMenuForGroupManager [
-	^ ERNavView new
-		listOptions:
-			(OrderedCollection new
-				add: self createHomeItem;
-				add: self createGroupManagerItem;
-				add: self createAdminItem;
-				add: self createLogoutItem;
-				yourself); yourself
 ]
 
 { #category : #'as yet unclassified' }

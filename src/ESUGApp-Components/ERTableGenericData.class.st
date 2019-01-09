@@ -67,12 +67,13 @@ ERTableGenericData >> renderBody: html [
 
 { #category : #rendering }
 ERTableGenericData >> renderButton: html with: aObject [
-	listToRenderButton do: [ :dataButton |
-		self createColoredButton: dataButton first
-		with: [(dataButton second value: aObject)]
-		id: (dataButton third value: aObject)
-		on: html.
-	]
+	listToRenderButton
+		do: [ :dataButton | 
+			self
+				createColoredAnchorButton: dataButton first
+				with: [ dataButton second value: aObject ]
+				id: (dataButton third value: aObject)
+				on: html ]
 ]
 
 { #category : #rendering }

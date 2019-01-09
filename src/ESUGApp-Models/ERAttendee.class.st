@@ -28,12 +28,14 @@ Class {
 		'foodPreference',
 		'attendSocialEvent',
 		'addedToMainList',
+		'addPersonToSocialDinner',
 		'tshirtSize',
 		'attendance',
 		'gender',
 		'paymentType',
 		'paymentCurrency',
-		'coupon'
+		'coupon',
+		'paymentAmount'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -71,6 +73,16 @@ ERAttendee class >> paymentTypes [
 { #category : #'as yet unclassified' }
 ERAttendee class >> tShirtSizes [
 	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
+]
+
+{ #category : #accessing }
+ERAttendee >> addPersonToSocialDinner [
+	^ addPersonToSocialDinner
+]
+
+{ #category : #accessing }
+ERAttendee >> addPersonToSocialDinner: anObject [
+	addPersonToSocialDinner := anObject
 ]
 
 { #category : #accessing }
@@ -244,6 +256,7 @@ ERAttendee >> initialize [
 	userAccount := ERUserAccount new.
 	self attendSocialEvent: true.
 	self addedToMainList: true.
+	self addPersonToSocialDinner: false.
 	self
 		attendance:
 			(Dictionary
@@ -373,6 +386,16 @@ ERAttendee >> password [
 { #category : #accessing }
 ERAttendee >> password: anObject [
 	userAccount password: anObject
+]
+
+{ #category : #accessing }
+ERAttendee >> paymentAmount [
+	^ paymentAmount
+]
+
+{ #category : #accessing }
+ERAttendee >> paymentAmount: anObject [
+	paymentAmount := anObject
 ]
 
 { #category : #accessing }

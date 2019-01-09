@@ -59,6 +59,24 @@ ERComponentFactory >> createCheckboxField: aName for: aSymbol with: anotherSymbo
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredAnchorButton: aName id: anId dialogId: aDialogId condition: aCondition on: html [
+	html mdlAnchorButton
+		onClick: (html jQuery id: aDialogId) dialog open
+		if: aCondition;
+		colored;
+		id: anId;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredAnchorButton: aName id: anId on: html [
+	html mdlAnchorButton 
+		openDialogWithId: anId; 
+		colored;
+		with: aName.
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createColoredAnchorButton: aName with: aBlock id: anId on: html [
 	html mdlAnchorButton
 		colored;
@@ -72,6 +90,16 @@ ERComponentFactory >> createColoredButton: aName with: aBlock id: anId on: html 
 	html mdlButton
 		colored;
 		id: anId ;
+		callback: aBlock;
+		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createColoredButtonAsSubmit: aName with: aBlock id: anId on: html [
+	html mdlButton
+		colored;
+		beSubmit;
+		id: anId;
 		callback: aBlock;
 		with: aName
 ]
@@ -213,32 +241,6 @@ ERComponentFactory >> createRequiredTextField: aName for: aSymbol with: anotherS
 ]
 
 { #category : #'as yet unclassified' }
-ERComponentFactory >> createSelectField: aName for: aSymbol list: aList on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel with: aName.
-			html select
-				class: 'mdl-textfield__input';
-				id: (self idFromSymbol: aSymbol);
-				list: aList;
-				callback: [ :value | 
-					attendee perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createSelectField: aName for: aSymbol list: aList percent: aNumber on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		style: 'width:' , aNumber asString , '%';
-		with: [ html mdlTextFieldLabel with: aName.
-			html select
-				class: 'mdl-textfield__input';
-				id: (self idFromSymbol: aSymbol);
-				list: aList;
-				callback: [ :value | attendee perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #'as yet unclassified' }
 ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -267,6 +269,20 @@ ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol 
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList percent: aNumber to: anObject on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		style: 'width:' , aNumber asString , '%';
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				class: 'mdl-textfield__input';
+				id: (self idFromSymbol: aSymbol);
+				list: aList;
+				selected: (anObject perform: anotherSymbol);
+				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList to: anObject on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -277,6 +293,19 @@ ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol 
 				list: aList;
 				selected: (anObject perform: anotherSymbol);
 				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName list: aList callback: aBlock withId: anId on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				id: anId;
+				list: aList;
+				callback: aBlock ]
 ]
 
 { #category : #'as yet unclassified' }

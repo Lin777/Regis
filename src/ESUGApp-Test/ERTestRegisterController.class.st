@@ -9,8 +9,8 @@ ERTestRegisterController >> testARegisteredAttendeeHasTheRoleOfAttendee [
 	"check if the record has the role of attendee"
 
 	| anAttendee |
-	anAttendee := self registerAttendee .
-	self assert: anAttendee role = 'attendee'
+	anAttendee := self registerAttendee.
+	self assert: anAttendee isAttendee
 ]
 
 { #category : #tests }
@@ -21,7 +21,7 @@ ERTestRegisterController >> testARegisteredGroupManagerHasTheRoleOfGroupManager 
 	aGroupManager := (ERRegistrationController
 		attendee: ERTestControllers testGroupManager)
 		saveAsGroupManager.
-	self assert: aGroupManager role = 'groupManager'
+	self assert: aGroupManager isGroupManager 
 ]
 
 { #category : #tests }

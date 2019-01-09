@@ -236,7 +236,14 @@ ERLibrary >> registerCss [
 
 { #category : #updating }
 ERLibrary >> selectorsToInclude [
-	^ Array with: 'registerCss' with: 'tabsCss' with: 'loginCss' with: 'generalCss' with: 'esugJs' "with: 'esugCss'"
+	^ OrderedCollection new 
+	add: 'registerCss';
+	add: 'tabsCss';
+	add: 'loginCss';
+	add: 'generalCss';
+	add: 'esugJs' "with: 'esugCss'";
+	add: 'validationInputsJs';
+	yourself
 ]
 
 { #category : #updating }
@@ -307,6 +314,27 @@ ERLibrary >> tabsJs [
   $(''.btnPrevious'').click(function(){
 console.log("prev");
   $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
+]
+
+{ #category : #'as yet unclassified' }
+ERLibrary >> validationInputsJs [
+	^ '
+		$(window).bind("load", function(){
+		var newPassword = document.getElementById("newPassword");
+	var confNewPassword = document.getElementById("confNewPassword");
+	
+	function validatePassword(){
+		if(newPassword.value != confNewPassword.value){
+			confNewPassword.setCustomValidity("Passwords Dont Match");
+		} else { 
+			confNewPassword.setCustomValidity("");
+		}
+	}
+	
+	newPassword.onchange = validatePassword;
+	confNewPassword.onkeyup = validatePassword;
+	});
+	'
 ]
 
 { #category : #updating }

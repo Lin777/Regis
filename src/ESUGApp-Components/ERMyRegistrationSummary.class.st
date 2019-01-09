@@ -1,9 +1,6 @@
 Class {
 	#name : #ERMyRegistrationSummary,
 	#superclass : #ERTabContainerPage,
-	#instVars : [
-		'formWithoutBasicInfo'
-	],
 	#category : #'ESUGApp-Components'
 }
 

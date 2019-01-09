@@ -1,10 +1,6 @@
 Class {
 	#name : #ERGroupRegistration,
 	#superclass : #ERTabContainerPage,
-	#instVars : [
-		'formRegister',
-		'attenteeRegisterForm'
-	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -30,6 +26,11 @@ ERGroupRegistration >> cancel [
 ]
 
 { #category : #initialization }
+ERGroupRegistration >> initialize [
+	super initialize.
+]
+
+{ #category : #initialization }
 ERGroupRegistration >> initializeController [
 	controller := ERGroupManagerViewController new attendee: attendee
 ]
@@ -43,6 +44,7 @@ ERGroupRegistration >> initializeFormRegister [
 
 { #category : #rendering }
 ERGroupRegistration >> registerAttendee [
+	self initializeFormRegister.
 	content state: formRegister
 ]
 

@@ -67,6 +67,11 @@ ERConferenceOptions >> renderContentOn: html [
 		with: #attendSocialEvent
 		on: html.
 	self
+		createCheckboxField: 'Check if you add a person to the Social Dinner'
+		for: #addPersonToSocialDinner:
+		with: #addPersonToSocialDinner
+		on: html.
+	self
 		createCheckboxField: 'Check if you want to be added to the Mailling List'
 		for: #addedToMainList:
 		with: #addedToMainList
