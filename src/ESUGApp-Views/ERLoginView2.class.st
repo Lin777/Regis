@@ -105,11 +105,13 @@ ERLoginView2 >> renderPageOn: html [
 { #category : #rendering }
 ERLoginView2 >> renderPasswordField: html [
 	self
-		createPasswordRequiredField: 'Password'
+		createPasswordField: 'Password'
 		id: 'password-login'
-		callback: [ :value | 
+		with: [:mdlTxtInput | 
+			mdlTxtInput required;
+			callback: [ :value | 
 			self controller user
-				password: (ERUserAccount hashPassword: value) asString ]
+				password: (ERUserAccount hashPassword: value) asString ] ]
 		on: html
 ]
 

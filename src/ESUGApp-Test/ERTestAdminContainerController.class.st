@@ -41,16 +41,16 @@ ERTestAdminContainerController >> testFailValidateCurrentPassword [
 
 { #category : #tests }
 ERTestAdminContainerController >> testFailValidatePatternPassword [
-	self assert: (controller validatePatternPassword: '1234567').
-	self assert: (controller validatePatternPassword: 'test').
-	self assert: (controller validatePatternPassword: 'TEST2').
-	self assert: (controller validatePatternPassword: '<test>123').
-	self assert: (controller validatePatternPassword: ';as!2#$%%^@#').
-	self assert: (controller validatePatternPassword: '.et~@#$^*').
-	self assert: (controller validatePatternPassword: '1231234><').
-	self assert: (controller validatePatternPassword: 'ASD.asd./asd').
-	self assert: (controller validatePatternPassword: '.123_test_1.').
-	self assert: (controller validatePatternPassword: '+qweweA234').
+	self deny: (controller validatePatternPassword: '1234567').
+	self deny: (controller validatePatternPassword: 'test').
+	self deny: (controller validatePatternPassword: 'TEST2').
+	self deny: (controller validatePatternPassword: '<test>123').
+	self deny: (controller validatePatternPassword: ';as!2#$%%^@#').
+	self deny: (controller validatePatternPassword: '.et~@#$^*').
+	self deny: (controller validatePatternPassword: '1231234><').
+	self deny: (controller validatePatternPassword: 'ASD.asd./asd').
+	self deny: (controller validatePatternPassword: '.123*test_1!').
+	self deny: (controller validatePatternPassword: '+qweweA234').
 ]
 
 { #category : #tests }
@@ -74,7 +74,7 @@ ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 ERTestAdminContainerController >> testValidChangePasswordTo [
 	| user |
 	user := controller changePasswordTo: 'test12345.6_78'.
-	self assert: user password equals: 'test12345.6_78'.
+	self assert: user password equals: (ERUserAccount hashPassword: 'test12345.6_78').
 ]
 
 { #category : #tests }

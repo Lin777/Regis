@@ -37,11 +37,13 @@ ERMyRegistrationSummary >> renderButtons: html [
 		with: [ self pay ]
 		id: 'pay'
 		on: html.
-	self
-		createRaisedColoredRippleEffectAnchorButton: 'Get my invoice'
-		with: [ self getInvoice ]
-		id: 'invoice'
-		on: html
+	html mdlAnchorButton
+		raised;
+		colored;
+		rippleEffect;
+		id: 'invoice';
+		callback: [ self getInvoice ];
+		with: 'Get my invoice'
 ]
 
 { #category : #rendering }

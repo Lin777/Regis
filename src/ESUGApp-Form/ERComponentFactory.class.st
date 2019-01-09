@@ -101,73 +101,17 @@ ERComponentFactory >> createHeadingStrong: aString level: aNumber withValue: aVa
 			html text: aValue ]
 ]
 
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName for: aSymbol on: html [
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: (self idFromSymbol: aSymbol);
-				with: aName.
-			html mdlTextFieldInput
-				id: (self idFromSymbol: aSymbol);
-				type: 'password';
-				callback: [ :value | 
-					attendee
-						perform: aSymbol
-						with: (ERUserAccount hashPassword: value asString) ] ]
-]
-
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: anId ;
-				with: aName.
-			html mdlTextFieldInput
-				id: anId ;
-				type: 'password';
-				callback: aBlock]
-]
-
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName id: anId callback: aBlock pattern: aRegularExpression textError: aTextFieldError on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: anId;
-				with: aName.
-			html mdlTextFieldInput
-				id: anId;
-				type: 'password';
-				pattern: aRegularExpression;
-				callback: aBlock.
-			html mdlTextFieldError: aTextFieldError ]
-]
-
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName withCallback: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				with: aName.
-			html mdlTextFieldInput
-				type: 'password';
-				callback: aBlock]
-]
-
-{ #category : #building }
-ERComponentFactory >> createPasswordRequiredField: aName id: anId callback: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: anId;
-				with: aName.
-			html mdlTextFieldInput
-				id: anId;
-				required;
-				type: 'password';
-				callback: aBlock ]
+		with: [
+			| mdlTxtInput |
+			html mdlTextFieldLabel for: aId; with: aName.
+			mdlTxtInput := html mdlTextFieldInput id: aId; type: 'password';
+			pattern: '[A-Za-z0-9._]{8,}'.
+			aBlock ifNotNil: [ aBlock cull: mdlTxtInput ].
+		].
 ]
 
 { #category : #'as yet unclassified' }

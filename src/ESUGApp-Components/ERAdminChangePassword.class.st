@@ -73,9 +73,16 @@ ERAdminChangePassword >> renderContainer: html [
 
 { #category : #rendering }
 ERAdminChangePassword >> renderFields: html [
-	self createPasswordField: 'Current Password: ' withCallback: [:value | password := value ] on: html.
-	self createPasswordField: 'Password: ' id: 'newPassword' callback: [:value |  passwordChanged := value ] pattern: '[A-Za-z0-9._]{8,}' textError: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters' on: html .
-	self createPasswordField: 'Confirm password: ' id: 'confNewPassword' callback: [:value | passwordChangedConfirm := value ] pattern: '[A-Za-z0-9._]{8,}' textError: '' on: html.
+	self createPasswordField: 'Current Password: ' id: 'currentPassword' 
+	with: [:mdlTxtInput | mdlTxtInput callback: [:value | password := value ] ] on: html.
+	self createPasswordField: 'Password: ' id: 'newPassword' 
+	with: [ :mdlTxtInput | 
+		mdlTxtInput callback: [:value |  passwordChanged := value ].
+		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
+	   on: html .
+	self createPasswordField: 'Confirm password: ' id: 'confNewPassword' with: [ :mdlTxtInput | 
+		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
+		html mdlTextFieldError: ''] on: html.
 ]
 
 { #category : #rendering }
