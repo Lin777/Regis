@@ -10,6 +10,18 @@ Class {
 	#category : #'ESUGApp-Models'
 }
 
+{ #category : #adding }
+ERReductionTicket >> addAttendeeOfTicket: anAttendee [
+	^ usersOfTickets add: anAttendee
+]
+
+{ #category : #adding }
+ERReductionTicket >> addAttendeeOfTicketLimited: anAttendee [
+	self usersOfTickets size < self limitStrategy limit
+		ifTrue: [ ^ self addAttendeeOfTicket: anAttendee ]
+		ifFalse: [ ^ ERException new messageText: 'The ticket limit was exceeded, please use another ticket.'; signal ]
+]
+
 { #category : #accessing }
 ERReductionTicket >> discountStrategy [
 	^ discountStrategy
@@ -46,6 +58,23 @@ ERReductionTicket >> limitStrategyIsLimited [
 { #category : #'as yet unclassified' }
 ERReductionTicket >> limitStrategyIsUnlimited [
 	^ limitStrategy isMemberOf: ERUnlimitedReductionTicketUse 
+]
+
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> obtainNewAmountAfterDiscountFor: amount [
+	self strategyIsFixDiscount
+		ifTrue: [ | amountWithDiscount |
+			amountWithDiscount := amount - discountStrategy amount.
+			^ self roundToZeroIfNegative: amountWithDiscount ].
+	self strategyIsPercentageDiscount
+		ifTrue: [ ^ amount - (amount * discountStrategy percentage) ]
+]
+
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> roundToZeroIfNegative: amountWithDiscount [
+	amountWithDiscount >= 0
+		ifTrue: [ ^ amountWithDiscount ].
+		 ^ 0 
 ]
 
 { #category : #'as yet unclassified' }

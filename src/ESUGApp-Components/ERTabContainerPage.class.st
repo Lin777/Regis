@@ -8,7 +8,8 @@ Class {
 		'mofidyUserForm',
 		'formWithoutBasicInfo',
 		'formRegister',
-		'attenteeRegisterForm'
+		'attenteeRegisterForm',
+		'formApplyReductionTicket'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -70,7 +71,7 @@ ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
 { #category : #initialization }
 ERTabContainerPage >> initialize [
 	super initialize.
-	messageComponent := ERDialog new id: 'error'
+	"messageComponent := ERDialog new id: 'error'"
 ]
 
 { #category : #initialization }

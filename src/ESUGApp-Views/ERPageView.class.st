@@ -1,6 +1,6 @@
 Class {
 	#name : #ERPageView,
-	#superclass : #ERComponentFactory,
+	#superclass : #ERStateContent,
 	#instVars : [
 		'pageController',
 		'title',

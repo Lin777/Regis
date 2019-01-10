@@ -45,15 +45,12 @@ ERDialog >> okCallback: anObject [
 { #category : #rendering }
 ERDialog >> renderContentOn: html [
 	html mdlDialog
-		openButtonId: idOpen;
 		closeButtonId: idClose;
+		openButtonId: idOpen;
 		with: [ html mdlDialogTitle: title.
 			html mdlDialogContent: [ html paragraph: message ].
 			html
-				mdlDialogActions: [ html mdlAnchorButton
-						callback: okCallback;
-						with: 'Ok'.
-					html mdlButton
+				mdlDialogActions: [ html mdlButton
 						id: idClose;
 						bePush;
 						with: 'Cancel' ] ]

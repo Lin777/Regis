@@ -28,11 +28,11 @@ EREsugWebApp class >> initialize [
 { #category : #running }
 EREsugWebApp >> go [
 	| loginAnswer user |
-	loginAnswer := self call: ERLoginView2 new.
+	loginAnswer := self call: ERLoginView new.
 	loginAnswer = #registerUser
-		ifTrue: [ user := self call: ERAttendeeRegistrationView initializeForm ]
+		ifTrue: [ user := self call: (ERRegisterView register: (ERAttendeeRegistrationView new)) ]
 		ifFalse: [ loginAnswer = #registerUserAsGroupManager
-				ifTrue: [ user := self call: ERGroupManagerRegistrationView initializeForm ]
+				ifTrue: [ user := self call: (ERRegisterView register: (ERGroupManagerRegistrationView new))  ]
 				ifFalse: [ user := loginAnswer ] ].
 	user
 		ifNotNil: [ self session login: user.

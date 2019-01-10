@@ -31,16 +31,45 @@ ERAttendeeRegistrationView >> initialize [
 
 { #category : #initialize }
 ERAttendeeRegistrationView >> initializeTabForms [
-	self addTab: (ERTabForAForm form: (ERBasicInformation on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERContactInformation on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERConferenceOptions on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERAffiliationInformation on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERAdditionalInformation on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERPaymentInformation on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERBasicInformation on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERContactInformation on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERConferenceOptions on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERAffiliationInformation on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERAdditionalInformation on: self controller attendee)).
+	self
+		addTab:
+			(ERTabForAForm
+				form: (ERPaymentInformation on: self controller attendee)).
 	self
 		addTab:
 			(ERDoneForm
 				on: self controller attendee
-				callback: actionRegister).
+				button: [ :html | "actionRegister" self renderDoneButtonOn: html ]).
 	(self tabs at: 1) activate
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationView >> validateAndRegister [
+	| finishRegisterView |
+	pageController validateRegister.
+	finishRegisterView := ERFinishRegisterAttend
+		on: pageController attendee
+		withContent: content
+		withController: pageController .
+	content state: finishRegisterView
 ]

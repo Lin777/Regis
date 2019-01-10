@@ -15,6 +15,29 @@ ERRegistrationController class >> attendee: anAtteendee [
 	^ controller 
 ]
 
+{ #category : #action }
+ERRegistrationController >> addAttendeeToTicket: coupon [
+	coupon limitStrategyIsLimited
+		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
+	coupon limitStrategyIsUnlimited
+		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
+	^ ERException new
+		messageText: 'The ticket does not have a limit strategy allowed.';
+		signal
+]
+
+{ #category : #action }
+ERRegistrationController >> addAttendeeToTicketIfExist [
+	| coupon |
+	coupon := self reductionTicketWithName: attendee coupon.
+	coupon isNil
+		ifFalse: [ ^ self addAttendeeToTicket: coupon ].
+	attendee coupon: ''.
+	^ ERException new
+		messageText: 'The ticket does not exist for this conference';
+		signal
+]
+
 { #category : #accessing }
 ERRegistrationController >> attendee [
 	^ attendee
@@ -42,24 +65,19 @@ ERRegistrationController >> save [
 	attendeeResult := ERUserAccount
 		findUserByEmail: attendee userAccount email.
 	attendeeResult
-		ifNil: [ attendeeResult := self saveAttendee.
-			attendeeResult userAccount isAttendee ifTrue: 
-			[conference addAttendee: attendeeResult].
+		ifNil: [ "self verifyTicket."
+			attendeeResult := self saveAttendee.
+			attendeeResult userAccount isAttendee
+				ifTrue: [ conference addAttendee: attendeeResult ].
 			conference save.
 			^ attendeeResult userAccount ].
-	^ nil
+	^ nil	"ERException new messageText: 'This email is already registered'"
 ]
 
 { #category : #action }
 ERRegistrationController >> saveAsGroupManager [
 	self convertToGroupManager.
 	^ self save
-]
-
-{ #category : #action }
-ERRegistrationController >> saveAsGroupManagerOn: aConference [
-	self convertToGroupManager.
-	^ self saveOn: aConference 
 ]
 
 { #category : #action }
@@ -71,19 +89,29 @@ ERRegistrationController >> saveAttendee [
 	^ self attendee save
 ]
 
-{ #category : #action }
-ERRegistrationController >> saveOn: aConference [
+{ #category : #'as yet unclassified' }
+ERRegistrationController >> validateRegister [
 	| attendeeResult |
 	attendeeResult := ERUserAccount
 		findUserByEmail: attendee userAccount email.
-	attendeeResult
-		ifNil: [ | user |
-			user := self attendee userAccount save.
-			aConference addUser: user.
-			self attendee userAccount: user.
-			attendeeResult := self attendee save.
-			aConference addAttendee: attendeeResult .
-			aConference save.
-			^ attendeeResult userAccount ].
+	attendeeResult ifNil: [ ^ self verifyTicket ].
+	^ ERException new
+		messageText: 'This email is already registered'; signal
+]
+
+{ #category : #'as yet unclassified' }
+ERRegistrationController >> validateRegisterForGroupManager [
+	| attendeeResult |
+	attendeeResult := ERUserAccount
+		findUserByEmail: attendee userAccount email.
+	attendeeResult ifNil: [ ^ nil ].
+	^ ERException new
+		messageText: 'This email is already registered';
+		signal
+]
+
+{ #category : #action }
+ERRegistrationController >> verifyTicket [
+	attendee hasCoupon ifTrue: [  ^ self addAttendeeToTicketIfExist ].
 	^ nil
 ]

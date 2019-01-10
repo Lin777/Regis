@@ -6,9 +6,8 @@ Class {
 
 { #category : #rendering }
 ERGroupRegistrationMembers >> applyReductionTicketTo: user [
-	|tickets|
-	tickets := controller conference tickets .
-	
+	self initializeFormApplyReductionTicket: user.
+	content state: formApplyReductionTicket 
 ]
 
 { #category : #accessing }
@@ -42,6 +41,17 @@ ERGroupRegistrationMembers >> headers [
 ERGroupRegistrationMembers >> initialize [
 	super initialize .
 	callback := nil
+]
+
+{ #category : #rendering }
+ERGroupRegistrationMembers >> initializeFormApplyReductionTicket: user [	
+	| tickets |
+	tickets := OrderedCollection new.
+	controller conference reductionTickets
+		do: [ :each | tickets add: each ticketId ].
+	formApplyReductionTicket := (ERContainerApplyReductionTicket
+		on: user
+		withContent: content) listOfTickets: tickets
 ]
 
 { #category : #initialization }

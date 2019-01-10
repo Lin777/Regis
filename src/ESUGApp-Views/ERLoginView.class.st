@@ -1,5 +1,5 @@
 Class {
-	#name : #ERLoginView2,
+	#name : #ERLoginView,
 	#superclass : #ERPageView,
 	#instVars : [
 		'tabs',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERLoginView2 >> actionsBody: html [
+ERLoginView >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
@@ -21,7 +21,7 @@ ERLoginView2 >> actionsBody: html [
 ]
 
 { #category : #initialization }
-ERLoginView2 >> initialize [
+ERLoginView >> initialize [
 	super initialize.
 	title := 'User Login'.
 	icon := 'person'.
@@ -31,7 +31,7 @@ ERLoginView2 >> initialize [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> loginUser [
+ERLoginView >> loginUser [
 	| userValidate  |
 	userValidate := self controller validateLogin.
 	userValidate notNil
@@ -41,21 +41,21 @@ ERLoginView2 >> loginUser [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> registerAsGroupManager [
+ERLoginView >> registerAsGroupManager [
 	pageController conferenceIsOpenRegistration
 		ifTrue: [ self answer: #registerUserAsGroupManager ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
-ERLoginView2 >> registerUser [
+ERLoginView >> registerUser [
 	pageController conferenceIsOpenRegistration
 		ifTrue: [ self answer: #registerUser ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderBody: html with: aBlock [
+ERLoginView >> renderBody: html with: aBlock [
 	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
 	with: [ 
 		html mdlLayout	with: aBlock
@@ -63,7 +63,7 @@ ERLoginView2 >> renderBody: html with: aBlock [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderEmailField: html [
+ERLoginView >> renderEmailField: html [
 	self
 	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self controller user email: value asString ] on: html.
 "
@@ -74,13 +74,13 @@ ERLoginView2 >> renderEmailField: html [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderFieldsLoginOn: html [
+ERLoginView >> renderFieldsLoginOn: html [
 	self renderEmailField: html.
 	self renderPasswordField: html
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderLoginButtonOn: html [
+ERLoginView >> renderLoginButtonOn: html [
 	html mdlButton
 		beSubmit ;
 		raised;
@@ -94,12 +94,12 @@ ERLoginView2 >> renderLoginButtonOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderMessageComponent: html [
+ERLoginView >> renderMessageComponent: html [
 	html render: messageComponent 
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderPageOn: html [
+ERLoginView >> renderPageOn: html [
 	html form
 		id: 'loginForm';
 		with: [ 
@@ -111,7 +111,7 @@ ERLoginView2 >> renderPageOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderPasswordField: html [
+ERLoginView >> renderPasswordField: html [
 	self
 		createPasswordRequiredField: 'Password'
 		id: 'password-login'
@@ -122,7 +122,7 @@ ERLoginView2 >> renderPasswordField: html [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
+ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
 		class: 'mdl-color-text--blue';
 		"primaryColor ;"
@@ -132,7 +132,7 @@ ERLoginView2 >> renderRegisterAsGroupManagerButtonOn: html [
 ]
 
 { #category : #rendering }
-ERLoginView2 >> renderRegisterButtonOn: html [
+ERLoginView >> renderRegisterButtonOn: html [
 	html mdlAnchorButton
 		"mdlTextColorAccent;"
 		class: 'login-button mdl-color-text-colored';

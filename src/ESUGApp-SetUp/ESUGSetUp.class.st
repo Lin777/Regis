@@ -126,38 +126,38 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 
 { #category : #accessing }
 ESUGSetUp class >> createESUGConfiguration [
-	
 	| esugEmailConfiguration conferenName esugDates earlyRegistrationDeadline esugOrganizer |
-
 	"Set Postmark key"
 	"PatSmtpToPostMarkClientAdapter key: 'xxxxx'. 
-	"	
-	esugEmailConfiguration := ERConferenceEmailConfiguration new 
+	"
+	esugEmailConfiguration := ERConferenceEmailConfiguration new
 		senderEmailAddress: 'registration@esug.org';
 		smptServerAddress: 'localhost';
-		smptClient: "PatSmtpToPostMarkClientAdapter"'';
-		welcomeText: 'Welcome to this great conference'; save.
-
-	conferenName := 'ESUG'.		
+		smptClient: '';
+		welcomeText: 'Welcome to this great conference';
+		save.	"PatSmtpToPostMarkClientAdapter"
+	conferenName := 'ESUG'.
 	esugDates := (Date fromString: '09/10/2018') to: (Date fromString: '09/14/2018').
 	earlyRegistrationDeadline := Date fromString: '07/25/2018'.
-	esugOrganizer := ERConferenceOrganizer new 
-		name: 'ESUG'; 
+	esugOrganizer := ERConferenceOrganizer new
+		name: 'ESUG';
 		fiscalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
 		webPageUrl: 'http://www.esug.org';
-		addressString: 'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'; save.
-
-	^ ERConferenceConfigurationModel new 
+		addressString:
+			'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France';
+		save.
+	^ ERConferenceConfigurationModel new
 		organizer: esugOrganizer;
-		name: conferenName ;
+		name: conferenName;
 		description: 'ESUG International Smalltalk Conference';
-		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/' ;
-		dateFrom:(Date fromString: '09/10/2018');
+		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
+		dateFrom: (Date fromString: '09/10/2018');
 		dateTo: (Date fromString: '09/14/2018');
-		dateSubmissionDeadline: esugDates" from previous";
-		earlyRegistrationDeadline: earlyRegistrationDeadline ;
-		emailConfiguration: esugEmailConfiguration; save.";
-		uploadingFilesTo: ((Smalltalk imageDirectory / 'UploadedFiles') ensureCreateDirectory) pathString".
+		dateSubmissionDeadline: (Date fromString: '09/14/2018');
+		earlyRegistrationDeadline: earlyRegistrationDeadline;
+		emailConfiguration: esugEmailConfiguration;
+		save	" from previous"	";
+		uploadingFilesTo: ((Smalltalk imageDirectory / 'UploadedFiles') ensureCreateDirectory) pathString"
 ]
 
 { #category : #accessing }

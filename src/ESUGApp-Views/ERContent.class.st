@@ -3,7 +3,7 @@ Class {
 	#superclass : #WAComponent,
 	#instVars : [
 		'state',
-		'lastState'
+		'states'
 	],
 	#category : #'ESUGApp-Views'
 }
@@ -11,12 +11,13 @@ Class {
 { #category : #initialization }
 ERContent >> initialize [
 	super initialize.
+	states := OrderedCollection new.
 	state := nil
 ]
 
 { #category : #accessing }
 ERContent >> lastState [
-	^ lastState
+	^ states removeLast
 ]
 
 { #category : #rendering }
@@ -31,6 +32,6 @@ ERContent >> state [
 
 { #category : #accessing }
 ERContent >> state: anObject [
-	lastState := state.
+	states add: state .
 	state := anObject
 ]

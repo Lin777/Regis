@@ -9,10 +9,12 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #initialization }
-ERRegister class >> initializeForm [
+{ #category : #'as yet unclassified' }
+ERRegister class >> withContent: aContent withController: aController [
 	| form |
 	form := self new.
+	form content: aContent.
+	form pageController: aController.
 	form initializeTabForms.
 	^ form
 ]
@@ -50,11 +52,10 @@ ERRegister >> deactivateAllTabs [
 ERRegister >> initialize [
 	super initialize.
 	icon := 'assignment'.
-	messageComponent := ERComponentAlert warningAlert
-		id: 'messageAlertLogin'.
+	messageComponent := ERComponentAlert warningAlert id: 'registerAlert'.
 	pageController := ERRegistrationController new.
 	id := 'login-conatiner'.
-	classContainer := 'mdl-card-register'.
+	classContainer := 'mdl-card-register'
 ]
 
 { #category : #initialization }
@@ -72,6 +73,7 @@ ERRegister >> register [
 { #category : #initialization }
 ERRegister >> registerAsGroupManager [
 	| user |
+	
 	user := pageController saveAsGroupManager.
 	self validateRegister: user
 ]
@@ -96,12 +98,23 @@ ERRegister >> renderBody: html with: aBlock [
 ]
 
 { #category : #rendering }
+ERRegister >> renderDoneButtonOn: html [
+	self
+		createRaisedRippleEffectPrimaryButton: 'Save Information'
+		with: [ [ self validateAndRegister ]
+				on: ERException
+				do: [ :exception | messageComponent errorMessage: exception messageText 
+					] ]
+		id: 'registerButton'
+		on: html
+]
+
+{ #category : #rendering }
 ERRegister >> renderPageOn: html [
+	html render: messageComponent.
 	html form
 		id: 'registerForm';
-		with: [ 
-	html mdlTabs rippleEffect
-		with: [ html render: (ERTabsView tabs: self tabs) ]]
+		with: [ html mdlTabs rippleEffect with: [ html render: (ERTabsView tabs: self tabs) ] ].
 ]
 
 { #category : #rendering }
@@ -119,11 +132,15 @@ ERRegister >> tabs [
 	^ tabs.
 ]
 
+{ #category : #initialize }
+ERRegister >> validateAndRegister [
+	^ self subclassResponsibility 
+]
+
 { #category : #'as yet unclassified' }
 ERRegister >> validateRegister: user [
-
 	user notNil
 		ifTrue: [ self answer: user ]
 		ifFalse:
-			[ messageComponent errorMessage: 'This email is aleready registered' ]
+			[ messageComponent errorMessage: 'This email is already registered' ]
 ]
