@@ -72,11 +72,13 @@ ERGroupRegistrationSummary >> renderFormButtons: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummary >> renderGenerateInvoiceButtonOn: html [
-	self
-		createRaisedColoredRippleEffectAnchorButton: 'GENERATE INVOICE'
-		with: [ self generateInvoice ]
-		id: 'generateInvoice'
-		on: html
+	html mdlAnchorButton
+		raised;
+		colored;
+		rippleEffect;
+		id: 'generateInvoice';
+		callback: [ self generateInvoice ];
+		with: 'GENERATE INVOICE'
 ]
 
 { #category : #rendering }

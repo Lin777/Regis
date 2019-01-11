@@ -30,7 +30,7 @@ ERPageLoggedView >> initialize [
 				on: attendee
 				withContent: content
 				withController: pageController).
-	self initializeNabvar
+	self initializeNabvar.
 ]
 
 { #category : #rendering }
