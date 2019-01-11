@@ -45,8 +45,9 @@ ERBankTransferInformation >> okAction [
 	| user |
 	user := pageController save.
 	user
-		ifNotNil: [ self session login: user.
-			self call: ERPageLoggedView new ]
+		ifNotNil: [ self answer: user	"self session login: user.
+			self call: ERPageLoggedView new" ].
+	self answer: true
 ]
 
 { #category : #rendering }

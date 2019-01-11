@@ -9,16 +9,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #'as yet unclassified' }
-ERRegister class >> withContent: aContent withController: aController [
-	| form |
-	form := self new.
-	form content: aContent.
-	form pageController: aController.
-	form initializeTabForms.
-	^ form
-]
-
 { #category : #accessing }
 ERRegister >> actionRegister: anObject [
 	actionRegister := anObject
@@ -80,11 +70,11 @@ ERRegister >> registerAsGroupManager [
 
 { #category : #rendering }
 ERRegister >> renderBackLoginButtonOn: html [
-	html mdlAnchorButton 
+	html mdlAnchorButton
 		colored;
 		rippleEffect;
 		id: 'backLogin';
-		callback: [ self answer: nil ];
+		callback: [ self call: ERLoginView new ];
 		with: 'Back Login'
 ]
 

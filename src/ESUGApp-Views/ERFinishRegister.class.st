@@ -5,13 +5,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERFinishRegister class >> on: anAttendee withContent: content [
-	^ self new
-		attendee: anAttendee;
-		content: content
-]
-
-{ #category : #'as yet unclassified' }
 ERFinishRegister class >> on: anAttendee withContent: content withController: aController [
 	^ self new
 		attendee: anAttendee;

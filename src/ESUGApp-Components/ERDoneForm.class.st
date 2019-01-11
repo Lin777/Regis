@@ -38,16 +38,6 @@ ERDoneForm >> button: anObject [
 	button := anObject
 ]
 
-{ #category : #accessing }
-ERDoneForm >> callback [
-	^ callback
-]
-
-{ #category : #accessing }
-ERDoneForm >> callback: anObject [
-	callback := anObject
-]
-
 { #category : #initialization }
 ERDoneForm >> initialize [
 	super initialize.
@@ -69,11 +59,6 @@ ERDoneForm >> renderFormOn: html [
 	html paragraph: 'You have successfully completed all steps.'.
 	html break.
 	button cull: html.
-	"self
-		createRaisedRippleEffectPrimaryButton: 'Save Information'
-		with: self callback
-		id: 'registerButton'
-		on: html."
 	1 to: 9 do: [ :i | html break ]
 ]
 

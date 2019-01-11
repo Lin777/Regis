@@ -77,14 +77,16 @@ ERRegistrationController >> save [
 	attendeeResult := ERUserAccount
 		findUserByEmail: attendee userAccount email.
 	attendeeResult
-		ifNil: [
-			attendeeResult := self saveAttendee.
+		ifNil: [ attendeeResult := self saveAttendee.
 			attendeeResult userAccount isAttendee
 				ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
 					conference addAttendee: attendeeResult ].
+			attendeeResult userAccount isGroupManager
+				ifTrue: [ (ERGroupManagerViewController new attendee: attendeeResult )
+						groupForGroupManager ].
 			conference save.
 			^ attendeeResult userAccount ].
-	^ nil	"ERException new messageText: 'This email is already registered'"
+	^ nil
 ]
 
 { #category : #action }

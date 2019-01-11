@@ -1,65 +1,62 @@
 Class {
 	#name : #ERAttendeeRegistrationView,
 	#superclass : #ERRegister,
+	#instVars : [
+		'currentTab'
+	],
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #'as yet unclassified' }
-ERAttendeeRegistrationView class >> using: aPageController withAction: aBlock [
-	| instance |
-	instance := self new.
-	instance controller: aPageController.
-	instance actionRegister: aBlock.
-	^ instance
-]
-
-{ #category : #'as yet unclassified' }
-ERAttendeeRegistrationView class >> withAction: aBlock [
-	| instance |
-	instance := self new.
-	instance actionRegister: aBlock.
-	instance initializeTabForms.
-	^ instance
+{ #category : #accessing }
+ERAttendeeRegistrationView >> currentTab: anObject [
+	currentTab := anObject
 ]
 
 { #category : #initialization }
 ERAttendeeRegistrationView >> initialize [
 	actionRegister := [ self register ].
 	super initialize.
-	title := 'Registration'.
+	currentTab := 1.
+	title := 'Registration'
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationView >> initializeTabForms [
 	self
 		addTab:
-			(ERTabForAForm form: (ERBasicInformation on: self controller attendee)).
+			(ERTabForAForm
+				form: (ERBasicInformation on: self controller attendee)).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERContactInformation on: self controller attendee)).
+				form: (ERContactInformation on: self controller attendee)
+				).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERConferenceOptions on: self controller attendee)).
+				form: (ERConferenceOptions on: self controller attendee)
+				).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERAffiliationInformation on: self controller attendee)).
+				form: (ERAffiliationInformation on: self controller attendee)
+				).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERAdditionalInformation on: self controller attendee)).
+				form: (ERAdditionalInformation on: self controller attendee)
+				).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERPaymentInformation on: self controller attendee)).
+				form: (ERPaymentInformation on: self controller attendee)
+				).
 	self
 		addTab:
 			(ERDoneForm
 				on: self controller attendee
 				button: [ :html | self renderDoneButtonOn: html ]).
-	(self tabs at: 1) activate
+	(self tabs at: currentTab) activate
 ]
 
 { #category : #initialize }

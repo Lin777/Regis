@@ -11,15 +11,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #'options-generated' }
-ERPageView class >> using: aPageController [
-	|instance|
-	instance := self new.
-	instance controller: aPageController.
-	^ instance.
-	
-]
-
 { #category : #'as yet unclassified' }
 ERPageView >> actionsBody: html [
 	self subclassResponsibility 

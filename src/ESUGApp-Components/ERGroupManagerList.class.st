@@ -1,6 +1,9 @@
 Class {
 	#name : #ERGroupManagerList,
 	#superclass : #ERConfiguration,
+	#instVars : [
+		'groupManagerForm'
+	],
 	#category : #'ESUGApp-Components'
 }
 
@@ -38,6 +41,33 @@ ERGroupManagerList >> headers [
 	^ #('Name' 'Email' 'Organization' 'Remaing Fee' 'Have all Pay?' '')
 ]
 
+{ #category : #accessing }
+ERGroupManagerList >> initializeFormRegister [
+	newAttendee := ERAttendee new.
+	formRegister := ERContainerTabsView
+		formRegisterOn: newAttendee
+		withCallback: callback
+		content: content
+]
+
+{ #category : #accessing }
+ERGroupManagerList >> initializeFormRegisterAdminToGroupManager [
+	groupManagerForm := ERContainerTabsView
+		formAdminToGMRegisterOn: attendee
+		withCallback: [ self registerAdminAsGroupManager ]
+		content: content.
+	content state: groupManagerForm
+]
+
+{ #category : #accessing }
+ERGroupManagerList >> initializeFormRegisterForGroupManager: anAttendee [
+	groupManagerForm := ERContainerTabsView
+		formGMRegisterOn: anAttendee
+		withCallback: [ self registerGM  ]
+		content: content.
+	content state: groupManagerForm
+]
+
 { #category : #rendering }
 ERGroupManagerList >> listDataToRenderButton [
 	^ OrderedCollection new
@@ -71,21 +101,31 @@ ERGroupManagerList >> listDataToRenderButton [
 
 { #category : #'as yet unclassified' }
 ERGroupManagerList >> registerAdminAsGroupManager [
+	(ERRegistrationController attendee: attendee) validateRegisterForGroupManager .
 	controller registerAsGroupManager.
+	content state: content lastState
+]
+
+{ #category : #accessing }
+ERGroupManagerList >> registerGM [
+	(ERRegistrationController attendee: newAttendee)
+		validateRegisterForGroupManager;
+		saveAsGroupManager.
 	content state: content lastState
 ]
 
 { #category : #rendering }
 ERGroupManagerList >> registerGroupManager [
+	newAttendee := ERAttendee new.
+	self initializeFormRegisterForGroupManager: newAttendee 
 ]
 
 { #category : #rendering }
 ERGroupManagerList >> registerMyselfAsGroupManager [
-	attendee userAccount isGroupManager 
+	attendee userAccount isGroupManager
 		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
-	self initializeFormWithoutBasicInformationFor: attendee ]
+			self initializeFormRegisterAdminToGroupManager ]
 		ifTrue: [  ]
-	
 ]
 
 { #category : #rendering }

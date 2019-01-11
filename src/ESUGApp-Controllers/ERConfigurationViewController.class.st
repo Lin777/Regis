@@ -45,7 +45,7 @@ ERConfigurationViewController >> addItemTo: aList of: each [
 				ifTrue: [ anAttendee isMale
 						ifTrue: [ man := man + 1 ].
 					anAttendee isFemale
-						ifTrue: [ women := women + 1 ] ].
+						ifTrue: [ women := women + 1 ] ]].
 			aList
 				add:
 					(Dictionary new
@@ -53,7 +53,7 @@ ERConfigurationViewController >> addItemTo: aList of: each [
 						at: 'Man' put: man;
 						at: 'Women' put: women;
 						at: 'Total' put: man + women;
-						yourself)]
+						yourself)
 ]
 
 { #category : #adding }
@@ -332,8 +332,8 @@ ERConfigurationViewController >> registerAsGroupManager [
 	attendee userAccount
 		roleAdd: 'groupManager';
 		save.
-	attendee save.
-	conference addAttendee: attendee.
+	attendee save."
+	conference addAttendee: attendee."
 	conference save.
 	^ attendee
 ]

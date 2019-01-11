@@ -68,6 +68,7 @@ ERAttendeeList >> listDataToRenderButton [
 
 { #category : #rendering }
 ERAttendeeList >> registerAdminAsAttendee [
+	(ERRegistrationController attendee: attendee) validateRegister .
 	controller registerAsAttendee.
 	content state: content lastState
 ]
@@ -144,14 +145,6 @@ ERAttendeeList >> tabId [
 { #category : #accessing }
 ERAttendeeList >> tabName [
 	^ 'Attendees'
-]
-
-{ #category : #initialization }
-ERAttendeeList >> tabs [
-	attenteeRegisterForm
-		ifNil: [ attenteeRegisterForm := ERAttendeeRegistrationView
-				withAction: [ self registerAttendeeToConference ] ].
-	^ attenteeRegisterForm tabs
 ]
 
 { #category : #accessing }

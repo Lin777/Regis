@@ -12,6 +12,28 @@ Class {
 }
 
 { #category : #accessing }
+ERContainerTabsView class >> formAdminToGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form initializeTabsForConvertAdminToGroupManager: anAttendee.
+	form tabView: (ERTabsView tabs: form tabs).
+	^ form
+]
+
+{ #category : #accessing }
+ERContainerTabsView class >> formGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form initializeTabsForGroupManager: anAttendee.
+	form tabView: (ERTabsView tabs: form tabs).
+	^ form
+]
+
+{ #category : #accessing }
 ERContainerTabsView class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -73,6 +95,34 @@ ERContainerTabsView >> initializeDialog [
 		idClose: 'buttonClose';
 		idOpen: 'cancel-register-attendee';
 		okCallback: [ self cancel ]
+]
+
+{ #category : #accessing }
+ERContainerTabsView >> initializeTabsForConvertAdminToGroupManager: anAttendee [
+	tabs := OrderedCollection new
+				
+		add:
+			(ERTabForAForm
+				form: (ERAffiliationInformation on: anAttendee))activate;
+		add:
+			(ERDoneForm
+				on: anAttendee
+				button: [ :html | self renderDoneButtonOn: html ]);
+		yourself
+]
+
+{ #category : #accessing }
+ERContainerTabsView >> initializeTabsForGroupManager: anAttendee [
+	tabs := OrderedCollection new
+		add:
+			(ERTabForAForm form: (ERBasicInformation on: anAttendee))
+				activate;
+		add: (ERTabForAForm form: (ERAffiliationInformation on: anAttendee));
+		add:
+			(ERDoneForm
+				on: anAttendee
+				button: [ :html | self renderDoneButtonOn: html ]);
+		yourself
 ]
 
 { #category : #accessing }

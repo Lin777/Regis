@@ -110,11 +110,6 @@ ERTabContainerPage >> renderContentOn: html [
 	self renderContainer: html
 ]
 
-{ #category : #initialization }
-ERTabContainerPage >> tabs [
-	self subclassResponsibility 
-]
-
 { #category : #accessing }
 ERTabContainerPage >> title [
 	self subclassResponsibility 
