@@ -103,8 +103,8 @@ ERRegister >> renderDoneButtonOn: html [
 		createRaisedRippleEffectPrimaryButton: 'Save Information'
 		with: [ [ self validateAndRegister ]
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText 
-					] ]
+				do:
+					[ :exception | messageComponent errorMessage: exception messageText ] ]
 		id: 'registerButton'
 		on: html
 ]

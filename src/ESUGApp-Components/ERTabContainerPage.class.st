@@ -9,7 +9,8 @@ Class {
 		'formWithoutBasicInfo',
 		'formRegister',
 		'attenteeRegisterForm',
-		'formApplyReductionTicket'
+		'formApplyReductionTicket',
+		'newAttendee'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -53,37 +54,27 @@ ERTabContainerPage >> controller: anObject [
 	controller := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
-	^ OrderedCollection new
-		add:
-			(ERTabForAForm form: (ERContactInformation on: anAttendee))
-				activate;
-		add: (ERTabForAForm form: (ERConferenceOptions on: anAttendee));
-		add:
-			(ERTabForAForm form: (ERAffiliationInformation on: anAttendee));
-		add: (ERTabForAForm form: (ERAdditionalInformation on: anAttendee));
-		add: (ERTabForAForm form: (ERPaymentInformation on: anAttendee));
-		add: (ERDoneForm on: anAttendee callback: callback);
-		yourself
-]
-
 { #category : #initialization }
 ERTabContainerPage >> initialize [
 	super initialize.
-	"messageComponent := ERDialog new id: 'error'"
+	messageComponent := ERComponentAlert warningAlert id: 'tabAlert'.
 ]
 
 { #category : #initialization }
 ERTabContainerPage >> initializeFormRegister [
-	formRegister := (ERContainerTabsView content: content)
-		tabView: (ERTabsView tabs: self tabs)
+	newAttendee := ERAttendee new.
+	formRegister := ERContainerTabsView
+		formRegisterOn: newAttendee
+		withCallback: callback
+		content: content
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERTabContainerPage >> initializeFormWithoutBasicInformationFor: anAttendee [
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView: (ERTabsView tabs: (self formWithoutBasicInformationFor: anAttendee)).
+	formWithoutBasicInfo := ERContainerTabsView
+		formWithoutBasicInfoOn: anAttendee
+		withCallback: callback
+		content: content.
 	content state: formWithoutBasicInfo
 ]
 
@@ -131,6 +122,7 @@ ERTabContainerPage >> title [
 
 { #category : #accessing }
 ERTabContainerPage >> updateRegistrationInformation: anAttendee [
+	(ERRegistrationController attendee: anAttendee ) validateRegister .
 	anAttendee save.
 	content state: content lastState
 ]

@@ -17,38 +17,38 @@ ERContactInformation >> formName [
 { #category : #rendering }
 ERContactInformation >> renderContentOn: html [
 	self
-		createTextField: 'Address1'
+		createTextField: 'Address1 (*):'
 		for: #address:
 		with: #address
 		percent: 49
 		on: html.
 	self
-		createTextField: 'Address2'
+		createTextField: 'Address2 (*):'
 		for: #address2:
 		with: #address2
 		percent: 49
 		on: html.
 	self
-		createTextField: 'City'
+		createTextField: 'City (*):'
 		for: #city:
 		with: #city
 		percent: 49
 		on: html.
 	self
-		createSelectField: 'Country'
+		createSelectField: 'Country (*):'
 		for: #country:
 		with: #country
 		list: ERAttendee countries
 		percent: 49
 		on: html.
 	self
-		createTextField: 'Province/State'
+		createTextField: 'Province/State (*):'
 		for: #province:
 		with: #province
 		percent: 49
 		on: html.
 	self
-		createTextField: 'Postal/Zipcode'
+		createTextField: 'Postal/Zipcode (*):'
 		for: #postal:
 		with: #postal
 		percent: 49

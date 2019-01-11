@@ -10,6 +10,34 @@ ERFinishRegisterGroupManager >> actionsBody: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterGroupManager >> backAction [
+	self returnToThePreviousState
+]
+
+{ #category : #rendering }
+ERFinishRegisterGroupManager >> cancelAction [
+	self returnToThePreviousState
+]
+
+{ #category : #rendering }
+ERFinishRegisterGroupManager >> finishAction [
+	|user|
+	user := pageController saveAsGroupManager.
+	user
+		ifNotNil: [ self session login: user.
+			self call: ERPageLoggedView new ]
+]
+
+{ #category : #rendering }
+ERFinishRegisterGroupManager >> nextAction [
+	| user |
+	user := pageController saveAsGroupManager.
+	user
+		ifNotNil: [ self session login: user.
+			self call: ERPageLoggedView new ]
+]
+
+{ #category : #rendering }
 ERFinishRegisterGroupManager >> renderAffiliation: html [
 	html mdlCell
 		class: 'mdl-cell--4-col';

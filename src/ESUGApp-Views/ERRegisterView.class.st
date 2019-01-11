@@ -42,8 +42,7 @@ ERRegisterView >> controller: anObject [
 ERRegisterView >> initialize [
 	super initialize.
 	controller := ERRegistrationController new.
-	content := ERContent new.
-	"(ERAttendeeRegistrationView withContent: content withController: controller)"
+	content := ERContent new
 ]
 
 { #category : #initialization }

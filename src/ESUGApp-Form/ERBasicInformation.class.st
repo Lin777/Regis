@@ -17,20 +17,23 @@ ERBasicInformation >> formName [
 { #category : #rendering }
 ERBasicInformation >> renderContentOn: html [
 	self
-		createTextField: 'First Name'
+		createTextField: 'First Name (*):'
 		for: #firstName:
 		with: #firstName
 		on: html.
 	self
-		createTextField: 'Last Name'
+		createTextField: 'Last Name (*):'
 		for: #lastName:
 		with: #lastName
 		on: html.
 	self
-		createTextField: 'Email'
+		createTextField: 'Email (*):'
 		for: #email:
 		with: #email
 		on: html.
-	self createPasswordField: 'Password' for: #password: on: html.
-	self createPasswordField: 'Confirm Password' for: #confirmPassword: on: html.
+	self createPasswordField: 'Password (*):' for: #password: on: html.
+	self
+		createPasswordField: 'Confirm Password (*):'
+		for: #confirmPassword:
+		on: html
 ]

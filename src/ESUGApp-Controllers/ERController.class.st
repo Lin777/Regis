@@ -75,6 +75,34 @@ ERController >> initialize [
 	conference := ERConference find: [ :each | each active ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> payPalAmountToken [
+	^ '[AMOUNT]'
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> payPalInvoiceNumberToken [
+	^ '[INVOICENUMBER]'
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> payPalUrlFor: anAttendeeOrGroupManager [
+	| conferenceFee url fee |
+	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
+	fee := self feePerTypeCurrencyOf: anAttendeeOrGroupManager.
+	url := fee bankPayPalUrl.
+	url := url
+		copyReplaceAll: fee payPalAmountToken
+		with: (conferenceFee printShowingDecimalPlaces: 2).
+	url := url
+		copyReplaceAll: fee payPalInvoiceNumberToken
+		with:
+			(anAttendeeOrGroupManager
+				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
+				printString.
+	^ url
+]
+
 { #category : #action }
 ERController >> reductionTicketWithName: aString [
 	conference reductionTickets

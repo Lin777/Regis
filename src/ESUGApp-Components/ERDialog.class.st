@@ -50,7 +50,10 @@ ERDialog >> renderContentOn: html [
 		with: [ html mdlDialogTitle: title.
 			html mdlDialogContent: [ html paragraph: message ].
 			html
-				mdlDialogActions: [ html mdlButton
+				mdlDialogActions: [ html mdlAnchorButton
+						callback: okCallback;
+						with: 'Ok'.
+					html mdlButton
 						id: idClose;
 						bePush;
 						with: 'Cancel' ] ]

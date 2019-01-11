@@ -11,7 +11,8 @@ Class {
 		'groups',
 		'users',
 		'configuration',
-		'active'
+		'active',
+		'invoiceNumber'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -107,6 +108,11 @@ ERConference >> groups: anObject [
 ]
 
 { #category : #initialization }
+ERConference >> incrementInvoiceNumber [
+	^ invoiceNumber := self invoiceNumber +1
+]
+
+{ #category : #initialization }
 ERConference >> initialize [
 	super initialize.
 	attends := OrderedCollection new.
@@ -117,7 +123,14 @@ ERConference >> initialize [
 	submittedAwards := OrderedCollection new.
 	submittedTalks := OrderedCollection new.
 	users := OrderedCollection new.
-	active := false
+	active := false.
+	invoiceNumber := 0
+]
+
+{ #category : #accessing }
+ERConference >> invoiceNumber [
+	invoiceNumber ifNil: [ invoiceNumber := 0 ].
+	 ^ invoiceNumber
 ]
 
 { #category : #accessing }

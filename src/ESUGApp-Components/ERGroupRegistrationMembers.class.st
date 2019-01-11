@@ -102,6 +102,7 @@ ERGroupRegistrationMembers >> listDataToRenderButton [
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 	"Add function to add attendee role to group manager"
+	(ERRegistrationController attendee: attendee) validateRegister.
 	controller registerAsAttendee.
 	content state: content lastState
 ]
@@ -109,6 +110,11 @@ ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerMyselfAsAttendee [
 	callback := [ self registerGroupManagerAsAttendee ].
+
+	"callback := [ :html | 
+	self
+		renderDoneButtonCallback: [ self validateAndRegisterAsAttendee ]
+		on: html ]."
 	self initializeFormWithoutBasicInformationFor: attendee
 ]
 
@@ -173,4 +179,12 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> validateAndRegisterAsAttendee [
+	(ERRegistrationController attendee: attendee)
+		validateRegister.
+	controller registerAsAttendee.
+	content state: content lastState
 ]

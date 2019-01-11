@@ -26,30 +26,42 @@ ERFinishRegisterAttend >> content: anObject [
 
 { #category : #rendering }
 ERFinishRegisterAttend >> finishAction [
-	
+	attendee paymentTypeIsBankTransfer
+		ifTrue: [ ^ self registerAndShowFinishViewForCreditCard ].
+	attendee paymentTypeIsCreditCard
+		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
+	^ ERException new
+		messageText: 'The type of payment entered is not valid. ';
+		signal
 ]
 
 { #category : #rendering }
 ERFinishRegisterAttend >> nextAction [
 	attendee paymentTypeIsBankTransfer
-		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	attendee paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndShowFinishViewForCreditCard ].
-	^ ERException new messageText: 'The type of payment entered is not valid. '; signal
+	attendee paymentTypeIsCreditCard
+		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
+	^ ERException new
+		messageText: 'The type of payment entered is not valid. ';
+		signal
 ]
 
 { #category : #rendering }
 ERFinishRegisterAttend >> registerAndRedirectionPayPAL [
+	| url |
+	pageController save.
+	url := pageController payPalUrlFor: attendee.
+	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }
 ERFinishRegisterAttend >> registerAndShowFinishViewForCreditCard [
 	| finishRegisterView |
-			finishRegisterView := ERBankTransferInformation
-				on: attendee
-				withContent: content
-				withController: pageController.
-			content state: finishRegisterView
+	finishRegisterView := ERBankTransferInformation
+		on: attendee
+		withContent: content
+		withController: pageController.
+	content state: finishRegisterView
 ]
 
 { #category : #rendering }

@@ -42,7 +42,11 @@ ERBankTransferInformation >> initializeFee [
 
 { #category : #rendering }
 ERBankTransferInformation >> okAction [
-	
+	| user |
+	user := pageController save.
+	user
+		ifNotNil: [ self session login: user.
+			self call: ERPageLoggedView new ]
 ]
 
 { #category : #rendering }

@@ -35,7 +35,8 @@ Class {
 		'paymentType',
 		'paymentCurrency',
 		'coupon',
-		'paymentAmount'
+		'paymentAmount',
+		'invoiceNumber'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -276,6 +277,17 @@ ERAttendee >> initialize [
 					('wednesday' -> true).
 					('thursday' -> true).
 					('friday' -> true)})
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> invoiceNumberIfNone [
+	invoiceNumber
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> invoiceNumberIfNone: aBlock [
+	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
+	^ invoiceNumber 
 ]
 
 { #category : #testing }

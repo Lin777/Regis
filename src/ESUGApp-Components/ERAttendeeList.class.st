@@ -72,11 +72,17 @@ ERAttendeeList >> registerAdminAsAttendee [
 	content state: content lastState
 ]
 
+{ #category : #rendering }
+ERAttendeeList >> registerAttendee [
+	callback := [ self registerAttendeeToConference ].
+	super registerAttendee 
+]
+
 { #category : #initialization }
 ERAttendeeList >> registerAttendeeToConference [
 	| result |
-	result := controller
-		addAttendee: attenteeRegisterForm controller attendee.
+	(ERRegistrationController attendee: newAttendee )validateRegister .
+	result := controller addAttendee: newAttendee.	"attenteeRegisterForm controller attendee"
 	result
 		ifNil: [ Transcript show: 'This email already registered' ]
 		ifNotNil: [ content state: content lastState ]

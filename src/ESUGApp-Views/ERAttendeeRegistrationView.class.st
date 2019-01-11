@@ -33,8 +33,7 @@ ERAttendeeRegistrationView >> initialize [
 ERAttendeeRegistrationView >> initializeTabForms [
 	self
 		addTab:
-			(ERTabForAForm
-				form: (ERBasicInformation on: self controller attendee)).
+			(ERTabForAForm form: (ERBasicInformation on: self controller attendee)).
 	self
 		addTab:
 			(ERTabForAForm
@@ -59,7 +58,7 @@ ERAttendeeRegistrationView >> initializeTabForms [
 		addTab:
 			(ERDoneForm
 				on: self controller attendee
-				button: [ :html | "actionRegister" self renderDoneButtonOn: html ]).
+				button: [ :html | self renderDoneButtonOn: html ]).
 	(self tabs at: 1) activate
 ]
 
@@ -70,6 +69,6 @@ ERAttendeeRegistrationView >> validateAndRegister [
 	finishRegisterView := ERFinishRegisterAttend
 		on: pageController attendee
 		withContent: content
-		withController: pageController .
+		withController: pageController.
 	content state: finishRegisterView
 ]
