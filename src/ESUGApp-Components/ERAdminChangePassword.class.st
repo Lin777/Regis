@@ -16,29 +16,24 @@ ERAdminChangePassword >> cancel [
 { #category : #rendering }
 ERAdminChangePassword >> changePassword [
 	(controller validateCurrentPassword: password) 
-	ifTrue: [(controller validatePatternPassword: password)
-		ifTrue: [ (controller validateNewPassword: password with: passwordChangedConfirm) 
+	ifTrue: [(controller validatePatternPassword: passwordChanged)
+		ifTrue: [ (controller validateNewPassword: passwordChanged with: passwordChangedConfirm) 
 			ifTrue: [ controller changePasswordTo: passwordChanged ] 
-			ifFalse: [ messageComponent errorMessage: 'Passwords Dont Match' ]
+			ifFalse: [ messageComponent errorMessage: 'Passwords Dont Match' ].
 		]
 		ifFalse: [ 
-			messageComponent errorMessage: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters'	
+			messageComponent errorMessage: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters'.
 		]
 	] ifFalse: [ 
-		messageComponent errorMessage: 'The password entered does not match the current password' ].
-	"(controller
-		changePasswordFrom: password
-		to: passwordChanged)
-		ifNil: [ messageComponent
-				errorMessage: 'The password entered does not match the current password' ]"
+		messageComponent errorMessage: 'The password entered does not match the current password'.
+		].
 
 ]
 
 { #category : #initialization }
 ERAdminChangePassword >> initialize [
 	super initialize.
-	messageComponent := ERComponentAlert warningAlert
-		id: 'adminChangePasswordAlert'
+	messageComponent id: 'adminChangePasswordAlert'.
 ]
 
 { #category : #rendering }
@@ -75,12 +70,12 @@ ERAdminChangePassword >> renderContainer: html [
 ERAdminChangePassword >> renderFields: html [
 	self createPasswordField: 'Current Password: ' id: 'currentPassword' 
 	with: [:mdlTxtInput | mdlTxtInput callback: [:value | password := value ] ] on: html.
-	self createPasswordField: 'Password: ' id: 'newPassword' 
+	self createPasswordField: 'Password: ' id: 'password' 
 	with: [ :mdlTxtInput | 
 		mdlTxtInput callback: [:value |  passwordChanged := value ].
 		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
 	   on: html .
-	self createPasswordField: 'Confirm password: ' id: 'confNewPassword' with: [ :mdlTxtInput | 
+	self createPasswordField: 'Confirm password: ' id: 'confirmPassword' with: [ :mdlTxtInput | 
 		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
 		html mdlTextFieldError: ''] on: html.
 ]
@@ -91,9 +86,10 @@ ERAdminChangePassword >> renderFormOn: html [
 		method: 'post';
 		id: 'groupManagerFunctions';
 		with: [ 
-			html render: messageComponent .
+			html render: messageComponent.
 			self renderFields: html.
-			self renderButtons: html ]
+			self renderButtons: html.
+		]
 ]
 
 { #category : #accessing }

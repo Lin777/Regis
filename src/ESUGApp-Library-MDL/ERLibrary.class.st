@@ -320,8 +320,8 @@ console.log("prev");
 ERLibrary >> validationInputsJs [
 	^ '
 		$(window).bind("load", function(){
-		var newPassword = document.getElementById("newPassword");
-	var confNewPassword = document.getElementById("confNewPassword");
+		var newPassword = document.getElementById("password");
+	var confNewPassword = document.getElementById("confirmPassword");
 	
 	function validatePassword(){
 		if(newPassword.value != confNewPassword.value){

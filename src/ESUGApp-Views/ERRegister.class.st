@@ -125,5 +125,5 @@ ERRegister >> validateRegister: user [
 	user notNil
 		ifTrue: [ self answer: user ]
 		ifFalse:
-			[ messageComponent errorMessage: 'This email is aleready registered' ]
+			[ messageComponent errorMessage: 'This email is already registered' ]
 ]

@@ -70,7 +70,7 @@ ERTabContainerPage >> formWithoutBasicInformationFor: anAttendee [
 { #category : #initialization }
 ERTabContainerPage >> initialize [
 	super initialize.
-	messageComponent := ERDialog new id: 'error'
+	messageComponent := ERComponentAlert warningAlert.
 ]
 
 { #category : #initialization }

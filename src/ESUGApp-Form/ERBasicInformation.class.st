@@ -34,9 +34,9 @@ ERBasicInformation >> renderContentOn: html [
 	self createPasswordField: 'Password' id: 'password' 
 	with: [ :mdlTxtInput | 
 		mdlTxtInput callback: [ :value | 
-			self attendee perform: '#password:' with: (ERUserAccount hashPassword: value asString )].
+			self attendee perform: #password: with: (ERUserAccount hashPassword: value asString )].
 		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 or more characters' ] on: html.
 	self createPasswordField: 'Confirm Password' id: 'confirmPassword' with: [ :mdlTxtInput | 
 		mdlTxtInput callback: [ :value | 
-			self attendee perform: '#confirmPassword:' with: (ERUserAccount hashPassword: value asString )] ] on: html.
+			self attendee perform: #confirmPassword: with: (ERUserAccount hashPassword: value asString )] ] on: html.
 ]

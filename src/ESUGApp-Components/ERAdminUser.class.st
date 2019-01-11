@@ -23,8 +23,7 @@ ERAdminUser >> cancel [
 ERAdminUser >> initialize [
 	super initialize.
 	modifiedUser := ERUserAccount new.
-	messageComponent := ERComponentAlert warningAlert
-		id: 'adminUserAlert'
+	messageComponent id: 'adminUserAlert'
 ]
 
 { #category : #rendering }

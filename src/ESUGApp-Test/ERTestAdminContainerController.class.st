@@ -17,22 +17,6 @@ ERTestAdminContainerController >> setUp [
 ]
 
 { #category : #tests }
-ERTestAdminContainerController >> testChangePasswordWhenTheCurrentPasswordDoesNotMatches [
-	| result |
-	result := controller
-		changePasswordFrom: '87654321' asString
-		to: '1234567890'.
-	self assert: result isNil
-]
-
-{ #category : #tests }
-ERTestAdminContainerController >> testChangePasswordWhenTheCurrentPasswordMatches [
-	| result |
-	result := controller changePasswordFrom:'12345678' asString to: '87654321'.
-	self assert: result isNotNil
-]
-
-{ #category : #tests }
 ERTestAdminContainerController >> testFailValidateCurrentPassword [
 	self deny: (controller validateCurrentPassword: '87654321').
 	self deny: (controller validateCurrentPassword: 'asdfghjk').

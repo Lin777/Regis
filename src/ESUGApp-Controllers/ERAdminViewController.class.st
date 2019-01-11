@@ -13,15 +13,6 @@ ERAdminViewController class >> attendee: anAtteendee [
 ]
 
 { #category : #'as yet unclassified' }
-ERAdminViewController >> changePasswordFrom: confirmPassword to: passwordChanged [
-	(self validateCurrentPassword: confirmPassword)
-		ifTrue: [ attendee
-				password: (ERUserAccount hashPassword: passwordChanged) asString.
-			^ attendee save ].
-		^ nil
-]
-
-{ #category : #'as yet unclassified' }
 ERAdminViewController >> changePasswordTo: aString [
 	attendee password: (ERUserAccount hashPassword: aString) asString.
 	^ attendee save.
