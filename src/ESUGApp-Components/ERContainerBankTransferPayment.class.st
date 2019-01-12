@@ -1,68 +1,58 @@
 Class {
-	#name : #ERBankTransferInformation,
-	#superclass : #ERFinishRegister,
+	#name : #ERContainerBankTransferPayment,
+	#superclass : #ERGeneralContainerView,
 	#instVars : [
+		'controller',
 		'fee',
 		'bankAccountInformation',
-		'bankInformation'
+		'bankInformation',
+		'dialog'
 	],
-	#category : #'ESUGApp-Views'
+	#category : #'ESUGApp-Components'
 }
 
 { #category : #'as yet unclassified' }
-ERBankTransferInformation class >> on: anAttendee withContent: content withController: aController [
-	^ self new
-		attendee: anAttendee;
-		content: content;
-		pageController: aController;
-		initializeFee
+ERContainerBankTransferPayment class >> on: anAttendee withContent: aContent [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form content: aContent.
+	form initializeFee.
+	^ form
 ]
 
-{ #category : #'as yet unclassified' }
-ERBankTransferInformation >> actionsBody: html [
+{ #category : #rendering }
+ERContainerBankTransferPayment >> content: anObject [
+	content := anObject
 ]
 
-{ #category : #accessing }
-ERBankTransferInformation >> headers [
+{ #category : #rendering }
+ERContainerBankTransferPayment >> headers [
 	^ #('Bank Code' 'Counter Code' 'Account Number' 'RIB Key' 'Bank Address')
 ]
 
-{ #category : #initialization }
-ERBankTransferInformation >> initialize [
-	super initialize.
-	title := 'Finish'.
+{ #category : #rendering }
+ERContainerBankTransferPayment >> initializeDialog [
+	dialog := ERDialog new
+		title: 'Cancel Modify Affiliation';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'back-state';
+		okCallback: [ self returnToThePreviousState ]
 ]
 
-{ #category : #initialization }
-ERBankTransferInformation >> initializeFee [
-	fee := pageController feePerTypeCurrencyOf: pageController attendee.
+{ #category : #rendering }
+ERContainerBankTransferPayment >> initializeFee [
+	| pageController |
+	pageController := ERController new.
+	fee := pageController
+		feePerTypeCurrencyOf: attendee.
 	bankAccountInformation := fee bankAccountInformation.
 	bankInformation := bankAccountInformation bankInformation
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> okAction [
-	| user |
-	user := pageController save.
-	user
-		ifNotNil: [ self session login: user.
-			self call: ERPageLoggedView new].
-	self answer: true
-]
-
-{ #category : #rendering }
-ERBankTransferInformation >> renderActions: html [
-	html mdlCardActions
-		class: 'mdl-card--border';
-		with: [ self
-				createColoredAnchorButton: 'Ok'
-				with: [ self okAction ]
-				id: 'okButton'
-				on: html ]
-]
-
-{ #category : #rendering }
-ERBankTransferInformation >> renderBody: html [
+ERContainerBankTransferPayment >> renderBody: html [
 	html
 		tableBody: [ html
 				tableRow: [ html mdlTableCell: [ html text: bankInformation code ].
@@ -77,24 +67,14 @@ ERBankTransferInformation >> renderBody: html [
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> renderBody: html with: aBlock [
-	html div
-		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
-		with: [ html break.
-			html break.
-			aBlock value ]
-]
-
-{ #category : #rendering }
-ERBankTransferInformation >> renderHeaders: html [
+ERContainerBankTransferPayment >> renderHeaders: html [
 	html
 		tableHead: [ html
 				tableRow: [ self headers do: [ :each | html mdlTableHeading: each ] ] ]
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> renderInfoBank: html [
+ERContainerBankTransferPayment >> renderInfoBank: html [
 	html break.
 	self
 		createTextStrongWithoutParagraph: 'Bank name:  '
@@ -116,12 +96,13 @@ ERBankTransferInformation >> renderInfoBank: html [
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> renderInfoBankTransfer: html [
+ERContainerBankTransferPayment >> renderInfoBankTransfer: html [
 	html break.
 	html
 		text:
-			'BANK TRANSFER to "' , bankAccountInformation owner , '" (in '
-				, fee currency,
+			'BANK TRANSFER to "' , bankAccountInformation owner
+				, '" (in ' , fee currency
+				,
 					'). the tranfer should be "whitout cost to the beneficiary" (i.e
         your organization shoul pay all bank transfer fees) Now make they bank transfer from your account, either right awaty or within the next few days.
         (In the text field transfer, please put your email. to speed payment reconcilliation.) To record this data, either save/print this page now or click "OK" the "My Registration" then "Generate Invoice",
@@ -131,18 +112,28 @@ ERBankTransferInformation >> renderInfoBankTransfer: html [
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> renderPageOn: html [
+ERContainerBankTransferPayment >> renderPageOn: html [
 	self renderInfoBankTransfer: html.
 	self renderTableInfoBank: html.
 	self renderInfoBank: html.
-	self renderActions: html.
+	html horizontalRule.
+	self initializeDialog.
+	self
+		createColoredAnchorButton: 'Back'
+		id: 'back-state'
+		on: html
 ]
 
 { #category : #rendering }
-ERBankTransferInformation >> renderTableInfoBank: html [
+ERContainerBankTransferPayment >> renderTableInfoBank: html [
 	html mdlTable
-				class: 'mdl-shadow--2dp';
-				style: 'width:100%;';
-				with: [ self renderHeaders: html.
-						  self renderBody: html] 
+		class: 'mdl-shadow--2dp';
+		style: 'width:100%;';
+		with: [ self renderHeaders: html.
+			self renderBody: html ]
+]
+
+{ #category : #accessing }
+ERContainerBankTransferPayment >> title [
+	^ 'Bank Transfer'
 ]

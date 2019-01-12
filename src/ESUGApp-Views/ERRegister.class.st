@@ -74,7 +74,7 @@ ERRegister >> renderBackLoginButtonOn: html [
 		colored;
 		rippleEffect;
 		id: 'backLogin';
-		callback: [ self call: ERLoginView new ];
+		callback: [ self returnToThePreviousState  ];
 		with: 'Back Login'
 ]
 
@@ -105,6 +105,11 @@ ERRegister >> renderPageOn: html [
 	html form
 		id: 'registerForm';
 		with: [ html mdlTabs rippleEffect with: [ html render: (ERTabsView tabs: self tabs) ] ].
+]
+
+{ #category : #hooks }
+ERRegister >> states [
+    ^ Array with: self
 ]
 
 { #category : #rendering }

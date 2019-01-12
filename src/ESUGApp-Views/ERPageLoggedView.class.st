@@ -55,7 +55,7 @@ ERPageLoggedView >> itemList [
 				withController: pageController ];
 		at: 'logout'
 			put: [ self session logout.
-			self call: ERLoginView new ];
+			self requestContext redirectTo: 'http://localhost:8000/ESUG' ];
 		at: 'groupRegistration'
 			put: [ ERContainerGroupRegistrationView
 				attendee: attendee
@@ -105,4 +105,9 @@ ERPageLoggedView >> renderContentOn: html [
 		html render: navbar .
 		html render: content .
 		 ]
+]
+
+{ #category : #hooks }
+ERPageLoggedView >> states [
+    ^ Array with: self
 ]

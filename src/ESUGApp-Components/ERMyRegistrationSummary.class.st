@@ -20,6 +20,26 @@ ERMyRegistrationSummary >> modifyRegistration [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> pay [
+	attendee paymentTypeIsBankTransfer
+		ifTrue: [ ^ self redirectViewForBankTransfer ].
+	attendee paymentTypeIsCreditCard
+		ifTrue: [ ^ self redirectionPayPAL ]
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> redirectViewForBankTransfer [
+	| bankTransferView |
+	bankTransferView := ERContainerBankTransferPayment
+		on: attendee
+		withContent: content.
+	content state: bankTransferView 
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> redirectionPayPAL [
+	| url |
+	url := ERController new payPalUrlFor: attendee.
+	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }

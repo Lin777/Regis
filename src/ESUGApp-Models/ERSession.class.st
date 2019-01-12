@@ -1,22 +1,12 @@
 Class {
 	#name : #ERSession,
-	#superclass : #WASession,
+	#superclass : #WAExpirySession,
 	#instVars : [
 		'user',
 		'account'
 	],
 	#category : #'ESUGApp-Models'
 }
-
-{ #category : #accessing }
-ERSession >> account [
-	^ account
-]
-
-{ #category : #accessing }
-ERSession >> account: anObject [
-	account := anObject
-]
 
 { #category : #actions }
 ERSession >> findUserByEmail: anEmail [
@@ -44,7 +34,7 @@ ERSession >> login: aUser [
 { #category : #actions }
 ERSession >> logout [
 	self user: nil.
-	self account: nil
+	self unregistered
 ]
 
 { #category : #actions }
@@ -53,17 +43,17 @@ ERSession >> responseForRequest: aRequest [
 	^ super responseForRequest: aRequest
 ]
 
-{ #category : #'parent/child' }
+{ #category : #actions }
 ERSession >> unregistered [
-	super unregistered
+	super unregistered.
+	user := nil.
 ]
 
 { #category : #updating }
 ERSession >> updateRoot: anHtmlRoot [
-
- super updateRoot: anHtmlRoot.
- anHtmlRoot title: ERLibrary applicationName.
- anHtmlRoot beHtml5.
+	super updateRoot: anHtmlRoot.
+	anHtmlRoot title: ERLibrary applicationName.
+	"anHtmlRoot beHtml5"
 ]
 
 { #category : #accessing }

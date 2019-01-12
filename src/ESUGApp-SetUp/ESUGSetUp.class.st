@@ -173,7 +173,7 @@ ESUGSetUp class >> start [
 	self configureESUGFeesForConference: conference.
 	self configureESUGReductionCodesForConference: conference.
 	self activateOnlyThisConference: conference.
-	EREsugWebApp initialize .
+	"EREsugWebApp initialize"EREsugApp initialize
 ]
 
 { #category : #accessing }

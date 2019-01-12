@@ -24,8 +24,9 @@ ERFinishRegisterGroupManager >> finishAction [
 	| user |
 	user := pageController saveAsGroupManager.
 	user
-		ifNotNil: [ self answer: user	"self session login: user.
-			self call: ERPageLoggedView new" ]. self answer: true
+		ifNotNil: [ self session login: user.
+			self call: ERPageLoggedView new ].
+	self answer: true
 ]
 
 { #category : #rendering }
@@ -33,11 +34,9 @@ ERFinishRegisterGroupManager >> nextAction [
 	| user |
 	user := pageController saveAsGroupManager.
 	user
-		ifNotNil:
-			[ self answer: user	"self session login: user.
-			self call: ERPageLoggedView new " ].
-				self
-		answer: true
+		ifNotNil: [ self session login: user.
+			self call: ERPageLoggedView new  ].
+	self answer: true
 ]
 
 { #category : #rendering }

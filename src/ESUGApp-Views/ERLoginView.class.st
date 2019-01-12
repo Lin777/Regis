@@ -2,7 +2,6 @@ Class {
 	#name : #ERLoginView,
 	#superclass : #ERPageView,
 	#instVars : [
-		'tabs',
 		'messageComponent'
 	],
 	#category : #'ESUGApp-Views'
@@ -32,25 +31,34 @@ ERLoginView >> initialize [
 
 { #category : #rendering }
 ERLoginView >> loginUser [
-	| userValidate  |
+	| userValidate |
 	userValidate := self controller validateLogin.
 	userValidate notNil
-		ifTrue: [ self answer: userValidate ]
-		ifFalse:
-			[ messageComponent errorMessage: 'Login failed.' ]
+		ifTrue: [ 
+			self session login: userValidate.
+			self call: ERPageLoggedView new ]
+		ifFalse: [ messageComponent errorMessage: 'Login failed.' ]
 ]
 
 { #category : #rendering }
 ERLoginView >> registerAsGroupManager [
 	pageController conferenceIsOpenRegistration
-		ifTrue: [ self answer: #registerUserAsGroupManager ]
+		ifTrue: [ 
+			| formRegister |
+			formRegister := ERGroupManagerRegistrationView new.
+			formRegister content: self content.
+			formRegister initializeTabForms ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
 ERLoginView >> registerUser [
 	pageController conferenceIsOpenRegistration
-		ifTrue: [ self answer: #registerUser ]
+		ifTrue: [
+			| formRegister |
+			formRegister := ERAttendeeRegistrationView new.
+			formRegister content: self content.
+			formRegister initializeTabForms ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
@@ -134,9 +142,9 @@ ERLoginView >> renderRegisterAsGroupManagerButtonOn: html [
 { #category : #rendering }
 ERLoginView >> renderRegisterButtonOn: html [
 	html mdlAnchorButton
-		"mdlTextColorAccent;"
-		class: 'login-button mdl-color-text-colored';
+		class: 'mdl-button login-button mdl-color-text-colored';
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
+	"mdlTextColorAccent;"
 ]

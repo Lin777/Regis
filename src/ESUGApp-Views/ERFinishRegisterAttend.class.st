@@ -27,7 +27,7 @@ ERFinishRegisterAttend >> content: anObject [
 { #category : #rendering }
 ERFinishRegisterAttend >> finishAction [
 	attendee paymentTypeIsBankTransfer
-		ifTrue: [ ^ self registerAndShowFinishViewForCreditCard ].
+		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
 	attendee paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
 	^ ERException new
@@ -38,7 +38,7 @@ ERFinishRegisterAttend >> finishAction [
 { #category : #rendering }
 ERFinishRegisterAttend >> nextAction [
 	attendee paymentTypeIsBankTransfer
-		ifTrue: [ ^ self registerAndShowFinishViewForCreditCard ].
+		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
 	attendee paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
 	^ ERException new
@@ -55,7 +55,7 @@ ERFinishRegisterAttend >> registerAndRedirectionPayPAL [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttend >> registerAndShowFinishViewForCreditCard [
+ERFinishRegisterAttend >> registerAndShowFinishViewForBankTransfer [
 	| finishRegisterView |
 	finishRegisterView := ERBankTransferInformation
 		on: attendee
