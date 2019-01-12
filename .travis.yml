@@ -19,6 +19,7 @@ before_script:
   - "java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone-3.14.0.jar -port 4444 > /tmp/seleniumlog.&"
 smalltalk:
   - Pharo-6.1
+  - Pharo-7.0
   
 matrix:
   allow_failures:
