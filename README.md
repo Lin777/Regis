@@ -20,24 +20,15 @@ Metacello new
  repository: 'github://Lin777/ESUGConfRegistrationApp:master/src';
  load.
  
- (Smalltalk at: #ZnZincServerAdaptor) startOn: 8080.
+ESUGSetUp start
 ```
 
-You can see the application run in: http://localhost:8080/ESUG
+You can see the application run in: http://localhost:8000/ESUG
 
-## Run Tests
+Admin credentials:
 
-The tests for the model run like any test.
-
-On the other hand, the tests with Selenium (Parasol) require extract the Chromedriver's ZIP file into the directory where you put the Selenium server JAR file. And then run the Selenium server, execute the following on the command line:
-
-```bash
-java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone-3.0.1.jar
-```
-
-and now you can run the tests.
-
-If you have any inconvenience with parasol, you can check the [Parasol github](https://github.com/SeasideSt/Parasol)
+email: admin@esug.org
+password: 12345678
 
 ## Progress Status
 
@@ -66,13 +57,13 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 
 ### Admin-Organizer
 
-* [ ] setup infos (cf. PatagoniaForESUG-Example.st) :
+* [x] setup infos (cf. PatagoniaForESUG-Example.st) :
 * [x] admin credentials (login/password)
-* [ ] ESUG dates : start & stop
-* [ ] prices : early 1 day, early full, late 1 day, late full
-* [ ] price for extra person to the social dinner
+* [x] ESUG dates : start & stop
+* [x] prices : early 1 day, early full, late 1 day, late full
+* [x] price for extra person to the social dinner
 * [ ] STMP server : currently we use a REST service to send emails (PatSmtpToPostMarkClientAdapter) and this is  easier than having its own SMTP server
-* [ ] Open / close registration
+* [x] Open / close registration
 * [ ] create coupons : percentage discount, fixed reduction, limited usage
 	cf. https://esug.github.io/become_sponsor.html when clicking on a coupon -> see all registrations that used it 
 * [x] modify a registration
@@ -86,9 +77,9 @@ If you have any inconvenience with parasol, you can check the [Parasol github](h
 * [ ] attendees list should only contain: names, mail, Organisation, Country
 
 ### Statistics to organize
-* [ ] number of participants to lunches per day and per types. Example: Monday: 120 normal attendees, 10 vegetarians, 3 vegans ... 	Tuesday: ...
-* [ ] polos: 40 Man S, 10 Woman S, 10 Woman M, 10 Man M, 30 Man XL, 4 Man 3XL, ...
-* [ ] number of participants to social dinner (same)
+* [x] number of participants to lunches per day and per types. Example: Monday: 120 normal attendees, 10 vegetarians, 3 vegans ... 	Tuesday: ...
+* [x] polos: 40 Man S, 10 Woman S, 10 Woman M, 10 Man M, 30 Man XL, 4 Man 3XL, ...
+* [x] number of participants to social dinner (same)
 * [ ] download all invoices in one zip
 
 ## Student Volunter
