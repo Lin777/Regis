@@ -17,8 +17,8 @@ ERTabsView class >> tabs: aList [
 
 { #category : #rendering }
 ERTabsView >> renderContentOn: html [
-			self renderTabNames: html.
-			self renderTabs: html
+	self renderTabNames: html.
+	self renderTabs: html
 ]
 
 { #category : #rendering }

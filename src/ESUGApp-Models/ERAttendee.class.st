@@ -35,7 +35,8 @@ Class {
 		'paymentType',
 		'paymentCurrency',
 		'coupon',
-		'paymentAmount'
+		'paymentAmount',
+		'invoiceNumber'
 	],
 	#category : #'ESUGApp-Models'
 }
@@ -48,6 +49,11 @@ ERAttendee class >> countries [
 { #category : #'as yet unclassified' }
 ERAttendee class >> currencyTypes [
 	^ #('Euro' 'Dollar')
+]
+
+{ #category : #accessing }
+ERAttendee class >> days [
+	^ #('monday' 'tuesday' 'wednesday' 'thursday' 'friday')
 ]
 
 { #category : #'as yet unclassified' }
@@ -240,6 +246,11 @@ ERAttendee >> gender: anObject [
 	gender := anObject
 ]
 
+{ #category : #testing }
+ERAttendee >> hasCoupon [
+	^ (coupon isNil or: coupon isEmpty) not
+]
+
 { #category : #accessing }
 ERAttendee >> homePage [
 	^ homePage
@@ -266,6 +277,52 @@ ERAttendee >> initialize [
 					('wednesday' -> true).
 					('thursday' -> true).
 					('friday' -> true)})
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> invoiceNumberIfNone [
+	invoiceNumber
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> invoiceNumberIfNone: aBlock [
+	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
+	^ invoiceNumber 
+]
+
+{ #category : #testing }
+ERAttendee >> isFemale [
+	^ gender = 'Female'
+]
+
+{ #category : #testing }
+ERAttendee >> isMale [
+	^ gender = 'Male'
+]
+
+{ #category : #testing }
+ERAttendee >> isNormal [
+	^ foodPreference ='Normal' 
+]
+
+{ #category : #testing }
+ERAttendee >> isPaymentInDollar [
+	^ paymentCurrency = 'Dollar'
+]
+
+{ #category : #testing }
+ERAttendee >> isPaymentInEuro [
+	^ paymentCurrency =  'Euro'
+]
+
+{ #category : #testing }
+ERAttendee >> isVegan [
+	^ foodPreference = 'Vegan'
+]
+
+{ #category : #testing }
+ERAttendee >> isVegetarian [
+	^ foodPreference =  'Vegetarian'
 ]
 
 { #category : #accessing }
@@ -416,6 +473,16 @@ ERAttendee >> paymentType [
 { #category : #accessing }
 ERAttendee >> paymentType: anObject [
 	paymentType := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> paymentTypeIsBankTransfer [
+	^ 'Bank transfer' = paymentType
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> paymentTypeIsCreditCard [
+	^  'Credit Card' = paymentType
 ]
 
 { #category : #accessing }

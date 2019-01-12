@@ -13,6 +13,10 @@ ERTestController >> setUp [
 	controller := ERController new
 ]
 
+{ #category : #tests }
+ERTestController >> testAmountToPay [
+]
+
 { #category : #initialization }
 ERTestController >> testConferenceIsOpenRegistration [
 	controller conference configuration openRegistration: true.

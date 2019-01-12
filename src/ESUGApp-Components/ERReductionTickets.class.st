@@ -9,9 +9,19 @@ Class {
 }
 
 { #category : #rendering }
+ERReductionTickets >> actionModifyTicket: aReductionTicket [
+	controller modifyTicket: aReductionTicket 
+]
+
+{ #category : #rendering }
 ERReductionTickets >> addTicket [
-	self initializeFormAddFee.
+	self initializeFormAddTicket.
 	content state: formAddTicket
+]
+
+{ #category : #rendering }
+ERReductionTickets >> addTicketToConference [
+	controller addTicket: ticket
 ]
 
 { #category : #rendering }
@@ -36,9 +46,18 @@ ERReductionTickets >> headers [
 ]
 
 { #category : #rendering }
-ERReductionTickets >> initializeFormAddFee [
+ERReductionTickets >> initializeFormAddTicket [
 	ticket := ERReductionTicket new.
-	formAddTicket := (ERContainerFormTicket on: ticket withContent: content)
+	formAddTicket := (ERContainerFormTicket on: ticket withContent: content).
+	formAddTicket callback: [ self addTicketToConference ]
+]
+
+{ #category : #rendering }
+ERReductionTickets >> initializeFormModifyTicket: aReductionTicket [
+	formAddTicket := ERContainerFormTicket
+		on: aReductionTicket
+		withContent: content.
+	formAddTicket callback: [ self actionModifyTicket: aReductionTicket  ]
 ]
 
 { #category : #rendering }
@@ -58,7 +77,10 @@ ERReductionTickets >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERReductionTickets >> modifyTicket: ticket [
+ERReductionTickets >> modifyTicket: aReductionTicket [
+	self initializeFormModifyTicket: aReductionTicket.
+	
+	content state: formAddTicket
 ]
 
 { #category : #rendering }

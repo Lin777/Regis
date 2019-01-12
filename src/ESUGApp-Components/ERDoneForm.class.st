@@ -2,7 +2,7 @@ Class {
 	#name : #ERDoneForm,
 	#superclass : #ERAttendeeRegistrationForm,
 	#instVars : [
-		'callback'
+		'button'
 	],
 	#category : #'ESUGApp-Components'
 }
@@ -16,6 +16,15 @@ ERDoneForm class >> callback: aBlock [
 ]
 
 { #category : #callbacks }
+ERDoneForm class >> on: anAttendee button: aBlock [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form button: aBlock.
+	^ form
+]
+
+{ #category : #callbacks }
 ERDoneForm class >> on: anAttendee callback: aBlock [
 	| form |
 	form := self new.
@@ -25,13 +34,8 @@ ERDoneForm class >> on: anAttendee callback: aBlock [
 ]
 
 { #category : #accessing }
-ERDoneForm >> callback [
-	^ callback
-]
-
-{ #category : #accessing }
-ERDoneForm >> callback: anObject [
-	callback := anObject
+ERDoneForm >> button: anObject [
+	button := anObject
 ]
 
 { #category : #initialization }
@@ -54,8 +58,8 @@ ERDoneForm >> renderFormOn: html [
 	html break.
 	html paragraph: 'You have successfully completed all steps.'.
 	html break.
-	self createRaisedRippleEffectPrimaryButton: 'Save Information' with: self callback id: 'registerButton' on: html.
-	1 to: 9 do: [ :i | html break ].
+	button cull: html.
+	1 to: 9 do: [ :i | html break ]
 ]
 
 { #category : #accessing }

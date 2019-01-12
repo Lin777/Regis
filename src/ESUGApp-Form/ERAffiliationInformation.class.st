@@ -17,12 +17,12 @@ ERAffiliationInformation >> formName [
 { #category : #rendering }
 ERAffiliationInformation >> renderContentOn: html [
 	self
-		createRequiredTextField: 'Organization Name (*):'
+		createTextField: 'Organization Name (*):'
 		for: #orgName:
 		with: #orgName
 		on: html.
 	self
-		createRequiredTextField: 'Address1 (*): '
+		createTextField: 'Address1 (*): '
 		for: #orgAddrees1:
 		with: #orgAddrees1
 		percent: 49

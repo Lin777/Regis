@@ -36,6 +36,6 @@ ERPaymentInformation >> renderContentOn: html [
 		createSelectField: 'Payment Currency'
 		for: #paymentCurrency:
 		with: #paymentCurrency
-		list: ERAttendee currencyTypes
+		list: ERController currencyAvailable
 		on: html
 ]

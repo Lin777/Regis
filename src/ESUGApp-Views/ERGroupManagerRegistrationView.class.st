@@ -17,6 +17,17 @@ self addTab: (ERTabForAForm form: (ERBasicInformation on: self controller attend
 	self addTab: (ERTabForAForm form: (ERAffiliationInformation on: self controller attendee)).
 	self
 		addTab:
-			(ERDoneForm on: self controller attendee callback: actionRegister).
+			(ERDoneForm on: self controller attendee button:  [ :html | self renderDoneButtonOn: html ]).
 	(self tabs at: 1) activate
+]
+
+{ #category : #initialize }
+ERGroupManagerRegistrationView >> validateAndRegister [
+	| finishRegisterView |
+	pageController validateRegisterForGroupManager.
+	finishRegisterView := ERFinishRegisterGroupManager
+		on: pageController attendee
+		withContent: content
+		withController: pageController.
+	content state: finishRegisterView
 ]

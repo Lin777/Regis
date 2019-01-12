@@ -68,15 +68,22 @@ ERAttendeeList >> listDataToRenderButton [
 
 { #category : #rendering }
 ERAttendeeList >> registerAdminAsAttendee [
+	(ERRegistrationController attendee: attendee) validateRegister .
 	controller registerAsAttendee.
 	content state: content lastState
+]
+
+{ #category : #rendering }
+ERAttendeeList >> registerAttendee [
+	callback := [ self registerAttendeeToConference ].
+	super registerAttendee 
 ]
 
 { #category : #initialization }
 ERAttendeeList >> registerAttendeeToConference [
 	| result |
-	result := controller
-		addAttendee: attenteeRegisterForm controller attendee.
+	(ERRegistrationController attendee: newAttendee )validateRegister .
+	result := controller addAttendee: newAttendee.	"attenteeRegisterForm controller attendee"
 	result
 		ifNil: [ Transcript show: 'This email already registered' ]
 		ifNotNil: [ content state: content lastState ]
@@ -138,14 +145,6 @@ ERAttendeeList >> tabId [
 { #category : #accessing }
 ERAttendeeList >> tabName [
 	^ 'Attendees'
-]
-
-{ #category : #initialization }
-ERAttendeeList >> tabs [
-	attenteeRegisterForm
-		ifNil: [ attenteeRegisterForm := ERAttendeeRegistrationView
-				withAction: [ self registerAttendeeToConference ] ].
-	^ attenteeRegisterForm tabs
 ]
 
 { #category : #accessing }

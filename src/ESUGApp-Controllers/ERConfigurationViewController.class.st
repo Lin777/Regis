@@ -19,6 +19,70 @@ ERConfigurationViewController >> addAttendee: anAttendee [
 ]
 
 { #category : #adding }
+ERConfigurationViewController >> addAttendsToLunchPer: day to: list [
+	| normal vegetarian vegan |
+	normal := 0. vegan := 0. vegetarian := 0.
+	self attends
+		do: [ :anAttendee | 
+			(anAttendee perform: day asSymbol)
+				ifTrue: [ anAttendee isNormal
+						ifTrue: [ normal := normal + 1 ].
+					anAttendee isVegan
+						ifTrue: [ vegan := vegan + 1 ].
+					anAttendee isVegetarian
+						ifTrue: [ vegetarian := vegetarian + 1 ] ] ].
+	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> addItemTo: aList of: each [
+	| man women |
+	man := 0.
+	women := 0.
+	self attends
+		do: [ :anAttendee | 
+			anAttendee tshirtSize = each
+				ifTrue: [ anAttendee isMale
+						ifTrue: [ man := man + 1 ].
+					anAttendee isFemale
+						ifTrue: [ women := women + 1 ] ]].
+			aList
+				add:
+					(Dictionary new
+						at: 'Size of the shirt' put: each;
+						at: 'Man' put: man;
+						at: 'Women' put: women;
+						at: 'Total' put: man + women;
+						yourself)
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list [
+	list
+		add:
+			(Dictionary new
+				at: 'Day' put: day capitalized;
+				at: 'Normal' put: normal;
+				at: 'Vegetarian' put: vegetarian;
+				at: 'Vegan' put: vegan;
+				yourself)
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> addReductionTicketToConference: ticketRegistered [
+	conference addReductionTicket: ticketRegistered .
+	conference save.
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> addTicket: aReductionTicket [
+	| ticketRegistered |
+	self reductionTicketAlreadyExist: aReductionTicket.
+	ticketRegistered := self saveTicket: aReductionTicket .
+	self addReductionTicketToConference: ticketRegistered
+]
+
+{ #category : #adding }
 ERConfigurationViewController >> addUser: anAttendee [
 	(ERUserAccount findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
@@ -210,9 +274,71 @@ ERConfigurationViewController >> headerUser [
 	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
 ]
 
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> headersParticipantsToLunches [
+	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> headersParticipantsToSocialDinner [
+	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> headersShirtsStatistics [
+	^ #('Size of the shirt' 'Man' 'Women' 'Total')
+]
+
 { #category : #rendering }
 ERConfigurationViewController >> hearderAwards [
 	^ #('Name' 'Submitted by')
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> listWithNormal: normal vegan: vegan vegetarian: vegetarian [ 
+	^ OrderedCollection new add: (Dictionary new at: 'Normal' put: normal; at: 'Vegetarian' put: vegetarian ; at: 'Vegan' put: vegan; at: 'Total' put: normal +vegan +vegetarian ; yourself );yourself 
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> modifyTicket: aTicket [
+	"Add validator for not accept use a ticket id name it was already exist"
+	self saveTicket: aTicket
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> participantsToLunches [
+	| list |
+	list := OrderedCollection new.
+	ERAttendee days
+		do: [ :day | self addAttendsToLunchPer: day to: list ].
+	^ list
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> participantsToSocialDinner [
+	| normal vegetarian vegan |
+	normal := 0. vegan := 0. vegetarian := 0.
+	self attends
+		do: [ :anAttendee | 
+			(anAttendee attendSocialEvent)
+				ifTrue: [ anAttendee isNormal
+						ifTrue: [ normal := normal + 1 ].
+					anAttendee isVegan
+						ifTrue: [ vegan := vegan + 1 ].
+					anAttendee isVegetarian
+						ifTrue: [ vegetarian := vegetarian + 1 ].
+					anAttendee addPersonToSocialDinner ifTrue: [ "Person added by default normal"normal := normal + 1 ] ] ].
+	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> reductionTicketAlreadyExist: aReductionTicket [
+	conference reductionTickets
+		do: [ :each | 
+			aReductionTicket ticketId = each ticketId
+				ifTrue: [ ^ ERException new
+						messageText:
+							'There is already a previously registered ticket with this ticket ID'; signal ] ]
 ]
 
 { #category : #accessing }
@@ -236,10 +362,33 @@ ERConfigurationViewController >> registerAsGroupManager [
 	attendee userAccount
 		roleAdd: 'groupManager';
 		save.
-	attendee save.
-	conference addAttendee: attendee.
+	attendee save."
+	conference addAttendee: attendee."
 	conference save.
 	^ attendee
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> registrationsStatistics [
+	|list|
+	list := OrderedCollection new.
+	^ list
+"	^ #('Date' 'Total Attendees')"
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> saveTicket: aReductionTicket [
+	aReductionTicket discountStrategy save.
+	aReductionTicket limitStrategy save.
+	^ aReductionTicket save.
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationViewController >> shirtsStatistics [
+	| list |
+	list := OrderedCollection new.
+	ERAttendee tShirtSizes do: [ :each | self addItemTo: list of: each ].
+	^ list
 ]
 
 { #category : #accessing }

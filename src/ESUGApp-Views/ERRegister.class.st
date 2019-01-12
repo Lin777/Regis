@@ -9,14 +9,6 @@ Class {
 	#category : #'ESUGApp-Views'
 }
 
-{ #category : #initialization }
-ERRegister class >> initializeForm [
-	| form |
-	form := self new.
-	form initializeTabForms.
-	^ form
-]
-
 { #category : #accessing }
 ERRegister >> actionRegister: anObject [
 	actionRegister := anObject
@@ -50,11 +42,10 @@ ERRegister >> deactivateAllTabs [
 ERRegister >> initialize [
 	super initialize.
 	icon := 'assignment'.
-	messageComponent := ERComponentAlert warningAlert
-		id: 'messageAlertLogin'.
+	messageComponent := ERComponentAlert warningAlert id: 'registerAlert'.
 	pageController := ERRegistrationController new.
 	id := 'login-conatiner'.
-	classContainer := 'mdl-card-register'.
+	classContainer := 'mdl-card-register'
 ]
 
 { #category : #initialization }
@@ -72,17 +63,18 @@ ERRegister >> register [
 { #category : #initialization }
 ERRegister >> registerAsGroupManager [
 	| user |
+	
 	user := pageController saveAsGroupManager.
 	self validateRegister: user
 ]
 
 { #category : #rendering }
 ERRegister >> renderBackLoginButtonOn: html [
-	html mdlAnchorButton 
+	html mdlAnchorButton
 		colored;
 		rippleEffect;
 		id: 'backLogin';
-		callback: [ self answer: nil ];
+		callback: [ self returnToThePreviousState  ];
 		with: 'Back Login'
 ]
 
@@ -96,12 +88,28 @@ ERRegister >> renderBody: html with: aBlock [
 ]
 
 { #category : #rendering }
+ERRegister >> renderDoneButtonOn: html [
+	self
+		createRaisedRippleEffectPrimaryButton: 'Save Information'
+		with: [ [ self validateAndRegister ]
+				on: ERException
+				do:
+					[ :exception | messageComponent errorMessage: exception messageText ] ]
+		id: 'registerButton'
+		on: html
+]
+
+{ #category : #rendering }
 ERRegister >> renderPageOn: html [
+	html render: messageComponent.
 	html form
 		id: 'registerForm';
-		with: [ 
-	html mdlTabs rippleEffect
-		with: [ html render: (ERTabsView tabs: self tabs) ]]
+		with: [ html mdlTabs rippleEffect with: [ html render: (ERTabsView tabs: self tabs) ] ].
+]
+
+{ #category : #hooks }
+ERRegister >> states [
+    ^ Array with: self
 ]
 
 { #category : #rendering }
@@ -119,9 +127,13 @@ ERRegister >> tabs [
 	^ tabs.
 ]
 
+{ #category : #initialize }
+ERRegister >> validateAndRegister [
+	^ self subclassResponsibility 
+]
+
 { #category : #'as yet unclassified' }
 ERRegister >> validateRegister: user [
-
 	user notNil
 		ifTrue: [ self answer: user ]
 		ifFalse:

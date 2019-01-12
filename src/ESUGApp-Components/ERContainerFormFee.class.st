@@ -18,15 +18,6 @@ ERContainerFormFee class >> on: aFee callback: aBlock withContent: aContent [
 	^ form
 ]
 
-{ #category : #'as yet unclassified' }
-ERContainerFormFee class >> on: aFee withContent: aContent [
-	| form |
-	form := self new.
-	form fee: aFee.
-	form content: aContent.
-	^ form
-]
-
 { #category : #accessing }
 ERContainerFormFee >> callback: anObject [
 	callback := anObject

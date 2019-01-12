@@ -59,16 +59,6 @@ ERComponentFactory >> createCheckboxField: aName for: aSymbol with: anotherSymbo
 ]
 
 { #category : #'as yet unclassified' }
-ERComponentFactory >> createColoredAnchorButton: aName id: anId dialogId: aDialogId condition: aCondition on: html [
-	html mdlAnchorButton
-		onClick: (html jQuery id: aDialogId) dialog open
-		if: aCondition;
-		colored;
-		id: anId;
-		with: aName
-]
-
-{ #category : #'as yet unclassified' }
 ERComponentFactory >> createColoredAnchorButton: aName id: anId on: html [
 	html mdlAnchorButton 
 		openDialogWithId: anId; 
@@ -303,6 +293,21 @@ ERComponentFactory >> createSelectField: aName list: aList callback: aBlock with
 			html select
 				onChange: 'submit()';
 				class: 'mdl-textfield__input';
+				selected: nil;
+				id: anId;
+				list: aList;
+				callback: aBlock ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName list: aList callback: aBlock withId: anId selected: aString on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				selected: aString;
 				id: anId;
 				list: aList;
 				callback: aBlock ]

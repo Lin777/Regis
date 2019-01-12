@@ -13,39 +13,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERCardView class >> title: aString icon: anIcon content: aBlock [
-	| instance |
-	instance := self new.
-	instance title: aString.
-	instance iconPage: anIcon .
-	instance content: aBlock .
-	^ instance
-]
-
-{ #category : #'as yet unclassified' }
-ERCardView class >> title: aString icon: anIcon content: aBlock id: anId [
-	| instance |
-	instance := self new.
-	instance title: aString.
-	instance iconPage: anIcon .
-	instance content: aBlock .
-	instance id: anId .
-	^ instance
-]
-
-{ #category : #'as yet unclassified' }
-ERCardView class >> title: aString icon: anIcon content: aBlock id: anId colorIcon: anColor [
-	| instance |
-	instance := self new.
-	instance title: aString.
-	instance iconPage: anIcon .
-	instance content: aBlock .
-	instance id: anId .
-	instance classColorIcon: anColor.
-	^ instance
-]
-
-{ #category : #'as yet unclassified' }
 ERCardView class >> title: aString icon: anIcon content: aBlock id: anId colorIcon: anColor actions: aBlockActions [
 	| instance |
 	instance := self new.

@@ -6,9 +6,8 @@ Class {
 
 { #category : #rendering }
 ERGroupRegistrationMembers >> applyReductionTicketTo: user [
-	|tickets|
-	tickets := controller conference tickets .
-	
+	self initializeFormApplyReductionTicket: user.
+	content state: formApplyReductionTicket 
 ]
 
 { #category : #accessing }
@@ -42,6 +41,17 @@ ERGroupRegistrationMembers >> headers [
 ERGroupRegistrationMembers >> initialize [
 	super initialize .
 	callback := nil
+]
+
+{ #category : #rendering }
+ERGroupRegistrationMembers >> initializeFormApplyReductionTicket: user [	
+	| tickets |
+	tickets := OrderedCollection new.
+	controller conference reductionTickets
+		do: [ :each | tickets add: each ticketId ].
+	formApplyReductionTicket := (ERContainerApplyReductionTicket
+		on: user
+		withContent: content) listOfTickets: tickets
 ]
 
 { #category : #initialization }
@@ -92,6 +102,7 @@ ERGroupRegistrationMembers >> listDataToRenderButton [
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 	"Add function to add attendee role to group manager"
+	(ERRegistrationController attendee: attendee) validateRegister.
 	controller registerAsAttendee.
 	content state: content lastState
 ]
@@ -99,6 +110,11 @@ ERGroupRegistrationMembers >> registerGroupManagerAsAttendee [
 { #category : #accessing }
 ERGroupRegistrationMembers >> registerMyselfAsAttendee [
 	callback := [ self registerGroupManagerAsAttendee ].
+
+	"callback := [ :html | 
+	self
+		renderDoneButtonCallback: [ self validateAndRegisterAsAttendee ]
+		on: html ]."
 	self initializeFormWithoutBasicInformationFor: attendee
 ]
 
@@ -163,4 +179,12 @@ ERGroupRegistrationMembers >> tabName [
 { #category : #rendering }
 ERGroupRegistrationMembers >> title [
 	^ 'Attends'
+]
+
+{ #category : #accessing }
+ERGroupRegistrationMembers >> validateAndRegisterAsAttendee [
+	(ERRegistrationController attendee: attendee)
+		validateRegister.
+	controller registerAsAttendee.
+	content state: content lastState
 ]

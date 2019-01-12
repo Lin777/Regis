@@ -100,3 +100,14 @@ ERFee >> lrfOneDayFee [
 ERFee >> lrfOneDayFee: anObject [
 	lrfOneDayFee := anObject
 ]
+
+{ #category : #'as yet unclassified' }
+ERFee >> payPalAmountToken [
+	^ '[AMOUNT]'
+]
+
+{ #category : #'as yet unclassified' }
+ERFee >> payPalInvoiceNumberToken [
+	
+	^ '[INVOICENUMBER]'
+]

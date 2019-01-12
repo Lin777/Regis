@@ -10,16 +10,36 @@ ERMyRegistrationSummary >> getInvoice [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> modifyRegistration [
-	callback := [self updateMyRegistration].
-	formWithoutBasicInfo := (ERContainerTabsView content: content)
-		tabView:
-			(ERTabsView
-				tabs: (self formWithoutBasicInformationFor: attendee)).
+	callback := [ self updateMyRegistration ].
+	formWithoutBasicInfo := ERContainerTabsView
+		formWithoutBasicInfoOn: attendee
+		withCallback: callback
+		content: content.
 	content state: formWithoutBasicInfo
 ]
 
 { #category : #rendering }
 ERMyRegistrationSummary >> pay [
+	attendee paymentTypeIsBankTransfer
+		ifTrue: [ ^ self redirectViewForBankTransfer ].
+	attendee paymentTypeIsCreditCard
+		ifTrue: [ ^ self redirectionPayPAL ]
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> redirectViewForBankTransfer [
+	| bankTransferView |
+	bankTransferView := ERContainerBankTransferPayment
+		on: attendee
+		withContent: content.
+	content state: bankTransferView 
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummary >> redirectionPayPAL [
+	| url |
+	url := ERController new payPalUrlFor: attendee.
+	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }
@@ -73,7 +93,7 @@ ERMyRegistrationSummary >> title [
 
 { #category : #rendering }
 ERMyRegistrationSummary >> updateMyRegistration [
+	(ERRegistrationController attendee: attendee) validateRegister .
 	attendee save.
-	
 	content state: content lastState
 ]

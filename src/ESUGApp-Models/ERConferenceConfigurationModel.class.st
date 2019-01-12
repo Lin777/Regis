@@ -110,7 +110,7 @@ ERConferenceConfigurationModel >> homePageUrl: anObject [
 { #category : #initialization }
 ERConferenceConfigurationModel >> initialize [
 	super initialize.
-	self openRegistration: false.
+	self openRegistration: true
 ]
 
 { #category : #accessing }
