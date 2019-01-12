@@ -301,9 +301,8 @@ ERConfigurationViewController >> listWithNormal: normal vegan: vegan vegetarian:
 
 { #category : #adding }
 ERConfigurationViewController >> modifyTicket: aTicket [
-	self reductionTicketAlreadyExist: aTicket.
-	self saveTicket: aTicket.
-	
+	"Add validator for not accept use a ticket id name it was already exist"
+	self saveTicket: aTicket
 ]
 
 { #category : #'as yet unclassified' }

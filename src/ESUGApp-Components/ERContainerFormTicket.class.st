@@ -30,18 +30,19 @@ ERContainerFormTicket >> callback: anObject [
 { #category : #rendering }
 ERContainerFormTicket >> changeDiscountStrategy: value [
 	(ERDiscountStrategy isPercentageStrategy: value)
-		ifTrue: [ ticket discountStrategy: ERPercentageDiscount new ].
+		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: [  ticket discountStrategy: ERPercentageDiscount new ]].
 	(ERDiscountStrategy isFixStrategy: value)
-		ifTrue: [ ticket discountStrategy: ERFixDiscount new ]
+		ifTrue: [ ticket strategyIsFixDiscount ifFalse: [ticket discountStrategy: ERFixDiscount new ]]
 ]
 
 { #category : #rendering }
 ERContainerFormTicket >> changeLimitStrategy: value [
 	(ERLimitStrategy isUnlimitStrategy: value)
-		ifTrue: [ ticket limitStrategy: ERUnlimitedReductionTicketUse new ].
+		ifTrue: [ ticket limitStrategyIsUnlimited
+				ifFalse: [ticket limitStrategy: ERUnlimitedReductionTicketUse new ]].
 	(ERLimitStrategy isLimitStrategy: value)
-		ifTrue: [ ticket limitStrategy: ERLimitedReductionTicketUse new ].
-	
+		ifTrue: [ ticket limitStrategyIsLimited
+				ifFalse: [ticket limitStrategy: ERLimitedReductionTicketUse new ]]
 ]
 
 { #category : #rendering }
