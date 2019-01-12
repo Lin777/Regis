@@ -11,7 +11,7 @@ BaselineOfESUGApp >> baseline: spec [
 		for: #common
 		do: [ self setUpDependencies: spec.
 			spec
-				package: 'ESUGApp-Exceptions' with: [ spec requires: #() ];
+				package: 'ESUGApp-Exceptions';
 				package: 'ESUGApp-Models' with: [ spec requires: #('SandstoneDb') ];
 				package: 'ESUGApp-Library-MDL'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Models') ];
