@@ -69,6 +69,20 @@ ERConfigurationViewController >> addNormal: normal vegan: vegan vegetarian: vege
 ]
 
 { #category : #adding }
+ERConfigurationViewController >> addReductionTicketToConference: ticketRegistered [
+	conference addReductionTicket: ticketRegistered .
+	conference save.
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> addTicket: aReductionTicket [
+	| ticketRegistered |
+	self reductionTicketAlreadyExist: aReductionTicket.
+	ticketRegistered := self saveTicket: aReductionTicket .
+	self addReductionTicketToConference: ticketRegistered
+]
+
+{ #category : #adding }
 ERConfigurationViewController >> addUser: anAttendee [
 	(ERUserAccount findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
@@ -285,6 +299,13 @@ ERConfigurationViewController >> listWithNormal: normal vegan: vegan vegetarian:
 	^ OrderedCollection new add: (Dictionary new at: 'Normal' put: normal; at: 'Vegetarian' put: vegetarian ; at: 'Vegan' put: vegan; at: 'Total' put: normal +vegan +vegetarian ; yourself );yourself 
 ]
 
+{ #category : #adding }
+ERConfigurationViewController >> modifyTicket: aTicket [
+	self reductionTicketAlreadyExist: aTicket.
+	self saveTicket: aTicket.
+	
+]
+
 { #category : #'as yet unclassified' }
 ERConfigurationViewController >> participantsToLunches [
 	| list |
@@ -309,6 +330,16 @@ ERConfigurationViewController >> participantsToSocialDinner [
 						ifTrue: [ vegetarian := vegetarian + 1 ].
 					anAttendee addPersonToSocialDinner ifTrue: [ "Person added by default normal"normal := normal + 1 ] ] ].
 	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> reductionTicketAlreadyExist: aReductionTicket [
+	conference reductionTickets
+		do: [ :each | 
+			aReductionTicket ticketId = each ticketId
+				ifTrue: [ ^ ERException new
+						messageText:
+							'There is already a previously registered ticket with this ticket ID'; signal ] ]
 ]
 
 { #category : #accessing }
@@ -344,6 +375,13 @@ ERConfigurationViewController >> registrationsStatistics [
 	list := OrderedCollection new.
 	^ list
 "	^ #('Date' 'Total Attendees')"
+]
+
+{ #category : #adding }
+ERConfigurationViewController >> saveTicket: aReductionTicket [
+	aReductionTicket discountStrategy save.
+	aReductionTicket limitStrategy save.
+	^ aReductionTicket save.
 ]
 
 { #category : #'as yet unclassified' }

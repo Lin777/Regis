@@ -349,6 +349,21 @@ ERComponentFactory >> createSelectField: aName list: aList callback: aBlock with
 			html select
 				onChange: 'submit()';
 				class: 'mdl-textfield__input';
+				selected: nil;
+				id: anId;
+				list: aList;
+				callback: aBlock ]
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createSelectField: aName list: aList callback: aBlock withId: anId selected: aString on: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: aName.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				selected: aString;
 				id: anId;
 				list: aList;
 				callback: aBlock ]

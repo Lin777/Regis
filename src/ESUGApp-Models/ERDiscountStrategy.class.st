@@ -18,8 +18,3 @@ ERDiscountStrategy class >> isPercentageStrategy: value [
 ERDiscountStrategy class >> typesDiscount [
 	^  #('Fix Discount' 'Percentage Discount')
 ]
-
-{ #category : #'as yet unclassified' }
-ERDiscountStrategy class >> typesDiscount: html [
-	^ #('Fix Discount' 'Percentage Discount')
-]

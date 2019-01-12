@@ -23,7 +23,7 @@ ERController >> amountForCurrentDateFor: aFee [
 		ifTrue: [ ^ aFee lrfAllDaysFee ]
 		ifFalse: [ ^ aFee erfAllDaysFee ].
 	^ ERException new
-		messageText: 'An error occurred when calculating the payment amount.'
+		messageText: 'An error occurred when calculating the payment amount.'; raised
 ]
 
 { #category : #accessing }

@@ -74,19 +74,16 @@ ERRegistrationController >> initialize [
 { #category : #action }
 ERRegistrationController >> save [
 	| attendeeResult |
-	attendeeResult := ERUserAccount
-		findUserByEmail: attendee userAccount email.
-	attendeeResult
-		ifNil: [ attendeeResult := self saveAttendee.
-			attendeeResult userAccount isAttendee
-				ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
-					conference addAttendee: attendeeResult ].
-			attendeeResult userAccount isGroupManager
-				ifTrue: [ (ERGroupManagerViewController new attendee: attendeeResult )
-						groupForGroupManager ].
-			conference save.
-			^ attendeeResult userAccount ].
-	^ nil
+	self validateIfEmailIsAlreadyRegistered: attendee  email.
+	attendeeResult := self saveAttendee.
+	attendeeResult userAccount isAttendee
+		ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
+			conference addAttendee: attendeeResult ].
+	attendeeResult userAccount isGroupManager
+		ifTrue: [ (ERGroupManagerViewController new attendee: attendeeResult)
+				groupForGroupManager ].
+	conference save.
+	^ attendeeResult userAccount
 ]
 
 { #category : #action }
@@ -149,6 +146,16 @@ ERRegistrationController >> validateCountry: aSymbol [
 		ifTrue: [ ^ ERException new
 				messageText: 'Please select a country';
 				signal ]
+]
+
+{ #category : #action }
+ERRegistrationController >> validateIfEmailIsAlreadyRegistered: email [
+	conference users
+		do: [ :each | 
+			each email = email
+				ifTrue: [ ^ ERException new
+						messageText: 'This email is already registered';
+						signal ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -258,6 +265,8 @@ ERRegistrationController >> validateUserForm [
 	self validatePatternForText: #lastName.
 	self validatePatternForRequired: #email.
 	self validatePatternEmail: #email.
+	self
+		validateIfEmailIsAlreadyRegistered: attendee email
 	"self validatePatternForRequired: #password"
 	"self validatePatternPassword: #password"
 ]

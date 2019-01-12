@@ -32,6 +32,14 @@ ERReductionTicket >> discountStrategy: anObject [
 	discountStrategy := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> discountStrategyAsString [
+	self strategyIsFixDiscount
+		ifTrue: [ ^ 'Fix Discount' ].
+	self strategyIsPercentageDiscount
+		ifTrue: [ ^ 'Percentage Discount' ]
+]
+
 { #category : #accessing }
 ERReductionTicket >> initialize [
 	super initialize.
@@ -48,6 +56,13 @@ ERReductionTicket >> limitStrategy [
 { #category : #accessing }
 ERReductionTicket >> limitStrategy: anObject [
 	limitStrategy := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> limitStrategyAsString [
+	self limitStrategyIsLimited
+		ifTrue: [ ^ 'Limit Strategy' ].
+	self limitStrategyIsUnlimited ifTrue: [ 'Unlimit strategy' ]
 ]
 
 { #category : #'as yet unclassified' }
