@@ -1,6 +1,6 @@
 Class {
 	#name : #ERSandstoneDatabase,
-	#superclass : #ERDatabase,
+	#superclass : #Object,
 	#instVars : [
 		'connection'
 	],
