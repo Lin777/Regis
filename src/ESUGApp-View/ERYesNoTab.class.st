@@ -1,38 +1,38 @@
 Class {
-	#name : #ERTabYesNo,
+	#name : #ERYesNoTab,
 	#superclass : #ERContentAdminTab,
 	#instVars : [
 		'tabId',
 		'name',
 		'title'
 	],
-	#category : #'ESUGApp-Component'
+	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #accessing }
-ERTabYesNo >> callbackNo: anObject [
+ERYesNoTab >> callbackNo: anObject [
 	callbackNo := anObject
 ]
 
 { #category : #accessing }
-ERTabYesNo >> callbackYes: anObject [
+ERYesNoTab >> callbackYes: anObject [
 	callbackYes := anObject
 ]
 
 { #category : #accessing }
-ERTabYesNo >> name: anObject [
+ERYesNoTab >> name: anObject [
 	name := anObject
 ]
 
 { #category : #rendering }
-ERTabYesNo >> renderContainer: html [
+ERYesNoTab >> renderContainer: html [
 	html horizontalRule.
 	self renderYesButton: html.
 	self renderNoButton: html
 ]
 
 { #category : #rendering }
-ERTabYesNo >> renderNoButton: html [
+ERYesNoTab >> renderNoButton: html [
 	self
 		createColoredAnchorButton: 'No'
 		with: callbackNo
@@ -41,7 +41,7 @@ ERTabYesNo >> renderNoButton: html [
 ]
 
 { #category : #rendering }
-ERTabYesNo >> renderYesButton: html [
+ERYesNoTab >> renderYesButton: html [
 	self
 		createColoredAnchorButton: 'Yes'
 		with: callbackYes
@@ -51,31 +51,31 @@ ERTabYesNo >> renderYesButton: html [
 ]
 
 { #category : #accessing }
-ERTabYesNo >> tabId [
+ERYesNoTab >> tabId [
 	^ tabId 
 ]
 
 { #category : #accessing }
-ERTabYesNo >> tabId: anId [
+ERYesNoTab >> tabId: anId [
 	tabId := anId 
 ]
 
 { #category : #accessing }
-ERTabYesNo >> tabName [
+ERYesNoTab >> tabName [
 	^ name
 ]
 
 { #category : #accessing }
-ERTabYesNo >> tabName: aName [
+ERYesNoTab >> tabName: aName [
 	name := aName
 ]
 
 { #category : #accessing }
-ERTabYesNo >> title [
+ERYesNoTab >> title [
 	^ title
 ]
 
 { #category : #accessing }
-ERTabYesNo >> title: anObject [
+ERYesNoTab >> title: anObject [
 	title := anObject
 ]

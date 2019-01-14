@@ -73,7 +73,7 @@ ERAdminView >> openRegistration [
 { #category : #initialization }
 ERAdminView >> renderBackupTab [
 	tabs add:
-			((ERTabYesNo on: attendee withContent: content)
+			((ERYesNoTab on: attendee withContent: content)
 				tabId: 'tabBackup';
 				tabName: 'Backup';
 				title: self titleBackup;
@@ -90,7 +90,7 @@ ERAdminView >> renderContentPage: html [
 
 { #category : #initialization }
 ERAdminView >> renderOpenCloseRegistration [
-	tabs add:((ERTabYesNo on: attendee withContent: content)
+	tabs add:((ERYesNoTab on: attendee withContent: content)
 				tabId: 'tabOpenClose';
 				tabName: 'Open / Close registration';
 				title: self titleOpenClose;
@@ -101,7 +101,7 @@ ERAdminView >> renderOpenCloseRegistration [
 { #category : #initialization }
 ERAdminView >> renderRestoreTab [
 	tabs add:
-			((ERTabYesNo on: attendee withContent: content)
+			((ERYesNoTab on: attendee withContent: content)
 				tabId: 'tabRestore';
 				tabName: 'Restore';
 				title: self titleRestore;
