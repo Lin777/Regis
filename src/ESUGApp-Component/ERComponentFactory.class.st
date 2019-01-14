@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'attendee'
 	],
-	#category : #'ESUGApp-Form'
+	#category : #'ESUGApp-Component'
 }
 
 { #category : #'instance creation' }
