@@ -24,7 +24,7 @@ ERLoginPage >> initialize [
 	super initialize.
 	title := 'User Login'.
 	icon := 'person'.
-	messageComponent := ERComponentAlert warningAlert id: 'loginAlert'.
+	messageComponent := ERAlert warningAlert id: 'loginAlert'.
 	id := 'login-conatiner'.
 	pageController := ERLoginController new
 ]

@@ -58,7 +58,7 @@ ERReductionTicketForm >> discountStrategy [
 { #category : #rendering }
 ERReductionTicketForm >> initialize [
 	super initialize.
-	messageComponent := ERComponentAlert warningAlert
+	messageComponent := ERAlert warningAlert
 		id: 'formTicketAlert'.
 	
 ]

@@ -57,7 +57,7 @@ ERContainerTab >> controller: anObject [
 { #category : #initialization }
 ERContainerTab >> initialize [
 	super initialize.
-	messageComponent := ERComponentAlert warningAlert id: 'tabAlert'.
+	messageComponent := ERAlert warningAlert id: 'tabAlert'.
 
 ]
 

@@ -42,7 +42,7 @@ ERRegisterPage >> deactivateAllTabs [
 ERRegisterPage >> initialize [
 	super initialize.
 	icon := 'assignment'.
-	messageComponent := ERComponentAlert warningAlert id: 'registerAlert'.
+	messageComponent := ERAlert warningAlert id: 'registerAlert'.
 	pageController := ERRegistrationController new.
 	id := 'login-conatiner'.
 	classContainer := 'mdl-card-register'

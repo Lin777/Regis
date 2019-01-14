@@ -83,7 +83,7 @@ ERContainerTabs >> content: anObject [
 { #category : #rendering }
 ERContainerTabs >> initialize [
 	super initialize .
-	messageComponent := ERComponentAlert warningAlert id: 'registerAlert'.
+	messageComponent := ERAlert warningAlert id: 'registerAlert'.
 	
 ]
 
