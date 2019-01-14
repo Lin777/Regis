@@ -1,12 +1,10 @@
 Class {
 	#name : #ERTabYesNo,
-	#superclass : #ERAdmin,
+	#superclass : #ERAdminView,
 	#instVars : [
 		'tabId',
 		'name',
-		'title',
-		'callbackYes',
-		'callbackNo'
+		'title'
 	],
 	#category : #'ESUGApp-Component'
 }
