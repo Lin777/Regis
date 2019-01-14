@@ -13,7 +13,7 @@ BaselineOfESUGApp >> baseline: spec [
 			spec
 				package: 'ESUGApp-Exception';
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
-				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
+				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV' 'ESUGApp-Exception') ];
 				package: 'ESUGApp-DB' with: [ spec requires: #('SandstoneDb' 'ESUGApp-Model') ];
 				package: 'ESUGApp-SetUp' with: [ spec requires: #('ESUGApp-View' 'Seaside3') ];		
 				package: 'ESUGApp-Library'
