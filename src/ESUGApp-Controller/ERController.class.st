@@ -16,6 +16,17 @@ ERController class >> currencyAvailable [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> add:attendee ToTicket: coupon [
+	coupon limitStrategyIsLimited
+		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
+	coupon limitStrategyIsUnlimited
+		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
+	ERException new
+		messageText: 'The ticket does not have a limit strategy allowed.';
+		signal
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	| currentDate |
 	currentDate := Date today.
@@ -24,6 +35,14 @@ ERController >> amountForCurrentDateFor: aFee [
 		ifFalse: [ ^ aFee erfAllDaysFee ].
 	^ ERException new
 		messageText: 'An error occurred when calculating the payment amount.'; raised
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> applyReductionTicketTo: anAttendee [
+	| reductionTicket |
+	reductionTicket := self reductionTicketWithName: anAttendee coupon.
+	self add: anAttendee ToTicket: reductionTicket.
+	anAttendee save.
 ]
 
 { #category : #accessing }
@@ -109,5 +128,5 @@ ERController >> reductionTicketWithName: aString [
 		do: [ :each | 
 			each ticketId = aString
 				ifTrue: [ ^ each ] ].
-	^ nil
+	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
 ]

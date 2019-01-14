@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERTittledView,
 	#instVars : [
 		'formAffiliation',
-		'dialog'
+		'dialog',
+		'updateCallback'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -32,7 +33,7 @@ ERModifyAffiliationForm >> initializeFormAffiliation [
 ERModifyAffiliationForm >> renderAcceptButtonOn: html [
 	self
 		createColoredButton: 'Accept'
-		with: [ self updateAffiliation ]
+		with: updateCallback 
 		id: 'accept-change-affiliation'
 		on: html
 ]
@@ -70,8 +71,7 @@ ERModifyAffiliationForm >> title [
 	^ 'Affiliation Information'
 ]
 
-{ #category : #rendering }
-ERModifyAffiliationForm >> updateAffiliation [
-	attendee save.
-	self returnToThePreviousState
+{ #category : #accessing }
+ERModifyAffiliationForm >> updateCallback: anObject [
+	updateCallback := anObject 
 ]
