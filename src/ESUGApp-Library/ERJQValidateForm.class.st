@@ -1,7 +1,7 @@
 Class {
 	#name : #ERJQValidateForm,
 	#superclass : #WAFileLibrary,
-	#category : #'ESUGApp-Library-MDL'
+	#category : #'ESUGApp-Library'
 }
 
 { #category : #updating }

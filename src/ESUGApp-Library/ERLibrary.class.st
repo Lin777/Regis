@@ -1,7 +1,7 @@
 Class {
 	#name : #ERLibrary,
 	#superclass : #WAFileLibrary,
-	#category : #'ESUGApp-Library-MDL'
+	#category : #'ESUGApp-Library'
 }
 
 { #category : #accessing }
