@@ -6,7 +6,7 @@ Class {
 
 { #category : #rendering }
 ERMembersTab >> applyReductionTicketTo: user [
-	self initializeFormApplyReductionTicket: user.
+	self initializeApplyReductionTicketForm: user.
 	content state: formApplyReductionTicket 
 ]
 
@@ -44,14 +44,14 @@ ERMembersTab >> initialize [
 ]
 
 { #category : #rendering }
-ERMembersTab >> initializeFormApplyReductionTicket: user [	
+ERMembersTab >> initializeApplyReductionTicketForm: user [	
 	| tickets |
-	tickets := OrderedCollection new.
+	tickets := OrderedCollection new add: 'No reduction ticket'; yourself .
 	controller conference reductionTickets
 		do: [ :each | tickets add: each ticketId ].
 	formApplyReductionTicket := (ERApplyReductionTicketView
 		on: user
-		withContent: content) listOfTickets: tickets
+		withContent: content) listOfTickets: tickets; updateTicketAttendee: [ self updateTicketInformation: user ]
 ]
 
 { #category : #initialization }
@@ -179,6 +179,11 @@ ERMembersTab >> tabName [
 { #category : #rendering }
 ERMembersTab >> title [
 	^ 'Attends'
+]
+
+{ #category : #rendering }
+ERMembersTab >> updateTicketInformation: anAttendee [
+	controller applyReductionTicketTo: anAttendee 
 ]
 
 { #category : #accessing }

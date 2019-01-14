@@ -35,6 +35,7 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 		on: attendee
 		withContent: content)
 		cancelCallback: [ self cancel ];
+		updateCallback: [ self updateAffiliation ];
 		yourself
 ]
 
@@ -135,7 +136,6 @@ ERGroupRegistrationSummaryTab >> title [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> updateAffiliation [
-	attendee := formMofidyAffiliation attendee.
 	attendee save.
 	self returnToThePreviousState
 ]

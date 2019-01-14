@@ -22,7 +22,7 @@ ERConfigurationController >> addAttendee: anAttendee [
 ERConfigurationController >> addAttendsToLunchPer: day to: list [
 	| normal vegetarian vegan |
 	normal := 0. vegan := 0. vegetarian := 0.
-	self attends
+	self attends 
 		do: [ :anAttendee | 
 			(anAttendee perform: day asSymbol)
 				ifTrue: [ anAttendee isNormal
