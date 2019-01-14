@@ -31,7 +31,7 @@ ERGroupRegistrationSummaryTab >> initialize [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERContainerModifyAffiliationView
+	formMofidyAffiliation := (ERModifyAffiliationForm
 		on: attendee
 		withContent: content)
 		cancelCallback: [ self cancel ];
