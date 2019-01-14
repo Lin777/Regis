@@ -12,7 +12,7 @@ ERTestGroupManagerViewController >> setUp [
 	| anUser |
 	super setUp.
 	anUser := self registerAsGroupManager.
-	controller := ERGroupManagerViewController new.
+	controller := ERGroupManagerController new.
 	controller attendee: (controller attendeeFromUser: anUser)
 ]
 
@@ -55,7 +55,7 @@ ERTestGroupManagerViewController >> testDeleteAnAttendee [
 ERTestGroupManagerViewController >> testGroupOfAttendee [
 	| user group |
 	user := self registerAttendee.
-	group := ERGroupManagerViewController new
+	group := ERGroupManagerController new
 		groupOfAttendee: user.
 	self assert: (group isKindOf: ERGroup )
 ]

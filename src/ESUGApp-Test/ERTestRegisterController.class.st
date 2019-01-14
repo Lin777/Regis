@@ -48,19 +48,17 @@ ERTestRegisterController >> testAddAttendee [
 ERTestRegisterController >> testAddExitentAttendee [
 	"When an assistant's email has already been registered it can not be registered again, therefore a nil is returned "
 
-	| anAttende |
 	self registerAttendee.
-	anAttende := self registerAttendee .
-	self assert: anAttende isNil
+	self should: [ self registerAttendee  ] raise: ERException 
 ]
 
 { #category : #tests }
 ERTestRegisterController >> testAddExitentGroupManager [
 	"When an group manager's email has already been registered it can not be registered again, therefore a nil is returned "
-	| anAttende |
+	
 	self registerAttendee.
-	anAttende :=  (ERRegistrationController
+	
+	self should: [ (ERRegistrationController
 		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager.
-	self assert: anAttende isNil
+		saveAsGroupManager. ] raise: ERException 
 ]
