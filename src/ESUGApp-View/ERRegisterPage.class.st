@@ -6,7 +6,7 @@ Class {
 		'actionRegister',
 		'messageComponent'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #accessing }

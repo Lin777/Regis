@@ -8,7 +8,7 @@ Class {
 		'id',
 		'classContainer'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #'as yet unclassified' }

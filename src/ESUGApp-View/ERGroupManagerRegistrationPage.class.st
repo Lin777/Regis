@@ -1,7 +1,7 @@
 Class {
 	#name : #ERGroupManagerRegistrationPage,
 	#superclass : #ERRegisterPage,
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #initialization }

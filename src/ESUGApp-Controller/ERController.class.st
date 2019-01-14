@@ -61,7 +61,7 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> feeForCurrencyType: paymentCurrency [
 	conference fees do: [ :fee | fee currency = paymentCurrency ifTrue: [ ^ fee ] ].
-	^ ERException new messageText: 'The payment currency is not available now.'; signal
+	ERException new messageText: 'The payment currency is not available now.'; signal
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ERFinishRegisterPage,
 	#superclass : #ERPage,
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #'as yet unclassified' }

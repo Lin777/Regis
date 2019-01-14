@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentTab'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #accessing }

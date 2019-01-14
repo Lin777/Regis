@@ -19,7 +19,7 @@ ERReductionTicket >> addAttendeeOfTicket: anAttendee [
 ERReductionTicket >> addAttendeeOfTicketLimited: anAttendee [
 	self usersOfTickets size < self limitStrategy limit
 		ifTrue: [ ^ self addAttendeeOfTicket: anAttendee ]
-		ifFalse: [ ^ ERException new messageText: 'The ticket limit was exceeded, please use another ticket.'; signal ]
+		ifFalse: [ ERException new messageText: 'The ticket limit was exceeded, please use another ticket.'; signal ]
 ]
 
 { #category : #accessing }

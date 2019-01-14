@@ -1,7 +1,7 @@
 Class {
 	#name : #ERFinishRegisterAttendeePage,
 	#superclass : #ERFinishRegisterPage,
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #'as yet unclassified' }
@@ -30,7 +30,7 @@ ERFinishRegisterAttendeePage >> finishAction [
 		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
 	attendee paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	^ ERException new
+	ERException new
 		messageText: 'The type of payment entered is not valid. ';
 		signal
 ]
@@ -41,7 +41,7 @@ ERFinishRegisterAttendeePage >> nextAction [
 		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
 	attendee paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	^ ERException new
+	ERException new
 		messageText: 'The type of payment entered is not valid. ';
 		signal
 ]

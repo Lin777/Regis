@@ -21,7 +21,7 @@ ERRegistrationController >> addAttendeeToTicket: coupon [
 		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
 	coupon limitStrategyIsUnlimited
 		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	^ ERException new
+	ERException new
 		messageText: 'The ticket does not have a limit strategy allowed.';
 		signal
 ]
@@ -33,7 +33,7 @@ ERRegistrationController >> addAttendeeToTicketIfExist [
 	coupon isNil
 		ifFalse: [ ^ self addAttendeeToTicket: coupon ].
 	attendee coupon: ''.
-	^ ERException new
+	ERException new
 		messageText: 'The ticket does not exist for this conference';
 		signal
 ]
@@ -45,7 +45,7 @@ ERRegistrationController >> addAttendeeToTicketIfExist: anAttendee [
 	coupon isNil
 		ifFalse: [ ^ self addAttendeeToTicket: coupon ].
 	anAttendee coupon: ''.
-	^ ERException new
+	ERException new
 		messageText: 'The ticket does not exist for this conference';
 		signal
 ]
@@ -143,7 +143,7 @@ ERRegistrationController >> validateContactForm [
 ERRegistrationController >> validateCountry: aSymbol [
 	self validatePatternForRequired: aSymbol.
 	(attendee perform: aSymbol) = 'Select Country'
-		ifTrue: [ ^ ERException new
+		ifTrue: [ ERException new
 				messageText: 'Please select a country';
 				signal ]
 ]
@@ -153,7 +153,7 @@ ERRegistrationController >> validateIfEmailIsAlreadyRegistered: email [
 	conference users
 		do: [ :each | 
 			each email = email
-				ifTrue: [ ^ ERException new
+				ifTrue: [ ERException new
 						messageText: 'This email is already registered';
 						signal ] ]
 ]
@@ -163,7 +163,7 @@ ERRegistrationController >> validateIfTicketExist [
 	attendee hasCoupon
 		ifTrue: [ (self reductionTicketWithName: attendee coupon) isNil
 				ifTrue: [ attendee coupon: ''.
-					^ ERException new
+					ERException new
 						messageText: 'The ticket does not exist for this conference';
 						signal ] ]
 ]
@@ -173,7 +173,7 @@ ERRegistrationController >> validatePatternEmail: aSymbol [
 	((attendee perform: aSymbol)
 		matchesRegex:
 			'\S+@\S+\.\S+')
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText:
 					'The field ' , aSymbol asString , ' does not match with email format.';
 				signal ]
@@ -182,7 +182,7 @@ ERRegistrationController >> validatePatternEmail: aSymbol [
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validatePatternForRequired: aSymbol [
 	((attendee perform: aSymbol) matchesRegex: '\S+[\S*\s*]*')
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText:
 					'The field ' , aSymbol asString
 						, ' is required please add content to it.';
@@ -192,7 +192,7 @@ ERRegistrationController >> validatePatternForRequired: aSymbol [
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validatePatternForText: aSymbol [
 	((attendee perform: aSymbol) matchesRegex: '[(a-zA-Z)+\s*]{3,}')
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText: 'The field ' , aSymbol asString , ' only accept a text.';
 				signal ]
 ]
@@ -202,7 +202,7 @@ ERRegistrationController >> validatePatternPassword: aSymbol [
 	(((attendee perform: aSymbol)
 		matchesRegex: '[A-Za-z0-9._]{8,}')
 		and: [ (attendee perform: aSymbol) size >= 8 ])
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText:
 					'The password must have at least 8 characters, and only accepts letters, numbers, slash and dots.';signal ]
 ]
@@ -215,7 +215,7 @@ ERRegistrationController >> validatePatternUrl: aSymbol [
 		((attendee perform: aSymbol)
 		matchesRegex:
 			'\S+')
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText: 'The field ' , aSymbol text , ' does not match with url format.';
 				signal ]
 ]
@@ -252,7 +252,7 @@ ERRegistrationController >> validateRegisterForGroupManager [
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateSelectValue: aSymbol on: list withMessage: aString [
 	(list includes: (attendee perform: aSymbol))
-		ifFalse: [ ^ ERException new
+		ifFalse: [ ERException new
 				messageText: 'The ' , aString , ' entered is not valid.';
 				signal ]
 ]

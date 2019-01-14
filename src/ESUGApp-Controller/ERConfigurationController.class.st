@@ -336,7 +336,7 @@ ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
 	conference reductionTickets
 		do: [ :each | 
 			aReductionTicket ticketId = each ticketId
-				ifTrue: [ ^ ERException new
+				ifTrue: [ ERException new
 						messageText:
 							'There is already a previously registered ticket with this ticket ID'; signal ] ]
 ]
