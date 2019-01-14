@@ -1,6 +1,6 @@
 Class {
 	#name : #ERStateContent,
-	#superclass : #AnObsoleteERComponentFactory,
+	#superclass : #ERComponentFactory,
 	#instVars : [
 		'content'
 	],

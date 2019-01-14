@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTable,
-	#superclass : #AnObsoleteERComponentFactory,
+	#superclass : #ERComponentFactory,
 	#instVars : [
 		'blockToExecute',
 		'listToRenderButton',
