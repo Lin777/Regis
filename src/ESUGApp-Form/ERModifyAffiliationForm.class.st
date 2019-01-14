@@ -1,6 +1,6 @@
 Class {
 	#name : #ERModifyAffiliationForm,
-	#superclass : #ERGeneralContainerView,
+	#superclass : #ERTittledView,
 	#instVars : [
 		'formAffiliation',
 		'dialog'

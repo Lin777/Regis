@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTabYesNo,
-	#superclass : #ERAdminView,
+	#superclass : #ERContentAdminTab,
 	#instVars : [
 		'tabId',
 		'name',
