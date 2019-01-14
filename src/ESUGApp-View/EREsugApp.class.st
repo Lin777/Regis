@@ -68,7 +68,7 @@ EREsugApp >> initialize [
 { #category : #initialization }
 EREsugApp >> initializeLoginView [
 	| aFormView |
-	aFormView := ERLoginView new.
+	aFormView := ERLoginPage new.
 	aFormView content: self content.
 	^ aFormView
 ]
