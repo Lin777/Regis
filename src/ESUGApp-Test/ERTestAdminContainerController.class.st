@@ -47,11 +47,11 @@ ERTestAdminContainerController >> testUpdateUser [
 
 { #category : #tests }
 ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
-	| modifyUser |
 	self registerAttendee: ERTestControllers testExampleAttendee.
-	modifyUser := controller
-		updateUserFields: ERTestControllers testExampleAttendee userAccount.
-	self assert: modifyUser isNil
+	self
+		should: [ controller
+				updateUserFields: ERTestControllers testExampleAttendee userAccount ]
+		raise: ERException
 ]
 
 { #category : #tests }
