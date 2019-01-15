@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTabForAForm,
-	#superclass : #ERAttendeeRegistrationForm,
+	#superclass : #ERContentTab,
 	#instVars : [
 		'form'
 	],
