@@ -29,9 +29,8 @@ ERAdminController >> updateAttendee: modifiedUser [
 
 { #category : #'as yet unclassified' }
 ERAdminController >> updateUserFields: anUser [
-	(self verifyIfEmailIsAlreadyRegistered: anUser)
-		ifTrue: [ ^ self updateAttendee: anUser ].
-		^ nil
+	self validateIfEmailIsAlreadyRegistered: anUser email.
+	self updateAttendee: anUser
 ]
 
 { #category : #'as yet unclassified' }
