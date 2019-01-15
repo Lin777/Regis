@@ -68,7 +68,7 @@ ERRegistrationController >> initialize [
 { #category : #action }
 ERRegistrationController >> save [
 	| attendeeResult |
-	self validateIfEmailIsAlreadyRegistered: attendee  email.
+	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	attendeeResult := self saveAttendee.
 	attendeeResult userAccount isAttendee
 		ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
@@ -259,8 +259,7 @@ ERRegistrationController >> validateUserForm [
 	self validatePatternForText: #lastName.
 	self validatePatternForRequired: #email.
 	self validatePatternEmail: #email.
-	self
-		validateIfEmailIsAlreadyRegistered: attendee email
+	self validateIfEmailIsAlreadyRegistered: attendee userAccount
 	"self validatePatternForRequired: #password"
 	"self validatePatternPassword: #password"
 ]

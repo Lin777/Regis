@@ -38,19 +38,11 @@ ERTestAdminContainerController >> testFailValidatePatternPassword [
 ]
 
 { #category : #tests }
-ERTestAdminContainerController >> testUpdateUser [
-	| modifyUser |
-	modifyUser := controller
-		updateAttendee: ERTestControllers testModifyUser.
-	self assert: modifyUser isNotNil
-]
-
-{ #category : #tests }
 ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 	self registerAttendee: ERTestControllers testExampleAttendee.
 	self
 		should: [ controller
-				updateUserFields: ERTestControllers testExampleAttendee userAccount ]
+				updateUser: ERTestControllers testExampleAttendee userAccount ]
 		raise: ERException
 ]
 

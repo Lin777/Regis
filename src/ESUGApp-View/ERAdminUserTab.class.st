@@ -7,23 +7,41 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
+{ #category : #'as yet unclassified' }
+ERAdminUserTab class >> on: anAttendee withContent: aContent [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form content: aContent.
+	form initializeController.
+	form initializeUserCopy.
+	^ form
+]
+
 { #category : #rendering }
 ERAdminUserTab >> acceptUser [
-	(controller updateUserFields: modifiedUser)
-		ifNil: [ messageComponent
-				errorMessage:
-					'This email is already registered, change the email for continue with your updating' ]
+	[ controller updateUser: attendee userAccount ]
+		on: ERException
+		do: [ :exception | "
+			attendee userAccount abortChanges.
+			attendee abortChanges."
+			messageComponent errorMessage: exception messageText ]
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
+	attendee abortChanges
 ]
 
 { #category : #initialization }
 ERAdminUserTab >> initialize [
 	super initialize.
-	modifiedUser := ERUserAccount new.
 	messageComponent id: 'adminUserAlert'
+]
+
+{ #category : #initialization }
+ERAdminUserTab >> initializeUserCopy [
+	modifiedUser := attendee userAccount
 ]
 
 { #category : #rendering }
@@ -68,7 +86,7 @@ ERAdminUserTab >> renderEmailInputTextOn: html [
 				id: 'email';
 				type: 'text';
 				value: attendee email;
-				callback: [ :value | modifiedUser email: value ] ]
+				callback: [ :value | attendee email: value ] ]
 ]
 
 { #category : #rendering }
@@ -89,15 +107,15 @@ ERAdminUserTab >> renderFirstNameInputTextOn: html [
 				id: 'firstName';
 				type: 'text';
 				value: attendee firstName;
-				callback: [ :value | modifiedUser firstName: value ] ]
+				callback: [ :value | attendee firstName: value ] ]
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> renderFormOn: html [
 	html form
 		method: 'post';
-		id: 'groupManagerFunctions';
-		with: [ html render: messageComponent .
+		id: 'modifyUser';
+		with: [ html render: messageComponent.
 			self renderFields: html.
 			self renderButtons: html ]
 ]
@@ -113,7 +131,7 @@ ERAdminUserTab >> renderLastNameInputTextOn: html [
 				id: 'lastName';
 				type: 'text';
 				value: attendee lastName;
-				callback: [ :value | modifiedUser lastName: value ] ]
+				callback: [ :value | attendee lastName: value ] ]
 ]
 
 { #category : #accessing }

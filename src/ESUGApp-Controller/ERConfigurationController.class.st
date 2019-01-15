@@ -6,16 +6,14 @@ Class {
 
 { #category : #adding }
 ERConfigurationController >> addAttendee: anAttendee [
-	| anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee email)
-		ifNil: [ | userSaved |
-			userSaved := anAttendee userAccount save.
-			conference addUser: userSaved.
-			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-			conference addAttendee: anAttendeeSaved.
-			conference save.
-			^ anAttendeeSaved ].
-	^ nil
+	| anAttendeeSaved userSaved |
+	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
+	userSaved := anAttendee userAccount save.
+	conference addUser: userSaved.
+	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+	conference addAttendee: anAttendeeSaved.
+	conference save.
+	^ anAttendeeSaved
 ]
 
 { #category : #adding }

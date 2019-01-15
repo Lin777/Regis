@@ -38,6 +38,20 @@ ERController >> amountForCurrentDateFor: aFee [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> amountOfPayToGroup: list [
+	| generalAmount |
+	generalAmount := 0.
+	list
+		do: [ :each | 
+			| fee amount |
+			fee := self feePerTypeCurrencyOf: each.
+			amount := self amountForCurrentDateFor: fee.
+			amount := self decreaseCouponAmountFor: amount to: each.
+			generalAmount := generalAmount + amount ].
+	^ generalAmount
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> applyReductionTicketTo: anAttendee [
 	| reductionTicket |
 	reductionTicket := self reductionTicketWithName: anAttendee coupon.
@@ -88,6 +102,14 @@ ERController >> feePerTypeCurrencyOf: anAttendee [
 	^ self feeForCurrencyType: anAttendee paymentCurrency
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> groupManagerAmountOfPay: aGroupManager [
+	| fee amount |
+	fee := self feePerTypeCurrencyOf: aGroupManager.
+	amount := self amountForCurrentDateFor: fee.
+	^ self decreaseCouponAmountFor: amount to: aGroupManager
+]
+
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
@@ -131,12 +153,54 @@ ERController >> reductionTicketWithName: aString [
 	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> updateUser: anUser [
+	self validatePatternForRequired: anUser email withName: 'Email'.
+	self
+		validatePatternForRequired: anUser firstName
+		withName: 'First name'.
+	self
+		validatePatternForRequired: anUser lastName
+		withName: 'Last name'.
+	self validatePatternEmail: anUser email withName: 'Email'.
+	self validateIfEmailIsAlreadyRegistered: anUser.
+	
+	^ anUser save
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updateUser: anUser to: anAttendee [
+	anAttendee
+		userAccount: (self updateUser: anUser).
+	anAttendee save
+]
+
 { #category : #action }
-ERController >> validateIfEmailIsAlreadyRegistered: email [
+ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 	conference users
 		do: [ :each | 
-			each email = email
-				ifTrue: [ ERException new
+			each email = anUser email
+				ifTrue: [ 
+					each = anUser ifFalse:[
+					ERException new
 						messageText: 'This email is already registered';
-						signal ] ]
+						signal ] ]]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> validatePatternEmail: aString withName: aString2 [
+	(aString matchesRegex: '\S+@\S+\.\S+')
+		ifFalse: [ ERException new
+				messageText: 'The field ' , aString2 , ' does not match with email format.';
+				signal ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> validatePatternForRequired: aString withName: aString2 [
+	(aString matchesRegex: '\S+[\S*\s*]*')
+		ifFalse: [ ERException new
+				messageText:
+					'The field ' , aString2
+						, ' is required please add content to it.';
+				signal ]
 ]

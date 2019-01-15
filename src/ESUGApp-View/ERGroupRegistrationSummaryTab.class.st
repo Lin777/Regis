@@ -51,6 +51,17 @@ ERGroupRegistrationSummaryTab >> pay [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> paymentStatus [
+	| listAttends |
+	listAttends := self attends.
+	listAttends size = 0
+		ifTrue: [ ^ 'No status available. The group has no members ' ]
+		ifFalse: [ ^ 'Payment no registered yet. Amount due: '
+			, (ERController new amountOfPayToGroup: listAttends) asString , ' ', 
+			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderButtons: html [
 	self renderModifyAffiliationButtonOn: html.
 	self renderRegisterAttendeeButtonOn: html.
@@ -107,7 +118,10 @@ ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
-	self createTextStrong: 'Payment Status: ' withText: 'No status avaliable. The group has no mmebers ' on: html 
+	self
+		createTextStrong: 'Payment Status: '
+		withText: self paymentStatus
+		on: html
 ]
 
 { #category : #rendering }

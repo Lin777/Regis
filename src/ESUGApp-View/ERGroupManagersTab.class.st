@@ -68,13 +68,22 @@ ERGroupManagersTab >> initializeFormRegisterForGroupManager: anAttendee [
 	content state: groupManagerForm
 ]
 
+{ #category : #accessing }
+ERGroupManagersTab >> initializeFormRegisterModifyAffiliationGroupManager: aGroupManager [
+	groupManagerForm := ERContainerTabs
+		formAdminToGMRegisterOn: aGroupManager
+		withCallback: [ self registerAdminAsGroupManager ]
+		content: content.
+	content state: groupManagerForm
+]
+
 { #category : #rendering }
 ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
 				with: 'Modify'
-				with: [ :user | self modifyRegistrationInformation: user ]
+				with: [ :user | self modifyAffiliationGroupManager: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
@@ -97,6 +106,12 @@ ERGroupManagersTab >> listDataToRenderButton [
 				with: [ nil ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself
+]
+
+{ #category : #rendering }
+ERGroupManagersTab >> modifyAffiliationGroupManager: aGroupManager [
+	self
+		initializeFormRegisterModifyAffiliationGroupManager: aGroupManager groupManager 
 ]
 
 { #category : #'as yet unclassified' }

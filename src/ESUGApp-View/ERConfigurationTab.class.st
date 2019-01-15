@@ -15,9 +15,11 @@ ERConfigurationTab class >> on: anAttendee withContent: aContent [
 ]
 
 { #category : #'file library' }
-ERConfigurationTab >> fileExists: fileName [ 
-	^ (File named: ((FileSystem workingDirectory asString splitOn: '@ ') at:2),'/fileName') exists.
-
+ERConfigurationTab >> fileExists: fileName [
+	^ (File
+		named:
+			((FileSystem workingDirectory asString splitOn: '@ ') at: 2)
+				, '/',fileName) exists
 ]
 
 { #category : #initialization }

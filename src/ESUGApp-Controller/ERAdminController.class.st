@@ -19,18 +19,22 @@ ERAdminController >> changePasswordTo: aString [
 ]
 
 { #category : #'as yet unclassified' }
-ERAdminController >> updateAttendee: modifiedUser [
-	^ (attendee
-		email: modifiedUser email;
-		firstName: modifiedUser firstName;
-		lastName: modifiedUser lastName;
-		userAccount) save
+ERAdminController >> updateUser: anUser [
+	self validatePatternForRequired: anUser email withName: 'Email'.
+	self
+		validatePatternForRequired: anUser firstName
+		withName: 'First name'.
+	self
+		validatePatternForRequired: anUser lastName
+		withName: 'Last name'.
+	self validatePatternEmail: anUser email withName: 'Email'.
+	self validateIfEmailIsAlreadyRegistered: anUser.
+	^anUser save
 ]
 
 { #category : #'as yet unclassified' }
-ERAdminController >> updateUserFields: anUser [
-	self validateIfEmailIsAlreadyRegistered: anUser email.
-	self updateAttendee: anUser
+ERAdminController >> updateUser: anUser to: anAttendee [
+	anAttendee userAccount: (self updateUser: anUser); save
 ]
 
 { #category : #'as yet unclassified' }
@@ -48,11 +52,4 @@ ERAdminController >> validateNewPassword: aString1 with: aString2 [
 ERAdminController >> validatePatternPassword: aString [
 	^ (aString matchesRegex: '[A-Za-z0-9._]{8,}') 
 	and: [aString size >= 8].
-]
-
-{ #category : #'as yet unclassified' }
-ERAdminController >> verifyIfEmailIsAlreadyRegistered: modifiedUser [
-	^ (ERUserAccount findUserByEmail: modifiedUser email) isNil
-		or: attendee email = modifiedUser email
-
 ]

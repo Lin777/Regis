@@ -98,29 +98,80 @@ ERFinishRegisterAttendeePage >> renderContactInformation: html [
 	html mdlCell
 		class: 'mdl-cell--4-col';
 		with: [ self renderTitle: html with: 'Contact Information'.
-			self createTextStrongWithoutParagraph: 'First Name: ' with: #firstName on: html.
-			self createTextStrongWithoutParagraph: 'Last Name: ' with: #lastName on: html.
-			self createTextStrongWithoutParagraph: 'Email: ' with: #email on: html.
-			self createTextStrongWithoutParagraph: 'Facebook: ' with: #facebookURL on: html.
-			self createTextStrongWithoutParagraph: 'Twitter: ' with: #twitterURL on: html.
-			self createTextStrongWithoutParagraph: 'Home Page: ' with: #homePage on: html.
-			
-			self createTextStrongWithoutParagraph: 'Address Line 1: ' with: #address on: html.
-			self createTextStrongWithoutParagraph: 'Address Line 2: ' with: #address2 on: html.
-			self createTextStrongWithoutParagraph: 'City: ' with: #city on: html.
-			self createTextStrongWithoutParagraph: 'Province/States: ' with: #province on: html.
-			self createTextStrongWithoutParagraph: 'Postal/Zip Code: ' with: #postal on: html.
-			self createTextStrongWithoutParagraph: 'Country: ' with: #country on: html.
+			self
+				createTextStrongWithoutParagraph: 'First Name: '
+				with: #firstName
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Last Name: '
+				with: #lastName
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Email: '
+				with: #email
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Facebook: '
+				with: #facebookURL
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Twitter: '
+				with: #twitterURL
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Home Page: '
+				with: #homePage
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Address Line 1: '
+				with: #address
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Address Line 2: '
+				with: #address2
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'City: '
+				with: #city
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Province/States: '
+				with: #province
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Postal/Zip Code: '
+				with: #postal
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Country: '
+				with: #country
+				on: html.
 			self renderTitle: html with: 'Conference Options'.
-			self createTextStrongWithoutParagraph: 'Day(s) to attend: ' withText: self stringOfDays on: html.
-			self createTextStrongWithoutParagraph: 'Gender: ' with: #gender on: html.
-			self createTextStrongWithoutParagraph: 'TShirt: ' with: #tshirtSize on: html.
-			self createTextStrongWithoutParagraph: 'Type Food: ' with: #foodPreference on: html.
-			self createTextStrongWithoutParagraph: 'Goes Social Event: ' withText: (self stringForBooleanForASymbol: #attendSocialEvent) on: html.
-			self createTextStrongWithoutParagraph: 'Add mailling list: ' withText: (self stringForBooleanForASymbol: #addedToMainList) on: html.
-			html break
-	
-			 ]
+			self
+				createTextStrongWithoutParagraph: 'Day(s) to attend: '
+				withText: attendee daysOfAssistance
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Gender: '
+				with: #gender
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'TShirt: '
+				with: #tshirtSize
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Type Food: '
+				with: #foodPreference
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Goes Social Event: '
+				withText: (self stringForBooleanForASymbol: #attendSocialEvent)
+				on: html.
+			self
+				createTextStrongWithoutParagraph: 'Add mailling list: '
+				withText: (self stringForBooleanForASymbol: #addedToMainList)
+				on: html.
+			html break ]
 ]
 
 { #category : #rendering }

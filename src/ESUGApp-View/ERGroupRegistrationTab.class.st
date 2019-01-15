@@ -15,6 +15,12 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
+{ #category : #accessing }
+ERGroupRegistrationTab >> attends [
+	^ (ERGroupManagerController new groupOfAttendee: attendee)
+		listAttends
+]
+
 { #category : #actions }
 ERGroupRegistrationTab >> cancel [
 	self returnToThePreviousState

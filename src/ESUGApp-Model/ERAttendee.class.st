@@ -186,6 +186,19 @@ ERAttendee >> coupon: anObject [
 	coupon := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERAttendee >> daysOfAssistance [
+	| aString |
+	aString := ''.
+	#(#monday #tuesday #wednesday #thursday #friday)
+		do: [ :each | 
+			(self perform: each)
+				ifTrue: [ aString isEmpty
+						ifTrue: [ aString := each asString capitalized ]
+						ifFalse: [ aString :=  aString , ', ' , each asString capitalized ] ] ].
+	^ aString
+]
+
 { #category : #accessing }
 ERAttendee >> email [
 	^ self userAccount email.
