@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERStateContent,
 	#instVars : [
 		'active',
-		'id'
+		'id',
+		'container'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -16,6 +17,15 @@ ERContentTab class >> on: anAttendee [
 	^ form
 ]
 
+{ #category : #'instance creation' }
+ERContentTab class >> on: anAttendee container: aContainer [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form container: aContainer.
+	^ form
+]
+
 { #category : #activation }
 ERContentTab >> activate [
 	active := true.
@@ -24,6 +34,11 @@ ERContentTab >> activate [
 { #category : #accessing }
 ERContentTab >> attendee: anObject [
 	attendee := anObject
+]
+
+{ #category : #accessing }
+ERContentTab >> container: aContainer [
+	container := aContainer
 ]
 
 { #category : #private }
@@ -55,4 +70,13 @@ ERContentTab >> tabId [
 { #category : #accessing }
 ERContentTab >> tabName [
 	^ self subclassResponsibility.
+]
+
+{ #category : #'as yet unclassified' }
+ERContentTab >> updateStateTab: aString [
+	container tabs detect: [ :tab | (tab tabName = aString) ]
+	ifFound: [ :tab | tab activate.
+		container tabs reject: [ :aTab | (aTab tabName = aString) ]
+		thenDo: [ :aTab | aTab deactivate ]
+	]
 ]
