@@ -28,26 +28,20 @@ ERRegistrationController >> addAttendeeToTicket: coupon [
 
 { #category : #action }
 ERRegistrationController >> addAttendeeToTicketIfExist [
-	| coupon |
+	[ | coupon |
 	coupon := self reductionTicketWithName: attendee coupon.
-	coupon isNil
-		ifFalse: [ ^ self addAttendeeToTicket: coupon ].
-	attendee coupon: ''.
-	ERException new
-		messageText: 'The ticket does not exist for this conference';
-		signal
+	self addAttendeeToTicket: coupon ]
+		on: ERException
+		do: [ attendee coupon: '' ]
 ]
 
 { #category : #action }
 ERRegistrationController >> addAttendeeToTicketIfExist: anAttendee [
-	| coupon |
+	[| coupon |
 	coupon := self reductionTicketWithName: anAttendee coupon.
-	coupon isNil
-		ifFalse: [ ^ self addAttendeeToTicket: coupon ].
-	anAttendee coupon: ''.
-	ERException new
-		messageText: 'The ticket does not exist for this conference';
-		signal
+	self addAttendeeToTicket: coupon.] on: ERException do:[
+	anAttendee coupon: ''].
+
 ]
 
 { #category : #accessing }
@@ -162,7 +156,7 @@ ERRegistrationController >> validateIfEmailIsAlreadyRegistered: email [
 ERRegistrationController >> validateIfTicketExist [
 	attendee hasCoupon
 		ifTrue: [ (self reductionTicketWithName: attendee coupon) isNil
-				ifTrue: [ attendee coupon: ''.
+				ifTrue: [ 
 					ERException new
 						messageText: 'The ticket does not exist for this conference';
 						signal ] ]

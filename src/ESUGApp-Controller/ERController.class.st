@@ -130,3 +130,13 @@ ERController >> reductionTicketWithName: aString [
 				ifTrue: [ ^ each ] ].
 	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
 ]
+
+{ #category : #action }
+ERController >> validateIfEmailIsAlreadyRegistered: email [
+	conference users
+		do: [ :each | 
+			each email = email
+				ifTrue: [ ERException new
+						messageText: 'This email is already registered';
+						signal ] ]
+]
