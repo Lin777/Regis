@@ -19,16 +19,16 @@ ERGroupManagersTab >> blockTableToExecute [
 		add: ([ :att | att groupManager firstName ] value: group);
 		add: ([ :att | att groupManager email ] value: group);
 		add: ([ :att | att groupManager orgName ] value: group);
-		add: '660.00 Euros';
+		add:
+			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
+				value: group);
 		add: 'No';
 		yourself ]
 ]
 
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
-	(self fileExists: 'groupManagers.cvs')
-		ifFalse: [ controller exportGroupManagers ]
-		ifTrue: [ Transcript show: 'File Exist' ].
+	controller exportGroupManagers: 'groupManagers'.
 	self updateStateTab: self tabName
 ]
 
@@ -55,7 +55,7 @@ ERGroupManagersTab >> initializeFormRegister [
 ERGroupManagersTab >> initializeFormRegisterAdminToGroupManager [
 	groupManagerForm := ERContainerTabs
 		formAdminToGMRegisterOn: attendee
-		withCallback: [ self registerAdminAsGroupManager ]
+		withCallback: callback
 		content: content.
 	content state: groupManagerForm
 ]
@@ -69,13 +69,22 @@ ERGroupManagersTab >> initializeFormRegisterForGroupManager: anAttendee [
 	content state: groupManagerForm
 ]
 
+{ #category : #accessing }
+ERGroupManagersTab >> initializeFormRegisterModifyAffiliationGroupManager: aGroupManager [
+	groupManagerForm := ERContainerTabs
+		formAdminToGMRegisterOn: aGroupManager
+		withCallback: [ self registerAdminAsGroupManager ]
+		content: content.
+	content state: groupManagerForm
+]
+
 { #category : #rendering }
 ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
 				with: 'Modify'
-				with: [ :user | self modifyRegistrationInformation: user ]
+				with: [ :user | self modifyAffiliationGroupManager: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
@@ -100,10 +109,20 @@ ERGroupManagersTab >> listDataToRenderButton [
 		yourself
 ]
 
+{ #category : #rendering }
+ERGroupManagersTab >> modifyAffiliationGroupManager: aGroupManager [
+	self
+		initializeFormRegisterModifyAffiliationGroupManager: aGroupManager groupManager 
+]
+
 { #category : #'as yet unclassified' }
 ERGroupManagersTab >> registerAdminAsGroupManager [
-	(ERRegistrationController attendee: attendee) validateRegisterForGroupManager .
-	controller registerAsGroupManager.
+	|groupManager|
+	(ERRegistrationController attendee: attendee)
+		validateRegisterForGroupManager.
+	groupManager := controller registerAsGroupManager.
+	(ERGroupManagerController new attendee: groupManager)
+				groupForGroupManager.
 	content state: content lastState
 ]
 
@@ -126,6 +145,7 @@ ERGroupManagersTab >> registerGroupManager [
 ERGroupManagersTab >> registerMyselfAsGroupManager [
 	attendee userAccount isGroupManager
 		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
+
 			self initializeFormRegisterAdminToGroupManager ]
 		ifTrue: [  ].
 	self updateStateTab: self tabName

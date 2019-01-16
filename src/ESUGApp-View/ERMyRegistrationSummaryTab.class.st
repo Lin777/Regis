@@ -72,8 +72,18 @@ ERMyRegistrationSummaryTab >> renderContainer: html [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
-	self createTextStrong: 'Attendace Date(s): ' withText: 'Monday 10, Tuesday 11, Wednesday 12, Thursday 13 and Friday 14' on: html.
-	self createTextStrong: 'Payment Status: ' withText: 'Payment no registered yet. Amount due: 660.00 Euros (NOTE: you could have paid but we could have not registered it yet)' on: html
+	self
+		createTextStrong: 'Attendace Day(s): '
+		withText: attendee daysOfAssistance
+		on: html.
+	self
+		createTextStrong: 'Payment Status: '
+		withText:
+			'Payment no registered yet. Amount due: '
+				, (ERController new conferenceFeeFor: attendee) asString , ' '
+				, attendee paymentCurrency , '(s) '
+				, ' (NOTE: you could have paid but we could have not registered it yet)'
+		on: html
 ]
 
 { #category : #accessing }
@@ -93,7 +103,8 @@ ERMyRegistrationSummaryTab >> title [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> updateMyRegistration [
-	(ERRegistrationController attendee: attendee) validateRegister .
+	(ERRegistrationController attendee: attendee) validateRegister.
+	"self halt.
 	attendee save.
-	content state: content lastState
+	content state: content lastState"
 ]

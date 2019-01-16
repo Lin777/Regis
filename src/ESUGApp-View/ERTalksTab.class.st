@@ -16,10 +16,8 @@ ERTalksTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERTalksTab >> exportTalks [
-	
-	(self fileExists: 'talks.cvs')
-		ifFalse: [ controller exportTalks ]
-		ifTrue: [ Transcript show: 'File Exist' ].
+
+	controller exportTalks: 'talks'.
 	self updateStateTab: self tabName
 ]
 

@@ -6,16 +6,14 @@ Class {
 
 { #category : #adding }
 ERConfigurationController >> addAttendee: anAttendee [
-	| anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee email)
-		ifNil: [ | userSaved |
-			userSaved := anAttendee userAccount save.
-			conference addUser: userSaved.
-			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-			conference addAttendee: anAttendeeSaved.
-			conference save.
-			^ anAttendeeSaved ].
-	^ nil
+	| anAttendeeSaved userSaved |
+	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
+	userSaved := anAttendee userAccount save.
+	conference addUser: userSaved.
+	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+	conference addAttendee: anAttendeeSaved.
+	conference save.
+	^ anAttendeeSaved
 ]
 
 { #category : #adding }
@@ -32,6 +30,17 @@ ERConfigurationController >> addAttendsToLunchPer: day to: list [
 					anAttendee isVegetarian
 						ifTrue: [ vegetarian := vegetarian + 1 ] ] ].
 	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list
+]
+
+{ #category : #adding }
+ERConfigurationController >> addFee: aFee [
+	|savedFee|
+	aFee bankAccountInformation bankInformation save.
+	aFee bankAccountInformation save.
+	savedFee := aFee save.
+	 conference addFee: savedFee.
+	 conference save.
+	^ savedFee
 ]
 
 { #category : #adding }
@@ -98,11 +107,6 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
-ERConfigurationController >> createFile: aNameFile [
-	^ FileStream newFileNamed: aNameFile.
-]
-
-{ #category : #rendering }
 ERConfigurationController >> deleteFee: aFee [
 	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
 	^ aFee delete.
@@ -125,123 +129,117 @@ ERConfigurationController >> deleteUser: anUser [
 ]
 
 { #category : #rendering }
-ERConfigurationController >> exportAttends [
-	| file cvs |
-	file := self createFile: 'attends.cvs'.
-	cvs := NeoCSVWriter on: file.
-	cvs writeHeader: self headerAttendee.
-	self attends
-		do: [ :each | 
-			cvs
-				nextPut:
-					{each id.
-					each firstName.
-					each lastName.
-					each email.
-					each password.
-					each userAccount rolesAsString.
-					each address.
-					each address2.
-					each city.
-					each country.
-					each province.
-					each postal.
-					each facebookURL.
-					each twitterURL.
-					each homePage.
-					''.
-					each gender.
-					each tshirtSize.
-					each foodPreference.
-					each attendSocialEvent asString.
-					each addedToMainList asString.
-					each orgName.
-					each orgAddrees1.
-					each orgAddrees2.
-					each orgCity.
-					each orgCountry.
-					each orgProvince.
-					each orgPostal.
-					each membershipType.
-					each keywords.
-					each additionalText.
-					each paymentType.
-					each coupon.
-					each paymentCurrency} ]
+ERConfigurationController >> exportAttends: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerAttendee.
+			self attends 
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{each firstName.
+							each lastName.
+							each email.
+							each country.
+							each orgName} ] ].
+	self
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
+		withStream: cvs
 ]
 
 { #category : #rendering }
-ERConfigurationController >> exportAwards [
-	| file cvs |
-	file := self createFile: 'awards.cvs'.
-	cvs := NeoCSVWriter on: file.
-	cvs writeHeader: self hearderAwards.
-	self submittedAwards
-		do: [ :each | 
-			cvs
-				nextPut:
+ERConfigurationController >> exportAwards: fileName [
+	|  cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self hearderAwards.
+			self submittedAwards
+				do: [ :each | 
+					neoWriter
+						nextPut:
 					{each name1.
-					each submittedBy.} ]
+					each submittedBy} ]].
+				self
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
+		withStream: cvs
 ]
 
 { #category : #rendering }
-ERConfigurationController >> exportGroupManagers [
-	| file cvs |
-	file := self createFile: 'groupManagers.cvs'.
-	cvs := NeoCSVWriter on: file.
-	cvs writeHeader: self headerGroups.
-	self groups
-		do: [ :each | 
-			cvs
-				nextPut:
-					{each groupManager id.
-					each groupManager firstName.
-					each groupManager lastName.
-					each groupManager email.
-					each groupManager password.
-					each groupManager userAccount rolesAsString.
-					each groupManager orgName.
-					each groupManager orgAddrees1.
-					each groupManager orgAddrees2.
-					each groupManager orgCity.
-					each groupManager orgCountry.
-					each groupManager orgProvince.
-					each groupManager orgPostal.
-					each groupManager membershipType} ]
+ERConfigurationController >> exportGroupManagers: fileName [
+	|  cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerGroups.
+			self groups
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{each groupManager id.
+							each groupManager firstName.
+							each groupManager lastName.
+							each groupManager email.
+							each groupManager password.
+							each groupManager userAccount rolesAsString.
+							each groupManager orgName.
+							each groupManager orgAddrees1.
+							each groupManager orgAddrees2.
+							each groupManager orgCity.
+							each groupManager orgCountry.
+							each groupManager orgProvince.
+							each groupManager orgPostal.
+							each groupManager membershipType} ] ].
+	self
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
+		withStream: cvs
 ]
 
 { #category : #rendering }
-ERConfigurationController >> exportTalks [
-	| file cvs |
-	file := self createFile: 'talks.cvs'.
-	cvs := NeoCSVWriter on: file.
-	cvs writeHeader: self headerTalks.
-	self submittedTalks
-		do: [ :each | 
-			cvs
+ERConfigurationController >> exportTalks: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerTalks.
+			self submittedTalks
+				do: [ :each | neoWriter 
 				nextPut:
 					{each name1.
 					each submittedBy.
-					each uploadFile} ]
+					each uploadFile} ]].
+	self
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
+		withStream: cvs
 ]
 
 { #category : #rendering }
-ERConfigurationController >> exportUsers [
-	| file cvs |
-	file := self createFile: 'users.cvs'.
-	cvs := NeoCSVWriter on: file.
-	cvs
-		writeHeader: self headerUser.
-	self users
-		do: [ :each | 
-			cvs
-				nextPut:
-					{each id.
-					each firstName.
-					each lastName.
-					each email.
-					each password.
-					each rolesAsString} ]
+ERConfigurationController >> exportUsers: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerUser.
+			self users
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{each id.
+							each firstName.
+							each lastName.
+							each email.
+							each password.
+							each rolesAsString} ] ].
+	self
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
+		withStream: cvs
 ]
 
 { #category : #accessing }
@@ -256,7 +254,7 @@ ERConfigurationController >> groups [
 
 { #category : #rendering }
 ERConfigurationController >> headerAttendee [
-	^ #('Id' 'FirstName' 'LastName' 'Email' 'Password' 'Role' 'Address Line1' 'Address Line2' 'City' 'Country' 'Province' 'Postal' 'Facebook URL' 'Twitter URL' 'Home Page' 'Days' 'Gender' 'T-Shirt' 'Preference Food' 'Social Event' 'Added main List' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership' 'keywords' 'Additional text' 'Payment Type' 'Reduction ticket' 'Currency' )
+	^ #('FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
 ]
 
 { #category : #rendering }
@@ -362,8 +360,7 @@ ERConfigurationController >> registerAsGroupManager [
 	attendee userAccount
 		roleAdd: 'groupManager';
 		save.
-	attendee save."
-	conference addAttendee: attendee."
+	attendee save.
 	conference save.
 	^ attendee
 ]
@@ -374,6 +371,15 @@ ERConfigurationController >> registrationsStatistics [
 	list := OrderedCollection new.
 	^ list
 "	^ #('Date' 'Total Attendees')"
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> saveFileOn: aFile withStream: stream [
+	aFile
+		ensureDelete;
+		binaryWriteStreamDo: [ :outputStream | 
+			(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
+				nextPutAll: stream contents ]
 ]
 
 { #category : #adding }

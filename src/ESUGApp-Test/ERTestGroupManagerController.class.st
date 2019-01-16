@@ -1,5 +1,5 @@
 Class {
-	#name : #ERTestGroupManagerViewController,
+	#name : #ERTestGroupManagerController,
 	#superclass : #ERTestControllers,
 	#instVars : [
 		'controller'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-ERTestGroupManagerViewController >> setUp [
+ERTestGroupManagerController >> setUp [
 	| anUser |
 	super setUp.
 	anUser := self registerAsGroupManager.
@@ -17,7 +17,7 @@ ERTestGroupManagerViewController >> setUp [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testAddAttendee [
+ERTestGroupManagerController >> testAddAttendee [
 	| result |
 	result := controller
 		addAttendee: ERTestControllers testExampleAttendee..
@@ -25,7 +25,7 @@ ERTestGroupManagerViewController >> testAddAttendee [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testAddMyselfToGroup [
+ERTestGroupManagerController >> testAddMyselfToGroup [
 	controller addMyselfToGroup .
 	self
 		assert:
@@ -34,14 +34,14 @@ ERTestGroupManagerViewController >> testAddMyselfToGroup [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testCreateGRoupForGroupManager [
+ERTestGroupManagerController >> testCreateGRoupForGroupManager [
 	|group|
 	group := controller groupForGroupManager .
 	self assert: (group groupManager = controller attendee )
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testDeleteAnAttendee [
+ERTestGroupManagerController >> testDeleteAnAttendee [
 	"| user attendee result |
 	user := self
 		registerAttendee: ERTestControllers testExampleAttendee.
@@ -52,7 +52,7 @@ ERTestGroupManagerViewController >> testDeleteAnAttendee [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testGroupOfAttendee [
+ERTestGroupManagerController >> testGroupOfAttendee [
 	| user group |
 	user := self registerAttendee.
 	group := ERGroupManagerController new
@@ -61,7 +61,7 @@ ERTestGroupManagerViewController >> testGroupOfAttendee [
 ]
 
 { #category : #tests }
-ERTestGroupManagerViewController >> testRegisterAsAttendee [
+ERTestGroupManagerController >> testRegisterAsAttendee [
 	controller registerAsAttendee.
 	self
 		assert:

@@ -11,6 +11,7 @@ Class {
 { #category : #rendering }
 ERReductionTicketsTab >> actionModifyTicket: aReductionTicket [
 	controller modifyTicket: aReductionTicket.
+
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
 ]
@@ -25,8 +26,10 @@ ERReductionTicketsTab >> addTicket [
 { #category : #rendering }
 ERReductionTicketsTab >> addTicketToConference [
 	controller addTicket: ticket.
+
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
+
 ]
 
 { #category : #rendering }

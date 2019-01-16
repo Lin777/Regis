@@ -88,10 +88,12 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 ]
 
 { #category : #accessing }
-ERContainerTab >> modifyUserFormGroup: anAttendee [
+ERContainerTab >> modifyUserFormGroup: anUser [
+	
 	mofidyUserForm := ERModifyUserView
-		on: anAttendee
-		withContent: content.
+		on: anUser
+		withContent: content
+		withAction: [ controller updateUser: anUser ].
 	content state: mofidyUserForm
 ]
 

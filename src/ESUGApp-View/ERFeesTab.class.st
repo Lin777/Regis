@@ -18,13 +18,8 @@ ERFeesTab >> addFee [
 { #category : #rendering }
 ERFeesTab >> addFeeToConference [
 	| aFee |
-	fee bankAccountInformation bankInformation save.
-	fee bankAccountInformation save.
-	aFee := fee save.
-	controller conference addFee: aFee.
-	controller conference save.
-	self returnToThePreviousState.
-	^ aFee
+	aFee := controller addFee: fee.
+	self returnToThePreviousState
 ]
 
 { #category : #rendering }

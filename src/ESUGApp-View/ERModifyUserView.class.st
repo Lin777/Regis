@@ -3,10 +3,27 @@ Class {
 	#superclass : #ERTittledView,
 	#instVars : [
 		'form',
-		'dialog'
+		'dialog',
+		'messageComponent',
+		'actionModify'
 	],
 	#category : #'ESUGApp-View'
 }
+
+{ #category : #'as yet unclassified' }
+ERModifyUserView class >> on: anAttendee withContent: aContent withAction: aBlock [
+	| form |
+	form := self new.
+	form attendee: anAttendee.
+	form content: aContent.
+	form actionModify: aBlock.
+	^ form
+]
+
+{ #category : #accessing }
+ERModifyUserView >> actionModify: anObject [
+	actionModify := anObject 
+]
 
 { #category : #actions }
 ERModifyUserView >> cancel [
@@ -18,6 +35,12 @@ ERModifyUserView >> cancel [
 { #category : #rendering }
 ERModifyUserView >> content: anObject [
 	content := anObject
+]
+
+{ #category : #rendering }
+ERModifyUserView >> initialize [
+	super initialize.
+	messageComponent := ERAlert warningAlert id: 'adminModifyUserAlert'
 ]
 
 { #category : #initialization }
@@ -61,12 +84,13 @@ ERModifyUserView >> renderFormOn: html [
 
 { #category : #rendering }
 ERModifyUserView >> renderPageOn: html [
+	html render: messageComponent .
 	html form
 		method: 'post';
 		id: 'formModifyUser';
 		with: [ self renderFormOn: html.
 			self renderButtons: html ].
-	html render: dialog 
+	html render: dialog
 ]
 
 { #category : #rendering }
@@ -76,6 +100,7 @@ ERModifyUserView >> title [
 
 { #category : #rendering }
 ERModifyUserView >> updateUserInformation [
-	attendee save.
-	self returnToThePreviousState .
+	[ actionModify value.self returnToThePreviousState
+	 ] on: ERException do: [ :exc | messageComponent errorMessage: exc messageText  ]
+	
 ]

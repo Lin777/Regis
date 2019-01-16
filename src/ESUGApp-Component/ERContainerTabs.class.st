@@ -17,6 +17,7 @@ ERContainerTabs class >> formAdminToGMRegisterOn: anAttendee withCallback: aBloc
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
+	form attendee: anAttendee.
 	form initializeTabsForConvertAdminToGroupManager: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
@@ -28,6 +29,8 @@ ERContainerTabs class >> formGMRegisterOn: anAttendee withCallback: aBlock conte
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
+	
+	form attendee: anAttendee.
 	form initializeTabsForGroupManager: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
@@ -39,6 +42,8 @@ ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
+	
+	form attendee: anAttendee.
 	form initializeTabsRegisterFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
@@ -50,8 +55,22 @@ ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
+	form attendee: anAttendee.
 	form initializeTabsWithoutBasicInformationFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #accessing }
+ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock withDialog: aDialog content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee .
+	form initializeTabsWithoutBasicInformationFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	form dialog: aDialog.
 	^ form
 ]
 
@@ -72,6 +91,9 @@ ERContainerTabs >> callback: anObject [
 
 { #category : #rendering }
 ERContainerTabs >> cancel [
+	attendee version > 0
+		ifTrue: [ attendee abortChanges ].
+
 	content state: content lastState
 ]
 
@@ -81,20 +103,24 @@ ERContainerTabs >> content: anObject [
 ]
 
 { #category : #rendering }
+ERContainerTabs >> dialog: aDialog [
+	dialog := aDialog 
+]
+
+{ #category : #rendering }
 ERContainerTabs >> initialize [
-	super initialize .
+	super initialize.
 	messageComponent := ERAlert warningAlert id: 'registerAlert'.
-	
+	dialog := ERDialog new
+				title: 'Cancel';
+				message: 'Are you sure you want to cancel?'
 ]
 
 { #category : #initialization }
 ERContainerTabs >> initializeDialog [
-	dialog := ERDialog new
-		title: 'Cancel Register Attendee';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog idClose: 'buttonClose';
 		idOpen: 'cancel-register-attendee';
-		okCallback: [ self cancel ]
+		okCallback: [ self cancel ].
 ]
 
 { #category : #accessing }
@@ -198,7 +224,8 @@ ERContainerTabs >> renderContentPage: html [
 ERContainerTabs >> renderDoneButtonOn: html [
 	self
 		createRaisedRippleEffectPrimaryButton: 'Save Information'
-		with: [ callback 
+		with: [ 
+			callback
 				on: ERException
 				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
 		id: 'registerButton'

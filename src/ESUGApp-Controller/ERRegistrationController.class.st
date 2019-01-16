@@ -68,7 +68,7 @@ ERRegistrationController >> initialize [
 { #category : #action }
 ERRegistrationController >> save [
 	| attendeeResult |
-	self validateIfEmailIsAlreadyRegistered: attendee  email.
+	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	attendeeResult := self saveAttendee.
 	attendeeResult userAccount isAttendee
 		ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
@@ -102,29 +102,53 @@ ERRegistrationController >> validateAdditionalForm [
 
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateAffiliationForm [
-	self validatePatternForRequired: #orgName.
-	self validatePatternForRequired: #orgAddrees1.
-	self validatePatternForRequired: #orgCity.
-	self validateCountry: #orgCountry.
-	self validatePatternForRequired: #orgProvince.
-	self validatePatternForRequired: #orgPostal.
-	self validateSelectValue: #membershipType on: ERAttendee membershipTypes withMessage: 'membership type'.
+	self
+		validatePatternForRequired: attendee orgName
+		withName: 'ORGANIZATION NAME'.
+	self
+		validatePatternForRequired: attendee orgAddrees1
+		withName: 'ORGANIZATION ADDRESS 1'.
+	self
+		validatePatternForRequired: attendee orgCity
+		withName: 'ORGANIZATION CITY'.
+	self
+		validateCountry: attendee orgCountry
+		withName: 'ORGANIZATION COUNTRY'.
+	self
+		validatePatternForRequired: attendee orgProvince
+		withName: 'ORGANIZATION PROVINCE'.
+	self
+		validatePatternForRequired: attendee orgPostal
+		withName: 'ORGANIZATION POSTAL'.
+	self
+		validateSelectValue: attendee membershipType
+		on: ERAttendee membershipTypes
+		withMessage: 'MEMBERSHIP TYPE'
 ]
 
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateConferenceForm [
-	self validateSelectValue: #gender on: ERAttendee genders withMessage: 'gender'.
-	self validateSelectValue: #tshirtSize on: ERAttendee tShirtSizes withMessage: 't-shirt size'.
-	self validateSelectValue: #foodPreference on: ERAttendee foodPreferences withMessage: 'food preference'.
+	self
+		validateSelectValue: attendee gender
+		on: ERAttendee genders
+		withMessage: 'GENDER'.
+	self
+		validateSelectValue: attendee tshirtSize
+		on: ERAttendee tShirtSizes
+		withMessage: 'T-SHIRT SIZE'.
+	self
+		validateSelectValue: attendee foodPreference
+		on: ERAttendee foodPreferences
+		withMessage: 'FOOD PREFERENCE'
 ]
 
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateContactForm [
-	self validatePatternForRequired: #address.
-	self validatePatternForRequired: #city.
-	self validatePatternForRequired: #province.
-	self validatePatternForRequired: #postal.
-	self validateCountry: #country.
+	self validatePatternForRequired: attendee address withName: 'ADDRESS'.
+	self validatePatternForRequired: attendee city withName: 'CITY'.
+	self validatePatternForRequired: attendee province withName: 'PROVINCE'.
+	self validatePatternForRequired: attendee postal withName: 'POSTAL'.
+	self validateCountry: attendee country withName: 'COUNTRY'.
 	attendee facebookURL isEmpty
 		ifFalse: [ self validatePatternUrl: #facebookURL ].
 	attendee twitterURL isEmpty
@@ -143,13 +167,19 @@ ERRegistrationController >> validateCountry: aSymbol [
 ]
 
 { #category : #action }
-ERRegistrationController >> validateIfEmailIsAlreadyRegistered: email [
-	conference users
-		do: [ :each | 
-			each email = email
-				ifTrue: [ ERException new
-						messageText: 'This email is already registered';
-						signal ] ]
+ERRegistrationController >> validateEmail [
+	self validatePatternForRequired: attendee email withName: 'EMAIL'.
+	self validatePatternEmail: attendee email withName: 'EMAIL'
+]
+
+{ #category : #action }
+ERRegistrationController >> validateFirstName [
+	self
+		validatePatternForRequired: attendee firstName
+		withName: 'FIRST NAME'.
+	self
+		validatePatternForText: attendee firstName
+		withName: 'FIRST NAME'.
 ]
 
 { #category : #'as yet unclassified' }
@@ -160,6 +190,22 @@ ERRegistrationController >> validateIfTicketExist [
 					ERException new
 						messageText: 'The ticket does not exist for this conference';
 						signal ] ]
+]
+
+{ #category : #action }
+ERRegistrationController >> validateLastName [
+	self
+		validatePatternForRequired: attendee lastName
+		withName: 'LAST NAME'.
+	self validatePatternForText: attendee lastName withName: 'LAST NAME'.
+	
+]
+
+{ #category : #action }
+ERRegistrationController >> validatePassword [
+	self
+		validatePatternForRequired: attendee password
+		withName: 'PASSWORD'.
 ]
 
 { #category : #'as yet unclassified' }
@@ -217,14 +263,14 @@ ERRegistrationController >> validatePatternUrl: aSymbol [
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validatePaymentForm [
 	self
-		validateSelectValue: #paymentType
+		validateSelectValue: attendee paymentType
 		on: ERAttendee paymentTypes
 		withMessage: 'payment type'.
 	self
-		validateSelectValue: #paymentCurrency
+		validateSelectValue: attendee paymentCurrency
 		on: ERController currencyAvailable
 		withMessage: 'payment currency'.
-	self validateIfTicketExist.
+	self validateIfTicketExist
 ]
 
 { #category : #'as yet unclassified' }
@@ -243,24 +289,13 @@ ERRegistrationController >> validateRegisterForGroupManager [
 	self validateAffiliationForm
 ]
 
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateSelectValue: aSymbol on: list withMessage: aString [
-	(list includes: (attendee perform: aSymbol))
-		ifFalse: [ ERException new
-				messageText: 'The ' , aString , ' entered is not valid.';
-				signal ]
-]
-
 { #category : #action }
 ERRegistrationController >> validateUserForm [
-	self validatePatternForRequired: #firstName.
-	self validatePatternForText: #firstName.
-	self validatePatternForRequired: #lastName.
-	self validatePatternForText: #lastName.
-	self validatePatternForRequired: #email.
-	self validatePatternEmail: #email.
-	self
-		validateIfEmailIsAlreadyRegistered: attendee email
+	self validateFirstName.
+	self validateLastName.
+	self validateEmail.
+	self validatePassword.
+	self validateIfEmailIsAlreadyRegistered: attendee userAccount
 	"self validatePatternForRequired: #password"
 	"self validatePatternPassword: #password"
 ]

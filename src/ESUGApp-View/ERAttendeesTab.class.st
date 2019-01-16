@@ -18,7 +18,8 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att email ] value: user);
 		add: ([ :att | att country ] value: user);
 		add: ([ :att | att orgName ] value: user);
-		add: '660.00 Euros';
+		add: ([ :att | (controller conferenceFeeFor: att) asString
+			, ' ', att paymentCurrency, '(s)'  ] value: user);
 		add: 'Not Paid';
 		add: 'Not Checked';
 		yourself ]
@@ -26,9 +27,7 @@ ERAttendeesTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
-	(self fileExists: 'attends.cvs')
-		ifFalse: [ controller exportAttends ]
-		ifTrue: [ Transcript show: 'File Exist' ].
+controller exportAttends: 'attends' .
 	self updateStateTab: self tabName.
 ]
 
@@ -83,12 +82,9 @@ ERAttendeesTab >> registerAttendee [
 
 { #category : #initialization }
 ERAttendeesTab >> registerAttendeeToConference [
-	| result |
-	(ERRegistrationController attendee: newAttendee )validateRegister .
-	result := controller addAttendee: newAttendee.	"attenteeRegisterForm controller attendee"
-	result
-		ifNil: [ Transcript show: 'This email already registered' ]
-		ifNotNil: [ content state: content lastState ]
+	(ERRegistrationController attendee: newAttendee) validateRegister.
+	controller addAttendee: newAttendee.
+	content state: content lastState
 ]
 
 { #category : #rendering }
