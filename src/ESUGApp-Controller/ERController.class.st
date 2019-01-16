@@ -175,6 +175,15 @@ ERController >> updateUser: anUser to: anAttendee [
 	anAttendee save
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> validateCountry: aString withName: aString2 [
+	self validatePatternForRequired: aString withName: aString2.
+	aString = 'Select Country'
+		ifTrue: [ ERException new
+				messageText: 'Please select a ',aString2 ;
+				signal ]
+]
+
 { #category : #action }
 ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 	conference users
@@ -202,5 +211,21 @@ ERController >> validatePatternForRequired: aString withName: aString2 [
 				messageText:
 					'The field ' , aString2
 						, ' is required please add content to it.';
+				signal ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> validatePatternForText: aString withName: aString2 [
+	(aString matchesRegex: '[(a-zA-Z)+\s*]{3,}')
+		ifFalse: [ ERException new
+				messageText: 'The field ' , aString2 , ' only accept a text.';
+				signal ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> validateSelectValue: aString on: list withMessage: aString2 [
+	(list includes: aString)
+		ifFalse: [ ERException new
+				messageText: 'The ' , aString2 , ' entered is not valid.';
 				signal ]
 ]

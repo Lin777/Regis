@@ -65,7 +65,8 @@ ERReductionTicket >> limitStrategy: anObject [
 ERReductionTicket >> limitStrategyAsString [
 	self limitStrategyIsLimited
 		ifTrue: [ ^ 'Limit Strategy' ].
-	self limitStrategyIsUnlimited ifTrue: [ 'Unlimit strategy' ]
+	self limitStrategyIsUnlimited
+		ifTrue: [ ^ 'Unlimit strategy' ]
 ]
 
 { #category : #'as yet unclassified' }

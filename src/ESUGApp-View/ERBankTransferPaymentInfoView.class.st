@@ -118,10 +118,7 @@ ERBankTransferPaymentInfoView >> renderPageOn: html [
 	self renderInfoBank: html.
 	html horizontalRule.
 	self initializeDialog.
-	self
-		createColoredAnchorButton: 'Back'
-		id: 'back-state'
-		on: html
+	self createColoredAnchorButton: 'Back' with: [self returnToThePreviousState ]id: 'back-state' on: html
 ]
 
 { #category : #rendering }

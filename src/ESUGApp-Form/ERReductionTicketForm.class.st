@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'ticket',
 		'messageComponent',
-		'callback'
+		'callback',
+		'dialog'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -39,10 +40,10 @@ ERReductionTicketForm >> changeDiscountStrategy: value [
 ERReductionTicketForm >> changeLimitStrategy: value [
 	(ERLimitStrategy isUnlimitStrategy: value)
 		ifTrue: [ ticket limitStrategyIsUnlimited
-				ifFalse: [ticket limitStrategy: ERUnlimitedReductionTicketUse new ]].
+				ifFalse: [ ticket limitStrategy: ERUnlimitedReductionTicketUse new ] ].
 	(ERLimitStrategy isLimitStrategy: value)
 		ifTrue: [ ticket limitStrategyIsLimited
-				ifFalse: [ticket limitStrategy: ERLimitedReductionTicketUse new ]]
+				ifFalse: [ ticket limitStrategy: ERLimitedReductionTicketUse new ] ]
 ]
 
 { #category : #rendering }
@@ -58,9 +59,13 @@ ERReductionTicketForm >> discountStrategy [
 { #category : #rendering }
 ERReductionTicketForm >> initialize [
 	super initialize.
-	messageComponent := ERAlert warningAlert
-		id: 'formTicketAlert'.
-	
+	messageComponent := ERAlert warningAlert id: 'formTicketAlert'.
+	dialog := ERDialog new
+		title: 'Cancel';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancelAddTicket';
+		okCallback: [ self returnToThePreviousState ]
 ]
 
 { #category : #rendering }
@@ -71,11 +76,10 @@ ERReductionTicketForm >> limitStrategy [
 { #category : #rendering }
 ERReductionTicketForm >> renderAcceptButton: html [
 	self
-		createColoredAnchorButton: 'Accept'
+		createColoredButton: 'Accept'
 		with: [ callback
 				on: ERException
-				do:
-					[ :exception | messageComponent errorMessage: exception messageText ] ]
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
 		id: 'acceptAddTicket'
 		on: html
 ]
@@ -88,8 +92,11 @@ ERReductionTicketForm >> renderAcceptCancelButtonsOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderCancelButtonOn: html [
-	self createColoredAnchorButton: 'Cancel' with: [ self returnToThePreviousState ] id: 'cancelAddTicket' on: html
-	
+	self
+		createColoredAnchorButton: 'Cancel'
+		
+		id: 'cancelAddTicket'
+		on: html
 ]
 
 { #category : #rendering }
@@ -166,8 +173,9 @@ ERReductionTicketForm >> renderLimitedStrategyOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderPageOn: html [
-	html render: messageComponent .
-	self renderFormOn: html
+	html render: messageComponent.
+	self renderFormOn: html.
+	html render: dialog
 ]
 
 { #category : #rendering }

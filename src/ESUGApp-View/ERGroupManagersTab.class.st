@@ -19,16 +19,16 @@ ERGroupManagersTab >> blockTableToExecute [
 		add: ([ :att | att groupManager firstName ] value: group);
 		add: ([ :att | att groupManager email ] value: group);
 		add: ([ :att | att groupManager orgName ] value: group);
-		add: '660.00 Euros';
+		add:
+			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
+				value: group);
 		add: 'No';
 		yourself ]
 ]
 
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
-	(self fileExists: 'groupManagers.cvs')
-		ifFalse: [ controller exportGroupManagers ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+	controller exportGroupManagers: 'groupManagers'
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ ERGroupManagersTab >> initializeFormRegister [
 ERGroupManagersTab >> initializeFormRegisterAdminToGroupManager [
 	groupManagerForm := ERContainerTabs
 		formAdminToGMRegisterOn: attendee
-		withCallback: [ self registerAdminAsGroupManager ]
+		withCallback: callback
 		content: content.
 	content state: groupManagerForm
 ]
@@ -116,8 +116,12 @@ ERGroupManagersTab >> modifyAffiliationGroupManager: aGroupManager [
 
 { #category : #'as yet unclassified' }
 ERGroupManagersTab >> registerAdminAsGroupManager [
-	(ERRegistrationController attendee: attendee) validateRegisterForGroupManager .
-	controller registerAsGroupManager.
+	|groupManager|
+	(ERRegistrationController attendee: attendee)
+		validateRegisterForGroupManager.
+	groupManager := controller registerAsGroupManager.
+	(ERGroupManagerController new attendee: groupManager)
+				groupForGroupManager.
 	content state: content lastState
 ]
 
@@ -139,8 +143,7 @@ ERGroupManagersTab >> registerGroupManager [
 ERGroupManagersTab >> registerMyselfAsGroupManager [
 	attendee userAccount isGroupManager
 		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
-			self initializeFormRegisterAdminToGroupManager ]
-		ifTrue: [  ]
+			self initializeFormRegisterAdminToGroupManager ].
 ]
 
 { #category : #rendering }

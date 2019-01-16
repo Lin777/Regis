@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERTittledView,
 	#instVars : [
 		'form',
-		'actionRegister'
+		'actionRegister',
+		'dialog'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -58,10 +59,14 @@ ERBasicInformationView >> renderButtons: html [
 
 { #category : #actions }
 ERBasicInformationView >> renderCancelButtonOn: html [
+	dialog := ERDialog new
+		title: 'Cancel';
+		message: 'Are you sure you want to cancel?';idClose: 'buttonClose';
+		idOpen: 'cancelUser';
+		okCallback: [ self cancel ].
 	self
 		createColoredAnchorButton: 'Cancel'
-		with: [ self cancel ]
-		id: 'cancel-change-affiliation'
+		id: 'cancelUser'
 		on: html
 ]
 
@@ -76,7 +81,8 @@ ERBasicInformationView >> renderPageOn: html [
 		method: 'post';
 		id: 'formAddUser';
 		with: [ self renderFormOn: html.
-			self renderButtons: html ]
+			self renderButtons: html ].
+	html render: dialog
 ]
 
 { #category : #actions }

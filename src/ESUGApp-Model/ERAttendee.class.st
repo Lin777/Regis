@@ -281,6 +281,7 @@ ERAttendee >> initialize [
 	self attendSocialEvent: true.
 	self addedToMainList: true.
 	self addPersonToSocialDinner: false.
+	self gender: 'Male'.
 	self
 		attendance:
 			(Dictionary

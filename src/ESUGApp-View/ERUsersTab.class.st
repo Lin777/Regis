@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'formUser',
-		'newUser'
+		'newUser',
+		'fileId'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -40,9 +41,15 @@ ERUsersTab >> deleteUser: user [
 
 { #category : #rendering }
 ERUsersTab >> exportUsers [
-	(self fileExists: 'users.cvs')
-		ifFalse: [ controller exportUsers ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+	controller exportUsers: 'users' , self fileIdUsers asString 
+]
+
+{ #category : #rendering }
+ERUsersTab >> fileIdUsers [
+	fileId isNil
+		ifTrue: [ fileId := 0 ].
+	fileId := fileId + 1.
+	^ fileId
 ]
 
 { #category : #rendering }

@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERContainer,
 	#instVars : [
 		'fee',
-		'callback'
+		'callback',
+		'dialog'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -41,7 +42,13 @@ ERFeeForm >> fee: anObject [
 { #category : #rendering }
 ERFeeForm >> initialize [
 	super initialize.
-	fee := ERFee new
+	fee := ERFee new.
+	dialog := ERDialog new
+		title: 'Cancel';
+		message: 'Are you sure you want to cancel?';
+		idClose: 'buttonClose';
+		idOpen: 'cancelAddFee';
+		okCallback: [ self returnToThePreviousState ]
 ]
 
 { #category : #rendering }
@@ -66,8 +73,10 @@ ERFeeForm >> renderAddressString: html [
 
 { #category : #rendering }
 ERFeeForm >> renderCancelButton: html [
-	self createColoredAnchorButton: 'Cancel' with: [ self returnToThePreviousState ] id: 'cancelAddFee' on: html
-	
+	self
+		createColoredAnchorButton: 'Cancel'
+		id: 'cancelAddFee'
+		on: html
 ]
 
 { #category : #rendering }
@@ -75,15 +84,16 @@ ERFeeForm >> renderContentPage: html [
 	html div
 		class: 'mdl-js-ripple-effect';
 		with: [ html form
-		method: 'post';
-		id: 'formFee';
-		with: [self renderFormConferenceFee: html.
-			self renderFormBankAccountInformation: html.
-			self renderFormBankInformation: html.
-			self renderAddressString: html.
-			self renderPayPALUrl: html.
-			self renderAcceptButton: html.
-			self renderCancelButton: html ]]
+				method: 'post';
+				id: 'formFee';
+				with: [ self renderFormConferenceFee: html.
+					self renderFormBankAccountInformation: html.
+					self renderFormBankInformation: html.
+					self renderAddressString: html.
+					self renderPayPALUrl: html.
+					self renderAcceptButton: html.
+					self renderCancelButton: html ] ].
+			html render: dialog
 ]
 
 { #category : #rendering }

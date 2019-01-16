@@ -20,10 +20,7 @@ ERAwardsTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERAwardsTab >> exportAwards [
-	
-	(self fileExists: 'awards.cvs')
-		ifFalse: [ controller exportAwards ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+			controller exportAwards: 'awards'
 ]
 
 { #category : #rendering }

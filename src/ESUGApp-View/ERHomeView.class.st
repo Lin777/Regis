@@ -27,7 +27,7 @@ ERHomeView >> renderPageOn: html [
 	html heading level6
 		with: [ html strong: 'Conference Home Page: '.
 			html anchor
-				url: '#';
+				url: controller conference configuration homePageUrl;
 				with: controller conference configuration homePageUrl ]
 ]
 
