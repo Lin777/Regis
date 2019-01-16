@@ -11,7 +11,8 @@ Class {
 { #category : #rendering }
 ERFeesTab >> addFee [
 	self initializeFormAddFee.
-	content state: formFee
+	content state: formFee.
+	self updateStateTab: self tabName 
 ]
 
 { #category : #rendering }
@@ -66,7 +67,8 @@ ERFeesTab >> initializeFormAddFee [
 
 { #category : #rendering }
 ERFeesTab >> initializeFormModifyFee: aFee [
-	callback := [ self modifyFeeOfConference: aFee ].
+	callback := [ self modifyFeeOfConference: aFee.
+		self updateStateTab: self tabName ].
 	formFee := ERFeeForm
 		on: aFee
 		callback: callback

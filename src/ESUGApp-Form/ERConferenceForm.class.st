@@ -8,11 +8,6 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #'as yet unclassified' }
-ERConferenceForm class >> conference: aConference [
-	^ self new conference: aConference ; yourself 
-]
-
 { #category : #rendering }
 ERConferenceForm >> cancel [
 	conference := conference abortChanges .
@@ -211,4 +206,5 @@ ERConferenceForm >> title [
 { #category : #rendering }
 ERConferenceForm >> updateOrCreateConference [
 	conference := conference save.
+	self updateStateTab: self tabName.
 ]

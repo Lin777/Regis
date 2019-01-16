@@ -25,12 +25,14 @@ ERAdminUserTab >> acceptUser [
 		do: [ :exception | "
 			attendee userAccount abortChanges.
 			attendee abortChanges."
-			messageComponent errorMessage: exception messageText ]
+			messageComponent errorMessage: exception messageText ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
 	attendee abortChanges
+	self updateStateTab: self tabName.
 ]
 
 { #category : #initialization }
@@ -114,8 +116,9 @@ ERAdminUserTab >> renderFirstNameInputTextOn: html [
 ERAdminUserTab >> renderFormOn: html [
 	html form
 		method: 'post';
-		id: 'modifyUser';
-		with: [ html render: messageComponent.
+
+		id: 'groupManagerFunctionsUser';
+		with: [ html render: messageComponent .
 			self renderFields: html.
 			self renderButtons: html ]
 ]

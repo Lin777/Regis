@@ -28,7 +28,8 @@ ERGroupManagersTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
-	controller exportGroupManagers: 'groupManagers'
+	controller exportGroupManagers: 'groupManagers'.
+	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }
@@ -136,14 +137,18 @@ ERGroupManagersTab >> registerGM [
 { #category : #rendering }
 ERGroupManagersTab >> registerGroupManager [
 	newAttendee := ERAttendee new.
-	self initializeFormRegisterForGroupManager: newAttendee 
+	self initializeFormRegisterForGroupManager: newAttendee.
+	self updateStateTab: self tabName. 
 ]
 
 { #category : #rendering }
 ERGroupManagersTab >> registerMyselfAsGroupManager [
 	attendee userAccount isGroupManager
 		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
-			self initializeFormRegisterAdminToGroupManager ].
+
+			self initializeFormRegisterAdminToGroupManager ]
+		ifTrue: [  ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

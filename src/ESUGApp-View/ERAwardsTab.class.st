@@ -20,7 +20,9 @@ ERAwardsTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERAwardsTab >> exportAwards [
-			controller exportAwards: 'awards'
+
+			controller exportAwards: 'awards'.
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

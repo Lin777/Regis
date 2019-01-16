@@ -5,12 +5,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERContentAdminTab class >> on: anAttendee withContent: aContent [
+ERContentAdminTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
+	form := super on: anAttendee withContent: aContent.
 	form initializeController .
+	form container: aContainer.
 	^ form
 ]
 

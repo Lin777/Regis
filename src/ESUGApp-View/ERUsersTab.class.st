@@ -12,7 +12,8 @@ Class {
 { #category : #rendering }
 ERUsersTab >> addUser [
 	self initializeFormAddUser.
-	content state: formUser
+	content state: formUser.
+	self updateStateTab: self tabName
 	
 ]
 
@@ -41,7 +42,8 @@ ERUsersTab >> deleteUser: user [
 
 { #category : #rendering }
 ERUsersTab >> exportUsers [
-	controller exportUsers: 'users' , self fileIdUsers asString 
+	controller exportUsers: 'users' , self fileIdUsers asString .
+  self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }

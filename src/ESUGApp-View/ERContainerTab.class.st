@@ -83,7 +83,8 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 ERContainerTab >> modifyRegistrationInformation: anAttendee [
 	callback := [ self updateRegistrationInformation: anAttendee ].
 	
-	self initializeFormWithoutBasicInformationFor: anAttendee
+	self initializeFormWithoutBasicInformationFor: anAttendee.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }

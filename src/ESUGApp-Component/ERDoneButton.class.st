@@ -8,28 +8,12 @@ Class {
 }
 
 { #category : #callbacks }
-ERDoneButton class >> callback: aBlock [
-	| instance |
-	instance := self new.
-	instance callback: aBlock.
-	^ instance
-]
-
-{ #category : #callbacks }
-ERDoneButton class >> on: anAttendee button: aBlock [
+ERDoneButton class >> on: anAttendee button: aBlock container: aContainer [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
 	form button: aBlock.
-	^ form
-]
-
-{ #category : #callbacks }
-ERDoneButton class >> on: anAttendee callback: aBlock [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form callback: aBlock.
+	form container: aContainer.
 	^ form
 ]
 

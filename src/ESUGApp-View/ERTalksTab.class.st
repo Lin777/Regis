@@ -16,7 +16,9 @@ ERTalksTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERTalksTab >> exportTalks [
-	controller exportTalks: 'talks'
+
+	controller exportTalks: 'talks'.
+	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }

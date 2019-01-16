@@ -27,7 +27,8 @@ ERAttendeesTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
-controller exportAttends: 'attends' 
+controller exportAttends: 'attends' .
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -75,7 +76,8 @@ ERAttendeesTab >> registerAdminAsAttendee [
 { #category : #rendering }
 ERAttendeesTab >> registerAttendee [
 	callback := [ self registerAttendeeToConference ].
-	super registerAttendee 
+	super registerAttendee.
+	self updateStateTab: self tabName. 
 ]
 
 { #category : #initialization }
@@ -88,7 +90,8 @@ ERAttendeesTab >> registerAttendeeToConference [
 { #category : #rendering }
 ERAttendeesTab >> registerMyselfAsAttendee [
 	callback := [ self registerAdminAsAttendee ].
-			self initializeFormWithoutBasicInformationFor: attendee
+			self initializeFormWithoutBasicInformationFor: attendee.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }

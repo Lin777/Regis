@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTabForAForm,
-	#superclass : #ERAttendeeRegistrationForm,
+	#superclass : #ERContentTab,
 	#instVars : [
 		'form'
 	],
@@ -8,10 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-ERTabForAForm class >> form: aForm [
+ERTabForAForm class >> form: aForm withContainer: aContainer [
 	| tab |
 	tab := self new.
 	tab form: aForm.
+	tab container: aContainer.
 	^ tab
 ]
 

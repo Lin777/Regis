@@ -13,11 +13,13 @@ ERGroupManagerRegistrationPage >> initialize [
 
 { #category : #initialization }
 ERGroupManagerRegistrationPage >> initializeTabForms [
-self addTab: (ERTabForAForm form: (ERBasicInformationForm on: self controller attendee)).
-	self addTab: (ERTabForAForm form: (ERAffiliationInformationForm on: self controller attendee)).
+self addTab: (ERTabForAForm form: (ERBasicInformationForm on: self controller attendee) withContainer: self).
+	self addTab: (ERTabForAForm form: (ERAffiliationInformationForm on: self controller attendee) withContainer: self).
 	self
 		addTab:
-			(ERDoneButton on: self controller attendee button:  [ :html | self renderDoneButtonOn: html ]).
+			(ERDoneButton on: self controller attendee 
+			button:  [ :html | self renderDoneButtonOn: html ]
+			container: self).
 	(self tabs at: 1) activate
 ]
 

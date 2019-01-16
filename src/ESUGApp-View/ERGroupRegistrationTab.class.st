@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERGroupRegistrationTab class >> on: anAttendee withContent: aContent [
+ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
+	form := super on: anAttendee withContent: aContent.
 	form initializeController.
 	form initializeFormRegister.
+	form container: aContainer.
 	^ form
 ]
 
@@ -39,7 +38,8 @@ ERGroupRegistrationTab >> initializeController [
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendee [
 	callback := [ self registerAttendeeToGroupManager ].
-	super registerAttendee
+	super registerAttendee.
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
@@ -52,5 +52,6 @@ ERGroupRegistrationTab >> registerAttendeeToGroupManager [
 
 { #category : #rendering }
 ERGroupRegistrationTab >> returnToThePreviousState [
-	content state: content lastState
+	content state: content lastState.
+	self updateStateTab: self tabName.
 ]

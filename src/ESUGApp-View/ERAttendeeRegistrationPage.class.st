@@ -25,37 +25,39 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERBasicInformationForm on: self controller attendee)).
+				form: (ERBasicInformationForm on: self controller attendee)
+				withContainer: self).
 	self
 		addTab:
 			(ERTabForAForm
 				form: (ERContactInformationForm on: self controller attendee)
-				).
+				withContainer: self).
 	self
 		addTab:
 			(ERTabForAForm
 				form: (ERRegisterConferenceForm on: self controller attendee)
-				).
+				withContainer: self).
 	self
 		addTab:
 			(ERTabForAForm
 				form: (ERAffiliationInformationForm on: self controller attendee)
-				).
+				withContainer: self).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERAdditionalInformationForm on: self controller attendee)
-				).
+				form: (ERAdditionalInformationForm on: self controller attendee) 
+				withContainer: self).
 	self
 		addTab:
 			(ERTabForAForm
-				form: (ERPaymentForm on: self controller attendee)
-				).
+				form: (ERPaymentForm on: self controller attendee) 
+				withContainer: self).
 	self
 		addTab:
 			(ERDoneButton
 				on: self controller attendee
-				button: [ :html | self renderDoneButtonOn: html ]).
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self).
 	(self tabs at: currentTab) activate
 ]
 
