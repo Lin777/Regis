@@ -56,8 +56,8 @@ ERAdminView >> initialize [
 
 { #category : #initialization }
 ERAdminView >> initializeTabForms [
-   tabs add: (ERAdminUserTab on: attendee withContent: content).
-   tabs add: (ERChangePasswordForm on: attendee withContent: content).
+   tabs add: (ERAdminUserTab on: attendee withContent: content container: self).
+   tabs add: (ERChangePasswordForm on: attendee withContent: content container: self).
 	self attendee userAccount isAdmin ifTrue: [ self addTabsForAdmin ].
 	(tabs at: 1) activate.
 	
@@ -73,7 +73,7 @@ ERAdminView >> openRegistration [
 { #category : #initialization }
 ERAdminView >> renderBackupTab [
 	tabs add:
-			((ERYesNoTab on: attendee withContent: content)
+			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabBackup';
 				tabName: 'Backup';
 				title: self titleBackup;
@@ -90,7 +90,7 @@ ERAdminView >> renderContentPage: html [
 
 { #category : #initialization }
 ERAdminView >> renderOpenCloseRegistration [
-	tabs add:((ERYesNoTab on: attendee withContent: content)
+	tabs add:((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabOpenClose';
 				tabName: 'Open / Close registration';
 				title: self titleOpenClose;
@@ -101,7 +101,7 @@ ERAdminView >> renderOpenCloseRegistration [
 { #category : #initialization }
 ERAdminView >> renderRestoreTab [
 	tabs add:
-			((ERYesNoTab on: attendee withContent: content)
+			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabRestore';
 				tabName: 'Restore';
 				title: self titleRestore;
@@ -113,28 +113,33 @@ ERAdminView >> renderRestoreTab [
 ERAdminView >> restoreToLastBackup [
 ]
 
+{ #category : #accessing }
+ERAdminView >> tabs [
+	^ tabs
+]
+
 { #category : #initialization }
 ERAdminView >> titleBackup [
-	callbackYes := [ self backUp ].
-	callbackNo := [ self cancel ].
+	callbackYes := [ :aTab | self backUp. aTab updateStateTab: aTab tabName ].
+	callbackNo := [ :aTab | self cancel. aTab updateStateTab: aTab tabName ].
 	^ 'Are you sure want to do a backup?'
 ]
 
 { #category : #initialization }
 ERAdminView >> titleOpenClose [
 	
-	callbackNo := [ self cancel ].
+	callbackNo := [ :aTab | self cancel. aTab updateStateTab: aTab tabName ].
 	controller conferenceIsOpenRegistration
 		ifTrue:
-			[ callbackYes := [ self closeRegistration ].
+			[ callbackYes := [ :aTab | self closeRegistration. aTab updateStateTab: aTab tabName ].
 			 ^ 'Registration is opened. Are you sure you want close it?' ]
-		ifFalse: [ callbackYes := [ self openRegistration ].
+		ifFalse: [ callbackYes := [ :aTab | self openRegistration. aTab updateStateTab: aTab tabName ].
 			 ^ 'Registration is closed. Are you sure you want open it?' ]
 ]
 
 { #category : #initialization }
 ERAdminView >> titleRestore [
-	callbackYes := [ self restoreToLastBackup ].
-	callbackNo := [ self cancel ].
+	callbackYes := [:aTab | self restoreToLastBackup. aTab updateStateTab: aTab tabName ].
+	callbackNo := [:aTab | self cancel. aTab updateStateTab: aTab tabName ].
 	^ 'Are you sure you want to restore the last backup? The current ata will be lost'
 ]

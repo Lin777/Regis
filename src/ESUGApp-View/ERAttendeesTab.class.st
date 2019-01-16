@@ -28,7 +28,8 @@ ERAttendeesTab >> blockTableToExecute [
 ERAttendeesTab >> exportAttends [
 	(self fileExists: 'attends.cvs')
 		ifFalse: [ controller exportAttends ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+		ifTrue: [ Transcript show: 'File Exist' ].
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -76,7 +77,8 @@ ERAttendeesTab >> registerAdminAsAttendee [
 { #category : #rendering }
 ERAttendeesTab >> registerAttendee [
 	callback := [ self registerAttendeeToConference ].
-	super registerAttendee 
+	super registerAttendee.
+	self updateStateTab: self tabName. 
 ]
 
 { #category : #initialization }
@@ -92,7 +94,8 @@ ERAttendeesTab >> registerAttendeeToConference [
 { #category : #rendering }
 ERAttendeesTab >> registerMyselfAsAttendee [
 	callback := [ self registerAdminAsAttendee ].
-			self initializeFormWithoutBasicInformationFor: attendee
+			self initializeFormWithoutBasicInformationFor: attendee.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }

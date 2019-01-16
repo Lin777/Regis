@@ -10,18 +10,23 @@ Class {
 
 { #category : #rendering }
 ERReductionTicketsTab >> actionModifyTicket: aReductionTicket [
-	controller modifyTicket: aReductionTicket 
+	controller modifyTicket: aReductionTicket.
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
 ERReductionTicketsTab >> addTicket [
 	self initializeFormAddTicket.
-	content state: formAddTicket
+	content state: formAddTicket.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
 ERReductionTicketsTab >> addTicketToConference [
-	controller addTicket: ticket
+	controller addTicket: ticket.
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -36,8 +41,9 @@ ERReductionTicketsTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
-ERReductionTicketsTab >> deleteTicket: ticket [
-	controller deleteReductionTicket: ticket 
+ERReductionTicketsTab >> deleteTicket: aTicket [
+	controller deleteReductionTicket: aTicket.
+	self updateStateTab: self tabName. 
 ]
 
 { #category : #accessing }
@@ -80,7 +86,8 @@ ERReductionTicketsTab >> listDataToRenderButton [
 ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 	self initializeFormModifyTicket: aReductionTicket.
 	
-	content state: formAddTicket
+	content state: formAddTicket.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }

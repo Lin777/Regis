@@ -5,12 +5,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERConfigurationTab class >> on: anAttendee withContent: aContent [
+ERConfigurationTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
 	form := self new.
 	form attendee: anAttendee.
 	form content: aContent.
 	form initializeController.
+	form container: aContainer.
 	^ form
 ]
 

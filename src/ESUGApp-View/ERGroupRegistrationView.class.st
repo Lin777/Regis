@@ -25,8 +25,8 @@ ERGroupRegistrationView >> initialize [
 
 { #category : #rendering }
 ERGroupRegistrationView >> initializeTabForms [
-	tabs add: (ERGroupRegistrationSummaryTab on: attendee withContent: content);
-	add: (ERMembersTab on: attendee withContent: content).
+	tabs add: (ERGroupRegistrationSummaryTab on: attendee withContent: content container: self);
+	add: (ERMembersTab on: attendee withContent: content container: self).
 	(tabs at: 1) activate
 ]
 
@@ -35,4 +35,9 @@ ERGroupRegistrationView >> renderContentPage: html [
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
 		with: [ html render: (ERTabs new tabs: tabs) ]
+]
+
+{ #category : #accessing }
+ERGroupRegistrationView >> tabs [
+	^ tabs
 ]

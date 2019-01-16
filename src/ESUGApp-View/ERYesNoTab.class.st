@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'tabId',
 		'name',
-		'title'
+		'title',
+		'callbackNo',
+		'callbackYes'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -35,7 +37,7 @@ ERYesNoTab >> renderContainer: html [
 ERYesNoTab >> renderNoButton: html [
 	self
 		createColoredAnchorButton: 'No'
-		with: callbackNo
+		with: [callbackNo value: self]
 		id: 'no-' , tabId
 		on: html
 ]
@@ -44,7 +46,7 @@ ERYesNoTab >> renderNoButton: html [
 ERYesNoTab >> renderYesButton: html [
 	self
 		createColoredAnchorButton: 'Yes'
-		with: callbackYes
+		with: [callbackYes value: self]
 		id: 'yes-' , tabId
 		on: html.
 	

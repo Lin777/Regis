@@ -28,7 +28,8 @@ ERGroupManagersTab >> blockTableToExecute [
 ERGroupManagersTab >> exportGroups [
 	(self fileExists: 'groupManagers.cvs')
 		ifFalse: [ controller exportGroupManagers ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+		ifTrue: [ Transcript show: 'File Exist' ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }
@@ -117,7 +118,8 @@ ERGroupManagersTab >> registerGM [
 { #category : #rendering }
 ERGroupManagersTab >> registerGroupManager [
 	newAttendee := ERAttendee new.
-	self initializeFormRegisterForGroupManager: newAttendee 
+	self initializeFormRegisterForGroupManager: newAttendee.
+	self updateStateTab: self tabName. 
 ]
 
 { #category : #rendering }
@@ -125,7 +127,8 @@ ERGroupManagersTab >> registerMyselfAsGroupManager [
 	attendee userAccount isGroupManager
 		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
 			self initializeFormRegisterAdminToGroupManager ]
-		ifTrue: [  ]
+		ifTrue: [  ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

@@ -103,11 +103,13 @@ ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 				
 		add:
 			(ERTabForAForm
-				form: (ERAffiliationInformationForm on: anAttendee))activate;
+				form: (ERAffiliationInformationForm on: anAttendee)
+				withContainer: self) activate;
 		add:
 			(ERDoneButton
 				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]);
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self);
 		yourself
 ]
 
@@ -115,13 +117,16 @@ ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
 	tabs := OrderedCollection new
 		add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee))
+			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee)
+			withContainer: self)
 				activate;
-		add: (ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee));
+		add: (ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee)
+			withContainer: self);
 		add:
 			(ERDoneButton
 				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]);
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self);
 		yourself
 ]
 
@@ -129,19 +134,20 @@ ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	tabs := OrderedCollection new
 	add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee))
+			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee) withContainer: self)
 				activate;
 		add:
-			(ERTabForAForm form: (ERContactInformationForm on: anAttendee));
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee));
+			(ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self);
+		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
 		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee));
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee));
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee));
+			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
+		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
+		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
 		add:
 			(ERDoneButton
 				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]);
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self);
 		yourself
 ]
 
@@ -149,16 +155,17 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	tabs := OrderedCollection new
 		
-		add: (ERTabForAForm form: (ERContactInformationForm on: anAttendee)) activate;
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee));
+		add: (ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self) activate;
+		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
 		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee));
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee));
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee));
+			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
+		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
+		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
 		add:
 			(ERDoneButton
 				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]);
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self);
 		yourself
 ]
 
