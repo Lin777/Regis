@@ -33,11 +33,6 @@ ERAdminController >> updateUser: anUser [
 ]
 
 { #category : #'as yet unclassified' }
-ERAdminController >> updateUser: anUser to: anAttendee [
-	anAttendee userAccount: (self updateUser: anUser); save
-]
-
-{ #category : #'as yet unclassified' }
 ERAdminController >> validateCurrentPassword: confirmPassword [
 	^ attendee password
 		= (ERUserAccount hashPassword: confirmPassword) asString

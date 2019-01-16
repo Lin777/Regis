@@ -163,16 +163,9 @@ ERController >> updateUser: anUser [
 		validatePatternForRequired: anUser lastName
 		withName: 'Last name'.
 	self validatePatternEmail: anUser email withName: 'Email'.
-	self validateIfEmailIsAlreadyRegistered: anUser.
+	self validateIfEmailIsAlreadyRegistered: anUser userAccount.
 	
 	^ anUser save
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> updateUser: anUser to: anAttendee [
-	anAttendee
-		userAccount: (self updateUser: anUser).
-	anAttendee save
 ]
 
 { #category : #'as yet unclassified' }

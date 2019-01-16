@@ -93,7 +93,9 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := ERModifyUserView
 		on: anUser
 		withContent: content
-		withAction: [ controller updateUser: anUser ].
+		withAction: [ controller updateUser: anUser.
+			self returnToThePreviousState.
+			self updateStateTab: self tabName.  ].
 	content state: mofidyUserForm
 ]
 

@@ -100,7 +100,8 @@ ERModifyUserView >> title [
 
 { #category : #rendering }
 ERModifyUserView >> updateUserInformation [
-	[ actionModify value.self returnToThePreviousState
-	 ] on: ERException do: [ :exc | messageComponent errorMessage: exc messageText  ]
+	actionModify 
+on: ERException
+ do: [ :exc | messageComponent errorMessage: exc messageText  ]
 	
 ]
