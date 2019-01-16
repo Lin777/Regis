@@ -224,7 +224,7 @@ ERTestRegisterController >> testValidateAttendeeWithInvalidPaymentType [
 ERTestRegisterController >> testValidateAttendeeWithNotValidCountry [
 	| wasHandled  |
 	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) city: 'Select Country'; yourself .
+	attendee := (ERTestControllers testAttendee) country: 'Select Country'; yourself .
 	controller attendee: attendee.
 	[controller validateRegister] 
 		on: ERException 
