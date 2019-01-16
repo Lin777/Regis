@@ -23,7 +23,8 @@ ERAwardsTab >> exportAwards [
 	
 	(self fileExists: 'awards.cvs')
 		ifFalse: [ controller exportAwards ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+		ifTrue: [ Transcript show: 'File Exist' ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

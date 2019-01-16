@@ -25,15 +25,15 @@ ERConfigurationView >> initialize [
 
 { #category : #initialization }
 ERConfigurationView >> initializeTabForms [
-	tabs add: (ERConferenceForm on: attendee withContent: content);
-	add: (ERFeesTab on: attendee withContent: content);
-	add: (ERReductionTicketsTab on: attendee withContent: content);
-	add: (ERUsersTab on: attendee withContent: content);
-	add: (ERAttendeesTab on: attendee withContent: content);
-	add: (ERGroupManagersTab on: attendee withContent: content);
-	add: (ERTalksTab on: attendee withContent: content);
-	add: (ERAwardsTab on: attendee withContent: content);
-	add: (ERStatisticsTab on: attendee withContent: content).
+	tabs add: (ERConferenceForm on: attendee withContent: content container: self);
+	add: (ERFeesTab on: attendee withContent: content container: self);
+	add: (ERReductionTicketsTab on: attendee withContent: content container: self);
+	add: (ERUsersTab on: attendee withContent: content container: self);
+	add: (ERAttendeesTab on: attendee withContent: content container: self);
+	add: (ERGroupManagersTab on: attendee withContent: content container: self);
+	add: (ERTalksTab on: attendee withContent: content container: self);
+	add: (ERAwardsTab on: attendee withContent: content container: self);
+	add: (ERStatisticsTab on: attendee withContent: content container: self).
 	(tabs at: 1) activate
 ]
 
@@ -42,4 +42,9 @@ ERConfigurationView >> renderContentPage: html [
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
 		with: [ html render: (ERTabs new tabs: tabs) ]
+]
+
+{ #category : #accessing }
+ERConfigurationView >> tabs [
+	^ tabs
 ]

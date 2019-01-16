@@ -11,6 +11,7 @@ Class {
 
 { #category : #rendering }
 ERChangePasswordForm >> cancel [
+	self updateStateTab: self tabName 
 ]
 
 { #category : #rendering }
@@ -27,6 +28,7 @@ ERChangePasswordForm >> changePassword [
 	] ifFalse: [ 
 		messageComponent errorMessage: 'The password entered does not match the current password'.
 		].
+	self updateStateTab: self tabName
 
 ]
 
@@ -55,7 +57,7 @@ ERChangePasswordForm >> renderButtons: html [
 ERChangePasswordForm >> renderCancelButtonOn: html [
 	html mdlButton
 		colored;
-		id: 'cancel-user';
+		id: 'cancel-change-password';
 		callback: [ self cancel ];
 		with: 'Cancel'
 ]

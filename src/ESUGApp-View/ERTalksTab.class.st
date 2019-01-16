@@ -19,7 +19,8 @@ ERTalksTab >> exportTalks [
 	
 	(self fileExists: 'talks.cvs')
 		ifFalse: [ controller exportTalks ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+		ifTrue: [ Transcript show: 'File Exist' ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }

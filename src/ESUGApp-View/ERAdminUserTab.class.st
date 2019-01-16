@@ -12,11 +12,13 @@ ERAdminUserTab >> acceptUser [
 	(controller updateUserFields: modifiedUser)
 		ifNil: [ messageComponent
 				errorMessage:
-					'This email is already registered, change the email for continue with your updating' ]
+					'This email is already registered, change the email for continue with your updating' ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
+	self updateStateTab: self tabName
 ]
 
 { #category : #initialization }
@@ -96,7 +98,7 @@ ERAdminUserTab >> renderFirstNameInputTextOn: html [
 ERAdminUserTab >> renderFormOn: html [
 	html form
 		method: 'post';
-		id: 'groupManagerFunctions';
+		id: 'groupManagerFunctionsUser';
 		with: [ html render: messageComponent .
 			self renderFields: html.
 			self renderButtons: html ]

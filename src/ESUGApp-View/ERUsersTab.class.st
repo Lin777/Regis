@@ -11,7 +11,8 @@ Class {
 { #category : #rendering }
 ERUsersTab >> addUser [
 	self initializeFormAddUser.
-	content state: formUser
+	content state: formUser.
+	self updateStateTab: self tabName
 	
 ]
 
@@ -42,7 +43,8 @@ ERUsersTab >> deleteUser: user [
 ERUsersTab >> exportUsers [
 	(self fileExists: 'users.cvs')
 		ifFalse: [ controller exportUsers ]
-		ifTrue: [ Transcript show: 'File Exist' ]
+		ifTrue: [ Transcript show: 'File Exist' ].
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
