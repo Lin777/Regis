@@ -25,6 +25,12 @@ ERGroupRegistrationTab >> cancel [
 	self returnToThePreviousState
 ]
 
+{ #category : #accessing }
+ERGroupRegistrationTab >> group [
+	^ (ERGroupManagerController new groupOfAttendee: attendee)
+		
+]
+
 { #category : #initialization }
 ERGroupRegistrationTab >> initialize [
 	super initialize.
@@ -44,9 +50,8 @@ ERGroupRegistrationTab >> registerAttendee [
 
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendeeToGroupManager [
-	| result |
 	(ERRegistrationController attendee: newAttendee) validateRegister.
-	result := controller addAttendee: newAttendee.
+	controller addAttendee: newAttendee.
 	content state: content lastState
 ]
 

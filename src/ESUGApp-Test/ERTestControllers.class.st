@@ -26,6 +26,7 @@ ERTestControllers class >> testAttendee [
 		city: 'testCity';
 		country: 'Bolivia';
 		postal: '0000';
+		province: 'test';
 		facebookURL: '';
 		twitterURL: '';
 		homePage: '';
@@ -43,7 +44,7 @@ ERTestControllers class >> testAttendee [
 					('friday' -> true)});
 		gender: 'Male';
 		paymentType: 'Bank transfer';
-		paymentCurrency: 'Dollar';
+		paymentCurrency: 'Euro';
 		coupon: '';
 		yourself
 ]

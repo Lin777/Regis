@@ -7,6 +7,7 @@ Class {
 { #category : #adding }
 ERConfigurationController >> addAttendee: anAttendee [
 	| anAttendeeSaved userSaved |
+	
 	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	userSaved := anAttendee userAccount save.
 	conference addUser: userSaved.
@@ -19,17 +20,12 @@ ERConfigurationController >> addAttendee: anAttendee [
 { #category : #adding }
 ERConfigurationController >> addAttendsToLunchPer: day to: list [
 	| normal vegetarian vegan |
-	normal := 0. vegan := 0. vegetarian := 0.
-	self attends 
-		do: [ :anAttendee | 
-			(anAttendee perform: day asSymbol)
-				ifTrue: [ anAttendee isNormal
-						ifTrue: [ normal := normal + 1 ].
-					anAttendee isVegan
-						ifTrue: [ vegan := vegan + 1 ].
-					anAttendee isVegetarian
-						ifTrue: [ vegetarian := vegetarian + 1 ] ] ].
-	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list
+	normal :=((self attends select: #isNormal) select: day asSymbol) size.
+	vegan :=((self attends select: #isVegan) select: day asSymbol) size.
+	vegetarian :=((self attends select: #isVegetarian) select: day asSymbol) size.
+	
+	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list.
+	
 ]
 
 { #category : #adding }
@@ -314,18 +310,11 @@ ERConfigurationController >> participantsToLunches [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> participantsToSocialDinner [
-	| normal vegetarian vegan |
-	normal := 0. vegan := 0. vegetarian := 0.
-	self attends
-		do: [ :anAttendee | 
-			(anAttendee attendSocialEvent)
-				ifTrue: [ anAttendee isNormal
-						ifTrue: [ normal := normal + 1 ].
-					anAttendee isVegan
-						ifTrue: [ vegan := vegan + 1 ].
-					anAttendee isVegetarian
-						ifTrue: [ vegetarian := vegetarian + 1 ].
-					anAttendee addPersonToSocialDinner ifTrue: [ "Person added by default normal"normal := normal + 1 ] ] ].
+	| normal vegetarian vegan list|
+	list := (self attends select: #attendSocialEvent).
+	normal :=(list select: #isNormal) size.
+	vegan :=(list select:  #isVegan) size.
+	vegetarian :=(list select:  #isVegetarian) size.
 	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
 ]
 
