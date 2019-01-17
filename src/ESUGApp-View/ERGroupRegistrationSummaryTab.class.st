@@ -40,6 +40,18 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> initializePaymentForm [
+	^ ( ERPaymentGroupManagerView on: self group
+		withContent: content) 
+	updatePayment: [ self payForGroup ];
+	cancel: [ self returnToThePreviousState .
+		self updateStateTab: self tabName. ];
+	amountString:
+	(ERController new amountOfPayToGroup: self attends) asString.
+
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> modifyAffiliation [
 	self initializeModifyAffiliationForm .
 	content state: formMofidyAffiliation
@@ -48,14 +60,20 @@ ERGroupRegistrationSummaryTab >> modifyAffiliation [
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> pay [
 	|formUpdatePayment|
-	formUpdatePayment :=( ERPaymentGroupManagerView on: self group
-		withContent: content) 
-	updatePayment: [  ];
-	cancel: [ self returnToThePreviousState . self updateStateTab: self tabName. ];
-	amountString:
-	(ERController new amountOfPayToGroup: self attends) asString.
-	content state: formUpdatePayment .
+	formUpdatePayment := self initializePaymentForm.
+	content state: formUpdatePayment.
 	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> payForGroup [
+	|group|
+	group := self group.
+	controller updateGroup: group.
+	group paymentTypeIsBankTransfer
+		ifTrue: [ ^ self redirectViewForBankTransfer ].
+	group paymentTypeIsCreditCard
+		ifTrue: [ ^ self redirectionPayPAL ]
 ]
 
 { #category : #rendering }
@@ -67,6 +85,22 @@ ERGroupRegistrationSummaryTab >> paymentStatus [
 		ifFalse: [ ^ 'Payment no registered yet. Amount due: '
 			, (ERController new amountOfPayToGroup: listAttends) asString , ' ', 
 			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> redirectViewForBankTransfer [
+	| bankTransferView |
+	bankTransferView := ERBankTransferPaymentInfoView
+		on: self group
+		withContent: content.
+	content state: bankTransferView 
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> redirectionPayPAL [
+	| url |
+	url := ERController new payPalUrlForGroup: self group.
+	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }

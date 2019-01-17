@@ -18,10 +18,9 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att email ] value: user);
 		add: ([ :att | att country ] value: user);
 		add: ([ :att | att orgName ] value: user);
-		add: ([ :att | (controller conferenceFeeFor: att) asString
+		add: ([ :att | self halt.(controller conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)'  ] value: user);
 		add: 'Not Paid';
-		add: 'Not Checked';
 		yourself ]
 ]
 
@@ -42,7 +41,7 @@ ERAttendeesTab >> generateInvoice: user [
 { #category : #rendering }
 ERAttendeesTab >> headers [
 	^ #(
-'#Invoice (D)'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?'	'Checked?' '')
+'#Invoice (D)'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?' '')
 ]
 
 { #category : #rendering }

@@ -134,3 +134,17 @@ ERGroupManagerController >> registerAsAttendee [
 	conference save.
 	^ attendee
 ]
+
+{ #category : #adding }
+ERGroupManagerController >> updateGroup: aGroup [
+	aGroup save.
+	self updatePaymentForAttendees: aGroup
+]
+
+{ #category : #adding }
+ERGroupManagerController >> updatePaymentForAttendees: aGroup [
+	aGroup listAttends do: [ :att | 
+		att paymentType: aGroup paymentType .
+		att paymentCurrency: aGroup paymentCurrency. 
+		att save ]
+]
