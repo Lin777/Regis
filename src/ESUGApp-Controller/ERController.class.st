@@ -53,10 +53,12 @@ ERController >> amountOfPayToGroup: list [
 
 { #category : #'as yet unclassified' }
 ERController >> applyReductionTicketTo: anAttendee [
-	| reductionTicket |
-	reductionTicket := self reductionTicketWithName: anAttendee coupon.
-	self add: anAttendee ToTicket: reductionTicket.
-	anAttendee save.
+	anAttendee save
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> attendeesForATicket: ticketId [
+	^ conference attends select: [ :each | each coupon = ticketId ]
 ]
 
 { #category : #accessing }
@@ -89,6 +91,18 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 			coupon := self reductionTicketWithName: anAttendee coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
+]
+
+{ #category : #rendering }
+ERController >> deleteAttendee: anAttendee [
+]
+
+{ #category : #rendering }
+ERController >> deleteGroupManager: aGroupManager [
+]
+
+{ #category : #rendering }
+ERController >> deleteUser: anUser [
 ]
 
 { #category : #'as yet unclassified' }
@@ -221,4 +235,16 @@ ERController >> validateSelectValue: aString on: list withMessage: aString2 [
 		ifFalse: [ ERException new
 				messageText: 'The ' , aString2 , ' entered is not valid.';
 				signal ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> verifyIfTicketCanApply: ticket [
+	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
+	ticket limitStrategyIsLimited ifTrue: 
+	[ ((self attendeesForATicket: ticket ticketId) size 
+	< ticket limitStrategy limit) ifTrue: [ ^ true ]
+	ifFalse: [ 
+		ERException new 
+		messageText: 'The limit of the ticket was exceeded, you can not use it'; 
+		signal ] ]
 ]

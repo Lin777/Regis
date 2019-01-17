@@ -22,7 +22,8 @@ ERMembersTab >> blockTableToExecute [
 	^ [:user | OrderedCollection new
 		add: ([ :att | att firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: '660.00 Euros';
+		add: ([ :att | (controller conferenceFeeFor: att) asString
+			, ' ', att paymentCurrency, '(s)'  ] value: user);
 		add: 'No';
 		yourself
 	]
@@ -187,7 +188,15 @@ ERMembersTab >> title [
 
 { #category : #rendering }
 ERMembersTab >> updateTicketInformation: anAttendee [
-	controller applyReductionTicketTo: anAttendee 
+	|ticket|
+	anAttendee coupon = 'No reduction ticket'
+	ifTrue: [ anAttendee coupon: '' ]
+	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee coupon.
+		controller verifyIfTicketCanApply: ticket.
+		 ].
+	controller applyReductionTicketTo: anAttendee .
+	self returnToThePreviousState. 
+			self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }

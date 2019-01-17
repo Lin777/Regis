@@ -46,19 +46,6 @@ ERTestRegisterController >> testAddAGroupManager [
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testAddAttendee [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self deny: wasHandled
-]
-
-{ #category : #tests }
 ERTestRegisterController >> testAddExitentAttendee [
 	"When an assistant's email has already been registered it can not be registered again, therefore a nil is returned "
 
@@ -257,4 +244,17 @@ ERTestRegisterController >> testValidateAttendeeWithoutFormatEmail [
 		do: [:exception | wasHandled := true.
 			exception return] .
 	self assert: wasHandled
+]
+
+{ #category : #tests }
+ERTestRegisterController >> testValidateRegister [
+	| wasHandled  |
+	wasHandled := false.
+	attendee := (ERTestControllers testAttendee) .
+	controller attendee: attendee.
+	[controller validateRegister] 
+		on: ERException 
+		do: [:exception | wasHandled := true.
+			exception return] .
+	self deny: wasHandled
 ]
