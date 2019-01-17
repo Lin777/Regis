@@ -4,13 +4,6 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
-ERMembersTab >> applyReductionTicketTo: user [
-	self initializeApplyReductionTicketForm: user.
-	content state: formApplyReductionTicket .
-	self updateStateTab: self tabName.
-]
-
 { #category : #accessing }
 ERMembersTab >> attends [
 	^ (ERGroupManagerController new
@@ -43,20 +36,6 @@ ERMembersTab >> headers [
 ERMembersTab >> initialize [
 	super initialize .
 	callback := nil
-]
-
-{ #category : #rendering }
-ERMembersTab >> initializeApplyReductionTicketForm: user [	
-	| tickets |
-	tickets := controller conference reductionTickets collect: #ticketId.
-	tickets addFirst: 'No reduction ticket'.
-	formApplyReductionTicket := (ERApplyReductionTicketView
-		on: user
-		withContent: content) 
-		listOfTickets: tickets; 
-		updateTicketAttendee: [ self updateTicketInformation: user ]; 
-		cancel: [ self returnToThePreviousState. 
-			self updateStateTab: self tabName.]
 ]
 
 { #category : #initialization }
@@ -184,19 +163,6 @@ ERMembersTab >> tabName [
 { #category : #rendering }
 ERMembersTab >> title [
 	^ 'Attends'
-]
-
-{ #category : #rendering }
-ERMembersTab >> updateTicketInformation: anAttendee [
-	|ticket|
-	anAttendee coupon = 'No reduction ticket'
-	ifTrue: [ anAttendee coupon: '' ]
-	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee coupon.
-		controller verifyIfTicketCanApply: ticket.
-		 ].
-	controller applyReductionTicketTo: anAttendee .
-	self returnToThePreviousState. 
-			self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }

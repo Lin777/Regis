@@ -242,7 +242,7 @@ ERController >> verifyIfTicketCanApply: ticket [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
 	[ ((self attendeesForATicket: ticket ticketId) size 
-	< ticket limitStrategy limit) ifTrue: [ ^ true ]
+	<= ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ 
 		ERException new 
 		messageText: 'The limit of the ticket was exceeded, you can not use it'; 
