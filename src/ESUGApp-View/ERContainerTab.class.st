@@ -29,6 +29,13 @@ ERContainerTab >> alreadyRegisteredAsAttendee [
 	^ attendee userAccount isAttendee
 ]
 
+{ #category : #initialization }
+ERContainerTab >> applyReductionTicketTo: user [
+	self initializeApplyReductionTicketForm: user.
+	content state: formApplyReductionTicket .
+	self updateStateTab: self tabName.
+]
+
 { #category : #accessing }
 ERContainerTab >> callback [
 	^ callback
@@ -59,6 +66,20 @@ ERContainerTab >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'tabAlert'.
 
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeApplyReductionTicketForm: user [	
+	| tickets |
+	tickets := controller conference reductionTickets collect: #ticketId.
+	tickets addFirst: 'No reduction ticket'.
+	formApplyReductionTicket := (ERApplyReductionTicketView
+		on: user
+		withContent: content) 
+		listOfTickets: tickets; 
+		updateTicketAttendee: [ self updateTicketInformation: user ]; 
+		cancel: [ self returnToThePreviousState. 
+			self updateStateTab: self tabName.]
 ]
 
 { #category : #initialization }
@@ -93,7 +114,9 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := ERModifyUserView
 		on: anUser
 		withContent: content
-		withAction: [ controller updateUser: anUser ].
+		withAction: [ controller updateUser: anUser.
+			self returnToThePreviousState.
+			self updateStateTab: self tabName.  ].
 	content state: mofidyUserForm
 ]
 
@@ -124,4 +147,17 @@ ERContainerTab >> updateRegistrationInformation: anAttendee [
 	(ERRegistrationController attendee: anAttendee ) validateRegister .
 	anAttendee save.
 	content state: content lastState
+]
+
+{ #category : #initialization }
+ERContainerTab >> updateTicketInformation: anAttendee [
+	|ticket|
+	anAttendee coupon = 'No reduction ticket'
+	ifTrue: [ anAttendee coupon: '' ]
+	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee coupon.
+		controller verifyIfTicketCanApply: ticket.
+		 ].
+	controller applyReductionTicketTo: anAttendee .
+	self returnToThePreviousState. 
+			self updateStateTab: self tabName.
 ]

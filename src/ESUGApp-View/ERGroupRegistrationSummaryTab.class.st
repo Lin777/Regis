@@ -21,7 +21,7 @@ ERGroupRegistrationSummaryTab class >> on: anAttendee withContent: aContent [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> generateInvoice [
-	Transcript show: 'invoice...'
+	
 ]
 
 { #category : #rendering }
@@ -47,14 +47,22 @@ ERGroupRegistrationSummaryTab >> modifyAffiliation [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> pay [
-	Transcript show: 'pay.....'
+	|formUpdatePayment|
+	formUpdatePayment :=( ERPaymentGroupManagerView on: self group
+		withContent: content) 
+	updatePayment: [  ];
+	cancel: [ self returnToThePreviousState . self updateStateTab: self tabName. ];
+	amountString:
+	(ERController new amountOfPayToGroup: self attends) asString.
+	content state: formUpdatePayment .
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> paymentStatus [
 	| listAttends |
 	listAttends := self attends.
-	listAttends size = 0
+	listAttends isEmpty
 		ifTrue: [ ^ 'No status available. The group has no members ' ]
 		ifFalse: [ ^ 'Payment no registered yet. Amount due: '
 			, (ERController new amountOfPayToGroup: listAttends) asString , ' ', 

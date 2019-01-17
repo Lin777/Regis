@@ -4,12 +4,6 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
-ERMembersTab >> applyReductionTicketTo: user [
-	self initializeApplyReductionTicketForm: user.
-	content state: formApplyReductionTicket 
-]
-
 { #category : #accessing }
 ERMembersTab >> attends [
 	^ (ERGroupManagerController new
@@ -21,7 +15,8 @@ ERMembersTab >> blockTableToExecute [
 	^ [:user | OrderedCollection new
 		add: ([ :att | att firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: '660.00 Euros';
+		add: ([ :att | (controller conferenceFeeFor: att) asString
+			, ' ', att paymentCurrency, '(s)'  ] value: user);
 		add: 'No';
 		yourself
 	]
@@ -41,17 +36,6 @@ ERMembersTab >> headers [
 ERMembersTab >> initialize [
 	super initialize .
 	callback := nil
-]
-
-{ #category : #rendering }
-ERMembersTab >> initializeApplyReductionTicketForm: user [	
-	| tickets |
-	tickets := OrderedCollection new add: 'No reduction ticket'; yourself .
-	controller conference reductionTickets
-		do: [ :each | tickets add: each ticketId ].
-	formApplyReductionTicket := (ERApplyReductionTicketView
-		on: user
-		withContent: content) listOfTickets: tickets; updateTicketAttendee: [ self updateTicketInformation: user ]
 ]
 
 { #category : #initialization }
@@ -179,11 +163,6 @@ ERMembersTab >> tabName [
 { #category : #rendering }
 ERMembersTab >> title [
 	^ 'Attends'
-]
-
-{ #category : #rendering }
-ERMembersTab >> updateTicketInformation: anAttendee [
-	controller applyReductionTicketTo: anAttendee 
 ]
 
 { #category : #accessing }

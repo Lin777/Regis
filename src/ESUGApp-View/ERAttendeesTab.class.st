@@ -26,9 +26,17 @@ ERAttendeesTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERAttendeesTab >> deleteAttendeeFromGroup: user [
+]
+
+{ #category : #rendering }
 ERAttendeesTab >> exportAttends [
 controller exportAttends: 'attends' .
 	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> generateInvoice: user [
 ]
 
 { #category : #rendering }
@@ -56,13 +64,17 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
-			(Array with: 'Reset Password' with: [ nil ] with: [ :user | user id , '-resetPassword' ]);
+			(Array with: 'Reset Password' 
+			with: [ :user | self resetPassword: user ] 
+			with: [ :user | user id , '-resetPassword' ]);
 		add:
 			(Array
 				with: 'Apply Reduction'
-				with: [ nil ]
+				with: [ :user | self applyReductionTicketTo: user ]
 				with: [ :user | user id , '-applyReduction' ]);
-		add: (Array with: 'Invoice' with: [ nil ] with: [ :user | user id , '-invoice' ]);
+		add: (Array with: 'Invoice' 
+				with: [ :user | self generateInvoice: user ] 
+				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
 
@@ -134,6 +146,10 @@ ERAttendeesTab >> renderTableOfAttends: html [
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> resetPassword: user [
 ]
 
 { #category : #accessing }

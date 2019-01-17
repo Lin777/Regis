@@ -4,14 +4,21 @@ Class {
 	#instVars : [
 		'listOfTickets',
 		'updateTicketAttendee',
+		'cancel',
 		'messageComponent'
 	],
 	#category : #'ESUGApp-View'
 }
 
 { #category : #actions }
-ERApplyReductionTicketView >> cancel [
-	self returnToThePreviousState
+ERApplyReductionTicketView >> cancel: aBlock [
+	cancel := aBlock 
+	
+]
+
+{ #category : #accessing }
+ERApplyReductionTicketView >> content: anObject [
+	content := anObject
 ]
 
 { #category : #accessing }
@@ -40,7 +47,7 @@ ERApplyReductionTicketView >> renderAcceptButtonOn: html [
 ERApplyReductionTicketView >> renderCancelButtonOn: html [
 	self
 		createColoredAnchorButton: 'Cancel'
-		with: [ self cancel ]
+		with: cancel
 		id: 'cancel-change-affiliation'
 		on: html
 ]

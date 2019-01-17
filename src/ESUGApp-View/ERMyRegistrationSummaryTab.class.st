@@ -104,7 +104,5 @@ ERMyRegistrationSummaryTab >> title [
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> updateMyRegistration [
 	(ERRegistrationController attendee: attendee) validateRegister.
-	"self halt.
-	attendee save.
-	content state: content lastState"
+	
 ]

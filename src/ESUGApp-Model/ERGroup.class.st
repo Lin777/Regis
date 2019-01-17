@@ -3,7 +3,9 @@ Class {
 	#superclass : #SDActiveRecord,
 	#instVars : [
 		'groupManager',
-		'listAttends'
+		'listAttends',
+		'paymentType',
+		'paymentCurrency'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -33,7 +35,8 @@ ERGroup >> groupManager: anObject [
 { #category : #accessing }
 ERGroup >> initialize [
 	super initialize .
-	listAttends := OrderedCollection new
+	listAttends := OrderedCollection new.
+	
 ]
 
 { #category : #accessing }
@@ -44,4 +47,24 @@ ERGroup >> listAttends [
 { #category : #accessing }
 ERGroup >> listAttends: anObject [
 	listAttends := anObject
+]
+
+{ #category : #accessing }
+ERGroup >> paymentCurrency [
+	^ paymentCurrency
+]
+
+{ #category : #accessing }
+ERGroup >> paymentCurrency: anObject [
+	paymentCurrency := anObject 
+]
+
+{ #category : #accessing }
+ERGroup >> paymentType [
+	^ paymentType
+]
+
+{ #category : #accessing }
+ERGroup >> paymentType: anObject [
+	paymentType := anObject
 ]

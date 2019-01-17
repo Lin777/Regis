@@ -17,14 +17,6 @@ ERTestGroupManagerController >> setUp [
 ]
 
 { #category : #tests }
-ERTestGroupManagerController >> testAddAttendee [
-	| result |
-	result := controller
-		addAttendee: ERTestControllers testExampleAttendee..
-	self deny: result isNil
-]
-
-{ #category : #tests }
 ERTestGroupManagerController >> testAddMyselfToGroup [
 	controller addMyselfToGroup .
 	self
@@ -67,4 +59,12 @@ ERTestGroupManagerController >> testRegisterAsAttendee [
 		assert:
 			((controller attendee userAccount isAttendee) and: (controller
 				attendee userAccount isGroupManager))
+]
+
+{ #category : #tests }
+ERTestGroupManagerController >> testValidateRegister [
+	| result |
+	result := controller
+		addAttendee: ERTestControllers testExampleAttendee..
+	self deny: result isNil
 ]

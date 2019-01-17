@@ -31,7 +31,7 @@ ERAdminUserTab >> acceptUser [
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
-	attendee abortChanges
+	attendee abortChanges.
 	self updateStateTab: self tabName.
 ]
 
