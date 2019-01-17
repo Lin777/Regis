@@ -168,6 +168,11 @@ ERController >> reductionTicketWithName: aString [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> updateAttendee: anAteendee [
+	anAteendee save
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
 	self validatePatternForRequired: anUser email withName: 'Email'.
 	self

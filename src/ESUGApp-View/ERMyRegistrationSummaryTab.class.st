@@ -15,7 +15,8 @@ ERMyRegistrationSummaryTab >> modifyRegistration [
 		formWithoutBasicInfoOn: attendee
 		withCallback: callback
 		content: content.
-	content state: formWithoutBasicInfo
+	content state: formWithoutBasicInfo.
+	
 ]
 
 { #category : #rendering }
@@ -104,5 +105,7 @@ ERMyRegistrationSummaryTab >> title [
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> updateMyRegistration [
 	(ERRegistrationController attendee: attendee) validateRegister.
+	ERController new updateAttendee: attendee.
+	self returnToThePreviousState .
 	
 ]
