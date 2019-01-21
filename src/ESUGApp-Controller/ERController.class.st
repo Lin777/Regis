@@ -43,12 +43,11 @@ ERController >> amountOfPayToGroup: list [
 	generalAmount := 0.
 	list
 		do: [ :each | 
-			| fee amount |
-			fee := self feePerTypeCurrencyOf: each.
-			amount := self amountForCurrentDateFor: fee.
-			amount := self decreaseCouponAmountFor: amount to: each.
+			| amount |
+			amount := self conferenceFeeFor: each.
 			generalAmount := generalAmount + amount ].
-	^ generalAmount
+	^ generalAmount.
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -113,7 +112,7 @@ ERController >> feeForCurrencyType: paymentCurrency [
 
 { #category : #'as yet unclassified' }
 ERController >> feePerTypeCurrencyOf: anAttendee [
-	^ self feeForCurrencyType: anAttendee paymentCurrency
+	^ self feeForCurrencyType: anAttendee paymentCurrency 
 ]
 
 { #category : #'as yet unclassified' }
@@ -153,6 +152,24 @@ ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 		copyReplaceAll: fee payPalInvoiceNumberToken
 		with:
 			(anAttendeeOrGroupManager
+				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
+				printString.
+	^ url
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> payPalUrlForGroup: aGroup [
+	| conferenceFee url fee |
+	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
+	fee := self feePerTypeCurrencyOf: aGroup.
+	url := fee bankPayPalUrl.
+	url := url
+		copyReplaceAll: fee payPalAmountToken
+		with: (conferenceFee printShowingDecimalPlaces: 2).
+	url := url
+		copyReplaceAll: fee payPalInvoiceNumberToken
+		with:
+			(aGroup 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url

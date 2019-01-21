@@ -5,7 +5,8 @@ Class {
 		'groupManager',
 		'listAttends',
 		'paymentType',
-		'paymentCurrency'
+		'paymentCurrency',
+		'invoiceNumber'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -39,6 +40,12 @@ ERGroup >> initialize [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroup >> invoiceNumberIfNone: aBlock [
+	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
+	^ invoiceNumber 
+]
+
 { #category : #accessing }
 ERGroup >> listAttends [
 	^ listAttends
@@ -67,4 +74,14 @@ ERGroup >> paymentType [
 { #category : #accessing }
 ERGroup >> paymentType: anObject [
 	paymentType := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERGroup >> paymentTypeIsBankTransfer [
+	^ 'Bank transfer' = paymentType
+]
+
+{ #category : #'as yet unclassified' }
+ERGroup >> paymentTypeIsCreditCard [
+	^  'Credit Card' = paymentType
 ]

@@ -63,7 +63,7 @@ ERPaymentGroupManagerView >> renderSelectorOfCurrency: html [
 		createSelectField: 'Currency type: '
 		for: #paymentCurrency:
 		with: #paymentCurrency
-		list: ERAttendee paymentTypes
+		list: ERController currencyAvailable
 		to: attendee
 		on: html			
 ]
@@ -74,7 +74,7 @@ ERPaymentGroupManagerView >> renderSelectorOfPayment: html [
 		createSelectField: 'Payment type: '
 		for: #paymentType:
 		with: #paymentType
-		list: ERController currencyAvailable  
+		list: ERAttendee paymentTypes  
 		to: attendee
 		on: html			
 ]
