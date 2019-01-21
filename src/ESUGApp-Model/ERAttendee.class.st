@@ -36,7 +36,8 @@ Class {
 		'paymentCurrency',
 		'coupon',
 		'paymentAmount',
-		'invoiceNumber'
+		'invoiceNumber',
+		'hasPaid'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -265,6 +266,16 @@ ERAttendee >> hasCoupon [
 ]
 
 { #category : #accessing }
+ERAttendee >> hasPaid [
+	^ hasPaid
+]
+
+{ #category : #accessing }
+ERAttendee >> hasPaid: anObject [
+	hasPaid := anObject
+]
+
+{ #category : #accessing }
 ERAttendee >> homePage [
 	^ homePage
 ]
@@ -282,6 +293,7 @@ ERAttendee >> initialize [
 	self addedToMainList: true.
 	self addPersonToSocialDinner: false.
 	self gender: 'Male'.
+	self hasPaid: false.
 	self
 		attendance:
 			(Dictionary

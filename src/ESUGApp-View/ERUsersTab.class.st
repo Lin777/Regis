@@ -73,17 +73,17 @@ ERUsersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteUser: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Reset Password'
+				with: 'replay'
 				with: [ :user | self resetPassword: user ]
 				with: [ :user | user id , '-resetPassword' ]);
 		yourself

@@ -83,27 +83,27 @@ ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyAffiliationGroupManager: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteAttendeeFromGroup: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Modify User'
+				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user groupManager ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
-				with: 'Reset Password'
+				with: 'replay'
 				with: [ nil ]
 				with: [ :user | user id , '-resetPassword' ]);
 		add:
 			(Array
-				with: 'Invoice'
+				with: 'description'
 				with: [ nil ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself

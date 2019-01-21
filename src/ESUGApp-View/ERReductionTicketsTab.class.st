@@ -34,12 +34,12 @@ ERReductionTicketsTab >> addTicketToConference [
 
 { #category : #rendering }
 ERReductionTicketsTab >> blockTableToExecute [
-	^ [ :ticket | 
+	^ [ :anTicket | 
 	OrderedCollection new
-		add: ([ :att | att ticketId ] value: ticket);
-		add: ([ :att | att discountStrategy description ] value: ticket );
-		add: ([ :att | att limitStrategy description ] value: ticket );
-		add: '0';
+		add: ([ :att | att ticketId ] value: anTicket);
+		add: ([ :att | att discountStrategy description ] value: anTicket );
+		add: ([ :att | att limitStrategy description ] value: anTicket );
+		add: ([:att | (self listOfAttendees: att)size] value: anTicket);
 		yourself ]
 ]
 
@@ -74,15 +74,33 @@ ERReductionTicketsTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
-				with: [ :ticket | self modifyTicket: ticket ]
-				with: [ :ticket | ticket id , '-modify' ]);
+				with: 'edit'
+				with: [ :anTicket | self modifyTicket: anTicket ]
+				with: [ :anTicket | anTicket id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
-				with: [ :ticket | self deleteTicket: ticket ]
-				with: [ :ticket | ticket id , '-delete' ]);
+				with: 'delete'
+				with: [ :anTicket | self deleteTicket: anTicket ]
+				with: [ :anTicket | anTicket id , '-delete' ]);
+		add:
+			(Array
+				with: 'list'
+				with: [ :anTicket | self listOfTicket: anTicket ]
+				with: [ :anTicket | anTicket id , '-list' ]);
 		yourself
+]
+
+{ #category : #accessing }
+ERReductionTicketsTab >> listOfAttendees: aTicket [
+	^ ERController new attendeesForATicket: aTicket ticketId
+]
+
+{ #category : #rendering }
+ERReductionTicketsTab >> listOfTicket: anTicket [
+	|list|
+	list := ERAttendeesOfTicket on: anTicket withContent: content.
+	content state: list .
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }

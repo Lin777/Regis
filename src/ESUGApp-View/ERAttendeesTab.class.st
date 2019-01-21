@@ -18,9 +18,9 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att email ] value: user);
 		add: ([ :att | att country ] value: user);
 		add: ([ :att | att orgName ] value: user);
-		add: ([ :att | self halt.(controller conferenceFeeFor: att) asString
+		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)'  ] value: user);
-		add: 'Not Paid';
+		add: ([ :att | att hasPaid ] value: user);
 		yourself ]
 ]
 
@@ -41,7 +41,7 @@ ERAttendeesTab >> generateInvoice: user [
 { #category : #rendering }
 ERAttendeesTab >> headers [
 	^ #(
-'#Invoice (D)'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?' '')
+'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?' '')
 ]
 
 { #category : #rendering }
@@ -49,29 +49,29 @@ ERAttendeesTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyRegistrationInformation: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteAttendeeFromGroup: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Modify User'
+				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
-			(Array with: 'Reset Password' 
+			(Array with: 'replay' 
 			with: [ :user | self resetPassword: user ] 
 			with: [ :user | user id , '-resetPassword' ]);
 		add:
 			(Array
-				with: 'Apply Reduction'
+				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user ]
 				with: [ :user | user id , '-applyReduction' ]);
-		add: (Array with: 'Invoice' 
+		add: (Array with: 'description' 
 				with: [ :user | self generateInvoice: user ] 
 				with: [ :user | user id , '-invoice' ]);
 		yourself

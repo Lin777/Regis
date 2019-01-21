@@ -69,11 +69,16 @@ ERTable >> renderBody: html [
 ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
-			self
+			html mdlAnchorButton
+		colored;	rippleEffect;
+		id: (dataButton third value: aObject);
+		callback: [ dataButton second value: aObject ];
+		icon: dataButton first].
+			"self
 				createColoredAnchorButton: dataButton first
 				with: [ dataButton second value: aObject ]
 				id: (dataButton third value: aObject)
-				on: html ]
+				on: html ]"
 ]
 
 { #category : #rendering }
