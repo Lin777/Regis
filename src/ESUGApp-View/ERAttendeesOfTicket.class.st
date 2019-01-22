@@ -56,7 +56,7 @@ ERAttendeesOfTicket >> listOfAttendees [
 ERAttendeesOfTicket >> renderButtonsOn: html [
 	self
 		createColoredAnchorButton: 'Back'
-		with: [self]
+		with: cancelCallback
 		id: 'accept'
 		on: html.
 ]

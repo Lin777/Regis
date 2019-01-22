@@ -98,8 +98,9 @@ ERReductionTicketsTab >> listOfAttendees: aTicket [
 { #category : #rendering }
 ERReductionTicketsTab >> listOfTicket: anTicket [
 	|list|
-	list := ERAttendeesOfTicket on: anTicket withContent: content.
-	content state: list .
+	list := (ERAttendeesOfTicket on: anTicket withContent: content ) cancelCallback: [ self returnToThePreviousState. 
+			self updateStateTab: self tabName].
+	content state: list.
 	self updateStateTab: self tabName.
 ]
 
