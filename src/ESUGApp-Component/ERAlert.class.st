@@ -13,7 +13,7 @@ Class {
 { #category : #'as yet unclassified' }
 ERAlert class >> warningAlert [
 	^ self new
-		class: 'alert alert-warning';
+		class: 'errors';
 		role: 'alert';
 		yourself .
 ]
