@@ -54,6 +54,19 @@ ERRegisterConferenceInformation >> attendance: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+ERRegisterConferenceInformation >> daysOfAssistance [
+	| aString |
+	aString := ''.
+	#(#monday #tuesday #wednesday #thursday #friday)
+		do: [ :each | 
+			(self perform: each)
+				ifTrue: [ aString isEmpty
+						ifTrue: [ aString := each asString capitalized ]
+						ifFalse: [ aString :=  aString , ', ' , each asString capitalized ] ] ].
+	^ aString
+]
+
+{ #category : #'as yet unclassified' }
 ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 	<magritteDescription>
 	| tmp2 |

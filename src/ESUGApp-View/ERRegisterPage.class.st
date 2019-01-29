@@ -18,8 +18,11 @@ ERRegisterPage >> actionRegister: anObject [
 ERRegisterPage >> actionsBody: html [
 	^ [
 	html mdlCardActions border with: [	
-			self renderBackLoginButtonOn: html
-		]
+			self renderBackLoginButtonOn: html.
+			self renderBackButtonOn: html.
+			self renderSkipButtonOn: html.
+			self renderNextButtonOn: html.
+		].
 	]
 ]
 
@@ -31,11 +34,6 @@ ERRegisterPage >> addTab: aAttendeeTabForm [
 { #category : #initialization }
 ERRegisterPage >> convertToGroupManager [
 	self attendee userAccount role: 'groupManager'
-]
-
-{ #category : #rendering }
-ERRegisterPage >> deactivateAllTabs [
-	self tabs do: [ :each | each deactivate ].
 ]
 
 { #category : #initialization }
@@ -66,6 +64,16 @@ ERRegisterPage >> registerAsGroupManager [
 	
 	user := pageController saveAsGroupManager.
 	self validateRegister: user
+]
+
+{ #category : #'as yet unclassified' }
+ERRegisterPage >> renderBackButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'previousButton';
+		class: 'btnPrevious';
+		with: 'Previous'
 ]
 
 { #category : #rendering }
@@ -99,6 +107,16 @@ ERRegisterPage >> renderDoneButtonOn: html [
 		on: html
 ]
 
+{ #category : #'as yet unclassified' }
+ERRegisterPage >> renderNextButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'nextButton';
+		class: 'btnNext';
+		with: 'Next'
+]
+
 { #category : #rendering }
 ERRegisterPage >> renderPageOn: html [
 	html render: messageComponent.
@@ -107,18 +125,13 @@ ERRegisterPage >> renderPageOn: html [
 		with: [ html mdlTabs rippleEffect with: [ html render: (ERTabs tabs: self tabs) ] ].
 ]
 
+{ #category : #'as yet unclassified' }
+ERRegisterPage >> renderSkipButtonOn: html [
+]
+
 { #category : #hooks }
 ERRegisterPage >> states [
     ^ Array with: self
-]
-
-{ #category : #rendering }
-ERRegisterPage >> tabActive [
-	tabs
-		do: [ :each | 
-			each isActive
-				ifTrue: [ ^ each ].
-			^ nil ]
 ]
 
 { #category : #accessing }

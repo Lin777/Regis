@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'paymentType',
 		'paymentCurrency',
-		'coupon'
+		'coupon',
+		'invoiceNumber',
+		'paymentAmount',
+		'hasPayment'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -28,6 +31,9 @@ ERPaymentInformation >> descriptionCoupon [
 		accessor: #coupon; 
 		priority: 20;
 		required: false;
+		addCondition: [ :value | ERController new 
+			existReductionTicketWithName: value]
+		labelled: 'There is no ticket with the ticket id provided.';
 		label: 'Reduction Ticket Code';
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
@@ -67,6 +73,48 @@ ERPaymentInformation >> descriptionPaymentType [
 ]
 
 { #category : #accessing }
+ERPaymentInformation >> hasPayment [
+	^ hasPayment
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> hasPayment: anObject [
+	hasPayment := anObject
+]
+
+{ #category : #initialization }
+ERPaymentInformation >> initialize [ 	
+	super initialize .
+	hasPayment := false
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> invoiceNumber [
+	^ invoiceNumber
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> invoiceNumber: anObject [
+	invoiceNumber := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> invoiceNumberIfNone: aBlock [
+	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
+	^ invoiceNumber
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> paymentAmount [
+	^ paymentAmount
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> paymentAmount: anObject [
+	paymentAmount := anObject
+]
+
+{ #category : #accessing }
 ERPaymentInformation >> paymentCurrency [
 	^ paymentCurrency
 ]
@@ -84,4 +132,14 @@ ERPaymentInformation >> paymentType [
 { #category : #accessing }
 ERPaymentInformation >> paymentType: anObject [
 	paymentType := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> paymentTypeIsBankTransfer [
+	^ 'Bank transfer' = paymentType
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> paymentTypeIsCreditCard [
+	^  'Credit Card' = paymentType
 ]

@@ -38,6 +38,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees1 [
 		accessor: #organizationAddrees1; 
 		priority: 20;
 		beRequired;
+		label: 'Address 1 (Required)';
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -52,6 +53,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees2 [
 		accessor: #organizationAddrees2; 
 		priority: 30;
 		required: false;
+		label: 'Address 2';
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -66,6 +68,7 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 		accessor: #organizationCity; 
 		priority: 40;
 		beRequired;
+		label: 'City (Required)';
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself

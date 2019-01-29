@@ -107,54 +107,44 @@ ERAttendeeRegistrationPage >> initialize [
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeAdditionalInformationComponent [
-	^ pageController attendee additionalInformation asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
+	
+	^ pageController attendee additionalInformation asComponent
 	addDecoration: MAValidationDecoration new;
-	 yourself .
+	 yourself
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeAffiliationInformationComponent [
 	^ pageController attendee affiliationInformation asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
 	addDecoration: MAValidationDecoration new;
-	 yourself .
+	 yourself
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeBasicInformationComponent [
-	^ ((pageController attendee userAccount) as: ERUserAccountForRegister) asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
+	^ ((pageController attendee userAccount) 
+	as: ERUserAccountForRegister) asComponent 
 	addDecoration: MAValidationDecoration new;
-	 yourself .
+	 yourself
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeContactInformationComponent [
 	^ pageController attendee contactInformation asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
 	addDecoration: MAValidationDecoration new;
-	 yourself .
+	 yourself
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializePaymentInformationComponent [
 	^ pageController attendee paymentInformation asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
 	addDecoration: MAValidationDecoration new;
-	 yourself .
+	 yourself
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeRegConferenceInformationComponent [
 	^ pageController attendee conferenceInformation asComponent 
-	addDecoration: (MDLMAFormDecoration buttons:
-	 (Array with: #cancel -> 'Cancel' with: #save -> 'Next' ));
 	addDecoration: MAValidationDecoration new;
 	 yourself 
 ]
@@ -174,9 +164,73 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 ]
 
 { #category : #initialize }
+ERAttendeeRegistrationPage >> saveAddInfo [
+	currentTab := addInfo.
+	pageController attendee additionalInformation: 
+	(addInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveAffilInfo [
+	currentTab := affiliationInfo.
+	pageController attendee affiliationInformation: 
+	(affiliationInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveBasicInfo [
+	currentTab := basicInfoTab.
+	pageController attendee userAccount: 
+	((basicInfoTab contentTab save) model as: ERUserAccount1 )
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveContactInfo [
+	currentTab := contactInfoTab.
+	pageController attendee contactInformation: 
+	(contactInfoTab contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> savePaymentInfo [
+	currentTab := paymentInfoTab.
+	pageController attendee paymentInformation: 
+	(paymentInfoTab contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveRegConfInfo [
+	currentTab := regConfInfo.
+	pageController attendee conferenceInformation:  
+	(regConfInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveTabs [
+	self saveBasicInfo.
+	self saveContactInfo.
+	self saveRegConfInfo.
+	self saveAffilInfo.
+	self saveAddInfo.
+	self savePaymentInfo.
+]
+
+{ #category : #initialize }
 ERAttendeeRegistrationPage >> validateAndRegister [
 	| finishRegisterView |
-	pageController validateRegister.
+	 [self saveTabs] 
+	on: ERException 
+	do: [ currentTab updateStateTab: currentTab tabName.
+		^ self ]."
+	pageController save."
+	"pageController validateRegister."
+	
 	finishRegisterView := ERFinishRegisterAttendeePage
 		on: pageController attendee
 		withContent: content

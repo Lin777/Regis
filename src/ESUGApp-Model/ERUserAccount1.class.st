@@ -1,6 +1,6 @@
 Class {
 	#name : #ERUserAccount1,
-	#superclass : #Object,
+	#superclass : #SDActiveRecord,
 	#instVars : [
 		'firstName',
 		'lastName',
@@ -31,6 +31,7 @@ ERUserAccount1 >> descriptionEmail [
 		accessor: #email; 
 		priority: 30;
 		beRequired;
+		label: 'Email (Required)';
 		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
 		labelled: 'Please enter a valid email';
 		withoutLabel: true;
@@ -47,6 +48,7 @@ ERUserAccount1 >> descriptionFirstName [
 		accessor: #firstName; 
 		priority: 10;
 		beRequired;
+		label: 'First Name (Required)';
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
 		labelled: 'This field only accept a text';
@@ -63,6 +65,7 @@ ERUserAccount1 >> descriptionLastName [
 		accessor: #lastName; 
 		priority: 20;
 		beRequired;
+		label: 'Last Name (Required)';
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
 		labelled: 'This field only accept a text';
@@ -94,6 +97,39 @@ ERUserAccount1 >> firstName: anObject [
 ERUserAccount1 >> initialize [ 
 	super initialize .
 	role := 'attendee'
+]
+
+{ #category : #testing }
+ERUserAccount1 >> isAdmin [
+	self role
+		do: [ :each | 
+			each = 'admin'
+				ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : #testing }
+ERUserAccount1 >> isAttendee [
+	self role do: [ :each | each = 'attendee' ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : #testing }
+ERUserAccount1 >> isGroupManager [
+	self role
+		do: [ :each | 
+			each = 'groupManager'
+				ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : #testing }
+ERUserAccount1 >> isStudent [
+	self role
+		do: [ :each | 
+			each = 'studentVolunter'
+				ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #accessing }

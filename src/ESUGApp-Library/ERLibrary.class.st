@@ -29,7 +29,8 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ "self validatorOfRegister , "self tabsJs", self validatorForLogin"
+	^ self registerButtonsJs
+	", self validatorForLogin, self validatorOfRegister "
 ]
 
 { #category : #updating }
@@ -182,6 +183,17 @@ ERLibrary >> loginCss [
 ]
 
 { #category : #updating }
+ERLibrary >> registerButtonsJs [
+	^ '$().ready(function() {
+	$(''.btnNext'').click(function(){
+  $(''.mdl-tabs__tab-bar > .is-active'').next("a").find("span").trigger(''click'');});
+
+  $(''.btnPrevious'').click(function(){
+  $(''.mdl-tabs__tab-bar > .is-active'').prev("a").find("span").trigger(''click'');
+}); });'
+]
+
+{ #category : #updating }
 ERLibrary >> registerCss [
 	^ '.body-all {
 	background-image: url("../CssForLoginMDL/profile_city.jpg");
@@ -316,14 +328,14 @@ ERLibrary >> tabsCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> tabsJs [
-	^ '$().ready(function() {$(''.btnNext'').click(function(){
-	console.log("next");
+	^ ''"'$().ready(function() {$(''.btnNext'').click(function(){
+	console.log(''next'');
 	$(''.mdl-tabs__tab-bar > .is-active'').next(''a'').trigger(''click'');
 });
 
   $(''.btnPrevious'').click(function(){
-console.log("prev");
-  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
+console.log(''prev'');
+  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'"
 ]
 
 { #category : #'as yet unclassified' }

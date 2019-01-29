@@ -52,6 +52,15 @@ ERAttendee1 >> contactInformation: anObject [
 	contactInformation := anObject
 ]
 
+{ #category : #testing }
+ERAttendee1 >> hasCoupon [
+	self paymentInformation coupon isNil 
+	ifFalse: [ self paymentInformation coupon isEmpty 
+		ifTrue:[^ false ]]
+	ifTrue: [ ^ false ].
+	^ true
+]
+
 { #category : #'initialize-release' }
 ERAttendee1 >> initialize [ 
 	super initialize .

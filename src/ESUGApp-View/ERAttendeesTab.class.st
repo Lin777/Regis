@@ -85,39 +85,7 @@ ERAttendeesTab >> registerAdminAsAttendee [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> registerAttendee [
-	callback := [ self registerAttendeeToConference ].
-	super registerAttendee.
-	self updateStateTab: self tabName. 
-]
-
-{ #category : #initialization }
-ERAttendeesTab >> registerAttendeeToConference [
-	(ERRegistrationController attendee: newAttendee) validateRegister.
-	controller addAttendee: newAttendee.
-	content state: content lastState
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> registerMyselfAsAttendee [
-	callback := [ self registerAdminAsAttendee ].
-			self initializeFormWithoutBasicInformationFor: attendee.
-	self updateStateTab: self tabName.
-]
-
-{ #category : #rendering }
 ERAttendeesTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'REGISTER ATTENDEE'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html.
-	self alreadyRegisteredAsAttendee
-		ifFalse: [ self
-				createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
-				with: [ self registerMyselfAsAttendee ]
-				id: 'registerMyseflAsAttendee'
-				on: html ].
 	self
 		createColoredAnchorButton: 'EXPORT'
 		with: [ self exportAttends ]

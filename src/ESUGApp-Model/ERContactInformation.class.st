@@ -93,7 +93,7 @@ ERContactInformation >> descriptionCity [
 	tmp 
 		accessor: #city; 
 		priority: 30;
-		required: true;
+		required: false;
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself

@@ -299,11 +299,6 @@ ERAttendee >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-ERAttendee >> invoiceNumberIfNone [
-	invoiceNumber
-]
-
-{ #category : #'as yet unclassified' }
 ERAttendee >> invoiceNumberIfNone: aBlock [
 	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
 	^ invoiceNumber 

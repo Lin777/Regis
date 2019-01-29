@@ -28,8 +28,6 @@ ERController >> add:attendee ToTicket: coupon [
 
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
-	| currentDate |
-	currentDate := Date today.
 	conference configuration earlyRegistrationDeadline < Date today
 		ifTrue: [ ^ aFee lrfAllDaysFee ]
 		ifFalse: [ ^ aFee erfAllDaysFee ].
@@ -87,7 +85,7 @@ ERController >> conferenceIsOpenRegistration [
 ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 	anAttendee hasCoupon
 		ifTrue: [ | coupon |
-			coupon := self reductionTicketWithName: anAttendee coupon.
+			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
 ]
@@ -104,15 +102,24 @@ ERController >> deleteGroupManager: aGroupManager [
 ERController >> deleteUser: anUser [
 ]
 
+{ #category : #action }
+ERController >> existReductionTicketWithName: aString [
+	^ conference reductionTickets
+		anySatisfy: [ :each | each ticketId = aString  ]
+]
+
 { #category : #'as yet unclassified' }
 ERController >> feeForCurrencyType: paymentCurrency [
-	conference fees do: [ :fee | fee currency = paymentCurrency ifTrue: [ ^ fee ] ].
-	ERException new messageText: 'The payment currency is not available now.'; signal
+	[ ^ conference fees detect: [ :fee | fee currency = paymentCurrency]]
+	on: NotFound 
+	do: [ ERException new 
+		messageText: 'The payment currency is not available now.';
+		signal ]
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> feePerTypeCurrencyOf: anAttendee [
-	^ self feeForCurrencyType: anAttendee paymentCurrency 
+	^ self feeForCurrencyType: anAttendee paymentInformation paymentCurrency 
 ]
 
 { #category : #'as yet unclassified' }
@@ -151,7 +158,7 @@ ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 	url := url
 		copyReplaceAll: fee payPalInvoiceNumberToken
 		with:
-			(anAttendeeOrGroupManager
+			(anAttendeeOrGroupManager paymentInformation
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
@@ -177,11 +184,12 @@ ERController >> payPalUrlForGroup: aGroup [
 
 { #category : #action }
 ERController >> reductionTicketWithName: aString [
-	conference reductionTickets
-		do: [ :each | 
-			each ticketId = aString
-				ifTrue: [ ^ each ] ].
-	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
+	[ ^ conference reductionTickets detect: [ :each | 
+			each ticketId = aString] ]
+	on: NotFound 
+	do: [ ERException new 
+		messageText: 'There is no ticket with the ticket id provided.';
+		signal ]
 ]
 
 { #category : #'as yet unclassified' }
