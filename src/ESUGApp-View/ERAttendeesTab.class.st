@@ -18,7 +18,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att email ] value: user);
 		add: ([ :att | att country ] value: user);
 		add: ([ :att | att orgName ] value: user);
-		add: ([ :att | self halt.(controller conferenceFeeFor: att) asString
+		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)'  ] value: user);
 		add: 'Not Paid';
 		yourself ]

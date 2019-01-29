@@ -62,7 +62,7 @@ ERRegistrationController >> convertToGroupManager [
 { #category : #initialize }
 ERRegistrationController >> initialize [
 	super initialize.
-	attendee := ERAttendee new.
+	attendee := ERAttendee1 new.
 ]
 
 { #category : #action }

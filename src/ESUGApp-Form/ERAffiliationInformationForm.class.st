@@ -14,9 +14,14 @@ ERAffiliationInformationForm >> formName [
 	^ 'Affiliation'
 ]
 
+{ #category : #initialization }
+ERAffiliationInformationForm >> initializeForm [
+	form := attendee affiliationInformation asComponent
+]
+
 { #category : #rendering }
 ERAffiliationInformationForm >> renderContentOn: html [
-	self
+	"self
 		createTextField: 'Organization Name (*):'
 		for: #orgName:
 		with: #orgName
@@ -63,5 +68,5 @@ ERAffiliationInformationForm >> renderContentOn: html [
 		for: #membershipType:
 		with: #membershipType
 		list: ERAttendee membershipTypes
-		on: html
+		on: html"html render: form.
 ]

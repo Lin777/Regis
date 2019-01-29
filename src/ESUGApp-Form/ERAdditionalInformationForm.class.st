@@ -38,9 +38,14 @@ ERAdditionalInformationForm >> initialize [
 	super initialize
 ]
 
+{ #category : #initialization }
+ERAdditionalInformationForm >> initializeForm [
+	form := attendee additionalInformation asComponent
+]
+
 { #category : #rendering }
 ERAdditionalInformationForm >> renderContentOn: html [
-	self
+	"self
 		createTextField: 'Keywords'
 		for: #keywords:
 		with: #keywords
@@ -49,5 +54,5 @@ ERAdditionalInformationForm >> renderContentOn: html [
 		createTextAreaField: 'Additional text'
 		for: #additionalText:
 		with: #additionalText
-		on: html
+		on: html"html render: form.
 ]

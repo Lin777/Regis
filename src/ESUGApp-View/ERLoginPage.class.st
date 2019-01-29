@@ -13,7 +13,7 @@ ERLoginPage >> actionsBody: html [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
 		html mdlAnchorButton 
-		class: 'mdl-color-text--blue'"primaryColor";
+		class: 'mdl-color-text--blue';
 		with: 'Forgot Password'
 		]
 	]
@@ -56,15 +56,14 @@ ERLoginPage >> registerUser [
 	pageController conferenceIsOpenRegistration
 		ifTrue: [
 			| formRegister |
-			formRegister := ERAttendeeRegistrationPage new.
-			formRegister content: self content.
-			formRegister initializeTabForms ]
+			formRegister := ERAttendeeRegistrationPage 
+								content: self content ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
 ERLoginPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
+	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh;';
 	with: [ 
 		html mdlLayout	with: aBlock
 	]
@@ -92,7 +91,6 @@ ERLoginPage >> renderLoginButtonOn: html [
 	html mdlButton
 		beSubmit ;
 		raised;
-		"colored;"
 		rippleEffect;
 		accentColor;
 		id: 'login-button';
@@ -135,7 +133,6 @@ ERLoginPage >> renderPasswordField: html [
 ERLoginPage >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
 		class: 'mdl-color-text--blue';
-		"primaryColor ;"
 		id: 'register-button-as-group-manager';
 		callback: [ self registerAsGroupManager ];
 		with: 'Group Manager'
@@ -148,5 +145,4 @@ ERLoginPage >> renderRegisterButtonOn: html [
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
-	"mdlTextColorAccent;"
 ]

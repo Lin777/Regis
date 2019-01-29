@@ -14,9 +14,14 @@ ERRegisterConferenceForm >> formName [
 	^ 'Conference'
 ]
 
+{ #category : #initialization }
+ERRegisterConferenceForm >> initializeForm [
+	form := attendee conferenceInformation asComponent
+]
+
 { #category : #rendering }
 ERRegisterConferenceForm >> renderContentOn: html [
-	html html: '<br> <label>Days:</label> <br>'.
+	"html html: '<br> <label>Days:</label> <br>'.
 	self
 		createCheckboxField: 'Monday (dd/mm/aa)'
 		for: #monday:
@@ -75,5 +80,5 @@ ERRegisterConferenceForm >> renderContentOn: html [
 		createCheckboxField: 'Check if you want to be added to the Mailling List'
 		for: #addedToMainList:
 		with: #addedToMainList
-		on: html
+		on: html"html render: form.
 ]

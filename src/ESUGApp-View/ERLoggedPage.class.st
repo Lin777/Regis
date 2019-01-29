@@ -7,7 +7,7 @@ Class {
 		'content',
 		'attendee'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #accessing }

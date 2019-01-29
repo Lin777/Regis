@@ -14,9 +14,14 @@ ERContactInformationForm >> formName [
 	^ 'Contact'
 ]
 
+{ #category : #initialization }
+ERContactInformationForm >> initializeForm [
+	form := attendee contactInformation asComponent
+]
+
 { #category : #rendering }
 ERContactInformationForm >> renderContentOn: html [
-	self
+	"self
 		createTextField: 'Address1 (*):'
 		for: #address:
 		with: #address
@@ -69,5 +74,5 @@ ERContactInformationForm >> renderContentOn: html [
 		createTextField: 'Home Page URL'
 		for: #homePage:
 		with: #homePage
-		on: html
+		on: html"html render: form.
 ]

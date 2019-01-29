@@ -14,9 +14,14 @@ ERBasicInformationForm >> formName [
 	^ 'User'
 ]
 
+{ #category : #initialization }
+ERBasicInformationForm >> initializeForm [
+	form := attendee userAccount asComponent
+]
+
 { #category : #rendering }
 ERBasicInformationForm >> renderContentOn: html [
-	self
+	"self
 		createTextField: 'First Name (*):'
 		for: #firstName:
 		with: #firstName
@@ -39,5 +44,6 @@ ERBasicInformationForm >> renderContentOn: html [
 	self createPasswordField: 'Confirm Password' id: 'confirmPassword' with: [ :mdlTxtInput | 
 		mdlTxtInput callback: [ :value | 
 			self attendee perform: #confirmPassword: with: (ERUserAccount hashPassword: value asString )] ] on: html.
-
+"html render: form.
+self createPasswordField: 'Confirm Password' id: 'confirmPassword' with: [  ] on: html
 ]

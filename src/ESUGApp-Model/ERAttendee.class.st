@@ -77,6 +77,11 @@ ERAttendee class >> paymentTypes [
 ]
 
 { #category : #'as yet unclassified' }
+ERAttendee class >> roles [
+	^ #('admin' 'attendee' 'groupManager' 'studentVolunter')
+]
+
+{ #category : #'as yet unclassified' }
 ERAttendee class >> tShirtSizes [
 	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
 ]

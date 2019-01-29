@@ -12,9 +12,13 @@ ERLibrary class >> applicationName [
 { #category : #updating }
 ERLibrary >> errorCss [
 	^ '
-.error {
-  color: red
-  }
+.errors {
+  min-width: 150px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+	background-color: lightgoldenrodyellow;
+    border-color: lightgoldenrodyellow;}
   '
 ]
 
@@ -34,6 +38,10 @@ ERLibrary >> generalCss [
 	margin: 0px;
 	padding: 0px;
 }
+
+table { width: 100%; }
+.halfDiv{ width: 49%; }
+
 html, body {
   font-family: ''Roboto'', ''Helvetica'', sans-serif;
 }
@@ -154,6 +162,7 @@ ERLibrary >> loginCss [
 .login-button {
   width: 100%;
   height: 40px;
+  padding: 0px;
   min-width: initial;
 }
 
@@ -241,6 +250,7 @@ ERLibrary >> selectorsToInclude [
 	add: 'tabsCss';
 	add: 'loginCss';
 	add: 'generalCss';
+	add: 'esugCss';
 	add: 'esugJs' "with: 'esugCss'";
 	add: 'validationInputsJs';
 	yourself
