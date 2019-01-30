@@ -28,6 +28,17 @@ ERMyRegistrationSummaryTab >> pay [
 ]
 
 { #category : #rendering }
+ERMyRegistrationSummaryTab >> paymentStatus [
+	attendee paymentInformation hasPaid 
+	ifTrue: [ ^ 'Payment successfully received' ]
+	ifFalse: [ 
+	^ 'Payment no registered yet. Amount due: '
+				, (ERController new conferenceFeeFor: attendee) asString , ' '
+				, attendee paymentInformation paymentCurrency , '(s) '
+				, ' (NOTE: you could have paid but we could have not registered it yet)']
+]
+
+{ #category : #rendering }
 ERMyRegistrationSummaryTab >> redirectViewForBankTransfer [
 	| bankTransferView |
 	bankTransferView := ERBankTransferPaymentInfoView
@@ -79,11 +90,7 @@ ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
 		on: html.
 	self
 		createTextStrong: 'Payment Status: '
-		withText:
-			'Payment no registered yet. Amount due: '
-				, (ERController new conferenceFeeFor: attendee) asString , ' '
-				, attendee paymentInformation paymentCurrency , '(s) '
-				, ' (NOTE: you could have paid but we could have not registered it yet)'
+		withText: self paymentStatus
 		on: html
 ]
 

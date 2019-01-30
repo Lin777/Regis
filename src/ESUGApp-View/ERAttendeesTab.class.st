@@ -13,7 +13,7 @@ ERAttendeesTab >> attends [
 ERAttendeesTab >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
-		add: '10';
+		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att contactInformation country ] value: user);

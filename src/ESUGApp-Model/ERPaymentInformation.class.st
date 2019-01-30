@@ -7,7 +7,7 @@ Class {
 		'coupon',
 		'invoiceNumber',
 		'paymentAmount',
-		'hasPayment'
+		'hasPaid'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -73,19 +73,19 @@ ERPaymentInformation >> descriptionPaymentType [
 ]
 
 { #category : #accessing }
-ERPaymentInformation >> hasPayment [
-	^ hasPayment
+ERPaymentInformation >> hasPaid [
+	^ hasPaid 
 ]
 
 { #category : #accessing }
-ERPaymentInformation >> hasPayment: anObject [
-	hasPayment := anObject
+ERPaymentInformation >> hasPaid: anObject [
+	hasPaid := anObject
 ]
 
 { #category : #initialization }
 ERPaymentInformation >> initialize [ 	
 	super initialize .
-	hasPayment := false
+	hasPaid := false
 ]
 
 { #category : #accessing }
