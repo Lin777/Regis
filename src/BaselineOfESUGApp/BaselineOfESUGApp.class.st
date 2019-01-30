@@ -11,6 +11,7 @@ BaselineOfESUGApp >> baseline: spec [
 		for: #common
 		do: [ self setUpDependencies: spec.
 			spec
+				package: 'ESUGApp-MDLMagritte';
 				package: 'ESUGApp-Exception';
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV' 'ESUGApp-Exception') ];
