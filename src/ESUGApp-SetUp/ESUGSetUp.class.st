@@ -161,7 +161,7 @@ ESUGSetUp class >> createESUGConfiguration [
 ]
 
 { #category : #'as yet unclassified' }
-ESUGSetUp class >> loadMagritteForMDL [
+ESUGSetUp class >> initialize [
 	
 	Metacello new
 	baseline: 'Magritte';
