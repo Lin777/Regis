@@ -110,14 +110,14 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 		configuration: esugConferenceConfiguration;
 		save.
 	adminPassword := '12345678'.
-	adminUser := ERUserAccount new
+	adminUser := ERUserAccount1 new
 		firstName: 'Admin';
 		lastName: 'Admin';
 		password: (ERUserAccount hashPassword: adminPassword) asString;
 		email: 'admin@esug.org';
 		role: ERUserAccount adminRole;
 		save.
-	ERAttendee new userAccount: adminUser; save.
+	"ERAttendee new userAccount: adminUser; save."
 	conference
 		addUser: adminUser;
 		save.

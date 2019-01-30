@@ -15,9 +15,6 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 		beRequired;
 		label: 'Confirm Password (Required)';
 		withoutLabel: true;
-		addCondition: [ :value | self halt.
-			self password = value ]
-		labelled: 'Don''t match with password';
 		componentClass: MDLMATextPasswordComponent.
 	^ tmp yourself
 ]

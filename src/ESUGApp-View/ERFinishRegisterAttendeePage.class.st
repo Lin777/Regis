@@ -96,28 +96,10 @@ ERFinishRegisterAttendeePage >> renderAddress2On: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> renderAddress2OrgOn: html [
-	html strong: 'Address Line 2: '.
-			html text: 
-				attendee affiliationInformation organizationAddrees2.
-	html break.
-	
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderAddressOn: html [
 	html strong: 'Address: '.
 			html text: (attendee contactInformation address).
 	html break.
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderAddressOrgOn: html [
-	html strong: 'Address Line 1: '.
-			html text: 
-				attendee affiliationInformation organizationAddrees1.
-	html break.
-	
 ]
 
 { #category : #rendering }
@@ -166,15 +148,6 @@ ERFinishRegisterAttendeePage >> renderCityOn: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> renderCityOrgOn: html [
-	html strong: 'City: '.
-			html text: 
-				attendee affiliationInformation organizationCity.
-	html break.
-	
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderConferenceFeeOn: html [
 	html strong: 'Conference Fee: '.
 			html text:  
@@ -219,15 +192,6 @@ ERFinishRegisterAttendeePage >> renderCountryOn: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> renderCountryOrgOn: html [
-	html strong: 'Country: '.
-			html text: 
-				attendee affiliationInformation organizationCountry.
-	html break.
-	
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderDaysOfAssistanceOn: html [
 	html strong: 'Day(s) to attend: '.
 			html text: (attendee conferenceInformation daysOfAssistance).
@@ -236,23 +200,9 @@ ERFinishRegisterAttendeePage >> renderDaysOfAssistanceOn: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> renderEmailOn: html [
-	html strong: 'Email: '.
-			html text: (attendee userAccount email).
-	html break.
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderFacebookUrlOn: html [
 	html strong: 'Email: '.
 			html text: (attendee contactInformation facebookURL).
-	html break.
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderFirstNameOn: html [
-	html strong: 'First Name: '.
-			html text: (attendee userAccount firstName).
 	html break.
 ]
 
@@ -283,42 +233,6 @@ ERFinishRegisterAttendeePage >> renderKeywordsOn: html [
 	html strong: 'keywords: '.
 			html text: (attendee additionalInformation keywords).
 	html break.
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderLastNameOn: html [
-	html strong: 'Last Name: '.
-			html text: (attendee userAccount lastName).
-	html break.
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderMemberShipTypeOn: html [
-	html strong: 'MemberShip Type: '.
-			html text:  
-				attendee affiliationInformation membershipType.
-	html break.
-	
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderNameOrgOn: html [
-	html strong: 'Organization Name: '.
-			html text:  
-				attendee affiliationInformation organizationName.
-	html break.
-	
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> renderPageOn: html [
-	html mdlGrid class: 'mdl-grid--no-spacing';
-	with: [ 
-		self renderContactInformation: html.
-		self renderAffiliation: html.
-		self renderPaymentInformation: html.
-		self renderActions: html.
-	]
 ]
 
 { #category : #rendering }

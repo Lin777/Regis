@@ -234,6 +234,12 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> validateNewPassword: aString1 with: aString2 [
+	(aString1 = aString2) ifFalse: [ ERException new 
+		messageText: 'The password does not match with confirm password';signal ].
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> validatePatternEmail: aString withName: aString2 [
 	(aString matchesRegex: '\S+@\S+\.\S+')
 		ifFalse: [ ERException new

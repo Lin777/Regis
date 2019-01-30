@@ -21,7 +21,7 @@ ERGroupManager >> affiliationInformation: anObject [
 { #category : #'initialize-release' }
 ERGroupManager >> initialize [ 
 	super initialize .
-	userAccount := ERUserAccount1 new.
+	userAccount := ERUserAccount1 asGroupManager.
 	affiliationInformation := ERAffiliationInformation new.
 ]
 

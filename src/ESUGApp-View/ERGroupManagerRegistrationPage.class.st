@@ -7,29 +7,33 @@ Class {
 { #category : #initialization }
 ERGroupManagerRegistrationPage >> initialize [
 	super initialize.
+	pageController attendee: ERGroupManager new.
 	title := 'Group Manager'.
 	actionRegister := [ self registerAsGroupManager ]
 ]
 
 { #category : #initialization }
 ERGroupManagerRegistrationPage >> initializeTabForms [
-self addTab: (ERTabForAForm form: (ERBasicInformationForm on: self controller attendee) withContainer: self).
-	self addTab: (ERTabForAForm form: (ERAffiliationInformationForm on: self controller attendee) withContainer: self).
-	self
-		addTab:
-			(ERDoneButton on: self controller attendee 
-			button:  [ :html | self renderDoneButtonOn: html ]
-			container: self).
-	(self tabs at: 1) activate
+	self addBasicInfoTab.
+	self addAffiliationInfoTab.
+	self addDoneTab.
+	
+	currentTab := basicInfoTab.
+	currentTab updateStateTab: currentTab tabName.
 ]
 
 { #category : #initialize }
-ERGroupManagerRegistrationPage >> validateAndRegister [
+ERGroupManagerRegistrationPage >> redirectFinishRegister [
 	| finishRegisterView |
-	pageController validateRegisterForGroupManager.
 	finishRegisterView := ERFinishRegisterGroupManagerPage
 		on: pageController attendee
 		withContent: content
 		withController: pageController.
 	content state: finishRegisterView
+]
+
+{ #category : #initialize }
+ERGroupManagerRegistrationPage >> saveTabs [
+	self saveBasicInfo.
+	self saveAffilInfo.
 ]

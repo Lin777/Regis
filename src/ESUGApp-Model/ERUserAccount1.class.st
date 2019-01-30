@@ -12,6 +12,16 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
+{ #category : #converting }
+ERUserAccount1 class >> asGroupManager [
+	|instance|
+	instance := self new.
+	instance role: (Heap new
+		add: 'groupManager';
+		yourself).
+	^ instance
+]
+
 { #category : #accessing }
 ERUserAccount1 >> confirmPassword [
 	^ confirmPassword
@@ -96,7 +106,9 @@ ERUserAccount1 >> firstName: anObject [
 { #category : #initialization }
 ERUserAccount1 >> initialize [ 
 	super initialize .
-	role := 'attendee'
+	role := Heap new
+		add: 'attendee';
+		yourself
 ]
 
 { #category : #testing }
@@ -160,4 +172,12 @@ ERUserAccount1 >> role [
 { #category : #accessing }
 ERUserAccount1 >> role: anObject [
 	role := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount1 >> rolesAsString [
+	| roles |
+	roles := ''.
+	role do: [ :each | roles := roles , ' ' , each ].
+	^ roles
 ]

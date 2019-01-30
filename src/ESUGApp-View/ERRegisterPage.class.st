@@ -2,12 +2,25 @@ Class {
 	#name : #ERRegisterPage,
 	#superclass : #ERPage,
 	#instVars : [
+		'currentTab',
 		'tabs',
 		'actionRegister',
-		'messageComponent'
+		'messageComponent',
+		'basicInfoTab',
+		'affiliationInfo',
+		'doneTab'
 	],
 	#category : #'ESUGApp-View-Page'
 }
+
+{ #category : #accessing }
+ERRegisterPage class >> content: aContent [
+	| instance |
+	instance := self new.
+	instance content: aContent.
+	instance initializeTabForms.
+	^ instance
+]
 
 { #category : #accessing }
 ERRegisterPage >> actionRegister: anObject [
@@ -24,6 +37,36 @@ ERRegisterPage >> actionsBody: html [
 			self renderNextButtonOn: html.
 		].
 	]
+]
+
+{ #category : #adding }
+ERRegisterPage >> addAffiliationInfoTab [
+	affiliationInfo:= (ERContentTab new contentTab: self initializeAffiliationInformationComponent;
+			 tabId: 'affiliationInfoForm'; 
+			 tabName: 'Affiliation';
+			 container: self).
+	self
+		addTab: affiliationInfo .
+]
+
+{ #category : #adding }
+ERRegisterPage >> addBasicInfoTab [
+	basicInfoTab := (ERContentTab new contentTab: self initializeBasicInformationComponent;
+			 tabId: 'basicInfoForm'; 
+			 tabName: 'User';
+			 container: self).
+	self
+		addTab: basicInfoTab .
+]
+
+{ #category : #adding }
+ERRegisterPage >> addDoneTab [
+	doneTab := (ERDoneButton
+				on: self controller attendee
+				button: [ :html | self renderDoneButtonOn: html ]
+				container: self).
+	self
+		addTab: doneTab .
 ]
 
 { #category : #adding }
@@ -47,7 +90,27 @@ ERRegisterPage >> initialize [
 ]
 
 { #category : #initialization }
+ERRegisterPage >> initializeAffiliationInformationComponent [
+	^ pageController attendee affiliationInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #initialization }
+ERRegisterPage >> initializeBasicInformationComponent [
+	^ ((pageController attendee userAccount) 
+	as: ERUserAccountForRegister) asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #initialization }
 ERRegisterPage >> initializeTabForms [
+	self subclassResponsibility 
+]
+
+{ #category : #initialize }
+ERRegisterPage >> redirectFinishRegister [
 	self subclassResponsibility 
 ]
 
@@ -129,6 +192,27 @@ ERRegisterPage >> renderPageOn: html [
 ERRegisterPage >> renderSkipButtonOn: html [
 ]
 
+{ #category : #initialize }
+ERRegisterPage >> saveAffilInfo [
+	currentTab := affiliationInfo.
+	pageController attendee affiliationInformation: 
+	(affiliationInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERRegisterPage >> saveBasicInfo [
+	currentTab := basicInfoTab.
+	pageController attendee userAccount: 
+	((basicInfoTab contentTab save) model as: ERUserAccount1 )
+	
+]
+
+{ #category : #initialize }
+ERRegisterPage >> saveTabs [
+	self subclassResponsibility 
+]
+
 { #category : #hooks }
 ERRegisterPage >> states [
     ^ Array with: self
@@ -142,7 +226,12 @@ ERRegisterPage >> tabs [
 
 { #category : #initialize }
 ERRegisterPage >> validateAndRegister [
-	^ self subclassResponsibility 
+	 [self saveTabs] 
+	on: ERException 
+	do: [ currentTab updateStateTab: currentTab tabName.
+		^ self ].
+	pageController validateRegister.
+	self redirectFinishRegister
 ]
 
 { #category : #'as yet unclassified' }

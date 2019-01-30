@@ -140,9 +140,10 @@ ERBankTransferPage >> renderPageOn: html [
 
 { #category : #rendering }
 ERBankTransferPage >> renderTableInfoBank: html [
+	html div style: 'overflow-x: auto;'; with: [
 	html mdlTable
 				class: 'mdl-shadow--2dp';
 				style: 'width:100%;';
 				with: [ self renderHeaders: html.
-						  self renderBody: html] 
+						  self renderBody: html] ]
 ]

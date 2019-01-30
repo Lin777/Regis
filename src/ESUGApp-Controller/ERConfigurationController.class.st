@@ -20,9 +20,9 @@ ERConfigurationController >> addAttendee: anAttendee [
 { #category : #adding }
 ERConfigurationController >> addAttendsToLunchPer: day to: list [
 	| normal vegetarian vegan |
-	normal :=((self attends select: #isNormal) select: day asSymbol) size.
-	vegan :=((self attends select: #isVegan) select: day asSymbol) size.
-	vegetarian :=((self attends select: #isVegetarian) select: day asSymbol) size.
+	normal :=((self attends select: [:each | each conferenceInformation isNormal]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
+	vegan :=((self attends select: [:each | each conferenceInformation isVegan]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
+	vegetarian :=((self attends select: [:each | each conferenceInformation isVegetarian]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
 	
 	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list.
 	
@@ -46,10 +46,10 @@ ERConfigurationController >> addItemTo: aList of: each [
 	women := 0.
 	self attends
 		do: [ :anAttendee | 
-			anAttendee tshirtSize = each
-				ifTrue: [ anAttendee isMale
+			anAttendee conferenceInformation tshirtSize = each
+				ifTrue: [ anAttendee conferenceInformation isMale
 						ifTrue: [ man := man + 1 ].
-					anAttendee isFemale
+					anAttendee conferenceInformation isFemale
 						ifTrue: [ women := women + 1 ] ]].
 			aList
 				add:
@@ -311,10 +311,10 @@ ERConfigurationController >> participantsToLunches [
 { #category : #'as yet unclassified' }
 ERConfigurationController >> participantsToSocialDinner [
 	| normal vegetarian vegan list|
-	list := (self attends select: #attendSocialEvent).
-	normal :=(list select: #isNormal) size.
-	vegan :=(list select:  #isVegan) size.
-	vegetarian :=(list select:  #isVegetarian) size.
+	list := (self attends select: [:each | each conferenceInformation attendSocialEvent]).
+	normal :=(list select: [:each | each conferenceInformation isNormal]) size.
+	vegan :=(list select:  [:each | each conferenceInformation isVegan]) size.
+	vegetarian :=(list select:  [:each | each conferenceInformation isVegetarian]) size.
 	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
 ]
 

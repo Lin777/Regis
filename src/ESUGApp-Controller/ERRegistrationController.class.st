@@ -38,9 +38,9 @@ ERRegistrationController >> addAttendeeToTicketIfExist [
 { #category : #action }
 ERRegistrationController >> addAttendeeToTicketIfExist: anAttendee [
 	[| coupon |
-	coupon := self reductionTicketWithName: anAttendee coupon.
+	coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 	self addAttendeeToTicket: coupon.] on: ERException do:[
-	anAttendee coupon: ''].
+	anAttendee paymentInformation coupon: ''].
 
 ]
 
@@ -69,13 +69,14 @@ ERRegistrationController >> initialize [
 ERRegistrationController >> save [
 	| attendeeResult |
 	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
+	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
 	attendeeResult := self saveAttendee.
-	attendeeResult userAccount isAttendee
+	"attendeeResult userAccount isAttendee
 		ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
 			conference addAttendee: attendeeResult ].
 	attendeeResult userAccount isGroupManager
 		ifTrue: [ (ERGroupManagerController new attendee: attendeeResult)
-				groupForGroupManager ].
+				groupForGroupManager ]."
 	conference save.
 	^ attendeeResult userAccount
 ]
@@ -275,12 +276,9 @@ ERRegistrationController >> validatePaymentForm [
 
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateRegister [
-	self validateUserForm.
-	self validateContactForm.
-	self validateConferenceForm.
-	self validateAffiliationForm.
-	self validateAdditionalForm.
-	self validatePaymentForm
+	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
+	self validateNewPassword: attendee userAccount password 
+	with: attendee userAccount confirmPassword
 ]
 
 { #category : #'as yet unclassified' }

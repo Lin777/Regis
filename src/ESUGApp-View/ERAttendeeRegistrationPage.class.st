@@ -2,26 +2,13 @@ Class {
 	#name : #ERAttendeeRegistrationPage,
 	#superclass : #ERRegisterPage,
 	#instVars : [
-		'currentTab',
-		'basicInfoTab',
 		'contactInfoTab',
 		'regConfInfo',
 		'addInfo',
-		'affiliationInfo',
-		'doneTab',
 		'paymentInfoTab'
 	],
 	#category : #'ESUGApp-View-Page'
 }
-
-{ #category : #accessing }
-ERAttendeeRegistrationPage class >> content: aContent [
-	| instance |
-	instance := self new.
-	instance content: aContent.
-	instance initializeTabForms.
-	^ instance
-]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addAdditionalInfoTab [
@@ -34,26 +21,6 @@ ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 ]
 
 { #category : #initialize }
-ERAttendeeRegistrationPage >> addAffiliationInfoTab [
-	affiliationInfo:= (ERContentTab new contentTab: self initializeAffiliationInformationComponent;
-			 tabId: 'affiliationInfoForm'; 
-			 tabName: 'Affiliation';
-			 container: self).
-	self
-		addTab: affiliationInfo .
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> addBasicInfoTab [
-	basicInfoTab := (ERContentTab new contentTab: self initializeBasicInformationComponent;
-			 tabId: 'basicInfoForm'; 
-			 tabName: 'User';
-			 container: self).
-	self
-		addTab: basicInfoTab .
-]
-
-{ #category : #initialize }
 ERAttendeeRegistrationPage >> addContactInfoTab [
 	contactInfoTab := (ERContentTab new contentTab: self initializeContactInformationComponent;
 			 tabId: 'contactInfoForm'; 
@@ -61,16 +28,6 @@ ERAttendeeRegistrationPage >> addContactInfoTab [
 			 container: self).
 	self
 		addTab: contactInfoTab.
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> addDoneTab [
-	doneTab := (ERDoneButton
-				on: self controller attendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self).
-	self
-		addTab: doneTab .
 ]
 
 { #category : #initialize }
@@ -93,11 +50,6 @@ ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 		addTab: regConfInfo .
 ]
 
-{ #category : #accessing }
-ERAttendeeRegistrationPage >> currentTab: anObject [
-	currentTab := anObject
-]
-
 { #category : #initialization }
 ERAttendeeRegistrationPage >> initialize [
 	actionRegister := [ self register ].
@@ -109,21 +61,6 @@ ERAttendeeRegistrationPage >> initialize [
 ERAttendeeRegistrationPage >> initializeAdditionalInformationComponent [
 	
 	^ pageController attendee additionalInformation asComponent
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializeAffiliationInformationComponent [
-	^ pageController attendee affiliationInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializeBasicInformationComponent [
-	^ ((pageController attendee userAccount) 
-	as: ERUserAccountForRegister) asComponent 
 	addDecoration: MAValidationDecoration new;
 	 yourself
 ]
@@ -164,26 +101,20 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 ]
 
 { #category : #initialize }
+ERAttendeeRegistrationPage >> redirectFinishRegister [
+	| finishRegisterView |
+	finishRegisterView := ERFinishRegisterAttendeePage
+		on: pageController attendee
+		withContent: content
+		withController: pageController.
+	content state: finishRegisterView
+]
+
+{ #category : #initialize }
 ERAttendeeRegistrationPage >> saveAddInfo [
 	currentTab := addInfo.
 	pageController attendee additionalInformation: 
 	(addInfo contentTab save) model
-	
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> saveAffilInfo [
-	currentTab := affiliationInfo.
-	pageController attendee affiliationInformation: 
-	(affiliationInfo contentTab save) model
-	
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> saveBasicInfo [
-	currentTab := basicInfoTab.
-	pageController attendee userAccount: 
-	((basicInfoTab contentTab save) model as: ERUserAccount1 )
 	
 ]
 
@@ -219,21 +150,4 @@ ERAttendeeRegistrationPage >> saveTabs [
 	self saveAffilInfo.
 	self saveAddInfo.
 	self savePaymentInfo.
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> validateAndRegister [
-	| finishRegisterView |
-	 [self saveTabs] 
-	on: ERException 
-	do: [ currentTab updateStateTab: currentTab tabName.
-		^ self ]."
-	pageController save."
-	"pageController validateRegister."
-	
-	finishRegisterView := ERFinishRegisterAttendeePage
-		on: pageController attendee
-		withContent: content
-		withController: pageController.
-	content state: finishRegisterView
 ]
