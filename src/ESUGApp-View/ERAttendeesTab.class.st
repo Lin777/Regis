@@ -36,6 +36,7 @@ controller exportAttends: 'attends' .
 
 { #category : #rendering }
 ERAttendeesTab >> generateInvoice: user [
+	ERPDFInvoice templateRegistrationInvoice: user.
 ]
 
 { #category : #rendering }
