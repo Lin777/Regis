@@ -1,6 +1,9 @@
 Class {
 	#name : #ERGroupManagerController,
 	#superclass : #ERLoggedController,
+	#instVars : [
+		'group'
+	],
 	#category : #'ESUGApp-Controller'
 }
 
@@ -107,20 +110,35 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 ]
 
 { #category : #accessing }
+ERGroupManagerController >> group [
+	^ group
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> group: anObject [
+	group := anObject
+]
+
+{ #category : #accessing }
 ERGroupManagerController >> groupForGroupManager [
-	^ self groupOfAttendee: attendee
+	^ self groupOfUser: attendee
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> groupManager [ 
+	^ group groupManager
 ]
 
 { #category : #adding }
-ERGroupManagerController >> groupOfAttendee: aGroupManager [
-	| group |
-	group := ERGroup
-		find: [ :each | each groupManager = aGroupManager ].
-	group
+ERGroupManagerController >> groupOfUser: aGroupManager [
+	| aGroup |
+	aGroup := ERGroup1
+		find: [ :each | each groupManager userAccount = aGroupManager ].
+	aGroup
 		ifNil: [ 
-			group := self createGroup: aGroupManager .
+			aGroup := self createGroup: aGroupManager .
 			 ].
-	^ group
+	^ aGroup
 ]
 
 { #category : #adding }

@@ -193,6 +193,7 @@ ERTestControllers >> tearDown [
 			[ each delete ]
 				on: Error
 				do: [  ] ].
+	ERAttendee coolDown.
 	ERAttendee1
 		do: [ :each | 
 			[ each delete ]

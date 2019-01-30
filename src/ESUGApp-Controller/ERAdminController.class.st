@@ -20,14 +20,6 @@ ERAdminController >> changePasswordTo: aString [
 
 { #category : #'as yet unclassified' }
 ERAdminController >> updateUser: anUser [
-	self validatePatternForRequired: anUser email withName: 'Email'.
-	self
-		validatePatternForRequired: anUser firstName
-		withName: 'First name'.
-	self
-		validatePatternForRequired: anUser lastName
-		withName: 'Last name'.
-	self validatePatternEmail: anUser email withName: 'Email'.
 	self validateIfEmailIsAlreadyRegistered: anUser.
 	^anUser save
 ]

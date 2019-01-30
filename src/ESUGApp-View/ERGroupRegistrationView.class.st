@@ -25,8 +25,14 @@ ERGroupRegistrationView >> initialize [
 
 { #category : #rendering }
 ERGroupRegistrationView >> initializeTabForms [
-	tabs add: (ERGroupRegistrationSummaryTab on: attendee withContent: content container: self);
-	add: (ERMembersTab on: attendee withContent: content container: self).
+	tabs add: (ERGroupRegistrationSummaryTab 
+					on: attendee 
+					withContent: content
+					container: self);
+	add: (ERMembersTab 
+					on: attendee 
+					withContent: content 
+					container: self).
 	(tabs at: 1) activate
 ]
 

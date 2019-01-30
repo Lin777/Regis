@@ -84,7 +84,7 @@ ERContainerTab >> initializeApplyReductionTicketForm: user [
 
 { #category : #initialization }
 ERContainerTab >> initializeFormRegister [
-	newAttendee := ERAttendee new.
+	newAttendee := ERAttendee1 new.
 	formRegister := ERContainerTabs
 		formRegisterOn: newAttendee
 		withCallback: callback

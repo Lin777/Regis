@@ -48,7 +48,7 @@ ERTestGroupManagerController >> testGroupOfAttendee [
 	| user group |
 	user := self registerAttendee.
 	group := ERGroupManagerController new
-		groupOfAttendee: user.
+		groupOfUser: user.
 	self assert: (group isKindOf: ERGroup )
 ]
 

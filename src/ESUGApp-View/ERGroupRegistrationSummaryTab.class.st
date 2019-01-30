@@ -7,36 +7,31 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #'as yet unclassified' }
-ERGroupRegistrationSummaryTab class >> on: anAttendee withContent: aContent [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form initializeController.
-	form initializeFormRegister.
-	form initializeModifyAffiliationForm.
-	^ form
-]
-
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> generateInvoice [
 	
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> initialize [
-	super initialize
-]
-
-{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERModifyAffiliationForm
+	|form|
+	form := controller groupManager affiliationInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself.
+	formMofidyAffiliation := (ERModifyForm on: controller groupManager
+		withContent: content)
+		form: form;
+		title: 'Affiliation Information';
+		cancelCallback: [ self cancel ];
+		updateCallback: [ self updateAffiliation ];
+		yourself.
+	
+	"(ERModifyAffiliationForm
 		on: attendee
 		withContent: content)
 		cancelCallback: [ self cancel ];
 		updateCallback: [ self updateAffiliation ];
-		yourself
+		yourself"
 ]
 
 { #category : #rendering }
@@ -192,6 +187,7 @@ ERGroupRegistrationSummaryTab >> title [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> updateAffiliation [
-	attendee save.
+	controller groupManager affiliationInformation: (formMofidyAffiliation form save) model.
+	controller group save.
 	self returnToThePreviousState
 ]

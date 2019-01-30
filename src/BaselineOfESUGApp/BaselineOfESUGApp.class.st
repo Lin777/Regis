@@ -37,7 +37,6 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'Seaside3'
 		with: [ spec
-"				loads: #('Core' 'JQuery' 'Zinc');"
 				repository: 'github://SeasideSt/Seaside:master/repository' ].
 	"spec
 		baseline: 'Parasol'
@@ -47,6 +46,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://DuneSt/MaterialDesignLite:master/src' ].
+	
 	spec
 		project: 'SandstoneDb'
 		with: [ spec
@@ -58,5 +58,17 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 		with: [ spec
 				className: 'ConfigurationOfNeoCSV';
 				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ]
+				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+	
+	spec
+    baseline: 'Magritte'
+    with: [ spec repository: 'github://magritte-metamodel/magritte:master/source';
+			   onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		      load: #('Magritte-Seaside') ].
+	
+	spec
+    baseline: 'MaterialDesignLite'
+    with: [ spec githubUser: 'DuneSt' project: 'MaterialDesignLite' commitish: 'v2.x.x' path: 'src';
+			   onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		      load: 'all' ].
 ]

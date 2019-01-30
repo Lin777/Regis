@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
-	form := super on: anAttendee withContent: aContent.
+	form := self on: anAttendee withContent: aContent.
 	form initializeController.
 	form initializeFormRegister.
 	form container: aContainer.
@@ -16,7 +16,7 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: 
 
 { #category : #accessing }
 ERGroupRegistrationTab >> attends [
-	^ (ERGroupManagerController new groupOfAttendee: attendee)
+	^ (ERGroupManagerController new groupOfUser: attendee)
 		listAttends
 ]
 
@@ -27,18 +27,14 @@ ERGroupRegistrationTab >> cancel [
 
 { #category : #accessing }
 ERGroupRegistrationTab >> group [
-	^ (ERGroupManagerController new groupOfAttendee: attendee)
+	^ (ERGroupManagerController new groupOfUser: attendee)
 		
 ]
 
 { #category : #initialization }
-ERGroupRegistrationTab >> initialize [
-	super initialize.
-]
-
-{ #category : #initialization }
 ERGroupRegistrationTab >> initializeController [
-	controller := ERGroupManagerController new attendee: attendee
+	controller := ERGroupManagerController new.
+	controller group: (controller groupOfUser: attendee)
 ]
 
 { #category : #rendering }

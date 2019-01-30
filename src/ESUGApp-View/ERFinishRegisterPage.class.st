@@ -35,6 +35,11 @@ ERFinishRegisterPage >> content: anObject [
 
 { #category : #rendering }
 ERFinishRegisterPage >> finishAction [
+	self finishRegister 
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> finishRegister [
 	self subclassResponsibility 
 ]
 
@@ -49,7 +54,7 @@ ERFinishRegisterPage >> initialize [
 
 { #category : #rendering }
 ERFinishRegisterPage >> nextAction [
-	self subclassResponsibility
+	self finishRegister
 ]
 
 { #category : #'as yet unclassified' }

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 ERMembersTab >> attends [
 	^ (ERGroupManagerController new
-		groupOfAttendee: attendee ) listAttends
+		groupOfUser: attendee ) listAttends
 ]
 
 { #category : #'as yet unclassified' }

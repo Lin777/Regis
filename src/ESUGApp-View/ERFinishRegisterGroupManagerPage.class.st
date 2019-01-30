@@ -20,11 +20,6 @@ ERFinishRegisterGroupManagerPage >> cancelAction [
 ]
 
 { #category : #rendering }
-ERFinishRegisterGroupManagerPage >> finishAction [
-	self finishRegister 
-]
-
-{ #category : #rendering }
 ERFinishRegisterGroupManagerPage >> finishRegister [
 	| user |
 	user := pageController saveAsGroupManager.
@@ -33,11 +28,6 @@ ERFinishRegisterGroupManagerPage >> finishRegister [
 			self call: ERLoggedPage new ].
 	self answer: true"
 	self redirectLoggedPage: user
-]
-
-{ #category : #rendering }
-ERFinishRegisterGroupManagerPage >> nextAction [
-	self finishRegister 
 ]
 
 { #category : #rendering }

@@ -25,11 +25,6 @@ ERFinishRegisterAttendeePage >> content: anObject [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> finishAction [
-	self finishRegister
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> finishRegister [
 	attendee paymentInformation paymentTypeIsBankTransfer
 		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
@@ -38,11 +33,6 @@ ERFinishRegisterAttendeePage >> finishRegister [
 	ERException new
 		messageText: 'The type of payment entered is not valid. ';
 		signal
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> nextAction [
-	self finishRegister
 ]
 
 { #category : #rendering }
