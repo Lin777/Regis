@@ -52,6 +52,15 @@ ERFinishRegisterPage >> nextAction [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+ERFinishRegisterPage >> redirectLoggedPage: anUser [
+	anUser
+		ifNotNil: [ self session login: anUser.
+			self call: ERLoggedPage new].
+	self answer: true
+
+]
+
 { #category : #'tools registry' }
 ERFinishRegisterPage >> register [
 	| user |

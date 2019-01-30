@@ -1,6 +1,6 @@
 Class {
 	#name : #ERGroupManager,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#instVars : [
 		'userAccount',
 		'affiliationInformation'

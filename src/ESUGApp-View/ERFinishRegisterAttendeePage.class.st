@@ -48,7 +48,7 @@ ERFinishRegisterAttendeePage >> nextAction [
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> registerAndRedirectionPayPAL [
 	| url |
-	pageController save.
+	pageController saveAttendee.
 	url := pageController payPalUrlFor: attendee.
 	self requestContext redirectTo: url
 ]

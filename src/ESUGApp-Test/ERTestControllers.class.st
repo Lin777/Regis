@@ -163,6 +163,8 @@ ERTestControllers >> setUp [
 	SDActiveRecord setStore: store.
 	ERUserAccount warmUp.
 	ERAttendee warmUp.
+	ERUserAccount1 warmUp.
+	ERAttendee1 warmUp.
 	ERAward warmUp.
 	ERBankInformation warmUp.
 	ERBankAccountInformation warmUp.
@@ -191,7 +193,12 @@ ERTestControllers >> tearDown [
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERAttendee coolDown.
+	ERAttendee1
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAttendee1 coolDown.
 	ERAward
 		do: [ :each | 
 			[ each delete ]
@@ -277,6 +284,12 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERUserAccount coolDown.
+	ERUserAccount1
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERUserAccount1 coolDown.
 	ERConferenceOrganizer
 		do: [ :each | 
 			[ each delete ]

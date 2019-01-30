@@ -67,18 +67,12 @@ ERRegistrationController >> initialize [
 
 { #category : #action }
 ERRegistrationController >> save [
-	| attendeeResult |
+	| user|
 	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
-	attendeeResult := self saveAttendee.
-	"attendeeResult userAccount isAttendee
-		ifTrue: [ self addAttendeeToTicketIfExist: attendeeResult.
-			conference addAttendee: attendeeResult ].
-	attendeeResult userAccount isGroupManager
-		ifTrue: [ (ERGroupManagerController new attendee: attendeeResult)
-				groupForGroupManager ]."
-	conference save.
-	^ attendeeResult userAccount
+	user := self attendee userAccount save.
+	conference addUser: user.
+	^ user
 ]
 
 { #category : #action }
@@ -89,11 +83,22 @@ ERRegistrationController >> saveAsGroupManager [
 
 { #category : #action }
 ERRegistrationController >> saveAttendee [
-	| user |
-	user := self attendee userAccount save.
-	conference addUser: user.
-	self attendee userAccount: user.
-	^ self attendee save
+	|attendeeSaved|
+	self attendee userAccount: self save.
+	attendeeSaved := self attendee save.
+	conference addAttendee: attendeeSaved .
+	conference save.
+	^ attendeeSaved userAccount 
+]
+
+{ #category : #action }
+ERRegistrationController >> saveGroupManager [
+	|groupSaved|
+	self attendee userAccount: self save.
+	groupSaved := ERGroup1 groupManager: self attendee save.
+	conference addGroup: groupSaved .
+	conference save.
+	^ self attendee userAccount 
 ]
 
 { #category : #'as yet unclassified' }
