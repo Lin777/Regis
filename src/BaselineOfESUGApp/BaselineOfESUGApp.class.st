@@ -59,16 +59,4 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 				className: 'ConfigurationOfNeoCSV';
 				version: #stable;
 				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
-	
-	spec
-    baseline: 'Magritte'
-    with: [ spec repository: 'github://magritte-metamodel/magritte:master/source';
-			   onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		      load: #('Magritte-Seaside') ].
-	
-	spec
-    baseline: 'MaterialDesignLite'
-    with: [ spec githubUser: 'DuneSt' project: 'MaterialDesignLite' commitish: 'v2.x.x' path: 'src';
-			   onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		      load: 'all' ].
 ]

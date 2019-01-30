@@ -160,6 +160,22 @@ ESUGSetUp class >> createESUGConfiguration [
 		uploadingFilesTo: ((Smalltalk imageDirectory / 'UploadedFiles') ensureCreateDirectory) pathString"
 ]
 
+{ #category : #'as yet unclassified' }
+ESUGSetUp class >> loadMagritteForMDL [
+	
+	Metacello new
+	baseline: 'Magritte';
+		repository: 'github://magritte-metamodel/magritte:master/source';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: #('Magritte-Seaside').
+		
+ 	Metacello new
+        githubUser: 'DuneSt' project: 'MaterialDesignLite' commitish: 'v2.x.x' path: 'src';
+        baseline: 'MaterialDesignLite';
+onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+        load: 'all'.
+]
+
 { #category : #accessing }
 ESUGSetUp class >> start [
 	| esugConferenceConfiguration entryPoint conference |
