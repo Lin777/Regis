@@ -226,6 +226,17 @@ ERFinishRegisterAttendeePage >> renderKeywordsOn: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterAttendeePage >> renderPageOn: html [
+	html mdlGrid class: 'mdl-grid--no-spacing';
+	with: [ 
+		self renderContactInformation: html.
+		self renderAffiliation: html.
+		self renderPaymentInformation: html.
+		self renderActions: html.
+	]
+]
+
+{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderPaymentCurrencyOn: html [
 	html strong: 'Payment Currency: '.
 			html text:  

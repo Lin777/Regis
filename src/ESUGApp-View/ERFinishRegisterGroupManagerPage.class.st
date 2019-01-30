@@ -22,11 +22,7 @@ ERFinishRegisterGroupManagerPage >> cancelAction [
 { #category : #rendering }
 ERFinishRegisterGroupManagerPage >> finishRegister [
 	| user |
-	user := pageController saveAsGroupManager.
-	"user
-		ifNotNil: [ self session login: user.
-			self call: ERLoggedPage new ].
-	self answer: true"
+	user := pageController saveGroupManager.
 	self redirectLoggedPage: user
 ]
 

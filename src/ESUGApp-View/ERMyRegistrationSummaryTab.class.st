@@ -21,9 +21,9 @@ ERMyRegistrationSummaryTab >> modifyRegistration [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> pay [
-	attendee paymentTypeIsBankTransfer
+	attendee paymentInformation paymentTypeIsBankTransfer
 		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	attendee paymentTypeIsCreditCard
+	attendee paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self redirectionPayPAL ]
 ]
 
@@ -75,14 +75,14 @@ ERMyRegistrationSummaryTab >> renderContainer: html [
 ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
 	self
 		createTextStrong: 'Attendace Day(s): '
-		withText: attendee daysOfAssistance
+		withText: attendee conferenceInformation daysOfAssistance
 		on: html.
 	self
 		createTextStrong: 'Payment Status: '
 		withText:
 			'Payment no registered yet. Amount due: '
 				, (ERController new conferenceFeeFor: attendee) asString , ' '
-				, attendee paymentCurrency , '(s) '
+				, attendee paymentInformation paymentCurrency , '(s) '
 				, ' (NOTE: you could have paid but we could have not registered it yet)'
 		on: html
 ]

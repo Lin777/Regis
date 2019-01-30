@@ -58,7 +58,7 @@ ERAdminView >> initialize [
 ERAdminView >> initializeTabForms [
    tabs add: (ERAdminUserTab on: attendee withContent: content container: self).
    tabs add: (ERChangePasswordForm on: attendee withContent: content container: self).
-	self attendee userAccount isAdmin ifTrue: [ self addTabsForAdmin ].
+	self attendee isAdmin ifTrue: [ self addTabsForAdmin ].
 	(tabs at: 1) activate.
 	
 ]

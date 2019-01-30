@@ -141,7 +141,10 @@ ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderOrganizationName: html [
-	self createTextStrong: 'Organization Name: ' with: #orgName on: html
+	html
+		paragraph: [ html strong: 'Organization Name: '.
+			html text: (self groupManager affiliationInformation organizationName) ]."
+	self createTextStrong: 'Organization Name: ' with: #orgName on: html"
 ]
 
 { #category : #rendering }

@@ -41,7 +41,7 @@ ERLoginController >> validateLogin [
 { #category : #rendering }
 ERLoginController >> validateUserLogin: anObject [
 	| anUser |
-	anUser := ERUserAccount findUserByEmail: anObject email.
+	anUser := ERUserAccount1 findUserByEmail: anObject email.
 	(anUser notNil and: [ anUser  password = anObject password ])
 		ifTrue: [ ^ anUser ]
 		ifFalse: [ ^ nil ]

@@ -2,7 +2,6 @@ Class {
 	#name : #ERYesNoTab,
 	#superclass : #ERContentAdminTab,
 	#instVars : [
-		'tabId',
 		'name',
 		'title',
 		'callbackNo',

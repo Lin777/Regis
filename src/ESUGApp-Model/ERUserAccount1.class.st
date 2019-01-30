@@ -22,6 +22,13 @@ ERUserAccount1 class >> asGroupManager [
 	^ instance
 ]
 
+{ #category : #actions }
+ERUserAccount1 class >> findUserByEmail: aString [
+	| userAccount |
+	userAccount := ERUserAccount1 find: [ :each | each email = aString ].
+	^ userAccount
+]
+
 { #category : #accessing }
 ERUserAccount1 >> confirmPassword [
 	^ confirmPassword

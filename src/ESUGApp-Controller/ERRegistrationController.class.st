@@ -95,7 +95,7 @@ ERRegistrationController >> saveAttendee [
 ERRegistrationController >> saveGroupManager [
 	|groupSaved|
 	self attendee userAccount: self save.
-	groupSaved := ERGroup1 groupManager: self attendee save.
+	groupSaved := (ERGroup1 groupManager: self attendee) save.
 	conference addGroup: groupSaved .
 	conference save.
 	^ self attendee userAccount 

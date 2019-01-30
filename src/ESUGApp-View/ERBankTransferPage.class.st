@@ -45,10 +45,7 @@ ERBankTransferPage >> okAction [
 	| user |
 	user := pageController saveAttendee.
 	self redirectLoggedPage:user
-	"user
-		ifNotNil: [ self session login: user.
-			self call: ERLoggedPage new].
-	self answer: true"
+	
 ]
 
 { #category : #rendering }

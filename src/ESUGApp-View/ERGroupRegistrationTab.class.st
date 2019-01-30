@@ -31,10 +31,28 @@ ERGroupRegistrationTab >> group [
 		
 ]
 
+{ #category : #accessing }
+ERGroupRegistrationTab >> groupManager [ 
+	^ self group groupManager 
+		
+]
+
 { #category : #initialization }
 ERGroupRegistrationTab >> initializeController [
 	controller := ERGroupManagerController new.
 	controller group: (controller groupOfUser: attendee)
+]
+
+{ #category : #accessing }
+ERGroupRegistrationTab >> listAttendees [ 
+	^ self group listAttends  
+		
+]
+
+{ #category : #accessing }
+ERGroupRegistrationTab >> paymentInformation [ 
+	^ self group paymentInformation   
+		
 ]
 
 { #category : #rendering }
