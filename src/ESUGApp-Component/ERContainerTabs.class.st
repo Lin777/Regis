@@ -95,7 +95,8 @@ ERContainerTabs >> cancel [
 "	attendee version > 0
 		ifTrue: [ attendee abortChanges ]."
 
-	content state: content lastState
+	content state: content lastState.
+	"self updateStateTab: self tabName."
 ]
 
 { #category : #accessing }
@@ -127,7 +128,7 @@ ERContainerTabs >> initializeDialog [
 { #category : #accessing }
 ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 	tabs := OrderedCollection new
-	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createAffiliationInfoTab: anAttendee withContent: self) activate;
 		add:
 			(ERDoneButton
 				on: anAttendee

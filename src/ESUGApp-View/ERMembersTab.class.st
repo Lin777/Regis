@@ -47,9 +47,10 @@ ERMembersTab >> initialize [
 
 { #category : #initialization }
 ERMembersTab >> initializeModifyUserForm [
-	mofidyUserForm := ERModifyUserView
+	mofidyUserForm := (ERTittledFormView on: attendee userAccount 
+								withContent: content) title: 'User'."ERModifyUserView
 		on: attendee
-		withContent: content.
+		withContent: content."
 	
 	content state: mofidyUserForm
 ]
@@ -70,7 +71,7 @@ ERMembersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'Modify User'
-				with: [ :user | self modifyUserFormGroup: user ]
+				with: [ :user | self modifyUserFormGroup: user userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array

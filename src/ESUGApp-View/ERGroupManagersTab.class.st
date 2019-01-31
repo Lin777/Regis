@@ -58,7 +58,8 @@ ERGroupManagersTab >> initializeFormRegisterAdminToGroupManager [
 		formAdminToGMRegisterOn: attendee
 		withCallback: callback
 		content: content.
-	content state: groupManagerForm
+	content state: groupManagerForm.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }
@@ -76,7 +77,8 @@ ERGroupManagersTab >> initializeFormRegisterModifyAffiliationGroupManager: aGrou
 		formAdminToGMRegisterOn: aGroupManager
 		withCallback: [ self registerAdminAsGroupManager ]
 		content: content.
-	content state: groupManagerForm
+	content state: groupManagerForm.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -95,7 +97,7 @@ ERGroupManagersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'Modify User'
-				with: [ :user | self modifyUserFormGroup: user groupManager ]
+				with: [ :user | self modifyUserFormGroup: user groupManager userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array

@@ -101,13 +101,15 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 { #category : #accessing }
 ERContainerTab >> modifyUserFormGroup: anUser [
 	
-	mofidyUserForm := ERModifyUserView
+	mofidyUserForm := (ERTittledFormView on: anUser 
+								withContent: content) title: 'User'. "ERModifyUserView
 		on: anUser
 		withContent: content
 		withAction: [ controller updateUser: anUser.
 			self returnToThePreviousState.
-			self updateStateTab: self tabName.  ].
-	content state: mofidyUserForm
+			self updateStateTab: self tabName.  ]."
+	content state: mofidyUserForm.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
