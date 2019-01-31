@@ -83,15 +83,6 @@ ERContainerTab >> initializeApplyReductionTicketForm: user [
 ]
 
 { #category : #initialization }
-ERContainerTab >> initializeFormRegister [
-	newAttendee := ERAttendee1 new.
-	formRegister := ERContainerTabs
-		formRegisterOn: newAttendee
-		withCallback: callback
-		content: content
-]
-
-{ #category : #initialization }
 ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 	formWithoutBasicInfo := ERContainerTabs
 		formWithoutBasicInfoOn: anAttendee
@@ -118,12 +109,6 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 			self returnToThePreviousState.
 			self updateStateTab: self tabName.  ].
 	content state: mofidyUserForm
-]
-
-{ #category : #rendering }
-ERContainerTab >> registerAttendee [
-	self initializeFormRegister.
-	content state: formRegister
 ]
 
 { #category : #rendering }

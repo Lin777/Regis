@@ -20,7 +20,7 @@ ERAdminUserTab class >> on: anAttendee withContent: aContent [
 
 { #category : #rendering }
 ERAdminUserTab >> acceptUser [
-	[ controller updateUser: (modifiedUser contentTab save) model ]
+	[ controller updateUser: (modifiedUser save) model ]
 		on: ERException
 		do: [ :exception | 
 			messageComponent errorMessage: exception messageText ].

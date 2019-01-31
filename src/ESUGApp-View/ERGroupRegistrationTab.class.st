@@ -1,6 +1,9 @@
 Class {
 	#name : #ERGroupRegistrationTab,
 	#superclass : #ERContainerTab,
+	#instVars : [
+		'newAttendee'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -43,6 +46,15 @@ ERGroupRegistrationTab >> initializeController [
 	controller group: (controller groupOfUser: attendee)
 ]
 
+{ #category : #rendering }
+ERGroupRegistrationTab >> initializeFormRegister [
+	newAttendee := (ERAttendee1 new) affiliationInformation: (self groupManager affiliationInformation).
+	formRegister := ERContainerTabs
+		formRegisterOn: newAttendee
+		withCallback: callback
+		content: content
+]
+
 { #category : #accessing }
 ERGroupRegistrationTab >> listAttendees [ 
 	^ self group listAttends  
@@ -58,7 +70,8 @@ ERGroupRegistrationTab >> paymentInformation [
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendee [
 	callback := [ self registerAttendeeToGroupManager ].
-	super registerAttendee.
+	self initializeFormRegister.
+	content state: formRegister.
 	self updateStateTab: self tabName
 ]
 

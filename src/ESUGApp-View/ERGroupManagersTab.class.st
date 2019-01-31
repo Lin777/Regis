@@ -18,7 +18,7 @@ ERGroupManagersTab >> blockTableToExecute [
 	OrderedCollection new
 		add: ([ :att | att groupManager userAccount firstName ] value: group);
 		add: ([ :att | att groupManager userAccount email ] value: group);
-		add: ([ :att | att groupManager userAccount orgName ] value: group);
+		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
 		add:
 			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
 				value: group);
@@ -136,7 +136,7 @@ ERGroupManagersTab >> registerGM [
 
 { #category : #rendering }
 ERGroupManagersTab >> registerGroupManager [
-	newAttendee := ERAttendee new.
+	newAttendee := ERAttendee1 new.
 	self initializeFormRegisterForGroupManager: newAttendee.
 	self updateStateTab: self tabName. 
 ]

@@ -26,6 +26,57 @@ ERComponentFactory >> attendee: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent [
+	
+	^ ERContentTab new 
+	 contentTab: (self createAdditionalInformationComponent: anAttendee);
+			 tabId: 'additionalInfoForm'; 
+			 tabName: 'Additional';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createAdditionalInformationComponent: anAttendee [
+	
+	^ anAttendee additionalInformation asComponent
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+		contentTab: (self createAffiliationInformationComponentOn: anAttendee);
+			 tabId: 'affiliationInfoForm'; 
+			 tabName: 'Affiliation';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createAffiliationInformationComponentOn: anAttendee [
+	^ anAttendee affiliationInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+		contentTab: (self createBasicInformationComponent: anAttendee);
+			 tabId: 'basicInfoForm'; 
+			 tabName: 'User';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createBasicInformationComponent: anAttendee [
+	^ ((anAttendee userAccount) 
+	as: ERUserAccountForRegister) asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createButtonField: aName with: aBlock id: anId on: html [
 	html mdlButton
 		beSubmit;
@@ -92,6 +143,22 @@ ERComponentFactory >> createColoredButtonAsSubmit: aName with: aBlock id: anId o
 		id: anId;
 		callback: aBlock;
 		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+		contentTab: (self createContactInformationComponent: anAttendee);
+			 tabId: 'contactInfoForm'; 
+			 tabName: 'Contact';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createContactInformationComponent: anAttendee [
+	^ anAttendee contactInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
 ]
 
 { #category : #'as yet unclassified' }
@@ -202,6 +269,22 @@ ERComponentFactory >> createPasswordRequiredField: aName id: anId callback: aBlo
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+			contentTab: (self createPaymentInformationComponent: anAttendee );
+			 tabId: 'paymentInformationForm'; 
+			 tabName: 'Payment';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createPaymentInformationComponent: anAttendee [
+	^ anAttendee paymentInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createRaisedColoredRippleEffectAnchorButton: aName with: aBlock id: anId on: html [
 	html mdlAnchorButton
 		raised;
@@ -253,6 +336,22 @@ ERComponentFactory >> createRaisedRippleEffectPrimaryButton: aName with: aBlock 
 		id: anId;
 		callback: aBlock;
 		with: aName
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+			contentTab: (self createRegConferenceInformationComponent: anAttendee);
+			 tabId: 'conferenceOptionsForm'; 
+			 tabName: 'Conference';
+			 container: aContent
+]
+
+{ #category : #'as yet unclassified' }
+ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
+	^ anAttendee conferenceInformation asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself 
 ]
 
 { #category : #building }

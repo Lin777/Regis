@@ -41,20 +41,16 @@ ERRegisterPage >> actionsBody: html [
 
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
-	affiliationInfo:= (ERContentTab new contentTab: self initializeAffiliationInformationComponent;
-			 tabId: 'affiliationInfoForm'; 
-			 tabName: 'Affiliation';
-			 container: self).
+	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
+								withContent: self).
 	self
 		addTab: affiliationInfo .
 ]
 
 { #category : #adding }
 ERRegisterPage >> addBasicInfoTab [
-	basicInfoTab := (ERContentTab new contentTab: self initializeBasicInformationComponent;
-			 tabId: 'basicInfoForm'; 
-			 tabName: 'User';
-			 container: self).
+	basicInfoTab := (self createBasicInfoTab: pageController attendee
+							withContent: self).
 	self
 		addTab: basicInfoTab .
 ]
@@ -87,21 +83,6 @@ ERRegisterPage >> initialize [
 	pageController := ERRegistrationController new.
 	id := 'login-conatiner'.
 	classContainer := 'mdl-card-register'
-]
-
-{ #category : #initialization }
-ERRegisterPage >> initializeAffiliationInformationComponent [
-	^ pageController attendee affiliationInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialization }
-ERRegisterPage >> initializeBasicInformationComponent [
-	^ ((pageController attendee userAccount) 
-	as: ERUserAccountForRegister) asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
 ]
 
 { #category : #initialization }

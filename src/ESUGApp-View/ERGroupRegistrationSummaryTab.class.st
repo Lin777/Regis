@@ -25,13 +25,6 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 		cancelCallback: [ self cancel ];
 		updateCallback: [ self updateAffiliation ];
 		yourself.
-	
-	"(ERModifyAffiliationForm
-		on: attendee
-		withContent: content)
-		cancelCallback: [ self cancel ];
-		updateCallback: [ self updateAffiliation ];
-		yourself"
 ]
 
 { #category : #rendering }

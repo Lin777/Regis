@@ -12,40 +12,32 @@ Class {
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addAdditionalInfoTab [
-	addInfo := (ERContentTab new contentTab: self initializeAdditionalInformationComponent;
-			 tabId: 'additionalInfoForm'; 
-			 tabName: 'Additional';
-			 container: self).
+	addInfo := (self createAdditionalInfoTab: pageController attendee
+						withContent: self).
 	self
 		addTab: addInfo.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addContactInfoTab [
-	contactInfoTab := (ERContentTab new contentTab: self initializeContactInformationComponent;
-			 tabId: 'contactInfoForm'; 
-			 tabName: 'Contact';
-			 container: self).
+	contactInfoTab := (self createContactInfoTab: pageController attendee 
+								withContent: self ).
 	self
 		addTab: contactInfoTab.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addPaymentInfoTab [
-	paymentInfoTab := (ERContentTab new contentTab: self initializePaymentInformationComponent;
-			 tabId: 'paymentInfoForm'; 
-			 tabName: 'Payment';
-			 container: self).
+	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
+								 withContent: self ).
 	self
 		addTab: paymentInfoTab.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
-	regConfInfo := (ERContentTab new contentTab: self initializeRegConferenceInformationComponent;
-			 tabId: 'conferenceOptionsForm'; 
-			 tabName: 'Conference';
-			 container: self).
+	regConfInfo := (self createRegConferenceInfoTab: pageController attendee
+							 withContent: self ).
 	self
 		addTab: regConfInfo .
 ]
@@ -55,35 +47,6 @@ ERAttendeeRegistrationPage >> initialize [
 	actionRegister := [ self register ].
 	super initialize.
 	title := 'Registration'
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializeAdditionalInformationComponent [
-	
-	^ pageController attendee additionalInformation asComponent
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializeContactInformationComponent [
-	^ pageController attendee contactInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializePaymentInformationComponent [
-	^ pageController attendee paymentInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
-]
-
-{ #category : #initialize }
-ERAttendeeRegistrationPage >> initializeRegConferenceInformationComponent [
-	^ pageController attendee conferenceInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself 
 ]
 
 { #category : #initialize }

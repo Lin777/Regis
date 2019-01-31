@@ -9,17 +9,17 @@ Class {
 
 { #category : #adding }
 ERGroupManagerController >> addAttendee: anAttendee [
-	| group anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee email)
+	|  aGroup anAttendeeSaved |
+	(ERUserAccount findUserByEmail: anAttendee userAccount email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved .
 			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
 			conference addAttendee: anAttendeeSaved.
-			group := self groupForGroupManager.
-			group addAttendee: anAttendeeSaved.
+			aGroup := self groupForGroupManager.
+			aGroup addAttendee: anAttendeeSaved.
 			conference save.
-			^ group save ].
+			^ aGroup save ].
 	^ nil
 ]
 
@@ -121,7 +121,8 @@ ERGroupManagerController >> group: anObject [
 
 { #category : #accessing }
 ERGroupManagerController >> groupForGroupManager [
-	^ self groupOfUser: attendee
+	self halt.
+	^ self groupOfUser: attendee.
 ]
 
 { #category : #accessing }

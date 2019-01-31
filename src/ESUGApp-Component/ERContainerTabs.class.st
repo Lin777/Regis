@@ -6,7 +6,8 @@ Class {
 		'dialog',
 		'messageComponent',
 		'callback',
-		'tabs'
+		'tabs',
+		'saveTabs'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -126,11 +127,7 @@ ERContainerTabs >> initializeDialog [
 { #category : #accessing }
 ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 	tabs := OrderedCollection new
-				
-		add:
-			(ERTabForAForm
-				form: (ERAffiliationInformationForm on: anAttendee)
-				withContainer: self) activate;
+	add: (self createAffiliationInfoTab: anAttendee withContent: self);
 		add:
 			(ERDoneButton
 				on: anAttendee
@@ -142,12 +139,8 @@ ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 { #category : #accessing }
 ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
 	tabs := OrderedCollection new
-		add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee)
-			withContainer: self)
-				activate;
-		add: (ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee)
-			withContainer: self);
+		add: (self createBasicInfoTab: anAttendee withContent: self) activate;
+		add: (self createAffiliationInfoTab: anAttendee withContent: self);
 		add:
 			(ERDoneButton
 				on: anAttendee
@@ -159,16 +152,12 @@ ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
 { #category : #accessing }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	tabs := OrderedCollection new
-	add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee) withContainer: self)
-				activate;
-		add:
-			(ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
-		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
+	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
+	add: (self createContactInfoTab: anAttendee withContent: self );
+	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
+	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createAdditionalInfoTab: anAttendee withContent: self);
+	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:
 			(ERDoneButton
 				on: anAttendee
@@ -180,13 +169,11 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 { #category : #accessing }
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	tabs := OrderedCollection new
-		
-		add: (ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self) activate;
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
-		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
+	add: (self createContactInfoTab: anAttendee withContent: self ) activate;
+	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
+	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createAdditionalInfoTab: anAttendee withContent: self);
+	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:
 			(ERDoneButton
 				on: anAttendee
