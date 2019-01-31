@@ -118,7 +118,6 @@ ERRegisterConferenceInformation >> descriptionFood [
 		priority: 80;
 		required: false;
 		options: ERAttendee1 foodPreferences;
-		default: 'Normal';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -148,7 +147,6 @@ ERRegisterConferenceInformation >> descriptionGender [
 		priority: 60;
 		required: false;
 		options: ERAttendee1 genders;
-		default: 'Male';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -193,7 +191,6 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		priority: 70;
 		required: false;
 		options: ERAttendee1 tShirtSizes;
-		default: 'XS';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -260,6 +257,9 @@ ERRegisterConferenceInformation >> gender: anObject [
 { #category : #initialization }
 ERRegisterConferenceInformation >> initialize [
 	super initialize.
+	foodPreference :=  'Normal'.
+	gender :='Male'.
+	tshirtSize :='XS'.
 	self attendSocialEvent: true.
 	self addedToMainList: true.
 	self addPersonToSocialDinner: false.

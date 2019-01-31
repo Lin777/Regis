@@ -92,8 +92,8 @@ ERContainerTabs >> callback: anObject [
 
 { #category : #rendering }
 ERContainerTabs >> cancel [
-	attendee version > 0
-		ifTrue: [ attendee abortChanges ].
+"	attendee version > 0
+		ifTrue: [ attendee abortChanges ]."
 
 	content state: content lastState
 ]
@@ -138,6 +138,7 @@ ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
 
 { #category : #accessing }
 ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
+	
 	tabs := OrderedCollection new
 		add: (self createBasicInfoTab: anAttendee withContent: self) activate;
 		add: (self createAffiliationInfoTab: anAttendee withContent: self);
@@ -183,6 +184,23 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 ]
 
 { #category : #rendering }
+ERContainerTabs >> renderBackButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'previousButton';
+		class: 'btnPrevious';
+		with: 'Previous'
+]
+
+{ #category : #rendering }
+ERContainerTabs >> renderButtons: html [
+	self renderCancelButton: html.
+	self renderBackButtonOn: html.
+	self renderNextButtonOn: html
+]
+
+{ #category : #rendering }
 ERContainerTabs >> renderCancelButton: html [
 	self initializeDialog .
 	self
@@ -193,17 +211,16 @@ ERContainerTabs >> renderCancelButton: html [
 
 { #category : #rendering }
 ERContainerTabs >> renderContentPage: html [
+	html form
+		method: 'post';
+		id: 'formRegisterInTabs';
+		with: [
 	html mdlTabs rippleEffect
 		with: [ html div
 				style: 'overflow-x:auto;';
-				with: [ html mdlGrid noSpacing
-						with: [ 
-							html render: messageComponent .
-							html form
-								method: 'post';
-								id: 'formRegisterInTabs';
-								with: [ html render: tabView.
-									self renderCancelButton: html ] ] ] ].
+				with: [ html render: messageComponent .
+							 html render: tabView.
+									self renderButtons: html] ]] .
 	html render: dialog
 ]
 
@@ -217,6 +234,16 @@ ERContainerTabs >> renderDoneButtonOn: html [
 				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
 		id: 'registerButton'
 		on: html
+]
+
+{ #category : #rendering }
+ERContainerTabs >> renderNextButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'nextButton';
+		class: 'btnNext';
+		with: 'Next'
 ]
 
 { #category : #accessing }

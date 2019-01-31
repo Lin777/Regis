@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+ERMembersTab >> attendeeFrom: aGroupManager [
+	^ ERAttendee1 new 
+		userAccount: aGroupManager userAccount; 
+		affiliationInformation: aGroupManager affiliationInformation 
+]
+
+{ #category : #accessing }
 ERMembersTab >> attends [
 	^ (ERGroupManagerController new
 		groupOfUser: attendee ) listAttends
@@ -95,11 +102,7 @@ ERMembersTab >> registerGroupManagerAsAttendee [
 ERMembersTab >> registerMyselfAsAttendee [
 	callback := [ self registerGroupManagerAsAttendee ].
 
-	"callback := [ :html | 
-	self
-		renderDoneButtonCallback: [ self validateAndRegisterAsAttendee ]
-		on: html ]."
-	self initializeFormWithoutBasicInformationFor: attendee
+	self initializeFormWithoutBasicInformationFor: (self attendeeFrom: self groupManager)
 ]
 
 { #category : #accessing }

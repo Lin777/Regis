@@ -50,7 +50,6 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		priority: 30;
 		required: false;
 		options: ERAttendee1 currencyTypes;
-		default:'Euro';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -66,7 +65,6 @@ ERPaymentInformation >> descriptionPaymentType [
 		priority: 10;
 		required: false;
 		options: ERAttendee1 paymentTypes;
-		default:'Bank transfer';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -85,7 +83,9 @@ ERPaymentInformation >> hasPaid: anObject [
 { #category : #initialization }
 ERPaymentInformation >> initialize [ 	
 	super initialize .
-	hasPaid := false
+	hasPaid := false.
+	paymentType := 'Bank transfer'.
+	paymentCurrency := 'Euro'.
 ]
 
 { #category : #accessing }

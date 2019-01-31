@@ -2,7 +2,8 @@ Class {
 	#name : #ERGroupManagersTab,
 	#superclass : #ERConfigurationTab,
 	#instVars : [
-		'groupManagerForm'
+		'groupManagerForm',
+		'newAttendee'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -111,6 +112,7 @@ ERGroupManagersTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERGroupManagersTab >> modifyAffiliationGroupManager: aGroupManager [
+	
 	self
 		initializeFormRegisterModifyAffiliationGroupManager: aGroupManager groupManager 
 ]

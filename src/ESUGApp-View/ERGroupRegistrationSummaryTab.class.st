@@ -104,11 +104,6 @@ ERGroupRegistrationSummaryTab >> renderContainer: html [
 	html horizontalRule.
 	self renderOrganizationName: html.
 	self renderPaymentStatus: html.
-	self renderFormButtons: html
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderFormButtons: html [
 	self renderButtons: html
 ]
 

@@ -9,8 +9,7 @@ Class {
 		'formWithoutBasicInfo',
 		'formRegister',
 		'attenteeRegisterForm',
-		'formApplyReductionTicket',
-		'newAttendee'
+		'formApplyReductionTicket'
 	],
 	#category : #'ESUGApp-View-Tab'
 }

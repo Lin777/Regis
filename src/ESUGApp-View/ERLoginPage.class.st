@@ -125,7 +125,8 @@ ERLoginPage >> renderPageOn: html [
 			self renderFieldsLoginOn:html.
 			self renderLoginButtonOn: html.].
 			self renderRegisterButtonOn: html.
-
+			
+			
 ]
 
 { #category : #rendering }
