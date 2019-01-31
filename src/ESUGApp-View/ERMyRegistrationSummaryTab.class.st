@@ -1,6 +1,6 @@
 Class {
 	#name : #ERMyRegistrationSummaryTab,
-	#superclass : #ERContainerTab,
+	#superclass : #ERMyRegistrationTab,
 	#category : #'ESUGApp-View-Tab'
 }
 

@@ -127,7 +127,7 @@ ERReductionTicketForm >> renderFixStrategyOn: html [
 				createSelectField: 'Currency'
 				for: #currency:
 				with: #currency
-				list: ERAttendee currencyTypes
+				list: ERAttendee1 currencyTypes
 				to: ticket discountStrategy
 				on: html
 ]

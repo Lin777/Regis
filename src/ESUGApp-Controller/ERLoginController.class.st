@@ -1,9 +1,6 @@
 Class {
 	#name : #ERLoginController,
 	#superclass : #ERController,
-	#instVars : [
-		'user'
-	],
 	#category : #'ESUGApp-Controller'
 }
 
@@ -15,34 +12,9 @@ ERLoginController class >> user: anUser [
 	^ controller
 ]
 
-{ #category : #initialization }
-ERLoginController >> initialize [
-	super initialize.
-	user := ERAttendee new.
-]
-
-{ #category : #accessing }
-ERLoginController >> user [
-	^ user
-]
-
-{ #category : #accessing }
-ERLoginController >> user: anObject [
-	user := anObject
-]
-
 { #category : #rendering }
-ERLoginController >> validateLogin [
-	| aUser |
-	aUser := self validateUserLogin: self user.
-	^ aUser
-]
-
-{ #category : #rendering }
-ERLoginController >> validateUserLogin: anObject [
+ERLoginController >> validateLoginFor: aString1 password: aString2 [
 	| anUser |
-	anUser := ERUserAccount1 findUserByEmail: anObject email.
-	(anUser notNil and: [ anUser  password = anObject password ])
-		ifTrue: [ ^ anUser ]
-		ifFalse: [ ^ nil ]
+	anUser := ERUserAccount1 findUserByEmail: aString1.
+	^ anUser
 ]

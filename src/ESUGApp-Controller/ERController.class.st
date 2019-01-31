@@ -193,6 +193,18 @@ ERController >> reductionTicketWithName: aString [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> submittedAwardsFor: anAttendee [
+	^ self conference submittedAwards 
+			select: [ :each | each submitter = anAttendee ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> submittedTalksFor: anAttendee [
+	^ self conference submittedTalks 
+		select: [ :each | each submitter = anAttendee ]
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAteendee [
 	anAteendee save
 ]

@@ -108,7 +108,7 @@ ERContactInformation >> descriptionCountry [
 		accessor: #country;
 		priority: 40;
 		required: false;
-		options: ERAttendee countries;
+		options: ERAttendee1 countries;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself

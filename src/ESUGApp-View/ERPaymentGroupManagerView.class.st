@@ -76,7 +76,7 @@ ERPaymentGroupManagerView >> renderSelectorOfPayment: html [
 		with: [ html mdlTextFieldLabel with: 'Payment type: '.
 			html select
 				class: 'mdl-textfield__input';
-				list: ERAttendee paymentTypes;
+				list: ERAttendee1 paymentTypes;
 				selected: attendee paymentInformation paymentType;
 				callback: [ :value | attendee paymentInformation paymentType: value asString ] ].
 ]

@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 ERTestControllers class >> testAttendee [
-	^ ERAttendee new
+	^ ERAttendee1 new
 		userAccount: self testUserAccount;
 		orgName: 'testOrgName';
 		orgAddrees1: 'testAddress1';
@@ -51,7 +51,7 @@ ERTestControllers class >> testAttendee [
 
 { #category : #tests }
 ERTestControllers class >> testExampleAttendee [
-	^ ERAttendee new
+	^ ERAttendee1 new
 		userAccount: self testUserExampleAccount;
 		orgName: 'exampleOrgName';
 		orgAddrees1: 'exampleAddress1';
@@ -92,7 +92,7 @@ ERTestControllers class >> testExampleAttendee [
 
 { #category : #tests }
 ERTestControllers class >> testGroupManager [
-	^ ERAttendee new
+	^ ERAttendee1 new
 		userAccount: self testUserAccount;
 		orgName: 'testOrgName';
 		orgAddrees1: 'testAddress1';
@@ -162,7 +162,6 @@ ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
 	ERUserAccount warmUp.
-	ERAttendee warmUp.
 	ERUserAccount1 warmUp.
 	ERAttendee1 warmUp.
 	ERAward warmUp.
@@ -188,12 +187,6 @@ ERTestControllers >> setUp [
 
 { #category : #running }
 ERTestControllers >> tearDown [
-	ERAttendee
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERAttendee coolDown.
 	ERAttendee1
 		do: [ :each | 
 			[ each delete ]

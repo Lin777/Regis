@@ -2,7 +2,9 @@ Class {
 	#name : #ERLoginPage,
 	#superclass : #ERPage,
 	#instVars : [
-		'messageComponent'
+		'messageComponent',
+		'email',
+		'password'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -19,6 +21,11 @@ ERLoginPage >> actionsBody: html [
 	]
 ]
 
+{ #category : #accessing }
+ERLoginPage >> email: anObject [
+	email := anObject
+]
+
 { #category : #initialization }
 ERLoginPage >> initialize [
 	super initialize.
@@ -32,12 +39,17 @@ ERLoginPage >> initialize [
 { #category : #rendering }
 ERLoginPage >> loginUser [
 	| userValidate |
-	userValidate := self controller validateLogin.
+	userValidate := self controller validateLoginFor: email password: password.
 	userValidate notNil
 		ifTrue: [ 
 			self session login: userValidate.
 			self call: ERLoggedPage new ]
 		ifFalse: [ messageComponent errorMessage: 'Login failed.' ]
+]
+
+{ #category : #accessing }
+ERLoginPage >> password: anObject [
+	password := anObject
 ]
 
 { #category : #rendering }
@@ -72,7 +84,7 @@ ERLoginPage >> renderBody: html with: aBlock [
 { #category : #rendering }
 ERLoginPage >> renderEmailField: html [
 	self
-	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self controller user email: value asString ] on: html.
+	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self email: value asString ] on: html.
 "
 		createTextField: 'Email'
 		id: 'email-login'
@@ -124,8 +136,7 @@ ERLoginPage >> renderPasswordField: html [
 		with: [:mdlTxtInput | 
 			mdlTxtInput required;
 			callback: [ :value | 
-			self controller user
-				password: (ERUserAccount hashPassword: value) asString ] ]
+			self password: (ERUserAccount hashPassword: value) asString ] ]
 		on: html
 ]
 

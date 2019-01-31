@@ -121,7 +121,6 @@ ERGroupManagerController >> group: anObject [
 
 { #category : #accessing }
 ERGroupManagerController >> groupForGroupManager [
-	self halt.
 	^ self groupOfUser: attendee.
 ]
 

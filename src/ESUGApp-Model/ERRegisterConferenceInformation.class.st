@@ -117,7 +117,7 @@ ERRegisterConferenceInformation >> descriptionFood [
 		accessor: #foodPreference;
 		priority: 80;
 		required: false;
-		options: ERAttendee foodPreferences;
+		options: ERAttendee1 foodPreferences;
 		default: 'Normal';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -147,7 +147,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 		accessor: #gender;
 		priority: 60;
 		required: false;
-		options: ERAttendee genders;
+		options: ERAttendee1 genders;
 		default: 'Male';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -192,7 +192,7 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		accessor: #tshirtSize;
 		priority: 70;
 		required: false;
-		options: ERAttendee tShirtSizes;
+		options: ERAttendee1 tShirtSizes;
 		default: 'XS';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .

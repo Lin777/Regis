@@ -49,7 +49,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		accessor: #paymentCurrency;
 		priority: 30;
 		required: false;
-		options: ERAttendee currencyTypes;
+		options: ERAttendee1 currencyTypes;
 		default:'Euro';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -65,7 +65,7 @@ ERPaymentInformation >> descriptionPaymentType [
 		accessor: #paymentType;
 		priority: 10;
 		required: false;
-		options: ERAttendee paymentTypes;
+		options: ERAttendee1 paymentTypes;
 		default:'Bank transfer';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .

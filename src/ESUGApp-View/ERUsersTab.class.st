@@ -61,7 +61,7 @@ ERUsersTab >> headers [
 
 { #category : #rendering }
 ERUsersTab >> initializeFormAddUser [
-	newUser := ERAttendee new.
+	newUser := ERAttendee1 new.
 	formUser := ERBasicInformationView
 		on: newUser
 		withContent: content

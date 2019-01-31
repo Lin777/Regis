@@ -131,7 +131,7 @@ ERRegistrationController >> validateAffiliationForm [
 		withName: 'ORGANIZATION POSTAL'.
 	self
 		validateSelectValue: attendee membershipType
-		on: ERAttendee membershipTypes
+		on: ERAttendee1 membershipTypes
 		withMessage: 'MEMBERSHIP TYPE'
 ]
 
@@ -139,15 +139,15 @@ ERRegistrationController >> validateAffiliationForm [
 ERRegistrationController >> validateConferenceForm [
 	self
 		validateSelectValue: attendee gender
-		on: ERAttendee genders
+		on: ERAttendee1 genders
 		withMessage: 'GENDER'.
 	self
 		validateSelectValue: attendee tshirtSize
-		on: ERAttendee tShirtSizes
+		on: ERAttendee1 tShirtSizes
 		withMessage: 'T-SHIRT SIZE'.
 	self
 		validateSelectValue: attendee foodPreference
-		on: ERAttendee foodPreferences
+		on: ERAttendee1 foodPreferences
 		withMessage: 'FOOD PREFERENCE'
 ]
 
@@ -273,7 +273,7 @@ ERRegistrationController >> validatePatternUrl: aSymbol [
 ERRegistrationController >> validatePaymentForm [
 	self
 		validateSelectValue: attendee paymentType
-		on: ERAttendee paymentTypes
+		on: ERAttendee1 paymentTypes
 		withMessage: 'payment type'.
 	self
 		validateSelectValue: attendee paymentCurrency
