@@ -26,7 +26,7 @@ ERContainerTab class >> on: anAttendee withContent: aContent [
 
 { #category : #rendering }
 ERContainerTab >> alreadyRegisteredAsAttendee [
-	^ self groupManager userAccount isAttendee
+	^ self session user isAttendee
 ]
 
 { #category : #initialization }

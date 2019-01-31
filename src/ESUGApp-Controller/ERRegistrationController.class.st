@@ -96,7 +96,9 @@ ERRegistrationController >> saveAttendee [
 ERRegistrationController >> saveGroupManager [
 	|groupSaved|
 	self attendee userAccount: self save.
-	groupSaved := (ERGroup1 groupManager: self attendee) paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ]; save.
+	groupSaved := ERGroup1 groupManager: self attendee.
+	groupSaved paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ]. 		
+	groupSaved := groupSaved save.
 	conference addGroup: groupSaved .
 	conference save.
 	^ self attendee userAccount 

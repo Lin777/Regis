@@ -9,20 +9,20 @@ Class {
 
 { #category : #rendering }
 ERGroupManagersTab >> alreadyRegisteredAsGroupManager [
-	^ attendee userAccount isGroupManager
+	^ self session user isGroupManager
 ]
 
 { #category : #rendering }
 ERGroupManagersTab >> blockTableToExecute [
 	^ [ :group | 
 	OrderedCollection new
-		add: ([ :att | att groupManager firstName ] value: group);
-		add: ([ :att | att groupManager email ] value: group);
-		add: ([ :att | att groupManager orgName ] value: group);
+		add: ([ :att | att groupManager userAccount firstName ] value: group);
+		add: ([ :att | att groupManager userAccount email ] value: group);
+		add: ([ :att | att groupManager userAccount orgName ] value: group);
 		add:
 			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
 				value: group);
-		add: 'No';
+		add: ([ :att | att paymentInformation hasPaid ifTrue: [ 'Yes' ] ifFalse: [ 'No' ] ] value: group);
 		yourself ]
 ]
 
