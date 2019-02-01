@@ -55,6 +55,13 @@ ERProposedAwardsTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
+ERProposedAwardsTab >> proposalsAreAllowed [
+	
+	^ ERController new conference configuration 
+	dateSubmissionDeadline < Date today 
+]
+
+{ #category : #rendering }
 ERProposedAwardsTab >> renderAwardsTable: html [
 	| table |
 	table := ERTable new
@@ -78,7 +85,7 @@ ERProposedAwardsTab >> renderButtonAddOn: html [
 { #category : #rendering }
 ERProposedAwardsTab >> renderContainer: html [ 	
 	html horizontalRule .
-	self renderButtonAddOn: html.
+	self proposalsAreAllowed ifTrue: [self renderButtonAddOn: html].
 	self renderTable: html.
 ]
 

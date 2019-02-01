@@ -54,6 +54,12 @@ ERProposedTalksTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
+ERProposedTalksTab >> proposalsAreAllowed [
+	^ ERController new conference configuration 
+	dateSubmissionDeadline >= Date today 
+]
+
+{ #category : #rendering }
 ERProposedTalksTab >> renderButtonAddOn: html [
 	html mdlAnchorButton
 		colored;
@@ -65,7 +71,7 @@ ERProposedTalksTab >> renderButtonAddOn: html [
 { #category : #rendering }
 ERProposedTalksTab >> renderContainer: html [ 	
 	html horizontalRule .
-	self renderButtonAddOn: html.
+	self proposalsAreAllowed ifTrue: [self renderButtonAddOn: html].
 	self renderTable: html.
 ]
 

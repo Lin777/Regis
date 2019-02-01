@@ -136,11 +136,11 @@ ERConfigurationController >> exportAttends: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each firstName.
-							each lastName.
-							each email.
-							each country.
-							each orgName} ] ].
+							{each userAccount firstName.
+							each userAccount lastName.
+							each userAccount email.
+							each contactInformation country.
+							each affiliationInformation organizationName} ] ].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
 		withStream: cvs
@@ -158,8 +158,8 @@ ERConfigurationController >> exportAwards: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-					{each name1.
-					each submittedBy} ]].
+					{each nameAward.
+					each submitter userAccount email} ]].
 				self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
 		withStream: cvs
@@ -177,20 +177,19 @@ ERConfigurationController >> exportGroupManagers: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each groupManager id.
-							each groupManager firstName.
-							each groupManager lastName.
-							each groupManager email.
-							each groupManager password.
+							{each groupManager userAccount firstName.
+							each groupManager userAccount lastName.
+							each groupManager userAccount email.
+							each groupManager userAccount password.
 							each groupManager userAccount rolesAsString.
-							each groupManager orgName.
-							each groupManager orgAddrees1.
-							each groupManager orgAddrees2.
-							each groupManager orgCity.
-							each groupManager orgCountry.
-							each groupManager orgProvince.
-							each groupManager orgPostal.
-							each groupManager membershipType} ] ].
+							each groupManager affiliationInformation organizationName.
+							each groupManager affiliationInformation organizationAddrees1.
+							each groupManager affiliationInformation organizationAddrees2.
+							each groupManager affiliationInformation organizationCity.
+							each groupManager affiliationInformation organizationCountry.
+							each groupManager affiliationInformation organizationProvince.
+							each groupManager affiliationInformation organizationPostal.
+							each groupManager affiliationInformation membershipType} ] ].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
 		withStream: cvs
@@ -207,9 +206,9 @@ ERConfigurationController >> exportTalks: fileName [
 			self submittedTalks
 				do: [ :each | neoWriter 
 				nextPut:
-					{each name1.
-					each submittedBy.
-					each uploadFile} ]].
+					{each name.
+					each submitter userAccount email.
+					each presentation} ]].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
 		withStream: cvs
@@ -255,7 +254,7 @@ ERConfigurationController >> headerAttendee [
 
 { #category : #rendering }
 ERConfigurationController >> headerGroups [
-	^ #('id' 'First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
+	^ #('First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
 ]
 
 { #category : #rendering }

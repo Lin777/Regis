@@ -43,7 +43,7 @@ ERTalksTab >> renderButton: html [
 { #category : #rendering }
 ERTalksTab >> renderContainer: html [
 	self renderButton: html.
-	html horizontalRule.
+	html horizontalRule. 
 	self renderTableOfTalks: html
 ]
 
