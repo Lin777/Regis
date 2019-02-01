@@ -29,6 +29,7 @@ ERPDFInvoice class >> streamNamed: aName [
 ERPDFInvoice class >> templateRegistrationInvoice: user [
 	<script>
 	self new templateRegistrationInvoice: (self streamNamed: 'RegistrationInvoice.pdf') of: user.
+	^ (self demoPath, 'RegistrationInvoice.pdf') asFileReference
 ]
 
 { #category : #adding }

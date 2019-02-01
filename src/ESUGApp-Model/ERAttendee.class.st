@@ -37,7 +37,8 @@ Class {
 		'coupon',
 		'paymentAmount',
 		'invoiceNumber',
-		'hasPaid'
+		'hasPaid',
+		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -211,6 +212,16 @@ ERAttendee >> email: anString [
 ]
 
 { #category : #accessing }
+ERAttendee >> encodedInvoice [
+	^ encodedInvoice
+]
+
+{ #category : #accessing }
+ERAttendee >> encodedInvoice: anObject [
+	encodedInvoice := anObject
+]
+
+{ #category : #accessing }
 ERAttendee >> facebookURL [
 	^ facebookURL
 ]
@@ -303,11 +314,6 @@ ERAttendee >> initialize [
 					('wednesday' -> true).
 					('thursday' -> true).
 					('friday' -> true)})
-]
-
-{ #category : #'as yet unclassified' }
-ERAttendee >> invoiceNumberIfNone [
-	invoiceNumber
 ]
 
 { #category : #'as yet unclassified' }

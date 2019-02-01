@@ -28,6 +28,13 @@ ERAttendeesTab >> blockTableToExecute [
 ERAttendeesTab >> deleteAttendeeFromGroup: user [
 ]
 
+{ #category : #'as yet unclassified' }
+ERAttendeesTab >> encodeFiletoBase64: aFile [
+	^ aFile exists 
+		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
+		ifFalse: [ nil ]. 
+]
+
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
 controller exportAttends: 'attends' .
@@ -36,7 +43,11 @@ controller exportAttends: 'attends' .
 
 { #category : #rendering }
 ERAttendeesTab >> generateInvoice: user [
-	ERPDFInvoice templateRegistrationInvoice: user.
+	| file |
+	file := ERPDFInvoice templateRegistrationInvoice: user.
+	user encodedInvoice: (self encodeFiletoBase64: file).
+	user save.
+	
 ]
 
 { #category : #rendering }
@@ -72,9 +83,21 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user ]
 				with: [ :user | user id , '-applyReduction' ]);
-		add: (Array with: 'description' 
-				with: [ :user | self generateInvoice: user ] 
+		add: 
+			(Array 
+				with: 'description' 
+				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]);
+		yourself
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> listDataToRenderDownloadButton [
+	^ OrderedCollection new
+		add: (Array with: 'download' 
+			with: [ :user | user id , '-download' ]
+			with: [ :user | 'RegistrationInvoice_', user id, '.pdf']
+			with: [ :user |'data:text/pdf;base64,', user encodedInvoice ]);
 		yourself
 ]
 
@@ -123,7 +146,11 @@ ERAttendeesTab >> renderButtons: html [
 		createColoredAnchorButton: 'EXPORT'
 		with: [ self exportAttends ]
 		id: 'exportAttends'
-		on: html
+		on: html.
+	"html mdlAnchorButton 
+		url:'data:text/pdf;base64,', self encodeBase64; 
+		attributeAt: 'download' put: 'RegistrationInvoice.pdf';
+		with: 'download me'."
 ]
 
 { #category : #rendering }
@@ -144,7 +171,8 @@ ERAttendeesTab >> renderTableOfAttends: html [
 		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		listToRenderDownloadButton: self listDataToRenderDownloadButton.
 	html render: table
 ]
 
