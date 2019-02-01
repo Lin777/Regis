@@ -50,7 +50,9 @@ ERUserAccount1 >> descriptionEmail [
 		beRequired;
 		label: 'Email (Required)';
 		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
-		labelled: 'Please enter a valid email';
+		labelled: 'Please enter a valid email';"
+		addCondition: [ :value | ERController new emailIsAlreadyRegistered: value ]
+		labelled: 'This email is already registered';" 
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself

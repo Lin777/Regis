@@ -36,8 +36,8 @@ ERTittledFormView >> initializeForm [
 			(MDLMAFormDecoration 
 				buttons: 
 					(Array with: 
-						#cancel -> 'Cancel'
-						with: #save -> 'Accept'));
+						cancelCallback -> 'Cancel'
+						with: callback -> 'Accept'));
 	 yourself
 ]
 

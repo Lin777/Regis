@@ -14,14 +14,56 @@ ERProposedAwardsTab >> addAward [
 	self updateStateTab: self tabName.
 ]
 
+{ #category : #rendering }
+ERProposedAwardsTab >> blockTableToExecute [
+	^ [ :award | 
+	OrderedCollection new
+		add: ([ :att | att nameAward ] value: award);
+		add: ([ :att | att affiliation ] value: award);
+		add: ([ :att | att downloadUrl ] value: award);
+		yourself ]
+]
+
+{ #category : #initialization }
+ERProposedAwardsTab >> createAward: anAward [
+	anAward save.
+	ERController new addAward: anAward model .
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #accessing }
+ERProposedAwardsTab >> headers [
+	^ #('Name' 'Affiliation' 'Download Url' '')
+]
+
 { #category : #initialization }
 ERProposedAwardsTab >> initializeFormAddAward [
 	|award|
 	award := ERAward1 submitter: attendee.
 	formAddAward := (ERTittledFormView 
 							on: award 
-							withContent: content) title: 'Award'.
-	formAddAward callback: [ self saveAward ]
+							withContent: content) title: 'Award'; 
+							callback: [:anAward | self createAward: anAward];
+							cancelCallback: [:anAward | anAward cancel. self returnToThePreviousState.
+			self updateStateTab: self tabName.]; initializeForm
+]
+
+{ #category : #rendering }
+ERProposedAwardsTab >> listDataToRenderButton [
+	^ OrderedCollection new
+]
+
+{ #category : #rendering }
+ERProposedAwardsTab >> renderAwardsTable: html [
+	| table |
+	table := ERTable new
+		headers: self headers;
+		levelTotal: 6;
+		listObject: self submittedAwards;
+		blockToExecute: self blockTableToExecute;
+		listToRenderButton: self listDataToRenderButton.
+	html render: table
 ]
 
 { #category : #rendering }
@@ -50,7 +92,7 @@ ERProposedAwardsTab >> renderMessageEmptyOn: html [
 ERProposedAwardsTab >> renderTable: html [
 	self submittedAwards isEmpty 
 		ifTrue: [ self renderMessageEmptyOn: html ]
-		ifFalse: [  ]
+		ifFalse: [ self renderAwardsTable: html ]
 ]
 
 { #category : #initialization }

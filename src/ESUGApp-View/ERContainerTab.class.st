@@ -100,9 +100,12 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 
 { #category : #accessing }
 ERContainerTab >> modifyUserFormGroup: anUser [
-	
 	mofidyUserForm := (ERTittledFormView on: anUser 
-								withContent: content) title: 'User'. "ERModifyUserView
+								withContent: content) title: 'User';
+								callback: [:user | self updateUser: user];
+								cancelCallback: [:user | user cancel. self returnToThePreviousState.
+			self updateStateTab: self tabName.]; initializeForm. 
+								"ERModifyUserView
 		on: anUser
 		withContent: content
 		withAction: [ controller updateUser: anUser.
@@ -145,5 +148,13 @@ ERContainerTab >> updateTicketInformation: anAttendee [
 		 ].
 	controller applyReductionTicketTo: anAttendee .
 	self returnToThePreviousState. 
+			self updateStateTab: self tabName.
+]
+
+{ #category : #accessing }
+ERContainerTab >> updateUser: user [
+	user save.
+	controller updateUser: user model .
+			self returnToThePreviousState.
 			self updateStateTab: self tabName.
 ]

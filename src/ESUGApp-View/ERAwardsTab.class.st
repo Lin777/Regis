@@ -13,8 +13,8 @@ ERAwardsTab >> awards [
 ERAwardsTab >> blockTableToExecute [
 	^ [ :award | 
 	OrderedCollection new
-		add: ([ :att | att name1 ] value: award);
-		add: ([ :att | att submittedBy ] value: award);
+		add: ([ :att | att nameAward ] value: award);
+		add: ([ :att | att submitter userAccount email ] value: award);
 		yourself ]
 ]
 
@@ -27,7 +27,7 @@ ERAwardsTab >> exportAwards [
 
 { #category : #rendering }
 ERAwardsTab >> headers [
-	^ #('Name'	'Submitted By')
+	^ #('Name'	'Submitted By' '')
 ]
 
 { #category : #rendering }

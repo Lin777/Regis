@@ -15,13 +15,42 @@ ERProposedTalksTab >> addTalk [
 ]
 
 { #category : #rendering }
+ERProposedTalksTab >> blockTableToExecute [
+	^ [ :talk | 
+	OrderedCollection new
+		add: ([ :att | att name ] value: talk);
+		add: ([ :att | att description ] value: talk);
+		yourself ]
+]
+
+{ #category : #rendering }
+ERProposedTalksTab >> createTalk: aTalk [
+	aTalk save.
+	ERController new addTalk: aTalk model .
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERProposedTalksTab >> headers [
+	^ #('Name' 'Description' '')
+]
+
+{ #category : #rendering }
 ERProposedTalksTab >> initializeFormAddTalk [
 	|talk|
 	talk := ERTalk1 submitter: attendee.
 	formAddTalk := (ERTittledFormView 
 							on: talk 
-							withContent: content) title: 'Talk'.
-	formAddTalk callback: [ self saveTalk ]
+							withContent: content) title: 'Talk'; 
+							callback: [:aTalk | self createTalk: aTalk];
+							cancelCallback: [:aTalk | aTalk cancel. self returnToThePreviousState.
+			self updateStateTab: self tabName.]; initializeForm
+]
+
+{ #category : #rendering }
+ERProposedTalksTab >> listDataToRenderButton [
+	^ OrderedCollection new
 ]
 
 { #category : #rendering }
@@ -50,7 +79,19 @@ ERProposedTalksTab >> renderMessageEmptyOn: html [
 ERProposedTalksTab >> renderTable: html [
 	self submittedTalks isEmpty 
 		ifTrue: [ self renderMessageEmptyOn: html ]
-		ifFalse: [  ]
+		ifFalse: [ self renderTalksTable: html ]
+]
+
+{ #category : #rendering }
+ERProposedTalksTab >> renderTalksTable: html [
+	| table |
+	table := ERTable new
+		headers: self headers;
+		levelTotal: 6;
+		listObject: self submittedTalks;
+		blockToExecute: self blockTableToExecute;
+		listToRenderButton: self listDataToRenderButton.
+	html render: table
 ]
 
 { #category : #rendering }

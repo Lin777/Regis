@@ -8,9 +8,9 @@ Class {
 ERTalksTab >> blockTableToExecute [
 	^ [ :talk| 
 	OrderedCollection new
-		add: ([ :att | att name1 ] value: talk);
-		add: ([ :att | att submittedBy ] value: talk);
-		add: ([ :att | att uploadFile ] value: talk);
+		add: ([ :att | att name ] value: talk);
+		add: ([ :att | att submitter userAccount email ] value: talk);
+		add: ([ :att | att presentation ] value: talk);
 		yourself ]
 ]
 
@@ -23,7 +23,7 @@ ERTalksTab >> exportTalks [
 
 { #category : #accessing }
 ERTalksTab >> headers [ 	
-	^ #('Name'	'Submitted By'	'Uploaded File')
+	^ #('Name'	'Submitted By'	'Uploaded File' '')
 ]
 
 { #category : #rendering }

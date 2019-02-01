@@ -26,6 +26,25 @@ ERController >> add:attendee ToTicket: coupon [
 		signal
 ]
 
+{ #category : #adding }
+ERController >> addAward: anAward [
+	|award|
+	
+	anAward submittionDate: Date today.
+	award := anAward save.
+	conference addSubmittedAward: award.
+	conference save
+]
+
+{ #category : #adding }
+ERController >> addTalk: aTalk [
+	|talk|
+	aTalk submittionDate: Date today.
+	talk := aTalk save.
+	conference addSubmittedTalk: talk.
+	conference save
+]
+
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	conference configuration earlyRegistrationDeadline < Date today
@@ -100,6 +119,12 @@ ERController >> deleteGroupManager: aGroupManager [
 
 { #category : #rendering }
 ERController >> deleteUser: anUser [
+]
+
+{ #category : #action }
+ERController >> emailIsAlreadyRegistered: aString [
+	^ conference users anySatisfy: [ :each | 
+			each email = aString]
 ]
 
 { #category : #action }
@@ -219,7 +244,7 @@ ERController >> updateUser: anUser [
 		validatePatternForRequired: anUser lastName
 		withName: 'Last name'.
 	self validatePatternEmail: anUser email withName: 'Email'.
-	self validateIfEmailIsAlreadyRegistered: anUser userAccount.
+	self validateIfEmailIsAlreadyRegistered: anUser.
 	
 	^ anUser save
 ]
