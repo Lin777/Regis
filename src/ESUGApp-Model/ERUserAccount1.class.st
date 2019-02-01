@@ -122,35 +122,32 @@ ERUserAccount1 >> initialize [
 
 { #category : #testing }
 ERUserAccount1 >> isAdmin [
-	self role
-		do: [ :each | 
-			each = 'admin'
-				ifTrue: [ ^ true ] ].
-	^ false
+		^ self role anySatisfy: [ :each | each = 'admin']
+
 ]
 
 { #category : #testing }
 ERUserAccount1 >> isAttendee [
-	self role do: [ :each | each = 'attendee' ifTrue: [ ^ true ] ].
-	^ false
+	^ self role anySatisfy: [ :each | each = 'attendee']
+	
 ]
 
 { #category : #testing }
 ERUserAccount1 >> isGroupManager [
-	self role
-		do: [ :each | 
-			each = 'groupManager'
-				ifTrue: [ ^ true ] ].
-	^ false
+	^ self role
+		anySatisfy: [ :each | each = 'groupManager']
+	
 ]
 
 { #category : #testing }
 ERUserAccount1 >> isStudent [
-	self role
-		do: [ :each | 
-			each = 'studentVolunter'
-				ifTrue: [ ^ true ] ].
-	^ false
+	^ self role
+		anySatisfy: [ :each | each = 'studentVolunter']
+]
+
+{ #category : #accessing }
+ERUserAccount1 >> label [ 	
+	^ 'fgsfs'
 ]
 
 { #category : #accessing }

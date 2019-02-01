@@ -30,12 +30,17 @@ Example class >> initialize [
 { #category : #rendering }
 Example >> initialize [
 	super initialize.
-	object := "ObjectExample"ERConferenceConfigurationModel1 new asComponent 
+	object := ERUserAccountForAdminRegister new asComponent  addDecoration: (MDLMAFormDecoration buttons:
+	 (Array with: #cancel -> 'Cancel' with: #save -> 'Create a new form' ));
+	addDecoration: MAValidationDecoration new;
+	 yourself .
+	
+	"ERConferenceConfigurationModel1 new asComponent 
 	addDecoration: (MDLMAFormDecoration buttons:
 	 (Array with: #cancel -> 'Cancel' with: #save -> 'Create a new form' ));
 	addDecoration: MAValidationDecoration new;
 	 yourself .
-		
+		"
 ]
 
 { #category : #rendering }

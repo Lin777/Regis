@@ -11,7 +11,7 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 	tmp := MAPasswordDescription new.
 	tmp 
 		accessor: #confirmPassword; 
-		priority: 50;
+		priority: 60;
 		beRequired;
 		label: 'Confirm Password (Required)';
 		withoutLabel: true;
@@ -26,7 +26,7 @@ ERUserAccountForRegister >> descriptionPassword [
 	tmp := MAPasswordDescription new.
 	tmp 
 		accessor: #password; 
-		priority: 40;
+		priority: 50;
 		beRequired;
 		withoutLabel: true;
 		label: 'Password (Required)';

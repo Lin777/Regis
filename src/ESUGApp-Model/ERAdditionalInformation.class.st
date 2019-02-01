@@ -56,3 +56,8 @@ ERAdditionalInformation >> keywords [
 ERAdditionalInformation >> keywords: anObject [
 	keywords := anObject
 ]
+
+{ #category : #accessing }
+ERAdditionalInformation >> label [ 	
+	^ 'Add'
+]

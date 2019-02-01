@@ -53,6 +53,11 @@ ERAttendee1 class >> roles [
 ]
 
 { #category : #'as yet unclassified' }
+ERAttendee1 class >> rolesForAdminRegister [
+	^ #('admin' 'studentVolunter')
+]
+
+{ #category : #'as yet unclassified' }
 ERAttendee1 class >> tShirtSizes [
 	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
 ]
@@ -95,6 +100,32 @@ ERAttendee1 >> contactInformation [
 { #category : #accessing }
 ERAttendee1 >> contactInformation: anObject [
 	contactInformation := anObject
+]
+
+{ #category : #accessing }
+ERAttendee1 >> descriptionAdd [
+	<magritteDescription>
+	| tmp1 |
+	tmp1 := MAClassDescription new .
+	tmp1
+		accessor: #additionalInformation ;
+		label: 'add';
+		priority: 100;
+		required: true.
+	^ tmp1 yourself
+]
+
+{ #category : #accessing }
+ERAttendee1 >> descriptionUser [
+	<magritteDescription>
+	| tmp1 |
+	tmp1 := MAClassDescription new .
+	tmp1
+		accessor: #userAccount;
+		label: 'user';
+		priority: 10;
+		required: true.
+	^ tmp1 yourself
 ]
 
 { #category : #testing }

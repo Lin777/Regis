@@ -61,11 +61,17 @@ ERUsersTab >> headers [
 
 { #category : #rendering }
 ERUsersTab >> initializeFormAddUser [
-	newUser := ERAttendee1 new.
-	formUser := ERBasicInformationView
+	newUser := ERUserAccountForAdminRegister new.
+	formUser := (ERTittledFormView 
+							on: newUser 
+							withContent: content) title: 'User'; 
+							callback: [:anUser | self createUser: anUser];
+							cancelCallback: [:anUser | anUser cancel. self returnToThePreviousState.
+			self updateStateTab: self tabName.]; initializeForm
+		"ERBasicInformationView
 		on: newUser
 		withContent: content
-		withAction: [ self addUserToConference ]
+		withAction: [ self addUserToConference ]"
 ]
 
 { #category : #rendering }
