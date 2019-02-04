@@ -80,10 +80,6 @@ ERUsersTab >> initializeFormAddUser [
 							callback: [:anUser | self createUser: anUser];
 							cancelCallback: [self cancel];
 							initializeForm
-		"ERBasicInformationView
-		on: newUser
-		withContent: content
-		withAction: [ self addUserToConference ]"
 ]
 
 { #category : #rendering }

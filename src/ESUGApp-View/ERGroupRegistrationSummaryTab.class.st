@@ -14,17 +14,12 @@ ERGroupRegistrationSummaryTab >> generateInvoice [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
-	|form|
-	form := controller groupManager affiliationInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself.
-	formMofidyAffiliation := (ERModifyForm on: controller groupManager
-		withContent: content)
-		form: form;
-		title: 'Affiliation Information';
-		cancelCallback: [ self cancel ];
-		updateCallback: [ self updateAffiliation ];
-		yourself.
+	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -42,7 +37,6 @@ ERGroupRegistrationSummaryTab >> initializePaymentForm [
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> modifyAffiliation [
 	self initializeModifyAffiliationForm .
-	content state: formMofidyAffiliation
 ]
 
 { #category : #rendering }
@@ -177,8 +171,8 @@ ERGroupRegistrationSummaryTab >> title [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> updateAffiliation [
-	controller groupManager affiliationInformation: (formMofidyAffiliation form save) model.
+ERGroupRegistrationSummaryTab >> updateAffiliation: aff [
+	controller groupManager affiliationInformation: aff.
 	controller group save.
-	self returnToThePreviousState
+	self cancel.
 ]

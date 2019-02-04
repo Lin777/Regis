@@ -48,10 +48,7 @@ ERMembersTab >> initialize [
 { #category : #initialization }
 ERMembersTab >> initializeModifyUserForm [
 	mofidyUserForm := (ERTittledFormView on: attendee userAccount 
-								withContent: content) title: 'User'."ERModifyUserView
-		on: attendee
-		withContent: content."
-	
+								withContent: content) title: 'User'.
 	content state: mofidyUserForm
 ]
 

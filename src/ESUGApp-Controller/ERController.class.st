@@ -48,8 +48,8 @@ ERController >> addTalk: aTalk [
 { #category : #adding }
 ERController >> addUser: anUser [
 	|userSaved|
-	anUser as: ERUserAccount1 .
-	userSaved := anUser save.
+	userSaved := (anUser as: ERUserAccount1 ).
+	userSaved := userSaved save.
 	conference addUser: userSaved.
 	^ userSaved
 ]
@@ -253,17 +253,10 @@ ERController >> updateAttendee: anAteendee [
 
 { #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
-	self validatePatternForRequired: anUser email withName: 'Email'.
-	self
-		validatePatternForRequired: anUser firstName
-		withName: 'First name'.
-	self
-		validatePatternForRequired: anUser lastName
-		withName: 'Last name'.
-	self validatePatternEmail: anUser email withName: 'Email'.
-	self validateIfEmailIsAlreadyRegistered: anUser.
-	
-	^ anUser save
+	[self validateIfEmailIsAlreadyRegistered: anUser.
+	^ anUser save]
+	on: ERException 
+	do: [ :exp | ^ exp ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -271,7 +264,7 @@ ERController >> validateCountry: aString withName: aString2 [
 	self validatePatternForRequired: aString withName: aString2.
 	aString = 'Select Country'
 		ifTrue: [ ERException new
-				messageText: 'Please select a ',aString2 ;
+				messageText: 'Please select a ', aString2 ;
 				signal ]
 ]
 

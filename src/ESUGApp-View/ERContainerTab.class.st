@@ -109,14 +109,7 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := (ERTittledFormView on: anUser 
 								withContent: content) title: 'User';
 								callback: [:user | self updateUser: user];
-								cancelCallback: [:user | user cancel. self returnToThePreviousState.
-			self updateStateTab: self tabName.]; initializeForm. 
-								"ERModifyUserView
-		on: anUser
-		withContent: content
-		withAction: [ controller updateUser: anUser.
-			self returnToThePreviousState.
-			self updateStateTab: self tabName.  ]."
+								cancelCallback: [self cancel]; initializeForm. 
 	content state: mofidyUserForm.
 	self updateStateTab: self tabName.
 ]
@@ -159,8 +152,9 @@ ERContainerTab >> updateTicketInformation: anAttendee [
 
 { #category : #accessing }
 ERContainerTab >> updateUser: user [
-	user save.
-	controller updateUser: user model .
-			self returnToThePreviousState.
-			self updateStateTab: self tabName.
+	|result|
+	result := controller updateUser: user.
+	(result isMemberOf: ERException) ifTrue: [ result signal ]
+	ifFalse: [ self cancel ]
+	
 ]

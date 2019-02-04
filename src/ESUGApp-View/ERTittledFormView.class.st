@@ -86,6 +86,7 @@ ERTittledFormView >> renderCancelButtonOn: html [
 { #category : #rendering }
 ERTittledFormView >> renderPageOn: html [
 	html form: [ 
+	html render: messageComponent .
 	html render: form.
 	self renderCancelButtonOn: html.
 	self renderAcceptButtonOn: html.
