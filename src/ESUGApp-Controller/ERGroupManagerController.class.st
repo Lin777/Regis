@@ -10,7 +10,7 @@ Class {
 { #category : #adding }
 ERGroupManagerController >> addAttendee: anAttendee [
 	|  aGroup anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee userAccount email)
+	(ERController new findUserByEmail: anAttendee userAccount email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved .

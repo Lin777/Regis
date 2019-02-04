@@ -45,6 +45,12 @@ ERContainerTab >> callback: anObject [
 	callback := anObject
 ]
 
+{ #category : #actions }
+ERContainerTab >> cancel [
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
+]
+
 { #category : #accessing }
 ERContainerTab >> content: anObject [
 	content := anObject

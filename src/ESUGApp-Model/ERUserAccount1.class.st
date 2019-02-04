@@ -25,7 +25,7 @@ ERUserAccount1 class >> asGroupManager [
 { #category : #actions }
 ERUserAccount1 class >> findUserByEmail: aString [
 	| userAccount |
-	userAccount := ERUserAccount1 find: [ :each | each email = aString ].
+	userAccount := ERUserAccount find: [ :each | each email = aString ].
 	^ userAccount
 ]
 

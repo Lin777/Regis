@@ -26,10 +26,8 @@ ERProposedAwardsTab >> blockTableToExecute [
 
 { #category : #initialization }
 ERProposedAwardsTab >> createAward: anAward [
-	anAward save.
-	ERController new addAward: anAward model .
-	self returnToThePreviousState.
-	self updateStateTab: self tabName.
+	ERController new addAward: anAward.
+	self cancel
 ]
 
 { #category : #accessing }
@@ -45,8 +43,7 @@ ERProposedAwardsTab >> initializeFormAddAward [
 							on: award 
 							withContent: content) title: 'Award'; 
 							callback: [:anAward | self createAward: anAward];
-							cancelCallback: [:anAward | anAward cancel. self returnToThePreviousState.
-			self updateStateTab: self tabName.]; initializeForm
+							cancelCallback: [self cancel]; initializeForm
 ]
 
 { #category : #rendering }
@@ -100,10 +97,6 @@ ERProposedAwardsTab >> renderTable: html [
 	self submittedAwards isEmpty 
 		ifTrue: [ self renderMessageEmptyOn: html ]
 		ifFalse: [ self renderAwardsTable: html ]
-]
-
-{ #category : #initialization }
-ERProposedAwardsTab >> saveAward [
 ]
 
 { #category : #accessing }

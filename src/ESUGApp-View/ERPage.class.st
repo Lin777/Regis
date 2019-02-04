@@ -6,7 +6,8 @@ Class {
 		'title',
 		'icon',
 		'id',
-		'classContainer'
+		'classContainer',
+		'block'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -14,6 +15,11 @@ Class {
 { #category : #'as yet unclassified' }
 ERPage >> actionsBody: html [
 	self subclassResponsibility 
+]
+
+{ #category : #rendering }
+ERPage >> children [ 	
+	^Array with: block
 ]
 
 { #category : #accessing }
@@ -64,7 +70,6 @@ ERPage >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERPage >> renderContentOn: html [
-	| block |
 	block := [ html
 		render:
 			((ERCard

@@ -14,7 +14,8 @@ ERLoginController class >> user: anUser [
 
 { #category : #rendering }
 ERLoginController >> validateLoginFor: aString1 password: aString2 [
-	| anUser |
-	anUser := ERUserAccount1 findUserByEmail: aString1.
-	^ anUser
+	^  conference users 
+			detect: [:each | each email = aString1 and: [each password = aString2]] 
+			ifNone: nil
+	
 ]

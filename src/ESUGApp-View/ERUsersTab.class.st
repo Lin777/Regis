@@ -36,6 +36,18 @@ ERUsersTab >> blockTableToExecute [
 		yourself ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERUsersTab >> createUser: anUser [
+	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
+			validateNewPassword: anUser password with: anUser confirmPassword.
+	anUser password: (ERUserAccount hashPassword: anUser password) asString.
+	anUser role: (Heap new
+		add: anUser role;
+		yourself).
+	ERController new addUser: anUser .
+	self cancel
+]
+
 { #category : #rendering }
 ERUsersTab >> deleteUser: user [
 ]
@@ -66,8 +78,8 @@ ERUsersTab >> initializeFormAddUser [
 							on: newUser 
 							withContent: content) title: 'User'; 
 							callback: [:anUser | self createUser: anUser];
-							cancelCallback: [:anUser | anUser cancel. self returnToThePreviousState.
-			self updateStateTab: self tabName.]; initializeForm
+							cancelCallback: [self cancel];
+							initializeForm
 		"ERBasicInformationView
 		on: newUser
 		withContent: content

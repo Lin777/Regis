@@ -8,7 +8,7 @@ Class {
 ERTestLoginController >> testFindUserByEmailWhenUserExist [
 	| anUser |
 	self registerAttendee.
-	anUser := ERUserAccount
+	anUser := ERController new
 		findUserByEmail: ERTestControllers testAttendee email.
 	self deny: anUser isNil
 ]
@@ -17,7 +17,7 @@ ERTestLoginController >> testFindUserByEmailWhenUserExist [
 ERTestLoginController >> testFindUserByEmailWhenUserNotExist [
 	| anUser |
 	
-	anUser := ERUserAccount
+	anUser := ERController new
 		findUserByEmail: ERTestControllers testAttendee email.
 	self assert: anUser isNil
 ]

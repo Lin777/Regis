@@ -45,6 +45,15 @@ ERController >> addTalk: aTalk [
 	conference save
 ]
 
+{ #category : #adding }
+ERController >> addUser: anUser [
+	|userSaved|
+	anUser as: ERUserAccount1 .
+	userSaved := anUser save.
+	conference addUser: userSaved.
+	^ userSaved
+]
+
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	conference configuration earlyRegistrationDeadline < Date today
@@ -145,6 +154,14 @@ ERController >> feeForCurrencyType: paymentCurrency [
 { #category : #'as yet unclassified' }
 ERController >> feePerTypeCurrencyOf: anAttendee [
 	^ self feeForCurrencyType: anAttendee paymentInformation paymentCurrency 
+]
+
+{ #category : #actions }
+ERController >> findUserByEmail: aString [
+	^ conference users 
+		detect: [ :each | each email = aString ] 
+		ifNone: nil.
+	
 ]
 
 { #category : #'as yet unclassified' }

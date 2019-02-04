@@ -11,7 +11,7 @@ Class {
 { #category : #actions }
 ERSession >> findUserByEmail: anEmail [
 
- ^ self database findUserByEmail: anEmail
+ ^ ERController new findUserByEmail: anEmail
 
 ]
 

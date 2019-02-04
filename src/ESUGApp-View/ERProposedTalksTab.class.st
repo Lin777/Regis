@@ -25,10 +25,8 @@ ERProposedTalksTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERProposedTalksTab >> createTalk: aTalk [
-	aTalk save.
-	ERController new addTalk: aTalk model .
-	self returnToThePreviousState.
-	self updateStateTab: self tabName.
+	ERController new addTalk: aTalk.
+	self cancel
 ]
 
 { #category : #rendering }
@@ -44,8 +42,8 @@ ERProposedTalksTab >> initializeFormAddTalk [
 							on: talk 
 							withContent: content) title: 'Talk'; 
 							callback: [:aTalk | self createTalk: aTalk];
-							cancelCallback: [:aTalk | aTalk cancel. self returnToThePreviousState.
-			self updateStateTab: self tabName.]; initializeForm
+							cancelCallback: [ self cancel]; 
+							initializeForm
 ]
 
 { #category : #rendering }
@@ -56,7 +54,7 @@ ERProposedTalksTab >> listDataToRenderButton [
 { #category : #rendering }
 ERProposedTalksTab >> proposalsAreAllowed [
 	^ ERController new conference configuration 
-	dateSubmissionDeadline >= Date today 
+	dateSubmissionDeadline < Date today 
 ]
 
 { #category : #rendering }
@@ -98,10 +96,6 @@ ERProposedTalksTab >> renderTalksTable: html [
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
-]
-
-{ #category : #rendering }
-ERProposedTalksTab >> saveTalk [
 ]
 
 { #category : #accessing }
