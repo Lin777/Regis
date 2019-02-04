@@ -3,7 +3,10 @@ Class {
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'conference',
-		'dialog'
+		'dialog',
+		'configuration',
+		'emailConf',
+		'organizer'
 	],
 	#category : #'ESUGApp-Form'
 }

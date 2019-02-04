@@ -2,16 +2,16 @@ Extension { #name : #MATableRenderer }
 
 { #category : #'*ESUGApp-MDLMagritte' }
 MATableRenderer >> renderContainer: aDescription [ 
-	html div
+	"html div
 		class: (self classFor: aDescription);
-		with: [ super renderContainer: aDescription ]
+		with: [ "super renderContainer: aDescription "]"
 ]
 
 { #category : #'*ESUGApp-MDLMagritte' }
 MATableRenderer >> renderControl: aDescription [
-	"html tableData
+	html div
 		class: (self classFor: aDescription);
-		with: [ "self basicRenderControl: aDescription "]"
+		with: [ self basicRenderControl: aDescription ]
 ]
 
 { #category : #'*ESUGApp-MDLMagritte' }

@@ -98,6 +98,16 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 ]
 
 { #category : #initialization }
+ERContainerTab >> initializeModifyAffiliationForm [
+	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #initialization }
 ERContainerTab >> initializeModifyAffiliationForm: aGroup [
 	formMofidyAffiliation := (ERTittledFormView on: aGroup groupManager affiliationInformation 
 								withContent: content) title: 'Affiliation Information';

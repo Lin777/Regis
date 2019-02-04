@@ -47,3 +47,10 @@ Example >> initialize [
 Example >> renderContentOn: html [
 	html render: object
 ]
+
+{ #category : #hooks }
+Example >> style [ 	
+
+	^ '.half {width: 49%;
+	display: inline-block;}'
+]

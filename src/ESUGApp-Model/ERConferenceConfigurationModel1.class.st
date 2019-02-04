@@ -60,14 +60,18 @@ ERConferenceConfigurationModel1 >> description: anObject [
 ERConferenceConfigurationModel1 >> descriptionDateFrom [
 	<magritteDescription>
 	| tmp2 |
-	tmp2 := MADateDescription new.
+	tmp2 := MAStringDescription new.
 	tmp2
 		accessor: #dateFrom; 
 		priority: 40;
 		required: true;
+		cssClass: 'half';
+		group: 'Dates:';
 		label: 'From';
 		withoutLabel: true;
-		componentClass: MDLMADateInputComponent.
+		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
+		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
 
@@ -75,14 +79,17 @@ ERConferenceConfigurationModel1 >> descriptionDateFrom [
 ERConferenceConfigurationModel1 >> descriptionDateSubmissionDeadline [
 	<magritteDescription>
 	| tmp2 |
-	tmp2 := MADateDescription new.
+	tmp2 := MAStringDescription new.
 	tmp2
 		accessor: #dateSubmissionDeadline; 
 		priority: 60;
 		required: true;
 		label: 'Submission Deadline';
 		withoutLabel: true;
-		componentClass: MDLMADateInputComponent.
+		cssClass: 'half';
+		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
+		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
 
@@ -90,14 +97,17 @@ ERConferenceConfigurationModel1 >> descriptionDateSubmissionDeadline [
 ERConferenceConfigurationModel1 >> descriptionDateTo [
 	<magritteDescription>
 	| tmp2 |
-	tmp2 := MADateDescription new.
+	tmp2 := MAStringDescription new.
 	tmp2
 		accessor: #dateTo; 
 		priority: 50;
 		required: true;
 		label: 'To';
+		cssClass: 'half';
 		withoutLabel: true;
-		componentClass: MDLMADateInputComponent.
+		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
+		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		componentClass: MDLMATextInputComponent .
 	^ tmp2 yourself
 ]
 
@@ -119,14 +129,17 @@ ERConferenceConfigurationModel1 >> descriptionDescription [
 ERConferenceConfigurationModel1 >> descriptionEarlyRegistrationDeadline [
 	<magritteDescription>
 	| tmp2 |
-	tmp2 := MADateDescription new.
+	tmp2 := MAStringDescription new.
 	tmp2
 		accessor: #earlyRegistrationDeadline; 
 		priority: 70;
 		required: true;
 		label: 'Early Registration Deadline';
 		withoutLabel: true;
-		componentClass: MDLMADateInputComponent.
+		cssClass: 'half';
+		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
+		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
 

@@ -12,31 +12,13 @@ Class {
 
 { #category : #rendering }
 MDLMADateInputComponent >> choose [
-]
-
-{ #category : #rendering }
-MDLMADateInputComponent >> initialize [
-	super initialize.
-	date := Date today mmddyyyy 
-]
-
-{ #category : #rendering }
-MDLMADateInputComponent >> renderButtonOn: html [
-]
-
-{ #category : #rendering }
-MDLMADateInputComponent >> renderContentOn: html [
-			| inputId |
-	inputId := self labelId.
-	html mdlTextFieldContainer
-		style: 'display: block';
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: inputId;
-				with: self magritteDescription label.
-			html mdlTextFieldInput
-				id: inputId;
-				on: #string of: self;
-				script: (html jQuery new datepicker
-			onSelect: (html jQuery ajax serializeThis)) ]
+	| calendar |
+	calendar := MDLCalendar new.
+	calendar
+		currentDate: ((self value notNil
+			and: [ self magritteDescription isSatisfiedBy: self value ])
+				ifFalse: [ Date current ]
+				ifTrue: [ self value ]);
+		callback: [ :value | calendar answer: value ].
+	self chooser: calendar
 ]
