@@ -49,7 +49,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		accessor: #paymentCurrency;
 		priority: 30;
 		required: false;
-		options: ERAttendee1 currencyTypes;
+		options: ERAttendee currencyTypes;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -64,7 +64,7 @@ ERPaymentInformation >> descriptionPaymentType [
 		accessor: #paymentType;
 		priority: 10;
 		required: false;
-		options: ERAttendee1 paymentTypes;
+		options: ERAttendee paymentTypes;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself

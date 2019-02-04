@@ -62,23 +62,17 @@ ERRegistrationController >> convertToGroupManager [
 { #category : #initialize }
 ERRegistrationController >> initialize [
 	super initialize.
-	attendee := ERAttendee1 new.
+	attendee := ERAttendee new.
 ]
 
 { #category : #action }
 ERRegistrationController >> save [
 	| user|
 	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
-	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
+	self attendee userAccount password: (ERUserAccount1 hashPassword: self attendee userAccount password)asString.
 	user := self attendee userAccount save.
 	conference addUser: user.
 	^ user
-]
-
-{ #category : #action }
-ERRegistrationController >> saveAsGroupManager [
-	self convertToGroupManager.
-	^ self save
 ]
 
 { #category : #action }
@@ -105,53 +99,6 @@ ERRegistrationController >> saveGroupManager [
 ]
 
 { #category : #'as yet unclassified' }
-ERRegistrationController >> validateAdditionalForm [
-	
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateAffiliationForm [
-	self
-		validatePatternForRequired: attendee orgName
-		withName: 'ORGANIZATION NAME'.
-	self
-		validatePatternForRequired: attendee orgAddrees1
-		withName: 'ORGANIZATION ADDRESS 1'.
-	self
-		validatePatternForRequired: attendee orgCity
-		withName: 'ORGANIZATION CITY'.
-	self
-		validateCountry: attendee orgCountry
-		withName: 'ORGANIZATION COUNTRY'.
-	self
-		validatePatternForRequired: attendee orgProvince
-		withName: 'ORGANIZATION PROVINCE'.
-	self
-		validatePatternForRequired: attendee orgPostal
-		withName: 'ORGANIZATION POSTAL'.
-	self
-		validateSelectValue: attendee membershipType
-		on: ERAttendee1 membershipTypes
-		withMessage: 'MEMBERSHIP TYPE'
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateConferenceForm [
-	self
-		validateSelectValue: attendee gender
-		on: ERAttendee1 genders
-		withMessage: 'GENDER'.
-	self
-		validateSelectValue: attendee tshirtSize
-		on: ERAttendee1 tShirtSizes
-		withMessage: 'T-SHIRT SIZE'.
-	self
-		validateSelectValue: attendee foodPreference
-		on: ERAttendee1 foodPreferences
-		withMessage: 'FOOD PREFERENCE'
-]
-
-{ #category : #'as yet unclassified' }
 ERRegistrationController >> validateContactForm [
 	self validatePatternForRequired: attendee address withName: 'ADDRESS'.
 	self validatePatternForRequired: attendee city withName: 'CITY'.
@@ -175,22 +122,6 @@ ERRegistrationController >> validateCountry: aSymbol [
 				signal ]
 ]
 
-{ #category : #action }
-ERRegistrationController >> validateEmail [
-	self validatePatternForRequired: attendee email withName: 'EMAIL'.
-	self validatePatternEmail: attendee email withName: 'EMAIL'
-]
-
-{ #category : #action }
-ERRegistrationController >> validateFirstName [
-	self
-		validatePatternForRequired: attendee firstName
-		withName: 'FIRST NAME'.
-	self
-		validatePatternForText: attendee firstName
-		withName: 'FIRST NAME'.
-]
-
 { #category : #'as yet unclassified' }
 ERRegistrationController >> validateIfTicketExist [
 	attendee hasCoupon
@@ -199,15 +130,6 @@ ERRegistrationController >> validateIfTicketExist [
 					ERException new
 						messageText: 'The ticket does not exist for this conference';
 						signal ] ]
-]
-
-{ #category : #action }
-ERRegistrationController >> validateLastName [
-	self
-		validatePatternForRequired: attendee lastName
-		withName: 'LAST NAME'.
-	self validatePatternForText: attendee lastName withName: 'LAST NAME'.
-	
 ]
 
 { #category : #action }
@@ -270,19 +192,6 @@ ERRegistrationController >> validatePatternUrl: aSymbol [
 ]
 
 { #category : #'as yet unclassified' }
-ERRegistrationController >> validatePaymentForm [
-	self
-		validateSelectValue: attendee paymentType
-		on: ERAttendee1 paymentTypes
-		withMessage: 'payment type'.
-	self
-		validateSelectValue: attendee paymentCurrency
-		on: ERController currencyAvailable
-		withMessage: 'payment currency'.
-	self validateIfTicketExist
-]
-
-{ #category : #'as yet unclassified' }
 ERRegistrationController >> validateRegister [
 	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	self validateNewPassword: attendee userAccount password 
@@ -293,17 +202,6 @@ ERRegistrationController >> validateRegister [
 ERRegistrationController >> validateRegisterForGroupManager [
 	self validateUserForm.
 	self validateAffiliationForm
-]
-
-{ #category : #action }
-ERRegistrationController >> validateUserForm [
-	self validateFirstName.
-	self validateLastName.
-	self validateEmail.
-	self validatePassword.
-	self validateIfEmailIsAlreadyRegistered: attendee userAccount
-	"self validatePatternForRequired: #password"
-	"self validatePatternPassword: #password"
 ]
 
 { #category : #action }

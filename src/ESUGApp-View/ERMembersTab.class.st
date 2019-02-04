@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 ERMembersTab >> attendeeFrom: aGroupManager [
-	^ ERAttendee1 new 
+	^ ERAttendee new 
 		userAccount: aGroupManager userAccount; 
 		affiliationInformation: aGroupManager affiliationInformation 
 ]

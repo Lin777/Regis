@@ -37,7 +37,7 @@ ERProposedTalksTab >> headers [
 { #category : #rendering }
 ERProposedTalksTab >> initializeFormAddTalk [
 	|talk|
-	talk := ERTalk1 submitter: attendee.
+	talk := ERTalk submitter: attendee.
 	formAddTalk := (ERTittledFormView 
 							on: talk 
 							withContent: content) title: 'Talk'; 
@@ -49,12 +49,6 @@ ERProposedTalksTab >> initializeFormAddTalk [
 { #category : #rendering }
 ERProposedTalksTab >> listDataToRenderButton [
 	^ OrderedCollection new
-]
-
-{ #category : #rendering }
-ERProposedTalksTab >> proposalsAreAllowed [
-	^ ERController new conference configuration 
-	dateSubmissionDeadline < Date today 
 ]
 
 { #category : #rendering }

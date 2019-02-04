@@ -207,11 +207,11 @@ ERRegisterPage >> tabs [
 
 { #category : #initialize }
 ERRegisterPage >> validateAndRegister [
-	 [self saveTabs] 
+	 [self saveTabs.
+	pageController validateRegister.] 
 	on: ERException 
 	do: [ currentTab updateStateTab: currentTab tabName.
 		^ self ].
-	pageController validateRegister.
 	self redirectFinishRegister
 ]
 

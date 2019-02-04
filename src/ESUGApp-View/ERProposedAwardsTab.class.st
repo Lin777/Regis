@@ -38,7 +38,7 @@ ERProposedAwardsTab >> headers [
 { #category : #initialization }
 ERProposedAwardsTab >> initializeFormAddAward [
 	|award|
-	award := ERAward1 submitter: attendee.
+	award := ERAward submitter: attendee.
 	formAddAward := (ERTittledFormView 
 							on: award 
 							withContent: content) title: 'Award'; 
@@ -49,13 +49,6 @@ ERProposedAwardsTab >> initializeFormAddAward [
 { #category : #rendering }
 ERProposedAwardsTab >> listDataToRenderButton [
 	^ OrderedCollection new
-]
-
-{ #category : #rendering }
-ERProposedAwardsTab >> proposalsAreAllowed [
-	
-	^ ERController new conference configuration 
-	dateSubmissionDeadline < Date today 
 ]
 
 { #category : #rendering }

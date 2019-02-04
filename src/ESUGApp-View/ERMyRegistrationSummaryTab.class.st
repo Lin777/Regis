@@ -30,7 +30,7 @@ ERMyRegistrationSummaryTab >> pay [
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> paymentStatus [
 	attendee paymentInformation hasPaid 
-	ifTrue: [ ^ 'Payment successfully received' ]
+	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ 
 	^ 'Payment no registered yet. Amount due: '
 				, (ERController new conferenceFeeFor: attendee) asString , ' '

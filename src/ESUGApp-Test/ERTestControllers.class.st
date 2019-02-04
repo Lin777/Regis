@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 ERTestControllers class >> testAttendee [
-	^ ERAttendee1 new
+	^ ERAttendee new
 		userAccount: self testUserAccount;
 		orgName: 'testOrgName';
 		orgAddrees1: 'testAddress1';
@@ -51,7 +51,7 @@ ERTestControllers class >> testAttendee [
 
 { #category : #tests }
 ERTestControllers class >> testExampleAttendee [
-	^ ERAttendee1 new
+	^ ERAttendee new
 		userAccount: self testUserExampleAccount;
 		orgName: 'exampleOrgName';
 		orgAddrees1: 'exampleAddress1';
@@ -92,7 +92,7 @@ ERTestControllers class >> testExampleAttendee [
 
 { #category : #tests }
 ERTestControllers class >> testGroupManager [
-	^ ERAttendee1 new
+	^ ERAttendee new
 		userAccount: self testUserAccount;
 		orgName: 'testOrgName';
 		orgAddrees1: 'testAddress1';
@@ -107,7 +107,7 @@ ERTestControllers class >> testGroupManager [
 
 { #category : #tests }
 ERTestControllers class >> testModifyUser [
-	^ ERUserAccount new
+	^ ERUserAccount1 new
 		firstName: 'userModify';
 		lastName: 'usermodify';
 		email: 'userModify@gmail.com';
@@ -116,21 +116,21 @@ ERTestControllers class >> testModifyUser [
 
 { #category : #tests }
 ERTestControllers class >> testUserAccount [
-	^ ERUserAccount new
+	^ ERUserAccount1 new
 		email: 'test@gmail.com';
 		firstName: 'Test';
 		lastName: 'Test';
-		password: (ERUserAccount hashPassword: '12345678') asString;
+		password: (ERUserAccount1 hashPassword: '12345678') asString;
 		yourself
 ]
 
 { #category : #tests }
 ERTestControllers class >> testUserExampleAccount [
-	^ ERUserAccount new
+	^ ERUserAccount1 new
 		email: 'example@gmail.com';
 		firstName: 'Example';
 		lastName: 'Example';
-		password: (ERUserAccount hashPassword: '12345678') asString;
+		password: (ERUserAccount1 hashPassword: '12345678') asString;
 		yourself
 ]
 
@@ -161,9 +161,8 @@ ERTestControllers >> registerAttendee: anAttendee [
 ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
-	ERUserAccount warmUp.
 	ERUserAccount1 warmUp.
-	ERAttendee1 warmUp.
+	ERAttendee warmUp.
 	ERAward warmUp.
 	ERBankInformation warmUp.
 	ERBankAccountInformation warmUp.
@@ -175,7 +174,7 @@ ERTestControllers >> setUp [
 	ERUnlimitedReductionTicketUse warmUp.
 	ERReductionTicket warmUp.
 	ERFee warmUp.
-	ERGroup warmUp.
+	ERGroup1 warmUp.
 	ERTalk warmUp.
 	ERConferenceOrganizer warmUp.
 	ERConferenceEmailConfiguration warmUp.
@@ -187,12 +186,12 @@ ERTestControllers >> setUp [
 
 { #category : #running }
 ERTestControllers >> tearDown [
-	ERAttendee1
+	ERAttendee
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERAttendee1 coolDown.
+	ERAttendee coolDown.
 	ERAward
 		do: [ :each | 
 			[ each delete ]
@@ -254,12 +253,12 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERFee coolDown.
-	ERGroup
+	ERGroup1
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERGroup coolDown.
+	ERGroup1 coolDown.
 	ERReductionTicket
 		do: [ :each | 
 			[ each delete ]
@@ -272,12 +271,6 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERTalk coolDown.
-	ERUserAccount
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERUserAccount coolDown.
 	ERUserAccount1
 		do: [ :each | 
 			[ each delete ]

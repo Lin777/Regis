@@ -28,12 +28,12 @@ ERLoggedController >> attendee: anObject [
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser [
-	^ ERAttendee1 find: [ :each | each userAccount = user ]
+	^ ERAttendee find: [ :each | each userAccount = user ]
 ]
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser: anUser [
-	^ ERAttendee1 find: [ :each | each userAccount = anUser ]
+	^ ERAttendee find: [ :each | each userAccount = anUser ]
 ]
 
 { #category : #removing }
@@ -50,7 +50,7 @@ ERLoggedController >> deleteAttendeeAndRemoveUserForConference: anAttendee [
 { #category : #accessing }
 ERLoggedController >> initialize [
 	super initialize.
-	user := ERUserAccount new
+	user := ERUserAccount1 new
 ]
 
 { #category : #removing }

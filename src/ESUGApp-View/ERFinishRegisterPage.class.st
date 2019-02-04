@@ -74,13 +74,6 @@ ERFinishRegisterPage >> register [
 ]
 
 { #category : #rendering }
-ERFinishRegisterPage >> registerAsGroupManager [
-	| user |
-	user := pageController saveAsGroupManager.
-	self validateRegister: user
-]
-
-{ #category : #rendering }
 ERFinishRegisterPage >> renderActions: html [
 	html mdlCardActions
 		class: 'mdl-card--border';

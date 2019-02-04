@@ -13,7 +13,7 @@ ERUserAccountForAdminRegister >> descriptionRole [
 		accessor: #role;
 		priority: 40;
 		beRequired;
-		options: ERAttendee1 rolesForAdminRegister;
+		options: ERAttendee rolesForAdminRegister;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself

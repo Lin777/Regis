@@ -12,6 +12,21 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> admin [
+	| instance |
+	instance := self new.
+	instance role: 'admin'.
+	^ instance
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> adminRole [
+	^ Heap new
+		add: 'admin';
+		yourself
+]
+
 { #category : #converting }
 ERUserAccount1 class >> asGroupManager [
 	|instance|
@@ -22,11 +37,42 @@ ERUserAccount1 class >> asGroupManager [
 	^ instance
 ]
 
-{ #category : #actions }
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> attendeeRole [
+	^ Heap new
+		add: 'attendee';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERUserAccount1 class >> findUserByEmail: aString [
 	| userAccount |
-	userAccount := ERUserAccount find: [ :each | each email = aString ].
+	userAccount := ERUserAccount1 find: [ :each | each email = aString ].
 	^ userAccount
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> groupManager [
+	| instance |
+	instance := self new.
+	instance role: 'groupManager'.
+	^ instance
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> groupManagerRole [
+	^ Heap new
+		add: 'groupManager';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount1 class >> hashPassword: aString [
+
+ ^ aString 
+  ifEmpty: [0 asString] 
+  ifNotEmpty: [(GRPlatform current secureHashFor: aString) asString].
+
 ]
 
 { #category : #accessing }
@@ -37,6 +83,11 @@ ERUserAccount1 >> confirmPassword [
 { #category : #accessing }
 ERUserAccount1 >> confirmPassword: anObject [
 	confirmPassword := anObject
+]
+
+{ #category : #testing }
+ERUserAccount1 >> deleteRole: anObject [
+	role removeAllSuchThat: [ :each | each = anObject  ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -146,11 +197,6 @@ ERUserAccount1 >> isStudent [
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> label [ 	
-	^ 'fgsfs'
-]
-
-{ #category : #accessing }
 ERUserAccount1 >> lastName [
 	^ lastName
 ]
@@ -178,6 +224,11 @@ ERUserAccount1 >> role [
 { #category : #accessing }
 ERUserAccount1 >> role: anObject [
 	role := anObject
+]
+
+{ #category : #testing }
+ERUserAccount1 >> roleAdd: anObject [
+	role add: anObject 
 ]
 
 { #category : #'as yet unclassified' }

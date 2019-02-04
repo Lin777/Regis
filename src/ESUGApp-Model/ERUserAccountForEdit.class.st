@@ -13,7 +13,7 @@ ERUserAccountForEdit >> descriptionRole [
 		accessor: #role;
 		priority: 60;
 		beRequired;
-		options: ERAttendee1 roles;
+		options: ERAttendee roles;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself

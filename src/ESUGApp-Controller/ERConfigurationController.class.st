@@ -302,7 +302,7 @@ ERConfigurationController >> modifyTicket: aTicket [
 ERConfigurationController >> participantsToLunches [
 	| list |
 	list := OrderedCollection new.
-	ERAttendee1 days
+	ERAttendee days
 		do: [ :day | self addAttendsToLunchPer: day to: list ].
 	^ list
 ]
@@ -381,7 +381,7 @@ ERConfigurationController >> saveTicket: aReductionTicket [
 ERConfigurationController >> shirtsStatistics [
 	| list |
 	list := OrderedCollection new.
-	ERAttendee1 tShirtSizes do: [ :each | self addItemTo: list of: each ].
+	ERAttendee tShirtSizes do: [ :each | self addItemTo: list of: each ].
 	^ list
 ]
 

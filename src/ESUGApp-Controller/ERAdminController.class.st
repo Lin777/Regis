@@ -14,7 +14,7 @@ ERAdminController class >> attendee: anAtteendee [
 
 { #category : #'as yet unclassified' }
 ERAdminController >> changePasswordTo: aString [
-	attendee password: (ERUserAccount hashPassword: aString) asString.
+	attendee password: (ERUserAccount1 hashPassword: aString) asString.
 	^ attendee save.
 ]
 
@@ -27,7 +27,7 @@ ERAdminController >> updateUser: anUser [
 { #category : #'as yet unclassified' }
 ERAdminController >> validateCurrentPassword: confirmPassword [
 	^ attendee password
-		= (ERUserAccount hashPassword: confirmPassword) asString
+		= (ERUserAccount1 hashPassword: confirmPassword) asString
 ]
 
 { #category : #'as yet unclassified' }

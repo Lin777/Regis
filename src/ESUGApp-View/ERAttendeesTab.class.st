@@ -25,12 +25,12 @@ ERAttendeesTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> deleteAttendeeFromGroup: user [
+ERAttendeesTab >> deleteAttendee: user [
 ]
 
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
-controller exportAttends: 'attends' .
+	controller exportAttends: 'attends' .
 	self updateStateTab: self tabName.
 ]
 
@@ -55,7 +55,7 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'Delete'
-				with: [ :user | self deleteAttendeeFromGroup: user ]
+				with: [ :user | self deleteAttendee: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
@@ -75,13 +75,6 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | self generateInvoice: user ] 
 				with: [ :user | user id , '-invoice' ]);
 		yourself
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> registerAdminAsAttendee [
-	(ERRegistrationController attendee: attendee) validateRegister .
-	controller registerAsAttendee.
-	content state: content lastState
 ]
 
 { #category : #rendering }

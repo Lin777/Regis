@@ -9,7 +9,8 @@ Class {
 		'formWithoutBasicInfo',
 		'formRegister',
 		'attenteeRegisterForm',
-		'formApplyReductionTicket'
+		'formApplyReductionTicket',
+		'formMofidyAffiliation'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -96,6 +97,21 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 	content state: formWithoutBasicInfo
 ]
 
+{ #category : #initialization }
+ERContainerTab >> initializeModifyAffiliationForm: aGroup [
+	formMofidyAffiliation := (ERTittledFormView on: aGroup groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff on: aGroup];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERContainerTab >> modifyAffiliation: aGroup [
+	self initializeModifyAffiliationForm: aGroup .
+]
+
 { #category : #accessing }
 ERContainerTab >> modifyRegistrationInformation: anAttendee [
 	callback := [ self updateRegistrationInformation: anAttendee ].
@@ -128,6 +144,13 @@ ERContainerTab >> renderContentOn: html [
 { #category : #accessing }
 ERContainerTab >> title [
 	self subclassResponsibility 
+]
+
+{ #category : #rendering }
+ERContainerTab >> updateAffiliation: aff on: aGroup [
+	aGroup groupManager affiliationInformation: aff.
+	aGroup save.
+	self cancel.
 ]
 
 { #category : #accessing }

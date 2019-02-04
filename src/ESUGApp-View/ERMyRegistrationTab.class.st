@@ -13,3 +13,9 @@ ERMyRegistrationTab class >> on: anAttendee withContent: aContent container: aCo
 	form container: aContainer.
 	^ form
 ]
+
+{ #category : #rendering }
+ERMyRegistrationTab >> proposalsAreAllowed [
+	^ ERController new conference configuration 
+	dateSubmissionDeadline < Date today 
+]

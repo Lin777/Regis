@@ -31,17 +31,6 @@ ERGroupManagerController >> addMyselfToGroup [
 	group save.
 ]
 
-{ #category : #adding }
-ERGroupManagerController >> createGroup: aGroupManager [
-	|group|
-	group := ERGroup groupManager: aGroupManager.
-			group := group save.
-			conference
-				addGroup: group;
-				save.
-	^ group
-]
-
 { #category : #accessing }
 ERGroupManagerController >> deleteAllFieldsOfAttendeeExceptAffiliationInformation [
 	attendee keywords: ''.
@@ -134,10 +123,6 @@ ERGroupManagerController >> groupOfUser: aGroupManager [
 	| aGroup |
 	aGroup := ERGroup1
 		find: [ :each | each groupManager userAccount = aGroupManager ].
-	aGroup
-		ifNil: [ 
-			aGroup := self createGroup: aGroupManager .
-			 ].
 	^ aGroup
 ]
 

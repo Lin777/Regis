@@ -40,7 +40,7 @@ ERUsersTab >> blockTableToExecute [
 ERUsersTab >> createUser: anUser [
 	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
 			validateNewPassword: anUser password with: anUser confirmPassword.
-	anUser password: (ERUserAccount hashPassword: anUser password) asString.
+	anUser password: (ERUserAccount1 hashPassword: anUser password) asString.
 	anUser role: (Heap new
 		add: anUser role;
 		yourself).

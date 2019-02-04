@@ -190,7 +190,7 @@ ERFeeForm >> renderFormConferenceFee: html [
 		createSelectField: 'Currency:'
 		for: #currency:
 		with: #currency
-		list: ERAttendee1 currencyTypes
+		list: ERAttendee currencyTypes
 		percent: 49
 		to: fee
 		on: html.

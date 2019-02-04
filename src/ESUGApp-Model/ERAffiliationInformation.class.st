@@ -23,7 +23,7 @@ ERAffiliationInformation >> descriptionMembershipType [
 		accessor: #membershipType;
 		priority: 80;
 		required: false;
-		options: ERAttendee1 membershipTypes;
+		options: ERAttendee membershipTypes;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -83,7 +83,7 @@ ERAffiliationInformation >> descriptionOrganizationCountry [
 		accessor: #organizationCountry;
 		priority: 50;
 		required: false;
-		options: ERAttendee1 countries;
+		options: ERAttendee countries;
 		default:'Select Country';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
