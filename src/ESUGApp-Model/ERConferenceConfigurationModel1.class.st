@@ -64,13 +64,13 @@ ERConferenceConfigurationModel1 >> descriptionDateFrom [
 	tmp2
 		accessor: #dateFrom; 
 		priority: 40;
-		required: true;
+		beRequired;
 		cssClass: 'half';
 		group: 'Dates:';
 		label: 'From';
 		withoutLabel: true;
-		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
-		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -83,12 +83,12 @@ ERConferenceConfigurationModel1 >> descriptionDateSubmissionDeadline [
 	tmp2
 		accessor: #dateSubmissionDeadline; 
 		priority: 60;
-		required: true;
+		beRequired;
 		label: 'Submission Deadline';
 		withoutLabel: true;
 		cssClass: 'half';
-		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
-		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -101,12 +101,12 @@ ERConferenceConfigurationModel1 >> descriptionDateTo [
 	tmp2
 		accessor: #dateTo; 
 		priority: 50;
-		required: true;
+		beRequired;
 		label: 'To';
 		cssClass: 'half';
 		withoutLabel: true;
-		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
-		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
 		componentClass: MDLMATextInputComponent .
 	^ tmp2 yourself
 ]
@@ -133,12 +133,12 @@ ERConferenceConfigurationModel1 >> descriptionEarlyRegistrationDeadline [
 	tmp2
 		accessor: #earlyRegistrationDeadline; 
 		priority: 70;
-		required: true;
+		beRequired;
 		label: 'Early Registration Deadline';
 		withoutLabel: true;
 		cssClass: 'half';
-		addCondition: [ :value | value matchesRegex: '^([0]?[0-9]|[12][0-9]|[3][01])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$' ] 
-		labelled: 'This field only supports dates with the following format "DD/MM/YYYY"';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -165,7 +165,7 @@ ERConferenceConfigurationModel1 >> descriptionName [
 	tmp 
 		accessor: #name; 
 		priority: 10;
-		required: false;
+		beRequired;
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -201,6 +201,11 @@ ERConferenceConfigurationModel1 >> homePageUrl: anObject [
 	homePageUrl := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel1 >> messageInvalidDate [
+	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
+]
+
 { #category : #accessing }
 ERConferenceConfigurationModel1 >> name [
 	^ name
@@ -229,4 +234,9 @@ ERConferenceConfigurationModel1 >> organizer [
 { #category : #accessing }
 ERConferenceConfigurationModel1 >> organizer: anObject [
 	organizer := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel1 >> patternDate [ 
+	^ '^([0]?[1-9]|[1][0-2])[./-]([0]?[0-9]|[12][0-9]|[3][01])[./-]([0-9]{4}|[0-9]{2})$'
 ]

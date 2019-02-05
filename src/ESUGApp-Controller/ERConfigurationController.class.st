@@ -322,9 +322,7 @@ ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
 	conference reductionTickets
 		do: [ :each | 
 			aReductionTicket ticketId = each ticketId
-				ifTrue: [ ERException new
-						messageText:
-							'There is already a previously registered ticket with this ticket ID'; signal ] ]
+				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
 ]
 
 { #category : #accessing }
@@ -359,6 +357,14 @@ ERConfigurationController >> registrationsStatistics [
 	list := OrderedCollection new.
 	^ list
 "	^ #('Date' 'Total Attendees')"
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> saveConferenceWithConfiguration: configuration emailConfiguration: emailConfig organizer: organizer [
+	self conference configuration:configuration.
+	self conference configuration emailConfiguration: emailConfig .
+	self conference configuration organizer: organizer .
+	self conference save.
 ]
 
 { #category : #'as yet unclassified' }
@@ -398,4 +404,19 @@ ERConfigurationController >> submittedTalks [
 { #category : #accessing }
 ERConfigurationController >> users [
 	^ conference users
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateConferenceConfiguration: configuration [
+	configuration dateFrom asDate < configuration dateTo asDate
+	ifFalse: [ ERException invalidEsugDates ]
+	
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateEmailConfiguration: emailConfiguration [
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateOrganizerConfiguration: organizer [
 ]

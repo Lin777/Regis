@@ -6,7 +6,10 @@ Class {
 		'dialog',
 		'configuration',
 		'emailConf',
-		'organizer'
+		'organizer',
+		'configurationForm',
+		'emailConfigurationForm',
+		'organizerForm'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -21,8 +24,14 @@ ERConferenceForm >> initialize [
 	super initialize.
 	self initializeController.
 	conference := controller conference.
+	configurationForm := conference configuration asComponent addDecoration: MAValidationDecoration new;
+	 yourself.
+	emailConfigurationForm := conference configuration emailConfiguration asComponent addDecoration: MAValidationDecoration new;
+	 yourself.
+	organizerForm := conference configuration organizer asComponent addDecoration: MAValidationDecoration new;
+	 yourself.
 	dialog := ERDialog new
-		title: 'Cancel Modify Conference';
+		title: 'Cancel';
 		message: 'Are you sure you want to cancel?';
 		idClose: 'buttonClose';
 		idOpen: 'cancel-modify-conference';
@@ -75,53 +84,7 @@ ERConferenceForm >> renderFormConferenceConfiguration: html [
 		level3;
 		with: self title.
 	html horizontalRule.
-	self
-		createTextField: 'Name: '
-		for: #name:
-		with: #name1
-		to: conference configuration
-		on: html.
-	self
-		createTextField: 'Description: '
-		for: #description:
-		with: #description
-		to: conference configuration
-		on: html.
-	self
-		createTextField: 'Home Page: '
-		for: #homePageUrl:
-		with: #homePageUrl
-		to: conference configuration
-		on: html.
-	self createStrongText: 'Dates: ' to: html.
-	self
-		createTextField: 'From: '
-		for: #dateFrom:
-		with: #dateFrom
-		percent: 49
-		to: conference configuration
-		on: html.
-	self
-		createTextField: 'To: '
-		for: #dateTo:
-		with: #dateTo
-		percent: 49
-		to: conference configuration 
-		on: html.
-	self
-		createTextField: 'Submission Deadline: '
-		for: #dateSubmissionDeadline:
-		with: #dateSubmissionDeadline
-		percent: 49
-		to: conference configuration 
-		on: html.
-	self
-		createTextField: 'Early Registration Deadline: '
-		for: #earlyRegistrationDeadline:
-		with: #earlyRegistrationDeadline
-		percent: 49
-		to: conference configuration 
-		on: html
+	html render: configurationForm
 ]
 
 { #category : #rendering }
@@ -130,32 +93,7 @@ ERConferenceForm >> renderFormEmailConfiguration: html [
 		level3;
 		with: 'Email Configuration'.
 	html horizontalRule.
-	self
-		createTextField: 'Sender Email Address: '
-		for: #senderEmailAddress:
-		with: #senderEmailAddress
-		to: conference configuration emailConfiguration
-		on: html.
-	self
-		createTextField: 'Smpt Server Address: '
-		for: #smptServerAddress:
-		with: #smptServerAddress
-		to: conference configuration emailConfiguration
-		on: html.
-	self
-		createSelectField: 'Smpt Client: '
-		for: #smptClient:
-		with: #smptClient
-		list: #('PatSmtpToPPostMarkClientAdapter')
-		to: conference configuration emailConfiguration
-		on: html.
-	self
-		createTextAreaField: 'Welcome Text'
-		for: #welcomeText:
-		with: #welcomeText
-		withRows: 5
-		to: conference configuration emailConfiguration
-		on: html
+	html render: emailConfigurationForm 
 ]
 
 { #category : #rendering }
@@ -164,31 +102,7 @@ ERConferenceForm >> renderFormOrganizer: html [
 		level3;
 		with: 'Organizer'.
 	html horizontalRule.
-	self
-		createTextField: 'Name: '
-		for: #name:
-		with: #name1
-		to: conference configuration organizer
-		on: html.
-	self
-		createTextField: 'Fiscal Situacion: '
-		for: #fiscalSituation:
-		with: #fiscalSituation
-		to: conference configuration organizer
-		on: html.
-	self
-		createTextField: 'Web Page URL: '
-		for: #webPageUrl:
-		with: #webPageUrl
-		to: conference configuration organizer
-		on: html.
-	self
-		createTextAreaField: 'Address String: '
-		for: #addressString:
-		with: #addressString
-		withRows: 5
-		to: conference configuration organizer
-		on: html
+	html render: organizerForm 
 ]
 
 { #category : #accessing }
@@ -208,6 +122,15 @@ ERConferenceForm >> title [
 
 { #category : #rendering }
 ERConferenceForm >> updateOrCreateConference [
-	conference := conference save.
+	"Save all forms of conferece"
+	configurationForm save.
+	emailConfigurationForm save.
+	organizerForm save.
+	controller validateConferenceConfiguration: configurationForm model.
+	controller validateEmailConfiguration: emailConfigurationForm model.
+	controller validateOrganizerConfiguration: organizerForm model.
+	controller saveConferenceWithConfiguration: configurationForm model 
+				 emailConfiguration: emailConfigurationForm model 
+					organizer: organizerForm model.
 	self updateStateTab: self tabName.
 ]

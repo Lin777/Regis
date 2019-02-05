@@ -21,9 +21,7 @@ ERController >> add:attendee ToTicket: coupon [
 		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
 	coupon limitStrategyIsUnlimited
 		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	ERException new
-		messageText: 'The ticket does not have a limit strategy allowed.';
-		signal
+	ERException limitStrategyNotAllowedd signal
 ]
 
 { #category : #adding }
@@ -146,9 +144,7 @@ ERController >> existReductionTicketWithName: aString [
 ERController >> feeForCurrencyType: paymentCurrency [
 	[ ^ conference fees detect: [ :fee | fee currency = paymentCurrency]]
 	on: NotFound 
-	do: [ ERException new 
-		messageText: 'The payment currency is not available now.';
-		signal ]
+	do: [ ERException paymentCurrencyNotAvailable signal ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -229,8 +225,7 @@ ERController >> reductionTicketWithName: aString [
 	[ ^ conference reductionTickets detect: [ :each | 
 			each ticketId = aString] ]
 	on: NotFound 
-	do: [ ERException new 
-		messageText: 'There is no ticket with the ticket id provided.';
+	do: [ ERException invalidTicketId
 		signal ]
 ]
 
@@ -275,15 +270,12 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 			each email = anUser email
 				ifTrue: [ 
 					each = anUser ifFalse:[
-					ERException new
-						messageText: 'This email is already registered';
-						signal ] ]]
+					ERException emailAlreadyRegistered signal ] ]]
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> validateNewPassword: aString1 with: aString2 [
-	(aString1 = aString2) ifFalse: [ ERException new 
-		messageText: 'The password does not match with confirm password';signal ].
+	(aString1 = aString2) ifFalse: [ ERException passwordDoesNotMatchWithConfirmPass signal ].
 ]
 
 { #category : #'as yet unclassified' }
@@ -327,7 +319,5 @@ ERController >> verifyIfTicketCanApply: ticket [
 	[ ((self attendeesForATicket: ticket ticketId) size 
 	<= ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ 
-		ERException new 
-		messageText: 'The limit of the ticket was exceeded, you can not use it'; 
-		signal ] ]
+		ERException ticketWasExceeded signal ] ]
 ]

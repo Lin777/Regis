@@ -21,9 +21,7 @@ ERRegistrationController >> addAttendeeToTicket: coupon [
 		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
 	coupon limitStrategyIsUnlimited
 		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	ERException new
-		messageText: 'The ticket does not have a limit strategy allowed.';
-		signal
+	ERException limitStrategyNotAllowedd	signal
 ]
 
 { #category : #action }
@@ -127,9 +125,7 @@ ERRegistrationController >> validateIfTicketExist [
 	attendee hasCoupon
 		ifTrue: [ (self reductionTicketWithName: attendee coupon) isNil
 				ifTrue: [ 
-					ERException new
-						messageText: 'The ticket does not exist for this conference';
-						signal ] ]
+					ERException ticketDoesNotExist signal ] ]
 ]
 
 { #category : #action }
@@ -173,9 +169,7 @@ ERRegistrationController >> validatePatternPassword: aSymbol [
 	(((attendee perform: aSymbol)
 		matchesRegex: '[A-Za-z0-9._]{8,}')
 		and: [ (attendee perform: aSymbol) size >= 8 ])
-		ifFalse: [ ERException new
-				messageText:
-					'The password must have at least 8 characters, and only accepts letters, numbers, slash and dots.';signal ]
+		ifFalse: [ ERException passwordFormatException signal ]
 ]
 
 { #category : #'as yet unclassified' }

@@ -30,9 +30,7 @@ ERFinishRegisterAttendeePage >> finishRegister [
 		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
 	attendee paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	ERException new
-		messageText: 'The type of payment entered is not valid. ';
-		signal
+	ERException paymentInvalid signal
 ]
 
 { #category : #rendering }

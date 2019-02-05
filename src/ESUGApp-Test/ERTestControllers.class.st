@@ -176,9 +176,6 @@ ERTestControllers >> setUp [
 	ERFee warmUp.
 	ERGroup1 warmUp.
 	ERTalk warmUp.
-	ERConferenceOrganizer warmUp.
-	ERConferenceEmailConfiguration warmUp.
-	ERConferenceConfigurationModel warmUp.
 	ERConference warmUp.
 	ERSandstoneDatabase initialize.
 	ESUGSetUp start
@@ -277,24 +274,6 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERUserAccount coolDown.
-	ERConferenceOrganizer
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERConferenceOrganizer coolDown.
-	ERConferenceEmailConfiguration
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERConferenceEmailConfiguration coolDown.
-	ERConferenceConfigurationModel
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERConferenceConfigurationModel coolDown.
 	ERConference
 		do: [ :each | 
 			[ each delete ]
