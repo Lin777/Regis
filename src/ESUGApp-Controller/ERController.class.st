@@ -54,7 +54,7 @@ ERController >> addUser: anUser [
 
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
-	conference configuration earlyRegistrationDeadline asDate < Date today
+	conference configuration earlyRegistrationDeadline < Date today
 		ifTrue: [ ^ aFee lrfAllDaysFee ]
 		ifFalse: [ ^ aFee erfAllDaysFee ].
 	^ ERException new
