@@ -54,11 +54,10 @@ ERController >> addUser: anUser [
 
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
-	conference configuration earlyRegistrationDeadline < Date today
+	conference configuration earlyRegistrationDeadline asDate < Date today
 		ifTrue: [ ^ aFee lrfAllDaysFee ]
 		ifFalse: [ ^ aFee erfAllDaysFee ].
-	^ ERException new
-		messageText: 'An error occurred when calculating the payment amount.'; raised
+	^ ERException errorWhenCalculatingPaymentAmount raised
 ]
 
 { #category : #'as yet unclassified' }

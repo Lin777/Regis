@@ -44,10 +44,7 @@ ERTittledFormView >> initialize [
 
 { #category : #rendering }
 ERTittledFormView >> initializeDialog [ 
-	dialog := ERDialog new
-		title: 'Cancel ';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog := ERDialog cancelDialog 
 		idOpen: 'cancel';
 		okCallback: [self cancelForm] 
 ]

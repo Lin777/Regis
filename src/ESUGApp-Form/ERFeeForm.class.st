@@ -4,10 +4,27 @@ Class {
 	#instVars : [
 		'fee',
 		'callback',
-		'dialog'
+		'dialog',
+		'feeForm',
+		'bankAccountInfoForm',
+		'bankInfoForm',
+		'cancelCallback',
+		'messageComponent'
 	],
 	#category : #'ESUGApp-Form'
 }
+
+{ #category : #'as yet unclassified' }
+ERFeeForm class >> on: aFee callback: block1 cancel: block2 withContent: aContent [
+	| form |
+	form := self new.
+	form fee: aFee.
+	form callback: block1.
+	form cancelCallback: block2 .
+   form content: aContent.
+	form initializeForms.
+	^ form
+]
 
 { #category : #'as yet unclassified' }
 ERFeeForm class >> on: aFee callback: aBlock withContent: aContent [
@@ -16,12 +33,34 @@ ERFeeForm class >> on: aFee callback: aBlock withContent: aContent [
 	form fee: aFee.
 	form callback: aBlock.
    form content: aContent.
+	form initializeForms.
 	^ form
 ]
 
 { #category : #accessing }
 ERFeeForm >> callback: anObject [
 	callback := anObject
+]
+
+{ #category : #rendering }
+ERFeeForm >> cancel [ 	
+	self returnToThePreviousState.
+	cancelCallback value
+]
+
+{ #category : #accessing }
+ERFeeForm >> cancelCallback: anObject [
+	cancelCallback := anObject
+]
+
+{ #category : #hooks }
+ERFeeForm >> children [
+	^ OrderedCollection new
+		add: dialog;
+		add: feeForm  ;
+		add: bankAccountInfoForm  ;
+		add: bankInfoForm;
+		yourself
 ]
 
 { #category : #accessing }
@@ -43,40 +82,41 @@ ERFeeForm >> fee: anObject [
 ERFeeForm >> initialize [
 	super initialize.
 	fee := ERFee new.
-	dialog := ERDialog new
-		title: 'Cancel';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	messageComponent := ERAlert warningAlert id: 'formConferenceAlert'.
+	dialog := ERDialog cancelDialog 
 		idOpen: 'cancelAddFee';
-		okCallback: [ self returnToThePreviousState ]
+		okCallback: [ self cancel ]
+]
+
+{ #category : #initialization }
+ERFeeForm >> initializeForms [
+	feeForm := self createFormOf: fee.
+	bankAccountInfoForm := self createFormOf: fee bankAccountInformation.
+	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderAcceptButton: html [
-	self
-		createColoredButtonAsSubmit: 'Accept'
-		with: callback
-		id: 'acceptAddFee'
-		on: html
+	html mdlButton
+		colored;
+		beSubmit;
+		id: 'acceptAddFee';
+		callback: [self saveAndValidateFee];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
-ERFeeForm >> renderAddressString: html [
-	self
-		createTextAreaField: 'Address String'
-		for: #addressString:
-		with: #addressString
-		withRows: 5
-		to: fee bankAccountInformation bankInformation
-		on: html
+ERFeeForm >> renderButtonsOn: html [ 
+	self renderCancelButton: html.
+	self renderAcceptButton: html
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderCancelButton: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		id: 'cancelAddFee'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancelAddFee'; 
+		colored;
+		with: 'Cancel'.
 ]
 
 { #category : #rendering }
@@ -89,159 +129,42 @@ ERFeeForm >> renderContentPage: html [
 				with: [ self renderFormConferenceFee: html.
 					self renderFormBankAccountInformation: html.
 					self renderFormBankInformation: html.
-					self renderAddressString: html.
-					self renderPayPALUrl: html.
-					self renderAcceptButton: html.
-					self renderCancelButton: html ] ].
+					self renderButtonsOn: html ] ].
 			html render: dialog
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderFormBankAccountInformation: html [
-	self
-		createHeadingStrong: 'Bank Account Information:'
-		level: 5
-		on: html.
+	html heading level: 5;
+		with: [ html strong: 'Bank Account Information:'].
 	html horizontalRule.
-	self
-		createDivGridWith: [ self
-				createDivCell6ColWith: [ self
-						createTextField: 'Owner:'
-						for: #owner:
-						with: #owner
-						percent: 49
-						to: fee bankAccountInformation
-						on: html.
-					self
-						createTextField: 'Number:'
-						for: #number:
-						with: #number
-						percent: 49
-						to: fee bankAccountInformation
-						on: html ]
-				on: html.
-			self
-				createDivCell6ColWith: [ self
-						createTextField: 'IBAN:'
-						for: #iban:
-						with: #iban
-						percent: 49
-						to: fee bankAccountInformation
-						on: html.
-					self
-						createTextField: 'Rib Key:'
-						for: #ribKey:
-						with: #ribKey
-						percent: 49
-						to: fee bankAccountInformation
-						on: html ]
-				on: html ]
-		on: html
+	html render: bankAccountInfoForm 
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderFormBankInformation: html [
-	self
-		createHeadingStrong: 'Bank Information:'
-		level: 5
-		on: html.
+	html heading level: 5;
+		with: [ html strong: 'Bank Information:'].
 	html horizontalRule.
-	self
-		createDivGridWith: [ self
-				createDivCell6ColWith: [ self
-						createTextField: 'Name:'
-						for: #name:
-						with: #name1
-						percent: 49
-						to: fee bankAccountInformation bankInformation
-						on: html.
-					self
-						createTextField: 'Code:'
-						for: #code:
-						with: #code
-						percent: 49
-						to: fee bankAccountInformation bankInformation
-						on: html ]
-				on: html.
-			self
-				createDivCell6ColWith: [ self
-						createTextField: 'Counter Code:'
-						for: #counterCode:
-						with: #counterCode
-						percent: 49
-						to: fee bankAccountInformation bankInformation
-						on: html.
-					self
-						createTextField: 'BIC:'
-						for: #bic:
-						with: #bic
-						percent: 49
-						to: fee bankAccountInformation bankInformation
-						on: html ]
-				on: html ]
-		on: html
+	html render: bankInfoForm  
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderFormConferenceFee: html [
-	self createHeadingStrong: 'Conference Fee:' level: 5 on: html.
+	html heading level: 5;
+		with: [ html strong: 'Conference Fee:'].
 	html horizontalRule.
-	self
-		createSelectField: 'Currency:'
-		for: #currency:
-		with: #currency
-		list: ERAttendee currencyTypes
-		percent: 49
-		to: fee
-		on: html.
-	self
-		createTextField: 'Price for add a person to the Social Dinner:'
-		for: #extraPersonSD:
-		with: #extraPersonSD
-		percent: 49
-		to: fee
-		on: html.
-	self
-		createDivGridWith: [ self
-				createDivCell6ColWith: [ html strong: 'Early Registration Fee:'.
-					html break.
-					self
-						createTextField: 'All days Fee:'
-						for: #erfAllDaysFee:
-						with: #erfAllDaysFee
-						percent: 49
-						to: fee
-						on: html.
-					self
-						createTextField: 'One day Fee:'
-						for: #erfOneDayFee:
-						with: #erfOneDayFee
-						percent: 49
-						to: fee
-						on: html ]
-				on: html.
-			self
-				createDivCell6ColWith: [ html strong: 'Late Registration Fee:'.
-					html break.
-					self
-						createTextField: 'All days Fee:'
-						for: #lrfAllDaysFee:
-						with: #lrfAllDaysFee
-						percent: 49
-						to: fee
-						on: html.
-					self
-						createTextField: 'One day Fee:'
-						for: #lrfOneDayFee:
-						with: #lrfOneDayFee
-						percent: 49
-						to: fee
-						on: html ]
-				on: html ]
-		on: html
+	html render: messageComponent .
+	html render: feeForm .
 ]
 
-{ #category : #rendering }
-ERFeeForm >> renderPayPALUrl: html [
-	self createTextField: 'Pay Pal URL:' for: #bankPayPalUrl: with: #bankPayPalUrl to: fee on: html
+{ #category : #'as yet unclassified' }
+ERFeeForm >> saveAndValidateFee [
+	[feeForm save.
+	bankAccountInfoForm save.
+	bankInfoForm save.
+	callback cull: feeForm model cull: bankInfoForm model cull: bankAccountInfoForm model]
+	on: ERException 
+	do: [:exception | messageComponent 
+					errorMessage: exception messageText ]
 ]

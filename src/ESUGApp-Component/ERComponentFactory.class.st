@@ -172,6 +172,13 @@ ERComponentFactory >> createDivGridWith: aBlock on: html [
 ]
 
 { #category : #'as yet unclassified' }
+ERComponentFactory >> createFormOf: anObject [
+	^ anObject asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself.
+]
+
+{ #category : #'as yet unclassified' }
 ERComponentFactory >> createHeadingStrong: aString level: aNumber on: html [
 	html heading
 		level: aNumber;

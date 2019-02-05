@@ -1,6 +1,6 @@
 Class {
 	#name : #ERBankAccountInformation,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#instVars : [
 		'owner',
 		'iban',
@@ -19,6 +19,70 @@ ERBankAccountInformation >> bankInformation [
 { #category : #accessing }
 ERBankAccountInformation >> bankInformation: anObject [
 	bankInformation := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERBankAccountInformation >> descriptionIban [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #iban; 
+		priority: 30;
+		beRequired;
+		label: 'Iban (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERBankAccountInformation >> descriptionNumber [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #number; 
+		priority: 20;
+		beRequired ;
+		label: 'Number (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERBankAccountInformation >> descriptionOwner [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #owner; 
+		priority: 10;
+		beRequired;
+		label: 'Owner (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERBankAccountInformation >> descriptionRibKey [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #ribKey; 
+		priority: 40;
+		beRequired;
+		label: 'Rib Key (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }

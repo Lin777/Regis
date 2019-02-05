@@ -2,9 +2,7 @@ Extension { #name : #MATableRenderer }
 
 { #category : #'*ESUGApp-MDLMagritte' }
 MATableRenderer >> renderContainer: aDescription [ 
-	"html div
-		class: (self classFor: aDescription);
-		with: [ "super renderContainer: aDescription "]"
+	super renderContainer: aDescription
 ]
 
 { #category : #'*ESUGApp-MDLMagritte' }
@@ -18,7 +16,7 @@ MATableRenderer >> renderControl: aDescription [
 MATableRenderer >> renderElement: aDescription [
 	aDescription group = group
 		ifFalse: [ self renderGroup: aDescription ].
-	"html tableRow:  [" self renderElementRow: aDescription "]"
+	self renderElementRow: aDescription
 ]
 
 { #category : #'*ESUGApp-MDLMagritte' }

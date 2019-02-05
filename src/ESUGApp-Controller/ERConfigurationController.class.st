@@ -31,8 +31,6 @@ ERConfigurationController >> addAttendsToLunchPer: day to: list [
 { #category : #adding }
 ERConfigurationController >> addFee: aFee [
 	|savedFee|
-	aFee bankAccountInformation bankInformation save.
-	aFee bankAccountInformation save.
 	savedFee := aFee save.
 	 conference addFee: savedFee.
 	 conference save.
@@ -401,6 +399,12 @@ ERConfigurationController >> submittedTalks [
 	^ conference submittedTalks
 ]
 
+{ #category : #adding }
+ERConfigurationController >> updateFee: aFee [
+	^ aFee save.
+	
+]
+
 { #category : #accessing }
 ERConfigurationController >> users [
 	^ conference users
@@ -409,7 +413,7 @@ ERConfigurationController >> users [
 { #category : #'as yet unclassified' }
 ERConfigurationController >> validateConferenceConfiguration: configuration [
 	configuration dateFrom asDate < configuration dateTo asDate
-	ifFalse: [ ERException invalidEsugDates ]
+	ifFalse: [ ERException invalidEsugDates signal ]
 	
 ]
 

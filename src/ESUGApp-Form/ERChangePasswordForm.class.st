@@ -32,6 +32,13 @@ ERChangePasswordForm >> changePassword [
 
 ]
 
+{ #category : #hooks }
+ERChangePasswordForm >> children [
+	^ OrderedCollection new
+		add: messageComponent;
+		yourself
+]
+
 { #category : #initialization }
 ERChangePasswordForm >> initialize [
 	super initialize.

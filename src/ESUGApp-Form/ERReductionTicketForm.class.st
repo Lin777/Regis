@@ -19,10 +19,6 @@ ERReductionTicketForm class >> on: aTicket withContent: aContent [
 	^ form
 ]
 
-{ #category : #rendering }
-ERReductionTicketForm >> addTicket [
-]
-
 { #category : #accessing }
 ERReductionTicketForm >> callback: anObject [
 	callback := anObject
@@ -60,10 +56,7 @@ ERReductionTicketForm >> discountStrategy [
 ERReductionTicketForm >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'.
-	dialog := ERDialog new
-		title: 'Cancel';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog := ERDialog cancelDialog 
 		idOpen: 'cancelAddTicket';
 		okCallback: [ self returnToThePreviousState ]
 ]
@@ -75,40 +68,33 @@ ERReductionTicketForm >> limitStrategy [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderAcceptButton: html [
-	self
-		createColoredButton: 'Accept'
-		with: [ callback
+	html mdlButton
+		colored;
+		id: 'acceptAddTicket' ;
+		callback: [ callback
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'acceptAddTicket'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ]];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderAcceptCancelButtonsOn: html [
-	self renderAcceptButton: html.
-	self renderCancelButtonOn: html
+	self renderCancelButtonOn: html.
+	self renderAcceptButton: html
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		
-		id: 'cancelAddTicket'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancelAddTicket'; 
+		colored;
+		with: 'Cancel'
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderDiscountStrategyOn: html [
-	self createStrongText: 'Discount Strategy' to: html.
-	self
-		createSelectField: 'Discount Strategy'
-		list: (ERDiscountStrategy typesDiscount)
-		callback: [ :value | self changeDiscountStrategy: value ]
-		withId: 'selectStrategy'
-		selected: self discountStrategy
-		on: html.
+	html paragraph: [ html strong: 'Discount Strategy'].
+	self renderSelectDiscountStrategyOn: html.
 	ticket strategyIsFixDiscount
 		ifTrue: [ self renderFixStrategyOn: html ].
 	ticket strategyIsPercentageDiscount
@@ -186,6 +172,20 @@ ERReductionTicketForm >> renderPercentageStrategyOn: html [
 				with: #percentage
 				to: ticket discountStrategy
 				on: html
+]
+
+{ #category : #rendering }
+ERReductionTicketForm >> renderSelectDiscountStrategyOn: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Discount Strategy'.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				selected: self discountStrategy;
+				id: 'selectStrategy';
+				list: (ERDiscountStrategy typesDiscount);
+				callback: [ :value | self changeDiscountStrategy: value ] ].
 ]
 
 { #category : #rendering }

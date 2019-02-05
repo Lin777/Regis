@@ -33,10 +33,7 @@ ERBankTransferPaymentInfoView >> headers [
 
 { #category : #rendering }
 ERBankTransferPaymentInfoView >> initializeDialog [
-	dialog := ERDialog new
-		title: 'Cancel Modify Affiliation';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog := ERDialog cancelDialog
 		idOpen: 'back-state';
 		okCallback: [ self returnToThePreviousState ]
 ]

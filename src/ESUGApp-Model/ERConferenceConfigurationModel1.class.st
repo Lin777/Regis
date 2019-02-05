@@ -201,6 +201,12 @@ ERConferenceConfigurationModel1 >> homePageUrl: anObject [
 	homePageUrl := anObject
 ]
 
+{ #category : #initialization }
+ERConferenceConfigurationModel1 >> initialize [
+	super initialize.
+	self openRegistration: true
+]
+
 { #category : #'as yet unclassified' }
 ERConferenceConfigurationModel1 >> messageInvalidDate [
 	^ 'This field only supports dates with the following format "MM/DD/YYYY"'

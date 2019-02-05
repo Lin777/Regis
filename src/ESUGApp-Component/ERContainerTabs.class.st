@@ -75,9 +75,7 @@ ERContainerTabs >> dialog: aDialog [
 ERContainerTabs >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'registerAlert'.
-	dialog := ERDialog new
-				title: 'Cancel';
-				message: 'Are you sure you want to cancel?'
+	dialog := ERDialog cancelDialog
 ]
 
 { #category : #initialization }

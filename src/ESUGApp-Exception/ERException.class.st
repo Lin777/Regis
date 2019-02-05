@@ -12,6 +12,13 @@ ERException class >> emailAlreadyRegistered [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> errorWhenCalculatingPaymentAmount [
+		^ self new
+		messageText: 'An error occurred when calculating the payment amount.';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> invalidEsugDates [
 		^ self new messageText:
 							'The date "From" must be less than date "To"';

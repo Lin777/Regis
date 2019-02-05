@@ -148,10 +148,10 @@ ESUGSetUp class >> createESUGConfiguration [
 		name: conferenName;
 		description: 'ESUG International Smalltalk Conference';
 		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
-		dateFrom: '10/09/2019';
-		dateTo: '14/09/2019';
-		dateSubmissionDeadline:  '14/09/2019';
-		earlyRegistrationDeadline: '25/07/2018';
+		dateFrom: '09/10/2019';
+		dateTo: '09/14/2019';
+		dateSubmissionDeadline:  '09/14/2019';
+		earlyRegistrationDeadline: '07/25/2019';
 		emailConfiguration: esugEmailConfiguration.
 			" from previous"	";
 		uploadingFilesTo: ((Smalltalk imageDirectory / 'UploadedFiles') ensureCreateDirectory) pathString"
