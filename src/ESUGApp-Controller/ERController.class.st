@@ -48,7 +48,7 @@ ERController >> addTalk: aTalk [
 { #category : #adding }
 ERController >> addUser: anUser [
 	|userSaved|
-	userSaved := (anUser as: ERUserAccount1 ).
+	userSaved := (anUser as: ERUserAccount ).
 	userSaved := userSaved save.
 	conference addUser: userSaved.
 	^ userSaved

@@ -65,7 +65,8 @@ ERContactInformation >> descriptionAddress [
 		priority: 10;
 		required: false;
 		withoutLabel: true;
-		cssClass: 'halfDiv';
+		group: 'Address: ';
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -80,7 +81,7 @@ ERContactInformation >> descriptionAddress2 [
 		priority: 20;
 		required: false;
 		withoutLabel: true;
-		cssClass: 'halfDiv';
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -95,6 +96,7 @@ ERContactInformation >> descriptionCity [
 		priority: 30;
 		required: false;
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -109,6 +111,7 @@ ERContactInformation >> descriptionCountry [
 		priority: 40;
 		required: false;
 		options: ERAttendee countries;
+		cssClass: 'half';
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
@@ -124,6 +127,7 @@ ERContactInformation >> descriptionFacebookURL [
 		priority: 70;
 		required: false;
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -153,6 +157,7 @@ ERContactInformation >> descriptionPostal [
 		required: false;
 		label: 'Postal/Zipcode ';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -168,6 +173,7 @@ ERContactInformation >> descriptionProvince [
 		required: false;
 		label: 'Province/State :';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -182,6 +188,7 @@ ERContactInformation >> descriptionTwitterURL [
 		priority: 80;
 		required: false;
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

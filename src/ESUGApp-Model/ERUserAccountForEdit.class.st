@@ -1,6 +1,6 @@
 Class {
 	#name : #ERUserAccountForEdit,
-	#superclass : #ERUserAccount1,
+	#superclass : #ERUserAccount,
 	#category : #'ESUGApp-Model-Magritte'
 }
 

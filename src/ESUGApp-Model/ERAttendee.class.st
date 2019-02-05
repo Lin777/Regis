@@ -140,7 +140,7 @@ ERAttendee >> hasCoupon [
 { #category : #'initialize-release' }
 ERAttendee >> initialize [ 
 	super initialize .
-	userAccount := ERUserAccount1 new.
+	userAccount := ERUserAccount new.
 	contactInformation := ERContactInformation new.
 	conferenceInformation := ERRegisterConferenceInformation new.
 	affiliationInformation := ERAffiliationInformation new.

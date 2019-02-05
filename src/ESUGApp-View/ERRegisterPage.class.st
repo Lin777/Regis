@@ -185,7 +185,7 @@ ERRegisterPage >> saveAffilInfo [
 ERRegisterPage >> saveBasicInfo [
 	currentTab := basicInfoTab.
 	pageController attendee userAccount: 
-	((basicInfoTab contentTab save) model as: ERUserAccount1 )
+	((basicInfoTab contentTab save) model as: ERUserAccount )
 	
 ]
 

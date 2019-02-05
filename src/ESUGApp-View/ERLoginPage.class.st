@@ -139,7 +139,7 @@ ERLoginPage >> renderPasswordField: html [
 		with: [:mdlTxtInput | 
 			mdlTxtInput required;
 			callback: [ :value | 
-			self password: (ERUserAccount1 hashPassword: value) asString ] ]
+			self password: (ERUserAccount hashPassword: value) asString ] ]
 		on: html
 ]
 

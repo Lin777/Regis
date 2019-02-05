@@ -1,5 +1,5 @@
 Class {
-	#name : #ERUserAccount1,
+	#name : #ERUserAccount,
 	#superclass : #SDActiveRecord,
 	#instVars : [
 		'firstName',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> admin [
+ERUserAccount class >> admin [
 	| instance |
 	instance := self new.
 	instance role: 'admin'.
@@ -21,14 +21,14 @@ ERUserAccount1 class >> admin [
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> adminRole [
+ERUserAccount class >> adminRole [
 	^ Heap new
 		add: 'admin';
 		yourself
 ]
 
 { #category : #converting }
-ERUserAccount1 class >> asGroupManager [
+ERUserAccount class >> asGroupManager [
 	|instance|
 	instance := self new.
 	instance role: (Heap new
@@ -38,21 +38,21 @@ ERUserAccount1 class >> asGroupManager [
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> attendeeRole [
+ERUserAccount class >> attendeeRole [
 	^ Heap new
 		add: 'attendee';
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> findUserByEmail: aString [
+ERUserAccount class >> findUserByEmail: aString [
 	| userAccount |
-	userAccount := ERUserAccount1 find: [ :each | each email = aString ].
+	userAccount := ERUserAccount find: [ :each | each email = aString ].
 	^ userAccount
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> groupManager [
+ERUserAccount class >> groupManager [
 	| instance |
 	instance := self new.
 	instance role: 'groupManager'.
@@ -60,14 +60,14 @@ ERUserAccount1 class >> groupManager [
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> groupManagerRole [
+ERUserAccount class >> groupManagerRole [
 	^ Heap new
 		add: 'groupManager';
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 class >> hashPassword: aString [
+ERUserAccount class >> hashPassword: aString [
 
  ^ aString 
   ifEmpty: [0 asString] 
@@ -76,22 +76,22 @@ ERUserAccount1 class >> hashPassword: aString [
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> confirmPassword [
+ERUserAccount >> confirmPassword [
 	^ confirmPassword
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> confirmPassword: anObject [
+ERUserAccount >> confirmPassword: anObject [
 	confirmPassword := anObject
 ]
 
 { #category : #testing }
-ERUserAccount1 >> deleteRole: anObject [
+ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 >> descriptionEmail [
+ERUserAccount >> descriptionEmail [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -110,7 +110,7 @@ ERUserAccount1 >> descriptionEmail [
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 >> descriptionFirstName [
+ERUserAccount >> descriptionFirstName [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -127,7 +127,7 @@ ERUserAccount1 >> descriptionFirstName [
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 >> descriptionLastName [
+ERUserAccount >> descriptionLastName [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -144,27 +144,27 @@ ERUserAccount1 >> descriptionLastName [
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> email [
+ERUserAccount >> email [
 	^ email
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> email: anObject [
+ERUserAccount >> email: anObject [
 	email := anObject
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> firstName [
+ERUserAccount >> firstName [
 	^ firstName
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> firstName: anObject [
+ERUserAccount >> firstName: anObject [
 	firstName := anObject
 ]
 
 { #category : #initialization }
-ERUserAccount1 >> initialize [ 
+ERUserAccount >> initialize [ 
 	super initialize .
 	role := Heap new
 		add: 'attendee';
@@ -172,67 +172,67 @@ ERUserAccount1 >> initialize [
 ]
 
 { #category : #testing }
-ERUserAccount1 >> isAdmin [
+ERUserAccount >> isAdmin [
 		^ self role anySatisfy: [ :each | each = 'admin']
 
 ]
 
 { #category : #testing }
-ERUserAccount1 >> isAttendee [
+ERUserAccount >> isAttendee [
 	^ self role anySatisfy: [ :each | each = 'attendee']
 	
 ]
 
 { #category : #testing }
-ERUserAccount1 >> isGroupManager [
+ERUserAccount >> isGroupManager [
 	^ self role
 		anySatisfy: [ :each | each = 'groupManager']
 	
 ]
 
 { #category : #testing }
-ERUserAccount1 >> isStudent [
+ERUserAccount >> isStudent [
 	^ self role
 		anySatisfy: [ :each | each = 'studentVolunter']
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> lastName [
+ERUserAccount >> lastName [
 	^ lastName
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> lastName: anObject [
+ERUserAccount >> lastName: anObject [
 	lastName := anObject
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> password [
+ERUserAccount >> password [
 	^ password
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> password: anObject [
+ERUserAccount >> password: anObject [
 	password := anObject
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> role [
+ERUserAccount >> role [
 	^ role
 ]
 
 { #category : #accessing }
-ERUserAccount1 >> role: anObject [
+ERUserAccount >> role: anObject [
 	role := anObject
 ]
 
 { #category : #testing }
-ERUserAccount1 >> roleAdd: anObject [
+ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
 ]
 
 { #category : #'as yet unclassified' }
-ERUserAccount1 >> rolesAsString [
+ERUserAccount >> rolesAsString [
 	| roles |
 	roles := ''.
 	role do: [ :each | roles := roles , ' ' , each ].

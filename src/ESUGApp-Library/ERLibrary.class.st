@@ -41,7 +41,8 @@ ERLibrary >> generalCss [
 }
 
 table { width: 100%; }
-.halfDiv{ width: 49%; }
+.half {width: 49%;
+	display: inline-block;}
 
 html, body {
   font-family: ''Roboto'', ''Helvetica'', sans-serif;

@@ -50,7 +50,7 @@ ERLoggedController >> deleteAttendeeAndRemoveUserForConference: anAttendee [
 { #category : #accessing }
 ERLoggedController >> initialize [
 	super initialize.
-	user := ERUserAccount1 new
+	user := ERUserAccount new
 ]
 
 { #category : #removing }

@@ -107,7 +107,7 @@ ERTestControllers class >> testGroupManager [
 
 { #category : #tests }
 ERTestControllers class >> testModifyUser [
-	^ ERUserAccount1 new
+	^ ERUserAccount new
 		firstName: 'userModify';
 		lastName: 'usermodify';
 		email: 'userModify@gmail.com';
@@ -116,21 +116,21 @@ ERTestControllers class >> testModifyUser [
 
 { #category : #tests }
 ERTestControllers class >> testUserAccount [
-	^ ERUserAccount1 new
+	^ ERUserAccount new
 		email: 'test@gmail.com';
 		firstName: 'Test';
 		lastName: 'Test';
-		password: (ERUserAccount1 hashPassword: '12345678') asString;
+		password: (ERUserAccount hashPassword: '12345678') asString;
 		yourself
 ]
 
 { #category : #tests }
 ERTestControllers class >> testUserExampleAccount [
-	^ ERUserAccount1 new
+	^ ERUserAccount new
 		email: 'example@gmail.com';
 		firstName: 'Example';
 		lastName: 'Example';
-		password: (ERUserAccount1 hashPassword: '12345678') asString;
+		password: (ERUserAccount hashPassword: '12345678') asString;
 		yourself
 ]
 
@@ -161,7 +161,7 @@ ERTestControllers >> registerAttendee: anAttendee [
 ERTestControllers >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
-	ERUserAccount1 warmUp.
+	ERUserAccount warmUp.
 	ERAttendee warmUp.
 	ERAward warmUp.
 	ERBankInformation warmUp.
@@ -271,12 +271,12 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERTalk coolDown.
-	ERUserAccount1
+	ERUserAccount
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERUserAccount1 coolDown.
+	ERUserAccount coolDown.
 	ERConferenceOrganizer
 		do: [ :each | 
 			[ each delete ]

@@ -69,7 +69,7 @@ ERRegistrationController >> initialize [
 ERRegistrationController >> save [
 	| user|
 	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
-	self attendee userAccount password: (ERUserAccount1 hashPassword: self attendee userAccount password)asString.
+	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
 	user := self attendee userAccount save.
 	conference addUser: user.
 	^ user

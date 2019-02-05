@@ -199,7 +199,7 @@ ERComponentFactory >> createPasswordField: aName for: aSymbol on: html [
 				callback: [ :value | 
 					attendee
 						perform: aSymbol
-						with: (ERUserAccount1 hashPassword: value asString) ] ]
+						with: (ERUserAccount hashPassword: value asString) ] ]
 ]
 
 { #category : #building }

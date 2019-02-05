@@ -38,8 +38,10 @@ ERAffiliationInformation >> descriptionOrganizationAddrees1 [
 		accessor: #organizationAddrees1; 
 		priority: 20;
 		beRequired;
+		group: 'Address: ';
 		label: 'Address 1 (Required)';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -55,6 +57,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees2 [
 		required: false;
 		label: 'Address 2';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -70,6 +73,7 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 		beRequired;
 		label: 'City (Required)';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -86,6 +90,7 @@ ERAffiliationInformation >> descriptionOrganizationCountry [
 		options: ERAttendee countries;
 		default:'Select Country';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -98,8 +103,9 @@ ERAffiliationInformation >> descriptionOrganizationName [
 	tmp 
 		accessor: #organizationName; 
 		priority: 10;
-		required: false;
+		beRequired;
 		withoutLabel: true;
+		label: 'Organization Name (Required)';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -112,9 +118,10 @@ ERAffiliationInformation >> descriptionOrganizationPostal [
 	tmp 
 		accessor: #organizationPostal; 
 		priority: 70;
-		required: false;
-		label: 'Postal/Zipcode';
+		beRequired;
+		label: 'Postal/Zipcode (Required)';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -130,6 +137,7 @@ ERAffiliationInformation >> descriptionOrganizationProvince [
 		required: false;
 		label: 'Province/State ';
 		withoutLabel: true;
+		cssClass: 'half';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

@@ -13,31 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-ERContainerTabs class >> formAdminToGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	form attendee: anAttendee.
-	form initializeTabsForConvertAdminToGroupManager: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	^ form
-]
-
-{ #category : #accessing }
-ERContainerTabs class >> formGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	
-	form attendee: anAttendee.
-	form initializeTabsForGroupManager: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	^ form
-]
-
-{ #category : #accessing }
 ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -59,19 +34,6 @@ ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock
 	form attendee: anAttendee.
 	form initializeTabsWithoutBasicInformationFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
-	^ form
-]
-
-{ #category : #accessing }
-ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock withDialog: aDialog content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	form attendee: anAttendee .
-	form initializeTabsWithoutBasicInformationFor: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	form dialog: aDialog.
 	^ form
 ]
 
