@@ -140,10 +140,12 @@ ERConfigurationController >> exportAttends: fileName [
 							each lastName.
 							each email.
 							each country.
-							each orgName} ] ].
+							each orgName} ].
+			neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -159,10 +161,12 @@ ERConfigurationController >> exportAwards: fileName [
 					neoWriter
 						nextPut:
 					{each name1.
-					each submittedBy} ]].
+					each submittedBy} ].
+			neoWriter close ].
 				self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -190,10 +194,12 @@ ERConfigurationController >> exportGroupManagers: fileName [
 							each groupManager orgCountry.
 							each groupManager orgProvince.
 							each groupManager orgPostal.
-							each groupManager membershipType} ] ].
+							each groupManager membershipType} ].
+				neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -209,10 +215,12 @@ ERConfigurationController >> exportTalks: fileName [
 				nextPut:
 					{each name1.
 					each submittedBy.
-					each uploadFile} ]].
+					each uploadFile} ].
+			neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -232,10 +240,12 @@ ERConfigurationController >> exportUsers: fileName [
 							each lastName.
 							each email.
 							each password.
-							each rolesAsString} ] ].
+							each rolesAsString} ].
+				neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #accessing }

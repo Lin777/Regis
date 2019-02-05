@@ -1,6 +1,10 @@
 Class {
 	#name : #ERAttendeesTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'encodeCSVFile',
+		'encodeZipFile'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -24,20 +28,45 @@ ERAttendeesTab >> blockTableToExecute [
 		yourself ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
+	[ zip close ]
+		ensure: [ 
+			subDir ensureDeleteAll.
+			zipFile ensureDelete.	
+		]
+]
+
 { #category : #rendering }
 ERAttendeesTab >> deleteAttendeeFromGroup: user [
 ]
 
 { #category : #'as yet unclassified' }
-ERAttendeesTab >> encodeFiletoBase64: aFile [
-	^ aFile exists 
-		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
-		ifFalse: [ nil ]. 
+ERAttendeesTab >> exportAllInvoices [
+	| nameFile zip subDir zipFile |
+	zip := ZipArchive new.
+	nameFile := 'Invoices'.
+	subDir := nameFile asFileReference.
+	subDir ensureCreateDirectory.
+	zip addDirectory: subDir fullName.
+	zipFile := nameFile asFileReference, 'zip'.
+	self cleanZip: zip with: zipFile subDir: subDir. 
+	ERPDFInvoice demoPath: nameFile, '/'.
+	self attends do: [ :attend | 
+		zip addFile: (ERPDFInvoice templateRegistrationInvoice: attend) path pathString.
+	].
+	zip writeToFileNamed: zipFile fullName.
+	encodeZipFile := self encodeFiletoBase64: zipFile.
+	self cleanZip: zip with: zipFile subDir: subDir.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
-controller exportAttends: 'attends' .
+	| file |
+	file := controller exportAttends: 'attends'.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
 	self updateStateTab: self tabName.
 ]
 
@@ -47,6 +76,8 @@ ERAttendeesTab >> generateInvoice: user [
 	file := ERPDFInvoice templateRegistrationInvoice: user.
 	user encodedInvoice: (self encodeFiletoBase64: file).
 	user save.
+	file ensureDelete.
+	self updateStateTab: self tabName.
 	
 ]
 
@@ -87,17 +118,18 @@ ERAttendeesTab >> listDataToRenderButton [
 			(Array 
 				with: 'description' 
 				with: [ :user | self generateInvoice: user ]
-				with: [ :user | user id , '-invoice' ]);
+				with: [ :user | user id , '-invoice' ]
+				with: [ :user | user hasPaid ]);
 		yourself
 ]
 
 { #category : #rendering }
 ERAttendeesTab >> listDataToRenderDownloadButton [
 	^ OrderedCollection new
-		add: (Array with: 'download' 
-			with: [ :user | user id , '-download' ]
+		add: (Array with: 'get_app' 
+			with: [ :user | user id , '-get_app' ]
 			with: [ :user | 'RegistrationInvoice_', user id, '.pdf']
-			with: [ :user |'data:text/pdf;base64,', user encodedInvoice ]);
+			with: [ :user | 'data:text/pdf;base64,', (user encodedInvoice ifNil: [ '' ]) ]);
 		yourself
 ]
 
@@ -147,6 +179,25 @@ ERAttendeesTab >> renderButtons: html [
 		with: [ self exportAttends ]
 		id: 'exportAttends'
 		on: html.
+	self renderDownloadButton: html with:  (Dictionary new 
+		at: 'id' put: 'downloadDataAttendees';
+		at: 'disabled' put: encodeCSVFile isNil;
+		at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+		at: 'nameFile' put: 'dataAttendees.csv';
+		at: 'nameButton' put: 'Download';
+		yourself).
+	html mdlAnchorButton colored;
+		id: 'exportAllInvoices';
+		disabled: self attends isEmpty;
+		callback: [ self exportAllInvoices ];
+		with: 'EXPORT ALL INVOICES'.
+	self renderDownloadButton: html with:  (Dictionary new 
+		at: 'id' put: 'downloadAllInvoices';
+		at: 'disabled' put: encodeZipFile isNil;
+		at: 'encodeFile' put: 'data:text/zip;base64,', (encodeZipFile ifNil: ['']);
+		at: 'nameFile' put: 'Invoices.zip';
+		at: 'nameButton' put: 'Download Invoices';
+		yourself).
 	"html mdlAnchorButton 
 		url:'data:text/pdf;base64,', self encodeBase64; 
 		attributeAt: 'download' put: 'RegistrationInvoice.pdf';

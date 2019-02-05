@@ -1,6 +1,9 @@
 Class {
 	#name : #ERAwardsTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'encodeCSVFile'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -20,8 +23,10 @@ ERAwardsTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERAwardsTab >> exportAwards [
-
-			controller exportAwards: 'awards'.
+	| file |
+	file := controller exportAwards: 'awards'.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
 	self updateStateTab: self tabName
 ]
 
@@ -47,8 +52,22 @@ ERAwardsTab >> renderButton: html [
 { #category : #rendering }
 ERAwardsTab >> renderContainer: html [
 	self renderButton: html.
+	self renderDownloadButton: html.
 	html horizontalRule.
 	self renderTableOfAwards: html
+]
+
+{ #category : #rendering }
+ERAwardsTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadAwards';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'awards.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #rendering }

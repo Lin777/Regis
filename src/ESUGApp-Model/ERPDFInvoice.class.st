@@ -1,12 +1,20 @@
 Class {
 	#name : #ERPDFInvoice,
 	#superclass : #Object,
+	#classInstVars : [
+		'demoPath'
+	],
 	#category : #'ESUGApp-Model'
 }
 
 { #category : #tool }
 ERPDFInvoice class >> demoPath [
-	^ 'pdf/'
+	^ demoPath ifNil: ['pdf/']
+]
+
+{ #category : #accessing }
+ERPDFInvoice class >> demoPath: aString [
+	demoPath := aString
 ]
 
 { #category : #tool }
@@ -28,8 +36,10 @@ ERPDFInvoice class >> streamNamed: aName [
 { #category : #'as yet unclassified' }
 ERPDFInvoice class >> templateRegistrationInvoice: user [
 	<script>
-	self new templateRegistrationInvoice: (self streamNamed: 'RegistrationInvoice.pdf') of: user.
-	^ (self demoPath, 'RegistrationInvoice.pdf') asFileReference
+	| nameFile |
+	nameFile := 'RegistrationInvoice_', user id, '.pdf'.
+	self new templateRegistrationInvoice: (self streamNamed: nameFile) of: user.
+	^ (self demoPath, nameFile) asFileReference
 ]
 
 { #category : #adding }
@@ -142,6 +152,8 @@ ERPDFInvoice >> addInfoESUG: aPage [
 
 { #category : #adding }
 ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
+	| fullname |
+	fullname := ((user userAccount firstName, ' ', user userAccount lastName) asText copyFrom: 1 to: 20) asString.
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
@@ -154,7 +166,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	add: (PDFFormattedTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
-		dimension: 160 mm @ 70 mm;
+		dimension: (168 - fullname size) mm @ 70 mm;
 		from: 0 mm @ 78 mm;
 		text: 'Bill to:';
 		alignment: (PDFAlignment right));
@@ -162,25 +174,25 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 		font: self fontContent;
 		dimension: 190 mm @ 70 mm;
 		from: 0 mm @ 78 mm;
-		text: "user name" 'Luc Fabresse';
+		text: fullname;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ 75 mm;
 		from: 0 mm @ 83 mm;
-		text: 'IMT Lille Douai';
+		text: user orgName;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ 80 mm;
 		from: 0 mm @ 88 mm;
-		text: '911 rue charles bourseul';
+		text: user orgAddrees1;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ 85 mm;
 		from: 0 mm @ 93 mm;
-		text: '59500 Douai';
+		text: user orgPostal, ' ', user orgCity;
 		alignment: (PDFAlignment right))
 ]
 

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'formUser',
 		'newUser',
-		'fileId'
+		'fileId',
+		'encodeCSVFile'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -42,8 +43,11 @@ ERUsersTab >> deleteUser: user [
 
 { #category : #rendering }
 ERUsersTab >> exportUsers [
-	controller exportUsers: 'users' , self fileIdUsers asString .
-  self updateStateTab: self tabName.
+	| file |
+	file := controller exportUsers: 'users' , self fileIdUsers asString.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
+  	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -100,7 +104,8 @@ ERUsersTab >> renderButtons: html [
 		createColoredAnchorButton: 'Export'
 		with: [ self exportUsers ]
 		id: 'exportUsers'
-		on: html
+		on: html.
+	self renderDownloadButton: html.
 ]
 
 { #category : #rendering }
@@ -111,6 +116,19 @@ ERUsersTab >> renderContainer: html [
 		with: [ self renderButtons: html.
 			html horizontalRule.
 			self renderTableOfUsers: html ]
+]
+
+{ #category : #rendering }
+ERUsersTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadDataUsers';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'dataUsers.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #rendering }

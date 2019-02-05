@@ -2,7 +2,8 @@ Class {
 	#name : #ERGroupManagersTab,
 	#superclass : #ERConfigurationTab,
 	#instVars : [
-		'groupManagerForm'
+		'groupManagerForm',
+		'encodeCSVFile'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -28,7 +29,10 @@ ERGroupManagersTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
-	controller exportGroupManagers: 'groupManagers'.
+	| file |
+	file := controller exportGroupManagers: 'groupManagers'.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
 	self updateStateTab: self tabName
 ]
 
@@ -168,7 +172,8 @@ ERGroupManagersTab >> renderButtons: html [
 		createColoredAnchorButton: 'Export'
 		with: [ self exportGroups ]
 		id: 'exportGroups'
-		on: html
+		on: html.
+	self renderDownloadButton: html.
 ]
 
 { #category : #rendering }
@@ -180,6 +185,19 @@ ERGroupManagersTab >> renderContainer: html [
 	self renderButtons: html.
 	html horizontalRule.
 	self renderTableOfGroups: html]
+]
+
+{ #category : #rendering }
+ERGroupManagersTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadDataGroupManagers';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'dataGroupManagers.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #accessing }

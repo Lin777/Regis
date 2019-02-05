@@ -1,6 +1,9 @@
 Class {
 	#name : #ERTalksTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'encodeCSVFile'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -16,8 +19,10 @@ ERTalksTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERTalksTab >> exportTalks [
-
-	controller exportTalks: 'talks'.
+	| file |
+	file := controller exportTalks: 'talks'.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
 	self updateStateTab: self tabName
 ]
 
@@ -43,8 +48,22 @@ ERTalksTab >> renderButton: html [
 { #category : #rendering }
 ERTalksTab >> renderContainer: html [
 	self renderButton: html.
+	self renderDownloadButton: html.
 	html horizontalRule.
 	self renderTableOfTalks: html
+]
+
+{ #category : #rendering }
+ERTalksTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadTalks';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'talks.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #accessing }
