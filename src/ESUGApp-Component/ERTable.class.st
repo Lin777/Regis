@@ -6,7 +6,8 @@ Class {
 		'listToRenderButton',
 		'listObject',
 		'levelTotal',
-		'headers'
+		'headers',
+		'listToRenderDownloadButton'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -26,6 +27,7 @@ ERTable >> initialize [
 	"blockToExecute listToRenderButton listObject levelTotal headers"
 	super initialize.
 	listToRenderButton := OrderedCollection new.
+	listToRenderDownloadButton := OrderedCollection new.
 	listObject := OrderedCollection new.
 	levelTotal := 6.
 	headers := OrderedCollection new.
@@ -44,6 +46,11 @@ ERTable >> listObject: anObject [
 { #category : #accessing }
 ERTable >> listToRenderButton: anObject [
 	listToRenderButton := anObject
+]
+
+{ #category : #accessing }
+ERTable >> listToRenderDownloadButton: aCollection [
+	listToRenderDownloadButton := aCollection
 ]
 
 { #category : #rendering }
@@ -67,18 +74,15 @@ ERTable >> renderBody: html [
 
 { #category : #rendering }
 ERTable >> renderButton: html with: aObject [
+	| button |
 	listToRenderButton
 		do: [ :dataButton | 
-			html mdlAnchorButton
-		colored;	rippleEffect;
-		id: (dataButton third value: aObject);
-		callback: [ dataButton second value: aObject ];
-		icon: dataButton first].
-			"self
-				createColoredAnchorButton: dataButton first
-				with: [ dataButton second value: aObject ]
-				id: (dataButton third value: aObject)
-				on: html ]"
+			button := html mdlAnchorButton colored;	rippleEffect;
+				id: (dataButton third value: aObject);
+				callback: [ dataButton second value: aObject ].
+			button disabled: ([(dataButton fourth value: aObject) not] on: SubscriptOutOfBounds do: [false]).
+			button icon: dataButton first].
+	self renderListDownloadButton: html with: aObject.
 ]
 
 { #category : #rendering }
@@ -101,6 +105,20 @@ ERTable >> renderHeaders: html [
 		html tableRow: [ 
 			headers do: [ :each | 
 				html mdlTableHeading: each ] ] ]
+]
+
+{ #category : #rendering }
+ERTable >> renderListDownloadButton: html with: aObject [
+	| downloadButton |
+	listToRenderDownloadButton do: [ :dataButton | 
+		downloadButton := html mdlAnchorButton colored;	rippleEffect;
+			id: (dataButton second value: aObject);
+			disabled: (((aObject isKindOf: ERAttendee) and: [aObject encodedInvoice isNotNil]) and: [aObject hasPaid]) not.
+		downloadButton isDisabled ifFalse: [ 
+			downloadButton url: (dataButton fourth value: aObject);
+			attributeAt: 'download' put: (dataButton third value: aObject)].
+		downloadButton icon: dataButton first.
+	].
 ]
 
 { #category : #rendering }
