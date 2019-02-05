@@ -79,11 +79,11 @@ ERAttendeesTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERAttendeesTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'EXPORT'
-		with: [ self exportAttends ]
-		id: 'exportAttends'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'exportAttends';
+		callback: [ self exportAttends ];
+		with: 'EXPORT'
 ]
 
 { #category : #rendering }

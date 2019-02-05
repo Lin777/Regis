@@ -123,20 +123,20 @@ ERMembersTab >> renderContainer: html [
 
 { #category : #accessing }
 ERMembersTab >> renderRegisterAttendee: html [
-	self
-		createColoredAnchorButton: 'Register Attendee'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'registerAttendee';
+		callback:  [ self registerAttendee ];
+		with: 'Register Attendee'
 ]
 
 { #category : #accessing }
 ERMembersTab >> renderRegisterMyselfAsAttendee: html [
-	self
-		createColoredAnchorButton: 'Register Myself as Attendee'
-		with: [ self registerMyselfAsAttendee ]
-		id: 'registerMyselfAsAttendee'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'registerMyselfAsAttendee';
+		callback: [ self registerMyselfAsAttendee ];
+		with: 'Register Myself as Attendee'
 ]
 
 { #category : #rendering }

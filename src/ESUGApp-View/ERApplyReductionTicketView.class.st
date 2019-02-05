@@ -34,22 +34,22 @@ ERApplyReductionTicketView >> listOfTickets: anObject [
 
 { #category : #accessing }
 ERApplyReductionTicketView >> renderAcceptButtonOn: html [	
-	self
-		createColoredButton: 'Accept'
-		with: [ updateTicketAttendee
+	html mdlButton
+		colored;
+		id: 'accept-change-affiliation' ;
+		callback: [ updateTicketAttendee
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'accept-change-affiliation'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERApplyReductionTicketView >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		with: cancel
-		id: 'cancel-change-affiliation'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'cancel-change-affiliation';
+		callback: cancel;
+		with: 'Cancel'
 ]
 
 { #category : #accessing }

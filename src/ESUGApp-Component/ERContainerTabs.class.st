@@ -164,10 +164,10 @@ ERContainerTabs >> renderButtons: html [
 { #category : #rendering }
 ERContainerTabs >> renderCancelButton: html [
 	self initializeDialog .
-	self
-		createColoredAnchorButton: 'Cancel'
-		id: 'cancel-register-attendee'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancel-register-attendee'; 
+		colored;
+		with: 'Cancel'.
 ]
 
 { #category : #rendering }
@@ -187,14 +187,17 @@ ERContainerTabs >> renderContentPage: html [
 
 { #category : #accessing }
 ERContainerTabs >> renderDoneButtonOn: html [
-	self
-		createRaisedRippleEffectPrimaryButton: 'Save Information'
-		with: [ 
+	html mdlButton
+		beSubmit;
+		raised;
+		primaryColor;
+		rippleEffect;
+		id: 'registerButton';
+		callback: [ 
 			callback
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'registerButton'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
+		with: 'Save Information'
 ]
 
 { #category : #rendering }

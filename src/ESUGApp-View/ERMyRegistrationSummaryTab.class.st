@@ -56,16 +56,18 @@ ERMyRegistrationSummaryTab >> redirectionPayPAL [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderButtons: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Modify Registration Information'
-		with: [ self modifyRegistration ]
-		id: 'modifyRegistration'
-		on: html.
-	self
-		createRaisedRippleEffectAnchorButton: 'Pay'
-		with: [ self pay ]
-		id: 'pay'
-		on: html.
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'modifyRegistration';
+		callback: [ self modifyRegistration ];
+		with: 'Modify Registration Information'.
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'pay';
+		callback: [ self pay ];
+		with: 'Pay'.
 	html mdlAnchorButton
 		raised;
 		colored;
@@ -84,14 +86,12 @@ ERMyRegistrationSummaryTab >> renderContainer: html [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
-	self
-		createTextStrong: 'Attendace Day(s): '
-		withText: attendee conferenceInformation daysOfAssistance
-		on: html.
-	self
-		createTextStrong: 'Payment Status: '
-		withText: self paymentStatus
-		on: html
+	html
+		paragraph: [ html strong: 'Attendace Day(s): '.
+			html text: attendee conferenceInformation daysOfAssistance ].
+	html
+		paragraph: [ html strong: 'Payment Status: '.
+			html text: self paymentStatus ]
 ]
 
 { #category : #accessing }

@@ -1,6 +1,9 @@
 Class {
 	#name : #ERConfigurationTab,
 	#superclass : #ERContainerTab,
+	#instVars : [
+		'dialog'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -21,6 +24,14 @@ ERConfigurationTab >> fileExists: fileName [
 		named:
 			((FileSystem workingDirectory asString splitOn: '@ ') at: 2)
 				, '/',fileName) exists
+]
+
+{ #category : #initialization }
+ERConfigurationTab >> initialize [
+	super initialize .
+	dialog := ERDialog deleteDialog
+		idOpen: 'back-state';
+		okCallback: [ self returnToThePreviousState ]
 ]
 
 { #category : #initialization }

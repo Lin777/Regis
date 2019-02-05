@@ -141,14 +141,18 @@ ERRegisterPage >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERRegisterPage >> renderDoneButtonOn: html [
-	self
-		createRaisedRippleEffectPrimaryButton: 'Save Information'
-		with: [ [ self validateAndRegister ]
+	
+	html mdlButton
+		beSubmit;
+		raised;
+		primaryColor;
+		rippleEffect;
+		id: 'registerButton';
+		callback: [ [ self validateAndRegister ]
 				on: ERException
 				do:
-					[ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'registerButton'
-		on: html
+					[ :exception | messageComponent errorMessage: exception messageText ] ];
+		with: 'Save Information'
 ]
 
 { #category : #'as yet unclassified' }

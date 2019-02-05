@@ -69,11 +69,11 @@ ERTable >> renderBody: html [
 ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
-			self
-				createColoredAnchorButton: dataButton first
-				with: [ dataButton second value: aObject ]
-				id: (dataButton third value: aObject)
-				on: html ]
+			html mdlAnchorButton
+		colored;
+		id: (dataButton third value: aObject);
+		callback: [ dataButton second value: aObject ];
+		with: dataButton first]
 ]
 
 { #category : #rendering }

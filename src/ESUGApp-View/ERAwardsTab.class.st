@@ -36,11 +36,11 @@ ERAwardsTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERAwardsTab >> renderButton: html [
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportAwards ]
-		id: 'exportAwards'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportAwards';
+		callback: [ self exportAwards ];
+		with: 'Export'
 ]
 
 { #category : #rendering }

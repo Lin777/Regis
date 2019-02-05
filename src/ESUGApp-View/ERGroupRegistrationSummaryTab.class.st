@@ -52,9 +52,9 @@ ERGroupRegistrationSummaryTab >> payForGroup [
 	|group|
 	group := self group.
 	controller updateGroup: group.
-	group paymentTypeIsBankTransfer
+	group paymentInformation  paymentTypeIsBankTransfer
 		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	group paymentTypeIsCreditCard
+	group paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self redirectionPayPAL ]
 ]
 
@@ -114,11 +114,12 @@ ERGroupRegistrationSummaryTab >> renderGenerateInvoiceButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Modify Affiliation'
-		with: [ self modifyAffiliation ]
-		id: 'modifyAffiliation'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'modifyAffiliation';
+		callback: [ self modifyAffiliation ];
+		with: 'Modify Affiliation'
 ]
 
 { #category : #rendering }
@@ -131,28 +132,29 @@ ERGroupRegistrationSummaryTab >> renderOrganizationName: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Pay'
-		with: [ self pay ]
-		id: 'pay'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'pay';
+		callback: [ self pay ];
+		with: 'Pay'
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
-	self
-		createTextStrong: 'Payment Status: '
-		withText: self paymentStatus
-		on: html
+	html
+		paragraph: [ html strong: 'Payment Status: '.
+			html text: self paymentStatus ]
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderRegisterAttendeeButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Register Attendee'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerAttendee';
+		callback: [ self registerAttendee ];
+		with: 'Register Attendee'
 ]
 
 { #category : #accessing }

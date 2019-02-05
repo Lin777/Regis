@@ -213,7 +213,7 @@ ERController >> payPalUrlForGroup: aGroup [
 	url := url
 		copyReplaceAll: fee payPalInvoiceNumberToken
 		with:
-			(aGroup 
+			(aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url

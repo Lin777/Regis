@@ -75,7 +75,7 @@ ERBankTransferPaymentInfoView >> renderInfoBank: html [
 	html break.
 	self
 		createTextStrongWithoutParagraph: 'Bank name:  '
-		withText: bankInformation name1
+		withText: bankInformation name
 		on: html.
 	self
 		createTextStrongWithoutParagraph: 'International Bank Account Numer (IBAN):  '
@@ -115,7 +115,11 @@ ERBankTransferPaymentInfoView >> renderPageOn: html [
 	self renderInfoBank: html.
 	html horizontalRule.
 	self initializeDialog.
-	self createColoredAnchorButton: 'Back' with: [self returnToThePreviousState ]id: 'back-state' on: html
+	html mdlAnchorButton
+		colored;
+		id: 'back-state';
+		callback: [self returnToThePreviousState ];
+		with: 'Back'.
 ]
 
 { #category : #rendering }

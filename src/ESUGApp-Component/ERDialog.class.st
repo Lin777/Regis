@@ -22,6 +22,16 @@ ERDialog class >> cancelDialog [
 	^ instance
 ]
 
+{ #category : #'as yet unclassified' }
+ERDialog class >> deleteDialog [
+	| instance |
+	instance := self new title: 'Delete';
+	message: 'Are you sure you want to delete this element?'; 
+	idClose: 'buttonClose';
+	yourself .
+	^ instance
+]
+
 { #category : #accessing }
 ERDialog >> callback [
 	^ callback

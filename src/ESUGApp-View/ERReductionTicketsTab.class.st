@@ -95,11 +95,11 @@ ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 
 { #category : #rendering }
 ERReductionTicketsTab >> renderContainer: html [
-	self
-		createColoredAnchorButton: 'Add'
-		with: [ self addTicket ]
-		id: 'addTicket'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'addTicket';
+		callback: [ self addTicket ];
+		with: 'Add'.
 	html horizontalRule.
 	self renderTableOfTickets: html
 ]

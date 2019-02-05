@@ -3,7 +3,6 @@ Class {
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'conference',
-		'dialog',
 		'configuration',
 		'emailConf',
 		'organizer',

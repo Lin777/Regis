@@ -85,11 +85,11 @@ ERGroupManagersTab >> registerAdminAsGroupManager [
 
 { #category : #rendering }
 ERGroupManagersTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportGroups ]
-		id: 'exportGroups'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'exportGroups';
+		callback: [ self exportGroups ];
+		with: 'Export'
 ]
 
 { #category : #rendering }

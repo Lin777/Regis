@@ -104,17 +104,32 @@ ERUsersTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
+ERUsersTab >> renderButtonAddOn: html [
+	html mdlAnchorButton
+		colored;
+		id: 'addUser';
+		callback: [ self addUser ];
+		with: 'Add'
+]
+
+{ #category : #rendering }
+ERUsersTab >> renderButtonExportOn: html [
+	html mdlAnchorButton
+		colored;
+		id: 'exportUsers';
+		callback: [ self exportUsers ];
+		with: 'Export'
+]
+
+{ #category : #rendering }
 ERUsersTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'Add'
-		with: [ self addUser ]
-		id: 'addUser'
-		on: html.
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportUsers ]
-		id: 'exportUsers'
-		on: html
+	self renderButtonAddOn: html.
+	self renderButtonExportOn: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportUsers';
+		callback:  [ self exportUsers ];
+		with: 'Export'
 ]
 
 { #category : #rendering }

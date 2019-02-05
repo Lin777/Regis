@@ -127,8 +127,6 @@ ERLoginPage >> renderPageOn: html [
 			self renderRegisterButtonOn: html.
 	"html div	class: 'mdl-tooltip'; attributeAt: 'data-mdl-for' put: 'XD'; with: 'Example'.
 	html mdlAnchorButton id: 'XD'; with: 'Example' <<===== Tooltip for buttons"
-			
-
 ]
 
 { #category : #rendering }

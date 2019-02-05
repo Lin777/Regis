@@ -77,26 +77,27 @@ ERFinishRegisterPage >> register [
 ERFinishRegisterPage >> renderActions: html [
 	html mdlCardActions
 		class: 'mdl-card--border';
-		with: [ self
-				createColoredAnchorButton: 'Back'
-				with: [ self backAction ]
-				id: 'back'
-				on: html.
-			self
-				createColoredAnchorButton: 'Next'
-				with: [ self nextAction ]
-				id: 'next'
-				on: html.
-			self
-				createColoredAnchorButton: 'Cancel'
-				with: [ self cancelAction ]
-				id: 'cancel'
-				on: html.
-			self
-				createColoredAnchorButton: 'Finish'
-				with: [ self finishAction ]
-				id: 'finish'
-				on: html ]
+		with: [ 
+			html mdlAnchorButton
+		colored;
+		id: 'back';
+		callback: [ self backAction ];
+		with: 'Back'.
+		html mdlAnchorButton
+		colored;
+		id: 'next';
+		callback:  [ self nextAction ];
+		with: 'Next'.
+		html mdlAnchorButton
+		colored;
+		id: 'cancel';
+		callback: [ self cancelAction ];
+		with: 'Cancel'.
+		html mdlAnchorButton
+		colored;
+		id: 'finish';
+		callback: [ self finishAction ];
+		with: 'Finish']
 ]
 
 { #category : #rendering }

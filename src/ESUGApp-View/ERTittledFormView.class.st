@@ -64,20 +64,20 @@ ERTittledFormView >> initializeForm [
 
 { #category : #rendering }
 ERTittledFormView >> renderAcceptButtonOn: html [
-	self
-		createColoredButton: 'Accept'
-		with: [ self saveForm ] 
-		id: 'accept-change-affiliation'
-		on: html
+	html mdlButton
+		colored;
+		id: 'accept-change-affiliation' ;
+		callback: [ self saveForm ];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERTittledFormView >> renderCancelButtonOn: html [
 	self initializeDialog .
-	self
-		createColoredAnchorButton: 'Cancel'
-		id: 'cancel'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancel'; 
+		colored;
+		with: 'Cancel'.
 ]
 
 { #category : #rendering }

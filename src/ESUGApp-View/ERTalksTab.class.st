@@ -33,11 +33,11 @@ ERTalksTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERTalksTab >> renderButton: html [
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportTalks ]
-		id: 'exportTalks'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportTalks';
+		callback: [ self exportTalks ];
+		with: 'Export'
 ]
 
 { #category : #rendering }

@@ -34,21 +34,20 @@ ERYesNoTab >> renderContainer: html [
 
 { #category : #rendering }
 ERYesNoTab >> renderNoButton: html [
-	self
-		createColoredAnchorButton: 'No'
-		with: [callbackNo value: self]
-		id: 'no-' , tabId
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'no-' , tabId;
+		callback: [callbackNo value: self];
+		with: 'No'
 ]
 
 { #category : #rendering }
 ERYesNoTab >> renderYesButton: html [
-	self
-		createColoredAnchorButton: 'Yes'
-		with: [callbackYes value: self]
-		id: 'yes-' , tabId
-		on: html.
-	
+	html mdlAnchorButton
+		colored;
+		id: 'yes-' , tabId;
+		callback: [callbackYes value: self];
+		with: 'Yes'
 ]
 
 { #category : #accessing }

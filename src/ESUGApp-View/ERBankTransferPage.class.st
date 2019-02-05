@@ -52,11 +52,12 @@ ERBankTransferPage >> okAction [
 ERBankTransferPage >> renderActions: html [
 	html mdlCardActions
 		class: 'mdl-card--border';
-		with: [ self
-				createColoredAnchorButton: 'Ok'
-				with: [ self okAction ]
-				id: 'okButton'
-				on: html ]
+		with: [ 
+			html mdlAnchorButton
+		colored;
+		id: 'okButton';
+		callback: [ self okAction ];
+		with: 'Ok']
 ]
 
 { #category : #rendering }
