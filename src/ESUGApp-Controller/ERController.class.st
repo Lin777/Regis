@@ -80,7 +80,7 @@ ERController >> applyReductionTicketTo: anAttendee [
 
 { #category : #'as yet unclassified' }
 ERController >> attendeesForATicket: ticketId [
-	^ conference attends select: [ :each | each coupon = ticketId ]
+	^ conference attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
 
 { #category : #accessing }

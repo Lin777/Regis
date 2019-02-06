@@ -165,7 +165,6 @@ ERContainerTab >> updateAffiliation: aff on: aGroup [
 
 { #category : #accessing }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
-	(ERRegistrationController attendee: anAttendee ) validateRegister .
 	anAttendee save.
 	content state: content lastState
 ]
@@ -173,9 +172,9 @@ ERContainerTab >> updateRegistrationInformation: anAttendee [
 { #category : #initialization }
 ERContainerTab >> updateTicketInformation: anAttendee [
 	|ticket|
-	anAttendee coupon = 'No reduction ticket'
-	ifTrue: [ anAttendee coupon: '' ]
-	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee coupon.
+	anAttendee paymentInformation coupon = 'No reduction ticket'
+	ifTrue: [ anAttendee paymentInformation coupon: '' ]
+	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee paymentInformation coupon.
 		controller verifyIfTicketCanApply: ticket.
 		 ].
 	controller applyReductionTicketTo: anAttendee .

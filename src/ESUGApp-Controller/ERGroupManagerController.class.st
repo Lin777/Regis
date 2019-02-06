@@ -25,10 +25,8 @@ ERGroupManagerController >> addAttendee: anAttendee [
 { #category : #adding }
 ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	| anAttendeeSaved userSaved |
-	self validateRegister: anAttendee.
 	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
-	anAttendee userAccount password: (ERUserAccount hashPassword: (anAttendee userAccount password )asString).
-	anAttendee userAccount roleAdd: ERUserAccount attendeeRole .
+	anAttendee userAccount roleAdd: 'attendee' .
 	userSaved := (anAttendee userAccount as: ERUserAccount) save.
 	conference addUser: userSaved .
 	anAttendeeSaved := (anAttendee userAccount: userSaved) save.

@@ -65,13 +65,15 @@ ERApplyReductionTicketView >> renderPageOn: html [
 
 { #category : #accessing }
 ERApplyReductionTicketView >> renderSelectorOfTickets: html [
-	self
-		createSelectField: 'Reduction Ticket Code: '
-		for: #coupon:
-		with: #coupon
-		list: listOfTickets 
-		to: attendee
-		on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Reduction Ticket Code: '.
+			html select
+				class: 'mdl-textfield__input';
+				id: 'selectTickets';
+				list: listOfTickets;
+				selected: attendee paymentInformation coupon;
+				callback: [ :value | attendee paymentInformation coupon: value asString ] ].
 ]
 
 { #category : #accessing }

@@ -109,13 +109,16 @@ ERReductionTicketForm >> renderFixStrategyOn: html [
 				with: #amount
 				to: ticket discountStrategy
 				on: html.
-			self
-				createSelectField: 'Currency'
-				for: #currency:
-				with: #currency
-				list: ERAttendee currencyTypes
-				to: ticket discountStrategy
-				on: html
+			
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Currency'.
+			html select
+				class: 'mdl-textfield__input';
+				id: 'currencyOfTicket';
+				list: ERAttendee currencyTypes;
+				selected: ticket discountStrategy currency;
+				callback: [ :value | ERAttendee currencyTypes currency: value asString ] ]
 ]
 
 { #category : #rendering }
