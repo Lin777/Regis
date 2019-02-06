@@ -44,6 +44,15 @@ ERReductionTicketsTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERReductionTicketsTab >> children [
+	^ OrderedCollection new
+		add: dialog;
+		add: formAddTicket;
+		add: messageComponent;
+		yourself
+]
+
+{ #category : #rendering }
 ERReductionTicketsTab >> deleteTicket: aTicket [
 	controller deleteReductionTicket: aTicket.
 	self updateStateTab: self tabName. 

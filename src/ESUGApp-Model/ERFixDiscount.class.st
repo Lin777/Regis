@@ -30,7 +30,7 @@ ERFixDiscount >> currency: anObject [
 
 { #category : #accessing }
 ERFixDiscount >> description [ 
-	^ 'Discount of ', amount asString , ' ', currency
+	^ 'Discount of ', amount asString , ' ', currency, '(s)'
 ]
 
 { #category : #initialization }

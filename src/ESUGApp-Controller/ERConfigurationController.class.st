@@ -312,6 +312,11 @@ ERConfigurationController >> participantsToSocialDinner [
 	normal :=(list select: [:each | each conferenceInformation isNormal]) size.
 	vegan :=(list select:  [:each | each conferenceInformation isVegan]) size.
 	vegetarian :=(list select:  [:each | each conferenceInformation isVegetarian]) size.
+	
+	list := (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ]).
+	normal := normal + ((list select: [:each | each conferenceInformation isNormal: each conferenceInformation personAddedFoodPreference]) size).
+	vegan := vegan + ((list select:  [:each | each conferenceInformation isVegan: each conferenceInformation personAddedFoodPreference]) size).
+	vegetarian := vegetarian + ((list select:  [:each | each conferenceInformation isVegetarian: each conferenceInformation personAddedFoodPreference]) size).
 	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
 ]
 

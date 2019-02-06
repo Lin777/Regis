@@ -78,6 +78,8 @@ ERRegistrationController >> saveAttendee [
 	|attendeeSaved|
 	self attendee userAccount: self save.
 	self attendee paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ].
+	self attendee conferenceInformation addPersonToSocialDinner ifFalse:
+	 [ self attendee conferenceInformation personAddedFoodPreference: ''].
 	attendeeSaved := self attendee save.
 	conference addAttendee: attendeeSaved .
 	conference save.

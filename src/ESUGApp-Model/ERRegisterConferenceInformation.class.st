@@ -7,8 +7,9 @@ Class {
 		'tshirtSize',
 		'foodPreference',
 		'attendSocialEvent',
+		'addedToMainList',
 		'addPersonToSocialDinner',
-		'addedToMainList'
+		'personAddedFoodPreference'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -75,7 +76,7 @@ ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 		checkboxLabel: 'Check if you add a person to the Social Dinner';
 		accessor: #addPersonToSocialDinner;
 		componentClass: MDLMACheckboxComponent;
-		priority: 100;
+		priority: 120;
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -103,7 +104,7 @@ ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 		checkboxLabel: 'Check if you will you go to the social Event';
 		accessor: #attendSocialEvent;
 		componentClass: MDLMACheckboxComponent;
-		priority: 90;
+		priority: 100;
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -117,6 +118,23 @@ ERRegisterConferenceInformation >> descriptionFood [
 		accessor: #foodPreference;
 		priority: 80;
 		required: false;
+		cssClass: 'third';
+		options: ERAttendee foodPreferences;
+		withoutLabel: true;
+		componentClass: MDLMASelectListComponent .
+	^ tmp1 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
+	<magritteDescription>
+	| tmp1 |
+	tmp1 := MASingleOptionDescription new.
+	tmp1
+		accessor: #personAddedFoodPreference;
+		priority: 130;
+		required: false;
+		default: 'Normal';
 		options: ERAttendee foodPreferences;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -146,6 +164,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 		accessor: #gender;
 		priority: 60;
 		required: false;
+		cssClass: 'third';
 		options: ERAttendee genders;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -190,6 +209,7 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		accessor: #tshirtSize;
 		priority: 70;
 		required: false;
+		cssClass: 'third';
 		options: ERAttendee tShirtSizes;
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
@@ -291,13 +311,28 @@ ERRegisterConferenceInformation >> isNormal [
 ]
 
 { #category : #initialization }
+ERRegisterConferenceInformation >> isNormal: aString [
+	^ aString ='Normal' 
+]
+
+{ #category : #initialization }
 ERRegisterConferenceInformation >> isVegan [
 	^ foodPreference = 'Vegan'
 ]
 
 { #category : #initialization }
+ERRegisterConferenceInformation >> isVegan: aString [
+	^ aString = 'Vegan'
+]
+
+{ #category : #initialization }
 ERRegisterConferenceInformation >> isVegetarian [
 	^ foodPreference =  'Vegetarian'
+]
+
+{ #category : #initialization }
+ERRegisterConferenceInformation >> isVegetarian: aString [
+	^ aString =  'Vegetarian'
 ]
 
 { #category : #initialization }
@@ -308,6 +343,16 @@ ERRegisterConferenceInformation >> monday [
 { #category : #initialization }
 ERRegisterConferenceInformation >> monday: aBoolean [
 	self attendance at: 'monday' put: aBoolean
+]
+
+{ #category : #accessing }
+ERRegisterConferenceInformation >> personAddedFoodPreference [
+	^ personAddedFoodPreference
+]
+
+{ #category : #accessing }
+ERRegisterConferenceInformation >> personAddedFoodPreference: anObject [
+	personAddedFoodPreference := anObject
 ]
 
 { #category : #initialization }

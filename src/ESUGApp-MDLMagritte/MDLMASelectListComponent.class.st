@@ -27,7 +27,6 @@ MDLMASelectListComponent >> renderEditorForUngroupedOn: html [
 	| inputId |
 	inputId := self labelId.
 	html mdlTextFieldContainer
-	
 		style: 'display: block';
 		floatingLabel;
 		with: [ html mdlTextFieldLabel

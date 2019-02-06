@@ -98,12 +98,19 @@ ERController >> conferenceFeeFor: anAttendee [
 	| fee amount |
 	fee := self feePerTypeCurrencyOf: anAttendee.
 	amount := self amountForCurrentDateFor: fee.
+	amount := amount + (self costPerExtraPerson: anAttendee on: fee).
 	^ self decreaseCouponAmountFor: amount to: anAttendee
 ]
 
 { #category : #accessing }
 ERController >> conferenceIsOpenRegistration [
 	^ self conference configuration openRegistration
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> costPerExtraPerson: anAttendee on: fee [
+	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
+	ifTrue: [ ^ fee extraPersonSD asNumber]
 ]
 
 { #category : #'as yet unclassified' }
