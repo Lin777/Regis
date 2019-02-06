@@ -1,5 +1,5 @@
 Class {
-	#name : #ERGroup1,
+	#name : #ERGroup,
 	#superclass : #SDActiveRecord,
 	#instVars : [
 		'groupManager',
@@ -10,48 +10,58 @@ Class {
 }
 
 { #category : #accessing }
-ERGroup1 class >> groupManager: aGroupManager [
+ERGroup class >> groupManager: aGroupManager [
 	^ self new groupManager: aGroupManager ; yourself
 ]
 
 { #category : #'initialize-release' }
-ERGroup1 >> addAttendee: anAttendee [
+ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]
 
 { #category : #accessing }
-ERGroup1 >> groupManager [
+ERGroup >> groupManager [
 	^ groupManager
 ]
 
 { #category : #accessing }
-ERGroup1 >> groupManager: anObject [
+ERGroup >> groupManager: anObject [
 	groupManager := anObject
 ]
 
 { #category : #'initialize-release' }
-ERGroup1 >> initialize [
+ERGroup >> initialize [
 	super initialize .
 	listAttends := OrderedCollection new.
 	paymentInformation := ERPaymentInformation new.
 ]
 
 { #category : #accessing }
-ERGroup1 >> listAttends [
+ERGroup >> listAttends [
 	^ listAttends
 ]
 
 { #category : #accessing }
-ERGroup1 >> listAttends: anObject [
+ERGroup >> listAttends: anObject [
 	listAttends := anObject
 ]
 
 { #category : #accessing }
-ERGroup1 >> paymentInformation [
+ERGroup >> paymentAmount [
+	^ paymentInformation paymentAmount
+]
+
+{ #category : #accessing }
+ERGroup >> paymentAmount: anObject [
+	^ paymentInformation paymentAmount: anObject
+]
+
+{ #category : #accessing }
+ERGroup >> paymentInformation [
 	^ paymentInformation
 ]
 
 { #category : #accessing }
-ERGroup1 >> paymentInformation: anObject [
+ERGroup >> paymentInformation: anObject [
 	paymentInformation := anObject
 ]

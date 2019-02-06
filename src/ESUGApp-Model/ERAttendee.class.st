@@ -149,6 +149,16 @@ ERAttendee >> initialize [
 ]
 
 { #category : #accessing }
+ERAttendee >> paymentAmount [
+	^ paymentInformation paymentAmount
+]
+
+{ #category : #accessing }
+ERAttendee >> paymentAmount: anObject [
+	^ paymentInformation paymentAmount: anObject
+]
+
+{ #category : #accessing }
 ERAttendee >> paymentInformation [
 	^ paymentInformation
 ]

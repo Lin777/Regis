@@ -253,15 +253,6 @@ ERController >> updateUser: anUser [
 	do: [ :exp | ^ exp ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> validateCountry: aString withName: aString2 [
-	self validatePatternForRequired: aString withName: aString2.
-	aString = 'Select Country'
-		ifTrue: [ ERException new
-				messageText: 'Please select a ', aString2 ;
-				signal ]
-]
-
 { #category : #action }
 ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 	conference users
@@ -278,37 +269,10 @@ ERController >> validateNewPassword: aString1 with: aString2 [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> validatePatternEmail: aString withName: aString2 [
-	(aString matchesRegex: '\S+@\S+\.\S+')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aString2 , ' does not match with email format.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> validatePatternForRequired: aString withName: aString2 [
-	(aString matchesRegex: '\S+[\S*\s*]*')
-		ifFalse: [ ERException new
-				messageText:
-					'The field ' , aString2
-						, ' is required please add content to it.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> validatePatternForText: aString withName: aString2 [
-	(aString matchesRegex: '[(a-zA-Z)+\s*]{3,}')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aString2 , ' only accept a text.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> validateSelectValue: aString on: list withMessage: aString2 [
-	(list includes: aString)
-		ifFalse: [ ERException new
-				messageText: 'The ' , aString2 , ' entered is not valid.';
-				signal ]
+ERController >> validateRegister: anAttendee [
+	self validateIfEmailIsAlreadyRegistered: anAttendee  userAccount.
+	self validateNewPassword: anAttendee userAccount password 
+	with: anAttendee userAccount confirmPassword
 ]
 
 { #category : #'as yet unclassified' }

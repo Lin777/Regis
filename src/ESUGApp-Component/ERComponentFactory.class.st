@@ -99,22 +99,7 @@ ERComponentFactory >> createFormOf: anObject [
 	 yourself.
 ]
 
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createHeadingStrong: aString level: aNumber on: html [
-	html heading
-		level: aNumber;
-		with: [ html strong: aString]
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createHeadingStrong: aString level: aNumber withValue: aValue on: html [
-	html heading
-		level: aNumber;
-		with: [ html strong: aString.
-			html text: aValue ]
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -159,20 +144,6 @@ ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
 	 yourself 
 ]
 
-{ #category : #building }
-ERComponentFactory >> createRequiredField: aName id: anId type: aType callback: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: anId;
-				with: aName.
-			html mdlTextFieldInput
-				id: anId;
-				required;
-				type: aType;
-				callback: aBlock ]
-]
-
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createSelectField: aName for: aSymbol with: anotherSymbol list: aList to: anObject on: html [
 	html mdlTextFieldContainer
@@ -200,25 +171,6 @@ ERComponentFactory >> createSelectField: aName list: aList callback: aBlock with
 				callback: aBlock ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createStrongText: aString to: html [
-	html paragraph: [ html strong: aString]
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol percent: aNumber on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		style: 'width:' , aNumber asString , '%';
-		with: [ html mdlTextFieldLabel
-				for: (self idFromSymbol: aSymbol);
-				with: aName.
-			html mdlTextFieldInput
-				id: (self idFromSymbol: aSymbol);
-				value: (attendee perform: anotherSymbol);
-				callback: [ :value | attendee perform: aSymbol with: value asString ]].
-]
-
 { #category : #building }
 ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol to: anObject on: html [
 	html mdlTextFieldContainer
@@ -230,13 +182,6 @@ ERComponentFactory >> createTextField: aName for: aSymbol with: anotherSymbol to
 				id: (self idFromSymbol: aSymbol);
 				value: (anObject perform: anotherSymbol);
 				callback: [ :value | anObject perform: aSymbol with: value asString ] ]
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createTextStrongWithoutParagraph: aString withText: aText on: html [
-	html strong: aString.
-			html text: aText.
-	html break .
 ]
 
 { #category : #building }

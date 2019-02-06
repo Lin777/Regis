@@ -133,7 +133,7 @@ ERReductionTicketForm >> renderFormOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderLimitStrategyOn: html [
-	self createStrongText: 'Use Limit Strategy' to: html.
+	html paragraph: [ html strong: 'Use Limit Strategy'].
 	self
 		createSelectField: 'Strategy'
 		list: ERLimitStrategy typesLimitStrategy

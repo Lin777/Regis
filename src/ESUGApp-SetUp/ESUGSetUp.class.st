@@ -52,7 +52,7 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 					'CCM Douai
 92 rue de Paris
 59500 Douai
-'; save); save.
+').
 	esugEuroFee := ERFee new
 		erfAllDaysFee: 470;
 		erfOneDayFee: 170;

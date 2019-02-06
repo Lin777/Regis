@@ -20,11 +20,11 @@ ERMembersTab >> attends [
 { #category : #'as yet unclassified' }
 ERMembersTab >> blockTableToExecute [
 	^ [:user | OrderedCollection new
-		add: ([ :att | att firstName ] value: user);
+		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
-			, ' ', att paymentCurrency, '(s)'  ] value: user);
-		add: 'No';
+			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+		add: ([ :att | att paymentInformation hasPaid ifTrue: [ 'Yes' ] ifFalse: [ 'No' ] ] value: user);
 		yourself
 	]
 ]
@@ -98,8 +98,7 @@ ERMembersTab >> registerGroupManagerAsAttendee [
 
 { #category : #accessing }
 ERMembersTab >> registerMyselfAsAttendee [
-	callback := [ self registerGroupManagerAsAttendee ].
-
+	callback := [ :att | controller addGroupManagerAsAttendee: att ].
 	self initializeFormWithoutBasicInformationFor: (self attendeeFrom: self groupManager)
 ]
 

@@ -33,7 +33,6 @@ ERRegisterPage >> actionsBody: html [
 	html mdlCardActions border with: [	
 			self renderBackLoginButtonOn: html.
 			self renderBackButtonOn: html.
-			self renderSkipButtonOn: html.
 			self renderNextButtonOn: html.
 		].
 	]
@@ -170,11 +169,8 @@ ERRegisterPage >> renderPageOn: html [
 	html render: messageComponent.
 	html form
 		id: 'registerForm';
-		with: [ html mdlTabs rippleEffect with: [ html render: (ERTabs tabs: self tabs) ] ].
-]
-
-{ #category : #'as yet unclassified' }
-ERRegisterPage >> renderSkipButtonOn: html [
+		with: [ html mdlTabs rippleEffect with: 
+			[ html render: (ERTabs tabs: self tabs) ] ].
 ]
 
 { #category : #initialize }
@@ -212,9 +208,11 @@ ERRegisterPage >> tabs [
 { #category : #initialize }
 ERRegisterPage >> validateAndRegister [
 	 [self saveTabs.
+		currentTab := tabs first. 
 	pageController validateRegister.] 
 	on: ERException 
-	do: [ currentTab updateStateTab: currentTab tabName.
+	do: [ :exception | messageComponent errorMessage: exception messageText.
+		currentTab updateStateTab: currentTab tabName.
 		^ self ].
 	self redirectFinishRegister
 ]

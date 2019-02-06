@@ -69,15 +69,14 @@ ERGroupRegistrationTab >> paymentInformation [
 
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendee [
-	callback := [ self registerAttendeeToGroupManager ].
+	callback := [ :att | self registerAttendeeToGroupManager: att ].
 	self initializeFormRegister.
 	content state: formRegister.
 	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
-ERGroupRegistrationTab >> registerAttendeeToGroupManager [
-	(ERRegistrationController attendee: newAttendee) validateRegister.
+ERGroupRegistrationTab >> registerAttendeeToGroupManager: anAttendee [
 	controller addAttendee: newAttendee.
 	content state: content lastState
 ]

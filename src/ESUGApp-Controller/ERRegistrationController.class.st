@@ -88,7 +88,7 @@ ERRegistrationController >> saveAttendee [
 ERRegistrationController >> saveGroupManager [
 	|groupSaved|
 	self attendee userAccount: self save.
-	groupSaved := ERGroup1 groupManager: self attendee.
+	groupSaved := ERGroup groupManager: self attendee.
 	groupSaved paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ]. 		
 	groupSaved := groupSaved save.
 	conference addGroup: groupSaved .
@@ -97,71 +97,11 @@ ERRegistrationController >> saveGroupManager [
 ]
 
 { #category : #'as yet unclassified' }
-ERRegistrationController >> validateContactForm [
-	self validatePatternForRequired: attendee address withName: 'ADDRESS'.
-	self validatePatternForRequired: attendee city withName: 'CITY'.
-	self validatePatternForRequired: attendee province withName: 'PROVINCE'.
-	self validatePatternForRequired: attendee postal withName: 'POSTAL'.
-	self validateCountry: attendee country withName: 'COUNTRY'.
-	attendee facebookURL isEmpty
-		ifFalse: [ self validatePatternUrl: #facebookURL ].
-	attendee twitterURL isEmpty
-		ifFalse: [ self validatePatternUrl: #twitterURL ].
-	attendee homePage isEmpty
-		ifFalse: [ self validatePatternUrl: #homePage ]
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateCountry: aSymbol [
-	self validatePatternForRequired: aSymbol.
-	(attendee perform: aSymbol) = 'Select Country'
-		ifTrue: [ ERException new
-				messageText: 'Please select a country';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
 ERRegistrationController >> validateIfTicketExist [
 	attendee hasCoupon
 		ifTrue: [ (self reductionTicketWithName: attendee coupon) isNil
 				ifTrue: [ 
 					ERException ticketDoesNotExist signal ] ]
-]
-
-{ #category : #action }
-ERRegistrationController >> validatePassword [
-	self
-		validatePatternForRequired: attendee password
-		withName: 'PASSWORD'.
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validatePatternEmail: aSymbol [
-	((attendee perform: aSymbol)
-		matchesRegex:
-			'\S+@\S+\.\S+')
-		ifFalse: [ ERException new
-				messageText:
-					'The field ' , aSymbol asString , ' does not match with email format.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validatePatternForRequired: aSymbol [
-	((attendee perform: aSymbol) matchesRegex: '\S+[\S*\s*]*')
-		ifFalse: [ ERException new
-				messageText:
-					'The field ' , aSymbol asString
-						, ' is required please add content to it.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validatePatternForText: aSymbol [
-	((attendee perform: aSymbol) matchesRegex: '[(a-zA-Z)+\s*]{3,}')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aSymbol asString , ' only accept a text.';
-				signal ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -173,33 +113,6 @@ ERRegistrationController >> validatePatternPassword: aSymbol [
 ]
 
 { #category : #'as yet unclassified' }
-ERRegistrationController >> validatePatternUrl: aSymbol [
-	"((attendee perform: aSymbol)
-		matchesRegex:
-			'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)')"
-		((attendee perform: aSymbol)
-		matchesRegex:
-			'\S+')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aSymbol text , ' does not match with url format.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
 ERRegistrationController >> validateRegister [
-	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
-	self validateNewPassword: attendee userAccount password 
-	with: attendee userAccount confirmPassword
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateRegisterForGroupManager [
-	self validateUserForm.
-	self validateAffiliationForm
-]
-
-{ #category : #action }
-ERRegistrationController >> verifyTicket [
-	attendee hasCoupon ifTrue: [  ^ self addAttendeeToTicketIfExist ].
-	^ nil
+	self validateRegister: attendee
 ]

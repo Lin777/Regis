@@ -174,7 +174,7 @@ ERTestControllers >> setUp [
 	ERUnlimitedReductionTicketUse warmUp.
 	ERReductionTicket warmUp.
 	ERFee warmUp.
-	ERGroup1 warmUp.
+	ERGroup warmUp.
 	ERTalk warmUp.
 	ERConference warmUp.
 	ERSandstoneDatabase initialize.
@@ -250,12 +250,12 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERFee coolDown.
-	ERGroup1
+	ERGroup
 		do: [ :each | 
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERGroup1 coolDown.
+	ERGroup coolDown.
 	ERReductionTicket
 		do: [ :each | 
 			[ each delete ]

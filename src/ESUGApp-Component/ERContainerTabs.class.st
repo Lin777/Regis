@@ -86,32 +86,6 @@ ERContainerTabs >> initializeDialog [
 ]
 
 { #category : #accessing }
-ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
-	tabs := OrderedCollection new
-	add: (self createAffiliationInfoTab: anAttendee withContent: self) activate;
-		add:
-			(ERDoneButton
-				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self);
-		yourself
-]
-
-{ #category : #accessing }
-ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
-	
-	tabs := OrderedCollection new
-		add: (self createBasicInfoTab: anAttendee withContent: self) activate;
-		add: (self createAffiliationInfoTab: anAttendee withContent: self);
-		add:
-			(ERDoneButton
-				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self);
-		yourself
-]
-
-{ #category : #accessing }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	tabs := OrderedCollection new
 	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
@@ -125,7 +99,8 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 				on: anAttendee
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self);
-		yourself
+		yourself.
+	saveTabs := [ self saveAttendeeTabs ]
 ]
 
 { #category : #accessing }
@@ -141,7 +116,8 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 				on: anAttendee
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self);
-		yourself
+		yourself.
+	saveTabs := [ self saveAttendeeToGroupManagerTabs ]
 ]
 
 { #category : #rendering }
@@ -194,7 +170,7 @@ ERContainerTabs >> renderDoneButtonOn: html [
 		rippleEffect;
 		id: 'registerButton';
 		callback: [ 
-			callback
+			saveTabs
 				on: ERException
 				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
 		with: 'Save Information'
@@ -208,6 +184,63 @@ ERContainerTabs >> renderNextButtonOn: html [
 		id: 'nextButton';
 		class: 'btnNext';
 		with: 'Next'
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAdditionalInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee additionalInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAffiliationInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee affiliationInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAttendeeTabs [
+	self saveUserAccountAt: 1.
+	self saveContactInfoAt: 2.
+	self saveRegConferenceInfoAt: 3.
+	self saveAffiliationInfoAt: 4.
+	self saveAdditionalInfoAt: 5.
+	self savePaymentInfoAt: 6.
+	callback cull: attendee
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAttendeeToGroupManagerTabs [
+	self saveContactInfoAt: 1.
+	self saveRegConferenceInfoAt: 2.
+	self saveAffiliationInfoAt: 3.
+	self saveAdditionalInfoAt: 4.
+	self savePaymentInfoAt: 5.
+	callback cull: attendee
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveContactInfoAt: index [
+	(tabs at: index) contentTab save.
+	attendee contactInformation: (tabs at: index) contentTab model
+]
+
+{ #category : #accessing }
+ERContainerTabs >> savePaymentInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee paymentInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveRegConferenceInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee conferenceInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveUserAccountAt: index [
+	(tabs at: index) contentTab save.
+	attendee userAccount: (tabs at: index) contentTab model
 ]
 
 { #category : #accessing }

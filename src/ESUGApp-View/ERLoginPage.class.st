@@ -83,8 +83,16 @@ ERLoginPage >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERLoginPage >> renderEmailField: html [
-	self
-	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self email: value asString ] on: html.
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: 'email-login';
+				with: 'Email'.
+			html mdlTextFieldInput
+				id: 'email-login';
+				required;
+				type: 'email';
+				callback: [ :value | self email: value asString ] ]
 "
 		createTextField: 'Email'
 		id: 'email-login'
@@ -95,7 +103,7 @@ ERLoginPage >> renderEmailField: html [
 { #category : #rendering }
 ERLoginPage >> renderFieldsLoginOn: html [
 	self renderEmailField: html.
-	self renderPasswordField: html
+	self renderPasswordFieldOn: html
 ]
 
 { #category : #rendering }
@@ -130,7 +138,7 @@ ERLoginPage >> renderPageOn: html [
 ]
 
 { #category : #rendering }
-ERLoginPage >> renderPasswordField: html [
+ERLoginPage >> renderPasswordFieldOn: html [
 	self
 		createPasswordField: 'Password'
 		id: 'password-login'
