@@ -5,10 +5,6 @@ Class {
 }
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> getInvoice [
-]
-
-{ #category : #rendering }
 ERMyRegistrationSummaryTab >> modifyRegistration [
 	callback := [ self updateMyRegistration ].
 	formWithoutBasicInfo := ERContainerTabs
@@ -45,6 +41,7 @@ ERMyRegistrationSummaryTab >> redirectionPayPAL [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderButtons: html [
+	| downloadButton |
 	self
 		createRaisedRippleEffectAnchorButton: 'Modify Registration Information'
 		with: [ self modifyRegistration ]
@@ -55,13 +52,18 @@ ERMyRegistrationSummaryTab >> renderButtons: html [
 		with: [ self pay ]
 		id: 'pay'
 		on: html.
-	html mdlAnchorButton
-		raised;
-		colored;
-		rippleEffect;
-		id: 'invoice';
-		callback: [ self getInvoice ];
-		with: 'Get my invoice'
+	self 
+		createRaisedRippleEffectAnchorButton: 'Generate Invoice' 
+		with: [ self generateInvoice: attendee ]
+		id: 'invoice'
+		on: html.
+	downloadButton := html mdlAnchorButton raised; rippleEffect;
+		id: 'download';
+		disabled: (attendee encodedInvoice isNotNil and: [attendee hasPaid]) not.
+	downloadButton isDisabled ifFalse: [ 
+		downloadButton url: ('data:text/pdf;base64,', (attendee encodedInvoice ifNil: [ '' ]));
+		attributeAt: 'download' put: 'RegistrationInvoice_', attendee id, '.pdf'].
+	downloadButton with: 'Download Invoice'.
 ]
 
 { #category : #rendering }

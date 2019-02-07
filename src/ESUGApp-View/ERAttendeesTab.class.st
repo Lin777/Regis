@@ -15,7 +15,7 @@ ERAttendeesTab >> attends [
 
 { #category : #rendering }
 ERAttendeesTab >> blockTableToExecute [
-	^ [ :user | 
+	^ [ :user :html | 
 	OrderedCollection new
 		add: '10';
 		add: ([ :att | att firstName ] value: user);
@@ -24,7 +24,12 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att orgName ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)'  ] value: user);
-		add: ([ :att | att hasPaid ] value: user);
+		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				value: att hasPaid;
+				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
+				onChange: (html jQuery ajax serializeForm).
+				] ] valueWithArguments: {user. html});
 		yourself ]
 ]
 
@@ -41,9 +46,20 @@ ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
 ERAttendeesTab >> deleteAttendeeFromGroup: user [
 ]
 
+{ #category : #rendering }
+ERAttendeesTab >> dictToRenderDownloadButton [
+	^ Dictionary new
+		at: 'icon' put: 'get_app';
+		at: 'id' put: [ :attend | attend id , '-get_app' ];
+		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend hasPaid ]) not ];
+		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 ERAttendeesTab >> exportAllInvoices [
-	| nameFile zip subDir zipFile |
+	| nameFile zip subDir zipFile groupAttendee |
 	zip := ZipArchive new.
 	nameFile := 'Invoices'.
 	subDir := nameFile asFileReference.
@@ -52,8 +68,11 @@ ERAttendeesTab >> exportAllInvoices [
 	zipFile := nameFile asFileReference, 'zip'.
 	self cleanZip: zip with: zipFile subDir: subDir. 
 	ERPDFInvoice demoPath: nameFile, '/'.
-	self attends do: [ :attend | 
-		zip addFile: (ERPDFInvoice templateRegistrationInvoice: attend) path pathString.
+	self attends select: [ :attend | attend hasPaid ] 
+	thenDo: [ :attend | 
+		groupAttendee := controller getGroupOfAttendee: attend.
+		zip addFile: (groupAttendee ifNil: [ (ERPDFInvoice templateRegistrationInvoice: attend) path pathString ] 
+		ifNotNil: [ (ERPDFInvoice templateRegistrationInvoice: groupAttendee groupManager) path pathString ])	
 	].
 	zip writeToFileNamed: zipFile fullName.
 	encodeZipFile := self encodeFiletoBase64: zipFile.
@@ -68,17 +87,6 @@ ERAttendeesTab >> exportAttends [
 	encodeCSVFile := self encodeFileToUTF8: file.
 	file ensureDelete.
 	self updateStateTab: self tabName.
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> generateInvoice: user [
-	| file |
-	file := ERPDFInvoice templateRegistrationInvoice: user.
-	user encodedInvoice: (self encodeFiletoBase64: file).
-	user save.
-	file ensureDelete.
-	self updateStateTab: self tabName.
-	
 ]
 
 { #category : #rendering }
@@ -118,18 +126,7 @@ ERAttendeesTab >> listDataToRenderButton [
 			(Array 
 				with: 'description' 
 				with: [ :user | self generateInvoice: user ]
-				with: [ :user | user id , '-invoice' ]
-				with: [ :user | user hasPaid ]);
-		yourself
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> listDataToRenderDownloadButton [
-	^ OrderedCollection new
-		add: (Array with: 'get_app' 
-			with: [ :user | user id , '-get_app' ]
-			with: [ :user | 'RegistrationInvoice_', user id, '.pdf']
-			with: [ :user | 'data:text/pdf;base64,', (user encodedInvoice ifNil: [ '' ]) ]);
+				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
 
@@ -198,10 +195,6 @@ ERAttendeesTab >> renderButtons: html [
 		at: 'nameFile' put: 'Invoices.zip';
 		at: 'nameButton' put: 'Download Invoices';
 		yourself).
-	"html mdlAnchorButton 
-		url:'data:text/pdf;base64,', self encodeBase64; 
-		attributeAt: 'download' put: 'RegistrationInvoice.pdf';
-		with: 'download me'."
 ]
 
 { #category : #rendering }
@@ -223,7 +216,7 @@ ERAttendeesTab >> renderTableOfAttends: html [
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		listToRenderDownloadButton: self listDataToRenderDownloadButton.
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

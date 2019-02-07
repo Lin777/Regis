@@ -243,7 +243,7 @@ ERPDFInvoice >> addInfoPayment: pdfPage [
 { #category : #adding }
 ERPDFInvoice >> addTablePayment: pdfPage of: user [
 	| fontLegend currency |
-	currency :=  (128 asCharacter) asString, ' 500'.
+	currency :=  (128 asCharacter) asString, ' ', (user paymentAmount ifNil: [ 0 ]) asString.
 	fontLegend := PDFTimesFont size: 10pt.
 	pdfPage add: (PDFDataTableWithColumnsCaptionElement new 
 		captions: #('Description' 'Total');

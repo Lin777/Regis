@@ -15,7 +15,7 @@ ERGroupManagersTab >> alreadyRegisteredAsGroupManager [
 
 { #category : #rendering }
 ERGroupManagersTab >> blockTableToExecute [
-	^ [ :group | 
+	^ [ :group :html | 
 	OrderedCollection new
 		add: ([ :att | att groupManager firstName ] value: group);
 		add: ([ :att | att groupManager email ] value: group);
@@ -23,8 +23,24 @@ ERGroupManagersTab >> blockTableToExecute [
 		add:
 			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
 				value: group);
-		add: 'No';
-		yourself ]
+		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				value: (controller allAttendeesHasPaid: att);
+				onTrue: [ controller stateUpdatePaidAttendees: att ] 
+				onFalse: [ controller stateUpdateNotPaidAttendees: att ];
+				onChange: (html jQuery ajax serializeForm).
+				] ] valueWithArguments: {group. html});
+		yourself ].
+]
+
+{ #category : #rendering }
+ERGroupManagersTab >> dictToRenderDownloadButton [
+	^ Dictionary new 
+	at: 'icon' put: 'get_app';
+	at: 'id' put: [ :group | group id , '-get_app' ];
+	at: 'disabled' put: [:group | ((controller allAttendeesHasPaid: group) and: [ group encodedInvoice isNotNil ]) not ];
+	at: 'url' put: [ :group | 'data:text/pdf;base64,', (group encodedInvoice ifNil: [ '' ])];
+	at: 'download' put: [ :group | 'RegistrationInvoice_', group id, '.pdf'];
+	yourself.
 ]
 
 { #category : #rendering }
@@ -108,7 +124,7 @@ ERGroupManagersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'description'
-				with: [ nil ]
+				with: [ :user | self generateInvoiceGroup: user ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
@@ -208,7 +224,8 @@ ERGroupManagersTab >> renderTableOfGroups: html [
 		levelTotal: 6;
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

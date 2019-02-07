@@ -7,7 +7,7 @@ Class {
 		'listObject',
 		'levelTotal',
 		'headers',
-		'listToRenderDownloadButton'
+		'dictToRenderDownloadButton'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -15,6 +15,11 @@ Class {
 { #category : #accessing }
 ERTable >> blockToExecute: anObject [
 	blockToExecute := anObject
+]
+
+{ #category : #accessing }
+ERTable >> dictToRenderDownloadButton: aDictionary [
+	dictToRenderDownloadButton := aDictionary 
 ]
 
 { #category : #accessing }
@@ -27,7 +32,7 @@ ERTable >> initialize [
 	"blockToExecute listToRenderButton listObject levelTotal headers"
 	super initialize.
 	listToRenderButton := OrderedCollection new.
-	listToRenderDownloadButton := OrderedCollection new.
+	dictToRenderDownloadButton := Dictionary new.
 	listObject := OrderedCollection new.
 	levelTotal := 6.
 	headers := OrderedCollection new.
@@ -48,17 +53,12 @@ ERTable >> listToRenderButton: anObject [
 	listToRenderButton := anObject
 ]
 
-{ #category : #accessing }
-ERTable >> listToRenderDownloadButton: aCollection [
-	listToRenderDownloadButton := aCollection
-]
-
 { #category : #rendering }
 ERTable >> render: html with: aObject [
 	| listContent |
-	listContent := blockToExecute value: aObject.
+	listContent := blockToExecute valueWithPossibleArgs: {aObject. html}.
 	listContent do: [ :content |
-		html mdlTableHeading: content
+		html mdlTableHeading: content.
 	].
 	html mdlTableHeading: [ self renderButton: html with: aObject ]
 	
@@ -74,15 +74,13 @@ ERTable >> renderBody: html [
 
 { #category : #rendering }
 ERTable >> renderButton: html with: aObject [
-	| button |
 	listToRenderButton
 		do: [ :dataButton | 
-			button := html mdlAnchorButton colored;	rippleEffect;
-				id: (dataButton third value: aObject);
-				callback: [ dataButton second value: aObject ].
-			button disabled: ([(dataButton fourth value: aObject) not] on: SubscriptOutOfBounds do: [false]).
-			button icon: dataButton first].
-	self renderListDownloadButton: html with: aObject.
+			html mdlAnchorButton colored;	rippleEffect;
+			id: (dataButton third value: aObject);
+			callback: [ dataButton second value: aObject ];
+			icon: dataButton first ].
+	self renderDownloadButton: html with: aObject.
 ]
 
 { #category : #rendering }
@@ -100,25 +98,25 @@ ERTable >> renderContentOn: html [
 ]
 
 { #category : #rendering }
+ERTable >> renderDownloadButton: html with: aObject [
+	dictToRenderDownloadButton ifNotEmpty: [ 
+		| downloadButton |
+		downloadButton := html mdlAnchorButton colored;	rippleEffect;
+			id: ((dictToRenderDownloadButton at: 'id') value: aObject);
+			disabled: ((dictToRenderDownloadButton at: 'disabled') value: aObject).
+		downloadButton isDisabled ifFalse: [ 
+			downloadButton url: ((dictToRenderDownloadButton at: 'url') value: aObject);
+			attributeAt: 'download' put: ((dictToRenderDownloadButton at: 'download') value: aObject)].
+		downloadButton icon: (dictToRenderDownloadButton at: 'icon').
+	].
+]
+
+{ #category : #rendering }
 ERTable >> renderHeaders: html [
 	html tableHead: [ 
 		html tableRow: [ 
 			headers do: [ :each | 
 				html mdlTableHeading: each ] ] ]
-]
-
-{ #category : #rendering }
-ERTable >> renderListDownloadButton: html with: aObject [
-	| downloadButton |
-	listToRenderDownloadButton do: [ :dataButton | 
-		downloadButton := html mdlAnchorButton colored;	rippleEffect;
-			id: (dataButton second value: aObject);
-			disabled: (((aObject isKindOf: ERAttendee) and: [aObject encodedInvoice isNotNil]) and: [aObject hasPaid]) not.
-		downloadButton isDisabled ifFalse: [ 
-			downloadButton url: (dataButton fourth value: aObject);
-			attributeAt: 'download' put: (dataButton third value: aObject)].
-		downloadButton icon: dataButton first.
-	].
 ]
 
 { #category : #rendering }

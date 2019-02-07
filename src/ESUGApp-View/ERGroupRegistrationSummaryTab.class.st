@@ -20,11 +20,6 @@ ERGroupRegistrationSummaryTab class >> on: anAttendee withContent: aContent [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> generateInvoice [
-	
-]
-
-{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> initialize [
 	super initialize
 ]
@@ -109,6 +104,7 @@ ERGroupRegistrationSummaryTab >> renderButtons: html [
 	self renderRegisterAttendeeButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderGenerateInvoiceButtonOn: html.
+	self renderDownloadInvoiceButtonOn: html.
 ]
 
 { #category : #rendering }
@@ -120,19 +116,28 @@ ERGroupRegistrationSummaryTab >> renderContainer: html [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
+	| downloadButton |
+	downloadButton := html mdlAnchorButton raised; rippleEffect;
+		id: 'download';
+		disabled: ((controller allAttendeesHasPaid: self group ) and: [ self group encodedInvoice isNotNil ]) not.
+	downloadButton isDisabled ifFalse: [ 
+		downloadButton url: ('data:text/pdf;base64,', (self group encodedInvoice ifNil: [ '' ]));
+		attributeAt: 'download' put: 'RegistrationInvoice_', self group id, '.pdf'].
+	downloadButton with: 'Download Invoice'.
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderFormButtons: html [
 	self renderButtons: html
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderGenerateInvoiceButtonOn: html [
-	html mdlAnchorButton
-		raised;
-		colored;
-		rippleEffect;
-		id: 'generateInvoice';
-		callback: [ self generateInvoice ];
-		with: 'GENERATE INVOICE'
+	self createRaisedRippleEffectAnchorButton: 'Generate Invoice'
+		with: [ self generateInvoiceGroup: self group ]
+		id: 'generateInvoice'
+		on: html.
 ]
 
 { #category : #rendering }

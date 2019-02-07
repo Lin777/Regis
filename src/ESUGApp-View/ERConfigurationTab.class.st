@@ -15,20 +15,6 @@ ERConfigurationTab class >> on: anAttendee withContent: aContent container: aCon
 	^ form
 ]
 
-{ #category : #'as yet unclassified' }
-ERConfigurationTab >> encodeFileToUTF8: aFile [
-	^ aFile exists 
-		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
-		ifFalse: [ nil ]. 
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationTab >> encodeFiletoBase64: aFile [
-	^ aFile exists 
-		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
-		ifFalse: [ nil ]. 
-]
-
 { #category : #'file library' }
 ERConfigurationTab >> fileExists: fileName [
 	^ (File
