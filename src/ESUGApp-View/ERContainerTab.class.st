@@ -77,13 +77,10 @@ ERContainerTab >> encodeFiletoBase64: aFile [
 
 { #category : #'as yet unclassified' }
 ERContainerTab >> generateInvoice: aAttendee [
-	controller conference groups detect: [ :aGroup | 
-		aGroup listAttends detect: [ :aAtt | 
-			aAtt userAccount = aAttendee userAccount ] 
-		ifFound: [ :aAtt | self generateInvoiceGroup: aGroup.
-			true ]
-		ifNone: [ false ]
-	] ifNone: [ self generateInvoiceAttendee: aAttendee ].
+	| groupAttendee |
+	groupAttendee := controller getGroupOfAttendee: aAttendee. 
+	groupAttendee ifNil: [ self generateInvoiceAttendee: aAttendee ] 
+	ifNotNil: [ self generateInvoiceGroup: groupAttendee ].
 ]
 
 { #category : #'as yet unclassified' }

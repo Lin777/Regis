@@ -122,6 +122,18 @@ ERController >> feePerTypeCurrencyOf: anAttendee [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> getGroupOfAttendee: aAttendee [
+	| groupOfAttendee |
+	self conference groups detect: [ :aGroup | 
+		aGroup listAttends detect: [ :aAtt | 
+			aAtt userAccount = aAttendee userAccount ] 
+		ifFound: [ :aAtt | groupOfAttendee := aGroup. true ]
+		ifNone: [ false ]
+	] ifNone: [ ].
+	^ groupOfAttendee 
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> groupManagerAmountOfPay: aGroupManager [
 	| fee amount |
 	fee := self feePerTypeCurrencyOf: aGroupManager.

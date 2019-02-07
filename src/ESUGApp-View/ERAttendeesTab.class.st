@@ -59,7 +59,7 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 
 { #category : #'as yet unclassified' }
 ERAttendeesTab >> exportAllInvoices [
-	| nameFile zip subDir zipFile |
+	| nameFile zip subDir zipFile groupAttendee |
 	zip := ZipArchive new.
 	nameFile := 'Invoices'.
 	subDir := nameFile asFileReference.
@@ -68,8 +68,11 @@ ERAttendeesTab >> exportAllInvoices [
 	zipFile := nameFile asFileReference, 'zip'.
 	self cleanZip: zip with: zipFile subDir: subDir. 
 	ERPDFInvoice demoPath: nameFile, '/'.
-	self attends do: [ :attend | 
-		zip addFile: (ERPDFInvoice templateRegistrationInvoice: attend) path pathString.
+	self attends select: [ :attend | attend hasPaid ] 
+	thenDo: [ :attend | 
+		groupAttendee := controller getGroupOfAttendee: attend.
+		zip addFile: (groupAttendee ifNil: [ (ERPDFInvoice templateRegistrationInvoice: attend) path pathString ] 
+		ifNotNil: [ (ERPDFInvoice templateRegistrationInvoice: groupAttendee groupManager) path pathString ])	
 	].
 	zip writeToFileNamed: zipFile fullName.
 	encodeZipFile := self encodeFiletoBase64: zipFile.
@@ -192,10 +195,6 @@ ERAttendeesTab >> renderButtons: html [
 		at: 'nameFile' put: 'Invoices.zip';
 		at: 'nameButton' put: 'Download Invoices';
 		yourself).
-	"html mdlAnchorButton 
-		url:'data:text/pdf;base64,', self encodeBase64; 
-		attributeAt: 'download' put: 'RegistrationInvoice.pdf';
-		with: 'download me'."
 ]
 
 { #category : #rendering }
