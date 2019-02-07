@@ -7,7 +7,7 @@ Class {
 		'conferenceInformation',
 		'affiliationInformation',
 		'additionalInformation',
-		'paymentInformation'
+		'paymentInformation',
 		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model-Magritte'
