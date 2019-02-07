@@ -7,7 +7,7 @@ Class {
 		'content',
 		'attendee'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #accessing }
@@ -27,7 +27,6 @@ ERLoggedPage >> initialize [
 	attendee := pageController attendeeFromUser.
 	content := ERContent new.
 	(ERHomeView
-				on: attendee
 				withContent: content
 				withController: pageController).
 	self initializeNabvar.
@@ -45,12 +44,11 @@ ERLoggedPage >> itemList [
 	^ Dictionary new
 		at: 'home'
 			put: [ ERHomeView
-				on: attendee
 				withContent: content
 				withController: pageController ];
 		at: 'admin'
 			put: [ ERAdminView
-				on: attendee
+				on: self session user
 				withContent: content
 				withController: pageController ];
 		at: 'logout'
@@ -58,7 +56,7 @@ ERLoggedPage >> itemList [
 			self requestContext redirectTo: 'http://localhost:8000/ESUG' ];
 		at: 'groupRegistration'
 			put: [ ERGroupRegistrationView
-				attendee: attendee
+				attendee: self session user
 				content: content ];
 		at: 'myRegistration'
 			put: [ ERMyRegistrationView

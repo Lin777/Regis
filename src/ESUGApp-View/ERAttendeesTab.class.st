@@ -17,15 +17,15 @@ ERAttendeesTab >> attends [
 ERAttendeesTab >> blockTableToExecute [
 	^ [ :user :html | 
 	OrderedCollection new
-		add: '10';
-		add: ([ :att | att firstName ] value: user);
-		add: ([ :att | att email ] value: user);
-		add: ([ :att | att country ] value: user);
-		add: ([ :att | att orgName ] value: user);
+		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
+		add: ([ :att | att userAccount firstName ] value: user);
+		add: ([ :att | att userAccount email ] value: user);
+		add: ([ :att | att contactInformation country ] value: user);
+		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
-			, ' ', att paymentCurrency, '(s)'  ] value: user);
+			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
-				value: att hasPaid;
+				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
 				onChange: (html jQuery ajax serializeForm).
@@ -43,7 +43,14 @@ ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> deleteAttendeeFromGroup: user [
+ERAttendeesTab >> children [
+	^ OrderedCollection new
+		add: table;
+		yourself
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> deleteAttendee: user [
 ]
 
 { #category : #rendering }
@@ -77,6 +84,7 @@ ERAttendeesTab >> exportAllInvoices [
 	zip writeToFileNamed: zipFile fullName.
 	encodeZipFile := self encodeFiletoBase64: zipFile.
 	self cleanZip: zip with: zipFile subDir: subDir.
+
 	self updateStateTab: self tabName.
 ]
 
@@ -106,12 +114,12 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'delete'
-				with: [ :user | self deleteAttendeeFromGroup: user ]
+				with: [ :user | self deleteAttendee: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user ]
+				with: [ :user | self modifyUserFormGroup: user userAccount]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array with: 'replay' 
@@ -131,51 +139,12 @@ ERAttendeesTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> registerAdminAsAttendee [
-	(ERRegistrationController attendee: attendee) validateRegister .
-	controller registerAsAttendee.
-	content state: content lastState
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> registerAttendee [
-	callback := [ self registerAttendeeToConference ].
-	super registerAttendee.
-	self updateStateTab: self tabName. 
-]
-
-{ #category : #initialization }
-ERAttendeesTab >> registerAttendeeToConference [
-	(ERRegistrationController attendee: newAttendee) validateRegister.
-	controller addAttendee: newAttendee.
-	content state: content lastState
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> registerMyselfAsAttendee [
-	callback := [ self registerAdminAsAttendee ].
-			self initializeFormWithoutBasicInformationFor: attendee.
-	self updateStateTab: self tabName.
-]
-
-{ #category : #rendering }
 ERAttendeesTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'REGISTER ATTENDEE'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html.
-	self alreadyRegisteredAsAttendee
-		ifFalse: [ self
-				createColoredAnchorButton: 'REGISTER MYSELF AS ATTENDEE'
-				with: [ self registerMyselfAsAttendee ]
-				id: 'registerMyseflAsAttendee'
-				on: html ].
-	self
-		createColoredAnchorButton: 'EXPORT'
-		with: [ self exportAttends ]
-		id: 'exportAttends'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportAttends';
+		callback: [ self exportAttends ];
+		with: 'EXPORT'.
 	self renderDownloadButton: html with:  (Dictionary new 
 		at: 'id' put: 'downloadDataAttendees';
 		at: 'disabled' put: encodeCSVFile isNil;
@@ -209,7 +178,6 @@ ERAttendeesTab >> renderContainer: html [
 
 { #category : #rendering }
 ERAttendeesTab >> renderTableOfAttends: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

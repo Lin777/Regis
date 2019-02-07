@@ -6,35 +6,11 @@ Class {
 		'dialog',
 		'messageComponent',
 		'callback',
-		'tabs'
+		'tabs',
+		'saveTabs'
 	],
 	#category : #'ESUGApp-Component'
 }
-
-{ #category : #accessing }
-ERContainerTabs class >> formAdminToGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	form attendee: anAttendee.
-	form initializeTabsForConvertAdminToGroupManager: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	^ form
-]
-
-{ #category : #accessing }
-ERContainerTabs class >> formGMRegisterOn: anAttendee withCallback: aBlock content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	
-	form attendee: anAttendee.
-	form initializeTabsForGroupManager: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	^ form
-]
 
 { #category : #accessing }
 ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
@@ -61,19 +37,6 @@ ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock
 	^ form
 ]
 
-{ #category : #accessing }
-ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock withDialog: aDialog content: aContent [
-	| form |
-	form := self new.
-	form content: aContent.
-	form callback: aBlock.
-	form attendee: anAttendee .
-	form initializeTabsWithoutBasicInformationFor: anAttendee.
-	form tabView: (ERTabs tabs: form tabs).
-	form dialog: aDialog.
-	^ form
-]
-
 { #category : #'as yet unclassified' }
 ERContainerTabs class >> on: anAttendee withContent: aContent [
 	| form |
@@ -91,10 +54,11 @@ ERContainerTabs >> callback: anObject [
 
 { #category : #rendering }
 ERContainerTabs >> cancel [
-	attendee version > 0
-		ifTrue: [ attendee abortChanges ].
+"	attendee version > 0
+		ifTrue: [ attendee abortChanges ]."
 
-	content state: content lastState
+	content state: content lastState.
+	"self updateStateTab: self tabName."
 ]
 
 { #category : #accessing }
@@ -111,9 +75,7 @@ ERContainerTabs >> dialog: aDialog [
 ERContainerTabs >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'registerAlert'.
-	dialog := ERDialog new
-				title: 'Cancel';
-				message: 'Are you sure you want to cancel?'
+	dialog := ERDialog cancelDialog
 ]
 
 { #category : #initialization }
@@ -124,112 +86,161 @@ ERContainerTabs >> initializeDialog [
 ]
 
 { #category : #accessing }
-ERContainerTabs >> initializeTabsForConvertAdminToGroupManager: anAttendee [
-	tabs := OrderedCollection new
-				
-		add:
-			(ERTabForAForm
-				form: (ERAffiliationInformationForm on: anAttendee)
-				withContainer: self) activate;
-		add:
-			(ERDoneButton
-				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self);
-		yourself
-]
-
-{ #category : #accessing }
-ERContainerTabs >> initializeTabsForGroupManager: anAttendee [
-	tabs := OrderedCollection new
-		add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee)
-			withContainer: self)
-				activate;
-		add: (ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee)
-			withContainer: self);
-		add:
-			(ERDoneButton
-				on: anAttendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self);
-		yourself
-]
-
-{ #category : #accessing }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	tabs := OrderedCollection new
-	add:
-			(ERTabForAForm form: (ERBasicInformationForm on: anAttendee) withContainer: self)
-				activate;
-		add:
-			(ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
-		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
+	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
+	add: (self createContactInfoTab: anAttendee withContent: self );
+	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
+	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createAdditionalInfoTab: anAttendee withContent: self);
+	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:
 			(ERDoneButton
 				on: anAttendee
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self);
-		yourself
+		yourself.
+	saveTabs := [ self saveAttendeeTabs ]
 ]
 
 { #category : #accessing }
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	tabs := OrderedCollection new
-		
-		add: (ERTabForAForm form: (ERContactInformationForm on: anAttendee) withContainer: self) activate;
-		add: (ERTabForAForm form: (ERRegisterConferenceForm on: anAttendee) withContainer: self);
-		add:
-			(ERTabForAForm form: (ERAffiliationInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERAdditionalInformationForm on: anAttendee) withContainer: self);
-		add: (ERTabForAForm form: (ERPaymentForm on: anAttendee) withContainer: self);
+	add: (self createContactInfoTab: anAttendee withContent: self ) activate;
+	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
+	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createAdditionalInfoTab: anAttendee withContent: self);
+	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:
 			(ERDoneButton
 				on: anAttendee
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self);
-		yourself
+		yourself.
+	saveTabs := [ self saveAttendeeToGroupManagerTabs ]
+]
+
+{ #category : #rendering }
+ERContainerTabs >> renderBackButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'previousButton';
+		class: 'btnPrevious';
+		with: 'Previous'
+]
+
+{ #category : #rendering }
+ERContainerTabs >> renderButtons: html [
+	self renderCancelButton: html.
+	self renderBackButtonOn: html.
+	self renderNextButtonOn: html
 ]
 
 { #category : #rendering }
 ERContainerTabs >> renderCancelButton: html [
 	self initializeDialog .
-	self
-		createColoredAnchorButton: 'Cancel'
-		id: 'cancel-register-attendee'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancel-register-attendee'; 
+		colored;
+		with: 'Cancel'.
 ]
 
 { #category : #rendering }
 ERContainerTabs >> renderContentPage: html [
+	html form
+		method: 'post';
+		id: 'formRegisterInTabs';
+		with: [
 	html mdlTabs rippleEffect
 		with: [ html div
 				style: 'overflow-x:auto;';
-				with: [ html mdlGrid noSpacing
-						with: [ 
-							html render: messageComponent .
-							html form
-								method: 'post';
-								id: 'formRegisterInTabs';
-								with: [ html render: tabView.
-									self renderCancelButton: html ] ] ] ].
+				with: [ html render: messageComponent .
+							 html render: tabView.
+									self renderButtons: html] ]] .
 	html render: dialog
 ]
 
 { #category : #accessing }
 ERContainerTabs >> renderDoneButtonOn: html [
-	self
-		createRaisedRippleEffectPrimaryButton: 'Save Information'
-		with: [ 
-			callback
+	html mdlButton
+		beSubmit;
+		raised;
+		primaryColor;
+		rippleEffect;
+		id: 'registerButton';
+		callback: [ 
+			saveTabs
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'registerButton'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
+		with: 'Save Information'
+]
+
+{ #category : #rendering }
+ERContainerTabs >> renderNextButtonOn: html [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: 'nextButton';
+		class: 'btnNext';
+		with: 'Next'
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAdditionalInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee additionalInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAffiliationInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee affiliationInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAttendeeTabs [
+	self saveUserAccountAt: 1.
+	self saveContactInfoAt: 2.
+	self saveRegConferenceInfoAt: 3.
+	self saveAffiliationInfoAt: 4.
+	self saveAdditionalInfoAt: 5.
+	self savePaymentInfoAt: 6.
+	callback cull: attendee
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveAttendeeToGroupManagerTabs [
+	self saveContactInfoAt: 1.
+	self saveRegConferenceInfoAt: 2.
+	self saveAffiliationInfoAt: 3.
+	self saveAdditionalInfoAt: 4.
+	self savePaymentInfoAt: 5.
+	callback cull: attendee
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveContactInfoAt: index [
+	(tabs at: index) contentTab save.
+	attendee contactInformation: (tabs at: index) contentTab model
+]
+
+{ #category : #accessing }
+ERContainerTabs >> savePaymentInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee paymentInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveRegConferenceInfoAt: index [
+	(tabs at: index)contentTab save.
+	attendee conferenceInformation: (tabs at: index)contentTab model 
+]
+
+{ #category : #accessing }
+ERContainerTabs >> saveUserAccountAt: index [
+	(tabs at: index) contentTab save.
+	attendee userAccount: (tabs at: index) contentTab model
 ]
 
 { #category : #accessing }

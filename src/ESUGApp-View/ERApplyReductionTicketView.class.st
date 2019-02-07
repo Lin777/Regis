@@ -2,6 +2,7 @@ Class {
 	#name : #ERApplyReductionTicketView,
 	#superclass : #ERTittledView,
 	#instVars : [
+		'ticketSelected',
 		'listOfTickets',
 		'updateTicketAttendee',
 		'cancel',
@@ -34,22 +35,22 @@ ERApplyReductionTicketView >> listOfTickets: anObject [
 
 { #category : #accessing }
 ERApplyReductionTicketView >> renderAcceptButtonOn: html [	
-	self
-		createColoredButton: 'Accept'
-		with: [ updateTicketAttendee
+	html mdlButton
+		colored;
+		id: 'accept-change-affiliation' ;
+		callback: [ [ updateTicketAttendee cull: ticketSelected ]
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'accept-change-affiliation'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERApplyReductionTicketView >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		with: cancel
-		id: 'cancel-change-affiliation'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'cancel-change-affiliation';
+		callback: cancel;
+		with: 'Cancel'
 ]
 
 { #category : #accessing }
@@ -65,13 +66,21 @@ ERApplyReductionTicketView >> renderPageOn: html [
 
 { #category : #accessing }
 ERApplyReductionTicketView >> renderSelectorOfTickets: html [
-	self
-		createSelectField: 'Reduction Ticket Code: '
-		for: #coupon:
-		with: #coupon
-		list: listOfTickets 
-		to: attendee
-		on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Reduction Ticket Code: '.
+			html select
+				class: 'mdl-textfield__input';
+				id: 'selectTickets';
+				list: listOfTickets;
+				selected: attendee paymentInformation coupon;
+				callback: [ :value | self ticketSelected: value asString ] ].
+]
+
+{ #category : #accessing }
+ERApplyReductionTicketView >> ticketSelected: aString [
+	ticketSelected := aString 
+	
 ]
 
 { #category : #accessing }

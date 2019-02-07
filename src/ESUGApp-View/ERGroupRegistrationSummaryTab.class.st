@@ -1,37 +1,17 @@
 Class {
 	#name : #ERGroupRegistrationSummaryTab,
 	#superclass : #ERGroupRegistrationTab,
-	#instVars : [
-		'formMofidyAffiliation'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #'as yet unclassified' }
-ERGroupRegistrationSummaryTab class >> on: anAttendee withContent: aContent [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form initializeController.
-	form initializeFormRegister.
-	form initializeModifyAffiliationForm.
-	^ form
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> initialize [
-	super initialize
-]
-
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERModifyAffiliationForm
-		on: attendee
-		withContent: content)
-		cancelCallback: [ self cancel ];
-		updateCallback: [ self updateAffiliation ];
-		yourself
+	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -49,7 +29,6 @@ ERGroupRegistrationSummaryTab >> initializePaymentForm [
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> modifyAffiliation [
 	self initializeModifyAffiliationForm .
-	content state: formMofidyAffiliation
 ]
 
 { #category : #rendering }
@@ -65,9 +44,9 @@ ERGroupRegistrationSummaryTab >> payForGroup [
 	|group|
 	group := self group.
 	controller updateGroup: group.
-	group paymentTypeIsBankTransfer
+	group paymentInformation  paymentTypeIsBankTransfer
 		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	group paymentTypeIsCreditCard
+	group paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self redirectionPayPAL ]
 ]
 
@@ -142,42 +121,47 @@ ERGroupRegistrationSummaryTab >> renderGenerateInvoiceButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Modify Affiliation'
-		with: [ self modifyAffiliation ]
-		id: 'modifyAffiliation'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'modifyAffiliation';
+		callback: [ self modifyAffiliation ];
+		with: 'Modify Affiliation'
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderOrganizationName: html [
-	self createTextStrong: 'Organization Name: ' with: #orgName on: html
+	html
+		paragraph: [ html strong: 'Organization Name: '.
+			html text: (self groupManager affiliationInformation organizationName) ]."
+	self createTextStrong: 'Organization Name: ' with: #orgName on: html"
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Pay'
-		with: [ self pay ]
-		id: 'pay'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'pay';
+		callback: [ self pay ];
+		with: 'Pay'
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
-	self
-		createTextStrong: 'Payment Status: '
-		withText: self paymentStatus
-		on: html
+	html
+		paragraph: [ html strong: 'Payment Status: '.
+			html text: self paymentStatus ]
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderRegisterAttendeeButtonOn: html [
-	self
-		createRaisedRippleEffectAnchorButton: 'Register Attendee'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerAttendee';
+		callback: [ self registerAttendee ];
+		with: 'Register Attendee'
 ]
 
 { #category : #accessing }
@@ -196,7 +180,8 @@ ERGroupRegistrationSummaryTab >> title [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> updateAffiliation [
-	attendee save.
-	self returnToThePreviousState
+ERGroupRegistrationSummaryTab >> updateAffiliation: aff [
+	controller groupManager affiliationInformation: aff.
+	controller group save.
+	self cancel.
 ]

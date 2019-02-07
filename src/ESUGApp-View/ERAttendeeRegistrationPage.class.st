@@ -2,72 +2,114 @@ Class {
 	#name : #ERAttendeeRegistrationPage,
 	#superclass : #ERRegisterPage,
 	#instVars : [
-		'currentTab'
+		'contactInfoTab',
+		'regConfInfo',
+		'addInfo',
+		'paymentInfoTab'
 	],
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #accessing }
-ERAttendeeRegistrationPage >> currentTab: anObject [
-	currentTab := anObject
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> addAdditionalInfoTab [
+	addInfo := (self createAdditionalInfoTab: pageController attendee
+						withContent: self).
+	self
+		addTab: addInfo.
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> addContactInfoTab [
+	contactInfoTab := (self createContactInfoTab: pageController attendee 
+								withContent: self ).
+	self
+		addTab: contactInfoTab.
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> addPaymentInfoTab [
+	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
+								 withContent: self ).
+	self
+		addTab: paymentInfoTab.
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
+	regConfInfo := (self createRegConferenceInfoTab: pageController attendee
+							 withContent: self ).
+	self
+		addTab: regConfInfo .
 ]
 
 { #category : #initialization }
 ERAttendeeRegistrationPage >> initialize [
-	actionRegister := [ self register ].
 	super initialize.
-	currentTab := 1.
 	title := 'Registration'
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> initializeTabForms [
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERBasicInformationForm on: self controller attendee)
-				withContainer: self).
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERContactInformationForm on: self controller attendee)
-				withContainer: self).
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERRegisterConferenceForm on: self controller attendee)
-				withContainer: self).
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERAffiliationInformationForm on: self controller attendee)
-				withContainer: self).
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERAdditionalInformationForm on: self controller attendee) 
-				withContainer: self).
-	self
-		addTab:
-			(ERTabForAForm
-				form: (ERPaymentForm on: self controller attendee) 
-				withContainer: self).
-	self
-		addTab:
-			(ERDoneButton
-				on: self controller attendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self).
-	(self tabs at: currentTab) activate
+	self addBasicInfoTab.
+	self addContactInfoTab.
+	self addRegisterConferenceInfoTab.
+	self addAffiliationInfoTab.
+	self addAdditionalInfoTab.
+	self addPaymentInfoTab.
+	self addDoneTab.
+	
+	currentTab := basicInfoTab.
+	currentTab updateStateTab: currentTab tabName.
 ]
 
 { #category : #initialize }
-ERAttendeeRegistrationPage >> validateAndRegister [
+ERAttendeeRegistrationPage >> redirectFinishRegister [
 	| finishRegisterView |
-	pageController validateRegister.
 	finishRegisterView := ERFinishRegisterAttendeePage
 		on: pageController attendee
 		withContent: content
 		withController: pageController.
 	content state: finishRegisterView
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveAddInfo [
+	currentTab := addInfo.
+	pageController attendee additionalInformation: 
+	(addInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveContactInfo [
+	currentTab := contactInfoTab.
+	pageController attendee contactInformation: 
+	(contactInfoTab contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> savePaymentInfo [
+	currentTab := paymentInfoTab.
+	pageController attendee paymentInformation: 
+	(paymentInfoTab contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveRegConfInfo [
+	currentTab := regConfInfo.
+	pageController attendee conferenceInformation:  
+	(regConfInfo contentTab save) model
+	
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> saveTabs [
+	self saveBasicInfo.
+	self saveContactInfo.
+	self saveRegConfInfo.
+	self saveAffilInfo.
+	self saveAddInfo.
+	self savePaymentInfo.
 ]

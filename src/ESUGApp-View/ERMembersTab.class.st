@@ -5,21 +5,28 @@ Class {
 }
 
 { #category : #accessing }
+ERMembersTab >> attendeeFrom: aGroupManager [
+	^ ERAttendee new 
+		userAccount: aGroupManager userAccount; 
+		affiliationInformation: aGroupManager affiliationInformation 
+]
+
+{ #category : #accessing }
 ERMembersTab >> attends [
 	^ (ERGroupManagerController new
-		groupOfAttendee: attendee ) listAttends
+		groupOfUser: attendee ) listAttends
 ]
 
 { #category : #'as yet unclassified' }
 ERMembersTab >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
-		add: ([ :att | att firstName ] value: user);
+		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
-			, ' ', att paymentCurrency, '(s)'  ] value: user);
+			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: true;
-				value: att hasPaid;
+				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
 				onChange: (html jQuery ajax serializeForm).
@@ -57,10 +64,8 @@ ERMembersTab >> initialize [
 
 { #category : #initialization }
 ERMembersTab >> initializeModifyUserForm [
-	mofidyUserForm := ERModifyUserView
-		on: attendee
-		withContent: content.
-	
+	mofidyUserForm := (ERTittledFormView on: attendee userAccount 
+								withContent: content) title: 'User'.
 	content state: mofidyUserForm
 ]
 
@@ -80,7 +85,7 @@ ERMembersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user ]
+				with: [ :user | self modifyUserFormGroup: user userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
@@ -101,22 +106,10 @@ ERMembersTab >> listDataToRenderButton [
 ]
 
 { #category : #accessing }
-ERMembersTab >> registerGroupManagerAsAttendee [
-	"Add function to add attendee role to group manager"
-	(ERRegistrationController attendee: attendee) validateRegister.
-	controller registerAsAttendee.
-	content state: content lastState
-]
-
-{ #category : #accessing }
 ERMembersTab >> registerMyselfAsAttendee [
-	callback := [ self registerGroupManagerAsAttendee ].
-
-	"callback := [ :html | 
-	self
-		renderDoneButtonCallback: [ self validateAndRegisterAsAttendee ]
-		on: html ]."
-	self initializeFormWithoutBasicInformationFor: attendee
+	callback := [ :att | controller addGroupManagerAsAttendee: att.
+								content state: content lastState ].
+	self initializeFormWithoutBasicInformationFor: (self attendeeFrom: self groupManager)
 ]
 
 { #category : #accessing }
@@ -139,20 +132,20 @@ ERMembersTab >> renderContainer: html [
 
 { #category : #accessing }
 ERMembersTab >> renderRegisterAttendee: html [
-	self
-		createColoredAnchorButton: 'Register Attendee'
-		with: [ self registerAttendee ]
-		id: 'registerAttendee'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'registerAttendee';
+		callback:  [ self registerAttendee ];
+		with: 'Register Attendee'
 ]
 
 { #category : #accessing }
 ERMembersTab >> renderRegisterMyselfAsAttendee: html [
-	self
-		createColoredAnchorButton: 'Register Myself as Attendee'
-		with: [ self registerMyselfAsAttendee ]
-		id: 'registerMyselfAsAttendee'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'registerMyselfAsAttendee';
+		callback: [ self registerMyselfAsAttendee ];
+		with: 'Register Myself as Attendee'
 ]
 
 { #category : #rendering }
@@ -181,12 +174,4 @@ ERMembersTab >> tabName [
 { #category : #rendering }
 ERMembersTab >> title [
 	^ 'Attends'
-]
-
-{ #category : #accessing }
-ERMembersTab >> validateAndRegisterAsAttendee [
-	(ERRegistrationController attendee: attendee)
-		validateRegister.
-	controller registerAsAttendee.
-	content state: content lastState
 ]

@@ -32,6 +32,13 @@ ERChangePasswordForm >> changePassword [
 
 ]
 
+{ #category : #hooks }
+ERChangePasswordForm >> children [
+	^ OrderedCollection new
+		add: messageComponent;
+		yourself
+]
+
 { #category : #initialization }
 ERChangePasswordForm >> initialize [
 	super initialize.
@@ -63,23 +70,30 @@ ERChangePasswordForm >> renderCancelButtonOn: html [
 ]
 
 { #category : #rendering }
+ERChangePasswordForm >> renderConfirmNewPasswordOn: html [
+	self createPasswordField: 'Confirm password: ' id: 'confirmPassword' with: [ :mdlTxtInput | 
+		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
+		html mdlTextFieldError: ''] on: html.
+]
+
+{ #category : #rendering }
 ERChangePasswordForm >> renderContainer: html [
 	html horizontalRule .
 	self renderFormOn: html
 ]
 
 { #category : #rendering }
-ERChangePasswordForm >> renderFields: html [
+ERChangePasswordForm >> renderCurrentPasswordOn: html [
 	self createPasswordField: 'Current Password: ' id: 'currentPassword' 
 	with: [:mdlTxtInput | mdlTxtInput callback: [:value | password := value ] ] on: html.
-	self createPasswordField: 'Password: ' id: 'password' 
-	with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value |  passwordChanged := value ].
-		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
-	   on: html .
-	self createPasswordField: 'Confirm password: ' id: 'confirmPassword' with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
-		html mdlTextFieldError: ''] on: html.
+	
+]
+
+{ #category : #rendering }
+ERChangePasswordForm >> renderFields: html [
+	self renderCurrentPasswordOn: html.
+	self renderNewPasswordOn: html.
+	self renderConfirmNewPasswordOn: html.
 ]
 
 { #category : #rendering }
@@ -92,6 +106,16 @@ ERChangePasswordForm >> renderFormOn: html [
 			self renderFields: html.
 			self renderButtons: html.
 		]
+]
+
+{ #category : #rendering }
+ERChangePasswordForm >> renderNewPasswordOn: html [
+	self createPasswordField: 'Password: ' id: 'password' 
+	with: [ :mdlTxtInput | 
+		mdlTxtInput callback: [:value |  passwordChanged := value ].
+		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
+	   on: html .
+	
 ]
 
 { #category : #accessing }

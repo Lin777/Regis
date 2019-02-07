@@ -58,9 +58,9 @@ ERTable >> render: html with: aObject [
 	| listContent |
 	listContent := blockToExecute valueWithPossibleArgs: {aObject. html}.
 	listContent do: [ :content |
-		html mdlTableHeading: content.
+		html mdlTableCell nonNumerical; with: content.
 	].
-	html mdlTableHeading: [ self renderButton: html with: aObject ]
+	html mdlTableCell nonNumerical; with: [ self renderButton: html with: aObject ]
 	
 ]
 
@@ -80,7 +80,7 @@ ERTable >> renderButton: html with: aObject [
 			id: (dataButton third value: aObject);
 			callback: [ dataButton second value: aObject ];
 			icon: dataButton first ].
-	self renderDownloadButton: html with: aObject.
+	self renderDownloadButton: html with: aObject
 ]
 
 { #category : #rendering }
@@ -116,7 +116,7 @@ ERTable >> renderHeaders: html [
 	html tableHead: [ 
 		html tableRow: [ 
 			headers do: [ :each | 
-				html mdlTableHeading: each ] ] ]
+				html mdlTableHeading nonNumerical; with: each ] ] ]
 ]
 
 { #category : #rendering }

@@ -1,6 +1,6 @@
 Class {
 	#name : #ERConferenceConfigurationModel,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#instVars : [
 		'name',
 		'description',
@@ -13,29 +13,8 @@ Class {
 		'dateTo',
 		'openRegistration'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Model-Magritte'
 }
-
-{ #category : #'as yet unclassified' }
-ERConferenceConfigurationModel class >> conferenceConfiguration [
-	"|email organizer conference|
-
-email := ERConferenceEmailConfiguration new 
-senderEmailAddress: 'registration@esug.org';
-		smptServerAddress: 'localhost';
-		smptClient: 'PatSmtpToPostMarkClientAdapter';
-		welcomeText: 'Welcome to this great conference'; save.
-organizer := ERConferenceOrganizer new 
-		name: 'ESUG' ;
-		fisicalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
-		webPageUrl: 'http://www.esug.org';
-		addressString: 'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'; save.
-	conference := ERConferenceConfigurationModel new name: 'ESUG'; description: 'ESUG International Smalltalk Conference'; homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/'; earlyRegistrationDeadline: '01/01/2018';
-	dateSubmissionDeadline: '01/01/2018';emailConfiguration: email ; organizer: organizer; save.
-	"
-
-	
-]
 
 { #category : #accessing }
 ERConferenceConfigurationModel >> dateFrom [
@@ -77,6 +56,121 @@ ERConferenceConfigurationModel >> description: anObject [
 	description := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionDateFrom [
+	<magritteDescription>
+	| tmp2 |
+	tmp2 := MAStringDescription new.
+	tmp2
+		accessor: #dateFrom; 
+		priority: 40;
+		beRequired;
+		cssClass: 'half';
+		group: 'Dates:';
+		label: 'From';
+		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
+		componentClass: MDLMATextInputComponent.
+	^ tmp2 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
+	<magritteDescription>
+	| tmp2 |
+	tmp2 := MAStringDescription new.
+	tmp2
+		accessor: #dateSubmissionDeadline; 
+		priority: 60;
+		beRequired;
+		label: 'Submission Deadline';
+		withoutLabel: true;
+		cssClass: 'half';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
+		componentClass: MDLMATextInputComponent.
+	^ tmp2 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionDateTo [
+	<magritteDescription>
+	| tmp2 |
+	tmp2 := MAStringDescription new.
+	tmp2
+		accessor: #dateTo; 
+		priority: 50;
+		beRequired;
+		label: 'To';
+		cssClass: 'half';
+		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
+		componentClass: MDLMATextInputComponent .
+	^ tmp2 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionDescription [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #description; 
+		priority: 20;
+		required: false;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
+	<magritteDescription>
+	| tmp2 |
+	tmp2 := MAStringDescription new.
+	tmp2
+		accessor: #earlyRegistrationDeadline; 
+		priority: 70;
+		beRequired;
+		label: 'Early Registration Deadline';
+		withoutLabel: true;
+		cssClass: 'half';
+		addCondition: [ :value | value matchesRegex: self patternDate ] 
+		labelled: self messageInvalidDate;
+		componentClass: MDLMATextInputComponent.
+	^ tmp2 yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionHomePageUrl [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #homePageUrl; 
+		priority: 30;
+		required: false;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> descriptionName [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #name; 
+		priority: 10;
+		beRequired;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
 { #category : #accessing }
 ERConferenceConfigurationModel >> earlyRegistrationDeadline [
 	^ earlyRegistrationDeadline
@@ -113,8 +207,13 @@ ERConferenceConfigurationModel >> initialize [
 	self openRegistration: true
 ]
 
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> messageInvalidDate [
+	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
+]
+
 { #category : #accessing }
-ERConferenceConfigurationModel >> name1 [
+ERConferenceConfigurationModel >> name [
 	^ name
 ]
 
@@ -141,4 +240,9 @@ ERConferenceConfigurationModel >> organizer [
 { #category : #accessing }
 ERConferenceConfigurationModel >> organizer: anObject [
 	organizer := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceConfigurationModel >> patternDate [ 
+	^ '^([0]?[1-9]|[1][0-2])[./-]([0]?[0-9]|[12][0-9]|[3][01])[./-]([0-9]{4}|[0-9]{2})$'
 ]

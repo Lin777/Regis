@@ -6,12 +6,13 @@ Class {
 		'lastName',
 		'email',
 		'password',
+		'confirmPassword',
 		'role'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 ERUserAccount class >> admin [
 	| instance |
 	instance := self new.
@@ -26,6 +27,16 @@ ERUserAccount class >> adminRole [
 		yourself
 ]
 
+{ #category : #converting }
+ERUserAccount class >> asGroupManager [
+	|instance|
+	instance := self new.
+	instance role: (Heap new
+		add: 'groupManager';
+		yourself).
+	^ instance
+]
+
 { #category : #'as yet unclassified' }
 ERUserAccount class >> attendeeRole [
 	^ Heap new
@@ -33,14 +44,14 @@ ERUserAccount class >> attendeeRole [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : #'as yet unclassified' }
 ERUserAccount class >> findUserByEmail: aString [
 	| userAccount |
 	userAccount := ERUserAccount find: [ :each | each email = aString ].
 	^ userAccount
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 ERUserAccount class >> groupManager [
 	| instance |
 	instance := self new.
@@ -65,8 +76,69 @@ ERUserAccount class >> hashPassword: aString [
 ]
 
 { #category : #accessing }
+ERUserAccount >> confirmPassword [
+	^ confirmPassword
+]
+
+{ #category : #accessing }
+ERUserAccount >> confirmPassword: anObject [
+	confirmPassword := anObject
+]
+
+{ #category : #testing }
 ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount >> descriptionEmail [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #email; 
+		priority: 30;
+		beRequired;
+		label: 'Email (Required)';
+		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
+		labelled: 'Please enter a valid email';
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount >> descriptionFirstName [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #firstName; 
+		priority: 10;
+		beRequired;
+		label: 'First Name (Required)';
+		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
+		labelled: 'This field only accept a text';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount >> descriptionLastName [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #lastName; 
+		priority: 20;
+		beRequired;
+		label: 'Last Name (Required)';
+		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
+		labelled: 'This field only accept a text';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }
@@ -90,8 +162,8 @@ ERUserAccount >> firstName: anObject [
 ]
 
 { #category : #initialization }
-ERUserAccount >> initialize [
-	super initialize.
+ERUserAccount >> initialize [ 
+	super initialize .
 	role := Heap new
 		add: 'attendee';
 		yourself
@@ -99,35 +171,27 @@ ERUserAccount >> initialize [
 
 { #category : #testing }
 ERUserAccount >> isAdmin [
-	self role
-		do: [ :each | 
-			each = 'admin'
-				ifTrue: [ ^ true ] ].
-	^ false
+		^ self role anySatisfy: [ :each | each = 'admin']
+
 ]
 
 { #category : #testing }
 ERUserAccount >> isAttendee [
-	self role do: [ :each | each = 'attendee' ifTrue: [ ^ true ] ].
-	^ false
+	^ self role anySatisfy: [ :each | each = 'attendee']
+	
 ]
 
 { #category : #testing }
 ERUserAccount >> isGroupManager [
-	self role
-		do: [ :each | 
-			each = 'groupManager'
-				ifTrue: [ ^ true ] ].
-	^ false
+	^ self role
+		anySatisfy: [ :each | each = 'groupManager']
+	
 ]
 
 { #category : #testing }
 ERUserAccount >> isStudent [
-	self role
-		do: [ :each | 
-			each = 'student'
-				ifTrue: [ ^ true ] ].
-	^ false
+	^ self role
+		anySatisfy: [ :each | each = 'studentVolunter']
 ]
 
 { #category : #accessing }
@@ -160,7 +224,7 @@ ERUserAccount >> role: anObject [
 	role := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
 ]

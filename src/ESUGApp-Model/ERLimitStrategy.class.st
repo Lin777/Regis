@@ -1,6 +1,6 @@
 Class {
 	#name : #ERLimitStrategy,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#category : #'ESUGApp-Model'
 }
 

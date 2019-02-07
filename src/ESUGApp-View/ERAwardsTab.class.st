@@ -16,12 +16,18 @@ ERAwardsTab >> awards [
 ERAwardsTab >> blockTableToExecute [
 	^ [ :award | 
 	OrderedCollection new
-		add: ([ :att | att name1 ] value: award);
-		add: ([ :att | att submittedBy ] value: award);
+		add: ([ :att | att nameAward ] value: award);
+		add: ([ :att | att submitter userAccount email ] value: award);
 		yourself ]
 ]
 
 { #category : #rendering }
+ERAwardsTab >> children [
+	^ OrderedCollection new
+		add: table;
+		yourself
+]
+
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller exportAwards: 'awards'.
@@ -32,7 +38,7 @@ ERAwardsTab >> exportAwards [
 
 { #category : #rendering }
 ERAwardsTab >> headers [
-	^ #('Name'	'Submitted By')
+	^ #('Name'	'Submitted By' '')
 ]
 
 { #category : #rendering }
@@ -42,11 +48,11 @@ ERAwardsTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERAwardsTab >> renderButton: html [
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportAwards ]
-		id: 'exportAwards'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportAwards';
+		callback: [ self exportAwards ];
+		with: 'Export'
 ]
 
 { #category : #rendering }
@@ -72,7 +78,6 @@ ERAwardsTab >> renderDownloadButton: html [
 
 { #category : #rendering }
 ERAwardsTab >> renderTableOfAwards: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

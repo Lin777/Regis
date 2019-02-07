@@ -33,10 +33,7 @@ ERBankTransferPaymentInfoView >> headers [
 
 { #category : #rendering }
 ERBankTransferPaymentInfoView >> initializeDialog [
-	dialog := ERDialog new
-		title: 'Cancel Modify Affiliation';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog := ERDialog cancelDialog
 		idOpen: 'back-state';
 		okCallback: [ self returnToThePreviousState ]
 ]
@@ -76,22 +73,15 @@ ERBankTransferPaymentInfoView >> renderHeaders: html [
 { #category : #rendering }
 ERBankTransferPaymentInfoView >> renderInfoBank: html [
 	html break.
-	self
-		createTextStrongWithoutParagraph: 'Bank name:  '
-		withText: bankInformation name1
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'International Bank Account Numer (IBAN):  '
-		withText: bankAccountInformation iban
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'BIC(Bank Identifier Code):  '
-		withText: bankInformation bic
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'Account owner:  '
-		withText: bankAccountInformation owner
-		on: html.
+	(OrderedCollection new
+			add: ('Bank name:  '-> bankInformation name); 
+			add: ('International Bank Account Numer (IBAN):  '-> bankAccountInformation iban); 
+			add: ('BIC(Bank Identifier Code):  '->bankInformation bic); 
+			add: ('Account owner:  '->bankAccountInformation owner);
+			yourself) do: [ :each | 
+				html strong: each key.
+				html text: each value.
+				html break ].
 	html break
 ]
 
@@ -118,7 +108,11 @@ ERBankTransferPaymentInfoView >> renderPageOn: html [
 	self renderInfoBank: html.
 	html horizontalRule.
 	self initializeDialog.
-	self createColoredAnchorButton: 'Back' with: [self returnToThePreviousState ]id: 'back-state' on: html
+	html mdlAnchorButton
+		colored;
+		id: 'back-state';
+		callback: [self returnToThePreviousState ];
+		with: 'Back'.
 ]
 
 { #category : #rendering }

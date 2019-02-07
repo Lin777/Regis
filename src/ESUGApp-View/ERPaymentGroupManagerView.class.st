@@ -27,22 +27,22 @@ ERPaymentGroupManagerView >> content: anObject [
 
 { #category : #rendering }
 ERPaymentGroupManagerView >> renderAcceptButtonOn: html [	
-	self
-		createColoredButton: 'Accept'
-		with: updatePayment "[ updatePayment
+	html mdlButton
+		colored;
+		id: 'accept-change-affiliation' ;
+		callback: updatePayment "[ updatePayment
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]"
-		id: 'accept-change-affiliation'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ]";
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERPaymentGroupManagerView >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		with: cancel
-		id: 'cancel-change-affiliation'
-		on: html
+	html mdlAnchorButton
+		colored;
+		id: 'cancel-change-affiliation';
+		callback: cancel;
+		with: 'Cancel'
 ]
 
 { #category : #rendering }
@@ -59,24 +59,26 @@ ERPaymentGroupManagerView >> renderPageOn: html [
 
 { #category : #rendering }
 ERPaymentGroupManagerView >> renderSelectorOfCurrency: html [
-	self
-		createSelectField: 'Currency type: '
-		for: #paymentCurrency:
-		with: #paymentCurrency
-		list: ERController currencyAvailable
-		to: attendee
-		on: html			
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Currency type: '.
+			html select
+				class: 'mdl-textfield__input';
+				list: ERController currencyAvailable;
+				selected: attendee paymentInformation paymentCurrency;
+				callback: [ :value | attendee paymentInformation paymentCurrency: value asString ] ].
 ]
 
 { #category : #rendering }
 ERPaymentGroupManagerView >> renderSelectorOfPayment: html [
-	self
-		createSelectField: 'Payment type: '
-		for: #paymentType:
-		with: #paymentType
-		list: ERAttendee paymentTypes  
-		to: attendee
-		on: html			
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel with: 'Payment type: '.
+			html select
+				class: 'mdl-textfield__input';
+				list: ERAttendee paymentTypes;
+				selected: attendee paymentInformation paymentType;
+				callback: [ :value | attendee paymentInformation paymentType: value asString ] ].
 ]
 
 { #category : #accessing }

@@ -29,7 +29,10 @@ BaselineOfESUGApp >> baseline: spec [
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Controller' 'ESUGApp-Component') ];
 				package: 'ESUGApp-Test'
 					with: [ spec
-						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ] ]
+						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ];
+				package: 'ESUGApp-MDLMagritte' with: [ spec
+						requires:
+							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]]
 ]
 
 { #category : #baselines }
@@ -37,7 +40,6 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'Seaside3'
 		with: [ spec
-"				loads: #('Core' 'JQuery' 'Zinc');"
 				repository: 'github://SeasideSt/Seaside:master/repository' ].
 	"spec
 		baseline: 'Parasol'
@@ -47,6 +49,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://DuneSt/MaterialDesignLite:master/src' ].
+	
 	spec
 		project: 'SandstoneDb'
 		with: [ spec
@@ -58,5 +61,5 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 		with: [ spec
 				className: 'ConfigurationOfNeoCSV';
 				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ]
+				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 ]

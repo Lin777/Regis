@@ -19,10 +19,6 @@ ERReductionTicketForm class >> on: aTicket withContent: aContent [
 	^ form
 ]
 
-{ #category : #rendering }
-ERReductionTicketForm >> addTicket [
-]
-
 { #category : #accessing }
 ERReductionTicketForm >> callback: anObject [
 	callback := anObject
@@ -31,9 +27,11 @@ ERReductionTicketForm >> callback: anObject [
 { #category : #rendering }
 ERReductionTicketForm >> changeDiscountStrategy: value [
 	(ERDiscountStrategy isPercentageStrategy: value)
-		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: [  ticket discountStrategy: ERPercentageDiscount new ]].
+		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: 
+			[  ticket discountStrategy: ERPercentageDiscount new ]].
 	(ERDiscountStrategy isFixStrategy: value)
-		ifTrue: [ ticket strategyIsFixDiscount ifFalse: [ticket discountStrategy: ERFixDiscount new ]]
+		ifTrue: [ ticket strategyIsFixDiscount ifFalse: 
+			[ticket discountStrategy: ERFixDiscount new ]]
 ]
 
 { #category : #rendering }
@@ -44,6 +42,14 @@ ERReductionTicketForm >> changeLimitStrategy: value [
 	(ERLimitStrategy isLimitStrategy: value)
 		ifTrue: [ ticket limitStrategyIsLimited
 				ifFalse: [ ticket limitStrategy: ERLimitedReductionTicketUse new ] ]
+]
+
+{ #category : #rendering }
+ERReductionTicketForm >> children [
+	^ OrderedCollection new
+		add: dialog;
+		add: messageComponent;
+		yourself
 ]
 
 { #category : #rendering }
@@ -60,10 +66,7 @@ ERReductionTicketForm >> discountStrategy [
 ERReductionTicketForm >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'.
-	dialog := ERDialog new
-		title: 'Cancel';
-		message: 'Are you sure you want to cancel?';
-		idClose: 'buttonClose';
+	dialog := ERDialog cancelDialog 
 		idOpen: 'cancelAddTicket';
 		okCallback: [ self returnToThePreviousState ]
 ]
@@ -75,40 +78,33 @@ ERReductionTicketForm >> limitStrategy [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderAcceptButton: html [
-	self
-		createColoredButton: 'Accept'
-		with: [ callback
+	html mdlButton
+		colored;
+		id: 'acceptAddTicket' ;
+		callback: [ callback
 				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]
-		id: 'acceptAddTicket'
-		on: html
+				do: [ :exception | messageComponent errorMessage: exception messageText ]];
+		with: 'Accept'
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderAcceptCancelButtonsOn: html [
-	self renderAcceptButton: html.
-	self renderCancelButtonOn: html
+	self renderCancelButtonOn: html.
+	self renderAcceptButton: html
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderCancelButtonOn: html [
-	self
-		createColoredAnchorButton: 'Cancel'
-		
-		id: 'cancelAddTicket'
-		on: html
+	html mdlAnchorButton 
+		openDialogWithId: 'cancelAddTicket'; 
+		colored;
+		with: 'Cancel'
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderDiscountStrategyOn: html [
-	self createStrongText: 'Discount Strategy' to: html.
-	self
-		createSelectField: 'Discount Strategy'
-		list: (ERDiscountStrategy typesDiscount)
-		callback: [ :value | self changeDiscountStrategy: value ]
-		withId: 'selectStrategy'
-		selected: self discountStrategy
-		on: html.
+	html paragraph: [ html strong: 'Discount Strategy'].
+	self renderSelectDiscountStrategyOn: html.
 	ticket strategyIsFixDiscount
 		ifTrue: [ self renderFixStrategyOn: html ].
 	ticket strategyIsPercentageDiscount
@@ -117,25 +113,33 @@ ERReductionTicketForm >> renderDiscountStrategyOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderFixStrategyOn: html [
-	self
-				createTextField: 'Amount'
-				for: #amount:
-				with: #amount
-				to: ticket discountStrategy
-				on: html.
-			self
-				createSelectField: 'Currency'
-				for: #currency:
-				with: #currency
-				list: ERAttendee currencyTypes
-				to: ticket discountStrategy
-				on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				with: 'Amount'.
+			html mdlTextFieldInput
+				id: 'amountToReduction';
+				value: ticket discountStrategy amount;
+				callback: [ :value | ticket strategyIsFixDiscount ifTrue:
+					[ticket discountStrategy amount: value asString ]]].
+	
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel 
+			for: 'currencyOfTicket'; 
+			with: 'Currency'.
+			html select
+				class: 'mdl-textfield__input';
+				id: 'currencyOfTicket';
+				list: ERAttendee currencyTypes;
+				selected: ticket discountStrategy currency;
+				callback: [ :value | ticket strategyIsFixDiscount ifTrue: 
+					[ticket discountStrategy currency: value asString ] ]].
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderFormOn: html [
 	html div
-		class: 'mdl-js-ripple-effect';
 		with: [ html form
 				method: 'post';
 				id: 'formTicket';
@@ -147,28 +151,37 @@ ERReductionTicketForm >> renderFormOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderLimitStrategyOn: html [
-	self createStrongText: 'Use Limit Strategy' to: html.
-	self
-		createSelectField: 'Strategy'
-		list: ERLimitStrategy typesLimitStrategy
-		callback: [ :value | self changeLimitStrategy: value ]
-		withId: 'selectLimitStrategy'
-		selected: self limitStrategy
-		on: html.
+	html paragraph: [ html strong: 'Use Limit Strategy'].
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel 
+			for: 'selectLimitStrategy';
+			with: 'Strategy'.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				selected: self limitStrategy;
+				id: 'selectLimitStrategy';
+				list: ERLimitStrategy typesLimitStrategy;
+				callback: [ :value | self changeLimitStrategy: value ]. ].
 	ticket limitStrategyIsLimited
 		ifTrue: [ self renderLimitedStrategyOn: html ].
 	ticket limitStrategyIsUnlimited
-		ifTrue: [ html paragraph: 'Is unlimited' ]
+		ifTrue: [ html paragraph: 'Is unlimited' ].
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderLimitedStrategyOn: html [
-	self
-				createTextField: 'Limit'
-				for: #limit:
-				with: #limit
-				to: ticket limitStrategy
-				on: html 
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: 'limitOfReductionticket';
+				with: 'Limit'.
+			html mdlTextFieldInput
+				id: 'limitOfReductionticket';
+				value: ticket limitStrategy limit;
+				callback: [ :value | ticket limitStrategyIsLimited ifTrue: 
+					[ ticket limitStrategy limit: value asString ] ]]. 
 ]
 
 { #category : #rendering }
@@ -180,22 +193,46 @@ ERReductionTicketForm >> renderPageOn: html [
 
 { #category : #rendering }
 ERReductionTicketForm >> renderPercentageStrategyOn: html [
-	self
-				createTextField: 'Percentage'
-				for: #percentage:
-				with: #percentage
-				to: ticket discountStrategy
-				on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				with: 'Percentage'.
+			html mdlTextFieldInput
+				id: 'percentageOfTicket';
+				value: ticket discountStrategy percentage;
+				callback: [ :value | 
+					ticket strategyIsPercentageDiscount ifTrue: 
+					[ticket discountStrategy percentage: value asString] ] ].
+]
+
+{ #category : #rendering }
+ERReductionTicketForm >> renderSelectDiscountStrategyOn: html [
+	html mdlTextFieldContainer
+		style: 'display: block';
+		floatingLabel;
+		with: [ html mdlTextFieldLabel for: 'selectStrategy';
+			 with: 'Discount Strategy'.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				id: 'selectStrategy';
+				list: (ERDiscountStrategy typesDiscount);
+				selected: self discountStrategy;
+				callback: [ :value | self changeDiscountStrategy: value ]. ].
 ]
 
 { #category : #rendering }
 ERReductionTicketForm >> renderTicketIdOn: html [
-	self
-		createTextField: 'Id:'
-		for: #ticketId:
-		with: #ticketId
-		to: ticket
-		on: html.
+	html mdlTextFieldContainer
+		style: 'display: block';
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: 'ticketId';
+				with: 'Id:'.
+			html mdlTextFieldInput
+				id: 'ticketId';
+				value: ticket ticketId;
+				callback: [ :value | ticket ticketId: value asString ] ]
 ]
 
 { #category : #accessing }

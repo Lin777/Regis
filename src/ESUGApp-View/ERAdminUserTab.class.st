@@ -14,24 +14,22 @@ ERAdminUserTab class >> on: anAttendee withContent: aContent [
 	form attendee: anAttendee.
 	form content: aContent.
 	form initializeController.
-	form initializeUserCopy.
+	
 	^ form
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> acceptUser [
-	[ controller updateUser: attendee userAccount ]
+	[ controller updateUser: (modifiedUser save) model ]
 		on: ERException
-		do: [ :exception | "
-			attendee userAccount abortChanges.
-			attendee abortChanges."
+		do: [ :exception | 
 			messageComponent errorMessage: exception messageText ].
 	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
-	attendee abortChanges.
+	"attendee abortChanges."
 	self updateStateTab: self tabName.
 ]
 
@@ -41,9 +39,11 @@ ERAdminUserTab >> initialize [
 	messageComponent id: 'adminUserAlert'
 ]
 
-{ #category : #initialization }
-ERAdminUserTab >> initializeUserCopy [
-	modifiedUser := attendee userAccount
+{ #category : #rendering }
+ERAdminUserTab >> initializeModifyUser [
+	modifiedUser := attendee asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
 ]
 
 { #category : #rendering }
@@ -78,20 +78,6 @@ ERAdminUserTab >> renderContainer: html [
 ]
 
 { #category : #rendering }
-ERAdminUserTab >> renderEmailInputTextOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: 'email';
-				with: 'Email: '.
-			html mdlTextFieldInput
-				id: 'email';
-				type: 'text';
-				value: attendee email;
-				callback: [ :value | attendee email: value ] ]
-]
-
-{ #category : #rendering }
 ERAdminUserTab >> renderFields: html [
 	self renderFirstNameInputTextOn: html.
 	self renderLastNameInputTextOn: html.
@@ -99,42 +85,14 @@ ERAdminUserTab >> renderFields: html [
 ]
 
 { #category : #rendering }
-ERAdminUserTab >> renderFirstNameInputTextOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: 'firstName';
-				with: 'First Name: '.
-			html mdlTextFieldInput
-				id: 'firstName';
-				type: 'text';
-				value: attendee firstName;
-				callback: [ :value | attendee firstName: value ] ]
-]
-
-{ #category : #rendering }
 ERAdminUserTab >> renderFormOn: html [
+	self initializeModifyUser.
 	html form
 		method: 'post';
-
 		id: 'groupManagerFunctionsUser';
-		with: [ html render: messageComponent .
-			self renderFields: html.
+		with: [ html render: messageComponent.
+			html render: modifiedUser.
 			self renderButtons: html ]
-]
-
-{ #category : #rendering }
-ERAdminUserTab >> renderLastNameInputTextOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: 'lastName';
-				with: 'Last Name: '.
-			html mdlTextFieldInput
-				id: 'lastName';
-				type: 'text';
-				value: attendee lastName;
-				callback: [ :value | attendee lastName: value ] ]
 ]
 
 { #category : #accessing }

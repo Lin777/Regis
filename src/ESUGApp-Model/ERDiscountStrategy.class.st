@@ -1,6 +1,6 @@
 Class {
 	#name : #ERDiscountStrategy,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#category : #'ESUGApp-Model'
 }
 

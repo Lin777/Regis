@@ -10,7 +10,7 @@ Class {
 		'formRegister',
 		'attenteeRegisterForm',
 		'formApplyReductionTicket',
-		'newAttendee'
+		'formMofidyAffiliation'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -26,7 +26,7 @@ ERContainerTab class >> on: anAttendee withContent: aContent [
 
 { #category : #rendering }
 ERContainerTab >> alreadyRegisteredAsAttendee [
-	^ attendee userAccount isAttendee
+	^ self session user isAttendee
 ]
 
 { #category : #initialization }
@@ -44,6 +44,12 @@ ERContainerTab >> callback [
 { #category : #accessing }
 ERContainerTab >> callback: anObject [
 	callback := anObject
+]
+
+{ #category : #actions }
+ERContainerTab >> cancel [
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }
@@ -127,18 +133,9 @@ ERContainerTab >> initializeApplyReductionTicketForm: user [
 		on: user
 		withContent: content) 
 		listOfTickets: tickets; 
-		updateTicketAttendee: [ self updateTicketInformation: user ]; 
+		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
 		cancel: [ self returnToThePreviousState. 
 			self updateStateTab: self tabName.]
-]
-
-{ #category : #initialization }
-ERContainerTab >> initializeFormRegister [
-	newAttendee := ERAttendee new.
-	formRegister := ERContainerTabs
-		formRegisterOn: newAttendee
-		withCallback: callback
-		content: content
 ]
 
 { #category : #initialization }
@@ -148,6 +145,31 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 		withCallback: callback
 		content: content.
 	content state: formWithoutBasicInfo
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeModifyAffiliationForm [
+	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeModifyAffiliationForm: aGroup [
+	formMofidyAffiliation := (ERTittledFormView on: aGroup groupManager affiliationInformation 
+								withContent: content) title: 'Affiliation Information';
+								callback: [:aff | self updateAffiliation: aff on: aGroup];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: formMofidyAffiliation.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERContainerTab >> modifyAffiliation: aGroup [
+	self initializeModifyAffiliationForm: aGroup .
 ]
 
 { #category : #accessing }
@@ -160,20 +182,12 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 
 { #category : #accessing }
 ERContainerTab >> modifyUserFormGroup: anUser [
-	
-	mofidyUserForm := ERModifyUserView
-		on: anUser
-		withContent: content
-		withAction: [ controller updateUser: anUser.
-			self returnToThePreviousState.
-			self updateStateTab: self tabName.  ].
-	content state: mofidyUserForm
-]
-
-{ #category : #rendering }
-ERContainerTab >> registerAttendee [
-	self initializeFormRegister.
-	content state: formRegister
+	mofidyUserForm := (ERTittledFormView on: anUser 
+								withContent: content) title: 'User';
+								callback: [:user | self updateUser: user];
+								cancelCallback: [self cancel]; initializeForm. 
+	content state: mofidyUserForm.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -192,22 +206,31 @@ ERContainerTab >> title [
 	self subclassResponsibility 
 ]
 
+{ #category : #rendering }
+ERContainerTab >> updateAffiliation: aff on: aGroup [
+	aGroup groupManager affiliationInformation: aff.
+	aGroup save.
+	self cancel.
+]
+
 { #category : #accessing }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
-	(ERRegistrationController attendee: anAttendee ) validateRegister .
 	anAttendee save.
 	content state: content lastState
 ]
 
 { #category : #initialization }
-ERContainerTab >> updateTicketInformation: anAttendee [
-	|ticket|
-	anAttendee coupon = 'No reduction ticket'
-	ifTrue: [ anAttendee coupon: '' ]
-	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee coupon.
-		controller verifyIfTicketCanApply: ticket.
-		 ].
-	controller applyReductionTicketTo: anAttendee .
+ERContainerTab >> updateTicket: aTicket from: anAttendee [
+	controller applyReductionTicket: aTicket To: anAttendee .
 	self returnToThePreviousState. 
-			self updateStateTab: self tabName.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #accessing }
+ERContainerTab >> updateUser: user [
+	|result|
+	result := controller updateUser: user.
+	(result isMemberOf: ERException) ifTrue: [ result signal ]
+	ifFalse: [ self cancel ]
+	
 ]

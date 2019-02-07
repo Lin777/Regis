@@ -2,7 +2,9 @@ Class {
 	#name : #ERLoginPage,
 	#superclass : #ERPage,
 	#instVars : [
-		'messageComponent'
+		'messageComponent',
+		'email',
+		'password'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -13,10 +15,15 @@ ERLoginPage >> actionsBody: html [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
 		html mdlAnchorButton 
-		class: 'mdl-color-text--blue'"primaryColor";
+		class: 'mdl-color-text--blue';
 		with: 'Forgot Password'
 		]
 	]
+]
+
+{ #category : #accessing }
+ERLoginPage >> email: anObject [
+	email := anObject
 ]
 
 { #category : #initialization }
@@ -26,18 +33,23 @@ ERLoginPage >> initialize [
 	icon := 'person'.
 	messageComponent := ERAlert warningAlert id: 'loginAlert'.
 	id := 'login-conatiner'.
-	pageController := ERLoginController new
+	pageController := ERController new
 ]
 
 { #category : #rendering }
 ERLoginPage >> loginUser [
 	| userValidate |
-	userValidate := self controller validateLogin.
+	userValidate := self controller validateLoginFor: email password: password.
 	userValidate notNil
 		ifTrue: [ 
 			self session login: userValidate.
 			self call: ERLoggedPage new ]
 		ifFalse: [ messageComponent errorMessage: 'Login failed.' ]
+]
+
+{ #category : #accessing }
+ERLoginPage >> password: anObject [
+	password := anObject
 ]
 
 { #category : #rendering }
@@ -56,15 +68,14 @@ ERLoginPage >> registerUser [
 	pageController conferenceIsOpenRegistration
 		ifTrue: [
 			| formRegister |
-			formRegister := ERAttendeeRegistrationPage new.
-			formRegister content: self content.
-			formRegister initializeTabForms ]
+			formRegister := ERAttendeeRegistrationPage 
+								content: self content ]
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
 { #category : #rendering }
 ERLoginPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
+	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh;';
 	with: [ 
 		html mdlLayout	with: aBlock
 	]
@@ -72,8 +83,16 @@ ERLoginPage >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERLoginPage >> renderEmailField: html [
-	self
-	createRequiredField: 'Email' id: 'email-login' type: 'email' callback: [ :value | self controller user email: value asString ] on: html.
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: 'email-login';
+				with: 'Email'.
+			html mdlTextFieldInput
+				id: 'email-login';
+				required;
+				type: 'email';
+				callback: [ :value | self email: value asString ] ]
 "
 		createTextField: 'Email'
 		id: 'email-login'
@@ -84,7 +103,7 @@ ERLoginPage >> renderEmailField: html [
 { #category : #rendering }
 ERLoginPage >> renderFieldsLoginOn: html [
 	self renderEmailField: html.
-	self renderPasswordField: html
+	self renderPasswordFieldOn: html
 ]
 
 { #category : #rendering }
@@ -92,7 +111,6 @@ ERLoginPage >> renderLoginButtonOn: html [
 	html mdlButton
 		beSubmit ;
 		raised;
-		"colored;"
 		rippleEffect;
 		accentColor;
 		id: 'login-button';
@@ -115,19 +133,24 @@ ERLoginPage >> renderPageOn: html [
 			self renderFieldsLoginOn:html.
 			self renderLoginButtonOn: html.].
 			self renderRegisterButtonOn: html.
-
+	"Confirm dialog for delete onjects"
+	"html mdlAnchorButton 
+	onClick: 'return confirm(''Are you sure you want to delete this item?'');';
+	callback: [ Transcript show: 'Delete' ];
+	with: 'Delete'. "
+	"html div	class: 'mdl-tooltip'; attributeAt: 'data-mdl-for' put: 'XD'; with: 'Example'.
+	html mdlAnchorButton id: 'XD'; with: 'Example' <<===== Tooltip for buttons"
 ]
 
 { #category : #rendering }
-ERLoginPage >> renderPasswordField: html [
+ERLoginPage >> renderPasswordFieldOn: html [
 	self
 		createPasswordField: 'Password'
 		id: 'password-login'
 		with: [:mdlTxtInput | 
 			mdlTxtInput required;
 			callback: [ :value | 
-			self controller user
-				password: (ERUserAccount hashPassword: value) asString ] ]
+			self password: (ERUserAccount hashPassword: value) asString ] ]
 		on: html
 ]
 
@@ -135,7 +158,6 @@ ERLoginPage >> renderPasswordField: html [
 ERLoginPage >> renderRegisterAsGroupManagerButtonOn: html [
 	html mdlAnchorButton
 		class: 'mdl-color-text--blue';
-		"primaryColor ;"
 		id: 'register-button-as-group-manager';
 		callback: [ self registerAsGroupManager ];
 		with: 'Group Manager'
@@ -148,5 +170,4 @@ ERLoginPage >> renderRegisterButtonOn: html [
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
-	"mdlTextColorAccent;"
 ]

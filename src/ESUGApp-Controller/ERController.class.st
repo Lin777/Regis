@@ -15,15 +15,32 @@ ERController class >> currencyAvailable [
 	^ list
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> add:attendee ToTicket: coupon [
-	coupon limitStrategyIsLimited
-		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
-	coupon limitStrategyIsUnlimited
-		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	ERException new
-		messageText: 'The ticket does not have a limit strategy allowed.';
-		signal
+{ #category : #adding }
+ERController >> addAward: anAward [
+	|award|
+	
+	anAward submittionDate: Date today.
+	award := anAward save.
+	conference addSubmittedAward: award.
+	conference save
+]
+
+{ #category : #adding }
+ERController >> addTalk: aTalk [
+	|talk|
+	aTalk submittionDate: Date today.
+	talk := aTalk save.
+	conference addSubmittedTalk: talk.
+	conference save
+]
+
+{ #category : #adding }
+ERController >> addUser: anUser [
+	|userSaved|
+	userSaved := (anUser as: ERUserAccount ).
+	userSaved := userSaved save.
+	conference addUser: userSaved.
+	^ userSaved
 ]
 
 { #category : #rendering }
@@ -34,13 +51,10 @@ ERController >> allAttendeesHasPaid: aGroup [
 
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
-	| currentDate |
-	currentDate := Date today.
-	conference configuration earlyRegistrationDeadline < Date today
+	conference configuration earlyRegistrationDeadline asDate < Date today
 		ifTrue: [ ^ aFee lrfAllDaysFee ]
 		ifFalse: [ ^ aFee erfAllDaysFee ].
-	^ ERException new
-		messageText: 'An error occurred when calculating the payment amount.'; raised
+	^ ERException errorWhenCalculatingPaymentAmount raised
 ]
 
 { #category : #'as yet unclassified' }
@@ -57,13 +71,20 @@ ERController >> amountOfPayToGroup: list [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> applyReductionTicketTo: anAttendee [
-	anAttendee save
+ERController >> applyReductionTicket: aTicket To: anAttendee [
+	|ticket|
+	aTicket = 'No reduction ticket'
+	ifTrue: [ anAttendee paymentInformation coupon: '' ]
+	ifFalse: [ ticket := self reductionTicketWithName: aTicket.
+		(self verifyIfTicketCanApply: ticket) 
+		ifTrue: [anAttendee paymentInformation coupon: aTicket].
+		 ].
+	anAttendee save.
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> attendeesForATicket: ticketId [
-	^ conference attends select: [ :each | each coupon = ticketId ]
+	^ conference attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
 
 { #category : #accessing }
@@ -81,6 +102,7 @@ ERController >> conferenceFeeFor: anAttendee [
 	| fee amount |
 	fee := self feePerTypeCurrencyOf: anAttendee.
 	amount := self amountForCurrentDateFor: fee.
+	amount := amount + (self costPerExtraPerson: anAttendee on: fee).
 	^ self decreaseCouponAmountFor: amount to: anAttendee
 ]
 
@@ -90,10 +112,16 @@ ERController >> conferenceIsOpenRegistration [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> costPerExtraPerson: anAttendee on: fee [
+	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
+	ifTrue: [ ^ fee extraPersonSD asNumber]
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 	anAttendee hasCoupon
 		ifTrue: [ | coupon |
-			coupon := self reductionTicketWithName: anAttendee coupon.
+			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
 ]
@@ -110,17 +138,30 @@ ERController >> deleteGroupManager: aGroupManager [
 ERController >> deleteUser: anUser [
 ]
 
+{ #category : #action }
+ERController >> existReductionTicketWithName: aString [
+	^ conference reductionTickets
+		anySatisfy: [ :each | each ticketId = aString  ]
+]
+
 { #category : #'as yet unclassified' }
 ERController >> feeForCurrencyType: paymentCurrency [
-	conference fees do: [ :fee | fee currency = paymentCurrency ifTrue: [ ^ fee ] ].
-	ERException new messageText: 'The payment currency is not available now.'; signal
+	[ ^ conference fees detect: [ :fee | fee currency = paymentCurrency]]
+	on: NotFound 
+	do: [ ERException paymentCurrencyNotAvailable signal ]
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> feePerTypeCurrencyOf: anAttendee [
-	^ self feeForCurrencyType: anAttendee paymentCurrency 
+	^ self feeForCurrencyType: anAttendee paymentInformation paymentCurrency 
 ]
 
+{ #category : #actions }
+ERController >> findUserByEmail: aString [
+	^ conference users 
+		detect: [ :each | each email = aString ] 
+    ifNone: nil.]
+	
 { #category : #'as yet unclassified' }
 ERController >> getGroupOfAttendee: aAttendee [
 	| groupOfAttendee |
@@ -169,7 +210,7 @@ ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 	url := url
 		copyReplaceAll: fee payPalInvoiceNumberToken
 		with:
-			(anAttendeeOrGroupManager
+			(anAttendeeOrGroupManager paymentInformation
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
@@ -187,7 +228,7 @@ ERController >> payPalUrlForGroup: aGroup [
 	url := url
 		copyReplaceAll: fee payPalInvoiceNumberToken
 		with:
-			(aGroup 
+			(aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
@@ -195,14 +236,18 @@ ERController >> payPalUrlForGroup: aGroup [
 
 { #category : #action }
 ERController >> reductionTicketWithName: aString [
-	conference reductionTickets
-		do: [ :each | 
-			each ticketId = aString
-				ifTrue: [ ^ each ] ].
-	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
+	[ ^ conference reductionTickets detect: [ :each | 
+			each ticketId = aString] ]
+	on: NotFound 
+	do: [ ERException invalidTicketId
+		signal ]
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> submittedAwardsFor: anAttendee [
+	^ self conference submittedAwards 
+  select: [ :each | each submitter = anAttendee ]]
+
 ERController >> stateUpdateNotPaidAttendees: aGroup [
 	aGroup listAttends do: [ :attend | 
 		self stateUpdatePaidAttendee: attend with: false
@@ -245,27 +290,22 @@ ERController >> updateAttendee: anAteendee [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> updateUser: anUser [
-	self validatePatternForRequired: anUser email withName: 'Email'.
-	self
-		validatePatternForRequired: anUser firstName
-		withName: 'First name'.
-	self
-		validatePatternForRequired: anUser lastName
-		withName: 'Last name'.
-	self validatePatternEmail: anUser email withName: 'Email'.
-	self validateIfEmailIsAlreadyRegistered: anUser userAccount.
-	
-	^ anUser save
+ERController >> submittedTalksFor: anAttendee [
+	^ self conference submittedTalks 
+		select: [ :each | each submitter = anAttendee ]
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> validateCountry: aString withName: aString2 [
-	self validatePatternForRequired: aString withName: aString2.
-	aString = 'Select Country'
-		ifTrue: [ ERException new
-				messageText: 'Please select a ',aString2 ;
-				signal ]
+ERController >> updateAttendee: anAteendee [
+	anAteendee save
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updateUser: anUser [
+	[self validateIfEmailIsAlreadyRegistered: anUser.
+	^ anUser save]
+	on: ERException 
+	do: [ :exp | ^ exp ]
 ]
 
 { #category : #action }
@@ -275,43 +315,35 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 			each email = anUser email
 				ifTrue: [ 
 					each = anUser ifFalse:[
-					ERException new
-						messageText: 'This email is already registered';
-						signal ] ]]
+					ERException emailAlreadyRegistered signal ] ]]
+]
+
+{ #category : #rendering }
+ERController >> validateLoginFor: aString1 password: aString2 [
+	^  conference users 
+			detect: [:each | each email = aString1 and: [each password = aString2]] 
+			ifNone: nil
+	
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> validatePatternEmail: aString withName: aString2 [
-	(aString matchesRegex: '\S+@\S+\.\S+')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aString2 , ' does not match with email format.';
-				signal ]
+ERController >> validateNewPassword: aString1 with: aString2 [
+	(aString1 = aString2) ifFalse: [ ERException passwordDoesNotMatchWithConfirmPass signal ].
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> validatePatternForRequired: aString withName: aString2 [
-	(aString matchesRegex: '\S+[\S*\s*]*')
-		ifFalse: [ ERException new
-				messageText:
-					'The field ' , aString2
-						, ' is required please add content to it.';
-				signal ]
+ERController >> validateRegister: anAttendee [
+	self validateIfEmailIsAlreadyRegistered: anAttendee  userAccount.
+	self validateNewPassword: anAttendee userAccount password 
+	with: anAttendee userAccount confirmPassword
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> validatePatternForText: aString withName: aString2 [
-	(aString matchesRegex: '[(a-zA-Z)+\s*]{3,}')
-		ifFalse: [ ERException new
-				messageText: 'The field ' , aString2 , ' only accept a text.';
-				signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> validateSelectValue: aString on: list withMessage: aString2 [
-	(list includes: aString)
-		ifFalse: [ ERException new
-				messageText: 'The ' , aString2 , ' entered is not valid.';
-				signal ]
+{ #category : #action }
+ERController >> verifyIfTheTicketIsStillAvailable: aString [
+	ERController new conference reductionTickets 
+	detect: [ :each | each ticketId = aString ] 
+	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
+	ifNone: [ ERException ticketDoesNotExist signal ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -319,9 +351,7 @@ ERController >> verifyIfTicketCanApply: ticket [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
 	[ ((self attendeesForATicket: ticket ticketId) size 
-	<= ticket limitStrategy limit) ifTrue: [ ^ true ]
+	< ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ 
-		ERException new 
-		messageText: 'The limit of the ticket was exceeded, you can not use it'; 
-		signal ] ]
+		ERException ticketWasExceeded signal ] ]
 ]

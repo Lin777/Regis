@@ -25,31 +25,18 @@ ERFinishRegisterAttendeePage >> content: anObject [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> finishAction [
-	attendee paymentTypeIsBankTransfer
+ERFinishRegisterAttendeePage >> finishRegister [
+	attendee paymentInformation paymentTypeIsBankTransfer
 		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
-	attendee paymentTypeIsCreditCard
+	attendee paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	ERException new
-		messageText: 'The type of payment entered is not valid. ';
-		signal
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> nextAction [
-	attendee paymentTypeIsBankTransfer
-		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
-	attendee paymentTypeIsCreditCard
-		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	ERException new
-		messageText: 'The type of payment entered is not valid. ';
-		signal
+	ERException paymentInvalid signal
 ]
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> registerAndRedirectionPayPAL [
 	| url |
-	pageController save.
+	pageController saveAttendee.
 	url := pageController payPalUrlFor: attendee.
 	self requestContext redirectTo: url
 ]
@@ -65,32 +52,96 @@ ERFinishRegisterAttendeePage >> registerAndShowFinishViewForBankTransfer [
 ]
 
 { #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAddPersonToSocialDinnerOn: html [
+	html strong: 'Add person to Social Dinner: '.
+			html text: (self stringForBoolean: 
+				attendee conferenceInformation addPersonToSocialDinner).
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAddToMainListOn: html [
+	html strong: 'Add mailling list: '.
+			html text: (self stringForBoolean: 
+				attendee conferenceInformation addedToMainList).
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAdditionalTextOn: html [
+	html strong: 'Additional Text: '.
+			html text: (attendee additionalInformation additionalText).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAddress2On: html [
+	html strong: 'Address 2: '.
+			html text: (attendee contactInformation address2).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAddressOn: html [
+	html strong: 'Address: '.
+			html text: (attendee contactInformation address).
+	html break.
+]
+
+{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderAffiliation: html [
 	html mdlCell class: 'mdl-cell--4-col';
 	with: [ 
 	self renderTitle: html with: 'Affiliation'.
-	self createTextStrongWithoutParagraph:'Organization Name: ' with: #orgName on: html.
-	self createTextStrongWithoutParagraph:'Address Line 1: ' with: #orgAddrees1 on: html.
-	self createTextStrongWithoutParagraph:'Address Line 2: ' with: #orgAddrees2 on: html.
-	self createTextStrongWithoutParagraph:'City: ' with: #orgCity on: html.
-	self createTextStrongWithoutParagraph:'Province/States: ' with: #orgProvince on: html.
-	self createTextStrongWithoutParagraph:'Postal/Zip Code: ' with: #orgPostal on: html.
-	self createTextStrongWithoutParagraph:'Country: ' with: #orgCountry on: html.
-	self createTextStrongWithoutParagraph:'MemberShip Type: ' with: #membershipType on: html.
+	self renderNameOrgOn: html.
+	self renderAddressOrgOn: html.
+	self renderAddress2OrgOn: html.
+	self renderCityOrgOn: html.
+	self renderProvinceOrgOn: html.
+	self renderPostalOrgOn: html.
+	self renderCountryOrgOn: html.
+	self renderMemberShipTypeOn: html.
 	self renderTitle: html with: 'Additional Information'.
-	self createTextStrongWithoutParagraph:'Additional Text: ' with: #additionalText on: html.
-	self createTextStrongWithoutParagraph:'Keywords: ' with: #keywords on: html.
+	self renderAdditionalTextOn: html.
+	self renderKeywordsOn: html.
 	]
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderAttendeeToSocialEventOn: html [
+	html strong: 'Goes Social Event: '.
+			html text: (self stringForBoolean: 
+				attendee conferenceInformation attendSocialEvent).
+	html break.
+	
 ]
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> renderBody: html with: aBlock [
 	html div
 		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
+			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y;background-size: cover; height: 100vh;';
 		with: [ html break.
 			html break.
 			aBlock value ]
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderCityOn: html [
+	html strong: 'City: '.
+			html text: (attendee contactInformation city).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderConferenceFeeOn: html [
+	html strong: 'Conference Fee: '.
+			html text:  
+				(pageController conferenceFeeFor: attendee ).
+	html break.
+				
 ]
 
 { #category : #rendering }
@@ -98,80 +149,78 @@ ERFinishRegisterAttendeePage >> renderContactInformation: html [
 	html mdlCell
 		class: 'mdl-cell--4-col';
 		with: [ self renderTitle: html with: 'Contact Information'.
-			self
-				createTextStrongWithoutParagraph: 'First Name: '
-				with: #firstName
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Last Name: '
-				with: #lastName
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Email: '
-				with: #email
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Facebook: '
-				with: #facebookURL
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Twitter: '
-				with: #twitterURL
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Home Page: '
-				with: #homePage
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Address Line 1: '
-				with: #address
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Address Line 2: '
-				with: #address2
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'City: '
-				with: #city
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Province/States: '
-				with: #province
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Postal/Zip Code: '
-				with: #postal
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Country: '
-				with: #country
-				on: html.
+			self renderFirstNameOn: html.
+			self renderLastNameOn: html.
+			self renderEmailOn: html.
+			self renderFacebookUrlOn: html.
+			self renderTwitterUrlOn: html.
+			self renderHomePageUrlOn: html.
+			self renderAddressOn: html.
+			self renderAddress2On: html.
+			self renderCityOn: html.
+			self renderProvinceOn: html.
+			self renderPostalOn: html.
+			self renderCountryOn: html.
 			self renderTitle: html with: 'Conference Options'.
-			self
-				createTextStrongWithoutParagraph: 'Day(s) to attend: '
-				withText: attendee daysOfAssistance
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Gender: '
-				with: #gender
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'TShirt: '
-				with: #tshirtSize
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Type Food: '
-				with: #foodPreference
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Goes Social Event: '
-				withText: (self stringForBooleanForASymbol: #attendSocialEvent)
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Add mailling list: '
-				withText: (self stringForBooleanForASymbol: #addedToMainList)
-				on: html.
+			self renderDaysOfAssistanceOn: html.
+			self renderGenderOn: html.
+			self renderTShirtSizeOn: html.
+			self renderFoodPreferenceOn: html.
+			self renderAttendeeToSocialEventOn: html.
+			self renderAddPersonToSocialDinnerOn: html.
+			self renderAddToMainListOn: html.
 			html break ]
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderCountryOn: html [
+	html strong: 'Country '.
+			html text: (attendee contactInformation country).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderDaysOfAssistanceOn: html [
+	html strong: 'Day(s) to attend: '.
+			html text: (attendee conferenceInformation daysOfAssistance).
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderFacebookUrlOn: html [
+	html strong: 'Email: '.
+			html text: (attendee contactInformation facebookURL).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderFoodPreferenceOn: html [
+	html strong: 'Type Food:  '.
+			html text: (attendee conferenceInformation foodPreference).
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderGenderOn: html [
+	html strong: 'Gender: '.
+			html text: (attendee conferenceInformation gender).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderHomePageUrlOn: html [
+	html strong: 'Home Page: '.
+			html text: (attendee contactInformation homePageURL).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderKeywordsOn: html [
+	html strong: 'keywords: '.
+			html text: (attendee additionalInformation keywords).
+	html break.
 ]
 
 { #category : #rendering }
@@ -186,22 +235,82 @@ ERFinishRegisterAttendeePage >> renderPageOn: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterAttendeePage >> renderPaymentCurrencyOn: html [
+	html strong: 'Payment Currency: '.
+			html text:  
+				attendee paymentInformation paymentCurrency.
+	html break.
+				
+]
+
+{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderPaymentInformation: html [
 	html mdlCell
 		class: 'mdl-cell--4-col';
 		with: [ self renderTitle: html with: 'Payment Information'.
-			self
-				createTextStrongWithoutParagraph: 'Payment Type: '
-				with: #paymentType
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Payment Currency: '
-				with: #paymentCurrency
-				on: html.
-			self
-				createTextStrongWithoutParagraph: 'Conference Fee: '
-				withText: (pageController conferenceFeeFor: attendee )
-				on: html ]
+			self renderPaymentTypeOn: html.
+			self renderPaymentCurrencyOn: html.
+			self renderConferenceFeeOn: html]
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderPaymentTypeOn: html [
+	html strong: 'Payment Type: '.
+			html text:  
+				attendee paymentInformation paymentType.
+	html break.
+				
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderPostalOn: html [
+	html strong: 'Postal: '.
+			html text: (attendee contactInformation postal).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderPostalOrgOn: html [
+	html strong: 'Postal/Zip Code: '.
+			html text: 
+				attendee affiliationInformation organizationPostal.
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderProvinceOn: html [
+	html strong: 'Province: '.
+			html text: (attendee contactInformation province).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderProvinceOrgOn: html [
+	html strong: 'Province/States: '.
+			html text: 
+				attendee affiliationInformation organizationProvince.
+	html break.
+	
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderTShirtSizeOn: html [
+	html strong: 'TShirt: '.
+			html text: (attendee conferenceInformation tshirtSize).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> renderTwitterUrlOn: html [
+	html strong: 'Twitter URL: '.
+			html text: (attendee contactInformation twitterURL).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterAttendeePage >> stringForBoolean: aBoolean [
+	aBoolean ifTrue: [ ^ 'Yes' ] ifFalse: [ ^ 'No' ] 
 ]
 
 { #category : #rendering }

@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'active',
 		'id',
-		'container'
+		'container',
+		'tabId',
+		'tabName',
+		'contentTab'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -41,6 +44,16 @@ ERContentTab >> container: aContainer [
 	container := aContainer
 ]
 
+{ #category : #accessing }
+ERContentTab >> contentTab [
+	^ contentTab
+]
+
+{ #category : #accessing }
+ERContentTab >> contentTab: anObject [
+	contentTab := anObject
+]
+
 { #category : #private }
 ERContentTab >> deactivate [
 	active := false.
@@ -59,17 +72,28 @@ ERContentTab >> isActive [
 
 { #category : #rendering }
 ERContentTab >> renderContentOn: html [
-	self subclassResponsibility 
+	html render: contentTab  
+	
 ]
 
 { #category : #accessing }
 ERContentTab >> tabId [
-	^ self subclassResponsibility.
+	^ tabId 
+]
+
+{ #category : #accessing }
+ERContentTab >> tabId: anObject [
+	tabId := anObject
 ]
 
 { #category : #accessing }
 ERContentTab >> tabName [
-	^ self subclassResponsibility.
+	^ tabName 
+]
+
+{ #category : #accessing }
+ERContentTab >> tabName: anObject [
+	tabName := anObject
 ]
 
 { #category : #'as yet unclassified' }

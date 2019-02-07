@@ -4,22 +4,18 @@ Class {
 	#instVars : [
 		'groupManager',
 		'listAttends',
-		'paymentType',
-		'paymentCurrency',
-		'invoiceNumber',
+		'paymentInformation'
 		'encodedInvoice'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Model-Magritte'
 }
 
 { #category : #accessing }
-ERGroup class >> groupManager: anObject [
-	^ self new
-		groupManager: anObject;
-		yourself
+ERGroup class >> groupManager: aGroupManager [
+	^ self new groupManager: aGroupManager ; yourself
 ]
 
-{ #category : #adding }
+{ #category : #'initialize-release' }
 ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]
@@ -44,17 +40,11 @@ ERGroup >> groupManager: anObject [
 	groupManager := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'initialize-release' }
 ERGroup >> initialize [
 	super initialize .
 	listAttends := OrderedCollection new.
-	
-]
-
-{ #category : #'as yet unclassified' }
-ERGroup >> invoiceNumberIfNone: aBlock [
-	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
-	^ invoiceNumber 
+	paymentInformation := ERPaymentInformation new.
 ]
 
 { #category : #accessing }
@@ -68,31 +58,21 @@ ERGroup >> listAttends: anObject [
 ]
 
 { #category : #accessing }
-ERGroup >> paymentCurrency [
-	^ paymentCurrency
+ERGroup >> paymentAmount [
+	^ paymentInformation paymentAmount
 ]
 
 { #category : #accessing }
-ERGroup >> paymentCurrency: anObject [
-	paymentCurrency := anObject 
+ERGroup >> paymentAmount: anObject [
+	^ paymentInformation paymentAmount: anObject
 ]
 
 { #category : #accessing }
-ERGroup >> paymentType [
-	^ paymentType
+ERGroup >> paymentInformation [
+	^ paymentInformation
 ]
 
 { #category : #accessing }
-ERGroup >> paymentType: anObject [
-	paymentType := anObject
-]
-
-{ #category : #'as yet unclassified' }
-ERGroup >> paymentTypeIsBankTransfer [
-	^ 'Bank transfer' = paymentType
-]
-
-{ #category : #'as yet unclassified' }
-ERGroup >> paymentTypeIsCreditCard [
-	^  'Credit Card' = paymentType
+ERGroup >> paymentInformation: anObject [
+	paymentInformation := anObject
 ]

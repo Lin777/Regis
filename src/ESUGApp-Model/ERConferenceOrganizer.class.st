@@ -1,13 +1,13 @@
 Class {
 	#name : #ERConferenceOrganizer,
-	#superclass : #SDActiveRecord,
+	#superclass : #Object,
 	#instVars : [
 		'name',
 		'fiscalSituation',
 		'webPageUrl',
 		'addressString'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Model-Magritte'
 }
 
 { #category : #accessing }
@@ -18,6 +18,63 @@ ERConferenceOrganizer >> addressString [
 { #category : #accessing }
 ERConferenceOrganizer >> addressString: anObject [
 	addressString := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceOrganizer >> descriptionAddressString [
+	<magritteDescription>
+	| tmp |
+	tmp := MAMemoDescription new.
+	tmp 
+		accessor: #addressString; 
+		priority: 40;
+		required: false;
+		lineCount: 5;
+		withoutLabel: true;
+		componentClass: MDLMATextAreaComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceOrganizer >> descriptionFiscalSituation [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #fiscalSituation; 
+		priority: 20;
+		required: false;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceOrganizer >> descriptionName [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #name; 
+		priority: 10;
+		required: false;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceOrganizer >> descriptionWebPageUrl [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #webPageUrl; 
+		priority: 30;
+		required: false;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }
@@ -31,7 +88,7 @@ ERConferenceOrganizer >> fiscalSituation: anObject [
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer >> name1 [
+ERConferenceOrganizer >> name [
 	^ name
 ]
 

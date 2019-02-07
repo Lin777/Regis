@@ -1,23 +1,39 @@
 Class {
 	#name : #ERGroupManagerController,
 	#superclass : #ERLoggedController,
+	#instVars : [
+		'group'
+	],
 	#category : #'ESUGApp-Controller'
 }
 
 { #category : #adding }
 ERGroupManagerController >> addAttendee: anAttendee [
-	| group anAttendeeSaved |
-	(ERUserAccount findUserByEmail: anAttendee email)
-		ifNil: [ | userSaved |
-			userSaved := anAttendee userAccount save.
-			conference addUser: userSaved .
-			anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-			conference addAttendee: anAttendeeSaved.
-			group := self groupForGroupManager.
-			group addAttendee: anAttendeeSaved.
-			conference save.
-			^ group save ].
-	^ nil
+	| anAttendeeSaved userSaved |
+	self validateRegister: anAttendee.
+	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
+	anAttendee userAccount password: (ERUserAccount hashPassword: (anAttendee userAccount password )asString).
+	userSaved := (anAttendee userAccount as: ERUserAccount) save.
+	conference addUser: userSaved .
+	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+	conference addAttendee: anAttendeeSaved.
+	self group addAttendee: anAttendeeSaved.
+	conference save.
+	^ self group save
+]
+
+{ #category : #adding }
+ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
+	| anAttendeeSaved userSaved |
+	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
+	anAttendee userAccount roleAdd: 'attendee' .
+	userSaved := (anAttendee userAccount as: ERUserAccount) save.
+	conference addUser: userSaved .
+	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+	conference addAttendee: anAttendeeSaved.
+	self group addAttendee: anAttendeeSaved.
+	conference save.
+	^ self group save
 ]
 
 { #category : #adding }
@@ -26,17 +42,6 @@ ERGroupManagerController >> addMyselfToGroup [
 	group := self groupForGroupManager.
 	group addAttendee: attendee.
 	group save.
-]
-
-{ #category : #adding }
-ERGroupManagerController >> createGroup: aGroupManager [
-	|group|
-	group := ERGroup groupManager: aGroupManager.
-			group := group save.
-			conference
-				addGroup: group;
-				save.
-	^ group
 ]
 
 { #category : #accessing }
@@ -107,38 +112,42 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> groupForGroupManager [
-	^ self groupOfAttendee: attendee
-]
-
-{ #category : #adding }
-ERGroupManagerController >> groupOfAttendee: aGroupManager [
-	| group |
-	group := ERGroup
-		find: [ :each | each groupManager = aGroupManager ].
-	group
-		ifNil: [ 
-			group := self createGroup: aGroupManager .
-			 ].
+ERGroupManagerController >> group [
 	^ group
 ]
 
+{ #category : #accessing }
+ERGroupManagerController >> group: anObject [
+	group := anObject
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> groupForGroupManager [
+	^ self groupOfUser: attendee.
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> groupManager [ 
+	^ group groupManager
+]
+
 { #category : #adding }
-ERGroupManagerController >> registerAsAttendee [
-	attendee userAccount
-		roleAdd: 'attendee';
-		save.
-	attendee save.
-	conference addAttendee: attendee.
-	self addMyselfToGroup.
-	conference save.
-	^ attendee
+ERGroupManagerController >> groupOfUser: aGroupManager [
+	^ conference groups
+		detect: [ :each | each groupManager userAccount = aGroupManager ].
+	
 ]
 
 { #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
 	aGroup save.
 	self updatePaymentForAttendees: aGroup
+]
+
+{ #category : #adding }
+ERGroupManagerController >> updateNumberInvoiceOn: anAttendee [
+	^ anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber
+	
 ]
 
 { #category : #adding }

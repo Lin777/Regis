@@ -17,6 +17,15 @@ ERHomeView class >> on: anAttendee withContent: aContent withController: aContro
 	^ form
 ]
 
+{ #category : #'as yet unclassified' }
+ERHomeView class >> withContent: aContent withController: aController [
+	| form |
+	form := self new.
+	form content: aContent.
+	form controller: aController.
+	^ form
+]
+
 { #category : #accessing }
 ERHomeView >> controller: anObject [
 	controller := anObject

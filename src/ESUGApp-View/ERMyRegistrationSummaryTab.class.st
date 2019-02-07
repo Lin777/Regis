@@ -1,6 +1,6 @@
 Class {
 	#name : #ERMyRegistrationSummaryTab,
-	#superclass : #ERContainerTab,
+	#superclass : #ERMyRegistrationTab,
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -17,10 +17,21 @@ ERMyRegistrationSummaryTab >> modifyRegistration [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> pay [
-	attendee paymentTypeIsBankTransfer
+	attendee paymentInformation paymentTypeIsBankTransfer
 		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	attendee paymentTypeIsCreditCard
+	attendee paymentInformation paymentTypeIsCreditCard
 		ifTrue: [ ^ self redirectionPayPAL ]
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> paymentStatus [
+	attendee paymentInformation hasPaid 
+	ifTrue: [ ^ 'Payment successfully received.' ]
+	ifFalse: [ 
+	^ 'Payment no registered yet. Amount due: '
+				, (ERController new conferenceFeeFor: attendee) asString , ' '
+				, attendee paymentInformation paymentCurrency , '(s) '
+				, ' (NOTE: you could have paid but we could have not registered it yet)']
 ]
 
 { #category : #rendering }
@@ -41,22 +52,26 @@ ERMyRegistrationSummaryTab >> redirectionPayPAL [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderButtons: html [
-	| downloadButton |
-	self
-		createRaisedRippleEffectAnchorButton: 'Modify Registration Information'
-		with: [ self modifyRegistration ]
-		id: 'modifyRegistration'
-		on: html.
-	self
-		createRaisedRippleEffectAnchorButton: 'Pay'
-		with: [ self pay ]
-		id: 'pay'
-		on: html.
-	self 
-		createRaisedRippleEffectAnchorButton: 'Generate Invoice' 
-		with: [ self generateInvoice: attendee ]
-		id: 'invoice'
-		on: html.
+  | downloadButton |
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'modifyRegistration';
+		callback: [ self modifyRegistration ];
+		with: 'Modify Registration Information'.
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'pay';
+		callback: [ self pay ];
+		with: 'Pay'.
+	html mdlAnchorButton
+		raised;
+		colored;
+		rippleEffect;
+		id: 'invoice';
+		callback: [ self generateInvoice: attendee  ];
+		with: 'Generate Invoice'.
 	downloadButton := html mdlAnchorButton raised; rippleEffect;
 		id: 'download';
 		disabled: (attendee encodedInvoice isNotNil and: [attendee hasPaid]) not.
@@ -75,18 +90,12 @@ ERMyRegistrationSummaryTab >> renderContainer: html [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
-	self
-		createTextStrong: 'Attendace Day(s): '
-		withText: attendee daysOfAssistance
-		on: html.
-	self
-		createTextStrong: 'Payment Status: '
-		withText:
-			'Payment no registered yet. Amount due: '
-				, (ERController new conferenceFeeFor: attendee) asString , ' '
-				, attendee paymentCurrency , '(s) '
-				, ' (NOTE: you could have paid but we could have not registered it yet)'
-		on: html
+	html
+		paragraph: [ html strong: 'Attendace Day(s): '.
+			html text: attendee conferenceInformation daysOfAssistance ].
+	html
+		paragraph: [ html strong: 'Payment Status: '.
+			html text: self paymentStatus ]
 ]
 
 { #category : #accessing }

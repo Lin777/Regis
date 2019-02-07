@@ -20,9 +20,9 @@ ERConfigurationController >> addAttendee: anAttendee [
 { #category : #adding }
 ERConfigurationController >> addAttendsToLunchPer: day to: list [
 	| normal vegetarian vegan |
-	normal :=((self attends select: #isNormal) select: day asSymbol) size.
-	vegan :=((self attends select: #isVegan) select: day asSymbol) size.
-	vegetarian :=((self attends select: #isVegetarian) select: day asSymbol) size.
+	normal :=((self attends select: [:each | each conferenceInformation isNormal]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
+	vegan :=((self attends select: [:each | each conferenceInformation isVegan]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
+	vegetarian :=((self attends select: [:each | each conferenceInformation isVegetarian]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
 	
 	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list.
 	
@@ -31,8 +31,6 @@ ERConfigurationController >> addAttendsToLunchPer: day to: list [
 { #category : #adding }
 ERConfigurationController >> addFee: aFee [
 	|savedFee|
-	aFee bankAccountInformation bankInformation save.
-	aFee bankAccountInformation save.
 	savedFee := aFee save.
 	 conference addFee: savedFee.
 	 conference save.
@@ -46,10 +44,10 @@ ERConfigurationController >> addItemTo: aList of: each [
 	women := 0.
 	self attends
 		do: [ :anAttendee | 
-			anAttendee tshirtSize = each
-				ifTrue: [ anAttendee isMale
+			anAttendee conferenceInformation tshirtSize = each
+				ifTrue: [ anAttendee conferenceInformation isMale
 						ifTrue: [ man := man + 1 ].
-					anAttendee isFemale
+					anAttendee conferenceInformation isFemale
 						ifTrue: [ women := women + 1 ] ]].
 			aList
 				add:
@@ -89,7 +87,7 @@ ERConfigurationController >> addTicket: aReductionTicket [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(ERUserAccount findUserByEmail: anAttendee email)
+	(ERController new findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.
@@ -103,6 +101,12 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
+ERConfigurationController >> deleteAttendee: anAttendee [
+
+	anAttendee
+]
+
+{ #category : #rendering }
 ERConfigurationController >> deleteFee: aFee [
 	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
 	^ aFee delete.
@@ -110,8 +114,8 @@ ERConfigurationController >> deleteFee: aFee [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
-	aReductionTicket usersOfTickets size > 0
-		ifTrue: [ ^ nil ]
+	(self attendeesForATicket: aReductionTicket ticketId) size > 0
+		ifTrue: [ ERException deletionOfTicketNotValid signal. ]
 		ifFalse: [ conference reductionTickets
 				removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
 				aReductionTicket delete ]
@@ -121,7 +125,7 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [  ]
-	ifTrue: [ ^ nil ]
+	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
 { #category : #rendering }
@@ -136,11 +140,11 @@ ERConfigurationController >> exportAttends: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each firstName.
-							each lastName.
-							each email.
-							each country.
-							each orgName} ].
+							{each userAccount firstName.
+							each userAccount lastName.
+							each userAccount email.
+							each contactInformation country.
+							each affiliationInformation organizationName} ].
 			neoWriter close ].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
@@ -160,8 +164,9 @@ ERConfigurationController >> exportAwards: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-					{each name1.
-					each submittedBy} ].
+					{each nameAward.
+					each submitter userAccount email}].
+
 			neoWriter close ].
 				self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
@@ -181,20 +186,19 @@ ERConfigurationController >> exportGroupManagers: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each groupManager id.
-							each groupManager firstName.
-							each groupManager lastName.
-							each groupManager email.
-							each groupManager password.
+							{each groupManager userAccount firstName.
+							each groupManager userAccount lastName.
+							each groupManager userAccount email.
+							each groupManager userAccount password.
 							each groupManager userAccount rolesAsString.
-							each groupManager orgName.
-							each groupManager orgAddrees1.
-							each groupManager orgAddrees2.
-							each groupManager orgCity.
-							each groupManager orgCountry.
-							each groupManager orgProvince.
-							each groupManager orgPostal.
-							each groupManager membershipType} ].
+							each groupManager affiliationInformation organizationName.
+							each groupManager affiliationInformation organizationAddrees1.
+							each groupManager affiliationInformation organizationAddrees2.
+							each groupManager affiliationInformation organizationCity.
+							each groupManager affiliationInformation organizationCountry.
+							each groupManager affiliationInformation organizationProvince.
+							each groupManager affiliationInformation organizationPostal.
+							each groupManager affiliationInformation membershipType} ].
 				neoWriter close ].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
@@ -213,9 +217,9 @@ ERConfigurationController >> exportTalks: fileName [
 			self submittedTalks
 				do: [ :each | neoWriter 
 				nextPut:
-					{each name1.
-					each submittedBy.
-					each uploadFile} ].
+					{each name.
+					each submitter userAccount email.
+					each presentation} ].
 			neoWriter close ].
 	self
 		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
@@ -265,7 +269,7 @@ ERConfigurationController >> headerAttendee [
 
 { #category : #rendering }
 ERConfigurationController >> headerGroups [
-	^ #('id' 'First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
+	^ #('First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
 ]
 
 { #category : #rendering }
@@ -321,10 +325,15 @@ ERConfigurationController >> participantsToLunches [
 { #category : #'as yet unclassified' }
 ERConfigurationController >> participantsToSocialDinner [
 	| normal vegetarian vegan list|
-	list := (self attends select: #attendSocialEvent).
-	normal :=(list select: #isNormal) size.
-	vegan :=(list select:  #isVegan) size.
-	vegetarian :=(list select:  #isVegetarian) size.
+	list := (self attends select: [:each | each conferenceInformation attendSocialEvent]).
+	normal :=(list select: [:each | each conferenceInformation isNormal]) size.
+	vegan :=(list select:  [:each | each conferenceInformation isVegan]) size.
+	vegetarian :=(list select:  [:each | each conferenceInformation isVegetarian]) size.
+	
+	list := (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ]).
+	normal := normal + ((list select: [:each | each conferenceInformation isNormal: each conferenceInformation personAddedFoodPreference]) size).
+	vegan := vegan + ((list select:  [:each | each conferenceInformation isVegan: each conferenceInformation personAddedFoodPreference]) size).
+	vegetarian := vegetarian + ((list select:  [:each | each conferenceInformation isVegetarian: each conferenceInformation personAddedFoodPreference]) size).
 	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
 ]
 
@@ -333,35 +342,12 @@ ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
 	conference reductionTickets
 		do: [ :each | 
 			aReductionTicket ticketId = each ticketId
-				ifTrue: [ ERException new
-						messageText:
-							'There is already a previously registered ticket with this ticket ID'; signal ] ]
+				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
 ]
 
 { #category : #accessing }
 ERConfigurationController >> reductionTickets [
 	^ conference reductionTickets
-]
-
-{ #category : #adding }
-ERConfigurationController >> registerAsAttendee [
-	attendee userAccount
-		roleAdd: 'attendee';
-		save.
-	attendee save.
-	conference addAttendee: attendee.
-	conference save.
-	^ attendee
-]
-
-{ #category : #adding }
-ERConfigurationController >> registerAsGroupManager [
-	attendee userAccount
-		roleAdd: 'groupManager';
-		save.
-	attendee save.
-	conference save.
-	^ attendee
 ]
 
 { #category : #'as yet unclassified' }
@@ -370,6 +356,14 @@ ERConfigurationController >> registrationsStatistics [
 	list := OrderedCollection new.
 	^ list
 "	^ #('Date' 'Total Attendees')"
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> saveConferenceWithConfiguration: configuration emailConfiguration: emailConfig organizer: organizer [
+	self conference configuration:configuration.
+	self conference configuration emailConfiguration: emailConfig .
+	self conference configuration organizer: organizer .
+	self conference save.
 ]
 
 { #category : #'as yet unclassified' }
@@ -383,8 +377,6 @@ ERConfigurationController >> saveFileOn: aFile withStream: stream [
 
 { #category : #adding }
 ERConfigurationController >> saveTicket: aReductionTicket [
-	aReductionTicket discountStrategy save.
-	aReductionTicket limitStrategy save.
 	^ aReductionTicket save.
 ]
 
@@ -406,7 +398,28 @@ ERConfigurationController >> submittedTalks [
 	^ conference submittedTalks
 ]
 
+{ #category : #adding }
+ERConfigurationController >> updateFee: aFee [
+	^ aFee save.
+	
+]
+
 { #category : #accessing }
 ERConfigurationController >> users [
 	^ conference users
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateConferenceConfiguration: configuration [
+	configuration dateFrom asDate < configuration dateTo asDate
+	ifFalse: [ ERException invalidEsugDates signal ]
+	
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateEmailConfiguration: emailConfiguration [
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> validateOrganizerConfiguration: organizer [
 ]

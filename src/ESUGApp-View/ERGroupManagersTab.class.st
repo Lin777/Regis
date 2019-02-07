@@ -3,23 +3,19 @@ Class {
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'groupManagerForm',
+		'newAttendee',
 		'encodeCSVFile'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #rendering }
-ERGroupManagersTab >> alreadyRegisteredAsGroupManager [
-	^ attendee userAccount isGroupManager
-]
-
-{ #category : #rendering }
 ERGroupManagersTab >> blockTableToExecute [
 	^ [ :group :html | 
 	OrderedCollection new
-		add: ([ :att | att groupManager firstName ] value: group);
-		add: ([ :att | att groupManager email ] value: group);
-		add: ([ :att | att groupManager orgName ] value: group);
+		add: ([ :att | att groupManager userAccount firstName ] value: group);
+		add: ([ :att | att groupManager userAccount email ] value: group);
+		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
 		add:
 			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
 				value: group);
@@ -44,6 +40,10 @@ ERGroupManagersTab >> dictToRenderDownloadButton [
 ]
 
 { #category : #rendering }
+ERGroupManagersTab >> deleteGroup: user [
+]
+
+{ #category : #rendering }
 ERGroupManagersTab >> exportGroups [
 	| file |
 	file := controller exportGroupManagers: 'groupManagers'.
@@ -62,59 +62,23 @@ ERGroupManagersTab >> headers [
 	^ #('Name' 'Email' 'Organization' 'Remaing Fee' 'Have all Pay?' '')
 ]
 
-{ #category : #accessing }
-ERGroupManagersTab >> initializeFormRegister [
-	newAttendee := ERAttendee new.
-	formRegister := ERContainerTabs
-		formRegisterOn: newAttendee
-		withCallback: callback
-		content: content
-]
-
-{ #category : #accessing }
-ERGroupManagersTab >> initializeFormRegisterAdminToGroupManager [
-	groupManagerForm := ERContainerTabs
-		formAdminToGMRegisterOn: attendee
-		withCallback: callback
-		content: content.
-	content state: groupManagerForm
-]
-
-{ #category : #accessing }
-ERGroupManagersTab >> initializeFormRegisterForGroupManager: anAttendee [
-	groupManagerForm := ERContainerTabs
-		formGMRegisterOn: anAttendee
-		withCallback: [ self registerGM  ]
-		content: content.
-	content state: groupManagerForm
-]
-
-{ #category : #accessing }
-ERGroupManagersTab >> initializeFormRegisterModifyAffiliationGroupManager: aGroupManager [
-	groupManagerForm := ERContainerTabs
-		formAdminToGMRegisterOn: aGroupManager
-		withCallback: [ self registerAdminAsGroupManager ]
-		content: content.
-	content state: groupManagerForm
-]
-
 { #category : #rendering }
 ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
 				with: 'edit'
-				with: [ :user | self modifyAffiliationGroupManager: user ]
+				with: [ :user | self modifyAffiliation: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
 				with: 'delete'
-				with: [ :user | self deleteAttendeeFromGroup: user ]
+				with: [ :user | self deleteGroup: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user groupManager ]
+				with: [ :user | self modifyUserFormGroup: user groupManager userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
@@ -130,65 +94,12 @@ ERGroupManagersTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> modifyAffiliationGroupManager: aGroupManager [
-	self
-		initializeFormRegisterModifyAffiliationGroupManager: aGroupManager groupManager 
-]
-
-{ #category : #'as yet unclassified' }
-ERGroupManagersTab >> registerAdminAsGroupManager [
-	|groupManager|
-	(ERRegistrationController attendee: attendee)
-		validateRegisterForGroupManager.
-	groupManager := controller registerAsGroupManager.
-	(ERGroupManagerController new attendee: groupManager)
-				groupForGroupManager.
-	content state: content lastState
-]
-
-{ #category : #accessing }
-ERGroupManagersTab >> registerGM [
-	(ERRegistrationController attendee: newAttendee)
-		validateRegisterForGroupManager;
-		saveAsGroupManager.
-	content state: content lastState
-]
-
-{ #category : #rendering }
-ERGroupManagersTab >> registerGroupManager [
-	newAttendee := ERAttendee new.
-	self initializeFormRegisterForGroupManager: newAttendee.
-	self updateStateTab: self tabName. 
-]
-
-{ #category : #rendering }
-ERGroupManagersTab >> registerMyselfAsGroupManager [
-	attendee userAccount isGroupManager
-		ifFalse: [ callback := [ self registerAdminAsGroupManager ].
-
-			self initializeFormRegisterAdminToGroupManager ]
-		ifTrue: [  ].
-	self updateStateTab: self tabName
-]
-
-{ #category : #rendering }
 ERGroupManagersTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'REGISTER GROUP MANAGER'
-		with: [ self registerGroupManager ]
-		id: 'registerGroupManager'
-		on: html.
-	self alreadyRegisteredAsGroupManager ifFalse: [
-	self
-		createColoredAnchorButton: 'REGISTER MYSELF AS GROUP MANAGER'
-		with: [ self registerMyselfAsGroupManager ]
-		id: 'registerMyselfAsGroupManager'
-		on: html].
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportGroups ]
-		id: 'exportGroups'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportGroups';
+		callback: [ self exportGroups ];
+		with: 'Export'.
 	self renderDownloadButton: html.
 ]
 
@@ -218,7 +129,6 @@ ERGroupManagersTab >> renderDownloadButton: html [
 
 { #category : #accessing }
 ERGroupManagersTab >> renderTableOfGroups: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

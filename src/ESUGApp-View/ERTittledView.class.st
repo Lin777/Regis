@@ -35,6 +35,11 @@ ERTittledView >> renderPageOn: html [
 ]
 
 { #category : #accessing }
+ERTittledView >> title [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
 ERTittledView >> title: anObject [
 	title := anObject
 ]

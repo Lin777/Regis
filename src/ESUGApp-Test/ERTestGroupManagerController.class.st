@@ -48,17 +48,8 @@ ERTestGroupManagerController >> testGroupOfAttendee [
 	| user group |
 	user := self registerAttendee.
 	group := ERGroupManagerController new
-		groupOfAttendee: user.
+		groupOfUser: user.
 	self assert: (group isKindOf: ERGroup )
-]
-
-{ #category : #tests }
-ERTestGroupManagerController >> testRegisterAsAttendee [
-	controller registerAsAttendee.
-	self
-		assert:
-			((controller attendee userAccount isAttendee) and: (controller
-				attendee userAccount isGroupManager))
 ]
 
 { #category : #tests }

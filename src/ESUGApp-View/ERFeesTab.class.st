@@ -16,6 +16,14 @@ ERFeesTab >> addFee [
 ]
 
 { #category : #rendering }
+ERFeesTab >> addFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+	aFee bankAccountInformation: anAccountBankInfo.
+	aFee bankAccountInformation bankInformation: aBankInfo.
+	controller addFee: aFee.
+	self returnToThePreviousState
+]
+
+{ #category : #rendering }
 ERFeesTab >> addFeeToConference [
 	| aFee |
 	aFee := controller addFee: fee.
@@ -50,28 +58,24 @@ ERFeesTab >> headers [
 ]
 
 { #category : #rendering }
-ERFeesTab >> initialize [
-	super initialize.
-]
-
-{ #category : #rendering }
 ERFeesTab >> initializeFormAddFee [
-	
 	fee := ERFee new.
 	callback := [ self addFeeToConference ].
 	formFee := ERFeeForm
 		on: fee
-		callback: callback
+		callback: [ :a :b :c | self addFee: a withBankInfo: b
+			withAccountBankInfo: c]
+		cancel: [ self updateStateTab: self tabName. ]
 		withContent: content
 ]
 
 { #category : #rendering }
 ERFeesTab >> initializeFormModifyFee: aFee [
-	callback := [ self modifyFeeOfConference: aFee.
-		self updateStateTab: self tabName ].
 	formFee := ERFeeForm
 		on: aFee
-		callback: callback
+		callback: [ :a :b :c | self modifyFee: a withBankInfo: b 
+			withAccountBankInfo: c ]
+		cancel: [ self updateStateTab: self tabName. ]
 		withContent: content
 ]
 
@@ -99,6 +103,16 @@ ERFeesTab >> modifyFee: aFee [
 ]
 
 { #category : #rendering }
+ERFeesTab >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+	aFee bankAccountInformation: anAccountBankInfo.
+	aFee bankAccountInformation bankInformation: aBankInfo.
+	controller updateFee: aFee.
+	self returnToThePreviousState.
+	self updateStateTab: self tabName
+	
+]
+
+{ #category : #rendering }
 ERFeesTab >> modifyFeeOfConference: aFee [
 	self returnToThePreviousState.
 	^ aFee save.
@@ -106,33 +120,18 @@ ERFeesTab >> modifyFeeOfConference: aFee [
 ]
 
 { #category : #rendering }
-ERFeesTab >> renderButtonsOfAFee: aFee at: html [
-	self
-		createColoredButton: 'Modify'
-		with: [ self modifyRegistrationInformation: aFee ]
-		id: aFee id , '-modify'
-		on: html.
-	self
-		createColoredButton: 'Delete'
-		with: [ self deleteAttendeeFromGroup: aFee ]
-		id: aFee id , '-delete'
-		on: html.
-]
-
-{ #category : #rendering }
 ERFeesTab >> renderContainer: html [
-	self
-		createColoredAnchorButton: 'Add'
-		with: [ self addFee ]
-		id: 'addFee'
-		on: html.
+	html mdlAnchorButton
+		colored;
+		id: 'addFee';
+		callback: [ self addFee ];
+		with: 'Add'.
 	html horizontalRule.
 	self renderTableOfFees: html
 ]
 
 { #category : #rendering }
 ERFeesTab >> renderTableOfFees: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

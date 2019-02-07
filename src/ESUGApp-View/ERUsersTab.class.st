@@ -19,15 +19,6 @@ ERUsersTab >> addUser [
 ]
 
 { #category : #rendering }
-ERUsersTab >> addUserToConference [
-	| result |
-	result := controller addUser: newUser.
-	result
-		ifNil: [ Transcript show: 'This email already registered' ]
-		ifNotNil: [ content state: content lastState ]
-]
-
-{ #category : #rendering }
 ERUsersTab >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
@@ -35,6 +26,18 @@ ERUsersTab >> blockTableToExecute [
 		add: ([ :att | att rolesAsString ] value: user);
 		add: ([ :att | att email ] value: user);
 		yourself ]
+]
+
+{ #category : #'as yet unclassified' }
+ERUsersTab >> createUser: anUser [
+	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
+			validateNewPassword: anUser password with: anUser confirmPassword.
+	anUser password: (ERUserAccount hashPassword: anUser password) asString.
+	anUser role: (Heap new
+		add: anUser role;
+		yourself).
+	ERController new addUser: anUser .
+	self cancel
 ]
 
 { #category : #rendering }
@@ -65,11 +68,13 @@ ERUsersTab >> headers [
 
 { #category : #rendering }
 ERUsersTab >> initializeFormAddUser [
-	newUser := ERAttendee new.
-	formUser := ERBasicInformationView
-		on: newUser
-		withContent: content
-		withAction: [ self addUserToConference ]
+	newUser := ERUserAccountForAdminRegister new.
+	formUser := (ERTittledFormView 
+							on: newUser 
+							withContent: content) title: 'User'; 
+							callback: [:anUser | self createUser: anUser];
+							cancelCallback: [self cancel];
+							initializeForm
 ]
 
 { #category : #rendering }
@@ -94,17 +99,32 @@ ERUsersTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
+ERUsersTab >> renderButtonAddOn: html [
+	html mdlAnchorButton
+		colored;
+		id: 'addUser';
+		callback: [ self addUser ];
+		with: 'Add'
+]
+
+{ #category : #rendering }
+ERUsersTab >> renderButtonExportOn: html [
+	html mdlAnchorButton
+		colored;
+		id: 'exportUsers';
+		callback: [ self exportUsers ];
+		with: 'Export'
+]
+
+{ #category : #rendering }
 ERUsersTab >> renderButtons: html [
-	self
-		createColoredAnchorButton: 'Add'
-		with: [ self addUser ]
-		id: 'addUser'
-		on: html.
-	self
-		createColoredAnchorButton: 'Export'
-		with: [ self exportUsers ]
-		id: 'exportUsers'
-		on: html.
+	self renderButtonAddOn: html.
+	self renderButtonExportOn: html.
+	html mdlAnchorButton
+		colored;
+		id: 'exportUsers';
+		callback:  [ self exportUsers ];
+		with: 'Export'.
 	self renderDownloadButton: html.
 ]
 
@@ -133,7 +153,6 @@ ERUsersTab >> renderDownloadButton: html [
 
 { #category : #rendering }
 ERUsersTab >> renderTableOfUsers: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

@@ -43,22 +43,21 @@ ERBankTransferPage >> initializeFee [
 { #category : #rendering }
 ERBankTransferPage >> okAction [
 	| user |
-	user := pageController save.
-	user
-		ifNotNil: [ self session login: user.
-			self call: ERLoggedPage new].
-	self answer: true
+	user := pageController saveAttendee.
+	self redirectLoggedPage:user
+	
 ]
 
 { #category : #rendering }
 ERBankTransferPage >> renderActions: html [
 	html mdlCardActions
 		class: 'mdl-card--border';
-		with: [ self
-				createColoredAnchorButton: 'Ok'
-				with: [ self okAction ]
-				id: 'okButton'
-				on: html ]
+		with: [ 
+			html mdlAnchorButton
+		colored;
+		id: 'okButton';
+		callback: [ self okAction ];
+		with: 'Ok']
 ]
 
 { #category : #rendering }
@@ -80,7 +79,7 @@ ERBankTransferPage >> renderBody: html [
 ERBankTransferPage >> renderBody: html with: aBlock [
 	html div
 		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-size: cover; height: 100vh; ';
+			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
 		with: [ html break.
 			html break.
 			aBlock value ]
@@ -96,22 +95,15 @@ ERBankTransferPage >> renderHeaders: html [
 { #category : #rendering }
 ERBankTransferPage >> renderInfoBank: html [
 	html break.
-	self
-		createTextStrongWithoutParagraph: 'Bank name:  '
-		withText: bankInformation name1
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'International Bank Account Numer (IBAN):  '
-		withText: bankAccountInformation iban
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'BIC(Bank Identifier Code):  '
-		withText: bankInformation bic
-		on: html.
-	self
-		createTextStrongWithoutParagraph: 'Account owner:  '
-		withText: bankAccountInformation owner
-		on: html.
+	(OrderedCollection new
+			add: ('Bank name:  '-> bankInformation name); 
+			add: ('International Bank Account Numer (IBAN):  '-> bankAccountInformation iban); 
+			add: ('BIC(Bank Identifier Code):  '->bankInformation bic); 
+			add: ('Account owner:  '->bankAccountInformation owner);
+			yourself) do: [ :each | 
+				html strong: each key.
+				html text: each value.
+				html break ].
 	html break
 ]
 
@@ -140,9 +132,10 @@ ERBankTransferPage >> renderPageOn: html [
 
 { #category : #rendering }
 ERBankTransferPage >> renderTableInfoBank: html [
+	html div style: 'overflow-x: auto;'; with: [
 	html mdlTable
 				class: 'mdl-shadow--2dp';
 				style: 'width:100%;';
 				with: [ self renderHeaders: html.
-						  self renderBody: html] 
+						  self renderBody: html] ]
 ]

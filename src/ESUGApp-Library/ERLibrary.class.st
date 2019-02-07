@@ -29,7 +29,8 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ "self validatorOfRegister , "self tabsJs", self validatorForLogin"
+	^ self registerButtonsJs
+	", self validatorForLogin, self validatorOfRegister "
 ]
 
 { #category : #updating }
@@ -38,6 +39,13 @@ ERLibrary >> generalCss [
 	margin: 0px;
 	padding: 0px;
 }
+
+table { width: 100%; }
+.half {width: 49%;
+	display: inline-block;}
+.third {width: 33%;
+	display: inline-block;}
+
 html, body {
   font-family: ''Roboto'', ''Helvetica'', sans-serif;
 }
@@ -178,6 +186,17 @@ ERLibrary >> loginCss [
 ]
 
 { #category : #updating }
+ERLibrary >> registerButtonsJs [
+	^ '$().ready(function() {
+	$(''.btnNext'').click(function(){
+  $(''.mdl-tabs__tab-bar > .is-active'').next("a").find("span").trigger(''click'');});
+
+  $(''.btnPrevious'').click(function(){
+  $(''.mdl-tabs__tab-bar > .is-active'').prev("a").find("span").trigger(''click'');
+}); });'
+]
+
+{ #category : #updating }
 ERLibrary >> registerCss [
 	^ '.body-all {
 	background-image: url("../CssForLoginMDL/profile_city.jpg");
@@ -247,7 +266,7 @@ ERLibrary >> selectorsToInclude [
 	add: 'loginCss';
 	add: 'generalCss';
 	add: 'esugCss';
-	add: 'esugJs';
+	add: 'esugJs' "with: 'esugCss'";
 	add: 'validationInputsJs';
 	yourself
 ]
@@ -312,14 +331,14 @@ ERLibrary >> tabsCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> tabsJs [
-	^ '$().ready(function() {$(''.btnNext'').click(function(){
-	console.log("next");
+	^ ''"'$().ready(function() {$(''.btnNext'').click(function(){
+	console.log(''next'');
 	$(''.mdl-tabs__tab-bar > .is-active'').next(''a'').trigger(''click'');
 });
 
   $(''.btnPrevious'').click(function(){
-console.log("prev");
-  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
+console.log(''prev'');
+  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'"
 ]
 
 { #category : #'as yet unclassified' }

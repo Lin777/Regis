@@ -12,6 +12,26 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
+{ #category : #'as yet unclassified' }
+ERDialog class >> cancelDialog [
+	| instance |
+	instance := self new title: 'Cancel';
+	message: 'Are you sure you want to cancel?'; 
+	idClose: 'buttonClose';
+	yourself .
+	^ instance
+]
+
+{ #category : #'as yet unclassified' }
+ERDialog class >> deleteDialog [
+	| instance |
+	instance := self new title: 'Delete';
+	message: 'Are you sure you want to delete this element?'; 
+	idClose: 'buttonClose';
+	yourself .
+	^ instance
+]
+
 { #category : #accessing }
 ERDialog >> callback [
 	^ callback

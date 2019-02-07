@@ -1,13 +1,16 @@
 Class {
 	#name : #ERGroupRegistrationTab,
 	#superclass : #ERContainerTab,
+	#instVars : [
+		'newAttendee'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #'as yet unclassified' }
 ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
-	form := super on: anAttendee withContent: aContent.
+	form := self on: anAttendee withContent: aContent.
 	form initializeController.
 	form initializeFormRegister.
 	form container: aContainer.
@@ -16,7 +19,7 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: 
 
 { #category : #accessing }
 ERGroupRegistrationTab >> attends [
-	^ (ERGroupManagerController new groupOfAttendee: attendee)
+	^ (ERGroupManagerController new groupOfUser: attendee)
 		listAttends
 ]
 
@@ -27,30 +30,53 @@ ERGroupRegistrationTab >> cancel [
 
 { #category : #accessing }
 ERGroupRegistrationTab >> group [
-	^ (ERGroupManagerController new groupOfAttendee: attendee)
+	^ (ERGroupManagerController new groupOfUser: attendee)
+		
+]
+
+{ #category : #accessing }
+ERGroupRegistrationTab >> groupManager [ 
+	^ self group groupManager 
 		
 ]
 
 { #category : #initialization }
-ERGroupRegistrationTab >> initialize [
-	super initialize.
+ERGroupRegistrationTab >> initializeController [
+	controller := ERGroupManagerController new.
+	controller group: (controller groupOfUser: attendee)
 ]
 
-{ #category : #initialization }
-ERGroupRegistrationTab >> initializeController [
-	controller := ERGroupManagerController new attendee: attendee
+{ #category : #rendering }
+ERGroupRegistrationTab >> initializeFormRegister [
+	newAttendee := (ERAttendee new) affiliationInformation: (self groupManager affiliationInformation).
+	formRegister := ERContainerTabs
+		formRegisterOn: newAttendee
+		withCallback: callback
+		content: content
+]
+
+{ #category : #accessing }
+ERGroupRegistrationTab >> listAttendees [ 
+	^ self group listAttends  
+		
+]
+
+{ #category : #accessing }
+ERGroupRegistrationTab >> paymentInformation [ 
+	^ self group paymentInformation   
+		
 ]
 
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendee [
-	callback := [ self registerAttendeeToGroupManager ].
-	super registerAttendee.
+	callback := [ :att | self registerAttendeeToGroupManager: att ].
+	self initializeFormRegister.
+	content state: formRegister.
 	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
-ERGroupRegistrationTab >> registerAttendeeToGroupManager [
-	(ERRegistrationController attendee: newAttendee) validateRegister.
+ERGroupRegistrationTab >> registerAttendeeToGroupManager: anAttendee [
 	controller addAttendee: newAttendee.
 	content state: content lastState
 ]
