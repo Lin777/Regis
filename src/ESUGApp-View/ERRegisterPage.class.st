@@ -101,14 +101,6 @@ ERRegisterPage >> register [
 	self validateRegister: user
 ]
 
-{ #category : #initialization }
-ERRegisterPage >> registerAsGroupManager [
-	| user |
-	
-	user := pageController saveAsGroupManager.
-	self validateRegister: user
-]
-
 { #category : #'as yet unclassified' }
 ERRegisterPage >> renderBackButtonOn: html [
 	html mdlAnchorButton

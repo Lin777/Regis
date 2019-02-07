@@ -73,16 +73,6 @@ ERGroupManagersTab >> listDataToRenderButton [
 		yourself
 ]
 
-{ #category : #accessing }
-ERGroupManagersTab >> registerAdminAsGroupManager [
-	|groupManager|
-	groupManager := controller registerAsGroupManager.
-	(ERGroupManagerController new attendee: groupManager)
-				groupForGroupManager.
-	content state: content lastState
-
-]
-
 { #category : #rendering }
 ERGroupManagersTab >> renderButtons: html [
 	html mdlAnchorButton

@@ -53,15 +53,6 @@ ERTestGroupManagerController >> testGroupOfAttendee [
 ]
 
 { #category : #tests }
-ERTestGroupManagerController >> testRegisterAsAttendee [
-	controller registerAsAttendee.
-	self
-		assert:
-			((controller attendee userAccount isAttendee) and: (controller
-				attendee userAccount isGroupManager))
-]
-
-{ #category : #tests }
 ERTestGroupManagerController >> testValidateRegister [
 	| result |
 	result := controller

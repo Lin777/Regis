@@ -202,12 +202,6 @@ ERTestControllers >> setUp [
 	ERUserAccount warmUp.
 	ERAttendee warmUp.
 	ERAward warmUp.
-	ERDiscountStrategy warmUp.
-	ERFixDiscount warmUp.
-	ERPercentageDiscount warmUp.
-	ERLimitStrategy warmUp.
-	ERLimitedReductionTicketUse warmUp.
-	ERUnlimitedReductionTicketUse warmUp.
 	ERReductionTicket warmUp.
 	ERFee warmUp.
 	ERGroup warmUp.
@@ -230,44 +224,7 @@ ERTestControllers >> tearDown [
 			[ each delete ]
 				on: Error
 				do: [  ] ].
-	ERAward coolDown.
-	ERDiscountStrategy
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERDiscountStrategy coolDown.
-	ERFixDiscount
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERFixDiscount coolDown.
-	ERPercentageDiscount
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERPercentageDiscount coolDown.
-	ERLimitStrategy
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERLimitStrategy coolDown.
-	ERLimitedReductionTicketUse
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERLimitedReductionTicketUse coolDown.
-	ERUnlimitedReductionTicketUse
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERUnlimitedReductionTicketUse coolDown.
-	
+	ERAward coolDown.	
 	ERFee
 		do: [ :each | 
 			[ each delete ]

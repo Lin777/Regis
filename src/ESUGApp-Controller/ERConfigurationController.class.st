@@ -333,27 +333,6 @@ ERConfigurationController >> reductionTickets [
 	^ conference reductionTickets
 ]
 
-{ #category : #adding }
-ERConfigurationController >> registerAsAttendee [
-	attendee userAccount
-		roleAdd: 'attendee';
-		save.
-	attendee save.
-	conference addAttendee: attendee.
-	conference save.
-	^ attendee
-]
-
-{ #category : #adding }
-ERConfigurationController >> registerAsGroupManager [
-	attendee userAccount
-		roleAdd: 'groupManager';
-		save.
-	attendee save.
-	conference save.
-	^ attendee
-]
-
 { #category : #'as yet unclassified' }
 ERConfigurationController >> registrationsStatistics [
 	|list|
@@ -381,8 +360,6 @@ ERConfigurationController >> saveFileOn: aFile withStream: stream [
 
 { #category : #adding }
 ERConfigurationController >> saveTicket: aReductionTicket [
-	aReductionTicket discountStrategy save.
-	aReductionTicket limitStrategy save.
 	^ aReductionTicket save.
 ]
 

@@ -89,14 +89,6 @@ ERMembersTab >> listDataToRenderButton [
 ]
 
 { #category : #accessing }
-ERMembersTab >> registerGroupManagerAsAttendee [
-	"Add function to add attendee role to group manager"
-	(ERRegistrationController attendee: attendee) validateRegister.
-	controller registerAsAttendee.
-	content state: content lastState
-]
-
-{ #category : #accessing }
 ERMembersTab >> registerMyselfAsAttendee [
 	callback := [ :att | controller addGroupManagerAsAttendee: att.
 								content state: content lastState ].
@@ -164,12 +156,4 @@ ERMembersTab >> tabName [
 { #category : #rendering }
 ERMembersTab >> title [
 	^ 'Attends'
-]
-
-{ #category : #accessing }
-ERMembersTab >> validateAndRegisterAsAttendee [
-	(ERRegistrationController attendee: attendee)
-		validateRegister.
-	controller registerAsAttendee.
-	content state: content lastState
 ]

@@ -8,8 +8,7 @@ Class {
 ERGroupManagerRegistrationPage >> initialize [
 	super initialize.
 	pageController attendee: ERGroupManager new.
-	title := 'Group Manager'.
-	actionRegister := [ self registerAsGroupManager ]
+	title := 'Group Manager'
 ]
 
 { #category : #initialization }

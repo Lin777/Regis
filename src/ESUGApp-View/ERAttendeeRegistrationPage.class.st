@@ -44,7 +44,6 @@ ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 
 { #category : #initialization }
 ERAttendeeRegistrationPage >> initialize [
-	actionRegister := [ self register ].
 	super initialize.
 	title := 'Registration'
 ]

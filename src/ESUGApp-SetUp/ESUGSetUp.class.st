@@ -18,8 +18,8 @@ ESUGSetUp class >> addReductionFeeForGoldSponsor: sponsorName forConference: con
 	"10% to 5 at most"
 	goldSponsorReductionTicket := ERReductionTicket new
 		ticketId: sponsorName , (1 to: 9999) atRandom asString;
-		discountStrategy: (ERPercentageDiscount of: 10) save;
-		limitStrategy: (ERLimitedReductionTicketUse of: 5) save; save.
+		discountStrategy: (ERPercentageDiscount of: 10);
+		limitStrategy: (ERLimitedReductionTicketUse of: 5); save.
 	conference addReductionTicket: goldSponsorReductionTicket
 ]
 
@@ -29,8 +29,8 @@ ESUGSetUp class >> addReductionFeeForPlatiniumSponsor: sponsorName forConference
 	"20% to 10 at most"
 	platiniumSponsorReductionTicket := ERReductionTicket new
 		ticketId: sponsorName , (1 to: 9999) atRandom asString;
-		discountStrategy: (ERPercentageDiscount of: 20) save;
-		limitStrategy: (ERLimitedReductionTicketUse of: 10) save; save.
+		discountStrategy: (ERPercentageDiscount of: 20);
+		limitStrategy: (ERLimitedReductionTicketUse of: 10); save.
 	conference addReductionTicket: platiniumSponsorReductionTicket
 ]
 
@@ -72,17 +72,16 @@ ESUGSetUp class >> configureESUGReductionCodesForConference: conference [
 	"students"
 	studentVolunteerReductionTicket := ERReductionTicket new
 		ticketId: 'students' , (1 to: 9999) atRandom asString;
-		discountStrategy: ((ERPercentageDiscount of: 100) save);
-		limitStrategy: ((ERLimitedReductionTicketUse of: 15) save); save.
+		discountStrategy: (ERPercentageDiscount of: 100);
+		limitStrategy: (ERLimitedReductionTicketUse of: 15); save.
 	conference
 		addReductionTicket: studentVolunteerReductionTicket.
-
 
 	"free entrance"
 	studentVolunteerReductionTicket := ERReductionTicket new
 		ticketId: 'free' , (1 to: 9999) atRandom asString;
-		discountStrategy: ((ERPercentageDiscount of: 100) save);
-		limitStrategy: ((ERLimitedReductionTicketUse of: 1) save); save.
+		discountStrategy: (ERPercentageDiscount of: 100) ;
+		limitStrategy: (ERLimitedReductionTicketUse of: 1) ; save.
 	conference
 		addReductionTicket: studentVolunteerReductionTicket.
 
