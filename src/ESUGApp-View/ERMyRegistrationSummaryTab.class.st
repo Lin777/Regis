@@ -6,12 +6,13 @@ Class {
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> modifyRegistration [
-	callback := [ self updateMyRegistration ].
+	"callback := [ self updateMyRegistration ].
 	formWithoutBasicInfo := ERContainerTabs
 		formWithoutBasicInfoOn: attendee
 		withCallback: callback
 		content: content.
-	content state: formWithoutBasicInfo.
+	content state: formWithoutBasicInfo."
+	self modifyRegistrationInformation: attendee.
 	
 ]
 
@@ -115,8 +116,8 @@ ERMyRegistrationSummaryTab >> title [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> updateMyRegistration [
-	(ERRegistrationController attendee: attendee) validateRegister.
+	"(ERRegistrationController attendee: attendee) validateRegister.
 	ERController new updateAttendee: attendee.
-	self returnToThePreviousState .
-	
+	self returnToThePreviousState ."
+	self modifyRegistrationInformation: attendee.
 ]
