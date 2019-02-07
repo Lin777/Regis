@@ -12,12 +12,18 @@ ERMembersTab >> attends [
 
 { #category : #'as yet unclassified' }
 ERMembersTab >> blockTableToExecute [
-	^ [:user | OrderedCollection new
+	^ [:user :html | OrderedCollection new
 		add: ([ :att | att firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)'  ] value: user);
-		add: 'No';
+		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				disabled: true;
+				value: att hasPaid;
+				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
+				onChange: (html jQuery ajax serializeForm).
+				] ] valueWithArguments: {user. html});
 		yourself
 	]
 ]
@@ -25,6 +31,17 @@ ERMembersTab >> blockTableToExecute [
 { #category : #accessing }
 ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
 	controller deleteAttendee: anAttendee
+]
+
+{ #category : #rendering }
+ERMembersTab >> dictToRenderDownloadButton [
+	^ Dictionary new
+		at: 'icon' put: 'get_app';
+		at: 'id' put: [ :attend | attend id , '-get_app' ];
+		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend hasPaid ]) not ];
+		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		yourself
 ]
 
 { #category : #accessing }
@@ -78,7 +95,7 @@ ERMembersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'description'
-				with: [ nil ]
+				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
@@ -146,7 +163,8 @@ ERMembersTab >> renderTableOfAttends: html [
 		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

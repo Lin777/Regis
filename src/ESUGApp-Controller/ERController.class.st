@@ -26,6 +26,12 @@ ERController >> add:attendee ToTicket: coupon [
 		signal
 ]
 
+{ #category : #rendering }
+ERController >> allAttendeesHasPaid: aGroup [
+	^ aGroup listAttends ifEmpty: [ false ] 
+	ifNotEmpty: [ aGroup listAttends allSatisfy: [:attend | attend hasPaid ] ]
+]
+
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	| currentDate |
@@ -182,6 +188,43 @@ ERController >> reductionTicketWithName: aString [
 			each ticketId = aString
 				ifTrue: [ ^ each ] ].
 	ERException new messageText: 'There is no ticket with the ticket id provided.'; signal
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> stateUpdateNotPaidAttendees: aGroup [
+	aGroup listAttends do: [ :attend | 
+		self stateUpdatePaidAttendee: attend with: false
+	].
+	aGroup encodedInvoice: nil.
+	aGroup groupManager paymentAmount: nil."Review with the merge"
+	aGroup save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
+	anAttendee hasPaid: aBoolean.
+	aBoolean ifFalse: [ 
+		anAttendee encodedInvoice: nil.
+		anAttendee paymentAmount: nil.	
+	] ifTrue: [ 
+		anAttendee paymentAmount: (self conferenceFeeFor: anAttendee).
+	].
+	anAttendee save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> stateUpdatePaidAttendees: aGroup [
+	| generalAmount amount |
+	generalAmount := 0.
+	aGroup listAttends do: [ :attend | 
+		attend hasPaid: true.
+		amount := self conferenceFeeFor: attend.
+		attend paymentAmount: amount.
+		generalAmount := generalAmount + amount.
+		attend save.
+	].
+	aGroup groupManager paymentAmount: generalAmount.
+	aGroup save.
 ]
 
 { #category : #'as yet unclassified' }

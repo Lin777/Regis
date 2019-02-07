@@ -6,7 +6,8 @@ Class {
 		'listAttends',
 		'paymentType',
 		'paymentCurrency',
-		'invoiceNumber'
+		'invoiceNumber',
+		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -21,6 +22,16 @@ ERGroup class >> groupManager: anObject [
 { #category : #adding }
 ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
+]
+
+{ #category : #accessing }
+ERGroup >> encodedInvoice [
+	^ encodedInvoice
+]
+
+{ #category : #accessing }
+ERGroup >> encodedInvoice: anObject [
+	encodedInvoice := anObject
 ]
 
 { #category : #accessing }
