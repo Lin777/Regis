@@ -91,7 +91,7 @@ ERContainerTab >> generateInvoice: aAttendee [
 
 { #category : #'as yet unclassified' }
 ERContainerTab >> generateInvoiceAttendee: aAttendee [
-	aAttendee hasPaid ifTrue: [ 
+	aAttendee paymentInformation hasPaid ifTrue: [ 
 		| file |
 		file := ERPDFInvoice templateRegistrationInvoice: aAttendee.
 		aAttendee encodedInvoice: (self encodeFiletoBase64: file).

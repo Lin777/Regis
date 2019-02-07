@@ -28,6 +28,7 @@ ERAwardsTab >> children [
 		yourself
 ]
 
+{ #category : #'' }
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller exportAwards: 'awards'.

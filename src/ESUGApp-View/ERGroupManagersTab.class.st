@@ -29,6 +29,10 @@ ERGroupManagersTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERGroupManagersTab >> deleteGroup: user [
+]
+
+{ #category : #rendering }
 ERGroupManagersTab >> dictToRenderDownloadButton [
 	^ Dictionary new 
 	at: 'icon' put: 'get_app';
@@ -37,10 +41,6 @@ ERGroupManagersTab >> dictToRenderDownloadButton [
 	at: 'url' put: [ :group | 'data:text/pdf;base64,', (group encodedInvoice ifNil: [ '' ])];
 	at: 'download' put: [ :group | 'RegistrationInvoice_', group id, '.pdf'];
 	yourself.
-]
-
-{ #category : #rendering }
-ERGroupManagersTab >> deleteGroup: user [
 ]
 
 { #category : #rendering }

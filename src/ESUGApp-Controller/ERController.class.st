@@ -46,7 +46,7 @@ ERController >> addUser: anUser [
 { #category : #rendering }
 ERController >> allAttendeesHasPaid: aGroup [
 	^ aGroup listAttends ifEmpty: [ false ] 
-	ifNotEmpty: [ aGroup listAttends allSatisfy: [:attend | attend hasPaid ] ]
+	ifNotEmpty: [ aGroup listAttends allSatisfy: [:attend | attend paymentInformation hasPaid ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -160,8 +160,9 @@ ERController >> feePerTypeCurrencyOf: anAttendee [
 ERController >> findUserByEmail: aString [
 	^ conference users 
 		detect: [ :each | each email = aString ] 
-    ifNone: nil.]
-	
+    ifNone: nil.
+]
+
 { #category : #'as yet unclassified' }
 ERController >> getGroupOfAttendee: aAttendee [
 	| groupOfAttendee |
@@ -243,11 +244,7 @@ ERController >> reductionTicketWithName: aString [
 		signal ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> submittedAwardsFor: anAttendee [
-	^ self conference submittedAwards 
-  select: [ :each | each submitter = anAttendee ]]
-
+{ #category : #'' }
 ERController >> stateUpdateNotPaidAttendees: aGroup [
 	aGroup listAttends do: [ :attend | 
 		self stateUpdatePaidAttendee: attend with: false
@@ -285,8 +282,9 @@ ERController >> stateUpdatePaidAttendees: aGroup [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> updateAttendee: anAteendee [
-	anAteendee save
+ERController >> submittedAwardsFor: anAttendee [
+	^ self conference submittedAwards 
+  select: [ :each | each submitter = anAttendee ]
 ]
 
 { #category : #'as yet unclassified' }

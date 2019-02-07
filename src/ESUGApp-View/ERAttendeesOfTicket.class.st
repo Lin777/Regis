@@ -27,7 +27,7 @@ ERAttendeesOfTicket >> blockTableToExecute [
 		add: ([ :att | att orgName ] value: user);
 		add: ([ :att | (ERController new conferenceFeeFor: att) asString
 			, ' ', att paymentCurrency, '(s)' ] value: user);
-		add: ([ :att | att hasPaid ] value: user);
+		add: ([ :att | att paymentInformation hasPaid ] value: user);
 		yourself ]
 ]
 

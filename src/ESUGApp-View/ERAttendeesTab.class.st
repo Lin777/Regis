@@ -33,6 +33,13 @@ ERAttendeesTab >> blockTableToExecute [
 		yourself ]
 ]
 
+{ #category : #rendering }
+ERAttendeesTab >> children [
+	^ OrderedCollection new
+		add: table;
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
 	[ zip close ]
@@ -40,13 +47,6 @@ ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
 			subDir ensureDeleteAll.
 			zipFile ensureDelete.	
 		]
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> children [
-	^ OrderedCollection new
-		add: table;
-		yourself
 ]
 
 { #category : #rendering }
@@ -58,7 +58,7 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 	^ Dictionary new
 		at: 'icon' put: 'get_app';
 		at: 'id' put: [ :attend | attend id , '-get_app' ];
-		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend hasPaid ]) not ];
+		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
 		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
 		yourself
@@ -75,7 +75,7 @@ ERAttendeesTab >> exportAllInvoices [
 	zipFile := nameFile asFileReference, 'zip'.
 	self cleanZip: zip with: zipFile subDir: subDir. 
 	ERPDFInvoice demoPath: nameFile, '/'.
-	self attends select: [ :attend | attend hasPaid ] 
+	self attends select: [ :attend | attend paymentInformation hasPaid ] 
 	thenDo: [ :attend | 
 		groupAttendee := controller getGroupOfAttendee: attend.
 		zip addFile: (groupAttendee ifNil: [ (ERPDFInvoice templateRegistrationInvoice: attend) path pathString ] 

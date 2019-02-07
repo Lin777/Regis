@@ -74,7 +74,7 @@ ERMyRegistrationSummaryTab >> renderButtons: html [
 		with: 'Generate Invoice'.
 	downloadButton := html mdlAnchorButton raised; rippleEffect;
 		id: 'download';
-		disabled: (attendee encodedInvoice isNotNil and: [attendee hasPaid]) not.
+		disabled: (attendee encodedInvoice isNotNil and: [attendee paymentInformation hasPaid]) not.
 	downloadButton isDisabled ifFalse: [ 
 		downloadButton url: ('data:text/pdf;base64,', (attendee encodedInvoice ifNil: [ '' ]));
 		attributeAt: 'download' put: 'RegistrationInvoice_', attendee id, '.pdf'].
