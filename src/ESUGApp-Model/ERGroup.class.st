@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'groupManager',
 		'listAttends',
-		'paymentInformation'
+		'paymentInformation',
 		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model-Magritte'
