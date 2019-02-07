@@ -1,9 +1,6 @@
 Class {
 	#name : #ERGroupRegistrationSummaryTab,
 	#superclass : #ERGroupRegistrationTab,
-	#instVars : [
-		'formMofidyAffiliation'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 

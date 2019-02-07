@@ -144,7 +144,6 @@ ERUsersTab >> renderContainer: html [
 
 { #category : #rendering }
 ERUsersTab >> renderTableOfUsers: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

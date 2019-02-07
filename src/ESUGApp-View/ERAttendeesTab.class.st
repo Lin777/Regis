@@ -25,6 +25,13 @@ ERAttendeesTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERAttendeesTab >> children [
+	^ OrderedCollection new
+		add: table;
+		yourself
+]
+
+{ #category : #rendering }
 ERAttendeesTab >> deleteAttendee: user [
 ]
 
@@ -98,7 +105,6 @@ ERAttendeesTab >> renderContainer: html [
 
 { #category : #rendering }
 ERAttendeesTab >> renderTableOfAttends: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

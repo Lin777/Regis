@@ -2,7 +2,8 @@ Class {
 	#name : #ERConfigurationTab,
 	#superclass : #ERContainerTab,
 	#instVars : [
-		'dialog'
+		'dialog',
+		'table'
 	],
 	#category : #'ESUGApp-View-Tab'
 }

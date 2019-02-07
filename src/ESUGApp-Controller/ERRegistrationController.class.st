@@ -15,33 +15,6 @@ ERRegistrationController class >> attendee: anAtteendee [
 	^ controller 
 ]
 
-{ #category : #action }
-ERRegistrationController >> addAttendeeToTicket: coupon [
-	coupon limitStrategyIsLimited
-		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
-	coupon limitStrategyIsUnlimited
-		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	ERException limitStrategyNotAllowedd	signal
-]
-
-{ #category : #action }
-ERRegistrationController >> addAttendeeToTicketIfExist [
-	[ | coupon |
-	coupon := self reductionTicketWithName: attendee coupon.
-	self addAttendeeToTicket: coupon ]
-		on: ERException
-		do: [ attendee coupon: '' ]
-]
-
-{ #category : #action }
-ERRegistrationController >> addAttendeeToTicketIfExist: anAttendee [
-	[| coupon |
-	coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
-	self addAttendeeToTicket: coupon.] on: ERException do:[
-	anAttendee paymentInformation coupon: ''].
-
-]
-
 { #category : #accessing }
 ERRegistrationController >> attendee [
 	^ attendee

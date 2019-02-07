@@ -101,6 +101,12 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
+ERConfigurationController >> deleteAttendee: anAttendee [
+
+	anAttendee
+]
+
+{ #category : #rendering }
 ERConfigurationController >> deleteFee: aFee [
 	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
 	^ aFee delete.
@@ -108,8 +114,8 @@ ERConfigurationController >> deleteFee: aFee [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
-	aReductionTicket usersOfTickets size > 0
-		ifTrue: [ ^ nil ]
+	(self attendeesForATicket: aReductionTicket ticketId) size > 0
+		ifTrue: [ ERException deletionOfTicketNotValid signal. ]
 		ifFalse: [ conference reductionTickets
 				removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
 				aReductionTicket delete ]
@@ -119,7 +125,7 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [  ]
-	ifTrue: [ ^ nil ]
+	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
 { #category : #rendering }

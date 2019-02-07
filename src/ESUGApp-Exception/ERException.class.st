@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+ERException class >> adminUserDoesNotDelete [
+		^ self new 
+			messageText: 'Users with administrator role can not be deletedD';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERException class >> deletionOfTicketNotValid [
+		^ self new
+				messageText: 'This ticket can not be used because it is being used by one or more attendees';
+				yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> emailAlreadyRegistered [
 		^ self new
 				messageText: 'This email is already registered';

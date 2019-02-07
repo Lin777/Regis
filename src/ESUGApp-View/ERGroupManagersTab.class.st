@@ -95,7 +95,6 @@ ERGroupManagersTab >> renderContainer: html [
 
 { #category : #accessing }
 ERGroupManagersTab >> renderTableOfGroups: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

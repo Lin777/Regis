@@ -139,18 +139,6 @@ ERGroupManagerController >> groupOfUser: aGroupManager [
 ]
 
 { #category : #adding }
-ERGroupManagerController >> registerAsAttendee [
-	attendee userAccount
-		roleAdd: 'attendee';
-		save.
-	attendee save.
-	conference addAttendee: attendee.
-	self addMyselfToGroup.
-	conference save.
-	^ attendee
-]
-
-{ #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
 	aGroup save.
 	self updatePaymentForAttendees: aGroup

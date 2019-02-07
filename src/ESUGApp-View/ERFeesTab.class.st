@@ -132,7 +132,6 @@ ERFeesTab >> renderContainer: html [
 
 { #category : #rendering }
 ERFeesTab >> renderTableOfFees: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

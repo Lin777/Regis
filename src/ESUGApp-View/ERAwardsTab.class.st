@@ -19,6 +19,13 @@ ERAwardsTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
+ERAwardsTab >> children [
+	^ OrderedCollection new
+		add: table;
+		yourself
+]
+
+{ #category : #rendering }
 ERAwardsTab >> exportAwards [
 	controller exportAwards: 'awards'.
 	self updateStateTab: self tabName
@@ -52,7 +59,6 @@ ERAwardsTab >> renderContainer: html [
 
 { #category : #rendering }
 ERAwardsTab >> renderTableOfAwards: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

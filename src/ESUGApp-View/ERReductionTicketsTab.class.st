@@ -46,15 +46,17 @@ ERReductionTicketsTab >> blockTableToExecute [
 { #category : #rendering }
 ERReductionTicketsTab >> children [
 	^ OrderedCollection new
-		add: dialog;
-		add: formAddTicket;
 		add: messageComponent;
+		add: table;
 		yourself
 ]
 
 { #category : #rendering }
 ERReductionTicketsTab >> deleteTicket: aTicket [
-	controller deleteReductionTicket: aTicket.
+	[controller deleteReductionTicket: aTicket]
+	on: ERException 
+	do: [ :exception | 
+			messageComponent errorMessage: exception messageText ].
 	self updateStateTab: self tabName. 
 ]
 
@@ -97,7 +99,6 @@ ERReductionTicketsTab >> listDataToRenderButton [
 { #category : #rendering }
 ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 	self initializeFormModifyTicket: aReductionTicket.
-	
 	content state: formAddTicket.
 	self updateStateTab: self tabName.
 ]
@@ -110,12 +111,12 @@ ERReductionTicketsTab >> renderContainer: html [
 		callback: [ self addTicket ];
 		with: 'Add'.
 	html horizontalRule.
+	html render: messageComponent .
 	self renderTableOfTickets: html
 ]
 
 { #category : #rendering }
 ERReductionTicketsTab >> renderTableOfTickets: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

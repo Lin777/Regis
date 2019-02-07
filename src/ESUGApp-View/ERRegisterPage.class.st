@@ -70,11 +70,6 @@ ERRegisterPage >> addTab: aAttendeeTabForm [
 ]
 
 { #category : #initialization }
-ERRegisterPage >> convertToGroupManager [
-	self attendee userAccount role: 'groupManager'
-]
-
-{ #category : #initialization }
 ERRegisterPage >> initialize [
 	super initialize.
 	icon := 'assignment'.

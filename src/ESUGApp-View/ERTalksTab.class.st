@@ -49,7 +49,6 @@ ERTalksTab >> renderContainer: html [
 
 { #category : #accessing }
 ERTalksTab >> renderTableOfTalks: html [
-	| table |
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;
