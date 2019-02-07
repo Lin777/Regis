@@ -21,20 +21,3 @@ ERTestLoginController >> testFindUserByEmailWhenUserNotExist [
 		findUserByEmail: ERTestControllers testAttendee email.
 	self assert: anUser isNil
 ]
-
-{ #category : #tests }
-ERTestLoginController >> testValidateLoginIfUserExist [
-	| anUser |
-	self registerAttendee.
-	anUser := (ERLoginController
-		user: ERTestControllers testUserAccount) validateLogin.
-	self deny: anUser isNil
-]
-
-{ #category : #tests }
-ERTestLoginController >> testValidateLoginIfUserNotExist [
-	| anUser |
-	anUser := (ERLoginController
-		user: ERTestControllers testUserAccount) validateLogin.
-	self assert: anUser isNil
-]

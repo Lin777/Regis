@@ -4,8 +4,7 @@ Extension { #name : #MDLMAFormDecoration }
 MDLMAFormDecoration >> renderButtonsOn: html [
 	html div
 		class: 'mdl-typography--text-right';
-		with: [ 
-					self buttons
+		with: [ self buttons
 						do: [ :each |
 									html mdlButton
 										colored 
