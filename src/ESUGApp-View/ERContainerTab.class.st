@@ -83,7 +83,7 @@ ERContainerTab >> initializeApplyReductionTicketForm: user [
 		on: user
 		withContent: content) 
 		listOfTickets: tickets; 
-		updateTicketAttendee: [ self updateTicketInformation: user ]; 
+		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
 		cancel: [ self returnToThePreviousState. 
 			self updateStateTab: self tabName.]
 ]
@@ -170,16 +170,10 @@ ERContainerTab >> updateRegistrationInformation: anAttendee [
 ]
 
 { #category : #initialization }
-ERContainerTab >> updateTicketInformation: anAttendee [
-	|ticket|
-	anAttendee paymentInformation coupon = 'No reduction ticket'
-	ifTrue: [ anAttendee paymentInformation coupon: '' ]
-	ifFalse: [ ticket := controller reductionTicketWithName: anAttendee paymentInformation coupon.
-		controller verifyIfTicketCanApply: ticket.
-		 ].
-	controller applyReductionTicketTo: anAttendee .
+ERContainerTab >> updateTicket: aTicket from: anAttendee [
+	controller applyReductionTicket: aTicket To: anAttendee .
 	self returnToThePreviousState. 
-			self updateStateTab: self tabName.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }

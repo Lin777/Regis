@@ -15,15 +15,6 @@ ERController class >> currencyAvailable [
 	^ list
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> add:attendee ToTicket: coupon [
-	coupon limitStrategyIsLimited
-		ifTrue: [ ^ coupon addAttendeeOfTicketLimited: attendee ].
-	coupon limitStrategyIsUnlimited
-		ifTrue: [ ^ coupon addAttendeeOfTicket: attendee ].
-	ERException limitStrategyNotAllowedd signal
-]
-
 { #category : #adding }
 ERController >> addAward: anAward [
 	|award|
@@ -74,8 +65,15 @@ ERController >> amountOfPayToGroup: list [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> applyReductionTicketTo: anAttendee [
-	anAttendee save
+ERController >> applyReductionTicket: aTicket To: anAttendee [
+	|ticket|
+	aTicket = 'No reduction ticket'
+	ifTrue: [ anAttendee paymentInformation coupon: '' ]
+	ifFalse: [ ticket := self reductionTicketWithName: aTicket.
+		(self verifyIfTicketCanApply: ticket) 
+		ifTrue: [anAttendee paymentInformation coupon: aTicket].
+		 ].
+	anAttendee save.
 ]
 
 { #category : #'as yet unclassified' }
@@ -135,12 +133,6 @@ ERController >> deleteUser: anUser [
 ]
 
 { #category : #action }
-ERController >> emailIsAlreadyRegistered: aString [
-	^ conference users anySatisfy: [ :each | 
-			each email = aString]
-]
-
-{ #category : #action }
 ERController >> existReductionTicketWithName: aString [
 	^ conference reductionTickets
 		anySatisfy: [ :each | each ticketId = aString  ]
@@ -164,14 +156,6 @@ ERController >> findUserByEmail: aString [
 		detect: [ :each | each email = aString ] 
 		ifNone: nil.
 	
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> groupManagerAmountOfPay: aGroupManager [
-	| fee amount |
-	fee := self feePerTypeCurrencyOf: aGroupManager.
-	amount := self amountForCurrentDateFor: fee.
-	^ self decreaseCouponAmountFor: amount to: aGroupManager
 ]
 
 { #category : #accessing }
@@ -290,12 +274,20 @@ ERController >> validateRegister: anAttendee [
 	with: anAttendee userAccount confirmPassword
 ]
 
+{ #category : #action }
+ERController >> verifyIfTheTicketIsStillAvailable: aString [
+	ERController new conference reductionTickets 
+	detect: [ :each | each ticketId = aString ] 
+	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
+	ifNone: [ ERException ticketDoesNotExist signal ]
+]
+
 { #category : #'as yet unclassified' }
 ERController >> verifyIfTicketCanApply: ticket [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
 	[ ((self attendeesForATicket: ticket ticketId) size 
-	<= ticket limitStrategy limit) ifTrue: [ ^ true ]
+	< ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ 
 		ERException ticketWasExceeded signal ] ]
 ]

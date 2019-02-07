@@ -2,6 +2,7 @@ Class {
 	#name : #ERApplyReductionTicketView,
 	#superclass : #ERTittledView,
 	#instVars : [
+		'ticketSelected',
 		'listOfTickets',
 		'updateTicketAttendee',
 		'cancel',
@@ -37,7 +38,7 @@ ERApplyReductionTicketView >> renderAcceptButtonOn: html [
 	html mdlButton
 		colored;
 		id: 'accept-change-affiliation' ;
-		callback: [ updateTicketAttendee
+		callback: [ [ updateTicketAttendee cull: ticketSelected ]
 				on: ERException
 				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
 		with: 'Accept'
@@ -73,7 +74,13 @@ ERApplyReductionTicketView >> renderSelectorOfTickets: html [
 				id: 'selectTickets';
 				list: listOfTickets;
 				selected: attendee paymentInformation coupon;
-				callback: [ :value | attendee paymentInformation coupon: value asString ] ].
+				callback: [ :value | self ticketSelected: value asString ] ].
+]
+
+{ #category : #accessing }
+ERApplyReductionTicketView >> ticketSelected: aString [
+	ticketSelected := aString 
+	
 ]
 
 { #category : #accessing }

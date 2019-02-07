@@ -52,11 +52,6 @@ ERRegistrationController >> attendee: anObject [
 	attendee := anObject 
 ]
 
-{ #category : #action }
-ERRegistrationController >> convertToGroupManager [
-	self attendee userAccount role: (Heap new add: 'groupManager'; yourself )
-]
-
 { #category : #initialize }
 ERRegistrationController >> initialize [
 	super initialize.
@@ -96,14 +91,6 @@ ERRegistrationController >> saveGroupManager [
 	conference addGroup: groupSaved .
 	conference save.
 	^ self attendee userAccount 
-]
-
-{ #category : #'as yet unclassified' }
-ERRegistrationController >> validateIfTicketExist [
-	attendee hasCoupon
-		ifTrue: [ (self reductionTicketWithName: attendee coupon) isNil
-				ifTrue: [ 
-					ERException ticketDoesNotExist signal ] ]
 ]
 
 { #category : #'as yet unclassified' }
