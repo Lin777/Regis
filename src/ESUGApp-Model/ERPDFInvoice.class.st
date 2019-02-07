@@ -153,7 +153,7 @@ ERPDFInvoice >> addInfoESUG: aPage [
 { #category : #adding }
 ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	| fullname |
-	fullname := ((user userAccount firstName, ' ', user userAccount lastName) asText copyFrom: 1 to: 20) asString.
+	fullname := ((user firstName, ' ', user lastName) asText copyFrom: 1 to: 20) asString.
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
@@ -162,7 +162,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	add: (PDFTextElement new
 		font: self fontContent;
 		from: 45 mm @ 82 mm;
-		text: "user invoiceNumber" '2019-01-001');
+		text: user invoiceNumber);
 	add: (PDFFormattedTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
@@ -180,19 +180,19 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 		font: self fontContent;
 		dimension: 190 mm @ 75 mm;
 		from: 0 mm @ 83 mm;
-		text: user orgName;
+		text: user organizationName;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ 80 mm;
 		from: 0 mm @ 88 mm;
-		text: user orgAddrees1;
+		text: user organizationAddress1;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ 85 mm;
 		from: 0 mm @ 93 mm;
-		text: user orgPostal, ' ', user orgCity;
+		text: user organizationPostal, ' ', user organizationCity;
 		alignment: (PDFAlignment right))
 ]
 

@@ -14,6 +14,12 @@ ERMyRegistrationTab class >> on: anAttendee withContent: aContent container: aCo
 	^ form
 ]
 
+{ #category : #initialization }
+ERMyRegistrationTab >> initialize [
+	super initialize.
+	controller := ERController new.
+]
+
 { #category : #rendering }
 ERMyRegistrationTab >> proposalsAreAllowed [
 	^ ERController new conference configuration 

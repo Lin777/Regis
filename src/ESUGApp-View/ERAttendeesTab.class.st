@@ -79,7 +79,7 @@ ERAttendeesTab >> exportAllInvoices [
 	thenDo: [ :attend | 
 		groupAttendee := controller getGroupOfAttendee: attend.
 		zip addFile: (groupAttendee ifNil: [ (ERPDFInvoice templateRegistrationInvoice: attend) path pathString ] 
-		ifNotNil: [ (ERPDFInvoice templateRegistrationInvoice: groupAttendee groupManager) path pathString ])	
+		ifNotNil: [ (ERPDFInvoice templateRegistrationInvoice: groupAttendee) path pathString ])	
 	].
 	zip writeToFileNamed: zipFile fullName.
 	encodeZipFile := self encodeFiletoBase64: zipFile.

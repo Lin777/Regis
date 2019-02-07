@@ -54,11 +54,11 @@ ERAttendeesOfTicket >> listOfAttendees [
 
 { #category : #accessing }
 ERAttendeesOfTicket >> renderButtonsOn: html [
-	self
-		createColoredAnchorButton: 'Back'
-		with: cancelCallback
-		id: 'accept'
-		on: html.
+	html mdlAnchorButton
+        colored;
+        id: 'accept';
+        callback: cancelCallback;
+        with: 'Back'
 ]
 
 { #category : #accessing }

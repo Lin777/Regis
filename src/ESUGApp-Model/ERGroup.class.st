@@ -31,6 +31,11 @@ ERGroup >> encodedInvoice: anObject [
 ]
 
 { #category : #accessing }
+ERGroup >> firstName [ 
+	^ groupManager userAccount firstName
+]
+
+{ #category : #accessing }
 ERGroup >> groupManager [
 	^ groupManager
 ]
@@ -48,6 +53,16 @@ ERGroup >> initialize [
 ]
 
 { #category : #accessing }
+ERGroup >> invoiceNumber [
+	^ paymentInformation invoiceNumber 
+]
+
+{ #category : #accessing }
+ERGroup >> lastName [ 
+	^ groupManager userAccount lastName
+]
+
+{ #category : #accessing }
 ERGroup >> listAttends [
 	^ listAttends
 ]
@@ -55,6 +70,26 @@ ERGroup >> listAttends [
 { #category : #accessing }
 ERGroup >> listAttends: anObject [
 	listAttends := anObject
+]
+
+{ #category : #accessing }
+ERGroup >> organizationAddress1 [
+	^ groupManager affiliationInformation organizationAddrees1
+]
+
+{ #category : #accessing }
+ERGroup >> organizationCity [ 	
+	^ groupManager affiliationInformation organizationCity 
+]
+
+{ #category : #accessing }
+ERGroup >> organizationName [
+	^ groupManager affiliationInformation organizationName
+]
+
+{ #category : #accessing }
+ERGroup >> organizationPostal [
+	^ groupManager affiliationInformation organizationPostal 
 ]
 
 { #category : #accessing }

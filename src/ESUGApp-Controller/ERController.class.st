@@ -250,13 +250,13 @@ ERController >> stateUpdateNotPaidAttendees: aGroup [
 		self stateUpdatePaidAttendee: attend with: false
 	].
 	aGroup encodedInvoice: nil.
-	aGroup groupManager paymentAmount: nil."Review with the merge"
+	aGroup paymentAmount: nil.
 	aGroup save.
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
-	anAttendee hasPaid: aBoolean.
+	anAttendee paymentInformation hasPaid: aBoolean.
 	aBoolean ifFalse: [ 
 		anAttendee encodedInvoice: nil.
 		anAttendee paymentAmount: nil.	
@@ -271,13 +271,13 @@ ERController >> stateUpdatePaidAttendees: aGroup [
 	| generalAmount amount |
 	generalAmount := 0.
 	aGroup listAttends do: [ :attend | 
-		attend hasPaid: true.
+		attend paymentInformation hasPaid: true.
 		amount := self conferenceFeeFor: attend.
 		attend paymentAmount: amount.
 		generalAmount := generalAmount + amount.
 		attend save.
 	].
-	aGroup groupManager paymentAmount: generalAmount.
+	aGroup paymentAmount: generalAmount.
 	aGroup save.
 ]
 

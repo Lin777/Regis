@@ -113,10 +113,12 @@ ERGroupRegistrationSummaryTab >> renderFormButtons: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderGenerateInvoiceButtonOn: html [
-	self createRaisedRippleEffectAnchorButton: 'Generate Invoice'
-		with: [ self generateInvoiceGroup: self group ]
-		id: 'generateInvoice'
-		on: html.
+	html mdlAnchorButton 
+        raised;
+        rippleEffect;
+        id: 'generateInvoice';
+        callback: [ self generateInvoiceGroup: self group ];
+        with: 'Generate Invoice'
 ]
 
 { #category : #rendering }

@@ -105,7 +105,7 @@ ERContainerTab >> generateInvoiceAttendee: aAttendee [
 ERContainerTab >> generateInvoiceGroup: aGroup [
 	(controller allAttendeesHasPaid: aGroup) ifTrue: [ 
 		| file encodeFile |
-		file := ERPDFInvoice templateRegistrationInvoice: aGroup groupManager.
+		file := ERPDFInvoice templateRegistrationInvoice: aGroup.
 		encodeFile := self encodeFiletoBase64: file.
 		aGroup listAttends do: [ :aAttendee | 
 			aAttendee encodedInvoice: encodeFile.

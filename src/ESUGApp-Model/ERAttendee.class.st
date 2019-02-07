@@ -77,15 +77,6 @@ ERAttendee >> additionalInformation: anObject [
 ERAttendee >> affiliationInformation [
   ^ affiliationInformation 
 ]
-  
-ERAttendee >> encodedInvoice [
-	^ encodedInvoice
-]
-
-{ #category : #accessing }
-ERAttendee >> encodedInvoice: anObject [
-	encodedInvoice := anObject
-]
 
 { #category : #accessing }
 ERAttendee >> affiliationInformation: anObject [
@@ -138,6 +129,21 @@ ERAttendee >> descriptionUser [
 	^ tmp1 yourself
 ]
 
+{ #category : #'' }
+ERAttendee >> encodedInvoice [
+	^ encodedInvoice
+]
+
+{ #category : #accessing }
+ERAttendee >> encodedInvoice: anObject [
+	encodedInvoice := anObject
+]
+
+{ #category : #accessing }
+ERAttendee >> firstName [ 
+	^ userAccount firstName
+]
+
 { #category : #testing }
 ERAttendee >> hasCoupon [
 	self paymentInformation coupon isNil 
@@ -156,6 +162,36 @@ ERAttendee >> initialize [
 	affiliationInformation := ERAffiliationInformation new.
 	additionalInformation := ERAdditionalInformation new.
 	paymentInformation := ERPaymentInformation new.
+]
+
+{ #category : #accessing }
+ERAttendee >> invoiceNumber [
+	^ paymentInformation invoiceNumber 
+]
+
+{ #category : #accessing }
+ERAttendee >> lastName [ 
+	^ userAccount lastName
+]
+
+{ #category : #accessing }
+ERAttendee >> organizationAddress1 [
+	^ affiliationInformation organizationAddrees1 
+]
+
+{ #category : #accessing }
+ERAttendee >> organizationCity [ 	
+	^ affiliationInformation organizationCity 
+]
+
+{ #category : #accessing }
+ERAttendee >> organizationName [
+	^ affiliationInformation organizationName
+]
+
+{ #category : #accessing }
+ERAttendee >> organizationPostal [
+	^ affiliationInformation organizationPostal 
 ]
 
 { #category : #accessing }
