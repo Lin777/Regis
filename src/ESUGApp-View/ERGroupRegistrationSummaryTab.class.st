@@ -56,9 +56,13 @@ ERGroupRegistrationSummaryTab >> paymentStatus [
 	listAttends := self attends.
 	listAttends isEmpty
 		ifTrue: [ ^ 'No status available. The group has no members ' ]
-		ifFalse: [ ^ 'Payment no registered yet. Amount due: '
+		ifFalse: [ 
+	(controller allAttendeesHasPaid: self group )
+	ifTrue: [ ^ 'Payment successfully received.' ]
+	ifFalse: [ ^ 'Payment no registered yet. Amount due: '
 			, (ERController new amountOfPayToGroup: listAttends) asString , ' ', 
-			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]
+			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]].
+		
 ]
 
 { #category : #rendering }
