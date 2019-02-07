@@ -17,5 +17,5 @@ ERMyRegistrationTab class >> on: anAttendee withContent: aContent container: aCo
 { #category : #rendering }
 ERMyRegistrationTab >> proposalsAreAllowed [
 	^ ERController new conference configuration 
-	dateSubmissionDeadline asDate < Date today 
+	dateSubmissionDeadline asDate >= Date today 
 ]

@@ -98,7 +98,8 @@ ERMembersTab >> registerGroupManagerAsAttendee [
 
 { #category : #accessing }
 ERMembersTab >> registerMyselfAsAttendee [
-	callback := [ :att | controller addGroupManagerAsAttendee: att ].
+	callback := [ :att | controller addGroupManagerAsAttendee: att.
+								content state: content lastState ].
 	self initializeFormWithoutBasicInformationFor: (self attendeeFrom: self groupManager)
 ]
 

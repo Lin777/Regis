@@ -129,13 +129,13 @@ ESUGSetUp class >> createESUGConfiguration [
 	"Set Postmark key"
 	"PatSmtpToPostMarkClientAdapter key: 'xxxxx'. 
 	"
-	esugEmailConfiguration := ERConferenceEmailConfiguration1 new
+	esugEmailConfiguration := ERConferenceEmailConfiguration new
 		senderEmailAddress: 'registration@esug.org';
 		smptServerAddress: 'localhost';
 		smptClient: '';
 		welcomeText: 'Welcome to this great conference'.
 	
-	esugOrganizer := ERConferenceOrganizer1 new
+	esugOrganizer := ERConferenceOrganizer new
 		name: 'ESUG';
 		fiscalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
 		webPageUrl: 'http://www.esug.org';
@@ -143,7 +143,7 @@ ESUGSetUp class >> createESUGConfiguration [
 			'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'.
 		
 	conferenName := 'ESUG'.
-	^ ERConferenceConfigurationModel1 new
+	^ ERConferenceConfigurationModel new
 		organizer: esugOrganizer;
 		name: conferenName;
 		description: 'ESUG International Smalltalk Conference';

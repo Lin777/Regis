@@ -1,5 +1,5 @@
 Class {
-	#name : #ERConferenceOrganizer1,
+	#name : #ERConferenceOrganizer,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> addressString [
+ERConferenceOrganizer >> addressString [
 	^ addressString
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> addressString: anObject [
+ERConferenceOrganizer >> addressString: anObject [
 	addressString := anObject
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceOrganizer1 >> descriptionAddressString [
+ERConferenceOrganizer >> descriptionAddressString [
 	<magritteDescription>
 	| tmp |
 	tmp := MAMemoDescription new.
@@ -36,7 +36,7 @@ ERConferenceOrganizer1 >> descriptionAddressString [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceOrganizer1 >> descriptionFiscalSituation [
+ERConferenceOrganizer >> descriptionFiscalSituation [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -50,7 +50,7 @@ ERConferenceOrganizer1 >> descriptionFiscalSituation [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceOrganizer1 >> descriptionName [
+ERConferenceOrganizer >> descriptionName [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -64,7 +64,7 @@ ERConferenceOrganizer1 >> descriptionName [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceOrganizer1 >> descriptionWebPageUrl [
+ERConferenceOrganizer >> descriptionWebPageUrl [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -78,31 +78,31 @@ ERConferenceOrganizer1 >> descriptionWebPageUrl [
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> fiscalSituation [
+ERConferenceOrganizer >> fiscalSituation [
 	^ fiscalSituation
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> fiscalSituation: anObject [
+ERConferenceOrganizer >> fiscalSituation: anObject [
 	fiscalSituation := anObject
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> name [
+ERConferenceOrganizer >> name [
 	^ name
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> name: anObject [
+ERConferenceOrganizer >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> webPageUrl [
+ERConferenceOrganizer >> webPageUrl [
 	^ webPageUrl
 ]
 
 { #category : #accessing }
-ERConferenceOrganizer1 >> webPageUrl: anObject [
+ERConferenceOrganizer >> webPageUrl: anObject [
 	webPageUrl := anObject
 ]

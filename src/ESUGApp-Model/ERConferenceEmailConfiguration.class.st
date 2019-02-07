@@ -1,5 +1,5 @@
 Class {
-	#name : #ERConferenceEmailConfiguration1,
+	#name : #ERConferenceEmailConfiguration,
 	#superclass : #Object,
 	#instVars : [
 		'senderEmailAddress',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration1 >> descriptionSenderEmailAddress [
+ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -25,7 +25,7 @@ ERConferenceEmailConfiguration1 >> descriptionSenderEmailAddress [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration1 >> descriptionSmptClient [
+ERConferenceEmailConfiguration >> descriptionSmptClient [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -39,7 +39,7 @@ ERConferenceEmailConfiguration1 >> descriptionSmptClient [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration1 >> descriptionSmptServerAddress [
+ERConferenceEmailConfiguration >> descriptionSmptServerAddress [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -53,7 +53,7 @@ ERConferenceEmailConfiguration1 >> descriptionSmptServerAddress [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration1 >> descriptionWelcomeText [
+ERConferenceEmailConfiguration >> descriptionWelcomeText [
 	<magritteDescription>
 	| tmp |
 	tmp := MAMemoDescription new.
@@ -68,41 +68,41 @@ ERConferenceEmailConfiguration1 >> descriptionWelcomeText [
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> senderEmailAddress [
+ERConferenceEmailConfiguration >> senderEmailAddress [
 	^ senderEmailAddress
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> senderEmailAddress: anObject [
+ERConferenceEmailConfiguration >> senderEmailAddress: anObject [
 	senderEmailAddress := anObject
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> smptClient [
+ERConferenceEmailConfiguration >> smptClient [
 	^ smptClient
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> smptClient: anObject [
+ERConferenceEmailConfiguration >> smptClient: anObject [
 	smptClient := anObject
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> smptServerAddress [
+ERConferenceEmailConfiguration >> smptServerAddress [
 	^ smptServerAddress
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> smptServerAddress: anObject [
+ERConferenceEmailConfiguration >> smptServerAddress: anObject [
 	smptServerAddress := anObject
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> welcomeText [
+ERConferenceEmailConfiguration >> welcomeText [
 	^ welcomeText
 ]
 
 { #category : #accessing }
-ERConferenceEmailConfiguration1 >> welcomeText: anObject [
+ERConferenceEmailConfiguration >> welcomeText: anObject [
 	welcomeText := anObject
 ]

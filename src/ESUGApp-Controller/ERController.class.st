@@ -270,6 +270,14 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 					ERException emailAlreadyRegistered signal ] ]]
 ]
 
+{ #category : #rendering }
+ERController >> validateLoginFor: aString1 password: aString2 [
+	^  conference users 
+			detect: [:each | each email = aString1 and: [each password = aString2]] 
+			ifNone: nil
+	
+]
+
 { #category : #'as yet unclassified' }
 ERController >> validateNewPassword: aString1 with: aString2 [
 	(aString1 = aString2) ifFalse: [ ERException passwordDoesNotMatchWithConfirmPass signal ].

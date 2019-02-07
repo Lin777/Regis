@@ -120,7 +120,8 @@ ERTestControllers class >> testUserAccount [
 		email: 'test@gmail.com';
 		firstName: 'Test';
 		lastName: 'Test';
-		password: (ERUserAccount hashPassword: '12345678') asString;
+		password: '12345678';
+		confirmPassword: '12345678';
 		yourself
 ]
 
@@ -142,7 +143,7 @@ ERTestControllers >> defaultStore [
 { #category : #rendering }
 ERTestControllers >> registerAsGroupManager [
 	^ (ERRegistrationController
-		attendee: ERTestControllers testAttendee) saveAsGroupManager
+		attendee: ERTestControllers testAttendee) saveGroupManager
 ]
 
 { #category : #rendering }
@@ -164,8 +165,6 @@ ERTestControllers >> setUp [
 	ERUserAccount warmUp.
 	ERAttendee warmUp.
 	ERAward warmUp.
-	ERBankInformation warmUp.
-	ERBankAccountInformation warmUp.
 	ERDiscountStrategy warmUp.
 	ERFixDiscount warmUp.
 	ERPercentageDiscount warmUp.
@@ -195,18 +194,6 @@ ERTestControllers >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERAward coolDown.
-	ERBankInformation
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERBankInformation coolDown.
-	ERBankAccountInformation
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERBankAccountInformation coolDown.
 	ERDiscountStrategy
 		do: [ :each | 
 			[ each delete ]

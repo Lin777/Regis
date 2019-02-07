@@ -1,5 +1,5 @@
 Class {
-	#name : #ERConferenceConfigurationModel1,
+	#name : #ERConferenceConfigurationModel,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -17,47 +17,47 @@ Class {
 }
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateFrom [
+ERConferenceConfigurationModel >> dateFrom [
 	^ dateFrom
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateFrom: anObject [
+ERConferenceConfigurationModel >> dateFrom: anObject [
 	dateFrom := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateSubmissionDeadline [
+ERConferenceConfigurationModel >> dateSubmissionDeadline [
 	^ dateSubmissionDeadline
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateSubmissionDeadline: anObject [
+ERConferenceConfigurationModel >> dateSubmissionDeadline: anObject [
 	dateSubmissionDeadline := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateTo [
+ERConferenceConfigurationModel >> dateTo [
 	^ dateTo
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> dateTo: anObject [
+ERConferenceConfigurationModel >> dateTo: anObject [
 	dateTo := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> description [
+ERConferenceConfigurationModel >> description [
 	^ description
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> description: anObject [
+ERConferenceConfigurationModel >> description: anObject [
 	description := anObject
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionDateFrom [
+ERConferenceConfigurationModel >> descriptionDateFrom [
 	<magritteDescription>
 	| tmp2 |
 	tmp2 := MAStringDescription new.
@@ -76,7 +76,7 @@ ERConferenceConfigurationModel1 >> descriptionDateFrom [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionDateSubmissionDeadline [
+ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 	<magritteDescription>
 	| tmp2 |
 	tmp2 := MAStringDescription new.
@@ -94,7 +94,7 @@ ERConferenceConfigurationModel1 >> descriptionDateSubmissionDeadline [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionDateTo [
+ERConferenceConfigurationModel >> descriptionDateTo [
 	<magritteDescription>
 	| tmp2 |
 	tmp2 := MAStringDescription new.
@@ -112,7 +112,7 @@ ERConferenceConfigurationModel1 >> descriptionDateTo [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionDescription [
+ERConferenceConfigurationModel >> descriptionDescription [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -126,7 +126,7 @@ ERConferenceConfigurationModel1 >> descriptionDescription [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionEarlyRegistrationDeadline [
+ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 	<magritteDescription>
 	| tmp2 |
 	tmp2 := MAStringDescription new.
@@ -144,7 +144,7 @@ ERConferenceConfigurationModel1 >> descriptionEarlyRegistrationDeadline [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionHomePageUrl [
+ERConferenceConfigurationModel >> descriptionHomePageUrl [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -158,7 +158,7 @@ ERConferenceConfigurationModel1 >> descriptionHomePageUrl [
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> descriptionName [
+ERConferenceConfigurationModel >> descriptionName [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -172,77 +172,77 @@ ERConferenceConfigurationModel1 >> descriptionName [
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> earlyRegistrationDeadline [
+ERConferenceConfigurationModel >> earlyRegistrationDeadline [
 	^ earlyRegistrationDeadline
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> earlyRegistrationDeadline: anObject [
+ERConferenceConfigurationModel >> earlyRegistrationDeadline: anObject [
 	earlyRegistrationDeadline := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> emailConfiguration [
+ERConferenceConfigurationModel >> emailConfiguration [
 	^ emailConfiguration
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> emailConfiguration: anObject [
+ERConferenceConfigurationModel >> emailConfiguration: anObject [
 	emailConfiguration := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> homePageUrl [
+ERConferenceConfigurationModel >> homePageUrl [
 	^ homePageUrl
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> homePageUrl: anObject [
+ERConferenceConfigurationModel >> homePageUrl: anObject [
 	homePageUrl := anObject
 ]
 
 { #category : #initialization }
-ERConferenceConfigurationModel1 >> initialize [
+ERConferenceConfigurationModel >> initialize [
 	super initialize.
 	self openRegistration: true
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> messageInvalidDate [
+ERConferenceConfigurationModel >> messageInvalidDate [
 	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> name [
+ERConferenceConfigurationModel >> name [
 	^ name
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> name: anObject [
+ERConferenceConfigurationModel >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> openRegistration [
+ERConferenceConfigurationModel >> openRegistration [
 	^ openRegistration
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> openRegistration: anObject [
+ERConferenceConfigurationModel >> openRegistration: anObject [
 	openRegistration := anObject
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> organizer [
+ERConferenceConfigurationModel >> organizer [
 	^ organizer
 ]
 
 { #category : #accessing }
-ERConferenceConfigurationModel1 >> organizer: anObject [
+ERConferenceConfigurationModel >> organizer: anObject [
 	organizer := anObject
 ]
 
 { #category : #'as yet unclassified' }
-ERConferenceConfigurationModel1 >> patternDate [ 
+ERConferenceConfigurationModel >> patternDate [ 
 	^ '^([0]?[1-9]|[1][0-2])[./-]([0]?[0-9]|[12][0-9]|[3][01])[./-]([0-9]{4}|[0-9]{2})$'
 ]
