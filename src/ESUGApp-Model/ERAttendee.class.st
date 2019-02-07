@@ -8,6 +8,7 @@ Class {
 		'affiliationInformation',
 		'additionalInformation',
 		'paymentInformation'
+		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -74,7 +75,16 @@ ERAttendee >> additionalInformation: anObject [
 
 { #category : #accessing }
 ERAttendee >> affiliationInformation [
-	^ affiliationInformation
+  ^ affiliationInformation 
+]
+  
+ERAttendee >> encodedInvoice [
+	^ encodedInvoice
+]
+
+{ #category : #accessing }
+ERAttendee >> encodedInvoice: anObject [
+	encodedInvoice := anObject
 ]
 
 { #category : #accessing }

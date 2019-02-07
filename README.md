@@ -43,7 +43,7 @@ password: 12345678
 
 * [x] create an account
 * [x] register: days, participate to social dinner, vegetarian/vegans/..., polo gender/size (Man XS, Woman XS, M/W M, M/W L, M/W XL, => M/W 4XL), social networks info
-* [ ] coupon to pay less/free
+* [x] coupon to pay less/free
 * [ ] can get its invoice -> unique invoice number
 * [ ] add an extra person to the social diner
 * [ ] get a *pdf* invoice (current Patagonia send it in HTML...) re-ask me a template
@@ -64,10 +64,10 @@ password: 12345678
 * [x] price for extra person to the social dinner
 * [ ] STMP server : currently we use a REST service to send emails (PatSmtpToPostMarkClientAdapter) and this is  easier than having its own SMTP server
 * [x] Open / close registration
-* [ ] create coupons : percentage discount, fixed reduction, limited usage
+* [x] create coupons : percentage discount, fixed reduction, limited usage
 	cf. https://esug.github.io/become_sponsor.html when clicking on a coupon -> see all registrations that used it 
 * [x] modify a registration
-* [ ] apply a coupon on a registration
+* [x] apply a coupon on a registration
 * [ ] Report to see who paid 
 * [ ] mark a bill as paid => all registration of this bill are marked as paid
 

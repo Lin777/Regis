@@ -67,6 +67,56 @@ ERContainerTab >> controller: anObject [
 	controller := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERContainerTab >> encodeFileToUTF8: aFile [
+	^ aFile exists 
+		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
+		ifFalse: [ nil ]. 
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> encodeFiletoBase64: aFile [
+	^ aFile exists 
+		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
+		ifFalse: [ nil ]. 
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> generateInvoice: aAttendee [
+	| groupAttendee |
+	groupAttendee := controller getGroupOfAttendee: aAttendee. 
+	groupAttendee ifNil: [ self generateInvoiceAttendee: aAttendee ] 
+	ifNotNil: [ self generateInvoiceGroup: groupAttendee ].
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> generateInvoiceAttendee: aAttendee [
+	aAttendee hasPaid ifTrue: [ 
+		| file |
+		file := ERPDFInvoice templateRegistrationInvoice: aAttendee.
+		aAttendee encodedInvoice: (self encodeFiletoBase64: file).
+		controller updateAttendee: aAttendee.
+		file ensureDelete.
+	].
+	self updateStateTab: self tabName.
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> generateInvoiceGroup: aGroup [
+	(controller allAttendeesHasPaid: aGroup) ifTrue: [ 
+		| file encodeFile |
+		file := ERPDFInvoice templateRegistrationInvoice: aGroup groupManager.
+		encodeFile := self encodeFiletoBase64: file.
+		aGroup listAttends do: [ :aAttendee | 
+			aAttendee encodedInvoice: encodeFile.
+			aAttendee save.
+		].
+		aGroup encodedInvoice: encodeFile.
+		file ensureDelete.
+	].
+	self updateStateTab: self tabName.
+]
+
 { #category : #initialization }
 ERContainerTab >> initialize [
 	super initialize.

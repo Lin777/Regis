@@ -84,12 +84,12 @@ ERFeesTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :aFee | self modifyFee: aFee ]
 				with: [ :aFee | aFee id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :aFee | self deleteFee: aFee ]
 				with: [ :aFee | aFee id , '-delete' ]);
 		yourself

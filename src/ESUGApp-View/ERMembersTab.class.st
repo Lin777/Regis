@@ -19,12 +19,18 @@ ERMembersTab >> attends [
 
 { #category : #'as yet unclassified' }
 ERMembersTab >> blockTableToExecute [
-	^ [:user | OrderedCollection new
+	^ [:user :html | OrderedCollection new
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
-		add: ([ :att | att paymentInformation hasPaid ifTrue: [ 'Yes' ] ifFalse: [ 'No' ] ] value: user);
+		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				disabled: true;
+				value: att paymentInformation hasPaid;
+				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
+				onChange: (html jQuery ajax serializeForm).
+				] ] valueWithArguments: {user. html});
 		yourself
 	]
 ]
@@ -32,6 +38,17 @@ ERMembersTab >> blockTableToExecute [
 { #category : #accessing }
 ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
 	controller deleteAttendee: anAttendee
+]
+
+{ #category : #rendering }
+ERMembersTab >> dictToRenderDownloadButton [
+	^ Dictionary new
+		at: 'icon' put: 'get_app';
+		at: 'id' put: [ :attend | attend id , '-get_app' ];
+		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend hasPaid ]) not ];
+		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		yourself
 ]
 
 { #category : #accessing }
@@ -57,33 +74,33 @@ ERMembersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyRegistrationInformation: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteAttendeeFromGroup: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Modify User'
+				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
-				with: 'Reset Password'
+				with: 'replay'
 				with: [ nil ]
 				with: [ :user | user id , '-resetPassword' ]);
 		add:
 			(Array
-				with: 'Apply Reduction'
+				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user  ]
 				with: [ :user | user id , '-applyReduction' ]);
 		add:
 			(Array
-				with: 'Invoice'
-				with: [ nil ]
+				with: 'description'
+				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
@@ -139,7 +156,8 @@ ERMembersTab >> renderTableOfAttends: html [
 		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

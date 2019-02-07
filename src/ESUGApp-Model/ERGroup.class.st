@@ -5,6 +5,7 @@ Class {
 		'groupManager',
 		'listAttends',
 		'paymentInformation'
+		'encodedInvoice'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -17,6 +18,16 @@ ERGroup class >> groupManager: aGroupManager [
 { #category : #'initialize-release' }
 ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
+]
+
+{ #category : #accessing }
+ERGroup >> encodedInvoice [
+	^ encodedInvoice
+]
+
+{ #category : #accessing }
+ERGroup >> encodedInvoice: anObject [
+	encodedInvoice := anObject
 ]
 
 { #category : #accessing }

@@ -3,14 +3,15 @@ Class {
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'groupManagerForm',
-		'newAttendee'
+		'newAttendee',
+		'encodeCSVFile'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #rendering }
 ERGroupManagersTab >> blockTableToExecute [
-	^ [ :group | 
+	^ [ :group :html | 
 	OrderedCollection new
 		add: ([ :att | att groupManager userAccount firstName ] value: group);
 		add: ([ :att | att groupManager userAccount email ] value: group);
@@ -18,8 +19,24 @@ ERGroupManagersTab >> blockTableToExecute [
 		add:
 			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
 				value: group);
-		add: ([ :att | att paymentInformation hasPaid ifTrue: [ 'Yes' ] ifFalse: [ 'No' ] ] value: group);
-		yourself ]
+		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				value: (controller allAttendeesHasPaid: att);
+				onTrue: [ controller stateUpdatePaidAttendees: att ] 
+				onFalse: [ controller stateUpdateNotPaidAttendees: att ];
+				onChange: (html jQuery ajax serializeForm).
+				] ] valueWithArguments: {group. html});
+		yourself ].
+]
+
+{ #category : #rendering }
+ERGroupManagersTab >> dictToRenderDownloadButton [
+	^ Dictionary new 
+	at: 'icon' put: 'get_app';
+	at: 'id' put: [ :group | group id , '-get_app' ];
+	at: 'disabled' put: [:group | ((controller allAttendeesHasPaid: group) and: [ group encodedInvoice isNotNil ]) not ];
+	at: 'url' put: [ :group | 'data:text/pdf;base64,', (group encodedInvoice ifNil: [ '' ])];
+	at: 'download' put: [ :group | 'RegistrationInvoice_', group id, '.pdf'];
+	yourself.
 ]
 
 { #category : #rendering }
@@ -28,7 +45,10 @@ ERGroupManagersTab >> deleteGroup: user [
 
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
-	controller exportGroupManagers: 'groupManagers'.
+	| file |
+	file := controller exportGroupManagers: 'groupManagers'.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
 	self updateStateTab: self tabName
 ]
 
@@ -47,28 +67,28 @@ ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyAffiliation: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteGroup: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Modify User'
+				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user groupManager userAccount ]
 				with: [ :user | user id , '-modifyUser' ]);
 		add:
 			(Array
-				with: 'Reset Password'
+				with: 'replay'
 				with: [ nil ]
 				with: [ :user | user id , '-resetPassword' ]);
 		add:
 			(Array
-				with: 'Invoice'
-				with: [ nil ]
+				with: 'description'
+				with: [ :user | self generateInvoiceGroup: user ]
 				with: [ :user | user id , '-invoice' ]);
 		yourself
 ]
@@ -79,7 +99,8 @@ ERGroupManagersTab >> renderButtons: html [
 		colored;
 		id: 'exportGroups';
 		callback: [ self exportGroups ];
-		with: 'Export'
+		with: 'Export'.
+	self renderDownloadButton: html.
 ]
 
 { #category : #rendering }
@@ -93,6 +114,19 @@ ERGroupManagersTab >> renderContainer: html [
 	self renderTableOfGroups: html]
 ]
 
+{ #category : #rendering }
+ERGroupManagersTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadDataGroupManagers';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'dataGroupManagers.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
+]
+
 { #category : #accessing }
 ERGroupManagersTab >> renderTableOfGroups: html [
 	table := ERTable new
@@ -100,7 +134,8 @@ ERGroupManagersTab >> renderTableOfGroups: html [
 		levelTotal: 6;
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

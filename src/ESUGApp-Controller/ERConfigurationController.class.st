@@ -144,10 +144,12 @@ ERConfigurationController >> exportAttends: fileName [
 							each userAccount lastName.
 							each userAccount email.
 							each contactInformation country.
-							each affiliationInformation organizationName} ] ].
+							each affiliationInformation organizationName} ].
+			neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -163,10 +165,13 @@ ERConfigurationController >> exportAwards: fileName [
 					neoWriter
 						nextPut:
 					{each nameAward.
-					each submitter userAccount email} ]].
+					each submitter userAccount email}].
+
+			neoWriter close ].
 				self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -193,10 +198,12 @@ ERConfigurationController >> exportGroupManagers: fileName [
 							each groupManager affiliationInformation organizationCountry.
 							each groupManager affiliationInformation organizationProvince.
 							each groupManager affiliationInformation organizationPostal.
-							each groupManager affiliationInformation membershipType} ] ].
+							each groupManager affiliationInformation membershipType} ].
+				neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -212,10 +219,12 @@ ERConfigurationController >> exportTalks: fileName [
 				nextPut:
 					{each name.
 					each submitter userAccount email.
-					each presentation} ]].
+					each presentation} ].
+			neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #rendering }
@@ -235,10 +244,12 @@ ERConfigurationController >> exportUsers: fileName [
 							each lastName.
 							each email.
 							each password.
-							each rolesAsString} ] ].
+							each rolesAsString} ].
+				neoWriter close ].
 	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'cvs'
-		withStream: cvs
+		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
+		withStream: cvs.
+	^ (fileName, '.csv') asFileReference
 ]
 
 { #category : #accessing }

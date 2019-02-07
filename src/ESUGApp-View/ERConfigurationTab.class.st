@@ -39,3 +39,16 @@ ERConfigurationTab >> initialize [
 ERConfigurationTab >> initializeController [
 	controller := ERConfigurationController new attendee: attendee
 ]
+
+{ #category : #rendering }
+ERConfigurationTab >> renderDownloadButton: html with: aDictionary [
+	| downloadButton |
+	downloadButton := html mdlAnchorButton colored;
+		id: (aDictionary at: 'id');
+		disabled: (aDictionary at: 'disabled').
+	downloadButton isDisabled ifFalse: [
+		downloadButton url: (aDictionary at: 'encodeFile');
+		attributeAt: 'download' put: (aDictionary at: 'nameFile').
+	].
+	downloadButton with: (aDictionary at: 'nameButton').
+]

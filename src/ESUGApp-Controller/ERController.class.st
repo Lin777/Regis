@@ -43,6 +43,12 @@ ERController >> addUser: anUser [
 	^ userSaved
 ]
 
+{ #category : #rendering }
+ERController >> allAttendeesHasPaid: aGroup [
+	^ aGroup listAttends ifEmpty: [ false ] 
+	ifNotEmpty: [ aGroup listAttends allSatisfy: [:attend | attend hasPaid ] ]
+]
+
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	conference configuration earlyRegistrationDeadline asDate < Date today
@@ -154,8 +160,26 @@ ERController >> feePerTypeCurrencyOf: anAttendee [
 ERController >> findUserByEmail: aString [
 	^ conference users 
 		detect: [ :each | each email = aString ] 
-		ifNone: nil.
+    ifNone: nil.]
 	
+{ #category : #'as yet unclassified' }
+ERController >> getGroupOfAttendee: aAttendee [
+	| groupOfAttendee |
+	self conference groups detect: [ :aGroup | 
+		aGroup listAttends detect: [ :aAtt | 
+			aAtt userAccount = aAttendee userAccount ] 
+		ifFound: [ :aAtt | groupOfAttendee := aGroup. true ]
+		ifNone: [ false ]
+	] ifNone: [ ].
+	^ groupOfAttendee 
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> groupManagerAmountOfPay: aGroupManager [
+	| fee amount |
+	fee := self feePerTypeCurrencyOf: aGroupManager.
+	amount := self amountForCurrentDateFor: fee.
+	^ self decreaseCouponAmountFor: amount to: aGroupManager
 ]
 
 { #category : #accessing }
@@ -222,7 +246,47 @@ ERController >> reductionTicketWithName: aString [
 { #category : #'as yet unclassified' }
 ERController >> submittedAwardsFor: anAttendee [
 	^ self conference submittedAwards 
-			select: [ :each | each submitter = anAttendee ]
+  select: [ :each | each submitter = anAttendee ]]
+
+ERController >> stateUpdateNotPaidAttendees: aGroup [
+	aGroup listAttends do: [ :attend | 
+		self stateUpdatePaidAttendee: attend with: false
+	].
+	aGroup encodedInvoice: nil.
+	aGroup groupManager paymentAmount: nil."Review with the merge"
+	aGroup save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
+	anAttendee hasPaid: aBoolean.
+	aBoolean ifFalse: [ 
+		anAttendee encodedInvoice: nil.
+		anAttendee paymentAmount: nil.	
+	] ifTrue: [ 
+		anAttendee paymentAmount: (self conferenceFeeFor: anAttendee).
+	].
+	anAttendee save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> stateUpdatePaidAttendees: aGroup [
+	| generalAmount amount |
+	generalAmount := 0.
+	aGroup listAttends do: [ :attend | 
+		attend hasPaid: true.
+		amount := self conferenceFeeFor: attend.
+		attend paymentAmount: amount.
+		generalAmount := generalAmount + amount.
+		attend save.
+	].
+	aGroup groupManager paymentAmount: generalAmount.
+	aGroup save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updateAttendee: anAteendee [
+	anAteendee save
 ]
 
 { #category : #'as yet unclassified' }

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'formUser',
 		'newUser',
-		'fileId'
+		'fileId',
+		'encodeCSVFile'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -45,8 +46,11 @@ ERUsersTab >> deleteUser: user [
 
 { #category : #rendering }
 ERUsersTab >> exportUsers [
-	controller exportUsers: 'users' , self fileIdUsers asString .
-  self updateStateTab: self tabName.
+	| file |
+	file := controller exportUsers: 'users' , self fileIdUsers asString.
+	encodeCSVFile := self encodeFileToUTF8: file.
+	file ensureDelete.
+  	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -78,17 +82,17 @@ ERUsersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
-				with: 'Modify'
+				with: 'edit'
 				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modify' ]);
 		add:
 			(Array
-				with: 'Delete'
+				with: 'delete'
 				with: [ :user | self deleteUser: user ]
 				with: [ :user | user id , '-delete' ]);
 		add:
 			(Array
-				with: 'Reset Password'
+				with: 'replay'
 				with: [ :user | self resetPassword: user ]
 				with: [ :user | user id , '-resetPassword' ]);
 		yourself
@@ -120,7 +124,8 @@ ERUsersTab >> renderButtons: html [
 		colored;
 		id: 'exportUsers';
 		callback:  [ self exportUsers ];
-		with: 'Export'
+		with: 'Export'.
+	self renderDownloadButton: html.
 ]
 
 { #category : #rendering }
@@ -131,6 +136,19 @@ ERUsersTab >> renderContainer: html [
 		with: [ self renderButtons: html.
 			html horizontalRule.
 			self renderTableOfUsers: html ]
+]
+
+{ #category : #rendering }
+ERUsersTab >> renderDownloadButton: html [
+	| dictionary |
+	dictionary := Dictionary new 
+	at: 'id' put: 'downloadDataUsers';
+	at: 'disabled' put: encodeCSVFile isNil;
+	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
+	at: 'nameFile' put: 'dataUsers.csv';
+	at: 'nameButton' put: 'Download';
+	yourself.
+	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #rendering }

@@ -6,7 +6,8 @@ Class {
 		'listToRenderButton',
 		'listObject',
 		'levelTotal',
-		'headers'
+		'headers',
+		'dictToRenderDownloadButton'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -14,6 +15,11 @@ Class {
 { #category : #accessing }
 ERTable >> blockToExecute: anObject [
 	blockToExecute := anObject
+]
+
+{ #category : #accessing }
+ERTable >> dictToRenderDownloadButton: aDictionary [
+	dictToRenderDownloadButton := aDictionary 
 ]
 
 { #category : #accessing }
@@ -26,6 +32,7 @@ ERTable >> initialize [
 	"blockToExecute listToRenderButton listObject levelTotal headers"
 	super initialize.
 	listToRenderButton := OrderedCollection new.
+	dictToRenderDownloadButton := Dictionary new.
 	listObject := OrderedCollection new.
 	levelTotal := 6.
 	headers := OrderedCollection new.
@@ -49,7 +56,7 @@ ERTable >> listToRenderButton: anObject [
 { #category : #rendering }
 ERTable >> render: html with: aObject [
 	| listContent |
-	listContent := blockToExecute value: aObject.
+	listContent := blockToExecute valueWithPossibleArgs: {aObject. html}.
 	listContent do: [ :content |
 		html mdlTableCell nonNumerical; with: content.
 	].
@@ -69,11 +76,11 @@ ERTable >> renderBody: html [
 ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
-			html mdlAnchorButton
-		colored;
-		id: (dataButton third value: aObject);
-		callback: [ dataButton second value: aObject ];
-		with: dataButton first]
+			html mdlAnchorButton colored;	rippleEffect;
+			id: (dataButton third value: aObject);
+			callback: [ dataButton second value: aObject ];
+			icon: dataButton first ].
+	self renderDownloadButton: html with: aObject
 ]
 
 { #category : #rendering }
@@ -88,6 +95,20 @@ ERTable >> renderContentOn: html [
 		]
 	].
 	self renderTotalRows: html.
+]
+
+{ #category : #rendering }
+ERTable >> renderDownloadButton: html with: aObject [
+	dictToRenderDownloadButton ifNotEmpty: [ 
+		| downloadButton |
+		downloadButton := html mdlAnchorButton colored;	rippleEffect;
+			id: ((dictToRenderDownloadButton at: 'id') value: aObject);
+			disabled: ((dictToRenderDownloadButton at: 'disabled') value: aObject).
+		downloadButton isDisabled ifFalse: [ 
+			downloadButton url: ((dictToRenderDownloadButton at: 'url') value: aObject);
+			attributeAt: 'download' put: ((dictToRenderDownloadButton at: 'download') value: aObject)].
+		downloadButton icon: (dictToRenderDownloadButton at: 'icon').
+	].
 ]
 
 { #category : #rendering }
