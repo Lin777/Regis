@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'currentTab',
 		'tabs',
-		'actionRegister',
 		'messageComponent',
 		'basicInfoTab',
 		'affiliationInfo',
@@ -20,11 +19,6 @@ ERRegisterPage class >> content: aContent [
 	instance content: aContent.
 	instance initializeTabForms.
 	^ instance
-]
-
-{ #category : #accessing }
-ERRegisterPage >> actionRegister: anObject [
-	actionRegister := anObject
 ]
 
 { #category : #'as yet unclassified' }
@@ -136,8 +130,7 @@ ERRegisterPage >> renderDoneButtonOn: html [
 		id: 'registerButton';
 		callback: [ [ self validateAndRegister ]
 				on: ERException
-				do:
-					[ :exception | messageComponent errorMessage: exception messageText ] ];
+				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
 		with: 'Save Information'
 ]
 
@@ -179,11 +172,6 @@ ERRegisterPage >> saveBasicInfo [
 { #category : #initialize }
 ERRegisterPage >> saveTabs [
 	self subclassResponsibility 
-]
-
-{ #category : #hooks }
-ERRegisterPage >> states [
-    ^ Array with: self
 ]
 
 { #category : #accessing }

@@ -18,15 +18,6 @@ ERUsersTab >> addUser [
 ]
 
 { #category : #rendering }
-ERUsersTab >> addUserToConference [
-	| result |
-	result := controller addUser: newUser.
-	result
-		ifNil: [ Transcript show: 'This email already registered' ]
-		ifNotNil: [ content state: content lastState ]
-]
-
-{ #category : #rendering }
 ERUsersTab >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
