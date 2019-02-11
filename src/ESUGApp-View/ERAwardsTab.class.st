@@ -28,7 +28,7 @@ ERAwardsTab >> children [
 		yourself
 ]
 
-{ #category : #'' }
+{ #category : #'as yet unclassified' }
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller exportAwards: 'awards'.
