@@ -88,10 +88,6 @@ BaselineOfESUGApp >> postload: loader package: packageSpec [
 	self loadMagritteForMDL .
 	self loadArtefact .
 	
-	self halt.
-	
-	(Smalltalk at: #Gofer ) new package: #'ESUGApp-MDLMagritte'; load.
-	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	Smalltalk cleanOutUndeclared.
 	
