@@ -1,6 +1,9 @@
 Class {
 	#name : #BaselineOfESUGApp,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfESUGApp
 }
 
@@ -9,7 +12,10 @@ BaselineOfESUGApp >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ self setUpDependencies: spec.
+		do: [
+			spec postLoadDoIt: #'postload:package:'.
+		
+			self setUpDependencies: spec.
 			spec
 				package: 'ESUGApp-Exception';
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
@@ -29,10 +35,68 @@ BaselineOfESUGApp >> baseline: spec [
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Controller' 'ESUGApp-Component') ];
 				package: 'ESUGApp-Test'
 					with: [ spec
-						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ];
+						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ]";
 				package: 'ESUGApp-MDLMagritte' with: [ spec
 						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]]
+							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]"]
+]
+
+{ #category : #baselines }
+BaselineOfESUGApp >> loadArtefact [
+	Metacello new
+        githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
+        baseline: 'Artefact';
+        onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+        load.
+]
+
+{ #category : #baselines }
+BaselineOfESUGApp >> loadMagritte [
+	Metacello new
+	baseline: 'Magritte';
+		repository: 'github://magritte-metamodel/magritte:master/source';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: #('Magritte-Seaside')
+]
+
+{ #category : #baselines }
+BaselineOfESUGApp >> loadMagritteForMDL [
+	Metacello new 
+		baseline: 'MaterialDesignLite'; 
+		repository: 'github://DuneSt/MaterialDesignLite:v2.1.1/src';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: 'all'.
+	
+]
+
+{ #category : #baselines }
+BaselineOfESUGApp >> postload: loader package: packageSpec [
+	
+	"Ignore pre and post loads if already executed"
+	| initializersEnabled repo gofer |
+	"self halt."
+	Initialized = true ifTrue: [ ^ self ].
+	
+	initializersEnabled := MCMethodDefinition initializersEnabled.
+
+	MCMethodDefinition initializersEnabled: false.
+	
+	"repo := TonelRepository new
+	directory: self packageRepository directory;
+	yourself."
+	self loadMagritte .
+	self loadMagritteForMDL .
+	self loadArtefact .
+	
+	self halt.
+	
+	(Smalltalk at: #Gofer ) new package: #'ESUGApp-MDLMagritte'; load.
+	
+	MCMethodDefinition initializersEnabled: initializersEnabled.
+	Smalltalk cleanOutUndeclared.
+	
+	
+	Initialized := true.
 ]
 
 { #category : #baselines }
