@@ -8,6 +8,31 @@ Class {
 }
 
 { #category : #tests }
+ERTestModel class >> testBankAccountInfo [
+	^ ERBankAccountInformation new
+		owner: 'ESUG - EUROPEAN SMALLTALK USERS GROUP';
+		number: 'W751167780';
+		iban: 'FR76 1562 9027 0100 0433 0600 144';
+		ribKey: '44';
+		bankInformation: self testBankinfo;
+		yourself
+]
+
+{ #category : #tests }
+ERTestModel class >> testBankinfo [
+	^ ERBankInformation new
+				name: 'Crédit Mutuel Nord Europe';
+				code: '15629';
+				counterCode: '02701';
+				bic: 'CMCIFR2A';
+				addressString:
+					'CCM Douai
+92 rue de Paris
+59500 Douai';
+yourself
+]
+
+{ #category : #tests }
 ERTestModel class >> testConference [
 	^ ERConference new
 		configuration: self class testConferenceConfigurationModel;
@@ -51,6 +76,21 @@ ERTestModel class >> testConferenceOrganizer [
 ]
 
 { #category : #tests }
+ERTestModel class >> testFee [
+	^ ERFee new
+		erfAllDaysFee: 470;
+		erfOneDayFee: 170;
+		lrfAllDaysFee: 660;
+		lrfOneDayFee: 210;
+		extraPersonSD: 50;
+		currency: 'Euro';
+		bankAccountInformation: self testBankAccountInfo;
+		bankPayPalUrl:
+			'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=board%40esug.org&item_name=ESUG+Conference+Registration&item_number=[INVOICENUMBER]&amount=[AMOUNT]&no_shipping=1&no_note=1&currency_code=EUR&charset=UTF-8';
+		yourself
+]
+
+{ #category : #tests }
 ERTestModel class >> testUserExampleAccount [
 	^ ERUserAccount new
 		email: 'example@gmail.com';
@@ -58,6 +98,11 @@ ERTestModel class >> testUserExampleAccount [
 		lastName: 'Example';
 		password: (ERUserAccount hashPassword: '12345678') asString;
 		yourself
+]
+
+{ #category : #tests }
+ERTestModel >> messageInvalidDate [
+	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
 ]
 
 { #category : #tests }
@@ -105,9 +150,72 @@ ERTestModel >> testValidateAffiliationWithEmptyOrganizationPostal [
 ]
 
 { #category : #tests }
+ERTestModel >> testValidateConfConfigDateFromWithoutDateFormat [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateFrom: '30/30/2019'; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageInvalidDate equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConfConfigDateSubmissionDeadlineWithoutDateFormat [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageInvalidDate equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConfConfigDateToWithoutDateFormat [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateTo: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageInvalidDate equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
 ERTestModel >> testValidateConferenceConfigWithEmptyDateFrom [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateFrom: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConferenceConfigWithEmptyDateSubmissionDeadline [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConferenceConfigWithEmptyDateTo [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateTo: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConferenceConfigWithEmptyEarlyRegistrationDeadline [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) earlyRegistrationDeadline: nil; yourself .
+	errors := conference asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConferenceConfigWithEmptyName [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) name: nil; yourself .
 	errors := conference asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: messageInputRequired equals: (errors at:1) messageText
