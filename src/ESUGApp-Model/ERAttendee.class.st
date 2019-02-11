@@ -129,7 +129,7 @@ ERAttendee >> descriptionUser [
 	^ tmp1 yourself
 ]
 
-{ #category : #'' }
+{ #category : #accessing }
 ERAttendee >> encodedInvoice [
 	^ encodedInvoice
 ]
