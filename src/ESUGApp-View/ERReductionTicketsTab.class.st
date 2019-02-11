@@ -87,17 +87,20 @@ ERReductionTicketsTab >> listDataToRenderButton [
 			(Array
 				with: 'edit'
 				with: [ :anTicket | self modifyTicket: anTicket ]
-				with: [ :anTicket | anTicket id , '-modify' ]);
+				with: [ :anTicket | anTicket id , '-modify' ]
+				with: 'Modify');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :anTicket | self deleteTicket: anTicket ]
-				with: [ :anTicket | anTicket id , '-delete' ]);
+				with: [ :anTicket | anTicket id , '-delete' ]
+				with: 'Delete');
 		add:
 			(Array
 				with: 'list'
 				with: [ :anTicket | self listOfTicket: anTicket ]
-				with: [ :anTicket | anTicket id , '-list' ]);
+				with: [ :anTicket | anTicket id , '-list' ]
+				with: 'List of Assistants');
 		yourself
 ]
 

@@ -5,19 +5,35 @@ Class {
 }
 
 { #category : #tests }
-ERTestLoginController >> testFindUserByEmailWhenUserExist [
+ERTestLoginController >> setUp [
+	super setUp .
+	
+]
+
+{ #category : #tests }
+ERTestLoginController >> testLoginWhenPasswordDontMatch [
 	| anUser |
 	self registerAttendee.
-	anUser := ERController new
-		findUserByEmail: ERTestControllers testAttendee email.
+	anUser := ERController new validateLoginFor: self class testUserAccount email 
+								password: (ERUserAccount hashPassword:
+								 'anotherPassword') asString.
+	self assert: anUser isNil
+]
+
+{ #category : #tests }
+ERTestLoginController >> testLoginWhenUserExist [
+	| anUser |
+	self registerAttendee.
+	anUser := ERController new validateLoginFor: self class testUserAccount email 
+								password: (ERUserAccount hashPassword:
+								 self class testUserAccount password) asString.
 	self deny: anUser isNil
 ]
 
 { #category : #tests }
-ERTestLoginController >> testFindUserByEmailWhenUserNotExist [
+ERTestLoginController >> testLoginWhenUserNotExist [
 	| anUser |
-	
-	anUser := ERController new
-		findUserByEmail: ERTestControllers testAttendee email.
+	anUser := ERController new validateLoginFor: ERTestControllers testUserAccount email 
+			password: (ERUserAccount hashPassword: '1234567') asString.
 	self assert: anUser isNil
 ]

@@ -75,6 +75,20 @@ ERUserAccount class >> hashPassword: aString [
 
 ]
 
+{ #category : #converting }
+ERUserAccount >> asAttendee [
+	self role: (Heap new
+		add: 'attendee';
+		yourself)
+]
+
+{ #category : #converting }
+ERUserAccount >> asGroupManager [
+	self role: (Heap new
+		add: 'groupManager';
+		yourself)
+]
+
 { #category : #accessing }
 ERUserAccount >> confirmPassword [
 	^ confirmPassword

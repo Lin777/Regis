@@ -60,55 +60,19 @@ ERTestControllers class >> testContactInformation [
 ERTestControllers class >> testExampleAttendee [
 	^ ERAttendee new
 		userAccount: self testUserExampleAccount;
-		orgName: 'exampleOrgName';
-		orgAddrees1: 'exampleAddress1';
-		orgAddrees2: 'exampleAddress2';
-		orgCity: 'exampleCity';
-		orgCountry: 'Bolivia';
-		orgProvince: 'exampleProvince';
-		orgPostal: '0000';
-		membershipType: 'Student';
-		keywords: 'example example example';
-		additionalText: 'example example example';
-		address: 'exampleAddress';
-		address2: 'exampleAddress2';
-		city: 'exampletCity';
-		country: 'Bolivia';
-		postal: '0000';
-		facebookURL: '';
-		twitterURL: '';
-		homePage: '';
-		foodPreference: 'Normal';
-		attendSocialEvent: true;
-		addedToMainList: true;
-		tshirtSize: 'XL';
-		attendance:
-			(Dictionary
-				newFrom:
-					{('monday' -> true).
-					('tuesday' -> true).
-					('wednesday' -> false).
-					('thursday' -> false).
-					('friday' -> true)});
-		gender: 'Male';
-		paymentType: 'Bank transfer';
-		paymentCurrency: 'Dollar';
-		coupon: '';
+		contactInformation: self testContactInformation ;
+		conferenceInformation: self testRegisterConferenceInformation ;
+		affiliationInformation: self testAffiliationInformation ;
+		additionalInformation: self testAdditionalInformation ;
+		paymentInformation: self testPaymentInformation ;
 		yourself
 ]
 
 { #category : #tests }
 ERTestControllers class >> testGroupManager [
-	^ ERAttendee new
-		userAccount: self testUserAccount;
-		orgName: 'testOrgName';
-		orgAddrees1: 'testAddress1';
-		orgAddrees2: 'testAddress2';
-		orgCity: 'testCity';
-		orgCountry: 'Bolivia';
-		orgProvince: 'testProvince';
-		orgPostal: '0000';
-		membershipType: 'Student';
+	^ ERGroupManager new
+		userAccount: self testUserAccount asGroupManager;
+		affiliationInformation: self testAffiliationInformation;
 		yourself
 ]
 
@@ -168,7 +132,8 @@ ERTestControllers class >> testUserExampleAccount [
 		email: 'example@gmail.com';
 		firstName: 'Example';
 		lastName: 'Example';
-		password: (ERUserAccount hashPassword: '12345678') asString;
+		password: '12345678';
+		confirmPassword: '12345678';
 		yourself
 ]
 
@@ -185,8 +150,8 @@ ERTestControllers >> registerAsGroupManager [
 
 { #category : #rendering }
 ERTestControllers >> registerAttendee [
-	^ (ERRegistrationController
-		attendee: ERTestControllers testAttendee) save
+	^ (ERRegistrationController new attendee: self class testAttendee) saveAttendee 
+	
 ]
 
 { #category : #rendering }
