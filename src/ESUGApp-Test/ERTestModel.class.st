@@ -8,6 +8,49 @@ Class {
 }
 
 { #category : #tests }
+ERTestModel class >> testConference [
+	^ ERConference new
+		configuration: self class testConferenceConfigurationModel;
+		yourself
+]
+
+{ #category : #tests }
+ERTestModel class >> testConferenceConfigurationModel [
+	^ ERConferenceConfigurationModel new
+		organizer: self testConferenceOrganizer;
+		name: 'ESUG';
+		description: 'ESUG International Smalltalk Conference';
+		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
+		dateFrom: '09/10/2019';
+		dateTo: '09/14/2019';
+		dateSubmissionDeadline:  '09/14/2019';
+		earlyRegistrationDeadline: '07/25/2019';
+		emailConfiguration: self testConferenceEmailConfiguration ;
+		yourself
+]
+
+{ #category : #tests }
+ERTestModel class >> testConferenceEmailConfiguration [
+	^ ERConferenceEmailConfiguration new
+		senderEmailAddress: 'registration@esug.org';
+		smptServerAddress: 'localhost';
+		smptClient: '';
+		welcomeText: 'Welcome to this great conference';
+		yourself
+]
+
+{ #category : #tests }
+ERTestModel class >> testConferenceOrganizer [
+	^ ERConferenceOrganizer new
+		name: 'ESUG';
+		fiscalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
+		webPageUrl: 'http://www.esug.org';
+		addressString:
+			'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France';
+		yourself
+]
+
+{ #category : #tests }
 ERTestModel class >> testUserExampleAccount [
 	^ ERUserAccount new
 		email: 'example@gmail.com';
@@ -25,11 +68,11 @@ ERTestModel >> setUp [
 
 { #category : #tests }
 ERTestModel >> testValidateAffiliationWithEmptyOrganizationAddrees1 [
-	| errors org |
+	| conferenceConf org |
 	org := (self class testAffiliationInformation) organizationAddrees1: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	conferenceConf := org asComponent validate; errors.
+	self assert: 1 equals: conferenceConf size.
+	self assert: messageInputRequired equals: (conferenceConf at:1) messageText
 ]
 
 { #category : #tests }
@@ -57,6 +100,15 @@ ERTestModel >> testValidateAffiliationWithEmptyOrganizationPostal [
 	| errors org |
 	org := (self class testAffiliationInformation) organizationPostal: nil; yourself .
 	errors := org asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #tests }
+ERTestModel >> testValidateConferenceConfigWithEmptyDateFrom [
+	| errors conference |
+	conference := (self class testConferenceConfigurationModel) dateFrom: nil; yourself .
+	errors := conference asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: messageInputRequired equals: (errors at:1) messageText
 ]

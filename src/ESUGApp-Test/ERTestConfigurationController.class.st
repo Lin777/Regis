@@ -2,7 +2,6 @@ Class {
 	#name : #ERTestConfigurationController,
 	#superclass : #ERTestControllers,
 	#instVars : [
-		'controller',
 		'fileNames'
 	],
 	#category : #'ESUGApp-Test'

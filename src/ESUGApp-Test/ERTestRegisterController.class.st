@@ -15,28 +15,6 @@ ERTestRegisterController >> setUp [
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testARegisteredGroupManagerHasTheRoleOfGroupManager [
-	"check if the record has the role of group manager"
-
-	| aGroupManager |
-	aGroupManager := (ERRegistrationController
-		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager.
-	self assert: aGroupManager isGroupManager 
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testAddAGroupManager [
-	"when an group manager is successfully registered the same group manager is returned as a result"
-
-	| anAttende |
-	anAttende := (ERRegistrationController
-		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager.
-	self deny: anAttende isNil
-]
-
-{ #category : #tests }
 ERTestRegisterController >> testAddExitentAttendee [
 	"When an assistant's email has already been registered it can not be registered again, therefore a nil is returned "
 
@@ -52,13 +30,13 @@ ERTestRegisterController >> testAddExitentGroupManager [
 	
 	self should: [ (ERRegistrationController
 		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager. ] raise: ERException 
+		saveGroupManager. ] raise: ERException 
 ]
 
 { #category : #tests }
 ERTestRegisterController >> testRegisterAttendee [
 	|userSaved|
-	controller := ERRegistrationController new attendee: self class testAttendee.
+	controller attendee: self class testAttendee.
 	userSaved := controller saveAttendee.
 	self assert: (userSaved role first) equals: 'attendee'.
 	controller conference 
@@ -70,7 +48,7 @@ ERTestRegisterController >> testRegisterAttendee [
 { #category : #tests }
 ERTestRegisterController >> testRegisterGroupManager [
 	|userSaved|
-	controller := ERRegistrationController new attendee: self class testGroupManager.
+	controller attendee: self class testGroupManager.
 	userSaved := controller saveGroupManager.
 	self assert: (userSaved role first) equals: 'groupManager'.
 	
@@ -79,7 +57,40 @@ ERTestRegisterController >> testRegisterGroupManager [
 ]
 
 { #category : #tests }
+ERTestRegisterController >> testValidateIfEmailIsAlreadyRegistered [
+	| wasHandled user |
+	user := self registerAttendee.
+	wasHandled := false.
+	self
+		should: [ 
+			[ controller validateIfEmailIsAlreadyRegistered: user]
+				on: ERException 
+				do: [ :exception | 
+					wasHandled := true.
+					exception return ] ]
+		raise: ERException.
+	self deny: wasHandled
+]
+
+{ #category : #tests }
 ERTestRegisterController >> testValidateRegister [
-	attendee := (ERTestControllers testAttendee) .
-	controller attendee: attendee.
+	| wasHandled  |
+	self registerAttendee .
+	wasHandled := false.
+	self
+		should: [ 
+			[ self halt.controller validateRegister: self class testAttendee ]
+				on: ERException 
+				do: [ :exception | 
+					wasHandled := true.
+					exception return ] ]
+		raise: ERException.
+	
+	self deny: wasHandled
+]
+
+{ #category : #tests }
+ERTestRegisterController >> testValidateRegisterWhenEmailAlreadyRegistered [
+	self registerAttendee .
+	controller validateRegister: self class testAttendee .
 ]

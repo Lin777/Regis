@@ -2,7 +2,8 @@ Class {
 	#name : #ERTestControllers,
 	#superclass : #TestCase,
 	#instVars : [
-		'store'
+		'store',
+		'controller'
 	],
 	#category : #'ESUGApp-Test'
 }
@@ -150,7 +151,7 @@ ERTestControllers >> registerAsGroupManager [
 
 { #category : #rendering }
 ERTestControllers >> registerAttendee [
-	^ (ERRegistrationController new attendee: self class testAttendee) saveAttendee 
+	^ (controller attendee: self class testAttendee) saveAttendee 
 	
 ]
 
