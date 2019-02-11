@@ -47,7 +47,7 @@ BaselineOfESUGApp >> loadArtefact [
         githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
         baseline: 'Artefact';
         onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-        load.
+        load: #('default' 'seaside')
 ]
 
 { #category : #baselines }
