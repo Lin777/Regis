@@ -165,14 +165,9 @@ ERController >> findUserByEmail: aString [
 
 { #category : #'as yet unclassified' }
 ERController >> getGroupOfAttendee: aAttendee [
-	| groupOfAttendee |
-	self conference groups detect: [ :aGroup | 
-		aGroup listAttends detect: [ :aAtt | 
-			aAtt userAccount = aAttendee userAccount ] 
-		ifFound: [ :aAtt | groupOfAttendee := aGroup. true ]
-		ifNone: [ false ]
-	] ifNone: [ ].
-	^ groupOfAttendee 
+	^ aAttendee idGroup 
+	ifNotNil: [ self conference groups detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
+		ifNone: [ nil ] ].
 ]
 
 { #category : #'as yet unclassified' }

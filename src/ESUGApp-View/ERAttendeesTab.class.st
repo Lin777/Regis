@@ -25,6 +25,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | (controller conferenceFeeFor: att) asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+				disabled: att idGroup isNotNil;
 				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
