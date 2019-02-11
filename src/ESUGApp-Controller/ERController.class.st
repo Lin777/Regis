@@ -244,7 +244,7 @@ ERController >> reductionTicketWithName: aString [
 		signal ]
 ]
 
-{ #category : #'' }
+{ #category : #'as yet unclassified' }
 ERController >> stateUpdateNotPaidAttendees: aGroup [
 	aGroup listAttends do: [ :attend | 
 		self stateUpdatePaidAttendee: attend with: false
