@@ -77,9 +77,12 @@ ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
 			html mdlAnchorButton colored;	rippleEffect;
-			id: (dataButton third value: aObject);
-			callback: [ dataButton second value: aObject ];
-			icon: dataButton first ].
+				id: (dataButton third value: aObject);
+				callback: [ dataButton second value: aObject ];
+				icon: dataButton first.
+			html div	class: 'mdl-tooltip'; 
+				attributeAt: 'data-mdl-for' put: (dataButton third value: aObject) ;
+				with: dataButton fourth].
 	self renderDownloadButton: html with: aObject
 ]
 
@@ -108,7 +111,9 @@ ERTable >> renderDownloadButton: html with: aObject [
 			downloadButton url: ((dictToRenderDownloadButton at: 'url') value: aObject);
 			attributeAt: 'download' put: ((dictToRenderDownloadButton at: 'download') value: aObject)].
 		downloadButton icon: (dictToRenderDownloadButton at: 'icon').
-	].
+		html div	class: 'mdl-tooltip'; 
+				attributeAt: 'data-mdl-for' put: ((dictToRenderDownloadButton at: 'id') value: aObject) ;
+				with: 'Download'].
 ]
 
 { #category : #rendering }

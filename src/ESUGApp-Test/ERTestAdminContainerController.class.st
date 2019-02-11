@@ -1,9 +1,6 @@
 Class {
 	#name : #ERTestAdminContainerController,
 	#superclass : #ERTestControllers,
-	#instVars : [
-		'controller'
-	],
 	#category : #'ESUGApp-Test'
 }
 
@@ -50,7 +47,7 @@ ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 ERTestAdminContainerController >> testValidChangePasswordTo [
 	| user |
 	user := controller changePasswordTo: 'test12345.6_78'.
-	self assert: user password equals: (ERUserAccount hashPassword: 'test12345.6_78').
+	self assert: user userAccount password equals: (ERUserAccount hashPassword: 'test12345.6_78').
 ]
 
 { #category : #tests }

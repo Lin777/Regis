@@ -15,37 +15,6 @@ ERTestRegisterController >> setUp [
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testARegisteredAttendeeHasTheRoleOfAttendee [
-	"check if the record has the role of attendee"
-
-	| anAttendee |
-	anAttendee := self registerAttendee.
-	self assert: anAttendee isAttendee
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testARegisteredGroupManagerHasTheRoleOfGroupManager [
-	"check if the record has the role of group manager"
-
-	| aGroupManager |
-	aGroupManager := (ERRegistrationController
-		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager.
-	self assert: aGroupManager isGroupManager 
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testAddAGroupManager [
-	"when an group manager is successfully registered the same group manager is returned as a result"
-
-	| anAttende |
-	anAttende := (ERRegistrationController
-		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager.
-	self deny: anAttende isNil
-]
-
-{ #category : #tests }
 ERTestRegisterController >> testAddExitentAttendee [
 	"When an assistant's email has already been registered it can not be registered again, therefore a nil is returned "
 
@@ -61,200 +30,67 @@ ERTestRegisterController >> testAddExitentGroupManager [
 	
 	self should: [ (ERRegistrationController
 		attendee: ERTestControllers testGroupManager)
-		saveAsGroupManager. ] raise: ERException 
+		saveGroupManager. ] raise: ERException 
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyEmail [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) email: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
+ERTestRegisterController >> testRegisterAttendee [
+	|userSaved|
+	controller attendee: self class testAttendee.
+	userSaved := controller saveAttendee.
+	self assert: (userSaved role first) equals: 'attendee'.
+	controller conference 
+	
+	
+	
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyFirstName [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) firstName: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
+ERTestRegisterController >> testRegisterGroupManager [
+	|userSaved|
+	controller attendee: self class testGroupManager.
+	userSaved := controller saveGroupManager.
+	self assert: (userSaved role first) equals: 'groupManager'.
+	
+	
+	
 ]
 
 { #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyLastName [
-	| wasHandled  |
+ERTestRegisterController >> testValidateIfEmailIsAlreadyRegistered [
+	| wasHandled user |
+	user := self registerAttendee.
 	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) lastName: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyOrganizationCity [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) orgCity: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyOrganizationName [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) orgName: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyOrganizationPostal [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) orgPostal: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyOrganizationProvince [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) orgProvince: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyPostal [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) postal: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithEmptyProvince [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) province: ''; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithInvalidMembershipType [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) membershipType: 'invalid'; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithInvalidPaymentType [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) paymentType: 'invalid'; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithNotValidCountry [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) country: 'Select Country'; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithNotValidGender [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) gender: 'invalid.gender'; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
-]
-
-{ #category : #tests }
-ERTestRegisterController >> testValidateAttendeeWithoutFormatEmail [
-	| wasHandled  |
-	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) email: 'this.is.a.bad.example'; yourself .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
-	self assert: wasHandled
+	self
+		should: [ 
+			[ controller validateIfEmailIsAlreadyRegistered: user]
+				on: ERException 
+				do: [ :exception | 
+					wasHandled := true.
+					exception return ] ]
+		raise: ERException.
+	self deny: wasHandled
 ]
 
 { #category : #tests }
 ERTestRegisterController >> testValidateRegister [
 	| wasHandled  |
+	self registerAttendee .
 	wasHandled := false.
-	attendee := (ERTestControllers testAttendee) .
-	controller attendee: attendee.
-	[controller validateRegister] 
-		on: ERException 
-		do: [:exception | wasHandled := true.
-			exception return] .
+	self
+		should: [ 
+			[ self halt.controller validateRegister: self class testAttendee ]
+				on: ERException 
+				do: [ :exception | 
+					wasHandled := true.
+					exception return ] ]
+		raise: ERException.
+	
 	self deny: wasHandled
+]
+
+{ #category : #tests }
+ERTestRegisterController >> testValidateRegisterWhenEmailAlreadyRegistered [
+	self registerAttendee .
+	controller validateRegister: self class testAttendee .
 ]

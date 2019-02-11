@@ -110,31 +110,32 @@ ERAttendeesTab >> listDataToRenderButton [
 			(Array
 				with: 'edit'
 				with: [ :user | self modifyRegistrationInformation: user ]
-				with: [ :user | user id , '-modify' ]);
+				with: [ :user | user id , '-modify' ]
+				with: 'Modify');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteAttendee: user ]
-				with: [ :user | user id , '-delete' ]);
+				with: [ :user | user id , '-delete' ]
+				with: 'Delete');
 		add:
 			(Array
 				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user userAccount]
-				with: [ :user | user id , '-modifyUser' ]);
-		add:
-			(Array with: 'replay' 
-			with: [ :user | self resetPassword: user ] 
-			with: [ :user | user id , '-resetPassword' ]);
+				with: [ :user | user id , '-modifyUser' ]
+				with: 'Modify User');
 		add:
 			(Array
 				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user ]
-				with: [ :user | user id , '-applyReduction' ]);
+				with: [ :user | user id , '-applyReduction' ]
+				with: 'Apply reduction');
 		add: 
 			(Array 
 				with: 'description' 
 				with: [ :user | self generateInvoice: user ]
-				with: [ :user | user id , '-invoice' ]);
+				with: [ :user | user id , '-invoice' ]
+				with: 'Generate invoice');
 		yourself
 ]
 

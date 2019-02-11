@@ -84,7 +84,6 @@ ERGroupRegistrationSummaryTab >> redirectionPayPAL [
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderButtons: html [
 	self renderModifyAffiliationButtonOn: html.
-	self renderRegisterAttendeeButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderGenerateInvoiceButtonOn: html.
 	self renderDownloadInvoiceButtonOn: html.
@@ -158,16 +157,6 @@ ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
 	html
 		paragraph: [ html strong: 'Payment Status: '.
 			html text: self paymentStatus ]
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderRegisterAttendeeButtonOn: html [
-	html mdlAnchorButton 
-		raised;
-		rippleEffect;
-		id: 'registerAttendee';
-		callback: [ self registerAttendee ];
-		with: 'Register Attendee'
 ]
 
 { #category : #accessing }

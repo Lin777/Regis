@@ -84,17 +84,14 @@ ERUsersTab >> listDataToRenderButton [
 			(Array
 				with: 'edit'
 				with: [ :user | self modifyUserFormGroup: user ]
-				with: [ :user | user id , '-modify' ]);
+				with: [ :user | user id , '-modify' ]
+				with: 'Modify');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteUser: user ]
-				with: [ :user | user id , '-delete' ]);
-		add:
-			(Array
-				with: 'replay'
-				with: [ :user | self resetPassword: user ]
-				with: [ :user | user id , '-resetPassword' ]);
+				with: [ :user | user id , '-delete' ]
+				with: 'Delete');
 		yourself
 ]
 

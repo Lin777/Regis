@@ -86,12 +86,14 @@ ERFeesTab >> listDataToRenderButton [
 			(Array
 				with: 'edit'
 				with: [ :aFee | self modifyFee: aFee ]
-				with: [ :aFee | aFee id , '-modify' ]);
+				with: [ :aFee | aFee id , '-modify' ]
+				with: 'Modify');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :aFee | self deleteFee: aFee ]
-				with: [ :aFee | aFee id , '-delete' ]);
+				with: [ :aFee | aFee id , '-delete' ]
+				with: 'Delete');
 		yourself
 ]
 
