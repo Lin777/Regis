@@ -13,7 +13,7 @@ BaselineOfESUGApp >> baseline: spec [
 	spec
 		for: #common
 		do: [
-			spec postLoadDoIt: #'postload:package:'.
+			"spec postLoadDoIt: #'postload:package:'."
 		
 			self setUpDependencies: spec.
 			spec
@@ -35,10 +35,10 @@ BaselineOfESUGApp >> baseline: spec [
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Controller' 'ESUGApp-Component') ];
 				package: 'ESUGApp-Test'
 					with: [ spec
-						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ]";
+						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ];
 				package: 'ESUGApp-MDLMagritte' with: [ spec
 						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]"]
+							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]]
 ]
 
 { #category : #baselines }
