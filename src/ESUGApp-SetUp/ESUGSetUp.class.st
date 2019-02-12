@@ -12,6 +12,26 @@ ESUGSetUp class >> activateOnlyThisConference: aConference [
 ERAttendee findAll."
 ]
 
+{ #category : #accessing}
+ESUGSetUp class >> initialize [
+	
+	Metacello new
+	baseline: 'Magritte';
+		repository: 'github://magritte-metamodel/magritte:master/source';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: #('Magritte-Seaside').
+	Metacello new 
+		baseline: 'MaterialDesignLite'; 
+		repository: 'github://DuneSt/MaterialDesignLite:v2.1.1/src';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: 'all'.
+	Metacello new
+        githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
+        baseline: 'Artefact';
+        onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+        load: #('default' 'seaside').
+]
+
 { #category : #accessing }
 ESUGSetUp class >> addReductionFeeForGoldSponsor: sponsorName forConference: conference [
 	| goldSponsorReductionTicket |
