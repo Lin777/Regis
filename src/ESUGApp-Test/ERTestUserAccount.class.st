@@ -4,6 +4,14 @@ Class {
 	#category : #'ESUGApp-Test'
 }
 
+{ #category : #asserting }
+ERTestUserAccount >> assertNonTextField: anOnject [
+	|errors|
+	errors := anOnject asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageTextField equals: (errors at:1) messageText
+]
+
 { #category : #tests }
 ERTestUserAccount >> testEmailFieldWithoutFormat [
 	| errors userAccount |
@@ -16,72 +24,51 @@ ERTestUserAccount >> testEmailFieldWithoutFormat [
 
 { #category : #tests }
 ERTestUserAccount >> testEmptyConfirmPasswordField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := ((self class testUserAccount) as: ERUserAccountForRegister) confirmPassword: nil; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testEmptyEmailField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := (self class testUserAccount) email: nil; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testEmptyFirstNameField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := (self class testUserAccount) firstName: nil; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testEmptyLastNameField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := (self class testUserAccount) lastName: nil; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testEmptyPasswordField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := ((self class testUserAccount) as: ERUserAccountForRegister) password: nil; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testNumericValueFirstNameField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := (self class testUserAccount) firstName: 'Test1'; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: self messageTextField equals: (errors at:1) messageText.
-	
+	self assertNonTextField: userAccount 
 ]
 
 { #category : #tests }
 ERTestUserAccount >> testNumericalValueLastNameField [
-	| errors userAccount |
+	| userAccount |
 	userAccount := (self class testUserAccount) lastName: 'Test1 test'; yourself .
-	errors := userAccount asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: self messageTextField equals: (errors at:1) messageText.
-	
+	self assertNonTextField: userAccount 
 ]
 
 { #category : #tests }

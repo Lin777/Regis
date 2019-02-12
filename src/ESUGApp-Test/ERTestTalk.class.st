@@ -15,20 +15,14 @@ ERTestTalk >> setUp [
 
 { #category : #'as yet unclassified' }
 ERTestTalk >> testEmptyDescriptionField [
-	| errors talk |
+	| talk |
 	talk := (self class testTalk: attendee) description: nil; yourself .
-	errors := talk asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: talk
 ]
 
 { #category : #'as yet unclassified' }
 ERTestTalk >> testEmptyNameField [
-	| errors talk |
+	| talk |
 	talk := (self class testTalk: attendee) name: nil; yourself .
-	errors := talk asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: talk
 ]

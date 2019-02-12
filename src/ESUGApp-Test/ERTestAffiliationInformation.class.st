@@ -6,56 +6,43 @@ Class {
 
 { #category : #tests }
 ERTestAffiliationInformation >> testEmptyOrganizationAddrees1Field [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) organizationAddrees1: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestAffiliationInformation >> testEmptyOrganizationCityField [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) organizationCity: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestAffiliationInformation >> testEmptyOrganizationNameField [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) organizationName: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestAffiliationInformation >> testEmptyOrganizationPostalField [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) organizationPostal: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestAffiliationInformation >> testNonValidOptionMembershipTypeField [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) membershipType: 'Non.Valid.Option'; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: self messageInvalidInput equals: (errors at:1) messageText
+	self assertNonValidField: org
+	
 ]
 
 { #category : #tests }
 ERTestAffiliationInformation >> testNonValidOptionOrganizationCountryField [
-	| errors org |
+	| org |
 	org := (self class testAffiliationInformation) organizationCountry: 'Non.Valid.Option'; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: self messageInvalidInput equals: (errors at:1) messageText
+	self assertNonValidField: org
 ]

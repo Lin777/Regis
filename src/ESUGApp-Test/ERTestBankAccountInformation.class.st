@@ -6,27 +6,21 @@ Class {
 
 { #category : #tests }
 ERTestBankAccountInformation >> testEmptyIbanField [
-	| errors org |
+	| org |
 	org := (self class testBankAccountInfo) iban: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestBankAccountInformation >> testEmptyNumberField [
-	| errors org |
+	| org |
 	org := (self class testBankAccountInfo) number: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assertEmptyField: org
 ]
 
 { #category : #tests }
 ERTestBankAccountInformation >> testEmptyOwnerField [
-	| errors org |
+	| org |
 	org := (self class testBankAccountInfo) owner: nil; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assertEmptyField: org
 ]

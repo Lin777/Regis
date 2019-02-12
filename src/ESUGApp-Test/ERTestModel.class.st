@@ -101,6 +101,22 @@ ERTestModel class >> testUserExampleAccount [
 ]
 
 { #category : #'as yet unclassified' }
+ERTestModel >> assertEmptyField: anObject [
+	|errors|
+	errors := anObject asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: messageInputRequired equals: (errors at:1) messageText
+]
+
+{ #category : #'as yet unclassified' }
+ERTestModel >> assertNonValidField: anObject [
+	|errors|
+	errors := anObject asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageInvalidInput equals: (errors at:1) messageText
+]
+
+{ #category : #'as yet unclassified' }
 ERTestModel >> messageInvalidInput [
 	^ 'Invalid input given'
 ]

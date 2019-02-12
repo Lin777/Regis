@@ -15,39 +15,28 @@ ERTestAward >> setUp [
 
 { #category : #tests }
 ERTestAward >> testEmptyAffiliationField [
-	| errors award |
+	| award |
 	award := (self class testAward: attendee) affiliation: nil; yourself .
-	errors := award asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: award
 ]
 
 { #category : #tests }
 ERTestAward >> testEmptyDownloadUrlField [
-	| errors award |
+	| award |
 	award := (self class testAward: attendee) downloadUrl: nil; yourself .
-	errors := award asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: award
 ]
 
 { #category : #tests }
 ERTestAward >> testEmptyNameAwardField [
-	| errors award |
+	| award |
 	award := (self class testAward: attendee) nameAward: nil; yourself .
-	errors := award asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText.
-	
+	self assertEmptyField: award
 ]
 
 { #category : #tests }
 ERTestAward >> testNonValidOptionCountryField [
-	| errors org |
-	org := (self class testAward: attendee) country: 'Non.Valid.Option'; yourself .
-	errors := org asComponent validate; errors.
-	self assert: 1 equals: errors size.
-	self assert: self messageInvalidInput equals: (errors at:1) messageText
+	| award |
+	award := (self class testAward: attendee) country: 'Non.Valid.Option'; yourself .
+	self assertNonValidField: award
 ]
