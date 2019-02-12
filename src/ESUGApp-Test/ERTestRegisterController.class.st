@@ -57,35 +57,21 @@ ERTestRegisterController >> testRegisterGroupManager [
 
 { #category : #tests }
 ERTestRegisterController >> testValidateIfEmailIsAlreadyRegistered [
-	| wasHandled user |
-	user := self registerAttendee.
-	wasHandled := false.
+	self registerAttendee.
 	self
-		should: [ 
-			[ controller validateIfEmailIsAlreadyRegistered: user]
-				on: ERException 
-				do: [ :exception | 
-					wasHandled := true.
-					exception return ] ]
+		should: [controller validateIfEmailIsAlreadyRegistered: 
+					self class testUserAccount]
 		raise: ERException.
-	self deny: wasHandled
 ]
 
 { #category : #tests }
 ERTestRegisterController >> testValidateRegister [
-	| wasHandled  |
 	self registerAttendee .
-	wasHandled := false.
 	self
-		should: [ 
-			[ controller validateRegister: self class testAttendee ]
-				on: ERException 
-				do: [ :exception | 
-					wasHandled := true.
-					exception return ] ]
+		should: [ controller validateRegister: 
+					self class testAttendee ]
 		raise: ERException.
 	
-	self deny: wasHandled
 ]
 
 { #category : #tests }

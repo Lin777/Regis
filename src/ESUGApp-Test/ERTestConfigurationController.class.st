@@ -24,7 +24,7 @@ ERTestConfigurationController >> tearDown [
 
 { #category : #tests }
 ERTestConfigurationController >> testExportAttends [
-	
+	self registerAttendee .
 	controller exportAttends: 'attendees'.
 	self assert: (File named: (fileNames at:1))exists
 ]

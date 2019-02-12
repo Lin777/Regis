@@ -14,15 +14,6 @@ ERTestGroupManagerController >> setUp [
 ]
 
 { #category : #tests }
-ERTestGroupManagerController >> testAddMyselfToGroup [
-	controller addMyselfToGroup .
-	self
-		assert:
-			(controller groupForGroupManager listAttends
-				find: controller attendee) isNotNil
-]
-
-{ #category : #tests }
 ERTestGroupManagerController >> testCreateGRoupForGroupManager [
 	|group|
 	group := controller groupForGroupManager .
@@ -53,6 +44,6 @@ ERTestGroupManagerController >> testGroupOfAttendee [
 ERTestGroupManagerController >> testValidateRegister [
 	| result |
 	result := controller
-		addAttendee: ERTestControllers testExampleAttendee..
+		addAttendee: ERTestControllers testExampleAttendee.
 	self deny: result isNil
 ]

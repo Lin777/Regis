@@ -128,6 +128,17 @@ ERTestControllers class >> testUserAccount [
 ]
 
 { #category : #tests }
+ERTestControllers class >> testUserAccount: email [
+	^ ERUserAccount new
+		email: email;
+		firstName: 'Test';
+		lastName: 'Test';
+		password: '12345678';
+		confirmPassword: '12345678';
+		yourself
+]
+
+{ #category : #tests }
 ERTestControllers class >> testUserExampleAccount [
 	^ ERUserAccount new
 		email: 'example@gmail.com';
@@ -146,7 +157,7 @@ ERTestControllers >> defaultStore [
 { #category : #rendering }
 ERTestControllers >> registerAsGroupManager [
 	^ (ERRegistrationController
-		attendee: ERTestControllers testAttendee) saveGroupManager
+		attendee: self class testGroupManager) saveGroupManager
 ]
 
 { #category : #rendering }
