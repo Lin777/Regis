@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestConfigurationController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#instVars : [
 		'fileNames'
 	],

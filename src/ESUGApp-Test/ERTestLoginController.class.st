@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestLoginController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#category : #'ESUGApp-Test'
 }
 
@@ -33,7 +33,7 @@ ERTestLoginController >> testLoginWhenUserExist [
 { #category : #tests }
 ERTestLoginController >> testLoginWhenUserNotExist [
 	| anUser |
-	anUser := ERController new validateLoginFor: ERTestControllers testUserAccount email 
+	anUser := ERController new validateLoginFor: ERTest testUserAccount email 
 			password: (ERUserAccount hashPassword: '1234567') asString.
 	self assert: anUser isNil
 ]

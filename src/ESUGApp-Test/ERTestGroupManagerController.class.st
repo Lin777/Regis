@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestGroupManagerController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#category : #'ESUGApp-Test'
 }
 
@@ -44,6 +44,6 @@ ERTestGroupManagerController >> testGroupOfAttendee [
 ERTestGroupManagerController >> testValidateRegister [
 	| result |
 	result := controller
-		addAttendee: ERTestControllers testExampleAttendee.
+		addAttendee: ERTest testExampleAttendee.
 	self deny: result isNil
 ]

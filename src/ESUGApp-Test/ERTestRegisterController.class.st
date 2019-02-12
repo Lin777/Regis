@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestRegisterController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#instVars : [
 		'attendee'
 	],
@@ -28,7 +28,7 @@ ERTestRegisterController >> testAddExitentGroupManager [
 	self registerAttendee.
 	
 	self should: [ (ERRegistrationController
-		attendee: ERTestControllers testGroupManager)
+		attendee: ERTest testGroupManager)
 		saveGroupManager. ] raise: ERException 
 ]
 

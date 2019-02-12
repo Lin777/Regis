@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestAdminContainerController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#category : #'ESUGApp-Test'
 }
 
@@ -36,10 +36,10 @@ ERTestAdminContainerController >> testFailValidatePatternPassword [
 
 { #category : #tests }
 ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
-	self registerAttendee: ERTestControllers testExampleAttendee.
+	self registerAttendee: ERTest testExampleAttendee.
 	self
 		should: [ controller
-				updateUser: ERTestControllers testExampleAttendee userAccount ]
+				updateUser: ERTest testExampleAttendee userAccount ]
 		raise: ERException
 ]
 
@@ -47,7 +47,7 @@ ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 ERTestAdminContainerController >> testValidChangePasswordTo [
 	| user |
 	user := controller changePasswordTo: 'test12345.6_78'.
-	self assert: user userAccount password equals: (ERUserAccount hashPassword: 'test12345.6_78').
+	self assert: user password equals: (ERUserAccount hashPassword: 'test12345.6_78').
 ]
 
 { #category : #tests }
