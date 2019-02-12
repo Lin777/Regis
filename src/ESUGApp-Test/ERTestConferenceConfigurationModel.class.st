@@ -10,7 +10,7 @@ ERTestConferenceConfigurationModel >> messageInvalidDate [
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConfConfigDateFromWithoutDateFormat [
+ERTestConferenceConfigurationModel >> testDateFromFieldWithoutDateFormat [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateFrom: '30/30/2019'; yourself .
 	errors := conference asComponent validate; errors.
@@ -19,7 +19,7 @@ ERTestConferenceConfigurationModel >> testValidateConfConfigDateFromWithoutDateF
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConfConfigDateSubmissionDeadlineWithoutDateFormat [
+ERTestConferenceConfigurationModel >> testDateSubmissionDeadlineFieldWithoutDateFormat [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: '30/30/2000'; yourself .
 	errors := conference asComponent validate; errors.
@@ -28,7 +28,7 @@ ERTestConferenceConfigurationModel >> testValidateConfConfigDateSubmissionDeadli
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConfConfigDateToWithoutDateFormat [
+ERTestConferenceConfigurationModel >> testDateToFieldWithoutDateFormat [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateTo: '30/30/2000'; yourself .
 	errors := conference asComponent validate; errors.
@@ -37,7 +37,7 @@ ERTestConferenceConfigurationModel >> testValidateConfConfigDateToWithoutDateFor
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateFrom [
+ERTestConferenceConfigurationModel >> testEmptyDateFromField [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateFrom: nil; yourself .
 	errors := conference asComponent validate; errors.
@@ -46,7 +46,7 @@ ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateF
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateSubmissionDeadline [
+ERTestConferenceConfigurationModel >> testEmptyDateSubmissionDeadlineField [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: nil; yourself .
 	errors := conference asComponent validate; errors.
@@ -55,7 +55,7 @@ ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateS
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateTo [
+ERTestConferenceConfigurationModel >> testEmptyDateToField [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) dateTo: nil; yourself .
 	errors := conference asComponent validate; errors.
@@ -64,7 +64,7 @@ ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyDateT
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyEarlyRegistrationDeadline [
+ERTestConferenceConfigurationModel >> testEmptyEarlyRegistrationDeadlineField [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel) earlyRegistrationDeadline: nil; yourself .
 	errors := conference asComponent validate; errors.
@@ -73,7 +73,7 @@ ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyEarly
 ]
 
 { #category : #tests }
-ERTestConferenceConfigurationModel >> testValidateConferenceConfigWithEmptyName [
+ERTestConferenceConfigurationModel >> testEmptyNameField [
 	| errors conference |
 	conference := (self class testConferenceConfigurationModel)
 						 name: nil; yourself .

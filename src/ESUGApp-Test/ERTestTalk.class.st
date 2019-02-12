@@ -14,7 +14,7 @@ ERTestTalk >> setUp [
 ]
 
 { #category : #'as yet unclassified' }
-ERTestTalk >> testValidateTalkWithEmptyDescription [
+ERTestTalk >> testEmptyDescriptionField [
 	| errors talk |
 	talk := (self class testTalk: attendee) description: nil; yourself .
 	errors := talk asComponent validate; errors.
@@ -24,7 +24,7 @@ ERTestTalk >> testValidateTalkWithEmptyDescription [
 ]
 
 { #category : #'as yet unclassified' }
-ERTestTalk >> testValidateTalkWithEmptyName [
+ERTestTalk >> testEmptyNameField [
 	| errors talk |
 	talk := (self class testTalk: attendee) name: nil; yourself .
 	errors := talk asComponent validate; errors.

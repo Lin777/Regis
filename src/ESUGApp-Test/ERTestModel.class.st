@@ -100,6 +100,16 @@ ERTestModel class >> testUserExampleAccount [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+ERTestModel >> messageInvalidInput [
+	^ 'Invalid input given'
+]
+
+{ #category : #'as yet unclassified' }
+ERTestModel >> messageTextField [
+	^ 'This field only accept a text'
+]
+
 { #category : #tests }
 ERTestModel >> setUp [
 	super setUp.

@@ -5,15 +5,7 @@ Class {
 }
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccount [
-	| errors |
-	errors := self class testUserAccount asComponent validate; errors.
-	self assert: 0 equals: errors size.
-	
-]
-
-{ #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmailWithoutFormat [
+ERTestUserAccount >> testEmailFieldWithoutFormat [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) email: 'thisIsANotValidEmail'; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -23,7 +15,7 @@ ERTestUserAccount >> testValidateUserAccountWithEmailWithoutFormat [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmptyConfirmPassword [
+ERTestUserAccount >> testEmptyConfirmPasswordField [
 	| errors userAccount |
 	userAccount := ((self class testUserAccount) as: ERUserAccountForRegister) confirmPassword: nil; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -33,7 +25,7 @@ ERTestUserAccount >> testValidateUserAccountWithEmptyConfirmPassword [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmptyEmail [
+ERTestUserAccount >> testEmptyEmailField [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) email: nil; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -43,7 +35,7 @@ ERTestUserAccount >> testValidateUserAccountWithEmptyEmail [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmptyFirstName [
+ERTestUserAccount >> testEmptyFirstNameField [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) firstName: nil; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -53,7 +45,7 @@ ERTestUserAccount >> testValidateUserAccountWithEmptyFirstName [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmptyLastName [
+ERTestUserAccount >> testEmptyLastNameField [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) lastName: nil; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -63,7 +55,7 @@ ERTestUserAccount >> testValidateUserAccountWithEmptyLastName [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithEmptyPassword [
+ERTestUserAccount >> testEmptyPasswordField [
 	| errors userAccount |
 	userAccount := ((self class testUserAccount) as: ERUserAccountForRegister) password: nil; yourself .
 	errors := userAccount asComponent validate; errors.
@@ -73,21 +65,29 @@ ERTestUserAccount >> testValidateUserAccountWithEmptyPassword [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithNumberInFirstName [
+ERTestUserAccount >> testNumericValueFirstNameField [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) firstName: 'Test1'; yourself .
 	errors := userAccount asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: 'This field only accept a text' equals: (errors at:1) messageText.
+	self assert: self messageTextField equals: (errors at:1) messageText.
 	
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testValidateUserAccountWithNumberInLastName [
+ERTestUserAccount >> testNumericalValueLastNameField [
 	| errors userAccount |
 	userAccount := (self class testUserAccount) lastName: 'Test1 test'; yourself .
 	errors := userAccount asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: 'This field only accept a text' equals: (errors at:1) messageText.
+	self assert: self messageTextField equals: (errors at:1) messageText.
+	
+]
+
+{ #category : #tests }
+ERTestUserAccount >> testValidateUserAccount [
+	| errors |
+	errors := self class testUserAccount asComponent validate; errors.
+	self assert: 0 equals: errors size.
 	
 ]

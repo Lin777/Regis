@@ -14,7 +14,7 @@ ERTestAward >> setUp [
 ]
 
 { #category : #tests }
-ERTestAward >> testValidateAwardWithEmptyAffiliation [
+ERTestAward >> testEmptyAffiliationField [
 	| errors award |
 	award := (self class testAward: attendee) affiliation: nil; yourself .
 	errors := award asComponent validate; errors.
@@ -24,7 +24,7 @@ ERTestAward >> testValidateAwardWithEmptyAffiliation [
 ]
 
 { #category : #tests }
-ERTestAward >> testValidateAwardWithEmptyDownloadUrl [
+ERTestAward >> testEmptyDownloadUrlField [
 	| errors award |
 	award := (self class testAward: attendee) downloadUrl: nil; yourself .
 	errors := award asComponent validate; errors.
@@ -34,11 +34,20 @@ ERTestAward >> testValidateAwardWithEmptyDownloadUrl [
 ]
 
 { #category : #tests }
-ERTestAward >> testValidateAwardWithEmptyNameAward [
+ERTestAward >> testEmptyNameAwardField [
 	| errors award |
 	award := (self class testAward: attendee) nameAward: nil; yourself .
 	errors := award asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: messageInputRequired equals: (errors at:1) messageText.
 	
+]
+
+{ #category : #tests }
+ERTestAward >> testNonValidOptionCountryField [
+	| errors org |
+	org := (self class testAward: attendee) country: 'Non.Valid.Option'; yourself .
+	errors := org asComponent validate; errors.
+	self assert: 1 equals: errors size.
+	self assert: self messageInvalidInput equals: (errors at:1) messageText
 ]
