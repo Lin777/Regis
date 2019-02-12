@@ -85,13 +85,15 @@ ERUsersTab >> listDataToRenderButton [
 				with: 'edit'
 				with: [ :user | self modifyUserFormGroup: user ]
 				with: [ :user | user id , '-modify' ]
-				with: 'Modify');
+				with: 'Modify'
+				with: '');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteUser: user ]
 				with: [ :user | user id , '-delete' ]
-				with: 'Delete');
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
 		yourself
 ]
 

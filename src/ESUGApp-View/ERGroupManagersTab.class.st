@@ -70,25 +70,29 @@ ERGroupManagersTab >> listDataToRenderButton [
 				with: 'edit'
 				with: [ :user | self modifyAffiliation: user ]
 				with: [ :user | user id , '-modify' ]
-				with: 'Modify');
+				with: 'Modify'
+				with: '');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteGroup: user ]
 				with: [ :user | user id , '-delete' ]
-				with: 'Delete');
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
 		add:
 			(Array
 				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user groupManager userAccount ]
 				with: [ :user | user id , '-modifyUser' ]
-				with: 'Modify user');
+				with: 'Modify user'
+				with: '');
 		add:
 			(Array
 				with: 'description'
 				with: [ :user | self generateInvoiceGroup: user ]
 				with: [ :user | user id , '-invoice' ]
-				with: 'Generate invoice');
+				with: 'Generate invoice'
+				with: '');
 		yourself
 ]
 
