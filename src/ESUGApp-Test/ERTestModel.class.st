@@ -131,3 +131,8 @@ ERTestModel >> setUp [
 	super setUp.
 	messageInputRequired := 'Input is required but no input given'
 ]
+
+{ #category : #'as yet unclassified' }
+ERTestModel >> validCoupon [
+	^ ERController new conference reductionTickets first ticketId
+]

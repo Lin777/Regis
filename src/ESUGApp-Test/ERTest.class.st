@@ -54,7 +54,8 @@ ERTest class >> testAward: anAttendee [
 			keywords: 'test, test, test, test';
 			licence: 'MIT';
 			otherDevelopers: 'Test Dev, Test1 Dev';
-			submittionDate: Date today.
+			submittionDate: Date today;
+			yourself 
 			
 			
 ]
@@ -108,7 +109,7 @@ ERTest class >> testPaymentInformation [
 	^ ERPaymentInformation new
 		paymentType: 'Bank transfer';
 		paymentCurrency: 'Euro';
-		coupon: '';
+		coupon: nil;
 		yourself
 ]
 
@@ -118,7 +119,7 @@ ERTest class >> testRegisterConferenceInformation [
 		attendSocialEvent: true;
 		addedToMainList: true;
 		foodPreference: 'Normal';
-		addPersonToSocialDinner: false;
+		addPersonToSocialDinner: true;
 		personAddedFoodPreference: 'Normal';
 		tshirtSize: 'XL';
 		attendance:
@@ -140,7 +141,8 @@ ERTest class >> testTalk: anAttendee [
 			description: 'Description test';
 			presentation: 'Test Org.';
 			authorsWithoutSubmitter: nil;
-			submittionDate: Date today.
+			submittionDate: Date today;
+			yourself 
 			
 			
 ]
