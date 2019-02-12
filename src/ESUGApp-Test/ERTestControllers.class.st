@@ -151,14 +151,14 @@ ERTestControllers >> registerAsGroupManager [
 
 { #category : #rendering }
 ERTestControllers >> registerAttendee [
-	^ (controller attendee: self class testAttendee) saveAttendee 
-	
+	^ (ERRegistrationController attendee:
+			 self class testAttendee) saveAttendee 
 ]
 
 { #category : #rendering }
 ERTestControllers >> registerAttendee: anAttendee [
 	^ (ERRegistrationController attendee: anAttendee)
-		save
+		saveAttendee
 ]
 
 { #category : #tests }

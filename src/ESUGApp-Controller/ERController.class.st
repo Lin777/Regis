@@ -308,6 +308,7 @@ ERController >> updateUser: anUser [
 
 { #category : #action }
 ERController >> validateIfEmailIsAlreadyRegistered: anUser [
+	self halt.
 	conference users
 		do: [ :each | 
 			each email = anUser email

@@ -161,7 +161,7 @@ ERTestModel >> testValidateConfConfigDateFromWithoutDateFormat [
 { #category : #tests }
 ERTestModel >> testValidateConfConfigDateSubmissionDeadlineWithoutDateFormat [
 	| errors conference |
-	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: nil; yourself .
+	conference := (self class testConferenceConfigurationModel) dateSubmissionDeadline: '30/30/2000'; yourself .
 	errors := conference asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: self messageInvalidDate equals: (errors at:1) messageText
@@ -170,7 +170,7 @@ ERTestModel >> testValidateConfConfigDateSubmissionDeadlineWithoutDateFormat [
 { #category : #tests }
 ERTestModel >> testValidateConfConfigDateToWithoutDateFormat [
 	| errors conference |
-	conference := (self class testConferenceConfigurationModel) dateTo: nil; yourself .
+	conference := (self class testConferenceConfigurationModel) dateTo: '30/30/2000'; yourself .
 	errors := conference asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: self messageInvalidDate equals: (errors at:1) messageText
@@ -215,7 +215,8 @@ ERTestModel >> testValidateConferenceConfigWithEmptyEarlyRegistrationDeadline [
 { #category : #tests }
 ERTestModel >> testValidateConferenceConfigWithEmptyName [
 	| errors conference |
-	conference := (self class testConferenceConfigurationModel) name: nil; yourself .
+	conference := (self class testConferenceConfigurationModel)
+						 name: nil; yourself .
 	errors := conference asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: messageInputRequired equals: (errors at:1) messageText
