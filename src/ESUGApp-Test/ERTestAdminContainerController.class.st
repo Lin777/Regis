@@ -10,7 +10,7 @@ ERTestAdminContainerController >> setUp [
 	super setUp.
 	user := self registerAttendee.
 	controller := ERAdminController new.
-	controller attendee: (controller attendeeFromUser: user)
+	controller attendee: user
 ]
 
 { #category : #tests }
