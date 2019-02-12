@@ -8,7 +8,8 @@ Class {
 		'affiliationInformation',
 		'additionalInformation',
 		'paymentInformation',
-		'encodedInvoice'
+		'encodedInvoice',
+		'idGroup'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -151,6 +152,16 @@ ERAttendee >> hasCoupon [
 		ifTrue:[^ false ]]
 	ifTrue: [ ^ false ].
 	^ true
+]
+
+{ #category : #accessing }
+ERAttendee >> idGroup [
+	^ idGroup
+]
+
+{ #category : #accessing }
+ERAttendee >> idGroup: anObject [
+	idGroup := anObject
 ]
 
 { #category : #'initialize-release' }

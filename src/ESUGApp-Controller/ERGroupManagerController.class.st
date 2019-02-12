@@ -9,17 +9,20 @@ Class {
 
 { #category : #adding }
 ERGroupManagerController >> addAttendee: anAttendee [
-	| anAttendeeSaved userSaved |
+	| anAttendeeSaved userSaved groupAtt |
 	self validateRegister: anAttendee.
-	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
+	groupAtt := self group.
+	anAttendee paymentInformation invoiceNumber: groupAtt paymentInformation invoiceNumber.
 	anAttendee userAccount password: (ERUserAccount hashPassword: (anAttendee userAccount password )asString).
 	userSaved := (anAttendee userAccount as: ERUserAccount) save.
 	conference addUser: userSaved .
 	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
 	conference addAttendee: anAttendeeSaved.
-	self group addAttendee: anAttendeeSaved.
+	groupAtt addAttendee: anAttendeeSaved.
 	conference save.
-	^ self group save
+	anAttendee idGroup: groupAtt id.
+	anAttendee save.
+	^ groupAtt save
 ]
 
 { #category : #adding }
