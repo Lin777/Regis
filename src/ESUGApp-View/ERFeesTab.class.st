@@ -87,13 +87,15 @@ ERFeesTab >> listDataToRenderButton [
 				with: 'edit'
 				with: [ :aFee | self modifyFee: aFee ]
 				with: [ :aFee | aFee id , '-modify' ]
-				with: 'Modify');
+				with: 'Modify'
+				with: '');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :aFee | self deleteFee: aFee ]
 				with: [ :aFee | aFee id , '-delete' ]
-				with: 'Delete');
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
 		yourself
 ]
 

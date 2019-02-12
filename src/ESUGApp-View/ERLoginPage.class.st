@@ -132,14 +132,7 @@ ERLoginPage >> renderPageOn: html [
 			self renderMessageComponent: html.
 			self renderFieldsLoginOn:html.
 			self renderLoginButtonOn: html.].
-			self renderRegisterButtonOn: html.
-	"Confirm dialog for delete onjects"
-	"html mdlAnchorButton 
-	onClick: 'return confirm(''Are you sure you want to delete this item?'');';
-	callback: [ Transcript show: 'Delete' ];
-	with: 'Delete'. "
-	"html div	class: 'mdl-tooltip'; attributeAt: 'data-mdl-for' put: 'XD'; with: 'Example'.
-	html mdlAnchorButton id: 'XD'; with: 'Example' <<===== Tooltip for buttons"
+			self renderRegisterButtonOn: html
 ]
 
 { #category : #rendering }

@@ -77,31 +77,36 @@ ERMembersTab >> listDataToRenderButton [
 				with: 'edit'
 				with: [ :user | self modifyRegistrationInformation: user ]
 				with: [ :user | user id , '-modify' ]
-				with: 'Modify');
+				with: 'Modify'
+				with: '');
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteAttendeeFromGroup: user ]
 				with: [ :user | user id , '-delete' ]
-				with: 'Delete');
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
 		add:
 			(Array
 				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user userAccount ]
 				with: [ :user | user id , '-modifyUser' ]
-				with: 'Modify user');
+				with: 'Modify user'
+				with: '');
 		add:
 			(Array
 				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user  ]
 				with: [ :user | user id , '-applyReduction' ]
-				with: 'Apply reduction');
+				with: 'Apply reduction'
+				with: '');
 		add:
 			(Array
 				with: 'description'
 				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]
-				with: 'Generate invoice');
+				with: 'Generate invoice'
+				with: '');
 		yourself
 ]
 

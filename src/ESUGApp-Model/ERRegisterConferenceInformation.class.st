@@ -75,6 +75,7 @@ ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 	tmp2 
 		checkboxLabel: 'Check if you add a person to the Social Dinner';
 		accessor: #addPersonToSocialDinner;
+		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 120;
 		withoutLabel: true.
@@ -89,6 +90,7 @@ ERRegisterConferenceInformation >> descriptionAddedToMainList [
 	tmp2 
 		checkboxLabel: 'Check if you want to be added to the Mailling List';
 		accessor: #addedToMainList;
+		beRequired;
 		componentClass: MDLMACheckboxComponent;
 		priority: 110;
 		withoutLabel: true.
@@ -103,6 +105,7 @@ ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 	tmp2 
 		checkboxLabel: 'Check if you will you go to the social Event';
 		accessor: #attendSocialEvent;
+		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 100;
 		withoutLabel: true.

@@ -28,12 +28,17 @@ ERLoggedController >> attendee: anObject [
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser [
-	^ ERAttendee find: [ :each | each userAccount = user ]
+	^ conference attends 
+		detect: [ :each | each userAccount = user ]
+		ifNone: [ nil ]
+	
 ]
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser: anUser [
-	^ ERAttendee find: [ :each | each userAccount = anUser ]
+	^ conference attends 
+			detect: [ :each | each userAccount = anUser ]
+			ifNone: [ nil ]
 ]
 
 { #category : #removing }

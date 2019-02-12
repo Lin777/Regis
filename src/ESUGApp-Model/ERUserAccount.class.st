@@ -16,7 +16,7 @@ Class {
 ERUserAccount class >> admin [
 	| instance |
 	instance := self new.
-	instance role: 'admin'.
+	instance role: self adminRole .
 	^ instance
 ]
 
@@ -55,7 +55,7 @@ ERUserAccount class >> findUserByEmail: aString [
 ERUserAccount class >> groupManager [
 	| instance |
 	instance := self new.
-	instance role: 'groupManager'.
+	instance role: self groupManagerRole.
 	^ instance
 ]
 
