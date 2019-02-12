@@ -272,3 +272,8 @@ ERTest >> tearDown [
 	ESUGSetUp stop.
 	Smalltalk garbageCollectMost
 ]
+
+{ #category : #'as yet unclassified' }
+ERTest >> validCoupon [
+	^ ERController new conference reductionTickets first ticketId
+]

@@ -58,6 +58,39 @@ ERTestUserAccount >> testEmptyPasswordField [
 ]
 
 { #category : #tests }
+ERTestUserAccount >> testIsAdmin [
+	|user|
+	user := ERUserAccount admin.
+	self assert: user isAdmin.
+	user := ERUserAccount groupManager .
+	self deny: user isAdmin .
+	user := self class testUserAccount.
+	self deny: user isAdmin
+]
+
+{ #category : #tests }
+ERTestUserAccount >> testIsAttendee [
+	|user|
+	user := ERUserAccount admin.
+	self deny: user isAttendee.
+	user := ERUserAccount groupManager .
+	self deny: user isAttendee .
+	user := self class testUserAccount.
+	self assert: user isAttendee
+]
+
+{ #category : #tests }
+ERTestUserAccount >> testIsGroupManager [
+	|user|
+	user := ERUserAccount admin.
+	self deny: user isGroupManager.
+	user := ERUserAccount groupManager .
+	self assert: user isGroupManager .
+	user := self class testUserAccount.
+	self deny: user isGroupManager
+]
+
+{ #category : #tests }
 ERTestUserAccount >> testNumericValueFirstNameField [
 	| userAccount |
 	userAccount := (self class testUserAccount) firstName: 'Test1'; yourself .

@@ -22,3 +22,9 @@ ERTestController >> testConferenceIsOpenRegistration [
 	controller conference configuration openRegistration: false.
 	self deny: controller conferenceIsOpenRegistration .
 ]
+
+{ #category : #tests }
+ERTestController >> testExistReductionTicketWithName [
+	self assert: (controller existReductionTicketWithName: self validCoupon).
+	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
+]
