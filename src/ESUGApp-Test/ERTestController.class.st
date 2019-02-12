@@ -1,9 +1,6 @@
 Class {
 	#name : #ERTestController,
 	#superclass : #ERTestControllers,
-	#instVars : [
-		'controller'
-	],
 	#category : #'ESUGApp-Test'
 }
 

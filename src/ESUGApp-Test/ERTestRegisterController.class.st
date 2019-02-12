@@ -2,7 +2,6 @@ Class {
 	#name : #ERTestRegisterController,
 	#superclass : #ERTestControllers,
 	#instVars : [
-		'controller',
 		'attendee'
 	],
 	#category : #'ESUGApp-Test'
@@ -79,7 +78,7 @@ ERTestRegisterController >> testValidateRegister [
 	wasHandled := false.
 	self
 		should: [ 
-			[ self halt.controller validateRegister: self class testAttendee ]
+			[ controller validateRegister: self class testAttendee ]
 				on: ERException 
 				do: [ :exception | 
 					wasHandled := true.
