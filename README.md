@@ -30,6 +30,17 @@ Admin credentials:
 email: admin@esug.org
 password: 12345678
 
+To automatically register attendees and group managers execute the following script after installation and initialization of the project (review previous script)
+
+```Smalltalk
+ERTest generateDataForTest 
+```
+
+You can see the registered users by logging in as admin. 
+
+### Note: 
+All the users generated automatically have as password: 12345678
+
 ## Progress Status
 
 ### Roles
