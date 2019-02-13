@@ -30,6 +30,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	| anAttendeeSaved |
 	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
 	(anAttendee userAccount) roleAdd: 'attendee'; save.
+	anAttendee idGroup: self group id.
 	anAttendeeSaved := anAttendee save.
 	conference addAttendee: anAttendeeSaved.
 	self group addAttendee: anAttendeeSaved.

@@ -68,7 +68,6 @@ ERMyRegistrationSummaryTab >> renderButtons: html [
 		with: 'Pay'.
 	html mdlAnchorButton
 		raised;
-		colored;
 		rippleEffect;
 		id: 'invoice';
 		callback: [ self generateInvoice: attendee  ];

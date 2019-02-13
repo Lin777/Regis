@@ -87,6 +87,51 @@ ERController >> attendeesForATicket: ticketId [
 	^ conference attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> cleanSubDirectory: aSubDir [
+	aSubDir ensureDeleteAll 
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> cleanZip: zip with: zipFile subDir: subDir [
+	[ zip close ]
+		ensure: [ 
+			subDir ensureDeleteAll.
+			zipFile ensureDelete.	
+		]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> codingZipFile: nameSubDirectory [
+	| zip subDir zipFile codingZipFile |
+	zip := ZipArchive new.
+	zipFile := nameSubDirectory asFileReference, 'zip'.
+	self cleanZip: zip with: zipFile subDir: subDir.
+	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path pathString ].
+	zip writeToFileNamed: zipFile fullName.
+	codingZipFile := self encodeFiletoBase64: zipFile.
+	self cleanZip: zip with: zipFile subDir: subDir.
+	self cleanSubDirectory: nameSubDirectory asFileReference.
+	^ codingZipFile
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> codingZipFile: aString with: nameSubDirectory [
+	| zip subDir zipFile codingZipFile |
+	zip := ZipArchive new.
+	subDir := aString asFileReference.
+	subDir ensureCreateDirectory.
+	zip addDirectory: subDir fullName.
+	zipFile := aString asFileReference, 'zip'.
+	self cleanZip: zip with: zipFile subDir: subDir.
+	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path pathString as: aString, '/', (aFile path at: 2) ].
+	zip writeToFileNamed: zipFile fullName.
+	codingZipFile := self encodeFiletoBase64: zipFile.
+	self cleanZip: zip with: zipFile subDir: subDir.
+	self cleanSubDirectory: nameSubDirectory asFileReference.
+	^ codingZipFile 
+]
+
 { #category : #accessing }
 ERController >> conference [
 	^ conference
@@ -136,6 +181,20 @@ ERController >> deleteGroupManager: aGroupManager [
 
 { #category : #rendering }
 ERController >> deleteUser: anUser [
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> encodeFileToUTF8: aFile [
+	^ aFile exists 
+		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
+		ifFalse: [ nil ]. 
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> encodeFiletoBase64: aFile [
+	^ aFile exists 
+		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
+		ifFalse: [ nil ]. 
 ]
 
 { #category : #action }

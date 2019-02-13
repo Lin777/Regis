@@ -41,15 +41,6 @@ ERAttendeesTab >> children [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-ERAttendeesTab >> cleanZip: zip with: zipFile subDir: subDir [
-	[ zip close ]
-		ensure: [ 
-			subDir ensureDeleteAll.
-			zipFile ensureDelete.	
-		]
-]
-
 { #category : #rendering }
 ERAttendeesTab >> deleteAttendee: user [
 ]
@@ -67,24 +58,17 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 
 { #category : #'as yet unclassified' }
 ERAttendeesTab >> exportAllInvoices [
-	| nameFile zip subDir zipFile groupAttendee |
-	zip := ZipArchive new.
-	nameFile := 'Invoices'.
-	subDir := nameFile asFileReference.
-	subDir ensureCreateDirectory.
-	zip addDirectory: subDir fullName.
-	zipFile := nameFile asFileReference, 'zip'.
-	self cleanZip: zip with: zipFile subDir: subDir. 
-	ERPDFInvoice demoPath: nameFile, '/'.
+	| nameZipFile subDir groupAttendee |
+	nameZipFile := 'Invoices'.
+	subDir := 'DirectoryInvoices'.
+	ERPDFInvoice demoPath: subDir, '/'.
 	self attends select: [ :attend | attend paymentInformation hasPaid ] 
 	thenDo: [ :attend | 
 		groupAttendee := controller getGroupOfAttendee: attend.
-		zip addFile: (groupAttendee ifNil: [ (ERPDFInvoice templateRegistrationInvoice: attend) path pathString ] 
-		ifNotNil: [ (ERPDFInvoice templateRegistrationInvoice: groupAttendee) path pathString ])	
+		groupAttendee ifNil: [ ERPDFInvoice templateRegistrationInvoice: attend ] 
+		ifNotNil: [ ERPDFInvoice templateRegistrationInvoice: groupAttendee ]
 	].
-	zip writeToFileNamed: zipFile fullName.
-	encodeZipFile := self encodeFiletoBase64: zipFile.
-	self cleanZip: zip with: zipFile subDir: subDir.
+	encodeZipFile := controller codingZipFile: nameZipFile with: subDir.
 
 	self updateStateTab: self tabName.
 ]
@@ -93,7 +77,7 @@ ERAttendeesTab >> exportAllInvoices [
 ERAttendeesTab >> exportAttends [
 	| file |
 	file := controller exportAttends: 'attends'.
-	encodeCSVFile := self encodeFileToUTF8: file.
+	encodeCSVFile := controller encodeFileToUTF8: file.
 	file ensureDelete.
 	self updateStateTab: self tabName.
 ]

@@ -48,7 +48,7 @@ ERUsersTab >> deleteUser: user [
 ERUsersTab >> exportUsers [
 	| file |
 	file := controller exportUsers: 'users' , self fileIdUsers asString.
-	encodeCSVFile := self encodeFileToUTF8: file.
+	encodeCSVFile := controller encodeFileToUTF8: file.
 	file ensureDelete.
   	self updateStateTab: self tabName.
 ]
