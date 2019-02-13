@@ -98,7 +98,9 @@ ERTestController >> testGroupOfAttendee [
 	add: group; yourself)).
 	
 	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
+]
 
+{ #category : #tests }
 ERTestController >> testExistReductionTicketWithName [
 	self assert: (controller existReductionTicketWithName: self validCoupon).
 	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
