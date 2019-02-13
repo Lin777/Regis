@@ -127,15 +127,6 @@ ERTest class >> testGroupManager: aString [
 ]
 
 { #category : #tests }
-ERTest class >> testModifyUser [
-	^ ERUserAccount new
-		firstName: 'userModify';
-		lastName: 'usermodify';
-		email: 'userModify@gmail.com';
-		yourself 
-]
-
-{ #category : #tests }
 ERTest class >> testPaymentInformation [
 	^ ERPaymentInformation new
 		paymentType: 'Bank transfer';

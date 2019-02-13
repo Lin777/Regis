@@ -18,7 +18,6 @@ ERController class >> currencyAvailable [
 { #category : #adding }
 ERController >> addAward: anAward [
 	|award|
-	
 	anAward submittionDate: Date today.
 	award := anAward save.
 	conference addSubmittedAward: award.
@@ -169,10 +168,6 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
-]
-
-{ #category : #rendering }
-ERController >> deleteAttendee: anAttendee [
 ]
 
 { #category : #rendering }

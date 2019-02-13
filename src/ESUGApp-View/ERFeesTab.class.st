@@ -9,13 +9,6 @@ Class {
 }
 
 { #category : #rendering }
-ERFeesTab >> addFee [
-	self initializeFormAddFee.
-	content state: formFee.
-	self updateStateTab: self tabName 
-]
-
-{ #category : #rendering }
 ERFeesTab >> addFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
 	aFee bankAccountInformation: anAccountBankInfo.
 	aFee bankAccountInformation bankInformation: aBankInfo.
@@ -125,11 +118,6 @@ ERFeesTab >> modifyFeeOfConference: aFee [
 
 { #category : #rendering }
 ERFeesTab >> renderContainer: html [
-	html mdlAnchorButton
-		colored;
-		id: 'addFee';
-		callback: [ self addFee ];
-		with: 'Add'.
 	html horizontalRule.
 	self renderTableOfFees: html
 ]

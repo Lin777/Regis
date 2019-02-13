@@ -26,7 +26,7 @@ ERConfigurationView >> initialize [
 { #category : #initialization }
 ERConfigurationView >> initializeTabForms [
 	tabs add: (ERConferenceForm on: attendee withContent: content container: self);
-	add: (ERFeesTab on: attendee withContent: content container: self);
+	add: ("ERFeesTab"ERFeeForm1 on: attendee withContent: content container: self);
 	add: (ERReductionTicketsTab on: attendee withContent: content container: self);
 	add: (ERUsersTab on: attendee withContent: content container: self);
 	add: (ERAttendeesTab on: attendee withContent: content container: self);
