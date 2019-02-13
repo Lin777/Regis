@@ -43,6 +43,18 @@ ERTest class >> testAttendee [
 ]
 
 { #category : #tests }
+ERTest class >> testAttendee: email [
+	^ ERAttendee new
+		userAccount: (self testUserAccount: email);
+		contactInformation: self testContactInformation ;
+		conferenceInformation: self testRegisterConferenceInformation ;
+		affiliationInformation: self testAffiliationInformation ;
+		additionalInformation: self testAdditionalInformation ;
+		paymentInformation: self testPaymentInformation ;
+		yourself
+]
+
+{ #category : #tests }
 ERTest class >> testAward: anAttendee [
 	^ (ERAward submitter: anAttendee) 
 			nameAward: 'testAward';
@@ -186,6 +198,11 @@ ERTest >> defaultStore [
 ]
 
 { #category : #rendering }
+ERTest >> groupOfUser: anUser [
+	^ ERGroupManagerController new groupOfUser: anUser.
+]
+
+{ #category : #rendering }
 ERTest >> registerAsGroupManager [
 	^ (ERRegistrationController
 		attendee: self class testGroupManager) saveGroupManager
@@ -201,6 +218,18 @@ ERTest >> registerAttendee [
 ERTest >> registerAttendee: anAttendee [
 	^ (ERRegistrationController attendee: anAttendee)
 		saveAttendee
+]
+
+{ #category : #rendering }
+ERTest >> registerGroup [
+	|user group aController|
+	user := self registerAsGroupManager .
+	group := self groupOfUser: user.
+	aController := ERGroupManagerController new group: group.
+	aController addAttendee: (self class testAttendee: 'test1@gmail.com').
+	aController addAttendee: (self class testAttendee: 'test2@gmail.com').
+	aController addAttendee: (self class testAttendee: 'test3@gmail.com').
+	^ group
 ]
 
 { #category : #tests }

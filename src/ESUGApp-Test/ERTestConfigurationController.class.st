@@ -24,35 +24,38 @@ ERTestConfigurationController >> tearDown [
 
 { #category : #tests }
 ERTestConfigurationController >> testExportAttends [
-	"self registerAttendee .
-	controller exportAttends: 'attendees'.
-	self assert: (File named: (fileNames at:1))exists"
+	| aFile |
+	aFile := controller exportAttends: 'attendees'.
+	self assert: aFile exists
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportAwards [
 	
-	"controller exportAttends: 'awards'.
-	self assert: (File named: (fileNames at:2))exists"
+	| aFile |
+	aFile := controller exportAwards: 'awards'.
+	self assert: aFile exists
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportGroupManagers [
 	
-	"controller exportAttends: 'groupManagers'.
-	self assert: (File named: (fileNames at:3))exists"
+	| aFile |
+	aFile := controller exportGroupManagers: 'groupManagers'.
+	self assert: aFile exists
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportTalks [
 	
-	"controller exportAttends: 'talks'.
-	self assert: (File named: (fileNames at:4))exists"
+	| aFile |
+	aFile := controller exportTalks: 'talks'.
+	self assert: aFile exists
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportUsers [
-	
-	"controller exportAttends: 'users'.
-	self assert: (File named: (fileNames at:5))exists"
+	| aFile |
+	aFile := controller exportUsers: 'users'.
+	self assert: aFile exists
 ]

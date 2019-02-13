@@ -84,24 +84,18 @@ ERTestController >> testEncodeFileToUTF8 [
 ]
 
 { #category : #tests }
-ERTestController >> testGroupOfAttendee [ 
-	| group attendee |
-	self registerAttendee: (ERAttendee new userAccount: (ERUserAccount new firstName: 'Mary')).
-	attendee := controller attendee.
-	group := ERGroup new listAttends: (OrderedCollection new 
-	add: attendee;
-	add: (ERAttendee new userAccount: (ERUserAccount new firstName: 'Peter'));
-	yourself);
-	id: '123'.
-	attendee idGroup: '123'.
-	controller conference: (ERConference new groups: (OrderedCollection new 
-	add: group; yourself)).
-	
-	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
-]
-
-{ #category : #tests }
 ERTestController >> testExistReductionTicketWithName [
 	self assert: (controller existReductionTicketWithName: self validCoupon).
 	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
+]
+
+{ #category : #tests }
+ERTestController >> testGroupOfAttendee [ 
+	| group attendee |
+	group := self registerGroup.
+	attendee := group listAttends first.
+	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
+	"the attendee does not belong to the group"
+	attendee := ERLoggedController new attendeeFromUser: self registerAttendee.
+	self assert: (controller getGroupOfAttendee: attendee) isNil.
 ]
