@@ -32,7 +32,7 @@ ERAwardsTab >> children [
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller exportAwards: 'awards'.
-	encodeCSVFile := self encodeFileToUTF8: file.
+	encodeCSVFile := controller encodeFileToUTF8: file.
 	file ensureDelete.
 	self updateStateTab: self tabName
 ]

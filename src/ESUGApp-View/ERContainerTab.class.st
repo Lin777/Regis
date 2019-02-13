@@ -68,20 +68,6 @@ ERContainerTab >> controller: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-ERContainerTab >> encodeFileToUTF8: aFile [
-	^ aFile exists 
-		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
-		ifFalse: [ nil ]. 
-]
-
-{ #category : #'as yet unclassified' }
-ERContainerTab >> encodeFiletoBase64: aFile [
-	^ aFile exists 
-		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
-		ifFalse: [ nil ]. 
-]
-
-{ #category : #'as yet unclassified' }
 ERContainerTab >> generateInvoice: aAttendee [
 	| groupAttendee |
 	groupAttendee := controller getGroupOfAttendee: aAttendee. 
@@ -94,7 +80,7 @@ ERContainerTab >> generateInvoiceAttendee: aAttendee [
 	aAttendee paymentInformation hasPaid ifTrue: [ 
 		| file |
 		file := ERPDFInvoice templateRegistrationInvoice: aAttendee.
-		aAttendee encodedInvoice: (self encodeFiletoBase64: file).
+		aAttendee encodedInvoice: (controller encodeFiletoBase64: file).
 		controller updateAttendee: aAttendee.
 		file ensureDelete.
 	].
@@ -106,7 +92,7 @@ ERContainerTab >> generateInvoiceGroup: aGroup [
 	(controller allAttendeesHasPaid: aGroup) ifTrue: [ 
 		| file encodeFile |
 		file := ERPDFInvoice templateRegistrationInvoice: aGroup.
-		encodeFile := self encodeFiletoBase64: file.
+		encodeFile := controller encodeFiletoBase64: file.
 		aGroup listAttends do: [ :aAttendee | 
 			aAttendee encodedInvoice: encodeFile.
 			aAttendee save.
