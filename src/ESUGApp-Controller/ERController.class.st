@@ -176,7 +176,7 @@ ERController >> deleteAttendee: anAttendee [
 ]
 
 { #category : #rendering }
-ERController >> deleteGroupManager: aGroupManager [
+ERController >> deleteGroup: aGroupManager [
 ]
 
 { #category : #rendering }

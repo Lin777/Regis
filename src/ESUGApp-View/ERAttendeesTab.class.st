@@ -42,7 +42,9 @@ ERAttendeesTab >> children [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> deleteAttendee: user [
+ERAttendeesTab >> deleteAttendee: anAttendee [
+	controller user: self session user.
+	controller deleteAttendee: anAttendee
 ]
 
 { #category : #rendering }

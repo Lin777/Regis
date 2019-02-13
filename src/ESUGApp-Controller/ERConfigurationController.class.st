@@ -101,15 +101,20 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
-ERConfigurationController >> deleteAttendee: anAttendee [
-
-	anAttendee
-]
-
-{ #category : #rendering }
 ERConfigurationController >> deleteFee: aFee [
 	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
 	^ aFee delete.
+]
+
+{ #category : #rendering }
+ERConfigurationController >> deleteGroup: aGroup [
+	|attendees|
+	attendees := aGroup listAttends deepCopy.
+	attendees do: [ :each | self deleteAttendee: (ERAttendee find: [:att | att = each]) ].
+	self deleteUserForConference: aGroup groupManager.
+	(self conference groups)
+		removeAllSuchThat: [ :each | aGroup id = each id ].
+	aGroup delete.
 ]
 
 { #category : #'as yet unclassified' }

@@ -41,15 +41,73 @@ ERLoggedController >> attendeeFromUser: anUser [
 			ifNone: [ nil ]
 ]
 
+{ #category : #rendering }
+ERLoggedController >> deleteAttendee: anAttendee [
+	self deleteAttendeeFromGroupAndConference: anAttendee.
+	anAttendee userAccount isGroupManager
+		ifFalse: [ self deleteUserForConference: anAttendee ]
+		ifTrue: [ self deleteAttendeeRoleFromUser: anAttendee ].
+	anAttendee delete.
+]
+
 { #category : #removing }
 ERLoggedController >> deleteAttendeeAndRemoveUserForConference: anAttendee [
 	| userOfAttendee |
 	userOfAttendee := anAttendee userAccount.
-	self removeUserOfTicketIfApply: anAttendee.
 	anAttendee delete.
 	self conference users
 		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
 	userOfAttendee delete
+]
+
+{ #category : #removing }
+ERLoggedController >> deleteAttendeeFromConference: anAttendee [
+	(self conference attends)
+		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self conference save.
+]
+
+{ #category : #accessing }
+ERLoggedController >> deleteAttendeeFromGroup: anAttendee [
+	| group |
+	group := self groupForGroupManager.
+	group listAttends
+		do: [ :each | 
+			each userAccount email = anAttendee userAccount email
+				ifTrue: [ 
+					group listAttends remove: each ifAbsent: [  ].
+					self deleteAttendee: each ] ].
+	group save
+]
+
+{ #category : #accessing }
+ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
+	anAttendee idGroup isNotNil ifTrue: [ 
+	|group|
+	group := self getGroupOfAttendee: anAttendee.
+	(group listAttends)
+		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	group save.	
+	].
+	(self conference attends)
+		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self conference save.
+]
+
+{ #category : #accessing }
+ERLoggedController >> deleteAttendeeRoleFromUser: anAttendee [
+	anAttendee userAccount deleteRole: 'attendee'
+]
+
+{ #category : #removing }
+ERLoggedController >> deleteUserForConference: anAttendee [
+	| userOfAttendee |
+	userOfAttendee := anAttendee userAccount.
+	self conference users
+		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
+	self conference save.
+	userOfAttendee delete.
+	self conference users
 ]
 
 { #category : #accessing }

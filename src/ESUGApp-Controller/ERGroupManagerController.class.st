@@ -39,47 +39,12 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> deleteAllFieldsOfAttendeeExceptAffiliationInformation [
-	attendee keywords: ''.
-	attendee additionalText: ''.
-	attendee address: ''.
-	attendee address2: ''.
-	attendee city: ''.
-	attendee country: 'Select Country'.
-	attendee province: ''.
-	attendee postal: ''.
-	attendee facebookURL: ''.
-	attendee twitterURL: ''.
-	attendee homePage: ''.
-	attendee foodPreference: 'Normal'.
-	attendee attendSocialEvent: true.
-	attendee addedToMainList: true.
-	attendee addPersonToSocialDinner: false.
-	attendee tshirtSize: 'XS'.
-	attendee
-		attendance:
-			(Dictionary
-				newFrom:
-					{('monday' -> true).
-					('tuesday' -> true).
-					('wednesday' -> true).
-					('thursday' -> true).
-					('friday' -> true)}).
-	attendee gender: 'Male'.
-	attendee paymentType: 'Bank transfer'.
-	attendee paymentCurrency: 'Euro'.
-	attendee coupon: ''.
-	attendee userAccount deleteRole: 'attendee'.
-	user save.
-	attendee save.
-]
-
-{ #category : #accessing }
 ERGroupManagerController >> deleteAttendee: anAttendee [
 	self deleteAttendeeFromGroupAndConference: anAttendee.
-	anAttendee userAccount = attendee userAccount
-		ifFalse: [ self deleteAttendeeAndRemoveUserForConference: anAttendee ]
-		ifTrue: [ self deleteAllFieldsOfAttendeeExceptAffiliationInformation ]
+	anAttendee userAccount isGroupManager
+		ifFalse: [ self deleteUserForConference: anAttendee ]
+		ifTrue: [ self deleteAttendeeRoleFromUser: anAttendee ].
+	anAttendee delete.
 ]
 
 { #category : #accessing }
@@ -97,12 +62,28 @@ ERGroupManagerController >> deleteAttendeeFromGroup: anAttendee [
 
 { #category : #accessing }
 ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
-	(self groupForGroupManager listAttends)
+	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
-	self groupForGroupManager save.
+	self group save.
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> deleteAttendeeRoleFromUser: anAttendee [
+	anAttendee userAccount deleteRole: 'attendee'
+]
+
+{ #category : #accessing }
+ERGroupManagerController >> deleteUserForConference: anAttendee [
+	| userOfAttendee |
+	userOfAttendee := anAttendee userAccount.
+	self conference users
+		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
+	self conference save.
+	userOfAttendee delete.
+	self conference users
 ]
 
 { #category : #accessing }

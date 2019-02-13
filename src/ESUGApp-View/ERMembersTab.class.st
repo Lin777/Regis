@@ -37,6 +37,7 @@ ERMembersTab >> blockTableToExecute [
 
 { #category : #accessing }
 ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
+	controller user: self session user.
 	controller deleteAttendee: anAttendee
 ]
 

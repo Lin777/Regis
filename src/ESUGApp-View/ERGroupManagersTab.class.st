@@ -30,6 +30,7 @@ ERGroupManagersTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERGroupManagersTab >> deleteGroup: user [
+	controller deleteGroup: user
 ]
 
 { #category : #rendering }
