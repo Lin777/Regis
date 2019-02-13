@@ -41,7 +41,7 @@ ERAttendee class >> genders [
 
 { #category : #'as yet unclassified' }
 ERAttendee class >> membershipTypes [
-	^ #('Industrial' 'Other' 'Professor / Reseacher' 'Student')
+	^ #('Industrial' 'Other' 'Academic')
 ]
 
 { #category : #'as yet unclassified' }

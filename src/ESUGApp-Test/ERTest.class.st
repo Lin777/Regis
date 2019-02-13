@@ -9,6 +9,17 @@ Class {
 }
 
 { #category : #tests }
+ERTest class >> generateDataForTest [
+	self new
+	 registerAttendees:#('ana@gmail.com' 'juan@gmail.com' 'lucas@gmail.com' 'michael@gmail.com');
+		registerGroupWithGroupManager: 'andrew@gmail.com' 
+			listOfAttendees: #('milton@gmail.com' 'david@gmail.com' 'anne@gmail.com' 'jess@gmail.com' );
+		registerGroupWithGroupManager: 'lesly@gmail.com' 
+			listOfAttendees: #('mary@gmail.com' 'josh@gmail.com' 'mike@gmail.com' 'nil@gmail.com' 'jenny@gmail.com').
+
+]
+
+{ #category : #tests }
 ERTest class >> testAdditionalInformation [
 	^ ERAdditionalInformation new
 		keywords: 'test test test';
@@ -26,7 +37,7 @@ ERTest class >> testAffiliationInformation [
 		organizationCountry: 'Bolivia';
 		organizationProvince: 'testProvince';
 		organizationPostal: '0000';
-		membershipType: 'Student';
+		membershipType: 'Academic';
 		yourself
 ]
 
@@ -102,7 +113,15 @@ ERTest class >> testExampleAttendee [
 { #category : #tests }
 ERTest class >> testGroupManager [
 	^ ERGroupManager new
-		userAccount: self testUserAccount asGroupManager;
+		userAccount: (self testUserAccount: 'groupManager@gmail.com') asGroupManager;
+		affiliationInformation: self testAffiliationInformation;
+		yourself
+]
+
+{ #category : #tests }
+ERTest class >> testGroupManager: aString [
+	^ ERGroupManager new
+		userAccount: (self testUserAccount: aString) asGroupManager;
 		affiliationInformation: self testAffiliationInformation;
 		yourself
 ]
@@ -174,8 +193,8 @@ ERTest class >> testUserAccount [
 ERTest class >> testUserAccount: email [
 	^ ERUserAccount new
 		email: email;
-		firstName: 'Test';
-		lastName: 'Test';
+		firstName: (email substrings: '@') first capitalized;
+		lastName: (email substrings: '@') first capitalized;
 		password: '12345678';
 		confirmPassword: '12345678';
 		yourself
@@ -209,6 +228,12 @@ ERTest >> registerAsGroupManager [
 ]
 
 { #category : #rendering }
+ERTest >> registerAsGroupManager: email [
+	^ (ERRegistrationController
+		attendee: (self class testGroupManager: email)) saveGroupManager
+]
+
+{ #category : #rendering }
 ERTest >> registerAttendee [
 	^ (ERRegistrationController attendee:
 			 self class testAttendee) saveAttendee 
@@ -221,6 +246,11 @@ ERTest >> registerAttendee: anAttendee [
 ]
 
 { #category : #rendering }
+ERTest >> registerAttendees: aList [
+	aList do: [ :email | self registerAttendee: (self class testAttendee: email) ]
+]
+
+{ #category : #rendering }
 ERTest >> registerGroup [
 	|user group aController|
 	user := self registerAsGroupManager .
@@ -229,6 +259,16 @@ ERTest >> registerGroup [
 	aController addAttendee: (self class testAttendee: 'test1@gmail.com').
 	aController addAttendee: (self class testAttendee: 'test2@gmail.com').
 	aController addAttendee: (self class testAttendee: 'test3@gmail.com').
+	^ group
+]
+
+{ #category : #rendering }
+ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
+	|user group aController|
+	user := self registerAsGroupManager: aString.
+	group := self groupOfUser: user.
+	aController := ERGroupManagerController new group: group.
+	aList do: [ :each | aController addAttendee: (self class testAttendee: each) ].
 	^ group
 ]
 
