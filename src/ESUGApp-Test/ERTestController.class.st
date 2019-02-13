@@ -1,9 +1,6 @@
 Class {
 	#name : #ERTestController,
-	#superclass : #ERTestControllers,
-	#instVars : [
-		'fileOfTest'
-	],
+	#superclass : #ERTest,
 	#category : #'ESUGApp-Test'
 }
 
@@ -101,4 +98,8 @@ ERTestController >> testGroupOfAttendee [
 	add: group; yourself)).
 	
 	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
+
+ERTestController >> testExistReductionTicketWithName [
+	self assert: (controller existReductionTicketWithName: self validCoupon).
+	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
 ]

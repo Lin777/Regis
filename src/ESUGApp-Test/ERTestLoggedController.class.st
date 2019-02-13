@@ -1,6 +1,6 @@
 Class {
 	#name : #ERTestLoggedController,
-	#superclass : #ERTestControllers,
+	#superclass : #ERTest,
 	#category : #'ESUGApp-Test'
 }
 
@@ -17,6 +17,6 @@ ERTestLoggedController >> testGetAttendeeWhenUserExist [
 ERTestLoggedController >> testGetAttendeeWhenUserNotExist [
 	|anUser|
 	anUser := (ERLoggedController
-		user: ERTestControllers testUserAccount) attendeeFromUser.
+		user: ERTest testUserAccount) attendeeFromUser.
 	self assert: anUser isNil
 ]

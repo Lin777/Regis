@@ -1,4 +1,4 @@
-# ESUGConfRegistrationApp
+# ESUGConfRegistrationApp [![master branch:](https://travis-ci.org/Lin777/ESUGConfRegistrationApp.svg?branch=master)](https://travis-ci.org/Lin777/ESUGConfRegistrationApp/branches)
 ESUG Conference Registration Application
 
 ## Installation 
@@ -87,5 +87,4 @@ password: 12345678
 * [ ] check that a participant has been registered
 * [ ] add an extra person to the social diner to an attendee -> email to pay extra fee + invoice?
 
-## Build Status [![master branch:](https://travis-ci.org/Lin777/ESUGConfRegistrationApp.svg?branch=master)](https://travis-ci.org/Lin777/ESUGConfRegistrationApp/branches)
 

@@ -88,7 +88,6 @@ ERAffiliationInformation >> descriptionOrganizationCountry [
 		priority: 50;
 		required: false;
 		options: ERAttendee countries;
-		default:'Select Country';
 		withoutLabel: true;
 		cssClass: 'half';
 		componentClass: MDLMASelectListComponent .

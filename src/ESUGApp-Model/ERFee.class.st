@@ -80,7 +80,7 @@ ERFee >> descriptionErfAllDaysFee [
 ERFee >> descriptionErfOneDayFee [
 	<magritteDescription>
 	| tmp |
-	tmp := MAStringDescription new.
+	tmp := MANumberDescription new.
 	tmp 
 		accessor: #erfOneDayFee; 
 		priority: 40;
@@ -96,7 +96,7 @@ ERFee >> descriptionErfOneDayFee [
 ERFee >> descriptionExtraPersonSD [
 	<magritteDescription>
 	| tmp |
-	tmp := MAStringDescription new.
+	tmp := MANumberDescription new.
 	tmp 
 		accessor: #extraPersonSD; 
 		priority: 20;
@@ -112,7 +112,7 @@ ERFee >> descriptionExtraPersonSD [
 ERFee >> descriptionLrfAllDaysFee [
 	<magritteDescription>
 	| tmp |
-	tmp := MAStringDescription new.
+	tmp := MANumberDescription new.
 	tmp 
 		accessor: #lrfAllDaysFee; 
 		priority: 50;
@@ -129,7 +129,7 @@ ERFee >> descriptionLrfAllDaysFee [
 ERFee >> descriptionLrfOneDayFee [
 	<magritteDescription>
 	| tmp |
-	tmp := MAStringDescription new.
+	tmp := MANumberDescription new.
 	tmp 
 		accessor: #lrfOneDayFee; 
 		priority: 60;

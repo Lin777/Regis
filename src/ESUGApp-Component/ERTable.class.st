@@ -76,8 +76,9 @@ ERTable >> renderBody: html [
 ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
-			html mdlAnchorButton colored;	rippleEffect;
+			html mdlAnchorButton colored; rippleEffect;
 				id: (dataButton third value: aObject);
+				onClick: dataButton fifth ;
 				callback: [ dataButton second value: aObject ];
 				icon: dataButton first.
 			html div	class: 'mdl-tooltip'; 

@@ -1,5 +1,5 @@
 Class {
-	#name : #ERTestControllers,
+	#name : #ERTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'store',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #tests }
-ERTestControllers class >> testAdditionalInformation [
+ERTest class >> testAdditionalInformation [
 	^ ERAdditionalInformation new
 		keywords: 'test test test';
 		additionalText: 'test test test';
@@ -17,7 +17,7 @@ ERTestControllers class >> testAdditionalInformation [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testAffiliationInformation [
+ERTest class >> testAffiliationInformation [
 	^ ERAffiliationInformation new
 		organizationName: 'testOrgName';
 		organizationAddrees1: 'testAddress1';
@@ -31,7 +31,7 @@ ERTestControllers class >> testAffiliationInformation [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testAttendee [
+ERTest class >> testAttendee [
 	^ ERAttendee new
 		userAccount: self testUserAccount;
 		contactInformation: self testContactInformation ;
@@ -43,7 +43,25 @@ ERTestControllers class >> testAttendee [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testContactInformation [
+ERTest class >> testAward: anAttendee [
+	^ (ERAward submitter: anAttendee) 
+			nameAward: 'testAward';
+			smalltalkDialect: 'English';
+			affiliation: 'Test Org.';
+			country: nil;
+			downloadUrl: 'https://www.webpagetest.org/';
+			demoUrl: 'https://www.webpagetest.org/';
+			keywords: 'test, test, test, test';
+			licence: 'MIT';
+			otherDevelopers: 'Test Dev, Test1 Dev';
+			submittionDate: Date today;
+			yourself 
+			
+			
+]
+
+{ #category : #tests }
+ERTest class >> testContactInformation [
 	^ ERContactInformation new
 		address: 'testAddress';
 		address2: 'testAddress2';
@@ -58,7 +76,7 @@ ERTestControllers class >> testContactInformation [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testExampleAttendee [
+ERTest class >> testExampleAttendee [
 	^ ERAttendee new
 		userAccount: self testUserExampleAccount;
 		contactInformation: self testContactInformation ;
@@ -70,7 +88,7 @@ ERTestControllers class >> testExampleAttendee [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testGroupManager [
+ERTest class >> testGroupManager [
 	^ ERGroupManager new
 		userAccount: self testUserAccount asGroupManager;
 		affiliationInformation: self testAffiliationInformation;
@@ -78,7 +96,7 @@ ERTestControllers class >> testGroupManager [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testModifyUser [
+ERTest class >> testModifyUser [
 	^ ERUserAccount new
 		firstName: 'userModify';
 		lastName: 'usermodify';
@@ -87,21 +105,21 @@ ERTestControllers class >> testModifyUser [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testPaymentInformation [
+ERTest class >> testPaymentInformation [
 	^ ERPaymentInformation new
 		paymentType: 'Bank transfer';
 		paymentCurrency: 'Euro';
-		coupon: '';
+		coupon: nil;
 		yourself
 ]
 
 { #category : #tests }
-ERTestControllers class >> testRegisterConferenceInformation [
+ERTest class >> testRegisterConferenceInformation [
 	^ ERRegisterConferenceInformation new
 		attendSocialEvent: true;
 		addedToMainList: true;
 		foodPreference: 'Normal';
-		addPersonToSocialDinner: false;
+		addPersonToSocialDinner: true;
 		personAddedFoodPreference: 'Normal';
 		tshirtSize: 'XL';
 		attendance:
@@ -117,7 +135,20 @@ ERTestControllers class >> testRegisterConferenceInformation [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testUserAccount [
+ERTest class >> testTalk: anAttendee [
+	^ (ERTalk submitter: anAttendee) 
+			name: 'Talk test';
+			description: 'Description test';
+			presentation: 'Test Org.';
+			authorsWithoutSubmitter: nil;
+			submittionDate: Date today;
+			yourself 
+			
+			
+]
+
+{ #category : #tests }
+ERTest class >> testUserAccount [
 	^ ERUserAccount new
 		email: 'test@gmail.com';
 		firstName: 'Test';
@@ -128,7 +159,18 @@ ERTestControllers class >> testUserAccount [
 ]
 
 { #category : #tests }
-ERTestControllers class >> testUserExampleAccount [
+ERTest class >> testUserAccount: email [
+	^ ERUserAccount new
+		email: email;
+		firstName: 'Test';
+		lastName: 'Test';
+		password: '12345678';
+		confirmPassword: '12345678';
+		yourself
+]
+
+{ #category : #tests }
+ERTest class >> testUserExampleAccount [
 	^ ERUserAccount new
 		email: 'example@gmail.com';
 		firstName: 'Example';
@@ -139,30 +181,30 @@ ERTestControllers class >> testUserExampleAccount [
 ]
 
 { #category : #tests }
-ERTestControllers >> defaultStore [
+ERTest >> defaultStore [
 	^ SDMemoryStore new
 ]
 
 { #category : #rendering }
-ERTestControllers >> registerAsGroupManager [
+ERTest >> registerAsGroupManager [
 	^ (ERRegistrationController
-		attendee: ERTestControllers testAttendee) saveGroupManager
+		attendee: self class testGroupManager) saveGroupManager
 ]
 
 { #category : #rendering }
-ERTestControllers >> registerAttendee [
+ERTest >> registerAttendee [
 	^ (ERRegistrationController attendee:
 			 self class testAttendee) saveAttendee 
 ]
 
 { #category : #rendering }
-ERTestControllers >> registerAttendee: anAttendee [
+ERTest >> registerAttendee: anAttendee [
 	^ (ERRegistrationController attendee: anAttendee)
 		saveAttendee
 ]
 
 { #category : #tests }
-ERTestControllers >> setUp [
+ERTest >> setUp [
 	store := self defaultStore.
 	SDActiveRecord setStore: store.
 	ERUserAccount warmUp.
@@ -178,7 +220,7 @@ ERTestControllers >> setUp [
 ]
 
 { #category : #running }
-ERTestControllers >> tearDown [
+ERTest >> tearDown [
 	ERAttendee
 		do: [ :each | 
 			[ each delete ]
@@ -229,4 +271,9 @@ ERTestControllers >> tearDown [
 	ERConference coolDown.
 	ESUGSetUp stop.
 	Smalltalk garbageCollectMost
+]
+
+{ #category : #'as yet unclassified' }
+ERTest >> validCoupon [
+	^ ERController new conference reductionTickets first ticketId
 ]

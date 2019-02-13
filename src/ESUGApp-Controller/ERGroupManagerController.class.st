@@ -38,14 +38,6 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	^ self group save
 ]
 
-{ #category : #adding }
-ERGroupManagerController >> addMyselfToGroup [
-	|group|
-	group := self groupForGroupManager.
-	group addAttendee: attendee.
-	group save.
-]
-
 { #category : #accessing }
 ERGroupManagerController >> deleteAllFieldsOfAttendeeExceptAffiliationInformation [
 	attendee keywords: ''.

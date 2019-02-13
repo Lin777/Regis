@@ -20,13 +20,13 @@ ERAttendeesOfTicket class >> on: anAttendee withContent: aContent [
 ERAttendeesOfTicket >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
-		add: '10';
-		add: ([ :att | att firstName ] value: user);
-		add: ([ :att | att email ] value: user);
-		add: ([ :att | att country ] value: user);
-		add: ([ :att | att orgName ] value: user);
+		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
+		add: ([ :att | att userAccount firstName ] value: user);
+		add: ([ :att | att userAccount email ] value: user);
+		add: ([ :att | att affiliationInformation organizationCountry ] value: user);
+		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | (ERController new conferenceFeeFor: att) asString
-			, ' ', att paymentCurrency, '(s)' ] value: user);
+			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
 		add: ([ :att | att paymentInformation hasPaid ] value: user);
 		yourself ]
 ]

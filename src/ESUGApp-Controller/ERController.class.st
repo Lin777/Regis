@@ -365,9 +365,7 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 	conference users
 		do: [ :each | 
 			each email = anUser email
-				ifTrue: [ Transcript show: 'True'.
-					each = anUser ifFalse:[
-						Transcript show: 'Exist'.
+				ifTrue: [each = anUser ifFalse:[
 					ERException emailAlreadyRegistered signal ] ]]
 ]
 

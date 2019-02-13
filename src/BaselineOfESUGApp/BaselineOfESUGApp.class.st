@@ -13,8 +13,6 @@ BaselineOfESUGApp >> baseline: spec [
 	spec
 		for: #common
 		do: [
-			"spec postLoadDoIt: #'postload:package:'."
-		
 			self setUpDependencies: spec.
 			spec
 				package: 'ESUGApp-Exception';
@@ -39,60 +37,6 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-MDLMagritte' with: [ spec
 						requires:
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]]
-]
-
-{ #category : #baselines }
-BaselineOfESUGApp >> loadArtefact [
-	Metacello new
-        githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
-        baseline: 'Artefact';
-        onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-        load: #('default' 'seaside')
-]
-
-{ #category : #baselines }
-BaselineOfESUGApp >> loadMagritte [
-	Metacello new
-	baseline: 'Magritte';
-		repository: 'github://magritte-metamodel/magritte:master/source';
-		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		load: #('Magritte-Seaside')
-]
-
-{ #category : #baselines }
-BaselineOfESUGApp >> loadMagritteForMDL [
-	Metacello new 
-		baseline: 'MaterialDesignLite'; 
-		repository: 'github://DuneSt/MaterialDesignLite:v2.1.1/src';
-		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		load: 'all'.
-	
-]
-
-{ #category : #baselines }
-BaselineOfESUGApp >> postload: loader package: packageSpec [
-	
-	"Ignore pre and post loads if already executed"
-	| initializersEnabled repo gofer |
-	"self halt."
-	Initialized = true ifTrue: [ ^ self ].
-	
-	initializersEnabled := MCMethodDefinition initializersEnabled.
-
-	MCMethodDefinition initializersEnabled: false.
-	
-	"repo := TonelRepository new
-	directory: self packageRepository directory;
-	yourself."
-	self loadMagritte .
-	self loadMagritteForMDL .
-	self loadArtefact .
-	
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-	Smalltalk cleanOutUndeclared.
-	
-	
-	Initialized := true.
 ]
 
 { #category : #baselines }
