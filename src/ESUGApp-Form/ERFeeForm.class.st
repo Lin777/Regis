@@ -1,5 +1,5 @@
 Class {
-	#name : #ERFeeForm1,
+	#name : #ERFeeForm,
 	#superclass : #ERForm,
 	#instVars : [
 		'fee',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #actions }
-ERFeeForm1 >> cancelForm [
+ERFeeForm >> cancelForm [
 	feeForm cancel.
 	bankAccountInfoForm cancel .
 	bankInfoForm cancel.
@@ -20,7 +20,7 @@ ERFeeForm1 >> cancelForm [
 ]
 
 { #category : #hooks }
-ERFeeForm1 >> children [
+ERFeeForm >> children [
 	^ OrderedCollection new
 		add: dialog;
 		add: feeForm  ;
@@ -30,28 +30,28 @@ ERFeeForm1 >> children [
 ]
 
 { #category : #initialization }
-ERFeeForm1 >> initialize [
+ERFeeForm >> initialize [
 	super initialize.
-	fee := controller fees first.
+	fee := controller conference fee.
 	self initializeForms.
 ]
 
 { #category : #initialization }
-ERFeeForm1 >> initializeForms [
+ERFeeForm >> initializeForms [
 	feeForm := self createFormOf: fee.
 	bankAccountInfoForm := self createFormOf: fee bankAccountInformation.
 	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm1 >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
 	aFee bankAccountInformation: anAccountBankInfo.
 	aFee bankAccountInformation bankInformation: aBankInfo.
 	controller updateFee: aFee.
 ]
 
 { #category : #rendering }
-ERFeeForm1 >> renderForm: html [
+ERFeeForm >> renderForm: html [
 	self renderFormConferenceFee: html.
 	self renderFormBankAccountInformation: html.
 	self renderFormBankInformation: html.
@@ -59,7 +59,7 @@ ERFeeForm1 >> renderForm: html [
 ]
 
 { #category : #rendering }
-ERFeeForm1 >> renderFormBankAccountInformation: html [
+ERFeeForm >> renderFormBankAccountInformation: html [
 	html heading level: 5;
 		with: [ html strong: 'Bank Account Information:'].
 	html horizontalRule.
@@ -67,7 +67,7 @@ ERFeeForm1 >> renderFormBankAccountInformation: html [
 ]
 
 { #category : #rendering }
-ERFeeForm1 >> renderFormBankInformation: html [
+ERFeeForm >> renderFormBankInformation: html [
 	html heading level: 5;
 		with: [ html strong: 'Bank Information:'].
 	html horizontalRule.
@@ -75,7 +75,7 @@ ERFeeForm1 >> renderFormBankInformation: html [
 ]
 
 { #category : #rendering }
-ERFeeForm1 >> renderFormConferenceFee: html [
+ERFeeForm >> renderFormConferenceFee: html [
 	html heading level: 5;
 		with: [ html strong: 'Conference Fee:'].
 	html horizontalRule.
@@ -84,14 +84,14 @@ ERFeeForm1 >> renderFormConferenceFee: html [
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm1 >> save [ 	
+ERFeeForm >> save [ 	
 	 self modifyFee: feeForm model
 			withBankInfo: bankInfoForm model
 			withAccountBankInfo: bankAccountInfoForm model
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm1 >> saveAndValidateFee [
+ERFeeForm >> saveAndValidateFee [
 	[feeForm save.
 	bankAccountInfoForm save.
 	bankInfoForm save.
@@ -102,27 +102,27 @@ ERFeeForm1 >> saveAndValidateFee [
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm1 >> saveForms [
+ERFeeForm >> saveForms [
 	feeForm save.
 	bankAccountInfoForm save.
 	bankInfoForm save.
 ]
 
 { #category : #accessing }
-ERFeeForm1 >> tabId [ 
+ERFeeForm >> tabId [ 
 	^ 'tabFees'
 ]
 
 { #category : #accessing }
-ERFeeForm1 >> tabName [
+ERFeeForm >> tabName [
 	^ 'Fee'
 ]
 
 { #category : #accessing }
-ERFeeForm1 >> title [
+ERFeeForm >> title [
 	^ 'Fee'
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm1 >> validateForms [
+ERFeeForm >> validateForms [
 ]

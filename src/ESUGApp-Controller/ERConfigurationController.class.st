@@ -29,15 +29,6 @@ ERConfigurationController >> addAttendsToLunchPer: day to: list [
 ]
 
 { #category : #adding }
-ERConfigurationController >> addFee: aFee [
-	|savedFee|
-	savedFee := aFee save.
-	 conference addFee: savedFee.
-	 conference save.
-	^ savedFee
-]
-
-{ #category : #adding }
 ERConfigurationController >> addItemTo: aList of: each [
 	| man women |
 	man := 0.

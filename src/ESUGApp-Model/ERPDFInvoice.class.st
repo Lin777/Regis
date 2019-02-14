@@ -71,7 +71,7 @@ ERPDFInvoice >> addDateInvoice: aPage [
 		font: self fontContent;
 		dimension: 190 mm @ 20 mm;
 		from: 0 mm @ 48 mm;
-		text: 'January 17, 2019';
+		text: self dateToday;
 		alignment: PDFAlignment right).
 ]
 
@@ -295,6 +295,11 @@ ERPDFInvoice >> colorLink [
 { #category : #'as yet unclassified' }
 ERPDFInvoice >> colorTitle [
 	^ PDFColor r: 0 g: 0 b: 128
+]
+
+{ #category : #adding }
+ERPDFInvoice >> dateToday [
+	^ Date today monthName asString, ' ', Date today dayOfMonth asString, ', ', Date today year asString
 ]
 
 { #category : #'as yet unclassified' }

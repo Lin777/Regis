@@ -63,7 +63,7 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 		bankAccountInformation: esugEuroBankAccountInformation;
 		bankPayPalUrl:
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=board%40esug.org&item_name=ESUG+Conference+Registration&item_number=[INVOICENUMBER]&amount=[AMOUNT]&no_shipping=1&no_note=1&currency_code=EUR&charset=UTF-8'; save.
-	conference addFee: esugEuroFee
+	conference fee: esugEuroFee
 ]
 
 { #category : #accessing }

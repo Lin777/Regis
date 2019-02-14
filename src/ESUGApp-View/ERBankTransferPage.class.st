@@ -35,7 +35,7 @@ ERBankTransferPage >> initialize [
 
 { #category : #initialization }
 ERBankTransferPage >> initializeFee [
-	fee := pageController feePerTypeCurrencyOf: pageController attendee.
+	fee := pageController conference fee.
 	bankAccountInformation := fee bankAccountInformation.
 	bankInformation := bankAccountInformation bankInformation
 ]
@@ -73,16 +73,6 @@ ERBankTransferPage >> renderBody: html [
 						mdlTableCell: [ html text: bankAccountInformation number ].
 					html
 						mdlTableCell: [ html text: bankInformation addressString ] ] ]
-]
-
-{ #category : #rendering }
-ERBankTransferPage >> renderBody: html with: aBlock [
-	html div
-		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
-		with: [ html break.
-			html break.
-			aBlock value ]
 ]
 
 { #category : #rendering }

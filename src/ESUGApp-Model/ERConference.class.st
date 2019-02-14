@@ -3,7 +3,7 @@ Class {
 	#superclass : #SDActiveRecord,
 	#instVars : [
 		'attends',
-		'fees',
+		'fee',
 		'reductionTickets',
 		'submittedTalks',
 		'submittedAwards',
@@ -30,11 +30,6 @@ ERConference >> active: anObject [
 { #category : #initialization }
 ERConference >> addAttendee: anAttendee [
 	attends add: anAttendee 
-]
-
-{ #category : #initialization }
-ERConference >> addFee: aFee [
-	fees add: aFee 
 ]
 
 { #category : #initialization }
@@ -88,13 +83,13 @@ ERConference >> configuration: anObject [
 ]
 
 { #category : #accessing }
-ERConference >> fees [
-	^ fees
+ERConference >> fee [
+	^ fee
 ]
 
 { #category : #accessing }
-ERConference >> fees: anObject [
-	fees := anObject
+ERConference >> fee: anObject [
+	fee := anObject
 ]
 
 { #category : #accessing }

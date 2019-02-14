@@ -144,7 +144,7 @@ ERController >> conference: anObject [
 { #category : #'as yet unclassified' }
 ERController >> conferenceFeeFor: anAttendee [
 	| fee amount |
-	fee := self feePerTypeCurrencyOf: anAttendee.
+	fee := self conference fee.
 	amount := self amountForCurrentDateFor: fee.
 	amount := amount + (self costPerExtraPerson: anAttendee on: fee).
 	^ self decreaseCouponAmountFor: amount to: anAttendee
@@ -196,18 +196,6 @@ ERController >> encodeFiletoBase64: aFile [
 ERController >> existReductionTicketWithName: aString [
 	^ conference reductionTickets
 		anySatisfy: [ :each | each ticketId = aString  ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> feeForCurrencyType: paymentCurrency [
-	[ ^ conference fees detect: [ :fee | fee currency = paymentCurrency]]
-	on: NotFound 
-	do: [ ERException paymentCurrencyNotAvailable signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> feePerTypeCurrencyOf: anAttendee [
-	^ self feeForCurrencyType: anAttendee paymentInformation paymentCurrency 
 ]
 
 { #category : #actions }
