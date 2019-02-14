@@ -16,7 +16,7 @@ BaselineOfESUGApp >> baseline: spec [
 			self setUpDependencies: spec.
 			spec
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
-				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV' 'ESUGApp-Exception') ];
+				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View' 'Seaside3' 'ESUGApp-Model') ];		
 				package: 'ESUGApp-Library'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
@@ -30,10 +30,10 @@ BaselineOfESUGApp >> baseline: spec [
 							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Controller' 'ESUGApp-Component') ];
 				package: 'ESUGApp-Test'
 					with: [ spec
-						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ];
+						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-Core') ];
 				package: 'ESUGApp-Extensions' with: [ spec
 						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp' 'SandstoneDb')]]
+							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Core' 'SandstoneDb')]]
 ]
 
 { #category : #baselines }
