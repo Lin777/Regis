@@ -7,14 +7,6 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #'as yet unclassified' }
-ERController class >> currencyAvailable [
-	| list |
-	list := OrderedCollection new.
-	self new conference fees do: [ :fee | list add: fee currency ].
-	^ list
-]
-
 { #category : #adding }
 ERController >> addAward: anAward [
 	|award|
@@ -212,14 +204,6 @@ ERController >> getGroupOfAttendee: aAttendee [
 		ifNone: [ nil ] ].
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> groupManagerAmountOfPay: aGroupManager [
-	| fee amount |
-	fee := self feePerTypeCurrencyOf: aGroupManager.
-	amount := self amountForCurrentDateFor: fee.
-	^ self decreaseCouponAmountFor: amount to: aGroupManager
-]
-
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
@@ -240,7 +224,7 @@ ERController >> payPalInvoiceNumberToken [
 ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 	| conferenceFee url fee |
 	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
-	fee := self feePerTypeCurrencyOf: anAttendeeOrGroupManager.
+	fee := conference fee .
 	url := fee bankPayPalUrl.
 	url := url
 		copyReplaceAll: fee payPalAmountToken
@@ -258,7 +242,7 @@ ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 ERController >> payPalUrlForGroup: aGroup [
 	| conferenceFee url fee |
 	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	fee := self feePerTypeCurrencyOf: aGroup.
+	fee := conference fee.
 	url := fee bankPayPalUrl.
 	url := url
 		copyReplaceAll: fee payPalAmountToken

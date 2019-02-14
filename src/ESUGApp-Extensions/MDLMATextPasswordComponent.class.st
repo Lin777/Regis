@@ -1,7 +1,7 @@
 Class {
 	#name : #MDLMATextPasswordComponent,
 	#superclass : #MDLMATextInputComponent,
-	#category : #'ESUGApp-MDLMagritte'
+	#category : #'ESUGApp-Extensions'
 }
 
 { #category : #visiting }

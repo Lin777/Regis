@@ -2,9 +2,7 @@ Class {
 	#name : #ERInvoice,
 	#superclass : #Object,
 	#instVars : [
-		'amount',
-		'numberInvoice',
-		'paymentStatus'
+		'paymentInformation'
 	],
 	#category : #'ESUGApp-Model'
 }

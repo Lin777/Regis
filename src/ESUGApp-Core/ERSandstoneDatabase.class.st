@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'WriteMutex'
 	],
-	#category : #'ESUGApp-DB'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #initialization }

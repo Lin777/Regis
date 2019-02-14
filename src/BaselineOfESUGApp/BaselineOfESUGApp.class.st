@@ -15,18 +15,15 @@ BaselineOfESUGApp >> baseline: spec [
 		do: [
 			self setUpDependencies: spec.
 			spec
-				package: 'ESUGApp-Exception';
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV' 'ESUGApp-Exception') ];
-				package: 'ESUGApp-DB' with: [ spec requires: #('SandstoneDb' 'ESUGApp-Model') ];
-				package: 'ESUGApp-SetUp' with: [ spec requires: #('ESUGApp-View' 'Seaside3') ];		
+				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View' 'Seaside3' 'ESUGApp-Model') ];		
 				package: 'ESUGApp-Library'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
 				package: 'ESUGApp-Form'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Component' 'ESUGApp-View') ];
 				package: 'ESUGApp-Component'
 					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Controller') ];
-				package: 'ESUGApp-SandstoneDB' with: [ spec requires: #('SandstoneDb') ];
 				package: 'ESUGApp-View'
 					with: [ spec
 						requires:
@@ -34,9 +31,9 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-Test'
 					with: [ spec
 						requires: #('SandstoneDb' 'ESUGApp-View' 'ESUGApp-DB' 'ESUGApp-Model' 'ESUGApp-SetUp') ];
-				package: 'ESUGApp-MDLMagritte' with: [ spec
+				package: 'ESUGApp-Extensions' with: [ spec
 						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp')]]
+							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-SetUp' 'SandstoneDb')]]
 ]
 
 { #category : #baselines }

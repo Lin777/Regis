@@ -1,6 +1,6 @@
 Extension { #name : #SDCachedStore }
 
-{ #category : #'*ESUGApp-SandstoneDB' }
+{ #category : #'*ESUGApp-Extensions' }
 SDCachedStore >> cachedLoadOfClass: aClass from: anId [
 	^ (cache at: aClass)
 		at: anId
@@ -14,7 +14,7 @@ SDCachedStore >> cachedLoadOfClass: aClass from: anId [
 					it sandstoneResolveReferences ] ]
 ]
 
-{ #category : #'*ESUGApp-SandstoneDB' }
+{ #category : #'*ESUGApp-Extensions' }
 SDCachedStore >> forClass: aClass at: anId ifAbsent: aHandler [
 	aClass withAllSubclasses
 		do: [ :class | ((cache at: class) at: anId ifAbsent: [ nil ]) 
@@ -22,7 +22,7 @@ SDCachedStore >> forClass: aClass at: anId ifAbsent: aHandler [
 	^ aHandler value
 ]
 
-{ #category : #'*ESUGApp-SandstoneDB' }
+{ #category : #'*ESUGApp-Extensions' }
 SDCachedStore >> forClass: aClass detect: aBlock ifFound: aHandler [
 	aClass withAllSubclasses
 		do: [ :class | 
@@ -33,7 +33,7 @@ SDCachedStore >> forClass: aClass detect: aBlock ifFound: aHandler [
 	^ nil
 ]
 
-{ #category : #'*ESUGApp-SandstoneDB' }
+{ #category : #'*ESUGApp-Extensions' }
 SDCachedStore >> forClass: aClass detect: aBlock ifNone: aHandler [ 
 	aClass withAllSubclasses
 		do: [ :class | 

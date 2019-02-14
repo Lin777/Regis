@@ -1,7 +1,7 @@
 Class {
 	#name : #ESUGSetUp,
 	#superclass : #Object,
-	#category : #'ESUGApp-SetUp'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #accessing }

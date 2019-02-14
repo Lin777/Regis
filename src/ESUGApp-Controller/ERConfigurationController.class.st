@@ -92,12 +92,6 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
-ERConfigurationController >> deleteFee: aFee [
-	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
-	^ aFee delete.
-]
-
-{ #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
@@ -110,11 +104,11 @@ ERConfigurationController >> deleteGroup: aGroup [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
-	(self attendeesForATicket: aReductionTicket ticketId) size > 0
-		ifTrue: [ ERException deletionOfTicketNotValid signal. ]
-		ifFalse: [ conference reductionTickets
-				removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
-				aReductionTicket delete ]
+	(self attendeesForATicket: aReductionTicket ticketId) isNotEmpty
+		ifTrue: [ ERException deletionOfTicketNotValid signal ].
+	conference reductionTickets
+		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
+	aReductionTicket delete
 ]
 
 { #category : #rendering }
@@ -249,11 +243,6 @@ ERConfigurationController >> exportUsers: fileName [
 ]
 
 { #category : #accessing }
-ERConfigurationController >> fees [
-	^ conference fees
-]
-
-{ #category : #accessing }
 ERConfigurationController >> groups [
 	^ conference groups 
 ]
@@ -299,6 +288,17 @@ ERConfigurationController >> hearderAwards [
 ]
 
 { #category : #'as yet unclassified' }
+ERConfigurationController >> listFoodPreferenceOfList: list symbolList: symbolList with: aSymbol [
+	|result|
+	result := OrderedCollection new.
+	symbolList 
+		do: [:symbol | result add:
+			 (list select: [:each | each conferenceInformation perform: symbol 
+				with: (each conferenceInformation perform: aSymbol)]) size ].
+	^ result
+]
+
+{ #category : #'as yet unclassified' }
 ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: vegetarian [ 
 	^ OrderedCollection new add: (Dictionary new at: 'Normal' put: normal; at: 'Vegetarian' put: vegetarian ; at: 'Vegan' put: vegan; at: 'Total' put: normal +vegan +vegetarian ; yourself );yourself 
 ]
@@ -320,17 +320,20 @@ ERConfigurationController >> participantsToLunches [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> participantsToSocialDinner [
-	| normal vegetarian vegan list|
-	list := (self attends select: [:each | each conferenceInformation attendSocialEvent]).
-	normal :=(list select: [:each | each conferenceInformation isNormal]) size.
-	vegan :=(list select:  [:each | each conferenceInformation isVegan]) size.
-	vegetarian :=(list select:  [:each | each conferenceInformation isVegetarian]) size.
+	|attendees addedPeople list symbolList|
 	
-	list := (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ]).
-	normal := normal + ((list select: [:each | each conferenceInformation isNormal: each conferenceInformation personAddedFoodPreference]) size).
-	vegan := vegan + ((list select:  [:each | each conferenceInformation isVegan: each conferenceInformation personAddedFoodPreference]) size).
-	vegetarian := vegetarian + ((list select:  [:each | each conferenceInformation isVegetarian: each conferenceInformation personAddedFoodPreference]) size).
-	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
+	symbolList := #(#isNormal: #isVegan: #isVegetarian:).
+	
+	attendees := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation attendSocialEvent])
+ 		symbolList: symbolList 
+		with: #foodPreference).
+		
+   addedPeople := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ])
+ 		symbolList: symbolList 
+		with: #personAddedFoodPreference).
+	list := attendees + addedPeople .
+	
+	^ self listWithNormal: (list at:1) vegan: (list at:2) vegetarian: (list at:3) 
 ]
 
 { #category : #adding }
@@ -344,14 +347,6 @@ ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
 { #category : #accessing }
 ERConfigurationController >> reductionTickets [
 	^ conference reductionTickets
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> registrationsStatistics [
-	|list|
-	list := OrderedCollection new.
-	^ list
-"	^ #('Date' 'Total Attendees')"
 ]
 
 { #category : #'as yet unclassified' }

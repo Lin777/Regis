@@ -64,7 +64,7 @@ ERPaymentGroupManagerView >> renderSelectorOfCurrency: html [
 		with: [ html mdlTextFieldLabel with: 'Currency type: '.
 			html select
 				class: 'mdl-textfield__input';
-				list: ERController currencyAvailable;
+				list: ERAttendee currencyTypes ;
 				selected: attendee paymentInformation paymentCurrency;
 				callback: [ :value | attendee paymentInformation paymentCurrency: value asString ] ].
 ]

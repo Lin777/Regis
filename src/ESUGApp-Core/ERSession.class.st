@@ -5,7 +5,7 @@ Class {
 		'user',
 		'account'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #actions }
@@ -52,8 +52,7 @@ ERSession >> unregistered [
 { #category : #updating }
 ERSession >> updateRoot: anHtmlRoot [
 	super updateRoot: anHtmlRoot.
-	anHtmlRoot title: ERLibrary applicationName.
-	"anHtmlRoot beHtml5"
+	anHtmlRoot title: ERLibrary applicationName
 ]
 
 { #category : #accessing }

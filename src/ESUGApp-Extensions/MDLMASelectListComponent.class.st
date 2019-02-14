@@ -1,7 +1,7 @@
 Class {
 	#name : #MDLMASelectListComponent,
 	#superclass : #MASelectListComponent,
-	#category : #'ESUGApp-MDLMagritte'
+	#category : #'ESUGApp-Extensions'
 }
 
 { #category : #'rendering-grouped' }
