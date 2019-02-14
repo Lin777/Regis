@@ -1,6 +1,6 @@
 Class {
 	#name : #ERFeeForm1,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERForm,
 	#instVars : [
 		'fee',
 		'feeForm',
@@ -12,14 +12,11 @@ Class {
 }
 
 { #category : #actions }
-ERFeeForm1 >> cancel [ 	
-	self returnToThePreviousState.
-	cancelCallback value
-]
-
-{ #category : #accessing }
-ERFeeForm1 >> cancelCallback: anObject [
-	cancelCallback := anObject
+ERFeeForm1 >> cancelForm [
+	feeForm cancel.
+	bankAccountInfoForm cancel .
+	bankInfoForm cancel.
+	fee := fee abortChanges 
 ]
 
 { #category : #hooks }
@@ -32,21 +29,11 @@ ERFeeForm1 >> children [
 		yourself
 ]
 
-{ #category : #accessing }
-ERFeeForm1 >> content: anObject [
-	content := anObject
-]
-
 { #category : #initialization }
 ERFeeForm1 >> initialize [
 	super initialize.
-	self initializeController.
 	fee := controller fees first.
-	self initializeForms .
-	messageComponent := ERAlert warningAlert id: 'formFeeAlert'.
-	dialog := ERDialog cancelDialog 
-		idOpen: 'cancelAddFee';
-		okCallback: [ self cancel ]
+	self initializeForms.
 ]
 
 { #category : #initialization }
@@ -56,40 +43,19 @@ ERFeeForm1 >> initializeForms [
 	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
 ]
 
-{ #category : #rendering }
-ERFeeForm1 >> renderAcceptButton: html [
-	html mdlButton
-		colored;
-		beSubmit;
-		id: 'acceptAddFee';
-		callback: [self saveAndValidateFee];
-		with: 'Accept'
+{ #category : #'as yet unclassified' }
+ERFeeForm1 >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+	aFee bankAccountInformation: anAccountBankInfo.
+	aFee bankAccountInformation bankInformation: aBankInfo.
+	controller updateFee: aFee.
 ]
 
 { #category : #rendering }
-ERFeeForm1 >> renderButtonsOn: html [ 
-	self renderCancelButton: html.
-	self renderAcceptButton: html
-]
-
-{ #category : #rendering }
-ERFeeForm1 >> renderCancelButton: html [
-	html mdlAnchorButton 
-		openDialogWithId: 'cancelAddFee'; 
-		colored;
-		with: 'Cancel'.
-]
-
-{ #category : #rendering }
-ERFeeForm1 >> renderContentOn: html [
-	html form
-		method: 'post';
-		id: 'formFee';
-		with: [ self renderFormConferenceFee: html.
-					self renderFormBankAccountInformation: html.
-					self renderFormBankInformation: html.
-					self renderButtonsOn: html].
-	html render: dialog
+ERFeeForm1 >> renderForm: html [
+	self renderFormConferenceFee: html.
+	self renderFormBankAccountInformation: html.
+	self renderFormBankInformation: html.
+	self renderButtonsOn: html
 ]
 
 { #category : #rendering }
@@ -118,6 +84,13 @@ ERFeeForm1 >> renderFormConferenceFee: html [
 ]
 
 { #category : #'as yet unclassified' }
+ERFeeForm1 >> save [ 	
+	 self modifyFee: feeForm model
+			withBankInfo: bankInfoForm model
+			withAccountBankInfo: bankAccountInfoForm model
+]
+
+{ #category : #'as yet unclassified' }
 ERFeeForm1 >> saveAndValidateFee [
 	[feeForm save.
 	bankAccountInfoForm save.
@@ -126,6 +99,13 @@ ERFeeForm1 >> saveAndValidateFee [
 	on: ERException 
 	do: [:exception | messageComponent 
 					errorMessage: exception messageText ]
+]
+
+{ #category : #'as yet unclassified' }
+ERFeeForm1 >> saveForms [
+	feeForm save.
+	bankAccountInfoForm save.
+	bankInfoForm save.
 ]
 
 { #category : #accessing }
@@ -141,4 +121,8 @@ ERFeeForm1 >> tabName [
 { #category : #accessing }
 ERFeeForm1 >> title [
 	^ 'Fee'
+]
+
+{ #category : #'as yet unclassified' }
+ERFeeForm1 >> validateForms [
 ]

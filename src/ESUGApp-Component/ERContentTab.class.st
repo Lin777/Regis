@@ -7,7 +7,8 @@ Class {
 		'container',
 		'tabId',
 		'tabName',
-		'contentTab'
+		'contentTab',
+		'previousContentTab'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -70,10 +71,22 @@ ERContentTab >> isActive [
 	^ active.
 ]
 
+{ #category : #accessing }
+ERContentTab >> previousContentTab: anObject [
+	previousContentTab := anObject
+]
+
 { #category : #rendering }
 ERContentTab >> renderContentOn: html [
+	self renderPreviousContentOn: html.
 	html render: contentTab  
 	
+]
+
+{ #category : #rendering }
+ERContentTab >> renderPreviousContentOn: html [
+	previousContentTab isNotNil 
+		ifTrue: [ html html: previousContentTab ]
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Class {
 	#name : #ERConferenceForm,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERForm,
 	#instVars : [
 		'conference',
 		'configuration',
@@ -14,20 +14,11 @@ Class {
 }
 
 { #category : #rendering }
-ERConferenceForm >> action [
-	^ [ self updateConference
-			on: ERException
-				do: [ :exception | messageComponent 
-					errorMessage: exception messageText ] ]
-]
-
-{ #category : #rendering }
-ERConferenceForm >> cancel [
+ERConferenceForm >> cancelForm [
 	configurationForm cancel.
 	emailConfigurationForm cancel.
 	organizerForm cancel.
-	conference := conference abortChanges .
-	self returnToThePreviousState .
+	conference := conference abortChanges 
 ]
 
 { #category : #rendering }
@@ -44,18 +35,8 @@ ERConferenceForm >> children [
 { #category : #rendering }
 ERConferenceForm >> initialize [
 	super initialize.
-	self initializeController.
-	messageComponent := ERAlert warningAlert id: 'formConferenceAlert'.
 	conference := controller conference.
 	self initializeForms.
-	self initializeDialog
-]
-
-{ #category : #rendering }
-ERConferenceForm >> initializeDialog [
-	dialog := ERDialog cancelDialog
-		idOpen: 'cancel-modify-conference';
-		okCallback: [ self cancel ]
 ]
 
 { #category : #rendering }
@@ -66,38 +47,11 @@ ERConferenceForm >> initializeForms [
 ]
 
 { #category : #rendering }
-ERConferenceForm >> renderAcceptButtonOn: html [
-	html mdlButton
-		colored;
-		id: 'accept-modify-conference' ;
-		callback: self action;
-		with: 'Accept'
-]
-
-{ #category : #rendering }
-ERConferenceForm >> renderButtons: html [
-	self renderCancelButtonOn: html.
-	self renderAcceptButtonOn: html.
-]
-
-{ #category : #rendering }
-ERConferenceForm >> renderCancelButtonOn: html [
-	html mdlAnchorButton 
-		openDialogWithId: 'cancel-modify-conference'; 
-		colored;
-		with: 'Cancel'.
-]
-
-{ #category : #rendering }
-ERConferenceForm >> renderContentOn: html [
-	html form
-		method: 'post';
-		id: 'formConference';
-		with: [ self renderFormConferenceConfiguration: html.
-			self renderFormEmailConfiguration: html.
-			self renderFormOrganizer: html.
-			self renderButtons: html ].
-	html render: dialog
+ERConferenceForm >> renderForm: html [
+	self renderFormConferenceConfiguration: html.
+	self renderFormEmailConfiguration: html.
+	self renderFormOrganizer: html.
+	self renderButtonsOn: html
 ]
 
 { #category : #rendering }
@@ -129,6 +83,13 @@ ERConferenceForm >> renderFormOrganizer: html [
 ]
 
 { #category : #rendering }
+ERConferenceForm >> save [ 
+	controller saveConferenceWithConfiguration: configurationForm model 
+				 emailConfiguration: emailConfigurationForm model 
+					organizer: organizerForm model.
+]
+
+{ #category : #rendering }
 ERConferenceForm >> saveForms [
 	"Save all forms of conferece"
 	configurationForm save.
@@ -149,16 +110,6 @@ ERConferenceForm >> tabName [
 { #category : #accessing }
 ERConferenceForm >> title [
 	^ 'Conference Configuration'
-]
-
-{ #category : #rendering }
-ERConferenceForm >> updateConference [
-	^ [self saveForms.
-	self validateForms.
-	controller saveConferenceWithConfiguration: configurationForm model 
-				 emailConfiguration: emailConfigurationForm model 
-					organizer: organizerForm model.
-	self updateStateTab: self tabName]
 ]
 
 { #category : #rendering }
