@@ -25,11 +25,9 @@ ERTestRegisterController >> testAddExitentAttendee [
 ERTestRegisterController >> testAddExitentGroupManager [
 	"When an group manager's email has already been registered it can not be registered again, therefore a nil is returned "
 	
-	self registerAttendee.
+	self registerAttendee: (self class testAttendee: 'groupManager@gmail.com').
 	
-	self should: [ (ERRegistrationController
-		attendee: ERTest testGroupManager)
-		saveGroupManager. ] raise: ERException 
+	self should: [ self registerAsGroupManager ] raise: ERException 
 ]
 
 { #category : #tests }

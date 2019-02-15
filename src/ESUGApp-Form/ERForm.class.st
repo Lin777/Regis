@@ -18,6 +18,7 @@ ERForm >> action [
 			on: ERException
 				do: [ :exception | messageComponent 
 					errorMessage: exception messageText.
+					Transcript show: 'Error'.
 					self returnToThePreviousState.
 					self updateStateTab: self tabName ] ]
 ]
@@ -60,7 +61,7 @@ ERForm >> renderAcceptButtonOn: html [
 	html mdlButton
 		colored;
 		id: ('accept', self tabId capitalized) ;
-		callback: self action;
+		callback: self acceptAction;
 		with: 'Accept'
 ]
 

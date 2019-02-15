@@ -73,16 +73,11 @@ ERTalk >> descriptionName [
 { #category : #'acessing-magritte' }
 ERTalk >> descriptionOtherAuthors [
 	<magritteDescription>
-	| tmp |
-	tmp := MAMemoDescription new.
-	tmp 
-		accessor: #authorsWithoutSubmitter; 
-		priority: 40;
-		required: false;
-		lineCount: 5;
-		withoutLabel: true;
-		componentClass: MDLMATextAreaComponent.
-	^ tmp yourself
+	^ ERAdditionalInformation new descriptionAdditionalText copy
+         accessor: #authorsWithoutSubmitter; 
+			priority: 40;
+		   lineCount: 5;
+         yourself
 ]
 
 { #category : #accessing }

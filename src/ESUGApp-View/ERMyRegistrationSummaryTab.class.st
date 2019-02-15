@@ -30,7 +30,7 @@ ERMyRegistrationSummaryTab >> paymentStatus [
 	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ 
 	^ 'Payment no registered yet. Amount due: '
-				, (ERController new conferenceFeeFor: attendee) asString , ' '
+				, attendee paymentInformation paymentAmount asString , ' '
 				, attendee paymentInformation paymentCurrency , '(s) '
 				, ' (NOTE: you could have paid but we could have not registered it yet)']
 ]

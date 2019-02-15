@@ -22,7 +22,7 @@ ERMembersTab >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: ([ :att | (controller conferenceFeeFor: att) asString
+		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: true;

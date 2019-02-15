@@ -22,7 +22,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att contactInformation country ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
-		add: ([ :att | (controller conferenceFeeFor: att) asString
+		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: att idGroup isNotNil;

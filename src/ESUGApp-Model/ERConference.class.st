@@ -111,7 +111,6 @@ ERConference >> incrementInvoiceNumber [
 ERConference >> initialize [
 	super initialize.
 	attends := OrderedCollection new.
-	fees := OrderedCollection new.
 	groups := OrderedCollection new.
 	payments := OrderedCollection new.
 	reductionTickets := OrderedCollection new.

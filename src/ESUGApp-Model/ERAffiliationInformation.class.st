@@ -81,17 +81,11 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 { #category : #'as yet unclassified' }
 ERAffiliationInformation >> descriptionOrganizationCountry [
 	<magritteDescription>
-	| tmp1 |
-	tmp1 := MASingleOptionDescription new.
-	tmp1
-		accessor: #organizationCountry;
-		priority: 50;
-		required: false;
-		options: ERAttendee countries;
-		withoutLabel: true;
-		cssClass: 'half';
-		componentClass: MDLMASelectListComponent .
-	^ tmp1 yourself
+	^ ERAward new descriptionCountry copy
+              accessor: #organizationCountry;
+				  priority: 50;
+				  cssClass: 'half';
+              yourself
 ]
 
 { #category : #'as yet unclassified' }

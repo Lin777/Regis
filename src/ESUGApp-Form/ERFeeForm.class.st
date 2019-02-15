@@ -91,17 +91,6 @@ ERFeeForm >> save [
 ]
 
 { #category : #'as yet unclassified' }
-ERFeeForm >> saveAndValidateFee [
-	[feeForm save.
-	bankAccountInfoForm save.
-	bankInfoForm save.
-	callback cull: feeForm model cull: bankInfoForm model cull: bankAccountInfoForm model]
-	on: ERException 
-	do: [:exception | messageComponent 
-					errorMessage: exception messageText ]
-]
-
-{ #category : #'as yet unclassified' }
 ERFeeForm >> saveForms [
 	feeForm save.
 	bankAccountInfoForm save.

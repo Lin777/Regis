@@ -287,6 +287,11 @@ ERConfigurationController >> hearderAwards [
 	^ #('Name' 'Submitted by')
 ]
 
+{ #category : #rendering }
+ERConfigurationController >> invoices [
+	^ (conference attends select: [ :each | each idGroup isNil ]), (conference groups).
+]
+
 { #category : #'as yet unclassified' }
 ERConfigurationController >> listFoodPreferenceOfList: list symbolList: symbolList with: aSymbol [
 	|result|

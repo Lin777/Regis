@@ -31,6 +31,7 @@ ERConfigurationView >> initializeTabForms [
 	add: (ERUsersTab on: attendee withContent: content container: self);
 	add: (ERAttendeesTab on: attendee withContent: content container: self);
 	add: (ERGroupManagersTab on: attendee withContent: content container: self);
+	add: (ERInvoicesTab on: attendee withContent: content container: self);
 	add: (ERTalksTab on: attendee withContent: content container: self);
 	add: (ERAwardsTab on: attendee withContent: content container: self);
 	add: (ERStatisticsTab on: attendee withContent: content container: self).

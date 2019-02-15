@@ -148,6 +148,12 @@ ERController >> conferenceIsOpenRegistration [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> costPerExtraPerson: anAttendee [ 
+	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
+	ifTrue: [ ^ conference fee extraPersonSD asNumber]
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> costPerExtraPerson: anAttendee on: fee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
 	ifTrue: [ ^ fee extraPersonSD asNumber]
@@ -256,6 +262,14 @@ ERController >> payPalUrlForGroup: aGroup [
 	^ url
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> paymentRateFor: anAttendee [
+	conference configuration earlyRegistrationDeadline asDate < anAttendee createdOn asDate
+		ifTrue: [ ^ conference fee lrfAllDaysFee ]
+		ifFalse: [ ^ conference fee erfAllDaysFee ].
+	^ ERException errorWhenCalculatingPaymentAmount raised
+]
+
 { #category : #action }
 ERController >> reductionTicketWithName: aString [
 	[ ^ conference reductionTickets detect: [ :each | 
@@ -320,6 +334,15 @@ ERController >> updateAttendee: anAteendee [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> updatePaymentRate: anAttendee [
+	|  amount |
+	amount := self paymentRateFor: anAttendee.
+	amount := amount + (self costPerExtraPerson: anAttendee).
+	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	anAttendee paymentInformation paymentAmount: amount
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
 	[self validateIfEmailIsAlreadyRegistered: anUser.
 	^ anUser save]
@@ -351,9 +374,10 @@ ERController >> validateNewPassword: aString1 with: aString2 [
 
 { #category : #'as yet unclassified' }
 ERController >> validateRegister: anAttendee [
-	self validateIfEmailIsAlreadyRegistered: anAttendee  userAccount.
+	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
-	with: anAttendee userAccount confirmPassword
+	with: anAttendee userAccount confirmPassword.
+	anAttendee userAccount isAttendee ifTrue: [self updatePaymentRate: anAttendee]
 ]
 
 { #category : #action }

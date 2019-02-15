@@ -129,7 +129,7 @@ ERFinishRegisterAttendeePage >> renderCityOn: html [
 ERFinishRegisterAttendeePage >> renderConferenceFeeOn: html [
 	html strong: 'Conference Fee: '.
 			html text:  
-				(pageController conferenceFeeFor: attendee ).
+				(attendee paymentInformation paymentAmount).
 	html break.
 				
 ]
