@@ -1,6 +1,9 @@
 Class {
 	#name : #ERInvoicesTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'encodeZipFile'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -29,6 +32,17 @@ ERInvoicesTab >> children [
 		yourself
 ]
 
+{ #category : #rendering }
+ERInvoicesTab >> dictToRenderDownloadButton [
+	^ Dictionary new
+		at: 'icon' put: 'get_app';
+		at: 'id' put: [ :attend | attend id , '-get_app' ];
+		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];		
+		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		yourself
+]
+
 { #category : #accessing }
 ERInvoicesTab >> headers [
 	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?')
@@ -36,12 +50,38 @@ ERInvoicesTab >> headers [
 
 { #category : #rendering }
 ERInvoicesTab >> invoices [
-	^ controller invoices
+	^ controller invoices 
+		sort: [ :a :b | a paymentInformation invoiceNumber <
+							 b paymentInformation invoiceNumber ]
 ]
 
 { #category : #rendering }
 ERInvoicesTab >> listDataToRenderButton [
-	^ OrderedCollection new
+	^ OrderedCollection new 
+		add: 
+			(Array 
+				with: 'description' 
+				with: [ :user | self generateInvoice: user ]
+				with: [ :user | user id , '-invoice' ]
+				with: 'Generate invoice'
+				with: '');
+		yourself
+]
+
+{ #category : #rendering }
+ERInvoicesTab >> renderButtonsOn: html [
+	html mdlAnchorButton colored;
+		id: 'exportAllInvoices';
+		disabled: self invoices isEmpty;
+		callback: [ self exportAllInvoices ];
+		with: 'EXPORT ALL INVOICES'.
+	self renderDownloadButton: html with:  (Dictionary new 
+		at: 'id' put: 'downloadAllInvoices';
+		at: 'disabled' put: encodeZipFile isNil;
+		at: 'encodeFile' put: 'data:text/zip;base64,', (encodeZipFile ifNil: ['']);
+		at: 'nameFile' put: 'Invoices.zip';
+		at: 'nameButton' put: 'Download Invoices';
+		yourself).
 ]
 
 { #category : #rendering }
@@ -49,7 +89,8 @@ ERInvoicesTab >> renderContainer: html [
 	html form
 		method: 'post';
 		id: 'formAllInvoices';
-		with: [ html horizontalRule.
+		with: [ self renderButtonsOn: html.
+			html horizontalRule.
 			self renderTableOfInvoices: html ]
 ]
 
@@ -60,7 +101,8 @@ ERInvoicesTab >> renderTableOfInvoices: html [
 		levelTotal: 6;
 		listObject: self invoices;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
 ]
 

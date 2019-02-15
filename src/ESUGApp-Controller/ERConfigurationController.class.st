@@ -289,7 +289,9 @@ ERConfigurationController >> hearderAwards [
 
 { #category : #rendering }
 ERConfigurationController >> invoices [
-	^ (conference attends select: [ :each | each idGroup isNil ]), (conference groups).
+	^ (conference groups), 
+	(conference attends 
+		select: [ :each | each idGroup isNil ])
 ]
 
 { #category : #'as yet unclassified' }
