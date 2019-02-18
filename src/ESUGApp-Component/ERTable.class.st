@@ -106,15 +106,14 @@ ERTable >> renderDownloadButton: html with: aObject [
 	dictToRenderDownloadButton ifNotEmpty: [ 
 		| downloadButton |
 		downloadButton := html mdlAnchorButton colored;	rippleEffect;
-			id: ((dictToRenderDownloadButton at: 'id') value: aObject);
-			disabled: ((dictToRenderDownloadButton at: 'disabled') value: aObject).
+			id: ((dictToRenderDownloadButton at: 'id') value: aObject).
 		downloadButton isDisabled ifFalse: [ 
 			downloadButton url: ((dictToRenderDownloadButton at: 'url') value: aObject);
 			attributeAt: 'download' put: ((dictToRenderDownloadButton at: 'download') value: aObject)].
 		downloadButton icon: (dictToRenderDownloadButton at: 'icon').
 		html div	class: 'mdl-tooltip'; 
 				attributeAt: 'data-mdl-for' put: ((dictToRenderDownloadButton at: 'id') value: aObject) ;
-				with: 'Download'].
+				with: 'Download invoice'].
 ]
 
 { #category : #rendering }

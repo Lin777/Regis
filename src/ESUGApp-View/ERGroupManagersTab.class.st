@@ -17,7 +17,7 @@ ERGroupManagersTab >> blockTableToExecute [
 		add: ([ :att | att groupManager userAccount email ] value: group);
 		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
 		add:
-			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
+			([ :att | att paymentInformation paymentAmount asString ]
 				value: group);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				value: (controller allAttendeesHasPaid: att);

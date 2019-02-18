@@ -22,7 +22,7 @@ ERGroupManagerController >> addAttendee: anAttendee [
 	conference save.
 	anAttendee idGroup: groupAtt id.
 	anAttendee save.
-	^ groupAtt save
+	^ self updateGroup: self group
 ]
 
 { #category : #adding }
@@ -35,7 +35,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	conference addAttendee: anAttendeeSaved.
 	self group addAttendee: anAttendeeSaved.
 	conference save.
-	^ self group save
+	^ self updateGroup: self group
 ]
 
 { #category : #accessing }
@@ -77,8 +77,8 @@ ERGroupManagerController >> groupOfUser: aGroupManager [
 
 { #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
-	aGroup save.
-	self updatePaymentForAttendees: aGroup
+	self updatePaymentForAttendees: aGroup.
+	super updateGroup: aGroup 
 ]
 
 { #category : #adding }
@@ -90,7 +90,7 @@ ERGroupManagerController >> updateNumberInvoiceOn: anAttendee [
 { #category : #adding }
 ERGroupManagerController >> updatePaymentForAttendees: aGroup [
 	aGroup listAttends do: [ :att | 
-		att paymentType: aGroup paymentType .
-		att paymentCurrency: aGroup paymentCurrency. 
+		att paymentInformation paymentType: aGroup paymentInformation paymentType .
+		att paymentInformation paymentCurrency: aGroup paymentInformation paymentCurrency. 
 		att save ]
 ]

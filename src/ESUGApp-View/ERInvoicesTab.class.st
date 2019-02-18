@@ -36,8 +36,7 @@ ERInvoicesTab >> children [
 ERInvoicesTab >> dictToRenderDownloadButton [
 	^ Dictionary new
 		at: 'icon' put: 'get_app';
-		at: 'id' put: [ :attend | attend id , '-get_app' ];
-		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];		
+		at: 'id' put: [ :attend | attend id , '-get_invoice' ];	
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
 		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
 		yourself
@@ -57,15 +56,7 @@ ERInvoicesTab >> invoices [
 
 { #category : #rendering }
 ERInvoicesTab >> listDataToRenderButton [
-	^ OrderedCollection new 
-		add: 
-			(Array 
-				with: 'description' 
-				with: [ :user | self generateInvoice: user ]
-				with: [ :user | user id , '-invoice' ]
-				with: 'Generate invoice'
-				with: '');
-		yourself
+	^ OrderedCollection new yourself
 ]
 
 { #category : #rendering }
