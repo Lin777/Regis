@@ -72,7 +72,7 @@ ERContainerTab >> generateInvoice: aAttendee [
 	| groupAttendee |
 	groupAttendee := controller getGroupOfAttendee: aAttendee. 
 	groupAttendee ifNil: [ self generateInvoiceAttendee: aAttendee ] 
-	ifNotNil: [ self generateInvoiceGroup: groupAttendee ].
+	ifNotNil: [ self generateInvoiceGroup: groupAttendee ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -201,7 +201,7 @@ ERContainerTab >> updateAffiliation: aff on: aGroup [
 
 { #category : #accessing }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
-	anAttendee save.
+	controller updateAttendee: anAttendee.
 	content state: content lastState
 ]
 

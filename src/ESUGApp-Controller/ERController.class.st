@@ -4,8 +4,18 @@ Class {
 	#instVars : [
 		'conference'
 	],
+	#classInstVars : [
+		'uniqueInstance'
+	],
 	#category : #'ESUGApp-Controller'
 }
+
+{ #category : #accessing }
+ERController class >> uniqueInstance [ 
+     uniqueInstance ifNil: [uniqueInstance := self new]. 
+     ^ uniqueInstance
+ 
+]
 
 { #category : #adding }
 ERController >> addAward: anAward [
@@ -14,6 +24,12 @@ ERController >> addAward: anAward [
 	award := anAward save.
 	conference addSubmittedAward: award.
 	conference save
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> addPayPalComissionIfApply: anAttendee [
+	(anAttendee idGroup isNil and: [ anAttendee paymentInformation paymentType = 'Credit Card' ])
+		ifTrue: [  ].
 ]
 
 { #category : #adding }
@@ -70,7 +86,7 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 		(self verifyIfTicketCanApply: ticket) 
 		ifTrue: [anAttendee paymentInformation coupon: aTicket].
 		 ].
-	anAttendee save.
+	self updateAttendee: anAttendee.
 ]
 
 { #category : #'as yet unclassified' }
@@ -296,7 +312,7 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 		anAttendee encodedInvoice: nil.
 		anAttendee paymentAmount: nil.	
 	] ifTrue: [ 
-		anAttendee paymentAmount: (self conferenceFeeFor: anAttendee).
+		anAttendee paymentAmount: anAttendee paymentInformation paymentAmount.
 	].
 	anAttendee save.
 ]
@@ -339,6 +355,7 @@ ERController >> updatePaymentRate: anAttendee [
 	amount := self paymentRateFor: anAttendee.
 	amount := amount + (self costPerExtraPerson: anAttendee).
 	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	self addPayPalComissionIfApply: anAttendee.
 	anAttendee paymentInformation paymentAmount: amount
 ]
 
