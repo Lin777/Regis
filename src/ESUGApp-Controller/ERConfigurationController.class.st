@@ -114,7 +114,8 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 { #category : #rendering }
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
-	anUser isAdmin ifFalse: [  ]
+	anUser isAdmin ifFalse: [ 
+		self  ]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 

@@ -23,14 +23,14 @@ ERMembersTab >> blockTableToExecute [
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
-			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);"
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: true;
 				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
 				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {user. html});
+				] ] valueWithArguments: {user. html});"
 		yourself
 	]
 ]
@@ -43,12 +43,12 @@ ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
 
 { #category : #rendering }
 ERMembersTab >> dictToRenderDownloadButton [
-	^ Dictionary new
+	^ Dictionary new"
 		at: 'icon' put: 'get_app';
 		at: 'id' put: [ :attend | attend id , '-get_app' ];
 		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
 		yourself
 ]
 
@@ -100,14 +100,14 @@ ERMembersTab >> listDataToRenderButton [
 				with: [ :user | self applyReductionTicketTo: user  ]
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
-				with: '');
+				with: '');"
 		add:
 			(Array
 				with: 'description'
 				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]
 				with: 'Generate invoice'
-				with: '');
+				with: '');"
 		yourself
 ]
 

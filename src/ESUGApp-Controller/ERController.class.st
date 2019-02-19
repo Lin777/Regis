@@ -27,12 +27,6 @@ ERController >> addAward: anAward [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> addPayPalComissionIfApply: anAttendee [
-	(anAttendee idGroup isNil and: [ anAttendee paymentInformation paymentType = 'Credit Card' ])
-		ifTrue: [  ].
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
 	((self applyToAddComission: anAttendee )
 		and: [ anAttendee paymentInformation paymentType = 'Credit Card' ])
