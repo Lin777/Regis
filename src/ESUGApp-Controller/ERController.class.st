@@ -263,7 +263,8 @@ ERController >> generateInvoiceOf: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> getGroupOfAttendee: aAttendee [
 	^ aAttendee idGroup 
-	ifNotNil: [ self conference groups detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
+	ifNotNil: [ self conference groups 
+		detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
 		ifNone: [ nil ] ].
 ]
 
@@ -413,6 +414,13 @@ ERController >> submittedTalksFor: anAttendee [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> updateAllAttendeesOf: aGroup [
+	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
+												aGroup paymentInformation hasPaid.
+											  each save. ]
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
 	self generateInvoiceOf: anAttendee.
@@ -424,6 +432,7 @@ ERController >> updateAttendee: anAttendee [
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup .
 	self generateInvoiceOf: aGroup.
+	self updateAllAttendeesOf: aGroup.
 	^ aGroup save.
 ]
 

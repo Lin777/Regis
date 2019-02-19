@@ -130,7 +130,8 @@ ERConfigurationController >> exportAttends: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each userAccount firstName.
+							{ each paymentInformation invoiceNumber.
+							each userAccount firstName.
 							each userAccount lastName.
 							each userAccount email.
 							each contactInformation country.
@@ -176,17 +177,14 @@ ERConfigurationController >> exportGroupManagers: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each groupManager userAccount firstName.
+							{each paymentInformation invoiceNumber.
+							each groupManager userAccount firstName.
 							each groupManager userAccount lastName.
 							each groupManager userAccount email.
-							each groupManager userAccount password.
-							each groupManager userAccount rolesAsString.
 							each groupManager affiliationInformation organizationName.
 							each groupManager affiliationInformation organizationAddrees1.
-							each groupManager affiliationInformation organizationAddrees2.
 							each groupManager affiliationInformation organizationCity.
 							each groupManager affiliationInformation organizationCountry.
-							each groupManager affiliationInformation organizationProvince.
 							each groupManager affiliationInformation organizationPostal.
 							each groupManager affiliationInformation membershipType} ].
 				neoWriter close ].
@@ -249,12 +247,13 @@ ERConfigurationController >> groups [
 
 { #category : #rendering }
 ERConfigurationController >> headerAttendee [
-	^ #('FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
 ]
 
 { #category : #rendering }
 ERConfigurationController >> headerGroups [
-	^ #('First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
+	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
+	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
 ]
 
 { #category : #rendering }

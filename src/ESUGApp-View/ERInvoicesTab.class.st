@@ -42,6 +42,20 @@ ERInvoicesTab >> dictToRenderDownloadButton [
 		yourself
 ]
 
+{ #category : #rendering }
+ERInvoicesTab >> exportAllInvoices [
+	| nameZipFile subDir |
+	nameZipFile := 'Invoices'.
+	subDir := 'DirectoryInvoices'.
+	ERPDFInvoice demoPath: subDir, '/'.
+	self invoices do: [ :anObject | 
+		ERPDFInvoice templateRegistrationInvoice: anObject
+	].
+	encodeZipFile := controller codingZipFile: nameZipFile with: subDir.
+
+	self updateStateTab: self tabName.
+]
+
 { #category : #accessing }
 ERInvoicesTab >> headers [
 	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?')
