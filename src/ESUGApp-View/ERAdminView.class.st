@@ -29,7 +29,11 @@ ERAdminView >> addTabsForAdmin [
 ]
 
 { #category : #initialization }
-ERAdminView >> backUp [
+ERAdminView >> backup [
+	[|fileName|
+	fileName := ERBackupRestore uniqueInstance backup.
+	] on: ERException 
+	do: [ :exc | exc  ]
 ]
 
 { #category : #actions }
@@ -38,7 +42,8 @@ ERAdminView >> cancel [
 
 { #category : #initialization }
 ERAdminView >> closeRegistration [
-	controller conference configuration openRegistration: false; save.
+	controller conference configuration openRegistration: false.
+	controller conference save.
 	
 	
 ]
@@ -66,8 +71,8 @@ ERAdminView >> initializeTabForms [
 { #category : #initialization }
 ERAdminView >> openRegistration [
 	controller conference configuration
-		openRegistration: true;
-		save
+		openRegistration: true.
+	controller conference	save
 ]
 
 { #category : #initialization }
@@ -120,7 +125,7 @@ ERAdminView >> tabs [
 
 { #category : #initialization }
 ERAdminView >> titleBackup [
-	callbackYes := [ :aTab | self backUp. aTab updateStateTab: aTab tabName ].
+	callbackYes := [ :aTab | self backup. aTab updateStateTab: aTab tabName ].
 	callbackNo := [ :aTab | self cancel. aTab updateStateTab: aTab tabName ].
 	^ 'Are you sure want to do a backup?'
 ]

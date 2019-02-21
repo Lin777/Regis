@@ -28,8 +28,11 @@ ERYesNoTab >> name: anObject [
 { #category : #rendering }
 ERYesNoTab >> renderContainer: html [
 	html horizontalRule.
-	self renderYesButton: html.
-	self renderNoButton: html
+	html form 
+		method: 'post';
+		with:
+	[self renderYesButton: html.
+	self renderNoButton: html]
 ]
 
 { #category : #rendering }
@@ -43,8 +46,9 @@ ERYesNoTab >> renderNoButton: html [
 
 { #category : #rendering }
 ERYesNoTab >> renderYesButton: html [
-	html mdlAnchorButton
+	html mdlButton
 		colored;
+		beSubmit;
 		id: 'yes-' , tabId;
 		callback: [callbackYes value: self];
 		with: 'Yes'

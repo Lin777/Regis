@@ -12,6 +12,13 @@ ERException class >> adminUserDoesNotDelete [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> backupError [
+		^ self new 
+			messageText: 'Something went wrong while the backup was done';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> deletionOfTicketNotValid [
 		^ self new
 				messageText: 'This ticket can not be deleted because it is being used by one or more attendees';
