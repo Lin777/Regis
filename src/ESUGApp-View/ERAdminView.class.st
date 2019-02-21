@@ -81,9 +81,9 @@ ERAdminView >> renderBackupTab [
 			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabBackup';
 				tabName: 'Backup';
-				title: self titleBackup;
-				callbackYes: callbackYes;
-				callbackNo: callbackNo)
+				titleTrue: self titleBackup ;
+				callbackTrue: callbackYes;
+				callbackNo: callbackNo).
 ]
 
 { #category : #adding }
@@ -98,9 +98,12 @@ ERAdminView >> renderOpenCloseRegistration [
 	tabs add:((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabOpenClose';
 				tabName: 'Open / Close registration';
-				title: self titleOpenClose;
-				callbackYes: callbackYes;
-				callbackNo: callbackNo)
+				stateBlock: [ controller conferenceIsOpenRegistration ];
+				titleTrue: 'Registration is opened. Are you sure you want close it?';
+				titleFalse:  'Registration is closed. Are you sure you want open it?';
+				callbackTrue: [ :aTab | self closeRegistration. aTab updateStateTab: aTab tabName ];
+				callbackFalse: [ :aTab | self openRegistration. aTab updateStateTab: aTab tabName ];
+				callbackNo: [ :aTab | self cancel. aTab updateStateTab: aTab tabName ])
 ]
 
 { #category : #initialization }
@@ -109,8 +112,8 @@ ERAdminView >> renderRestoreTab [
 			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabRestore';
 				tabName: 'Restore';
-				title: self titleRestore;
-				callbackYes: callbackYes ;
+				titleTrue: self titleRestore;
+				callbackTrue: callbackYes ;
 				callbackNo: callbackNo )
 ]
 
