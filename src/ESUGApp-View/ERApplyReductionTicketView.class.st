@@ -18,6 +18,11 @@ ERApplyReductionTicketView >> cancel: aBlock [
 ]
 
 { #category : #accessing }
+ERApplyReductionTicketView >> children [ 	
+	^ Array with: messageComponent
+]
+
+{ #category : #accessing }
 ERApplyReductionTicketView >> content: anObject [
 	content := anObject
 ]

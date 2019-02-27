@@ -39,7 +39,7 @@ ERConfigurationView >> initializeTabForms [
 ]
 
 { #category : #adding }
-ERConfigurationView >> renderContentPage: html [
+ERConfigurationView >> renderContentPageOn: html [
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
 		with: [ html render: (ERTabs new tabs: tabs) ]

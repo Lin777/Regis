@@ -82,9 +82,9 @@ ERGroupRegistrationSummaryTab >> redirectionPayPAL [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderContainer: html [
+ERGroupRegistrationSummaryTab >> renderContainerOn: html [
 	html horizontalRule.
-	self renderOrganizationName: html.
+	self renderOrganizationNameOn: html.
 	self renderPaymentStatus: html.
 	self renderFormButtonsOn: html
 ]
@@ -119,7 +119,7 @@ ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderOrganizationName: html [
+ERGroupRegistrationSummaryTab >> renderOrganizationNameOn: html [
 	html
 		paragraph: [ html strong: 'Organization Name: '.
 			html text: (self groupManager affiliationInformation organizationName) ]."

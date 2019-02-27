@@ -29,7 +29,7 @@ ERFinishRegisterGroupManagerPage >> finishRegister [
 { #category : #rendering }
 ERFinishRegisterGroupManagerPage >> renderPageOn: html [
 	html mdlGrid
-		class: 'mdl-grid--no-spacing';
+		noSpacing;
 		with: [ self renderContactInformation: html.
 			self renderAffiliation: html.
 			self renderActions: html ]

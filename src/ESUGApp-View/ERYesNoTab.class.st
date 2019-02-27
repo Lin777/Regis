@@ -46,17 +46,17 @@ ERYesNoTab >> name: anObject [
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderContainer: html [
+ERYesNoTab >> renderContainerOn: html [
 	html horizontalRule.
 	html form 
 		method: 'post';
 		with:
-	[self renderYesButton: html.
-	self renderNoButton: html]
+	[self renderYesButtonYes: html.
+	self renderNoButtonOn: html]
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderNoButton: html [
+ERYesNoTab >> renderNoButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'no-' , tabId;
@@ -65,7 +65,7 @@ ERYesNoTab >> renderNoButton: html [
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderYesButton: html [
+ERYesNoTab >> renderYesButtonYes: html [
 	html mdlButton
 		colored;
 		beSubmit;

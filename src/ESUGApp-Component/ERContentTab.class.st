@@ -40,6 +40,11 @@ ERContentTab >> attendee: anObject [
 	attendee := anObject
 ]
 
+{ #category : #rendering }
+ERContentTab >> children [ 	
+	^ Array with: contentTab 
+]
+
 { #category : #accessing }
 ERContentTab >> container: aContainer [
 	container := aContainer

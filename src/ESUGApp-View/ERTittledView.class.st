@@ -23,7 +23,7 @@ ERTittledView >> cancelCallback: anObject [
 ]
 
 { #category : #rendering }
-ERTittledView >> renderContentPage: html [
+ERTittledView >> renderContentPageOn: html [
 	html heading level3 with: self title.
 	html horizontalRule.
 	self renderPageOn: html

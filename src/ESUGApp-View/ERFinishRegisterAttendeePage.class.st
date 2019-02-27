@@ -215,7 +215,7 @@ ERFinishRegisterAttendeePage >> renderKeywordsOn: html [
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> renderPageOn: html [
-	html mdlGrid class: 'mdl-grid--no-spacing';
+	html mdlGrid noSpacing;
 	with: [ 
 		self renderContactInformation: html.
 		self renderAffiliation: html.

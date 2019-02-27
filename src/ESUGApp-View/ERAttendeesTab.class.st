@@ -35,13 +35,6 @@ ERAttendeesTab >> blockTableToExecute [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> children [
-	^ OrderedCollection new
-		add: table;
-		yourself
-]
-
-{ #category : #rendering }
 ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee
@@ -132,7 +125,7 @@ ERAttendeesTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderButtons: html [
+ERAttendeesTab >> renderButtonsOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportAttends';
@@ -160,17 +153,17 @@ ERAttendeesTab >> renderButtons: html [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderContainer: html [
+ERAttendeesTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllAttends';
-		with: [ self renderButtons: html.
+		with: [ self renderButtonsOn: html.
 			html horizontalRule.
-			self renderTableOfAttends: html ]
+			self renderTableOfAttendsOn: html ]
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderTableOfAttends: html [
+ERAttendeesTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

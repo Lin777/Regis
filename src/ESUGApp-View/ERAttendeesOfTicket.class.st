@@ -2,7 +2,8 @@ Class {
 	#name : #ERAttendeesOfTicket,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'ticket'
+		'ticket',
+		'tableComponent'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -29,6 +30,11 @@ ERAttendeesOfTicket >> blockTableToExecute [
 			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
 		add: ([ :att | att paymentInformation hasPaid ] value: user);
 		yourself ]
+]
+
+{ #category : #accessing }
+ERAttendeesOfTicket >> children [ 
+	^ Array with: tableComponent
 ]
 
 { #category : #accessing }
@@ -64,22 +70,20 @@ ERAttendeesOfTicket >> renderButtonsOn: html [
 { #category : #accessing }
 ERAttendeesOfTicket >> renderPageOn: html [
 	self listOfAttendees isEmpty ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
-	ifFalse: [self renderTableOfAttends: html ].
+	ifFalse: [self renderTableOfAttendsOn: html ].
 	html horizontalRule .
 	self renderButtonsOn: html
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> renderTableOfAttends: html [
-	
-	| table |
-		table := ERTable new
-		headers: self headers ;
+ERAttendeesOfTicket >> renderTableOfAttendsOn: html [
+	tableComponent := ERTable new
+		headers: self headers;
 		levelTotal: 6;
 		listObject: self listOfAttendees ;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
-	html render: table 
+	html render: tableComponent 
 	
 ]
 

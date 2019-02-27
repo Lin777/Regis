@@ -8,6 +8,11 @@ Class {
 	#category : #'ESUGApp-View'
 }
 
+{ #category : #rendering }
+ERContent >> children [ 	
+	^ Array with: state
+]
+
 { #category : #initialization }
 ERContent >> initialize [
 	super initialize.

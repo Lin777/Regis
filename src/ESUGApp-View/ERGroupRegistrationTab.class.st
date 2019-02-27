@@ -78,7 +78,8 @@ ERGroupRegistrationTab >> registerAttendee [
 { #category : #rendering }
 ERGroupRegistrationTab >> registerAttendeeToGroupManager: anAttendee [
 	controller addAttendee: newAttendee.
-	content state: content lastState
+	content state: content lastState.
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

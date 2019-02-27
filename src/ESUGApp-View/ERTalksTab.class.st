@@ -37,7 +37,7 @@ ERTalksTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERTalksTab >> renderButton: html [
+ERTalksTab >> renderButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportTalks';
@@ -46,15 +46,15 @@ ERTalksTab >> renderButton: html [
 ]
 
 { #category : #rendering }
-ERTalksTab >> renderContainer: html [
-	self renderButton: html.
-	self renderDownloadButton: html.
+ERTalksTab >> renderContainerOn: html [
+	self renderButtonOn: html.
+	self renderDownloadButtonOn: html.
 	html horizontalRule.
-	self renderTableOfTalks: html
+	self renderTableOfTalksOn: html
 ]
 
 { #category : #rendering }
-ERTalksTab >> renderDownloadButton: html [
+ERTalksTab >> renderDownloadButtonOn: html [
 	| dictionary |
 	dictionary := Dictionary new 
 	at: 'id' put: 'downloadTalks';
@@ -67,7 +67,7 @@ ERTalksTab >> renderDownloadButton: html [
 ]
 
 { #category : #accessing }
-ERTalksTab >> renderTableOfTalks: html [
+ERTalksTab >> renderTableOfTalksOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

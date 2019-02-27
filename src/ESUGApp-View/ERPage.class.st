@@ -17,11 +17,6 @@ ERPage >> actionsBody: html [
 	self subclassResponsibility 
 ]
 
-{ #category : #rendering }
-ERPage >> children [ 	
-	^Array with: block
-]
-
 { #category : #accessing }
 ERPage >> classContainer: anObject [
 	classContainer := anObject

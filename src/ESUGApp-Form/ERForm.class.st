@@ -84,12 +84,12 @@ ERForm >> renderContentOn: html [
 	html form
 		method: 'post';
 		id: ('form', self tabId capitalized);
-		with: [ self renderForm: html ].
+		with: [ self renderFormOn: html ].
 	html render: dialog
 ]
 
 { #category : #rendering }
-ERForm >> renderForm: html [
+ERForm >> renderFormOn: html [
 	self subclassResponsibility 
 ]
 

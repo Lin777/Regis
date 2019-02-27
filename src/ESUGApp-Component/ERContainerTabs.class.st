@@ -61,6 +61,11 @@ ERContainerTabs >> cancel [
 	"self updateStateTab: self tabName."
 ]
 
+{ #category : #rendering }
+ERContainerTabs >> children [ 
+	^ Array with: messageComponent with: tabView with: dialog
+]
+
 { #category : #accessing }
 ERContainerTabs >> content: anObject [
 	content := anObject
@@ -131,14 +136,14 @@ ERContainerTabs >> renderBackButtonOn: html [
 ]
 
 { #category : #rendering }
-ERContainerTabs >> renderButtons: html [
-	self renderCancelButton: html.
+ERContainerTabs >> renderButtonsOn: html [
+	self renderCancelButtonOn: html.
 	self renderBackButtonOn: html.
 	self renderNextButtonOn: html
 ]
 
 { #category : #rendering }
-ERContainerTabs >> renderCancelButton: html [
+ERContainerTabs >> renderCancelButtonOn: html [
 	self initializeDialog .
 	html mdlAnchorButton 
 		openDialogWithId: 'cancel-register-attendee'; 
@@ -147,7 +152,7 @@ ERContainerTabs >> renderCancelButton: html [
 ]
 
 { #category : #rendering }
-ERContainerTabs >> renderContentPage: html [
+ERContainerTabs >> renderContentPageOn: html [
 	html form
 		method: 'post';
 		id: 'formRegisterInTabs';
@@ -157,7 +162,7 @@ ERContainerTabs >> renderContentPage: html [
 				style: 'overflow-x:auto;';
 				with: [ html render: messageComponent .
 							 html render: tabView.
-									self renderButtons: html] ]] .
+									self renderButtonsOn: html] ]] .
 	html render: dialog
 ]
 

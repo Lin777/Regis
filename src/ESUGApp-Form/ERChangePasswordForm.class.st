@@ -34,9 +34,9 @@ ERChangePasswordForm >> changePassword [
 
 { #category : #hooks }
 ERChangePasswordForm >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: messageComponent;
-		yourself
+		yourself) yourself
 ]
 
 { #category : #initialization }
@@ -55,7 +55,7 @@ ERChangePasswordForm >> renderAcceptButtonOn: html [
 ]
 
 { #category : #rendering }
-ERChangePasswordForm >> renderButtons: html [
+ERChangePasswordForm >> renderButtonsOn: html [
 	self renderAcceptButtonOn: html.
 	self renderCancelButtonOn: html
 ]
@@ -77,7 +77,7 @@ ERChangePasswordForm >> renderConfirmNewPasswordOn: html [
 ]
 
 { #category : #rendering }
-ERChangePasswordForm >> renderContainer: html [
+ERChangePasswordForm >> renderContainerOn: html [
 	html horizontalRule .
 	self renderFormOn: html
 ]
@@ -104,7 +104,7 @@ ERChangePasswordForm >> renderFormOn: html [
 		with: [ 
 			html render: messageComponent.
 			self renderFields: html.
-			self renderButtons: html.
+			self renderButtonsOn: html.
 		]
 ]
 

@@ -45,10 +45,9 @@ ERReductionTicketsTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERReductionTicketsTab >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: messageComponent;
-		add: table;
-		yourself
+		yourself) yourself 
 ]
 
 { #category : #rendering }
@@ -129,7 +128,7 @@ ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 ]
 
 { #category : #rendering }
-ERReductionTicketsTab >> renderContainer: html [
+ERReductionTicketsTab >> renderContainerOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'addTicket';
@@ -137,11 +136,11 @@ ERReductionTicketsTab >> renderContainer: html [
 		with: 'Add'.
 	html horizontalRule.
 	html render: messageComponent .
-	self renderTableOfTickets: html
+	self renderTableOfTicketsOn: html
 ]
 
 { #category : #rendering }
-ERReductionTicketsTab >> renderTableOfTickets: html [
+ERReductionTicketsTab >> renderTableOfTicketsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

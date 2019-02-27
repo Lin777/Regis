@@ -21,12 +21,13 @@ ERFeeForm >> cancelForm [
 
 { #category : #hooks }
 ERFeeForm >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: dialog;
 		add: feeForm  ;
 		add: bankAccountInfoForm  ;
 		add: bankInfoForm;
-		yourself
+		add: messageComponent ;
+		yourself) yourself
 ]
 
 { #category : #initialization }
@@ -48,14 +49,6 @@ ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAcco
 	aFee bankAccountInformation: anAccountBankInfo.
 	aFee bankAccountInformation bankInformation: aBankInfo.
 	controller updateFee: aFee.
-]
-
-{ #category : #rendering }
-ERFeeForm >> renderForm: html [
-	self renderFormConferenceFee: html.
-	self renderFormBankAccountInformation: html.
-	self renderFormBankInformation: html.
-	self renderButtonsOn: html
 ]
 
 { #category : #rendering }
@@ -81,6 +74,14 @@ ERFeeForm >> renderFormConferenceFee: html [
 	html horizontalRule.
 	html render: messageComponent .
 	html render: feeForm .
+]
+
+{ #category : #rendering }
+ERFeeForm >> renderFormOn: html [
+	self renderFormConferenceFee: html.
+	self renderFormBankAccountInformation: html.
+	self renderFormBankInformation: html.
+	self renderButtonsOn: html
 ]
 
 { #category : #'as yet unclassified' }

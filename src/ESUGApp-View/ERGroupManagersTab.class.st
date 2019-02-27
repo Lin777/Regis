@@ -98,28 +98,28 @@ ERGroupManagersTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderButtons: html [
+ERGroupManagersTab >> renderButtonsOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportGroups';
 		callback: [ self exportGroups ];
 		with: 'Export'.
-	self renderDownloadButton: html.
+	self renderDownloadButtonOn: html.
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderContainer: html [
+ERGroupManagersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllGroups';
 		with: [
-	self renderButtons: html.
+	self renderButtonsOn: html.
 	html horizontalRule.
-	self renderTableOfGroups: html]
+	self renderTableOfGroupsOn: html]
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderDownloadButton: html [
+ERGroupManagersTab >> renderDownloadButtonOn: html [
 	| dictionary |
 	dictionary := Dictionary new 
 	at: 'id' put: 'downloadDataGroupManagers';
@@ -132,7 +132,7 @@ ERGroupManagersTab >> renderDownloadButton: html [
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> renderTableOfGroups: html [
+ERGroupManagersTab >> renderTableOfGroupsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

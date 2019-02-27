@@ -5,7 +5,8 @@ Class {
 		'controller',
 		'callbackYes',
 		'callbackNo',
-		'tabs'
+		'tabs',
+		'tabsComponent'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -38,6 +39,11 @@ ERAdminView >> backup [
 
 { #category : #actions }
 ERAdminView >> cancel [
+]
+
+{ #category : #adding }
+ERAdminView >> children [ 
+	^ Array with: tabsComponent
 ]
 
 { #category : #initialization }
@@ -87,10 +93,11 @@ ERAdminView >> renderBackupTab [
 ]
 
 { #category : #adding }
-ERAdminView >> renderContentPage: html [
+ERAdminView >> renderContentPageOn: html [
+	tabsComponent := (ERTabs new tabs: tabs).
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: (ERTabs new tabs: tabs) ]
+		with: [ html render: tabsComponent ]
 ]
 
 { #category : #initialization }

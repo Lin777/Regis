@@ -23,13 +23,13 @@ ERConferenceForm >> cancelForm [
 
 { #category : #rendering }
 ERConferenceForm >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: dialog;
 		add: configurationForm ;
 		add: emailConfigurationForm ;
 		add: organizerForm ;
 		add: messageComponent;
-		yourself
+		yourself) yourself
 ]
 
 { #category : #rendering }
@@ -47,15 +47,7 @@ ERConferenceForm >> initializeForms [
 ]
 
 { #category : #rendering }
-ERConferenceForm >> renderForm: html [
-	self renderFormConferenceConfiguration: html.
-	self renderFormEmailConfiguration: html.
-	self renderFormOrganizer: html.
-	self renderButtonsOn: html
-]
-
-{ #category : #rendering }
-ERConferenceForm >> renderFormConferenceConfiguration: html [
+ERConferenceForm >> renderFormConferenceConfigurationOn: html [
 	html heading
 		level3;
 		with: self title.
@@ -65,7 +57,7 @@ ERConferenceForm >> renderFormConferenceConfiguration: html [
 ]
 
 { #category : #rendering }
-ERConferenceForm >> renderFormEmailConfiguration: html [
+ERConferenceForm >> renderFormEmailConfigurationOn: html [
 	html heading
 		level3;
 		with: 'Email Configuration'.
@@ -74,7 +66,15 @@ ERConferenceForm >> renderFormEmailConfiguration: html [
 ]
 
 { #category : #rendering }
-ERConferenceForm >> renderFormOrganizer: html [
+ERConferenceForm >> renderFormOn: html [
+	self renderFormConferenceConfigurationOn: html.
+	self renderFormEmailConfigurationOn: html.
+	self renderFormOrganizerOn: html.
+	self renderButtonsOn: html
+]
+
+{ #category : #rendering }
+ERConferenceForm >> renderFormOrganizerOn: html [
 	html heading
 		level3;
 		with: 'Organizer'.

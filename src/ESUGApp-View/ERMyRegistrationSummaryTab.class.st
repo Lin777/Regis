@@ -61,17 +61,17 @@ ERMyRegistrationSummaryTab >> redirectionPayPAL [
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderButtons: html [
+ERMyRegistrationSummaryTab >> renderButtonsOn: html [
 	self renderModifyRegistrationOn: html.
 	self renderPayButtonOn: html.
 	self renderDownloadInvoiceOn: html
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderContainer: html [ 	
+ERMyRegistrationSummaryTab >> renderContainerOn: html [ 	
 	html horizontalRule .
-	self renderLabelsSummary: html.
-	self renderButtons: html.
+	self renderLabelsSummaryOn: html.
+	self renderButtonsOn: html.
 ]
 
 { #category : #rendering }
@@ -87,7 +87,7 @@ ERMyRegistrationSummaryTab >> renderDownloadInvoiceOn: html [
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
+ERMyRegistrationSummaryTab >> renderLabelsSummaryOn: html [
 	html
 		paragraph: [ html strong: 'Attendace Day(s): '.
 			html text: attendee conferenceInformation daysOfAssistance ].

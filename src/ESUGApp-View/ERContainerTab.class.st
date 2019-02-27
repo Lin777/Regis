@@ -10,7 +10,8 @@ Class {
 		'formRegister',
 		'attenteeRegisterForm',
 		'formApplyReductionTicket',
-		'formMofidyAffiliation'
+		'formMofidyAffiliation',
+		'table'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -50,6 +51,13 @@ ERContainerTab >> callback: anObject [
 ERContainerTab >> cancel [
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
+]
+
+{ #category : #rendering }
+ERContainerTab >> children [
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
+		add: table;
+		yourself); yourself
 ]
 
 { #category : #accessing }
@@ -177,14 +185,14 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 ]
 
 { #category : #rendering }
-ERContainerTab >> renderContainer: html [
+ERContainerTab >> renderContainerOn: html [
 	self subclassResponsibility 
 ]
 
 { #category : #rendering }
 ERContainerTab >> renderContentOn: html [
 	html heading level3; with: self title .
-	self renderContainer: html
+	self renderContainerOn: html
 ]
 
 { #category : #accessing }

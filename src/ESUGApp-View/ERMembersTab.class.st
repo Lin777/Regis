@@ -54,7 +54,7 @@ ERMembersTab >> dictToRenderDownloadButton [
 
 { #category : #accessing }
 ERMembersTab >> headers [
-	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
+	^ #('Name(D)' 'Email' 'Fee' '')
 ]
 
 { #category : #accessing }
@@ -119,21 +119,21 @@ ERMembersTab >> registerMyselfAsAttendee [
 ]
 
 { #category : #accessing }
-ERMembersTab >> renderButtons: html [
+ERMembersTab >> renderButtonsOn: html [
 	self renderRegisterAttendee: html.
 	self alreadyRegisteredAsAttendee ifFalse:[
 	self renderRegisterMyselfAsAttendee: html]
 ]
 
 { #category : #accessing }
-ERMembersTab >> renderContainer: html [
+ERMembersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formMembers';
 		with: [
-	self renderButtons: html.
+	self renderButtonsOn: html.
 	html horizontalRule.
-	self renderTableOfAttends: html]
+	self renderTableOfAttendsOn: html]
 ]
 
 { #category : #accessing }
@@ -155,8 +155,7 @@ ERMembersTab >> renderRegisterMyselfAsAttendee: html [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderTableOfAttends: html [
-	| table |
+ERMembersTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

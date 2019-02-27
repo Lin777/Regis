@@ -27,9 +27,9 @@ ERInvoicesTab >> blockTableToExecute [
 
 { #category : #hooks }
 ERInvoicesTab >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: table;
-		yourself
+		yourself) yourself
 ]
 
 { #category : #rendering }
@@ -90,17 +90,17 @@ ERInvoicesTab >> renderButtonsOn: html [
 ]
 
 { #category : #rendering }
-ERInvoicesTab >> renderContainer: html [
+ERInvoicesTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllInvoices';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
-			self renderTableOfInvoices: html ]
+			self renderTableOfInvoicesOn: html ]
 ]
 
 { #category : #rendering }
-ERInvoicesTab >> renderTableOfInvoices: html [
+ERInvoicesTab >> renderTableOfInvoicesOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

@@ -21,13 +21,6 @@ ERAwardsTab >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #rendering }
-ERAwardsTab >> children [
-	^ OrderedCollection new
-		add: table;
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 ERAwardsTab >> exportAwards [
 	| file |
@@ -48,7 +41,7 @@ ERAwardsTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERAwardsTab >> renderButton: html [
+ERAwardsTab >> renderButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportAwards';
@@ -57,15 +50,15 @@ ERAwardsTab >> renderButton: html [
 ]
 
 { #category : #rendering }
-ERAwardsTab >> renderContainer: html [
-	self renderButton: html.
-	self renderDownloadButton: html.
+ERAwardsTab >> renderContainerOn: html [
+	self renderButtonOn: html.
+	self renderDownloadButtonOn: html.
 	html horizontalRule.
-	self renderTableOfAwards: html
+	self renderTableOfAwardsOn: html
 ]
 
 { #category : #rendering }
-ERAwardsTab >> renderDownloadButton: html [
+ERAwardsTab >> renderDownloadButtonOn: html [
 	| dictionary |
 	dictionary := Dictionary new 
 	at: 'id' put: 'downloadAwards';
@@ -78,7 +71,7 @@ ERAwardsTab >> renderDownloadButton: html [
 ]
 
 { #category : #rendering }
-ERAwardsTab >> renderTableOfAwards: html [
+ERAwardsTab >> renderTableOfAwardsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

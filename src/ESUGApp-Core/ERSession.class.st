@@ -1,6 +1,6 @@
 Class {
 	#name : #ERSession,
-	#superclass : #WAExpirySession,
+	#superclass : #WASession,
 	#instVars : [
 		'user',
 		'account'
@@ -34,19 +34,13 @@ ERSession >> login: aUser [
 { #category : #actions }
 ERSession >> logout [
 	self user: nil.
-	self unregistered
+	self unregister
 ]
 
 { #category : #actions }
 ERSession >> responseForRequest: aRequest [
 	
 	^ super responseForRequest: aRequest
-]
-
-{ #category : #actions }
-ERSession >> unregistered [
-	super unregistered.
-	user := nil.
 ]
 
 { #category : #updating }
