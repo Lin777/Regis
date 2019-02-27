@@ -38,9 +38,7 @@ ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createAdditionalInformationComponent: anAttendee [
 	
-	^ anAttendee additionalInformation asComponent
-	addDecoration: MAValidationDecoration new;
-	 yourself
+	^ self createFormOf: anAttendee additionalInformation
 ]
 
 { #category : #'as yet unclassified' }
@@ -54,9 +52,7 @@ ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent
 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createAffiliationInformationComponentOn: anAttendee [
-	^ anAttendee affiliationInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
+	^ self createFormOf: anAttendee affiliationInformation
 ]
 
 { #category : #'as yet unclassified' }
@@ -70,10 +66,8 @@ ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createBasicInformationComponent: anAttendee [
-	^ ((anAttendee userAccount) 
-	as: ERUserAccountForRegister) asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
+	^ self createFormOf: ((anAttendee userAccount) 
+	as: ERUserAccountForRegister)
 ]
 
 { #category : #'as yet unclassified' }
@@ -87,9 +81,7 @@ ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createContactInformationComponent: anAttendee [
-	^ anAttendee contactInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
+	^ self createFormOf: anAttendee contactInformation
 ]
 
 { #category : #'as yet unclassified' }
@@ -116,6 +108,9 @@ ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
 ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 			contentTab: (self createPaymentInformationComponent: anAttendee );
+			previousContentTab: '<br><p>Pay by transfer or pay/card. Pay in euros</p>
+                    <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
+                    <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
 			 tabId: 'paymentInformationForm'; 
 			 tabName: 'Payment';
 			 container: aContent
@@ -123,9 +118,7 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createPaymentInformationComponent: anAttendee [
-	^ anAttendee paymentInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself
+	^ self createFormOf: anAttendee paymentInformation 
 ]
 
 { #category : #'as yet unclassified' }
@@ -139,7 +132,5 @@ ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aConte
 
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
-	^ anAttendee conferenceInformation asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself 
+	^ self createFormOf: anAttendee conferenceInformation
 ]

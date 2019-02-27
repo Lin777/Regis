@@ -22,7 +22,7 @@ ERGroupManagerController >> addAttendee: anAttendee [
 	conference save.
 	anAttendee idGroup: groupAtt id.
 	anAttendee save.
-	^ groupAtt save
+	^ self updateGroup: self group
 ]
 
 { #category : #adding }
@@ -31,33 +31,13 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
 	(anAttendee userAccount) roleAdd: 'attendee'; save.
 	anAttendee idGroup: self group id.
+	"Prueba"
+	self updatePaymentRate: anAttendee.
 	anAttendeeSaved := anAttendee save.
 	conference addAttendee: anAttendeeSaved.
 	self group addAttendee: anAttendeeSaved.
 	conference save.
-	^ self group save
-]
-
-{ #category : #accessing }
-ERGroupManagerController >> deleteAttendee: anAttendee [
-	self deleteAttendeeFromGroupAndConference: anAttendee.
-	anAttendee userAccount isGroupManager
-		ifFalse: [ self deleteUserForConference: anAttendee ]
-		ifTrue: [ self deleteAttendeeRoleFromUser: anAttendee ].
-	anAttendee delete.
-]
-
-{ #category : #accessing }
-ERGroupManagerController >> deleteAttendeeFromGroup: anAttendee [
-	| group |
-	group := self groupForGroupManager.
-	group listAttends
-		do: [ :each | 
-			each userAccount email = anAttendee userAccount email
-				ifTrue: [ 
-					group listAttends remove: each ifAbsent: [  ].
-					self deleteAttendee: each ] ].
-	group save
+	^ self updateGroup: self group
 ]
 
 { #category : #accessing }
@@ -68,22 +48,6 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
-]
-
-{ #category : #accessing }
-ERGroupManagerController >> deleteAttendeeRoleFromUser: anAttendee [
-	anAttendee userAccount deleteRole: 'attendee'
-]
-
-{ #category : #accessing }
-ERGroupManagerController >> deleteUserForConference: anAttendee [
-	| userOfAttendee |
-	userOfAttendee := anAttendee userAccount.
-	self conference users
-		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
-	self conference save.
-	userOfAttendee delete.
-	self conference users
 ]
 
 { #category : #accessing }
@@ -115,8 +79,8 @@ ERGroupManagerController >> groupOfUser: aGroupManager [
 
 { #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
-	aGroup save.
-	self updatePaymentForAttendees: aGroup
+	self updatePaymentForAttendees: aGroup.
+	super updateGroup: aGroup 
 ]
 
 { #category : #adding }
@@ -128,7 +92,7 @@ ERGroupManagerController >> updateNumberInvoiceOn: anAttendee [
 { #category : #adding }
 ERGroupManagerController >> updatePaymentForAttendees: aGroup [
 	aGroup listAttends do: [ :att | 
-		att paymentType: aGroup paymentType .
-		att paymentCurrency: aGroup paymentCurrency. 
+		att paymentInformation paymentType: aGroup paymentInformation paymentType .
+		att paymentInformation paymentCurrency: aGroup paymentInformation paymentCurrency. 
 		att save ]
 ]

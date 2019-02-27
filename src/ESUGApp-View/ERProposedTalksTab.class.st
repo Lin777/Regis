@@ -61,10 +61,10 @@ ERProposedTalksTab >> renderButtonAddOn: html [
 ]
 
 { #category : #rendering }
-ERProposedTalksTab >> renderContainer: html [ 	
+ERProposedTalksTab >> renderContainerOn: html [ 	
 	html horizontalRule .
 	self proposalsAreAllowed ifTrue: [self renderButtonAddOn: html].
-	self renderTable: html.
+	self renderTableOn: html.
 ]
 
 { #category : #rendering }
@@ -74,15 +74,14 @@ ERProposedTalksTab >> renderMessageEmptyOn: html [
 ]
 
 { #category : #rendering }
-ERProposedTalksTab >> renderTable: html [
+ERProposedTalksTab >> renderTableOn: html [
 	self submittedTalks isEmpty 
 		ifTrue: [ self renderMessageEmptyOn: html ]
-		ifFalse: [ self renderTalksTable: html ]
+		ifFalse: [ self renderTalksTableOn: html ]
 ]
 
 { #category : #rendering }
-ERProposedTalksTab >> renderTalksTable: html [
-	| table |
+ERProposedTalksTab >> renderTalksTableOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

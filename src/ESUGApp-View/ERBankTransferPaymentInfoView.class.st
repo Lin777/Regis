@@ -42,8 +42,7 @@ ERBankTransferPaymentInfoView >> initializeDialog [
 ERBankTransferPaymentInfoView >> initializeFee [
 	| pageController |
 	pageController := ERController new.
-	fee := pageController
-		feePerTypeCurrencyOf: attendee.
+	fee := pageController conference fee.
 	bankAccountInformation := fee bankAccountInformation.
 	bankInformation := bankAccountInformation bankInformation
 ]

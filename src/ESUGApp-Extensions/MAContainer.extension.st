@@ -1,6 +1,6 @@
 Extension { #name : #MAContainer }
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MAContainer class >> defaultComponentRenderer [
 	^ MADivRenderer 
 ]

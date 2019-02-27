@@ -17,12 +17,12 @@ ERTabs class >> tabs: aList [
 
 { #category : #rendering }
 ERTabs >> renderContentOn: html [
-	self renderTabNames: html.
-	self renderTabs: html
+	self renderTabNamesOn: html.
+	self renderTabsOn: html
 ]
 
 { #category : #rendering }
-ERTabs >> renderTabNames: html [
+ERTabs >> renderTabNamesOn: html [
 	html div
 		class: 'mdl-tabs__tab-bar';
 		with: [ self tabs
@@ -37,7 +37,7 @@ ERTabs >> renderTabNames: html [
 ]
 
 { #category : #rendering }
-ERTabs >> renderTabs: html [
+ERTabs >> renderTabsOn: html [
 	self tabs
 		do: [ :tab | 
 			|activeClass |		

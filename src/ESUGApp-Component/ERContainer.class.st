@@ -29,10 +29,10 @@ ERContainer >> renderContentOn: html [
 		with: [ html mdlCard
 				class:
 					'mdl-card__supporting-text mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col';
-				with: [ self renderContentPage: html ] ]
+				with: [ self renderContentPageOn: html ] ]
 ]
 
 { #category : #rendering }
-ERContainer >> renderContentPage: html [
+ERContainer >> renderContentPageOn: html [
 	self subclassResponsibility 
 ]

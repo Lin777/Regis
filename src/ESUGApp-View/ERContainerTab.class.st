@@ -10,7 +10,8 @@ Class {
 		'formRegister',
 		'attenteeRegisterForm',
 		'formApplyReductionTicket',
-		'formMofidyAffiliation'
+		'formMofidyAffiliation',
+		'table'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -52,6 +53,13 @@ ERContainerTab >> cancel [
 	self updateStateTab: self tabName.
 ]
 
+{ #category : #rendering }
+ERContainerTab >> children [
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
+		add: table;
+		yourself); yourself
+]
+
 { #category : #accessing }
 ERContainerTab >> content: anObject [
 	content := anObject
@@ -72,7 +80,7 @@ ERContainerTab >> generateInvoice: aAttendee [
 	| groupAttendee |
 	groupAttendee := controller getGroupOfAttendee: aAttendee. 
 	groupAttendee ifNil: [ self generateInvoiceAttendee: aAttendee ] 
-	ifNotNil: [ self generateInvoiceGroup: groupAttendee ].
+	ifNotNil: [ self generateInvoiceGroup: groupAttendee ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -177,14 +185,14 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 ]
 
 { #category : #rendering }
-ERContainerTab >> renderContainer: html [
+ERContainerTab >> renderContainerOn: html [
 	self subclassResponsibility 
 ]
 
 { #category : #rendering }
 ERContainerTab >> renderContentOn: html [
 	html heading level3; with: self title .
-	self renderContainer: html
+	self renderContainerOn: html
 ]
 
 { #category : #accessing }
@@ -201,7 +209,7 @@ ERContainerTab >> updateAffiliation: aff on: aGroup [
 
 { #category : #accessing }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
-	anAttendee save.
+	controller updateAttendee: anAttendee.
 	content state: content lastState
 ]
 

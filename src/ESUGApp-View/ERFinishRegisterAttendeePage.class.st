@@ -119,16 +119,6 @@ ERFinishRegisterAttendeePage >> renderAttendeeToSocialEventOn: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> renderBody: html with: aBlock [
-	html div
-		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y;background-size: cover; height: 100vh;';
-		with: [ html break.
-			html break.
-			aBlock value ]
-]
-
-{ #category : #rendering }
 ERFinishRegisterAttendeePage >> renderCityOn: html [
 	html strong: 'City: '.
 			html text: (attendee contactInformation city).
@@ -139,7 +129,7 @@ ERFinishRegisterAttendeePage >> renderCityOn: html [
 ERFinishRegisterAttendeePage >> renderConferenceFeeOn: html [
 	html strong: 'Conference Fee: '.
 			html text:  
-				(pageController conferenceFeeFor: attendee ).
+				(attendee paymentInformation paymentAmount).
 	html break.
 				
 ]
@@ -225,7 +215,7 @@ ERFinishRegisterAttendeePage >> renderKeywordsOn: html [
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> renderPageOn: html [
-	html mdlGrid class: 'mdl-grid--no-spacing';
+	html mdlGrid noSpacing;
 	with: [ 
 		self renderContactInformation: html.
 		self renderAffiliation: html.

@@ -1,6 +1,6 @@
 Extension { #name : #MDLMAFormDecoration }
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MDLMAFormDecoration >> renderButtonsOn: html [
 	html div
 		class: 'mdl-typography--text-right';

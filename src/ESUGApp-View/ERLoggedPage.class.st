@@ -10,6 +10,11 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
+{ #category : #hooks }
+ERLoggedPage >> children [ 
+	^ Array with: navbar with: content
+]
+
 { #category : #accessing }
 ERLoggedPage >> content [
 	^ content
@@ -53,7 +58,7 @@ ERLoggedPage >> itemList [
 				withController: pageController ];
 		at: 'logout'
 			put: [ self session logout.
-			self requestContext redirectTo: 'http://localhost:8000/ESUG' ];
+    ^ self requestContext redirectTo: self application url ];
 		at: 'groupRegistration'
 			put: [ ERGroupRegistrationView
 				attendee: self session user

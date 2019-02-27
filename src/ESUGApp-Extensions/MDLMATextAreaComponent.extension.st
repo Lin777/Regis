@@ -1,6 +1,6 @@
 Extension { #name : #MDLMATextAreaComponent }
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MDLMATextAreaComponent >> renderEditorOn: html [
 	| inputId |
 	inputId := self labelId.

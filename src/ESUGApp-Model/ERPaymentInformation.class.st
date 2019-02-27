@@ -81,11 +81,12 @@ ERPaymentInformation >> hasPaid: anObject [
 ]
 
 { #category : #initialization }
-ERPaymentInformation >> initialize [ 	
-	super initialize .
+ERPaymentInformation >> initialize [
+	super initialize.
 	hasPaid := false.
 	paymentType := 'Bank transfer'.
 	paymentCurrency := 'Euro'.
+	paymentAmount := 0
 ]
 
 { #category : #accessing }

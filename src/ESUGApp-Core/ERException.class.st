@@ -1,7 +1,7 @@
 Class {
 	#name : #ERException,
 	#superclass : #Exception,
-	#category : #'ESUGApp-Exception'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -12,9 +12,16 @@ ERException class >> adminUserDoesNotDelete [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> backupError [
+		^ self new 
+			messageText: 'Something went wrong while the backup was done';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> deletionOfTicketNotValid [
 		^ self new
-				messageText: 'This ticket can not be used because it is being used by one or more attendees';
+				messageText: 'This ticket can not be deleted because it is being used by one or more attendees';
 				yourself
 ]
 

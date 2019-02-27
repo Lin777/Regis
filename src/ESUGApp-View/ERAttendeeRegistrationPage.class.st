@@ -92,7 +92,8 @@ ERAttendeeRegistrationPage >> saveContactInfo [
 ERAttendeeRegistrationPage >> savePaymentInfo [
 	currentTab := paymentInfoTab.
 	pageController attendee paymentInformation: 
-	(paymentInfoTab contentTab save) model
+	(paymentInfoTab contentTab save) model.
+	pageController updatePaymentRate: pageController attendee.
 	
 ]
 

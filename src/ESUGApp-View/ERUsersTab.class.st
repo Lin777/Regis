@@ -116,7 +116,7 @@ ERUsersTab >> renderButtonExportOn: html [
 ]
 
 { #category : #rendering }
-ERUsersTab >> renderButtons: html [
+ERUsersTab >> renderButtonsOn: html [
 	self renderButtonAddOn: html.
 	self renderButtonExportOn: html.
 	html mdlAnchorButton
@@ -124,21 +124,21 @@ ERUsersTab >> renderButtons: html [
 		id: 'exportUsers';
 		callback:  [ self exportUsers ];
 		with: 'Export'.
-	self renderDownloadButton: html.
+	self renderDownloadButtonOn: html.
 ]
 
 { #category : #rendering }
-ERUsersTab >> renderContainer: html [
+ERUsersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllUsers';
-		with: [ self renderButtons: html.
+		with: [ self renderButtonsOn: html.
 			html horizontalRule.
-			self renderTableOfUsers: html ]
+			self renderTableOfUsersOn: html ]
 ]
 
 { #category : #rendering }
-ERUsersTab >> renderDownloadButton: html [
+ERUsersTab >> renderDownloadButtonOn: html [
 	| dictionary |
 	dictionary := Dictionary new 
 	at: 'id' put: 'downloadDataUsers';
@@ -151,7 +151,7 @@ ERUsersTab >> renderDownloadButton: html [
 ]
 
 { #category : #rendering }
-ERUsersTab >> renderTableOfUsers: html [
+ERUsersTab >> renderTableOfUsersOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

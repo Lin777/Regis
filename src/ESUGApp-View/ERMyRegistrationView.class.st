@@ -2,7 +2,8 @@ Class {
 	#name : #ERMyRegistrationView,
 	#superclass : #ERContainer,
 	#instVars : [
-		'tabs'
+		'tabs',
+		'tabsComponent'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -15,6 +16,11 @@ ERMyRegistrationView class >> attendee: anAttendee content: aContent [
 	instance content: aContent .
 	instance initializeTabForms.
 	^ instance
+]
+
+{ #category : #adding }
+ERMyRegistrationView >> children [ 	
+	^ Array with: tabsComponent 
 ]
 
 { #category : #initialization }
@@ -32,10 +38,12 @@ ERMyRegistrationView >> initializeTabForms [
 ]
 
 { #category : #adding }
-ERMyRegistrationView >> renderContentPage: html [
+ERMyRegistrationView >> renderContentPageOn: html [
+	
+	tabsComponent := (ERTabs new tabs: tabs).
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: (ERTabs new tabs: tabs) ]
+		with: [ html render: tabsComponent  ]
 ]
 
 { #category : #accessing }

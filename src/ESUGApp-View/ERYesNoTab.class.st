@@ -3,12 +3,20 @@ Class {
 	#superclass : #ERContentAdminTab,
 	#instVars : [
 		'name',
-		'title',
+		'titleTrue',
+		'titleFalse',
 		'callbackNo',
-		'callbackYes'
+		'callbackTrue',
+		'callbackFalse',
+		'stateBlock'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
+
+{ #category : #accessing }
+ERYesNoTab >> callbackFalse: anObject [
+	callbackFalse := anObject
+]
 
 { #category : #accessing }
 ERYesNoTab >> callbackNo: anObject [
@@ -16,8 +24,20 @@ ERYesNoTab >> callbackNo: anObject [
 ]
 
 { #category : #accessing }
-ERYesNoTab >> callbackYes: anObject [
-	callbackYes := anObject
+ERYesNoTab >> callbackTrue: anObject [
+	callbackTrue := anObject
+]
+
+{ #category : #accessing }
+ERYesNoTab >> callbackYes [
+	stateBlock value ifTrue: [^ callbackTrue ].
+	^ callbackFalse
+]
+
+{ #category : #initialization }
+ERYesNoTab >> initialize [ 	
+	super initialize .
+	stateBlock := [ true ]
 ]
 
 { #category : #accessing }
@@ -26,14 +46,17 @@ ERYesNoTab >> name: anObject [
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderContainer: html [
+ERYesNoTab >> renderContainerOn: html [
 	html horizontalRule.
-	self renderYesButton: html.
-	self renderNoButton: html
+	html form 
+		method: 'post';
+		with:
+	[self renderYesButtonYes: html.
+	self renderNoButtonOn: html]
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderNoButton: html [
+ERYesNoTab >> renderNoButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'no-' , tabId;
@@ -42,12 +65,18 @@ ERYesNoTab >> renderNoButton: html [
 ]
 
 { #category : #rendering }
-ERYesNoTab >> renderYesButton: html [
-	html mdlAnchorButton
+ERYesNoTab >> renderYesButtonYes: html [
+	html mdlButton
 		colored;
+		beSubmit;
 		id: 'yes-' , tabId;
-		callback: [callbackYes value: self];
+		callback: [self callbackYes value: self];
 		with: 'Yes'
+]
+
+{ #category : #accessing }
+ERYesNoTab >> stateBlock: anObject [
+	stateBlock := anObject
 ]
 
 { #category : #accessing }
@@ -72,10 +101,16 @@ ERYesNoTab >> tabName: aName [
 
 { #category : #accessing }
 ERYesNoTab >> title [
-	^ title
+	stateBlock value ifTrue: [ ^ titleTrue ].
+	^ titleFalse
 ]
 
 { #category : #accessing }
-ERYesNoTab >> title: anObject [
-	title := anObject
+ERYesNoTab >> titleFalse: anObject [
+	titleFalse := anObject
+]
+
+{ #category : #accessing }
+ERYesNoTab >> titleTrue: anObject [
+	titleTrue := anObject
 ]

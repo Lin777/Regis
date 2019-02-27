@@ -1,6 +1,6 @@
 Extension { #name : #MAValidationDecoration }
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MAValidationDecoration >> renderErrorsOn: html [
 	html break .
 	html div class: 'errors'; with:[

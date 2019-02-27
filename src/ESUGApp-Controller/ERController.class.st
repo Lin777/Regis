@@ -4,25 +4,41 @@ Class {
 	#instVars : [
 		'conference'
 	],
+	#classInstVars : [
+		'uniqueInstance'
+	],
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #'as yet unclassified' }
-ERController class >> currencyAvailable [
-	| list |
-	list := OrderedCollection new.
-	self new conference fees do: [ :fee | list add: fee currency ].
-	^ list
+{ #category : #accessing }
+ERController class >> uniqueInstance [ 
+     uniqueInstance ifNil: [uniqueInstance := self new]. 
+     ^ uniqueInstance
+ 
 ]
 
 { #category : #adding }
 ERController >> addAward: anAward [
 	|award|
-	
 	anAward submittionDate: Date today.
 	award := anAward save.
 	conference addSubmittedAward: award.
 	conference save
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
+	((self applyToAddComission: anAttendee )
+		and: [ anAttendee paymentInformation paymentType = 'Credit Card' ])
+		ifTrue: [ ^ (amount + (self addPayPalComissionOn: amount))].
+	^ amount
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> addPayPalComissionOn: amount [
+
+	^ ((conference fee payPalCommissionPercentage)/100) * amount + 
+	(conference fee staticCommissionPaypal)
 ]
 
 { #category : #adding }
@@ -79,7 +95,19 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 		(self verifyIfTicketCanApply: ticket) 
 		ifTrue: [anAttendee paymentInformation coupon: aTicket].
 		 ].
-	anAttendee save.
+	self updateAttendee: anAttendee.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> applyToAddComission: anObject [
+	anObject userAccount isGroupManager ifTrue: [ ^ true ].
+	^ anObject idGroup isNil
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> attendAllDays: anAttendee [
+ ^ (anAttendee conferenceInformation attendance 
+		values count: [ :each | each ]) = 5
 ]
 
 { #category : #'as yet unclassified' }
@@ -145,7 +173,7 @@ ERController >> conference: anObject [
 { #category : #'as yet unclassified' }
 ERController >> conferenceFeeFor: anAttendee [
 	| fee amount |
-	fee := self feePerTypeCurrencyOf: anAttendee.
+	fee := self conference fee.
 	amount := self amountForCurrentDateFor: fee.
 	amount := amount + (self costPerExtraPerson: anAttendee on: fee).
 	^ self decreaseCouponAmountFor: amount to: anAttendee
@@ -157,9 +185,21 @@ ERController >> conferenceIsOpenRegistration [
 ]
 
 { #category : #'as yet unclassified' }
+ERController >> costPerExtraPerson: anAttendee [ 
+	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
+	ifTrue: [ ^ conference fee extraPersonSD asNumber]
+]
+
+{ #category : #'as yet unclassified' }
 ERController >> costPerExtraPerson: anAttendee on: fee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
 	ifTrue: [ ^ fee extraPersonSD asNumber]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> daysOfAssistanceOf: anAttendee [
+ ^ (anAttendee conferenceInformation attendance 
+		values count: [ :each | each ])
 ]
 
 { #category : #'as yet unclassified' }
@@ -169,10 +209,6 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
-]
-
-{ #category : #rendering }
-ERController >> deleteAttendee: anAttendee [
 ]
 
 { #category : #rendering }
@@ -203,18 +239,6 @@ ERController >> existReductionTicketWithName: aString [
 		anySatisfy: [ :each | each ticketId = aString  ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> feeForCurrencyType: paymentCurrency [
-	[ ^ conference fees detect: [ :fee | fee currency = paymentCurrency]]
-	on: NotFound 
-	do: [ ERException paymentCurrencyNotAvailable signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> feePerTypeCurrencyOf: anAttendee [
-	^ self feeForCurrencyType: anAttendee paymentInformation paymentCurrency 
-]
-
 { #category : #actions }
 ERController >> findUserByEmail: aString [
 	^ conference users 
@@ -223,24 +247,31 @@ ERController >> findUserByEmail: aString [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> getGroupOfAttendee: aAttendee [
-	^ aAttendee idGroup 
-	ifNotNil: [ self conference groups detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
-		ifNone: [ nil ] ].
+ERController >> generateInvoiceOf: anAttendee [
+	| file |
+	file := ERPDFInvoice templateRegistrationInvoice: anAttendee.
+	anAttendee encodedInvoice: (self encodeFiletoBase64: file).
+	file ensureDelete.
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> groupManagerAmountOfPay: aGroupManager [
-	| fee amount |
-	fee := self feePerTypeCurrencyOf: aGroupManager.
-	amount := self amountForCurrentDateFor: fee.
-	^ self decreaseCouponAmountFor: amount to: aGroupManager
+ERController >> getGroupOfAttendee: aAttendee [
+	^ aAttendee idGroup 
+	ifNotNil: [ self conference groups 
+		detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
+		ifNone: [ nil ] ].
 ]
 
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
 	conference := ERConference find: [ :each | each active ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> isEarlyRegistrationOf: anAttendee [
+	^ conference configuration earlyRegistrationDeadline 
+		asDate > anAttendee createdOn asDate
 ]
 
 { #category : #'as yet unclassified' }
@@ -257,7 +288,7 @@ ERController >> payPalInvoiceNumberToken [
 ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 	| conferenceFee url fee |
 	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
-	fee := self feePerTypeCurrencyOf: anAttendeeOrGroupManager.
+	fee := conference fee .
 	url := fee bankPayPalUrl.
 	url := url
 		copyReplaceAll: fee payPalAmountToken
@@ -275,7 +306,7 @@ ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 ERController >> payPalUrlForGroup: aGroup [
 	| conferenceFee url fee |
 	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	fee := self feePerTypeCurrencyOf: aGroup.
+	fee := conference fee.
 	url := fee bankPayPalUrl.
 	url := url
 		copyReplaceAll: fee payPalAmountToken
@@ -287,6 +318,39 @@ ERController >> payPalUrlForGroup: aGroup [
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> paymentRateFor: anAttendee [
+	conference configuration earlyRegistrationDeadline 
+		asDate < anAttendee createdOn asDate
+		ifTrue: [ ^ conference fee lrfAllDaysFee ]
+		ifFalse: [ ^ conference fee erfAllDaysFee ].
+	^ ERException errorWhenCalculatingPaymentAmount raised
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> priceAccordingToAttendanceDaysOf: anAttendee [
+	|daysOfAssistance |
+	daysOfAssistance := self daysOfAssistanceOf: anAttendee.
+	(daysOfAssistance < 5) ifTrue: 
+		[ ^ self priceForNDays: daysOfAssistance Of: anAttendee ].
+	^ self priceForAllDaysOf: anAttendee
+	
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> priceForAllDaysOf: anAttendee [
+	(self isEarlyRegistrationOf: anAttendee)
+		ifTrue: [ ^ conference fee erfAllDaysFee ].
+		^ conference fee lrfAllDaysFee
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> priceForNDays: aNumber Of: anAttendee [
+	(self isEarlyRegistrationOf: anAttendee) 
+		ifTrue: [ ^ conference fee erfOneDayFee * aNumber ].
+		^ conference fee lrfOneDayFee * aNumber 
 ]
 
 { #category : #action }
@@ -311,13 +375,9 @@ ERController >> stateUpdateNotPaidAttendees: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee paymentInformation hasPaid: aBoolean.
-	aBoolean ifFalse: [ 
-		anAttendee encodedInvoice: nil.
-		anAttendee paymentAmount: nil.	
-	] ifTrue: [ 
-		anAttendee paymentAmount: (self conferenceFeeFor: anAttendee).
-	].
-	anAttendee save.
+	anAttendee userAccount isAttendee ifTrue: [
+	self updateAttendee: anAttendee]
+	ifFalse: [ self updateGroup: anAttendee ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -348,8 +408,44 @@ ERController >> submittedTalksFor: anAttendee [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> updateAttendee: anAteendee [
-	anAteendee save
+ERController >> updateAllAttendeesOf: aGroup [
+	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
+												aGroup paymentInformation hasPaid.
+											  each save. ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updateAttendee: anAttendee [
+	self updatePaymentRate: anAttendee.
+	self generateInvoiceOf: anAttendee.
+	anAttendee save.
+	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ]
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updateGroup: aGroup [
+	self updatePaymentRateForGroup: aGroup .
+	self generateInvoiceOf: aGroup.
+	self updateAllAttendeesOf: aGroup.
+	^ aGroup save.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updatePaymentRate: anAttendee [
+	|  amount |
+	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
+	amount := amount + (self costPerExtraPerson: anAttendee).
+	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	amount :=self addPayPalComissionIfApplyOn: amount of: anAttendee.
+	anAttendee paymentInformation paymentAmount: amount
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> updatePaymentRateForGroup: aGroup [ 
+	| amount |
+	amount := aGroup listAttends sum: [ :each | each paymentAmount ].
+	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
+	aGroup paymentInformation paymentAmount: amount.
 ]
 
 { #category : #'as yet unclassified' }
@@ -384,9 +480,10 @@ ERController >> validateNewPassword: aString1 with: aString2 [
 
 { #category : #'as yet unclassified' }
 ERController >> validateRegister: anAttendee [
-	self validateIfEmailIsAlreadyRegistered: anAttendee  userAccount.
+	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
-	with: anAttendee userAccount confirmPassword
+	with: anAttendee userAccount confirmPassword.
+	anAttendee userAccount isAttendee ifTrue: [self updatePaymentRate: anAttendee]
 ]
 
 { #category : #action }

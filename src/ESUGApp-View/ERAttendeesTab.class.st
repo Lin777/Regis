@@ -22,23 +22,16 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att contactInformation country ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
-		add: ([ :att | (controller conferenceFeeFor: att) asString
+		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
-		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
+		"add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: att idGroup isNotNil;
 				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
 				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {user. html});
+				] ] valueWithArguments: {user. html});"
 		yourself ]
-]
-
-{ #category : #rendering }
-ERAttendeesTab >> children [
-	^ OrderedCollection new
-		add: table;
-		yourself
 ]
 
 { #category : #rendering }
@@ -49,12 +42,12 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 
 { #category : #rendering }
 ERAttendeesTab >> dictToRenderDownloadButton [
-	^ Dictionary new
+	^ Dictionary new"
 		at: 'icon' put: 'get_app';
 		at: 'id' put: [ :attend | attend id , '-get_app' ];
 		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
 		yourself
 ]
 
@@ -87,7 +80,7 @@ ERAttendeesTab >> exportAttends [
 { #category : #rendering }
 ERAttendeesTab >> headers [
 	^ #(
-'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?' '')
+'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' '')
 ]
 
 { #category : #rendering }
@@ -121,18 +114,18 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
 				with: '');
-		add: 
+		"add: 
 			(Array 
 				with: 'description' 
 				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]
 				with: 'Generate invoice'
-				with: '');
+				with: '');"
 		yourself
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderButtons: html [
+ERAttendeesTab >> renderButtonsOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportAttends';
@@ -145,7 +138,7 @@ ERAttendeesTab >> renderButtons: html [
 		at: 'nameFile' put: 'dataAttendees.csv';
 		at: 'nameButton' put: 'Download';
 		yourself).
-	html mdlAnchorButton colored;
+	"html mdlAnchorButton colored;
 		id: 'exportAllInvoices';
 		disabled: self attends isEmpty;
 		callback: [ self exportAllInvoices ];
@@ -156,21 +149,21 @@ ERAttendeesTab >> renderButtons: html [
 		at: 'encodeFile' put: 'data:text/zip;base64,', (encodeZipFile ifNil: ['']);
 		at: 'nameFile' put: 'Invoices.zip';
 		at: 'nameButton' put: 'Download Invoices';
-		yourself).
+		yourself)."
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderContainer: html [
+ERAttendeesTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllAttends';
-		with: [ self renderButtons: html.
+		with: [ self renderButtonsOn: html.
 			html horizontalRule.
-			self renderTableOfAttends: html ]
+			self renderTableOfAttendsOn: html ]
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> renderTableOfAttends: html [
+ERAttendeesTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

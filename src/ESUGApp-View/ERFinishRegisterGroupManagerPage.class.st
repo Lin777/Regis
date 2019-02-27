@@ -27,19 +27,9 @@ ERFinishRegisterGroupManagerPage >> finishRegister [
 ]
 
 { #category : #rendering }
-ERFinishRegisterGroupManagerPage >> renderBody: html with: aBlock [
-	html div
-		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
-		with: [ html break.
-			html break.
-			aBlock value ]
-]
-
-{ #category : #rendering }
 ERFinishRegisterGroupManagerPage >> renderPageOn: html [
 	html mdlGrid
-		class: 'mdl-grid--no-spacing';
+		noSpacing;
 		with: [ self renderContactInformation: html.
 			self renderAffiliation: html.
 			self renderActions: html ]

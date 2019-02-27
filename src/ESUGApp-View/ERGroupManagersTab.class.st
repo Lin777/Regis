@@ -17,14 +17,14 @@ ERGroupManagersTab >> blockTableToExecute [
 		add: ([ :att | att groupManager userAccount email ] value: group);
 		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
 		add:
-			([ :att | (controller amountOfPayToGroup: att listAttends) asString ]
-				value: group);
+			([ :att | att paymentInformation paymentAmount asString ]
+				value: group);"
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				value: (controller allAttendeesHasPaid: att);
 				onTrue: [ controller stateUpdatePaidAttendees: att ] 
 				onFalse: [ controller stateUpdateNotPaidAttendees: att ];
 				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {group. html});
+				] ] valueWithArguments: {group. html});"
 		yourself ].
 ]
 
@@ -36,12 +36,12 @@ ERGroupManagersTab >> deleteGroup: user [
 { #category : #rendering }
 ERGroupManagersTab >> dictToRenderDownloadButton [
 	^ Dictionary new 
-	at: 'icon' put: 'get_app';
+	"at: 'icon' put: 'get_app';
 	at: 'id' put: [ :group | group id , '-get_app' ];
 	at: 'disabled' put: [:group | ((controller allAttendeesHasPaid: group) and: [ group encodedInvoice isNotNil ]) not ];
 	at: 'url' put: [ :group | 'data:text/pdf;base64,', (group encodedInvoice ifNil: [ '' ])];
 	at: 'download' put: [ :group | 'RegistrationInvoice_', group id, '.pdf'];
-	yourself.
+	"yourself.
 ]
 
 { #category : #rendering }
@@ -60,7 +60,7 @@ ERGroupManagersTab >> groups [
 
 { #category : #accessing }
 ERGroupManagersTab >> headers [
-	^ #('Name' 'Email' 'Organization' 'Remaing Fee' 'Have all Pay?' '')
+	^ #('Name' 'Email' 'Organization' 'Remaing Fee' '')
 ]
 
 { #category : #rendering }
@@ -86,40 +86,40 @@ ERGroupManagersTab >> listDataToRenderButton [
 				with: [ :user | self modifyUserFormGroup: user groupManager userAccount ]
 				with: [ :user | user id , '-modifyUser' ]
 				with: 'Modify user'
-				with: '');
+				with: '');"
 		add:
 			(Array
 				with: 'description'
 				with: [ :user | self generateInvoiceGroup: user ]
 				with: [ :user | user id , '-invoice' ]
 				with: 'Generate invoice'
-				with: '');
+				with: '');"
 		yourself
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderButtons: html [
+ERGroupManagersTab >> renderButtonsOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportGroups';
 		callback: [ self exportGroups ];
 		with: 'Export'.
-	self renderDownloadButton: html.
+	self renderDownloadButtonOn: html.
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderContainer: html [
+ERGroupManagersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllGroups';
 		with: [
-	self renderButtons: html.
+	self renderButtonsOn: html.
 	html horizontalRule.
-	self renderTableOfGroups: html]
+	self renderTableOfGroupsOn: html]
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderDownloadButton: html [
+ERGroupManagersTab >> renderDownloadButtonOn: html [
 	| dictionary |
 	dictionary := Dictionary new 
 	at: 'id' put: 'downloadDataGroupManagers';
@@ -132,7 +132,7 @@ ERGroupManagersTab >> renderDownloadButton: html [
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> renderTableOfGroups: html [
+ERGroupManagersTab >> renderTableOfGroupsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

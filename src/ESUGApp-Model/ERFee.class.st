@@ -9,6 +9,8 @@ Class {
 		'lrfOneDayFee',
 		'bankAccountInformation',
 		'bankPayPalUrl',
+		'payPalCommissionPercentage',
+		'staticCommissionPaypal',
 		'extraPersonSD'
 	],
 	#category : #'ESUGApp-Model'
@@ -53,7 +55,7 @@ ERFee >> descriptionBankPayPalUrl [
 		accessor: #bankPayPalUrl; 
 		priority: 70;
 		beRequired;
-		label: 'Pay Pal URL (Required)';
+		label: 'PayPal URL (Required)';
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -141,6 +143,22 @@ ERFee >> descriptionLrfOneDayFee [
 	^ tmp yourself
 ]
 
+{ #category : #accessing }
+ERFee >> descriptionPayPalCommissionPercentage [
+	<magritteDescription>
+	| tmp |
+	tmp := MANumberDescription new.
+	tmp 
+		accessor: #payPalCommissionPercentage; 
+		priority: 80;
+		beRequired;
+		label: 'Paypal Commission Percentage (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
 { #category : #'as yet unclassified' }
 ERFee >> descriptionPaymentCurrency [
 	<magritteDescription>
@@ -155,6 +173,22 @@ ERFee >> descriptionPaymentCurrency [
 		withoutLabel: true;
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
+]
+
+{ #category : #accessing }
+ERFee >> descriptionStaticPayPalCommission [
+	<magritteDescription>
+	| tmp |
+	tmp := MANumberDescription new.
+	tmp 
+		accessor: #staticCommissionPaypal; 
+		priority: 90;
+		beRequired;
+		label: 'Static Commission Paypal (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }
@@ -219,8 +253,28 @@ ERFee >> payPalAmountToken [
 	^ '[AMOUNT]'
 ]
 
+{ #category : #accessing }
+ERFee >> payPalCommissionPercentage [
+	^ payPalCommissionPercentage 
+]
+
+{ #category : #accessing }
+ERFee >> payPalCommissionPercentage: anObject [
+	payPalCommissionPercentage := anObject
+]
+
 { #category : #'as yet unclassified' }
 ERFee >> payPalInvoiceNumberToken [
 	
 	^ '[INVOICENUMBER]'
+]
+
+{ #category : #accessing }
+ERFee >> staticCommissionPaypal [
+	^ staticCommissionPaypal 
+]
+
+{ #category : #accessing }
+ERFee >> staticCommissionPaypal: anObject [
+	staticCommissionPaypal := anObject
 ]

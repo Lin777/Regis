@@ -159,16 +159,11 @@ ERAward >> descriptionNameAward [
 { #category : #'as yet unclassified' }
 ERAward >> descriptionOtherDevelopers [
 	<magritteDescription>
-	| tmp |
-	tmp := MAMemoDescription new.
-	tmp 
-		accessor: #otherDevelopers; 
-		priority: 30;
-		required: false;
-		lineCount: 5;
-		withoutLabel: true;
-		componentClass: MDLMATextAreaComponent.
-	^ tmp yourself
+	^ ERAdditionalInformation new descriptionAdditionalText copy
+			accessor: #otherDevelopers;
+			priority: 30;
+			lineCount: 5;
+			yourself 
 ]
 
 { #category : #'as yet unclassified' }

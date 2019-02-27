@@ -111,3 +111,8 @@ ERGroup >> paymentInformation [
 ERGroup >> paymentInformation: anObject [
 	paymentInformation := anObject
 ]
+
+{ #category : #accessing }
+ERGroup >> userAccount [
+	^ groupManager userAccount
+]

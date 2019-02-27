@@ -1,15 +1,29 @@
 Class {
 	#name : #ERStatisticsTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'tables'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
+
+{ #category : #rendering }
+ERStatisticsTab >> children [ 	
+	^ OrderedCollection withAll: tables
+]
+
+{ #category : #rendering }
+ERStatisticsTab >> initialize [ 	
+	super initialize .
+	tables:= OrderedCollection new.
+]
 
 { #category : #rendering }
 ERStatisticsTab >> renderAttendeesRolesStatisticsOn: html [
 ]
 
 { #category : #rendering }
-ERStatisticsTab >> renderContainer: html [
+ERStatisticsTab >> renderContainerOn: html [
 	html horizontalRule.
 	self renderParticipantsToLunchesStatisticsOn: html.
 	self renderShirtsStatisticsOn: html.
@@ -18,40 +32,43 @@ ERStatisticsTab >> renderContainer: html [
 
 { #category : #rendering }
 ERStatisticsTab >> renderParticipantsToLunchesStatisticsOn: html [
-	| table |
-	table := ERDictionaryTable new
+	| tab |
+	tab := ERDictionaryTable new
 		headers: controller headersParticipantsToLunches;
 		levelTotal: 6;
 		listObject: controller participantsToLunches.
-	html render: table
+	tables add: tab.
+	html render: tab
 ]
 
 { #category : #rendering }
 ERStatisticsTab >> renderParticipantsToSocialDinnerStatisticsOn: html [
-	|table|
+	|tab|
 	html heading
 		level3;
 		with: 'Participants To Social Dinner'.
 	html horizontalRule.
-	table := ERDictionaryTable new
+	tab := ERDictionaryTable new
 		headers: controller headersParticipantsToSocialDinner;
 		levelTotal: 6;
 		listObject: controller participantsToSocialDinner.
-	html render: table
+	tables add: tab.
+	html render: tab
 ]
 
 { #category : #rendering }
 ERStatisticsTab >> renderShirtsStatisticsOn: html [
-	| table |
+	| tab |
 	html heading
 		level3;
 		with: 'Shirts'.
 	html horizontalRule.
-	table := ERDictionaryTable new
+	tab := ERDictionaryTable new
 		headers: controller headersShirtsStatistics;
 		levelTotal: 6;
 		listObject: controller shirtsStatistics.
-	html render: table
+	tables add: tab.
+	html render: tab
 ]
 
 { #category : #accessing }

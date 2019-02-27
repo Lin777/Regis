@@ -1,6 +1,9 @@
 Class {
 	#name : #ERPDFInvoice,
 	#superclass : #Object,
+	#instVars : [
+		'controller'
+	],
 	#classInstVars : [
 		'demoPath'
 	],
@@ -71,7 +74,7 @@ ERPDFInvoice >> addDateInvoice: aPage [
 		font: self fontContent;
 		dimension: 190 mm @ 20 mm;
 		from: 0 mm @ 48 mm;
-		text: 'January 17, 2019';
+		text: self dateToday;
 		alignment: PDFAlignment right).
 ]
 
@@ -81,25 +84,25 @@ ERPDFInvoice >> addFooter: pdfPage [
 		textColor: self colorTitle;
 		font: self fontFooter;
 		from: 20 mm @ 276 mm;
-		text: 'ESUG');
+		text: controller conference configuration organizer name);
 	add: (PDFTextElement new
 		textColor: self colorLink;
 		font: self fontFooter;
 		from: 20 mm @ 280 mm;
-		text: 'http://www.esug.org');
+		text: controller conference configuration organizer webPageUrl);
 	add: (PDFFormattedTextElement new
 		textColor: self colorTitle;
 		font: self fontFooter;
 		dimension: 190 mm @ 3 mm;
 		from: 0 mm @ 272 mm;
-		text: 'Association Loi 1901 n W751167780 (not subjected to V.A.T.)';
+		text: controller conference configuration organizer fiscalSituation;
 		alignment: PDFAlignment right);
 	add: (PDFFormattedTextElement new
 		font: self fontFooter;
 		textColor: self colorTitle;
 		dimension: 190 mm @ 3 mm;
 		from: 0 mm @ 276 mm;
-		text: 'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck - 59800 Lille - France';
+		text: controller conference configuration organizer addressString;
 		alignment: PDFAlignment right).
 ]
 
@@ -197,7 +200,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 ]
 
 { #category : #adding }
-ERPDFInvoice >> addInfoPayment: pdfPage [
+ERPDFInvoice >> addInfoPayment: pdfPage of: user [
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
 		font: self fontBoldContent;
@@ -227,17 +230,26 @@ ERPDFInvoice >> addInfoPayment: pdfPage [
 		from: 20 mm @ 196 mm;
 		text: 'Pay by Bank Transfer:');
 	add: (PDFDataTableElement new
-		data: #(
-			#('Account Owner:' 'ESUG - EUROPEAN SMALLTALK USERS GROUP')
-			#('Bank name:' 'Crédit Mutuel Nord Europe')
-			#('IBAN:' 'FR76 1562 9027 0100 0433 0600 144')
-			#('BIC/SWIFT Code:' 'CMCIFR2A')
+		data: (Array with: (
+			Array with: 'Account Owner:' with: controller conference fee bankAccountInformation owner) with:
+			(Array with: 'Bank name:' with: controller conference fee bankAccountInformation bankInformation name) with:
+			(Array with: 'IBAN:' with: controller conference fee bankAccountInformation iban ) with:
+			(Array with: 'BIC/SWIFT Code:' with: controller conference fee bankAccountInformation bankInformation bic)
 		);
 		font: self fontContent;
 		from: 30 mm @ 202 mm;
 		dimension: 160 mm @ 20 mm;
 		style: #noBorder; yourself
-	).
+	);
+	add: (PDFTextElement new
+		textColor: self colorTitle;
+		font: self fontBoldContent;
+		from: 20 mm @ 225 mm;
+		text: 'Payment status:');
+	add: (PDFTextElement new
+		font: self fontContent;
+		from: 30 mm @ 230 mm;
+		text: (self paymentStatus: user)).
 ]
 
 { #category : #adding }
@@ -297,6 +309,16 @@ ERPDFInvoice >> colorTitle [
 	^ PDFColor r: 0 g: 0 b: 128
 ]
 
+{ #category : #accessing }
+ERPDFInvoice >> controller: anObject [
+	controller := anObject
+]
+
+{ #category : #adding }
+ERPDFInvoice >> dateToday [
+	^ Date today monthName asString, ' ', Date today dayOfMonth asString, ', ', Date today year asString
+]
+
 { #category : #'as yet unclassified' }
 ERPDFInvoice >> fontBoldContent [
 	^ (self fontContent) bold: true.
@@ -319,9 +341,17 @@ ERPDFInvoice >> lineElementFrom: aPoint1 to: aPoint2 [
 		to: aPoint2) drawColor: self colorTitle
 ]
 
+{ #category : #adding }
+ERPDFInvoice >> paymentStatus: user [
+	user paymentInformation hasPaid 
+		ifTrue: [ ^ 'Paid'].
+		^ 'Unpaid'
+]
+
 { #category : #'as yet unclassified' }
 ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	| pharoLogo pdfDoc pdfPage |
+	controller := ERController uniqueInstance .
 	pharoLogo := CssForLoginMDL new esugJpg.
 	pdfDoc := PDFDocument new.
 	pdfDoc styleSheet > #noBorder drawColor: self colorBorder.
@@ -347,7 +377,7 @@ ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	self addInfoInvoice: pdfPage of: user.
 	self addTablePayment: pdfPage of: user.
 	self addBorder: pdfPage.
-	self addInfoPayment: pdfPage.
+	self addInfoPayment: pdfPage of: user.
 	self addFooter: pdfPage.
 	pdfDoc add: pdfPage.
 	pdfDoc exportTo: aStream

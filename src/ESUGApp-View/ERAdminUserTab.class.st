@@ -33,6 +33,11 @@ ERAdminUserTab >> cancel [
 	self updateStateTab: self tabName.
 ]
 
+{ #category : #rendering }
+ERAdminUserTab >> children [ 
+	^ Array with: messageComponent with: modifiedUser
+]
+
 { #category : #initialization }
 ERAdminUserTab >> initialize [
 	super initialize.
@@ -56,7 +61,7 @@ ERAdminUserTab >> renderAcceptButtonOn: html [
 ]
 
 { #category : #rendering }
-ERAdminUserTab >> renderButtons: html [
+ERAdminUserTab >> renderButtonsOn: html [
 	self renderAcceptButtonOn: html.
 	self renderCancelButtonOn: html.
 ]
@@ -71,17 +76,10 @@ ERAdminUserTab >> renderCancelButtonOn: html [
 ]
 
 { #category : #rendering }
-ERAdminUserTab >> renderContainer: html [
+ERAdminUserTab >> renderContainerOn: html [
 	html horizontalRule .
 	self renderFormOn: html
 	
-]
-
-{ #category : #rendering }
-ERAdminUserTab >> renderFields: html [
-	self renderFirstNameInputTextOn: html.
-	self renderLastNameInputTextOn: html.
-	self renderEmailInputTextOn: html
 ]
 
 { #category : #rendering }
@@ -92,7 +90,7 @@ ERAdminUserTab >> renderFormOn: html [
 		id: 'groupManagerFunctionsUser';
 		with: [ html render: messageComponent.
 			html render: modifiedUser.
-			self renderButtons: html ]
+			self renderButtonsOn: html ]
 ]
 
 { #category : #accessing }

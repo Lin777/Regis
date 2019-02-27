@@ -1,12 +1,12 @@
 Extension { #name : #MADescription }
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MADescription >> withoutLabel [
 	^ self propertyAt: #withoutLabel 
 	ifAbsent: [ false ]
 ]
 
-{ #category : #'*ESUGApp-MDLMagritte' }
+{ #category : #'*ESUGApp-Extensions' }
 MADescription >> withoutLabel: aBoolean [
 	self propertyAt: #withoutLabel put: aBoolean
 ]

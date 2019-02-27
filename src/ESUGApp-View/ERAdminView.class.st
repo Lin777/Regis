@@ -5,7 +5,8 @@ Class {
 		'controller',
 		'callbackYes',
 		'callbackNo',
-		'tabs'
+		'tabs',
+		'tabsComponent'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -29,16 +30,26 @@ ERAdminView >> addTabsForAdmin [
 ]
 
 { #category : #initialization }
-ERAdminView >> backUp [
+ERAdminView >> backup [
+	[|fileName|
+	fileName := ERBackupRestore uniqueInstance backup.
+	] on: ERException 
+	do: [ :exc | exc  ]
 ]
 
 { #category : #actions }
 ERAdminView >> cancel [
 ]
 
+{ #category : #adding }
+ERAdminView >> children [ 
+	^ Array with: tabsComponent
+]
+
 { #category : #initialization }
 ERAdminView >> closeRegistration [
-	controller conference configuration openRegistration: false; save.
+	controller conference configuration openRegistration: false.
+	controller conference save.
 	
 	
 ]
@@ -66,8 +77,8 @@ ERAdminView >> initializeTabForms [
 { #category : #initialization }
 ERAdminView >> openRegistration [
 	controller conference configuration
-		openRegistration: true;
-		save
+		openRegistration: true.
+	controller conference	save
 ]
 
 { #category : #initialization }
@@ -76,16 +87,17 @@ ERAdminView >> renderBackupTab [
 			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabBackup';
 				tabName: 'Backup';
-				title: self titleBackup;
-				callbackYes: callbackYes;
-				callbackNo: callbackNo)
+				titleTrue: self titleBackup ;
+				callbackTrue: callbackYes;
+				callbackNo: callbackNo).
 ]
 
 { #category : #adding }
-ERAdminView >> renderContentPage: html [
+ERAdminView >> renderContentPageOn: html [
+	tabsComponent := (ERTabs new tabs: tabs).
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: (ERTabs new tabs: tabs) ]
+		with: [ html render: tabsComponent ]
 ]
 
 { #category : #initialization }
@@ -93,9 +105,12 @@ ERAdminView >> renderOpenCloseRegistration [
 	tabs add:((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabOpenClose';
 				tabName: 'Open / Close registration';
-				title: self titleOpenClose;
-				callbackYes: callbackYes;
-				callbackNo: callbackNo)
+				stateBlock: [ controller conferenceIsOpenRegistration ];
+				titleTrue: 'Registration is opened. Are you sure you want close it?';
+				titleFalse:  'Registration is closed. Are you sure you want open it?';
+				callbackTrue: [ :aTab | self closeRegistration. aTab updateStateTab: aTab tabName ];
+				callbackFalse: [ :aTab | self openRegistration. aTab updateStateTab: aTab tabName ];
+				callbackNo: [ :aTab | self cancel. aTab updateStateTab: aTab tabName ])
 ]
 
 { #category : #initialization }
@@ -104,8 +119,8 @@ ERAdminView >> renderRestoreTab [
 			((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabRestore';
 				tabName: 'Restore';
-				title: self titleRestore;
-				callbackYes: callbackYes ;
+				titleTrue: self titleRestore;
+				callbackTrue: callbackYes ;
 				callbackNo: callbackNo )
 ]
 
@@ -120,7 +135,7 @@ ERAdminView >> tabs [
 
 { #category : #initialization }
 ERAdminView >> titleBackup [
-	callbackYes := [ :aTab | self backUp. aTab updateStateTab: aTab tabName ].
+	callbackYes := [ :aTab | self backup. aTab updateStateTab: aTab tabName ].
 	callbackNo := [ :aTab | self cancel. aTab updateStateTab: aTab tabName ].
 	^ 'Are you sure want to do a backup?'
 ]

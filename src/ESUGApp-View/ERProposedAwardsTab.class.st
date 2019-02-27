@@ -52,8 +52,7 @@ ERProposedAwardsTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERProposedAwardsTab >> renderAwardsTable: html [
-	| table |
+ERProposedAwardsTab >> renderAwardsTableOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;
@@ -73,10 +72,10 @@ ERProposedAwardsTab >> renderButtonAddOn: html [
 ]
 
 { #category : #rendering }
-ERProposedAwardsTab >> renderContainer: html [ 	
+ERProposedAwardsTab >> renderContainerOn: html [ 	
 	html horizontalRule .
 	self proposalsAreAllowed ifTrue: [self renderButtonAddOn: html].
-	self renderTable: html.
+	self renderTableOn: html.
 ]
 
 { #category : #rendering }
@@ -86,10 +85,10 @@ ERProposedAwardsTab >> renderMessageEmptyOn: html [
 ]
 
 { #category : #rendering }
-ERProposedAwardsTab >> renderTable: html [
+ERProposedAwardsTab >> renderTableOn: html [
 	self submittedAwards isEmpty 
 		ifTrue: [ self renderMessageEmptyOn: html ]
-		ifFalse: [ self renderAwardsTable: html ]
+		ifFalse: [ self renderAwardsTableOn: html ]
 ]
 
 { #category : #accessing }

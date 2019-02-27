@@ -104,17 +104,10 @@ ERContactInformation >> descriptionCity [
 { #category : #accessing }
 ERContactInformation >> descriptionCountry [
 	<magritteDescription>
-	| tmp1 |
-	tmp1 := MASingleOptionDescription new.
-	tmp1
-		accessor: #country;
-		priority: 40;
-		required: false;
-		options: ERAttendee countries;
-		cssClass: 'half';
-		withoutLabel: true;
-		componentClass: MDLMASelectListComponent .
-	^ tmp1 yourself
+	^  ERAward new descriptionCountry copy
+              priority: 40;
+				  cssClass: 'half';
+              yourself.
 ]
 
 { #category : #accessing }

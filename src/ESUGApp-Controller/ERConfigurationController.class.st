@@ -29,15 +29,6 @@ ERConfigurationController >> addAttendsToLunchPer: day to: list [
 ]
 
 { #category : #adding }
-ERConfigurationController >> addFee: aFee [
-	|savedFee|
-	savedFee := aFee save.
-	 conference addFee: savedFee.
-	 conference save.
-	^ savedFee
-]
-
-{ #category : #adding }
 ERConfigurationController >> addItemTo: aList of: each [
 	| man women |
 	man := 0.
@@ -101,12 +92,6 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
-ERConfigurationController >> deleteFee: aFee [
-	conference fees removeAllSuchThat: [ :each | each id = aFee id ].
-	^ aFee delete.
-]
-
-{ #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
@@ -119,17 +104,18 @@ ERConfigurationController >> deleteGroup: aGroup [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
-	(self attendeesForATicket: aReductionTicket ticketId) size > 0
-		ifTrue: [ ERException deletionOfTicketNotValid signal. ]
-		ifFalse: [ conference reductionTickets
-				removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
-				aReductionTicket delete ]
+	(self attendeesForATicket: aReductionTicket ticketId) isNotEmpty
+		ifTrue: [ ERException deletionOfTicketNotValid signal ].
+	conference reductionTickets
+		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
+	aReductionTicket delete
 ]
 
 { #category : #rendering }
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
-	anUser isAdmin ifFalse: [  ]
+	anUser isAdmin ifFalse: [ 
+		self  ]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
@@ -145,7 +131,8 @@ ERConfigurationController >> exportAttends: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each userAccount firstName.
+							{ each paymentInformation invoiceNumber.
+							each userAccount firstName.
 							each userAccount lastName.
 							each userAccount email.
 							each contactInformation country.
@@ -191,17 +178,14 @@ ERConfigurationController >> exportGroupManagers: fileName [
 				do: [ :each | 
 					neoWriter
 						nextPut:
-							{each groupManager userAccount firstName.
+							{each paymentInformation invoiceNumber.
+							each groupManager userAccount firstName.
 							each groupManager userAccount lastName.
 							each groupManager userAccount email.
-							each groupManager userAccount password.
-							each groupManager userAccount rolesAsString.
 							each groupManager affiliationInformation organizationName.
 							each groupManager affiliationInformation organizationAddrees1.
-							each groupManager affiliationInformation organizationAddrees2.
 							each groupManager affiliationInformation organizationCity.
 							each groupManager affiliationInformation organizationCountry.
-							each groupManager affiliationInformation organizationProvince.
 							each groupManager affiliationInformation organizationPostal.
 							each groupManager affiliationInformation membershipType} ].
 				neoWriter close ].
@@ -258,23 +242,19 @@ ERConfigurationController >> exportUsers: fileName [
 ]
 
 { #category : #accessing }
-ERConfigurationController >> fees [
-	^ conference fees
-]
-
-{ #category : #accessing }
 ERConfigurationController >> groups [
 	^ conference groups 
 ]
 
 { #category : #rendering }
 ERConfigurationController >> headerAttendee [
-	^ #('FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
 ]
 
 { #category : #rendering }
 ERConfigurationController >> headerGroups [
-	^ #('First Name' 'Last Name' 'Email' 'Password' 'Org. Name' 'Org. Address1' 'Org. Address2' 'Org. City' 'Org. Country' 'Org. Province' 'Org. Postal' 'Org. Membership')
+	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
+	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
 ]
 
 { #category : #rendering }
@@ -307,6 +287,24 @@ ERConfigurationController >> hearderAwards [
 	^ #('Name' 'Submitted by')
 ]
 
+{ #category : #rendering }
+ERConfigurationController >> invoices [
+	^ (conference groups), 
+	(conference attends 
+		select: [ :each | each idGroup isNil ])
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> listFoodPreferenceOfList: list symbolList: symbolList with: aSymbol [
+	|result|
+	result := OrderedCollection new.
+	symbolList 
+		do: [:symbol | result add:
+			 (list select: [:each | each conferenceInformation perform: symbol 
+				with: (each conferenceInformation perform: aSymbol)]) size ].
+	^ result
+]
+
 { #category : #'as yet unclassified' }
 ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: vegetarian [ 
 	^ OrderedCollection new add: (Dictionary new at: 'Normal' put: normal; at: 'Vegetarian' put: vegetarian ; at: 'Vegan' put: vegan; at: 'Total' put: normal +vegan +vegetarian ; yourself );yourself 
@@ -329,17 +327,20 @@ ERConfigurationController >> participantsToLunches [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> participantsToSocialDinner [
-	| normal vegetarian vegan list|
-	list := (self attends select: [:each | each conferenceInformation attendSocialEvent]).
-	normal :=(list select: [:each | each conferenceInformation isNormal]) size.
-	vegan :=(list select:  [:each | each conferenceInformation isVegan]) size.
-	vegetarian :=(list select:  [:each | each conferenceInformation isVegetarian]) size.
+	|attendees addedPeople list symbolList|
 	
-	list := (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ]).
-	normal := normal + ((list select: [:each | each conferenceInformation isNormal: each conferenceInformation personAddedFoodPreference]) size).
-	vegan := vegan + ((list select:  [:each | each conferenceInformation isVegan: each conferenceInformation personAddedFoodPreference]) size).
-	vegetarian := vegetarian + ((list select:  [:each | each conferenceInformation isVegetarian: each conferenceInformation personAddedFoodPreference]) size).
-	^ self listWithNormal: normal vegan: vegan vegetarian: vegetarian 
+	symbolList := #(#isNormal: #isVegan: #isVegetarian:).
+	
+	attendees := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation attendSocialEvent])
+ 		symbolList: symbolList 
+		with: #foodPreference).
+		
+   addedPeople := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ])
+ 		symbolList: symbolList 
+		with: #personAddedFoodPreference).
+	list := attendees + addedPeople .
+	
+	^ self listWithNormal: (list at:1) vegan: (list at:2) vegetarian: (list at:3) 
 ]
 
 { #category : #adding }
@@ -353,14 +354,6 @@ ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
 { #category : #accessing }
 ERConfigurationController >> reductionTickets [
 	^ conference reductionTickets
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> registrationsStatistics [
-	|list|
-	list := OrderedCollection new.
-	^ list
-"	^ #('Date' 'Total Attendees')"
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ESUGSetUp,
 	#superclass : #Object,
-	#category : #'ESUGApp-SetUp'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #accessing }
@@ -60,10 +60,12 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 		lrfOneDayFee: 210;
 		extraPersonSD: 50;
 		currency: 'Euro';
+		payPalCommissionPercentage: 5.4;
+		staticCommissionPaypal: 0.3;
 		bankAccountInformation: esugEuroBankAccountInformation;
 		bankPayPalUrl:
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=board%40esug.org&item_name=ESUG+Conference+Registration&item_number=[INVOICENUMBER]&amount=[AMOUNT]&no_shipping=1&no_note=1&currency_code=EUR&charset=UTF-8'; save.
-	conference addFee: esugEuroFee
+	conference fee: esugEuroFee
 ]
 
 { #category : #accessing }
@@ -151,9 +153,7 @@ ESUGSetUp class >> createESUGConfiguration [
 		dateTo: '09/14/2019';
 		dateSubmissionDeadline:  '09/14/2019';
 		earlyRegistrationDeadline: '07/25/2019';
-		emailConfiguration: esugEmailConfiguration.
-			" from previous"	";
-		uploadingFilesTo: ((Smalltalk imageDirectory / 'UploadedFiles') ensureCreateDirectory) pathString"
+		emailConfiguration: esugEmailConfiguration
 ]
 
 { #category : #accessing }
@@ -189,7 +189,7 @@ ESUGSetUp class >> start [
 	self configureESUGFeesForConference: conference.
 	self configureESUGReductionCodesForConference: conference.
 	self activateOnlyThisConference: conference.
-	"EREsugWebApp initialize"EREsugApp initialize
+	EREsugApp initialize
 ]
 
 { #category : #accessing }

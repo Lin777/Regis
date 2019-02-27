@@ -89,7 +89,7 @@ ERCard >> renderContentOn: html [
 	with: [ 
 		html mdlCardTextContainer 
 		with: [ 
-			self renderIconCard: html.
+			self renderIconCardOn: html.
 			html div id: 'card-heading';
 			with: self title.
 			self content value.
@@ -99,7 +99,7 @@ ERCard >> renderContentOn: html [
 ]
 
 { #category : #rendering }
-ERCard >> renderIconCard: html [
+ERCard >> renderIconCardOn: html [
 	html div id: 'login-fab';
 	class: self classColorIcon, ' mdl-color-text--white';
 	with: [ 

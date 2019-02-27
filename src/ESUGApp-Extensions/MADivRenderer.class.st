@@ -1,7 +1,7 @@
 Class {
 	#name : #MADivRenderer,
 	#superclass : #MAComponentRenderer,
-	#category : #'ESUGApp-MDLMagritte'
+	#category : #'ESUGApp-Extensions'
 }
 
 { #category : #rendering }

@@ -8,6 +8,11 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
+{ #category : #hooks }
+ERNav >> children [
+	^ Array withAll: listOptions
+]
+
 { #category : #initialization }
 ERNav >> initialize [
 	super initialize.
@@ -22,18 +27,26 @@ ERNav >> listOptions: anObject [
 
 { #category : #rendering }
 ERNav >> renderContentOn: html [
-	self renderHeader: html.
+	self renderHeaderOn: html.
 	html div
 		class:
 			'demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"';
-		with: [ self renderHeaderESUG: html.
+		with: [ self renderHeaderESUGOn: html.
 			html mdlNavigation
 				class: 'demo-navigation mdl-color--blue-grey-800';
 				with: [ listOptions do: [ :each | html render: each ] ] ]
 ]
 
 { #category : #rendering }
-ERNav >> renderHeader: html [
+ERNav >> renderHeaderESUGOn: html [
+	html header class: 'demo-drawer-header';
+	with: [ 
+			html heading level4 with: 'ESUG'	
+	]
+]
+
+{ #category : #rendering }
+ERNav >> renderHeaderOn: html [
 	html header class: 'demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white';
 	with: [ 
 		html mdlLayoutHeaderRow with: [ 
@@ -42,14 +55,6 @@ ERNav >> renderHeader: html [
 			html mdlLayoutSpacer.
 		]	
 	].
-]
-
-{ #category : #rendering }
-ERNav >> renderHeaderESUG: html [
-	html header class: 'demo-drawer-header';
-	with: [ 
-			html heading level4 with: 'ESUG'	
-	]
 ]
 
 { #category : #accessing }

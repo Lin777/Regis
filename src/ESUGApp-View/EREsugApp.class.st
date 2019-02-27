@@ -24,7 +24,9 @@ EREsugApp class >> initialize [
 		addLibrary: ERJQValidateForm;
 		addLibrary: CssForLoginMDL;
 		addLibrary: ERLibrary;
-		preferenceAt: #sessionClass put: ERSession
+		preferenceAt: #sessionClass put: ERSession";
+		cache expiryPolicy configuration 
+    at: #cacheTimeout put: 60"
 ]
 
 { #category : #registry }
@@ -35,6 +37,11 @@ EREsugApp class >> register: aFormView [
 	aFormView pageController: formRegister controller .
 	aFormView initializeTabForms.
 	^ formRegister 
+]
+
+{ #category : #initialization }
+EREsugApp >> children [ 
+	^ Array with: content
 ]
 
 { #category : #accessing }

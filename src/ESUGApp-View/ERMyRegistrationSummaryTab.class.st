@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #rendering }
+ERMyRegistrationSummaryTab >> encodedInvoice [
+	attendee idGroup isNotNil
+	ifTrue: [ |group|
+		group := controller getGroupOfAttendee: attendee.
+		^ group encodedInvoice ]
+	ifFalse: [ ^ attendee encodedInvoice] 
+]
+
+{ #category : #rendering }
 ERMyRegistrationSummaryTab >> modifyRegistration [
 	"callback := [ self updateMyRegistration ].
 	formWithoutBasicInfo := ERContainerTabs
@@ -26,11 +35,11 @@ ERMyRegistrationSummaryTab >> pay [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> paymentStatus [
-	attendee paymentInformation hasPaid 
-	ifTrue: [ ^ 'Payment successfully received.' ]
-	ifFalse: [ 
-	^ 'Payment no registered yet. Amount due: '
-				, (ERController new conferenceFeeFor: attendee) asString , ' '
+   attendee paymentInformation hasPaid
+		ifTrue: [ ^ 'Payment successfully received.' ]
+		ifFalse: [ 
+			^ 'Payment no registered yet. Amount due: '
+				, attendee paymentInformation paymentAmount asString , ' '
 				, attendee paymentInformation paymentCurrency , '(s) '
 				, ' (NOTE: you could have paid but we could have not registered it yet)']
 ]
@@ -52,50 +61,60 @@ ERMyRegistrationSummaryTab >> redirectionPayPAL [
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderButtons: html [
-  | downloadButton |
-	html mdlAnchorButton 
-		raised;
-		rippleEffect;
-		id: 'modifyRegistration';
-		callback: [ self modifyRegistration ];
-		with: 'Modify Registration Information'.
-	html mdlAnchorButton 
-		raised;
-		rippleEffect;
-		id: 'pay';
-		callback: [ self pay ];
-		with: 'Pay'.
-	html mdlAnchorButton
-		raised;
-		rippleEffect;
-		id: 'invoice';
-		callback: [ self generateInvoice: attendee  ];
-		with: 'Generate Invoice'.
+ERMyRegistrationSummaryTab >> renderButtonsOn: html [
+	self renderModifyRegistrationOn: html.
+	self renderPayButtonOn: html.
+	self renderDownloadInvoiceOn: html
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> renderContainerOn: html [ 	
+	html horizontalRule .
+	self renderLabelsSummaryOn: html.
+	self renderButtonsOn: html.
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> renderDownloadInvoiceOn: html [
+	| downloadButton |
 	downloadButton := html mdlAnchorButton raised; rippleEffect;
 		id: 'download';
-		disabled: (attendee encodedInvoice isNotNil and: [attendee paymentInformation hasPaid]) not.
+		disabled: false.
 	downloadButton isDisabled ifFalse: [ 
-		downloadButton url: ('data:text/pdf;base64,', (attendee encodedInvoice ifNil: [ '' ]));
+		downloadButton url: ('data:text/pdf;base64,', (self encodedInvoice ifNil: [ '' ]));
 		attributeAt: 'download' put: 'RegistrationInvoice_', attendee id, '.pdf'].
 	downloadButton with: 'Download Invoice'.
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderContainer: html [ 	
-	html horizontalRule .
-	self renderLabelsSummary: html.
-	self renderButtons: html.
-]
-
-{ #category : #rendering }
-ERMyRegistrationSummaryTab >> renderLabelsSummary: html [
+ERMyRegistrationSummaryTab >> renderLabelsSummaryOn: html [
 	html
 		paragraph: [ html strong: 'Attendace Day(s): '.
 			html text: attendee conferenceInformation daysOfAssistance ].
 	html
 		paragraph: [ html strong: 'Payment Status: '.
 			html text: self paymentStatus ]
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html. [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'modifyRegistration';
+		callback: [ self modifyRegistration ];
+		with: 'Modify Registration Information'.
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> renderPayButtonOn: html [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'pay';
+		disabled: (attendee idGroup isNotNil);
+		callback: [ self pay ];
+		with: 'Pay'.
 ]
 
 { #category : #accessing }

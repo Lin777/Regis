@@ -1,91 +1,40 @@
 Class {
 	#name : #ERFeeForm,
-	#superclass : #ERContainer,
+	#superclass : #ERForm,
 	#instVars : [
 		'fee',
-		'callback',
-		'dialog',
 		'feeForm',
 		'bankAccountInfoForm',
 		'bankInfoForm',
-		'cancelCallback',
-		'messageComponent'
+		'cancelCallback'
 	],
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #'as yet unclassified' }
-ERFeeForm class >> on: aFee callback: block1 cancel: block2 withContent: aContent [
-	| form |
-	form := self new.
-	form fee: aFee.
-	form callback: block1.
-	form cancelCallback: block2 .
-   form content: aContent.
-	form initializeForms.
-	^ form
-]
-
-{ #category : #'as yet unclassified' }
-ERFeeForm class >> on: aFee callback: aBlock withContent: aContent [
-	| form |
-	form := self new.
-	form fee: aFee.
-	form callback: aBlock.
-   form content: aContent.
-	form initializeForms.
-	^ form
-]
-
-{ #category : #accessing }
-ERFeeForm >> callback: anObject [
-	callback := anObject
-]
-
-{ #category : #rendering }
-ERFeeForm >> cancel [ 	
-	self returnToThePreviousState.
-	cancelCallback value
-]
-
-{ #category : #accessing }
-ERFeeForm >> cancelCallback: anObject [
-	cancelCallback := anObject
+{ #category : #actions }
+ERFeeForm >> cancelForm [
+	feeForm cancel.
+	bankAccountInfoForm cancel .
+	bankInfoForm cancel.
+	fee := fee abortChanges 
 ]
 
 { #category : #hooks }
 ERFeeForm >> children [
-	^ OrderedCollection new
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
 		add: dialog;
 		add: feeForm  ;
 		add: bankAccountInfoForm  ;
 		add: bankInfoForm;
-		yourself
+		add: messageComponent ;
+		yourself) yourself
 ]
 
-{ #category : #accessing }
-ERFeeForm >> content: anObject [
-	content := anObject
-]
-
-{ #category : #accessing }
-ERFeeForm >> fee [
-	^ fee 
-]
-
-{ #category : #accessing }
-ERFeeForm >> fee: anObject [
-	fee := anObject
-]
-
-{ #category : #rendering }
+{ #category : #initialization }
 ERFeeForm >> initialize [
 	super initialize.
-	fee := ERFee new.
-	messageComponent := ERAlert warningAlert id: 'formConferenceAlert'.
-	dialog := ERDialog cancelDialog 
-		idOpen: 'cancelAddFee';
-		okCallback: [ self cancel ]
+	fee := controller conference fee.
+	self initializeForms.
 ]
 
 { #category : #initialization }
@@ -95,42 +44,11 @@ ERFeeForm >> initializeForms [
 	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
 ]
 
-{ #category : #rendering }
-ERFeeForm >> renderAcceptButton: html [
-	html mdlButton
-		colored;
-		beSubmit;
-		id: 'acceptAddFee';
-		callback: [self saveAndValidateFee];
-		with: 'Accept'
-]
-
-{ #category : #rendering }
-ERFeeForm >> renderButtonsOn: html [ 
-	self renderCancelButton: html.
-	self renderAcceptButton: html
-]
-
-{ #category : #rendering }
-ERFeeForm >> renderCancelButton: html [
-	html mdlAnchorButton 
-		openDialogWithId: 'cancelAddFee'; 
-		colored;
-		with: 'Cancel'.
-]
-
-{ #category : #rendering }
-ERFeeForm >> renderContentPage: html [
-	html div
-		class: 'mdl-js-ripple-effect';
-		with: [ html form
-				method: 'post';
-				id: 'formFee';
-				with: [ self renderFormConferenceFee: html.
-					self renderFormBankAccountInformation: html.
-					self renderFormBankInformation: html.
-					self renderButtonsOn: html ] ].
-			html render: dialog
+{ #category : #'as yet unclassified' }
+ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+	aFee bankAccountInformation: anAccountBankInfo.
+	aFee bankAccountInformation bankInformation: aBankInfo.
+	controller updateFee: aFee.
 ]
 
 { #category : #rendering }
@@ -158,13 +76,43 @@ ERFeeForm >> renderFormConferenceFee: html [
 	html render: feeForm .
 ]
 
+{ #category : #rendering }
+ERFeeForm >> renderFormOn: html [
+	self renderFormConferenceFee: html.
+	self renderFormBankAccountInformation: html.
+	self renderFormBankInformation: html.
+	self renderButtonsOn: html
+]
+
 { #category : #'as yet unclassified' }
-ERFeeForm >> saveAndValidateFee [
-	[feeForm save.
+ERFeeForm >> save [ 	
+	 self modifyFee: feeForm model
+			withBankInfo: bankInfoForm model
+			withAccountBankInfo: bankAccountInfoForm model
+]
+
+{ #category : #'as yet unclassified' }
+ERFeeForm >> saveForms [
+	feeForm save.
 	bankAccountInfoForm save.
 	bankInfoForm save.
-	callback cull: feeForm model cull: bankInfoForm model cull: bankAccountInfoForm model]
-	on: ERException 
-	do: [:exception | messageComponent 
-					errorMessage: exception messageText ]
+]
+
+{ #category : #accessing }
+ERFeeForm >> tabId [ 
+	^ 'tabFees'
+]
+
+{ #category : #accessing }
+ERFeeForm >> tabName [
+	^ 'Fee'
+]
+
+{ #category : #accessing }
+ERFeeForm >> title [
+	^ 'Fee'
+]
+
+{ #category : #'as yet unclassified' }
+ERFeeForm >> validateForms [
 ]

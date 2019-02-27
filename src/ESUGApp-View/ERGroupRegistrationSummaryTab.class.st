@@ -57,10 +57,10 @@ ERGroupRegistrationSummaryTab >> paymentStatus [
 	listAttends isEmpty
 		ifTrue: [ ^ 'No status available. The group has no members ' ]
 		ifFalse: [ 
-	(controller allAttendeesHasPaid: self group )
+	( self group paymentInformation hasPaid )
 	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ ^ 'Payment no registered yet. Amount due: '
-			, (ERController new amountOfPayToGroup: listAttends) asString , ' ', 
+			, (self group paymentAmount) asString , ' ', 
 			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]].
 		
 ]
@@ -82,19 +82,11 @@ ERGroupRegistrationSummaryTab >> redirectionPayPAL [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderButtons: html [
-	self renderModifyAffiliationButtonOn: html.
-	self renderPayButtonOn: html.
-	self renderGenerateInvoiceButtonOn: html.
-	self renderDownloadInvoiceButtonOn: html.
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderContainer: html [
+ERGroupRegistrationSummaryTab >> renderContainerOn: html [
 	html horizontalRule.
-	self renderOrganizationName: html.
+	self renderOrganizationNameOn: html.
 	self renderPaymentStatus: html.
-	self renderFormButtons: html
+	self renderFormButtonsOn: html
 ]
 
 { #category : #rendering }
@@ -102,7 +94,7 @@ ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
 	| downloadButton |
 	downloadButton := html mdlAnchorButton raised; rippleEffect;
 		id: 'download';
-		disabled: ((controller allAttendeesHasPaid: self group ) and: [ self group encodedInvoice isNotNil ]) not.
+		disabled: false.
 	downloadButton isDisabled ifFalse: [ 
 		downloadButton url: ('data:text/pdf;base64,', (self group encodedInvoice ifNil: [ '' ]));
 		attributeAt: 'download' put: 'RegistrationInvoice_', self group id, '.pdf'].
@@ -110,18 +102,10 @@ ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderFormButtons: html [
-	self renderButtons: html
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderGenerateInvoiceButtonOn: html [
-	html mdlAnchorButton 
-        raised;
-        rippleEffect;
-        id: 'generateInvoice';
-        callback: [ self generateInvoiceGroup: self group ];
-        with: 'Generate Invoice'
+ERGroupRegistrationSummaryTab >> renderFormButtonsOn: html [
+	self renderModifyAffiliationButtonOn: html.
+	self renderPayButtonOn: html.
+	self renderDownloadInvoiceButtonOn: html.
 ]
 
 { #category : #rendering }
@@ -135,7 +119,7 @@ ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderOrganizationName: html [
+ERGroupRegistrationSummaryTab >> renderOrganizationNameOn: html [
 	html
 		paragraph: [ html strong: 'Organization Name: '.
 			html text: (self groupManager affiliationInformation organizationName) ]."

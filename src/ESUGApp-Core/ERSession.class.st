@@ -1,11 +1,11 @@
 Class {
 	#name : #ERSession,
-	#superclass : #WAExpirySession,
+	#superclass : #WASession,
 	#instVars : [
 		'user',
 		'account'
 	],
-	#category : #'ESUGApp-Model'
+	#category : #'ESUGApp-Core'
 }
 
 { #category : #actions }
@@ -34,7 +34,7 @@ ERSession >> login: aUser [
 { #category : #actions }
 ERSession >> logout [
 	self user: nil.
-	self unregistered
+	self unregister
 ]
 
 { #category : #actions }
@@ -43,17 +43,10 @@ ERSession >> responseForRequest: aRequest [
 	^ super responseForRequest: aRequest
 ]
 
-{ #category : #actions }
-ERSession >> unregistered [
-	super unregistered.
-	user := nil.
-]
-
 { #category : #updating }
 ERSession >> updateRoot: anHtmlRoot [
 	super updateRoot: anHtmlRoot.
-	anHtmlRoot title: ERLibrary applicationName.
-	"anHtmlRoot beHtml5"
+	anHtmlRoot title: ERLibrary applicationName
 ]
 
 { #category : #accessing }

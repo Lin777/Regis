@@ -22,15 +22,15 @@ ERMembersTab >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: ([ :att | (controller conferenceFeeFor: att) asString
-			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+		add: ([ :att | att paymentInformation paymentAmount asString
+			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);"
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
 				disabled: true;
 				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
 				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {user. html});
+				] ] valueWithArguments: {user. html});"
 		yourself
 	]
 ]
@@ -43,18 +43,18 @@ ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
 
 { #category : #rendering }
 ERMembersTab >> dictToRenderDownloadButton [
-	^ Dictionary new
+	^ Dictionary new"
 		at: 'icon' put: 'get_app';
 		at: 'id' put: [ :attend | attend id , '-get_app' ];
 		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
+		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
 		yourself
 ]
 
 { #category : #accessing }
 ERMembersTab >> headers [
-	^ #('Name(D)' 'Email' 'Fee' 'Has Paid?' '')
+	^ #('Name(D)' 'Email' 'Fee' '')
 ]
 
 { #category : #accessing }
@@ -100,14 +100,14 @@ ERMembersTab >> listDataToRenderButton [
 				with: [ :user | self applyReductionTicketTo: user  ]
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
-				with: '');
+				with: '');"
 		add:
 			(Array
 				with: 'description'
 				with: [ :user | self generateInvoice: user ]
 				with: [ :user | user id , '-invoice' ]
 				with: 'Generate invoice'
-				with: '');
+				with: '');"
 		yourself
 ]
 
@@ -119,21 +119,21 @@ ERMembersTab >> registerMyselfAsAttendee [
 ]
 
 { #category : #accessing }
-ERMembersTab >> renderButtons: html [
+ERMembersTab >> renderButtonsOn: html [
 	self renderRegisterAttendee: html.
 	self alreadyRegisteredAsAttendee ifFalse:[
 	self renderRegisterMyselfAsAttendee: html]
 ]
 
 { #category : #accessing }
-ERMembersTab >> renderContainer: html [
+ERMembersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formMembers';
 		with: [
-	self renderButtons: html.
+	self renderButtonsOn: html.
 	html horizontalRule.
-	self renderTableOfAttends: html]
+	self renderTableOfAttendsOn: html]
 ]
 
 { #category : #accessing }
@@ -155,8 +155,7 @@ ERMembersTab >> renderRegisterMyselfAsAttendee: html [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderTableOfAttends: html [
-	| table |
+ERMembersTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;

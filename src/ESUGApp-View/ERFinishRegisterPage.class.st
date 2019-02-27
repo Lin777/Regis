@@ -140,6 +140,16 @@ ERFinishRegisterPage >> renderAffiliation: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterPage >> renderBody: html with: aBlock [
+	html div
+		style:
+			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
+		with: [ html break.
+			html break.
+			aBlock value ]
+]
+
+{ #category : #rendering }
 ERFinishRegisterPage >> renderCityOrgOn: html [
 	html strong: 'City: '.
 			html text: 

@@ -50,36 +50,6 @@ ERLoggedController >> deleteAttendee: anAttendee [
 	anAttendee delete.
 ]
 
-{ #category : #removing }
-ERLoggedController >> deleteAttendeeAndRemoveUserForConference: anAttendee [
-	| userOfAttendee |
-	userOfAttendee := anAttendee userAccount.
-	anAttendee delete.
-	self conference users
-		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
-	userOfAttendee delete
-]
-
-{ #category : #removing }
-ERLoggedController >> deleteAttendeeFromConference: anAttendee [
-	(self conference attends)
-		removeAllSuchThat: [ :each | anAttendee id = each id ].
-	self conference save.
-]
-
-{ #category : #accessing }
-ERLoggedController >> deleteAttendeeFromGroup: anAttendee [
-	| group |
-	group := self groupForGroupManager.
-	group listAttends
-		do: [ :each | 
-			each userAccount email = anAttendee userAccount email
-				ifTrue: [ 
-					group listAttends remove: each ifAbsent: [  ].
-					self deleteAttendee: each ] ].
-	group save
-]
-
 { #category : #accessing }
 ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	anAttendee idGroup isNotNil ifTrue: [ 
@@ -114,17 +84,6 @@ ERLoggedController >> deleteUserForConference: anAttendee [
 ERLoggedController >> initialize [
 	super initialize.
 	user := ERUserAccount new
-]
-
-{ #category : #removing }
-ERLoggedController >> removeUserOfTicketIfApply: anAttendee [
-	(anAttendee coupon isNotEmpty and: anAttendee coupon isNotNil)
-		ifTrue: [ | coupon |
-			coupon := ERReductionTicket
-				find: [ :each | each ticketId = anAttendee coupon ].
-			coupon usersOfTickets
-				removeAllSuchThat: [ :each | each = anAttendee userAccount ].
-			coupon save ]
 ]
 
 { #category : #accessing }
