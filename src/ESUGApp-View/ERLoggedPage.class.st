@@ -104,9 +104,14 @@ ERLoggedPage >> pageController [
 
 { #category : #rendering }
 ERLoggedPage >> renderContentOn: html [
-	html div class: 'demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header'; with: [ 
-		html render: navbar .
-		html render: content .
+	self initializeNabvar.
+	html mdlLayout
+		fixedDrawer;
+		fixedHeader;
+		class: 'demo-layout';
+		with: [ 
+			html render: navbar .
+			html render: content .
 		 ]
 ]
 

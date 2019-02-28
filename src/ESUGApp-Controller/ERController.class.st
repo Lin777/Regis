@@ -375,9 +375,10 @@ ERController >> stateUpdateNotPaidAttendees: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee paymentInformation hasPaid: aBoolean.
-	anAttendee userAccount isAttendee ifTrue: [
-	self updateAttendee: anAttendee]
-	ifFalse: [ self updateGroup: anAttendee ]
+	anAttendee userAccount isGroupManager ifTrue: [
+		 self updateGroup: anAttendee
+	]
+	ifFalse: [ self updateAttendee: anAttendee ]
 ]
 
 { #category : #'as yet unclassified' }

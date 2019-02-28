@@ -115,7 +115,9 @@ ERMembersTab >> listDataToRenderButton [
 ERMembersTab >> registerMyselfAsAttendee [
 	callback := [ :att | controller addGroupManagerAsAttendee: att.
 								content state: content lastState ].
-	self initializeFormWithoutBasicInformationFor: (self attendeeFrom: self groupManager)
+	self initializeFormWithoutBasicInformationFor:
+	 (self attendeeFrom: self groupManager).
+	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }

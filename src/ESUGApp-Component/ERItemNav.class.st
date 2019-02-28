@@ -39,8 +39,8 @@ ERItemNav >> renderContentOn: html [
 	html mdlNavigationLink
 		callback: callback;
 		with: [ 
-			html icon
-				class: 'mdl-color-text--white material-icons';
+			html mdlIcon
+				class: 'mdl-color-text--white';
 				with: [ html text: icon ].
 				html text:  label . ]
 ]

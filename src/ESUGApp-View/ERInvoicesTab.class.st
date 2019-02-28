@@ -18,9 +18,11 @@ ERInvoicesTab >> blockTableToExecute [
 		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
 				value: att paymentInformation hasPaid;
-				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
-				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
-				onChange: (html jQuery ajax serializeForm).
+				onTrue: [ controller stateUpdatePaidAttendee: att with: true. 
+					self updateStateTab: self tabName ] 
+				onFalse: [ controller stateUpdatePaidAttendee: att with: false.
+					self updateStateTab: self tabName ];
+				onChange: 'submit()'.
 				] ] valueWithArguments: {anTicket. html});
 		yourself ]
 ]
@@ -58,7 +60,7 @@ ERInvoicesTab >> exportAllInvoices [
 
 { #category : #accessing }
 ERInvoicesTab >> headers [
-	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?')
+	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?' '')
 ]
 
 { #category : #rendering }

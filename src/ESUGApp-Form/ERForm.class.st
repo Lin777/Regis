@@ -18,7 +18,6 @@ ERForm >> action [
 			on: ERException
 				do: [ :exception | messageComponent 
 					errorMessage: exception messageText.
-					Transcript show: 'Error'.
 					self returnToThePreviousState.
 					self updateStateTab: self tabName ] ]
 ]

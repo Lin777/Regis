@@ -28,9 +28,9 @@ ERNav >> listOptions: anObject [
 { #category : #rendering }
 ERNav >> renderContentOn: html [
 	self renderHeaderOn: html.
-	html div
+	html mdlLayoutDrawer
 		class:
-			'demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"';
+			'demo-drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50';
 		with: [ self renderHeaderESUGOn: html.
 			html mdlNavigation
 				class: 'demo-navigation mdl-color--blue-grey-800';
@@ -47,7 +47,8 @@ ERNav >> renderHeaderESUGOn: html [
 
 { #category : #rendering }
 ERNav >> renderHeaderOn: html [
-	html header class: 'demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white';
+	html mdlLayoutHeader
+	class: 'demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white';
 	with: [ 
 		html mdlLayoutHeaderRow with: [ 
 			html span class: 'mdl-layout-title';

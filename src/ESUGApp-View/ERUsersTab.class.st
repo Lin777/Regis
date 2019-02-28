@@ -112,18 +112,13 @@ ERUsersTab >> renderButtonExportOn: html [
 		colored;
 		id: 'exportUsers';
 		callback: [ self exportUsers ];
-		with: 'Export'
+		with: 'Export'.
 ]
 
 { #category : #rendering }
 ERUsersTab >> renderButtonsOn: html [
 	self renderButtonAddOn: html.
 	self renderButtonExportOn: html.
-	html mdlAnchorButton
-		colored;
-		id: 'exportUsers';
-		callback:  [ self exportUsers ];
-		with: 'Export'.
 	self renderDownloadButtonOn: html.
 ]
 

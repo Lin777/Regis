@@ -103,8 +103,7 @@ ERCard >> renderIconCardOn: html [
 	html div id: 'login-fab';
 	class: self classColorIcon, ' mdl-color-text--white';
 	with: [ 
-		html icon id: 'lock-icon';
-		class: 'material-icons';
+		html mdlIcon id: 'lock-icon';
 		with: self iconPage
 	].
 ]
