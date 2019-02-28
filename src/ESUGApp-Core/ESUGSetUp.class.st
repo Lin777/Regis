@@ -166,7 +166,7 @@ ESUGSetUp class >> initialize [
 		load: #('Magritte-Seaside').
 	Metacello new 
 		baseline: 'MaterialDesignLite'; 
-		repository: 'github://DuneSt/MaterialDesignLite:v2.1.1/src';
+		repository: 'github://DuneSt/MaterialDesignLite:v2.1.2/src';
 		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
 		load: 'all'.
 	Metacello new
