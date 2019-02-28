@@ -59,7 +59,7 @@ All the users generated automatically have as password: 12345678
 * [x] add an extra person to the social diner
 * [x] get a *pdf* invoice (current Patagonia send it in HTML...) re-ask me a template
 * [x] pay using paypal URL (cf. PatagoniaForESUG-Example.st)
-* [ ] submit an ESUG Award	
+* [x] submit an ESUG Award	
 
 ### Team Manager-Secretary
 
@@ -80,7 +80,7 @@ All the users generated automatically have as password: 12345678
 * [x] modify a registration
 * [x] apply a coupon on a registration
 * [ ] Report to see who paid 
-* [ ] mark a bill as paid => all registration of this bill are marked as paid
+* [x] mark a bill as paid => all registration of this bill are marked as paid
 
 ### CVS export 
 
