@@ -48,9 +48,7 @@ ERGroupManagersTab >> dictToRenderDownloadButton [
 ERGroupManagersTab >> exportGroups [
 	| file |
 	file := controller exportGroupManagers: 'groupManagers'.
-	encodeCSVFile := controller encodeFileToUTF8: file.
-	file ensureDelete.
-	self updateStateTab: self tabName
+	self exportFile: file wihtName: 'groupManagers.csv'
 ]
 
 { #category : #accessing }
@@ -103,8 +101,7 @@ ERGroupManagersTab >> renderButtonsOn: html [
 		colored;
 		id: 'exportGroups';
 		callback: [ self exportGroups ];
-		with: 'Export'.
-	self renderDownloadButtonOn: html.
+		with: 'Export'
 ]
 
 { #category : #rendering }
@@ -116,19 +113,6 @@ ERGroupManagersTab >> renderContainerOn: html [
 	self renderButtonsOn: html.
 	html horizontalRule.
 	self renderTableOfGroupsOn: html]
-]
-
-{ #category : #rendering }
-ERGroupManagersTab >> renderDownloadButtonOn: html [
-	| dictionary |
-	dictionary := Dictionary new 
-	at: 'id' put: 'downloadDataGroupManagers';
-	at: 'disabled' put: encodeCSVFile isNil;
-	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
-	at: 'nameFile' put: 'dataGroupManagers.csv';
-	at: 'nameButton' put: 'Download';
-	yourself.
-	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #accessing }

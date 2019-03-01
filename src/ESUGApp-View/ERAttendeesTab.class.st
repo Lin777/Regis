@@ -72,9 +72,7 @@ ERAttendeesTab >> exportAllInvoices [
 ERAttendeesTab >> exportAttends [
 	| file |
 	file := controller exportAttends: 'attends'.
-	encodeCSVFile := controller encodeFileToUTF8: file.
-	file ensureDelete.
-	self updateStateTab: self tabName.
+	self exportFile: file wihtName: 'attends.csv'
 ]
 
 { #category : #rendering }
@@ -130,26 +128,7 @@ ERAttendeesTab >> renderButtonsOn: html [
 		colored;
 		id: 'exportAttends';
 		callback: [ self exportAttends ];
-		with: 'EXPORT'.
-	self renderDownloadButton: html with:  (Dictionary new 
-		at: 'id' put: 'downloadDataAttendees';
-		at: 'disabled' put: encodeCSVFile isNil;
-		at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
-		at: 'nameFile' put: 'dataAttendees.csv';
-		at: 'nameButton' put: 'Download';
-		yourself).
-	"html mdlAnchorButton colored;
-		id: 'exportAllInvoices';
-		disabled: self attends isEmpty;
-		callback: [ self exportAllInvoices ];
-		with: 'EXPORT ALL INVOICES'.
-	self renderDownloadButton: html with:  (Dictionary new 
-		at: 'id' put: 'downloadAllInvoices';
-		at: 'disabled' put: encodeZipFile isNil;
-		at: 'encodeFile' put: 'data:text/zip;base64,', (encodeZipFile ifNil: ['']);
-		at: 'nameFile' put: 'Invoices.zip';
-		at: 'nameButton' put: 'Download Invoices';
-		yourself)."
+		with: 'EXPORT'
 ]
 
 { #category : #rendering }

@@ -22,7 +22,7 @@ ERGroupRegistrationSummaryTab >> initializePaymentForm [
 	cancel: [ self returnToThePreviousState .
 		self updateStateTab: self tabName. ];
 	amountString:
-	(ERController new amountOfPayToGroup: self attends) asString.
+	(ERController uniqueInstance amountOfPayToGroup: self attends) asString.
 
 ]
 
@@ -77,7 +77,7 @@ ERGroupRegistrationSummaryTab >> redirectViewForBankTransfer [
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> redirectionPayPAL [
 	| url |
-	url := ERController new payPalUrlForGroup: self group.
+	url := ERController uniqueInstance payPalUrlForGroup: self group.
 	self requestContext redirectTo: url
 ]
 

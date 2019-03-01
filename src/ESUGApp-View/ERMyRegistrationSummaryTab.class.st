@@ -56,7 +56,7 @@ ERMyRegistrationSummaryTab >> redirectViewForBankTransfer [
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> redirectionPayPAL [
 	| url |
-	url := ERController new payPalUrlFor: attendee.
+	url := ERController uniqueInstance payPalUrlFor: attendee.
 	self requestContext redirectTo: url
 ]
 

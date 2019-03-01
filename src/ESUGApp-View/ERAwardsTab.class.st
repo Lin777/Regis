@@ -25,9 +25,7 @@ ERAwardsTab >> blockTableToExecute [
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller exportAwards: 'awards'.
-	encodeCSVFile := controller encodeFileToUTF8: file.
-	file ensureDelete.
-	self updateStateTab: self tabName
+	self exportFile: file wihtName: 'awards.csv'
 ]
 
 { #category : #rendering }
@@ -52,22 +50,8 @@ ERAwardsTab >> renderButtonOn: html [
 { #category : #rendering }
 ERAwardsTab >> renderContainerOn: html [
 	self renderButtonOn: html.
-	self renderDownloadButtonOn: html.
 	html horizontalRule.
 	self renderTableOfAwardsOn: html
-]
-
-{ #category : #rendering }
-ERAwardsTab >> renderDownloadButtonOn: html [
-	| dictionary |
-	dictionary := Dictionary new 
-	at: 'id' put: 'downloadAwards';
-	at: 'disabled' put: encodeCSVFile isNil;
-	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
-	at: 'nameFile' put: 'awards.csv';
-	at: 'nameButton' put: 'Download';
-	yourself.
-	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #rendering }

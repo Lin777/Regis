@@ -41,7 +41,7 @@ ERBankTransferPaymentInfoView >> initializeDialog [
 { #category : #rendering }
 ERBankTransferPaymentInfoView >> initializeFee [
 	| pageController |
-	pageController := ERController new.
+	pageController := ERController uniqueInstance.
 	fee := pageController conference fee.
 	bankAccountInformation := fee bankAccountInformation.
 	bankInformation := bankAccountInformation bankInformation

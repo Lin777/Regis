@@ -93,7 +93,7 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 
 { #category : #accessing }
 ERProposedTalksTab >> submittedTalks [ 
-	^ ERController new submittedTalksFor: attendee
+	^ ERController uniqueInstance submittedTalksFor: attendee
 ]
 
 { #category : #accessing }

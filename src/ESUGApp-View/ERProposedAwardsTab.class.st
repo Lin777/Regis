@@ -93,7 +93,7 @@ ERProposedAwardsTab >> renderTableOn: html [
 
 { #category : #accessing }
 ERProposedAwardsTab >> submittedAwards [ 
-	^ ERController new submittedAwardsFor: attendee
+	^ ERController uniqueInstance submittedAwardsFor: attendee
 ]
 
 { #category : #accessing }

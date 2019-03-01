@@ -78,7 +78,7 @@ ERConfigurationController >> addTicket: aReductionTicket [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(ERController new findUserByEmail: anAttendee email)
+	(ERController uniqueInstance findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.
@@ -138,10 +138,7 @@ ERConfigurationController >> exportAttends: fileName [
 							each contactInformation country.
 							each affiliationInformation organizationName} ].
 			neoWriter close ].
-	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
-		withStream: cvs.
-	^ (fileName, '.csv') asFileReference
+	^ cvs
 ]
 
 { #category : #rendering }
@@ -160,10 +157,7 @@ ERConfigurationController >> exportAwards: fileName [
 					each submitter userAccount email}].
 
 			neoWriter close ].
-				self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
-		withStream: cvs.
-	^ (fileName, '.csv') asFileReference
+	^ cvs
 ]
 
 { #category : #rendering }
@@ -189,10 +183,7 @@ ERConfigurationController >> exportGroupManagers: fileName [
 							each groupManager affiliationInformation organizationPostal.
 							each groupManager affiliationInformation membershipType} ].
 				neoWriter close ].
-	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
-		withStream: cvs.
-	^ (fileName, '.csv') asFileReference
+	^ cvs
 ]
 
 { #category : #rendering }
@@ -210,10 +201,7 @@ ERConfigurationController >> exportTalks: fileName [
 					each submitter userAccount email.
 					each presentation} ].
 			neoWriter close ].
-	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
-		withStream: cvs.
-	^ (fileName, '.csv') asFileReference
+	^ cvs
 ]
 
 { #category : #rendering }
@@ -235,10 +223,7 @@ ERConfigurationController >> exportUsers: fileName [
 							each password.
 							each rolesAsString} ].
 				neoWriter close ].
-	self
-		saveFileOn: FileLocator imageDirectory / fileName asFileName , 'csv'
-		withStream: cvs.
-	^ (fileName, '.csv') asFileReference
+	^ cvs
 ]
 
 { #category : #accessing }

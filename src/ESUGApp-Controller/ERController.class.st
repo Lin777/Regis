@@ -489,7 +489,7 @@ ERController >> validateRegister: anAttendee [
 
 { #category : #action }
 ERController >> verifyIfTheTicketIsStillAvailable: aString [
-	ERController new conference reductionTickets 
+	ERController uniqueInstance conference reductionTickets 
 	detect: [ :each | each ticketId = aString ] 
 	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
 	ifNone: [ ERException ticketDoesNotExist signal ]

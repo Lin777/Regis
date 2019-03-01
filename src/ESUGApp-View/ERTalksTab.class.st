@@ -21,9 +21,7 @@ ERTalksTab >> blockTableToExecute [
 ERTalksTab >> exportTalks [
 	| file |
 	file := controller exportTalks: 'talks'.
-	encodeCSVFile := controller encodeFileToUTF8: file.
-	file ensureDelete.
-	self updateStateTab: self tabName
+	self exportFile: file wihtName: 'talks.csv'
 ]
 
 { #category : #accessing }
@@ -48,22 +46,8 @@ ERTalksTab >> renderButtonOn: html [
 { #category : #rendering }
 ERTalksTab >> renderContainerOn: html [
 	self renderButtonOn: html.
-	self renderDownloadButtonOn: html.
 	html horizontalRule.
 	self renderTableOfTalksOn: html
-]
-
-{ #category : #rendering }
-ERTalksTab >> renderDownloadButtonOn: html [
-	| dictionary |
-	dictionary := Dictionary new 
-	at: 'id' put: 'downloadTalks';
-	at: 'disabled' put: encodeCSVFile isNil;
-	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
-	at: 'nameFile' put: 'talks.csv';
-	at: 'nameButton' put: 'Download';
-	yourself.
-	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #accessing }

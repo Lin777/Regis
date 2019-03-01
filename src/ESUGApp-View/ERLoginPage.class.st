@@ -33,7 +33,7 @@ ERLoginPage >> initialize [
 	icon := 'person'.
 	messageComponent := ERAlert warningAlert id: 'loginAlert'.
 	id := 'login-conatiner'.
-	pageController := ERController new
+	pageController := ERController new.
 ]
 
 { #category : #rendering }

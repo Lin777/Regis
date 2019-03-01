@@ -18,6 +18,15 @@ ERConfigurationTab class >> on: anAttendee withContent: aContent container: aCon
 	^ form
 ]
 
+{ #category : #'as yet unclassified' }
+ERConfigurationTab >> exportFile: aFile wihtName: aString [
+	self requestContext respond: [ :response |
+		response
+            contentType: (WAMimeType main: 'application' sub: 'csv');
+            document: aFile; contents ;
+            attachmentWithFileName: aString]
+]
+
 { #category : #'file library' }
 ERConfigurationTab >> fileExists: fileName [
 	^ (File

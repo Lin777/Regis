@@ -30,13 +30,13 @@ ERUsersTab >> blockTableToExecute [
 
 { #category : #'as yet unclassified' }
 ERUsersTab >> createUser: anUser [
-	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
+	ERController uniqueInstance validateIfEmailIsAlreadyRegistered: anUser; 
 			validateNewPassword: anUser password with: anUser confirmPassword.
 	anUser password: (ERUserAccount hashPassword: anUser password) asString.
 	anUser role: (Heap new
 		add: anUser role;
 		yourself).
-	ERController new addUser: anUser .
+	ERController uniqueInstance addUser: anUser .
 	self cancel
 ]
 
@@ -47,10 +47,8 @@ ERUsersTab >> deleteUser: user [
 { #category : #rendering }
 ERUsersTab >> exportUsers [
 	| file |
-	file := controller exportUsers: 'users' , self fileIdUsers asString.
-	encodeCSVFile := controller encodeFileToUTF8: file.
-	file ensureDelete.
-  	self updateStateTab: self tabName.
+	file := controller exportUsers: 'users'.
+	self exportFile: file wihtName: 'users.csv'
 ]
 
 { #category : #rendering }
@@ -118,8 +116,7 @@ ERUsersTab >> renderButtonExportOn: html [
 { #category : #rendering }
 ERUsersTab >> renderButtonsOn: html [
 	self renderButtonAddOn: html.
-	self renderButtonExportOn: html.
-	self renderDownloadButtonOn: html.
+	self renderButtonExportOn: html
 ]
 
 { #category : #rendering }
@@ -130,19 +127,6 @@ ERUsersTab >> renderContainerOn: html [
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
 			self renderTableOfUsersOn: html ]
-]
-
-{ #category : #rendering }
-ERUsersTab >> renderDownloadButtonOn: html [
-	| dictionary |
-	dictionary := Dictionary new 
-	at: 'id' put: 'downloadDataUsers';
-	at: 'disabled' put: encodeCSVFile isNil;
-	at: 'encodeFile' put: 'data:text/csv;charset=utf-8,', (encodeCSVFile ifNil: ['']);
-	at: 'nameFile' put: 'dataUsers.csv';
-	at: 'nameButton' put: 'Download';
-	yourself.
-	self renderDownloadButton: html with: dictionary.
 ]
 
 { #category : #rendering }
