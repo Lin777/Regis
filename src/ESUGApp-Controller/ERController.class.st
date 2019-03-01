@@ -247,14 +247,6 @@ ERController >> findUserByEmail: aString [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> generateInvoiceOf: anAttendee [
-	| file |
-	file := ERPDFInvoice templateRegistrationInvoice: anAttendee.
-	anAttendee encodedInvoice: (self encodeFiletoBase64: file).
-	file ensureDelete
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> getGroupOfAttendee: aAttendee [
 	^ aAttendee idGroup 
 	ifNotNil: [ self conference groups 
@@ -367,7 +359,6 @@ ERController >> stateUpdateNotPaidAttendees: aGroup [
 	aGroup listAttends do: [ :attend | 
 		self stateUpdatePaidAttendee: attend with: false
 	].
-	aGroup encodedInvoice: nil.
 	aGroup paymentAmount: nil.
 	aGroup save.
 ]
@@ -379,21 +370,6 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 		 self updateGroup: anAttendee
 	]
 	ifFalse: [ self updateAttendee: anAttendee ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> stateUpdatePaidAttendees: aGroup [
-	| generalAmount amount |
-	generalAmount := 0.
-	aGroup listAttends do: [ :attend | 
-		attend paymentInformation hasPaid: true.
-		amount := self conferenceFeeFor: attend.
-		attend paymentAmount: amount.
-		generalAmount := generalAmount + amount.
-		attend save.
-	].
-	aGroup paymentAmount: generalAmount.
-	aGroup save.
 ]
 
 { #category : #'as yet unclassified' }
@@ -418,7 +394,7 @@ ERController >> updateAllAttendeesOf: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
-	self generateInvoiceOf: anAttendee.
+	"self generateInvoiceOf: anAttendee."
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ]
 ]
@@ -426,7 +402,7 @@ ERController >> updateAttendee: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup .
-	self generateInvoiceOf: aGroup.
+	"self generateInvoiceOf: aGroup."
 	self updateAllAttendeesOf: aGroup.
 	^ aGroup save.
 ]

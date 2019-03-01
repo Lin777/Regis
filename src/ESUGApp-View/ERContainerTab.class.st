@@ -88,42 +88,6 @@ ERContainerTab >> exportInvoiceOf: groupOrAttendee [
             attachmentWithFileName: ('invoice-', groupOrAttendee id asString, '.pdf') ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERContainerTab >> generateInvoice: aAttendee [
-	| groupAttendee |
-	groupAttendee := controller getGroupOfAttendee: aAttendee. 
-	groupAttendee ifNil: [ self generateInvoiceAttendee: aAttendee ] 
-	ifNotNil: [ self generateInvoiceGroup: groupAttendee ]
-]
-
-{ #category : #'as yet unclassified' }
-ERContainerTab >> generateInvoiceAttendee: aAttendee [
-	aAttendee paymentInformation hasPaid ifTrue: [ 
-		| file |
-		file := ERPDFInvoice templateRegistrationInvoice: aAttendee.
-		aAttendee encodedInvoice: (controller encodeFiletoBase64: file).
-		controller updateAttendee: aAttendee.
-		file ensureDelete.
-	].
-	self updateStateTab: self tabName.
-]
-
-{ #category : #'as yet unclassified' }
-ERContainerTab >> generateInvoiceGroup: aGroup [
-	(controller allAttendeesHasPaid: aGroup) ifTrue: [ 
-		| file encodeFile |
-		file := ERPDFInvoice templateRegistrationInvoice: aGroup.
-		encodeFile := controller encodeFiletoBase64: file.
-		aGroup listAttends do: [ :aAttendee | 
-			aAttendee encodedInvoice: encodeFile.
-			aAttendee save.
-		].
-		aGroup encodedInvoice: encodeFile.
-		file ensureDelete.
-	].
-	self updateStateTab: self tabName.
-]
-
 { #category : #initialization }
 ERContainerTab >> initialize [
 	super initialize.
