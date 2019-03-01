@@ -18,11 +18,9 @@ ERInvoicesTab >> blockTableToExecute [
 		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
 				value: att paymentInformation hasPaid;
-				onTrue: [ controller stateUpdatePaidAttendee: att with: true. 
-					self updateStateTab: self tabName ] 
-				onFalse: [ controller stateUpdatePaidAttendee: att with: false.
-					self updateStateTab: self tabName ];
-				onChange: 'submit()'.
+				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+				onFalse: [ controller stateUpdatePaidAttendee: att with: false];
+				onChange: (html jQuery ajax serializeForm).
 				] ] valueWithArguments: {anTicket. html});
 		yourself ]
 ]
@@ -35,13 +33,18 @@ ERInvoicesTab >> children [
 ]
 
 { #category : #rendering }
-ERInvoicesTab >> dictToRenderDownloadButton [
-	^ Dictionary new
-		at: 'icon' put: 'get_app';
-		at: 'id' put: [ :attend | attend id , '-get_invoice' ];	
-		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];
-		yourself
+ERInvoicesTab >> downloadInvoiceOf: user [
+	
+	self exportInvoiceOf: user."
+	self requestContext respond: [ :response |
+		|stream file |
+		file := ERPDFInvoice pdfDocOf: user.
+		stream := (RWBinaryOrTextStream on: String new) binary.
+		file exportTo: stream.
+		response
+            contentType: (WAMimeType main: 'application' sub: 'pdf');
+            document: stream close; contents ;
+            attachmentWithFileName: ('invoice-', user id asString, '.pdf') ]"
 ]
 
 { #category : #rendering }
@@ -72,7 +75,15 @@ ERInvoicesTab >> invoices [
 
 { #category : #rendering }
 ERInvoicesTab >> listDataToRenderButton [
-	^ OrderedCollection new yourself
+	^ OrderedCollection new 
+		add:
+			(Array
+				with: 'get_app'
+				with: [ :user | self downloadInvoiceOf: user ]
+				with: [ :user | user id , '-export' ]
+				with: 'Download invoice'
+				with: '');
+		yourself
 ]
 
 { #category : #rendering }
@@ -108,8 +119,7 @@ ERInvoicesTab >> renderTableOfInvoicesOn: html [
 		levelTotal: 6;
 		listObject: self invoices;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		listToRenderButton: self listDataToRenderButton.
 	html render: table
 ]
 

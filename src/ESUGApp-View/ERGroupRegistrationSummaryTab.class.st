@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> exportInvoice [
+	self exportInvoiceOf: self group.
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
@@ -91,14 +96,11 @@ ERGroupRegistrationSummaryTab >> renderContainerOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
-	| downloadButton |
-	downloadButton := html mdlAnchorButton raised; rippleEffect;
-		id: 'download';
-		disabled: false.
-	downloadButton isDisabled ifFalse: [ 
-		downloadButton url: ('data:text/pdf;base64,', (self group encodedInvoice ifNil: [ '' ]));
-		attributeAt: 'download' put: 'RegistrationInvoice_', self group id, '.pdf'].
-	downloadButton with: 'Download Invoice'.
+	html mdlAnchorButton
+		raised; rippleEffect;
+		id: 'exportInvoice';
+		callback: [ self exportInvoice ];
+		with: 'Download Invoice'
 ]
 
 { #category : #rendering }

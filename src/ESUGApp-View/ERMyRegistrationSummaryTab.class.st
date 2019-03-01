@@ -14,6 +14,22 @@ ERMyRegistrationSummaryTab >> encodedInvoice [
 ]
 
 { #category : #rendering }
+ERMyRegistrationSummaryTab >> exportInvoice [
+	|invoice|
+	invoice :=self managerOfInvoice.
+	self exportInvoiceOf: invoice.
+]
+
+{ #category : #rendering }
+ERMyRegistrationSummaryTab >> managerOfInvoice [
+	attendee idGroup isNotNil
+	ifTrue: [ |group|
+		group := controller getGroupOfAttendee: attendee.
+		^ group ]
+	ifFalse: [ ^ attendee ] 
+]
+
+{ #category : #rendering }
 ERMyRegistrationSummaryTab >> modifyRegistration [
 	"callback := [ self updateMyRegistration ].
 	formWithoutBasicInfo := ERContainerTabs
@@ -76,14 +92,11 @@ ERMyRegistrationSummaryTab >> renderContainerOn: html [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderDownloadInvoiceOn: html [
-	| downloadButton |
-	downloadButton := html mdlAnchorButton raised; rippleEffect;
-		id: 'download';
-		disabled: false.
-	downloadButton isDisabled ifFalse: [ 
-		downloadButton url: ('data:text/pdf;base64,', (self encodedInvoice ifNil: [ '' ]));
-		attributeAt: 'download' put: 'RegistrationInvoice_', attendee id, '.pdf'].
-	downloadButton with: 'Download Invoice'.
+	html mdlAnchorButton
+		raised; rippleEffect;
+		id: 'exportInvoice';
+		callback: [ self exportInvoice ];
+		with: 'Download Invoice'
 ]
 
 { #category : #rendering }

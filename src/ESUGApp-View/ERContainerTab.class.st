@@ -75,6 +75,19 @@ ERContainerTab >> controller: anObject [
 	controller := anObject
 ]
 
+{ #category : #rendering }
+ERContainerTab >> exportInvoiceOf: groupOrAttendee [
+	self requestContext respond: [ :response |
+		|stream file |
+		file := ERPDFInvoice pdfDocOf: groupOrAttendee.
+		stream := (RWBinaryOrTextStream on: String new) binary.
+		file exportTo: stream.
+		response
+            contentType: (WAMimeType main: 'application' sub: 'pdf');
+            document: stream close; contents ;
+            attachmentWithFileName: ('invoice-', groupOrAttendee id asString, '.pdf') ]
+]
+
 { #category : #'as yet unclassified' }
 ERContainerTab >> generateInvoice: aAttendee [
 	| groupAttendee |

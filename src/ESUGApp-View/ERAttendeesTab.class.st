@@ -24,13 +24,6 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
-		"add: ([ :att :aHtml | [ aHtml mdlCheckbox 
-				disabled: att idGroup isNotNil;
-				value: att paymentInformation hasPaid;
-				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
-				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
-				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {user. html});"
 		yourself ]
 ]
 
@@ -49,23 +42,6 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
 		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
 		yourself
-]
-
-{ #category : #'as yet unclassified' }
-ERAttendeesTab >> exportAllInvoices [
-	| nameZipFile subDir groupAttendee |
-	nameZipFile := 'Invoices'.
-	subDir := 'DirectoryInvoices'.
-	ERPDFInvoice demoPath: subDir, '/'.
-	self attends select: [ :attend | attend paymentInformation hasPaid ] 
-	thenDo: [ :attend | 
-		groupAttendee := controller getGroupOfAttendee: attend.
-		groupAttendee ifNil: [ ERPDFInvoice templateRegistrationInvoice: attend ] 
-		ifNotNil: [ ERPDFInvoice templateRegistrationInvoice: groupAttendee ]
-	].
-	encodeZipFile := controller codingZipFile: nameZipFile with: subDir.
-
-	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -112,13 +88,6 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
 				with: '');
-		"add: 
-			(Array 
-				with: 'description' 
-				with: [ :user | self generateInvoice: user ]
-				with: [ :user | user id , '-invoice' ]
-				with: 'Generate invoice'
-				with: '');"
 		yourself
 ]
 

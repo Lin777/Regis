@@ -251,7 +251,7 @@ ERController >> generateInvoiceOf: anAttendee [
 	| file |
 	file := ERPDFInvoice templateRegistrationInvoice: anAttendee.
 	anAttendee encodedInvoice: (self encodeFiletoBase64: file).
-	file ensureDelete.
+	file ensureDelete
 ]
 
 { #category : #'as yet unclassified' }

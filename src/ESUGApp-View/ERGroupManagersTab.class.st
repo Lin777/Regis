@@ -18,13 +18,7 @@ ERGroupManagersTab >> blockTableToExecute [
 		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
 		add:
 			([ :att | att paymentInformation paymentAmount asString ]
-				value: group);"
-		add: ([ :att :aHtml | [ aHtml mdlCheckbox 
-				value: (controller allAttendeesHasPaid: att);
-				onTrue: [ controller stateUpdatePaidAttendees: att ] 
-				onFalse: [ controller stateUpdateNotPaidAttendees: att ];
-				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {group. html});"
+				value: group);
 		yourself ].
 ]
 

@@ -20,6 +20,14 @@ ERPDFInvoice class >> demoPath: aString [
 	demoPath := aString
 ]
 
+{ #category : #'as yet unclassified' }
+ERPDFInvoice class >> pdfDocOf: user [
+	<script>
+	| nameFile|
+	nameFile := 'RegistrationInvoice_', user id, '.pdf'.
+	^ self new templateRegistrationInvoice: (self streamNamed: nameFile) of: user
+]
+
 { #category : #tool }
 ERPDFInvoice class >> streamNamed: aName [
 	| file |
@@ -380,5 +388,6 @@ ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	self addInfoPayment: pdfPage of: user.
 	self addFooter: pdfPage.
 	pdfDoc add: pdfPage.
-	pdfDoc exportTo: aStream
+	pdfDoc exportTo: aStream.
+	^ pdfDoc
 ]
