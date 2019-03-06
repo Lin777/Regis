@@ -9,7 +9,7 @@ ERTestConferenceConfigurationModel >> assertInvalidDate: anOnject [
 	|errors|
 	errors := anOnject asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: self messageInvalidDate equals: (errors at:1) messageText
+	self assert: self messageInvalidDate equals: (self messageTextOf: errors)
 ]
 
 { #category : #'as yet unclassified' }

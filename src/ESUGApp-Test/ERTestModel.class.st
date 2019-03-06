@@ -107,7 +107,7 @@ ERTestModel >> assertEmptyField: anObject [
 	|errors|
 	errors := anObject asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: messageInputRequired equals: (errors at:1) messageText
+	self assert: messageInputRequired equals: (self messageTextOf: errors)
 ]
 
 { #category : #'as yet unclassified' }
@@ -115,7 +115,7 @@ ERTestModel >> assertNonValidField: anObject [
 	|errors|
 	errors := anObject asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: self messageInvalidInput equals: (errors at:1) messageText
+	self assert: self messageInvalidInput equals: (self messageTextOf: errors)
 ]
 
 { #category : #'as yet unclassified' }
@@ -126,6 +126,11 @@ ERTestModel >> messageInvalidInput [
 { #category : #'as yet unclassified' }
 ERTestModel >> messageTextField [
 	^ 'This field only accept a text'
+]
+
+{ #category : #'as yet unclassified' }
+ERTestModel >> messageTextOf: errors [
+	^ ((errors at:1) collection at:1) messageText
 ]
 
 { #category : #tests }

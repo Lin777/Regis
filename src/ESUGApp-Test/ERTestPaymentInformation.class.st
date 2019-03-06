@@ -25,7 +25,7 @@ ERTestPaymentInformation >> testNonValidTicketIdCouponField [
 	errors := paymentInfo asComponent validate; errors.
 	self assert: 1 equals: errors size.
 	self assert: 'There is no ticket with the ticket id provided.'
-		 equals: (errors at:1) messageText
+		 equals: ((errors at:1) collection at:1) messageText
 ]
 
 { #category : #tests }

@@ -9,7 +9,7 @@ ERTestUserAccount >> assertNonTextField: anOnject [
 	|errors|
 	errors := anOnject asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: self messageTextField equals: (errors at:1) messageText
+	self assert: self messageTextField equals: (self messageTextOf: errors)
 ]
 
 { #category : #tests }
@@ -18,7 +18,7 @@ ERTestUserAccount >> testEmailFieldWithoutFormat [
 	userAccount := (self class testUserAccount) email: 'thisIsANotValidEmail'; yourself .
 	errors := userAccount asComponent validate; errors.
 	self assert: 1 equals: errors size.
-	self assert: 'Please enter a valid email' equals: (errors at:1) messageText.
+	self assert: 'Please enter a valid email' equals: ((errors at:1) collection at:1) messageText.
 	
 ]
 
