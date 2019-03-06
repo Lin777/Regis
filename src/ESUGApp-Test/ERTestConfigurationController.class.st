@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #tests }
+ERTestConfigurationController >> idOfAdmin [
+	^ (ERController new findUserByEmail: 'admin@esug.org') id asString
+]
+
+{ #category : #tests }
 ERTestConfigurationController >> setUp [
 	super setUp.
 	controller := ERConfigurationController new.
@@ -26,7 +31,7 @@ ERTestConfigurationController >> tearDown [
 ERTestConfigurationController >> testExportAttends [
 	| aFile |
 	aFile := controller exportAttends: 'attendees'.
-	self assert: aFile exists
+	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Email","Country","Org. Name"', String crlf
 ]
 
 { #category : #tests }
@@ -34,7 +39,7 @@ ERTestConfigurationController >> testExportAwards [
 	
 	| aFile |
 	aFile := controller exportAwards: 'awards'.
-	self assert: aFile exists
+	self assert: aFile equals: '"Name","Submitted by"', String crlf
 ]
 
 { #category : #tests }
@@ -42,7 +47,7 @@ ERTestConfigurationController >> testExportGroupManagers [
 	
 	| aFile |
 	aFile := controller exportGroupManagers: 'groupManagers'.
-	self assert: aFile exists
+	self assert: aFile equals: '"Invoice Number","First Name","Last Name","Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership"', String crlf
 ]
 
 { #category : #tests }
@@ -50,12 +55,15 @@ ERTestConfigurationController >> testExportTalks [
 	
 	| aFile |
 	aFile := controller exportTalks: 'talks'.
-	self assert: aFile exists
+	self assert: aFile equals: '"Name","Submitted By","Uploaded File"', String crlf 
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportUsers [
 	| aFile |
 	aFile := controller exportUsers: 'users'.
-	self assert: aFile exists
+	self assert: aFile equals: '"id","firstName","lastName","email","password","role"',
+	String crlf,
+'"',self idOfAdmin,'","Admin","Admin","admin@esug.org","|""/²}ò/Y!4è$c|
+"," admin"', String crlf
 ]

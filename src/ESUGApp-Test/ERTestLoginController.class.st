@@ -24,7 +24,7 @@ ERTestLoginController >> testLoginWhenPasswordDontMatch [
 ERTestLoginController >> testLoginWhenUserExist [
 	| anUser |
 	self registerAttendee.
-	anUser := ERController uniqueInstance validateLoginFor: self class testUserAccount email 
+	anUser := ERController new validateLoginFor: self class testUserAccount email 
 								password: (ERUserAccount hashPassword:
 								 self class testUserAccount password) asString.
 	self deny: anUser isNil

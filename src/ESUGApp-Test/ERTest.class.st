@@ -335,5 +335,5 @@ ERTest >> tearDown [
 
 { #category : #'as yet unclassified' }
 ERTest >> validCoupon [
-	^ ERController uniqueInstance conference reductionTickets first ticketId
+	^ ERController new conference reductionTickets first ticketId
 ]
