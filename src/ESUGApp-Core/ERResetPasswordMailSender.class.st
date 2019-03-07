@@ -34,7 +34,7 @@ ERResetPasswordMailSender >> textBody [
 	^  'Your password has been reseted.
 		Your new temporary password is: <strong>', self newPassword, 
 		'</strong> </br> Please change it as soon as you can.
-		</br>
+		
 		Thank you!'		
 ]
 

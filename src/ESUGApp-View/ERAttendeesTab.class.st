@@ -108,6 +108,7 @@ ERAttendeesTab >> renderContainerOn: html [
 		id: 'formAllAttends';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
+			html render: messageComponent .
 			self renderTableOfAttendsOn: html ]
 ]
 
@@ -124,12 +125,10 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> resetPassword: user [
-]
-
-{ #category : #rendering }
 ERAttendeesTab >> sendInvoiceTo: user [
-	controller sendInvoiceTo: user
+	[controller sendInvoiceTo: user]
+	on: Exception
+	do: [ :exception | messageComponent errorMessage: exception messageText]
 ]
 
 { #category : #accessing }
