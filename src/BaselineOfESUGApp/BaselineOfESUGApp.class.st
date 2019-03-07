@@ -15,6 +15,7 @@ BaselineOfESUGApp >> baseline: spec [
 		do: [
 			self setUpDependencies: spec.
 			spec
+				package: 'PostMark-Core' with: [ spec requires: 'NeoJSON' ];
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View' 'Seaside3' 'ESUGApp-Model') ];		
@@ -57,6 +58,13 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 				className: 'ConfigurationOfSandstoneDb';
 				version: #stable;
 				repository: 'http://smalltalkhub.com/mc/gnaritas/SandstoneDb/main' ].
+	
+	spec
+		project: 'NeoJSON'
+		with: [ spec
+				className: 'ConfigurationOfNeoJSON';
+				version: #stable;
+				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 	spec
 		project: 'NeoCSV'
 		with: [ spec

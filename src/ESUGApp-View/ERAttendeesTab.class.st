@@ -30,18 +30,13 @@ ERAttendeesTab >> blockTableToExecute [
 { #category : #rendering }
 ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
-	controller deleteAttendee: anAttendee
+	controller deleteAttendee: anAttendee.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
 ERAttendeesTab >> dictToRenderDownloadButton [
-	^ Dictionary new"
-		at: 'icon' put: 'get_app';
-		at: 'id' put: [ :attend | attend id , '-get_app' ];
-		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
-		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
-		yourself
+	^ Dictionary new	yourself
 ]
 
 { #category : #rendering }
@@ -53,8 +48,7 @@ ERAttendeesTab >> exportAttends [
 
 { #category : #rendering }
 ERAttendeesTab >> headers [
-	^ #(
-'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' '')
+	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' '')
 ]
 
 { #category : #rendering }
@@ -88,6 +82,13 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
 				with: '');
+		add:
+			(Array
+				with: 'send'
+				with: [ :user | self sendInvoiceTo: user ]
+				with: [ :user | user id , '-sendInvoice' ]
+				with: 'Send invoice'
+				with: '');
 		yourself
 ]
 
@@ -107,6 +108,7 @@ ERAttendeesTab >> renderContainerOn: html [
 		id: 'formAllAttends';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
+			html render: messageComponent .
 			self renderTableOfAttendsOn: html ]
 ]
 
@@ -123,7 +125,12 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 ]
 
 { #category : #rendering }
-ERAttendeesTab >> resetPassword: user [
+ERAttendeesTab >> sendInvoiceTo: user [
+	[controller sendInvoiceTo: user.
+	self updateStateTab: self tabName.]
+	on: Exception
+	do: [ :exception | messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName]
 ]
 
 { #category : #accessing }

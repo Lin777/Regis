@@ -33,6 +33,13 @@ ERException class >> emailAlreadyRegistered [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> emailDoesNotExistToResetPassword [
+		^ self new 
+			messageText: 'Can''t find that email, sorry.';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> errorWhenCalculatingPaymentAmount [
 		^ self new
 			messageText: 'An error occurred when calculating the payment amount.';
