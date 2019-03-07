@@ -79,11 +79,7 @@ ERInvoicesTab >> listDataToRenderButton [
 
 { #category : #rendering }
 ERInvoicesTab >> renderButtonsOn: html [
-	html mdlAnchorButton colored;
-		id: 'exportAllInvoices';
-		disabled: self invoices isEmpty;
-		callback: [ self exportAllInvoices ];
-		with: 'EXPORT ALL INVOICES'.
+	self renderExportAllInvoicesOn: html.
 		
 	self renderDownloadButton: html with:  (Dictionary new 
 		at: 'id' put: 'downloadAllInvoices';
@@ -102,6 +98,15 @@ ERInvoicesTab >> renderContainerOn: html [
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
 			self renderTableOfInvoicesOn: html ]
+]
+
+{ #category : #rendering }
+ERInvoicesTab >> renderExportAllInvoicesOn: html [
+	html mdlAnchorButton colored;
+		id: 'exportAllInvoices';
+		disabled: self invoices isEmpty;
+		callback: [ self exportAllInvoices ];
+		with: 'EXPORT ALL INVOICES'.
 ]
 
 { #category : #rendering }

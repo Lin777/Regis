@@ -1,6 +1,10 @@
 Class {
 	#name : #ERForgotPasswordPage,
 	#superclass : #ERPage,
+	#instVars : [
+		'email',
+		'messageComponent'
+	],
 	#category : #'ESUGApp-View-Page'
 }
 
@@ -9,10 +13,16 @@ ERForgotPasswordPage >> actionsBody: html [
 ]
 
 { #category : #rendering }
+ERForgotPasswordPage >> email: aString [
+	email := aString
+]
+
+{ #category : #rendering }
 ERForgotPasswordPage >> initialize [
 	super initialize.
 	title := 'Reset Password'.
 	icon := 'update'.
+	messageComponent := ERAlert warningAlert id: 'loginAlert'.
 	id := 'login-conatiner'.
 ]
 
@@ -31,7 +41,7 @@ ERForgotPasswordPage >> renderButtonOn: html [
 		beSubmit ;
 		id: 'login-button';
 		class: 'login-button mdl-color--blue-500 mdl-color-text--white';
-		callback: [ Transcript show: 'ds' ];
+		callback: [ self sendResetedPassword ];
 		with: 'Send password reset email'.
 ]
 
@@ -46,7 +56,7 @@ ERForgotPasswordPage >> renderEmailFieldOn: html [
 			html mdlTextFieldInput
 				id: 'email';
 				type: 'email';
-				callback: [ :value | self answer: value ] ].
+				callback: [ :value | self email: value ] ].
 ]
 
 { #category : #rendering }
@@ -54,6 +64,7 @@ ERForgotPasswordPage >> renderPageOn: html [
 	html form
 		id: 'emailToSend';
 		with: [ 
+			html render: messageComponent .
 			self renderTextOn: html.
 			self renderEmailFieldOn: html.
 			self renderButtonOn: html
@@ -66,4 +77,12 @@ ERForgotPasswordPage >> renderTextOn: html [
 	html text: 'Enter your email address and we will send you a link to reset your password.'.
 	html break.
 	html break.
+]
+
+{ #category : #rendering }
+ERForgotPasswordPage >> sendResetedPassword [
+	[ ERController uniqueInstance sendResetPasswordTo: email.
+	self answer: true ]
+	on: ERException 
+	do: [ :exception | messageComponent errorMessage: exception messageText]
 ]

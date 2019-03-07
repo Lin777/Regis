@@ -20,16 +20,21 @@ ERResetPasswordMailSender >> conference [
 ]
 
 { #category : #rendering }
+ERResetPasswordMailSender >> newPassword [
+	^ user resetPassword
+]
+
+{ #category : #rendering }
 ERResetPasswordMailSender >> subjectDescription [
-	^ 'New Password for ', conference name asString
+	^ 'New Password for ', self conference configuration name asString
 ]
 
 { #category : #rendering }
 ERResetPasswordMailSender >> textBody [
 	^  'Your password has been reseted.
-		Your new temporary password is: ', newPassword, 
-		'Please change it as soon as yoy can.
-		
+		Your new temporary password is: <strong>', self newPassword, 
+		'</strong> </br> Please change it as soon as you can.
+		</br>
 		Thank you!'		
 ]
 

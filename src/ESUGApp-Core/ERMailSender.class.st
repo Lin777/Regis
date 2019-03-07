@@ -35,7 +35,6 @@ ERMailSender >> value [
 		from: self senderEmailAddress ;
 		to: self toEmailString ;
 		subject: self subjectDescription;
-		htmlBody: self titleBody;
-		textBody: self textBody;
+		htmlBody: self titleBody, self textBody;
 		yourself 
 ]

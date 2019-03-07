@@ -30,7 +30,8 @@ ERAttendeesTab >> blockTableToExecute [
 { #category : #rendering }
 ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
-	controller deleteAttendee: anAttendee
+	controller deleteAttendee: anAttendee.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -128,11 +129,7 @@ ERAttendeesTab >> resetPassword: user [
 
 { #category : #rendering }
 ERAttendeesTab >> sendInvoiceTo: user [
-	|stream |
-	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
-	PMInterface new 
-		apiKey: 'xxxxxxxxxxxx'; 
-		send: stream.
+	controller sendInvoiceTo: user
 ]
 
 { #category : #accessing }

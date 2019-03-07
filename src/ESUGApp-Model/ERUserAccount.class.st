@@ -239,7 +239,7 @@ ERUserAccount >> resetPassword [
     
     | passwordCharacters random newPasswordStream newPassword |
     
-    passwordCharacters := '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&/()=?*-_.:,;[]{}'.
+    passwordCharacters := '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-'.
     random := Random seed: Time millisecondClockValue.
     newPasswordStream := WriteStream on: String new.
     self resetedPasswordSize timesRepeat: [ | newPasswordChar |

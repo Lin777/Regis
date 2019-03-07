@@ -355,6 +355,26 @@ ERController >> reductionTicketWithName: aString [
 ]
 
 { #category : #rendering }
+ERController >> sendInvoiceTo: user [
+	|stream |
+	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
+	PMInterface new 
+		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71'; 
+		send: stream.
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> sendResetPasswordTo: aString [
+	| user stream |
+	user := self findUserByEmail: aString.
+	user ifNil: [ ERException emailDoesNotExistToResetPassword signal ].
+	stream := NeoJSONWriter toString: (ERResetPasswordMailSender on: user) value.
+	PMInterface new 
+		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71'; 
+		send: stream.
+]
+
+{ #category : #rendering }
 ERController >> senderEmailAddress [
 	^ self conference configuration emailConfiguration senderEmailAddress
 ]

@@ -99,7 +99,7 @@ ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
 			| mdlTxtInput |
 			html mdlTextFieldLabel for: aId; with: aName.
 			mdlTxtInput := html mdlTextFieldInput id: aId; type: 'password';
-			pattern: '[A-Za-z0-9._]{8,}'.
+			pattern: '[A-Za-z0-9._-]{8,}'.
 			aBlock ifNotNil: [ aBlock cull: mdlTxtInput ].
 		].
 ]
