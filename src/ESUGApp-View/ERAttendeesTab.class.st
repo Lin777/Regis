@@ -35,13 +35,7 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 
 { #category : #rendering }
 ERAttendeesTab >> dictToRenderDownloadButton [
-	^ Dictionary new"
-		at: 'icon' put: 'get_app';
-		at: 'id' put: [ :attend | attend id , '-get_app' ];
-		at: 'disabled' put: [ :attend | (attend encodedInvoice isNotNil and: [ attend paymentInformation hasPaid ]) not ];
-		at: 'download' put: [ :attend | 'RegistrationInvoice_', attend id, '.pdf'];
-		at: 'url' put: [ :attend | 'data:text/pdf;base64,', (attend encodedInvoice ifNil: [ '' ]) ];"
-		yourself
+	^ Dictionary new	yourself
 ]
 
 { #category : #rendering }
@@ -53,8 +47,7 @@ ERAttendeesTab >> exportAttends [
 
 { #category : #rendering }
 ERAttendeesTab >> headers [
-	^ #(
-'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' '')
+	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' '')
 ]
 
 { #category : #rendering }
@@ -87,6 +80,13 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | self applyReductionTicketTo: user ]
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
+				with: '');
+		add:
+			(Array
+				with: 'send'
+				with: [ :user | self sendInvoiceTo: user ]
+				with: [ :user | user id , '-sendInvoice' ]
+				with: 'Send invoice'
 				with: '');
 		yourself
 ]
@@ -124,6 +124,15 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 
 { #category : #rendering }
 ERAttendeesTab >> resetPassword: user [
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> sendInvoiceTo: user [
+	|stream |
+	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
+	PMInterface new 
+		apiKey: 'xxxxxxxxxxxx'; 
+		send: stream.
 ]
 
 { #category : #accessing }

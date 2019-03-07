@@ -354,6 +354,11 @@ ERController >> reductionTicketWithName: aString [
 		signal ]
 ]
 
+{ #category : #rendering }
+ERController >> senderEmailAddress [
+	^ self conference configuration emailConfiguration senderEmailAddress
+]
+
 { #category : #'as yet unclassified' }
 ERController >> stateUpdateNotPaidAttendees: aGroup [
 	aGroup listAttends do: [ :attend | 

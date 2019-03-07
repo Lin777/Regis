@@ -45,8 +45,8 @@ PMInterface class >> defaultApiUrl [
 { #category : #example }
 PMInterface class >> example [ 
 	|email|
-email := PMEmail new from: 'dev@esug.org'; to: 'dev@esug.org'; subject: 'Hello from Postmark'; htmlBody: '<strong>Hello this is an example</strong> dear Postmark user.'; toJsonString.
-self new apiKey: '4ca013fd-fd02-4fd4-ac97-f401ca3af723'; ssend: email
+email := (PMEmail new from: 'dev@esug.org'; to: 'cusi.evelyn@gmail.com'; subject: 'ESUG Conference Invoice'; htmlBody: '<strong>Hello Evelyn</strong> This is your invoice.') toJsonString.
+self new apiKey: '4ca013fd-fd02-4fd4-ac97-f401ca3af723'; ssend: email asString
 ]
 
 { #category : #accessing }
@@ -150,7 +150,7 @@ PMInterface >> ssend: email [
 	client := ZnClient new 
 	headerAt: 'X-Postmark-Server-Token' put: self apiKey;
 	beOneShot ;
-	url: self apiUrl;
+	url: self apiUrl, '/email';
 	entity: body.
 	client post.
 	^ client response 

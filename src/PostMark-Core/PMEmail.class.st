@@ -20,34 +20,33 @@ I act like a Dictionary. According to PostMark documentation, I accept the follo
 "
 Class {
 	#name : #PMEmail,
-	#superclass : #Object,
-	#instVars : [
-		'from',
-		'to',
-		'subject',
-		'htmlBody'
-	],
+	#superclass : #NeoJSONObject,
 	#category : #'PostMark-Core'
 }
 
-{ #category : #accessing }
-PMEmail >> from [
-	^ from
+{ #category : #attachments }
+PMEmail >> addAttachment: name content: contentString contentType: aContentType [
+	| attachment encodedStream |
+	encodedStream := Base64MimeConverter mimeEncode: contentString readStream.
+	attachment := NeoJSONObject new.
+	attachment at: 'Name' put: name.
+	attachment at: 'ContentType' put: aContentType asString.
+	attachment at: 'Content' put: encodedStream contents.
+	
+	(self at: #Attachments) ifNil: [ self at: #Attachments put: OrderedCollection new ].
+	(self at: #Attachments) add: attachment.
 ]
 
-{ #category : #accessing }
-PMEmail >> from: anObject [
-	from := anObject
-]
-
-{ #category : #accessing }
-PMEmail >> htmlBody [
-	^ htmlBody
-]
-
-{ #category : #accessing }
-PMEmail >> htmlBody: anObject [
-	htmlBody := anObject
+{ #category : #attachments }
+PMEmail >> addAttachmentAndCompress: contentString archiveName: aString [
+	| baseStream  gzwStream |
+	baseStream := RWBinaryOrTextStream on: String new.
+	gzwStream := GZipWriteStream on: baseStream.
+	gzwStream nextPutAll: contentString.
+	gzwStream close.
+	baseStream reset.
+	
+	^self addAttachment: aString content:  baseStream contents contentType: 'application/x-gzip'.
 ]
 
 { #category : #attachments }
@@ -61,33 +60,4 @@ PMEmail >> send [
 		whileFalse: [ 
 			(Delay forMilliseconds: 5000) wait.
 			success := interface send: self ]
-]
-
-{ #category : #accessing }
-PMEmail >> subject [
-	^ subject ifNil: [ subject := '' ]
-]
-
-{ #category : #accessing }
-PMEmail >> subject: anObject [
-	subject := anObject
-]
-
-{ #category : #accessing }
-PMEmail >> to [
-	^ to
-]
-
-{ #category : #accessing }
-PMEmail >> to: anObject [
-	to := anObject
-]
-
-{ #category : #'as yet unclassified' }
-PMEmail >> toJsonString [
-	^ NeoJSONWriter toString: 
-		{ 'From' -> self from .
-		 'To' -> self to . 
-		'Subject' -> self subject . 
-		'HtmlBody' -> self htmlBody } asDictionary.
 ]
