@@ -359,7 +359,7 @@ ERController >> sendInvoiceTo: user [
 	|stream |
 	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
 	PMInterface new 
-		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71'; 
+		apiKey: self conference configuration emailConfiguration apiKey; 
 		send: stream.
 ]
 

@@ -131,9 +131,8 @@ ESUGSetUp class >> createESUGConfiguration [
 	"PatSmtpToPostMarkClientAdapter key: 'xxxxx'. 
 	"
 	esugEmailConfiguration := ERConferenceEmailConfiguration new
-		senderEmailAddress: 'registration@esug.org';
-		smptServerAddress: 'localhost';
-		smptClient: '';
+		senderEmailAddress: 'dev@esug.org';
+		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71';
 		welcomeText: 'Welcome to this great conference'.
 	
 	esugOrganizer := ERConferenceOrganizer new

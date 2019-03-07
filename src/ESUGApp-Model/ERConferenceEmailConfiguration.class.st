@@ -3,12 +3,35 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'senderEmailAddress',
-		'smptServerAddress',
-		'smptClient',
+		'apiKey',
 		'welcomeText'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
+
+{ #category : #accessing }
+ERConferenceEmailConfiguration >> apiKey [
+	^ apiKey
+]
+
+{ #category : #accessing }
+ERConferenceEmailConfiguration >> apiKey: anObject [
+	apiKey := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConferenceEmailConfiguration >> descriptionApiKey [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #apiKey; 
+		priority: 30;
+		required: true;
+		withoutLabel: true;
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
 
 { #category : #'as yet unclassified' }
 ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
@@ -18,34 +41,6 @@ ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 	tmp 
 		accessor: #senderEmailAddress; 
 		priority: 10;
-		required: false;
-		withoutLabel: true;
-		componentClass: MDLMATextInputComponent.
-	^ tmp yourself
-]
-
-{ #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration >> descriptionSmptClient [
-	<magritteDescription>
-	| tmp |
-	tmp := MAStringDescription new.
-	tmp 
-		accessor: #smptClient; 
-		priority: 30;
-		required: false;
-		withoutLabel: true;
-		componentClass: MDLMATextInputComponent.
-	^ tmp yourself
-]
-
-{ #category : #'as yet unclassified' }
-ERConferenceEmailConfiguration >> descriptionSmptServerAddress [
-	<magritteDescription>
-	| tmp |
-	tmp := MAStringDescription new.
-	tmp 
-		accessor: #smptServerAddress; 
-		priority: 20;
 		required: false;
 		withoutLabel: true;
 		componentClass: MDLMATextInputComponent.
@@ -75,26 +70,6 @@ ERConferenceEmailConfiguration >> senderEmailAddress [
 { #category : #accessing }
 ERConferenceEmailConfiguration >> senderEmailAddress: anObject [
 	senderEmailAddress := anObject
-]
-
-{ #category : #accessing }
-ERConferenceEmailConfiguration >> smptClient [
-	^ smptClient
-]
-
-{ #category : #accessing }
-ERConferenceEmailConfiguration >> smptClient: anObject [
-	smptClient := anObject
-]
-
-{ #category : #accessing }
-ERConferenceEmailConfiguration >> smptServerAddress [
-	^ smptServerAddress
-]
-
-{ #category : #accessing }
-ERConferenceEmailConfiguration >> smptServerAddress: anObject [
-	smptServerAddress := anObject
 ]
 
 { #category : #accessing }

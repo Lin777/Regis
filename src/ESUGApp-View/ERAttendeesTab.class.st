@@ -126,9 +126,11 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 
 { #category : #rendering }
 ERAttendeesTab >> sendInvoiceTo: user [
-	[controller sendInvoiceTo: user]
+	[controller sendInvoiceTo: user.
+	self updateStateTab: self tabName.]
 	on: Exception
-	do: [ :exception | messageComponent errorMessage: exception messageText]
+	do: [ :exception | messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName]
 ]
 
 { #category : #accessing }
