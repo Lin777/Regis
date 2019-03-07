@@ -35,16 +35,7 @@ ERInvoicesTab >> children [
 { #category : #rendering }
 ERInvoicesTab >> downloadInvoiceOf: user [
 	
-	self exportInvoiceOf: user."
-	self requestContext respond: [ :response |
-		|stream file |
-		file := ERPDFInvoice pdfDocOf: user.
-		stream := (RWBinaryOrTextStream on: String new) binary.
-		file exportTo: stream.
-		response
-            contentType: (WAMimeType main: 'application' sub: 'pdf');
-            document: stream close; contents ;
-            attachmentWithFileName: ('invoice-', user id asString, '.pdf') ]"
+	self exportInvoiceOf: user
 ]
 
 { #category : #rendering }
@@ -93,6 +84,7 @@ ERInvoicesTab >> renderButtonsOn: html [
 		disabled: self invoices isEmpty;
 		callback: [ self exportAllInvoices ];
 		with: 'EXPORT ALL INVOICES'.
+		
 	self renderDownloadButton: html with:  (Dictionary new 
 		at: 'id' put: 'downloadAllInvoices';
 		at: 'disabled' put: encodeZipFile isNil;

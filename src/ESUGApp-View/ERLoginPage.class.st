@@ -14,9 +14,7 @@ ERLoginPage >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
 		self renderRegisterAsGroupManagerButtonOn: html.
-		html mdlAnchorButton 
-		class: 'mdl-color-text--blue';
-		with: 'Forgot Password'
+		self renderForgotPasswordButtonOn: html
 		]
 	]
 ]
@@ -82,7 +80,7 @@ ERLoginPage >> renderBody: html with: aBlock [
 ]
 
 { #category : #rendering }
-ERLoginPage >> renderEmailField: html [
+ERLoginPage >> renderEmailFieldOn: html [
 	html mdlTextFieldContainer
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
@@ -90,20 +88,23 @@ ERLoginPage >> renderEmailField: html [
 				with: 'Email'.
 			html mdlTextFieldInput
 				id: 'email-login';
-				required;
+				"required;"
 				type: 'email';
-				callback: [ :value | self email: value asString ] ]
-"
-		createTextField: 'Email'
-		id: 'email-login'
-		callback: [ :value | self controller user email: value asString ]
-		on: html."
+				callback: [ :value | self email: value asString ]]
 ]
 
 { #category : #rendering }
 ERLoginPage >> renderFieldsLoginOn: html [
-	self renderEmailField: html.
+	self renderEmailFieldOn: html.
 	self renderPasswordFieldOn: html
+]
+
+{ #category : #rendering }
+ERLoginPage >> renderForgotPasswordButtonOn: html [
+	html mdlAnchorButton 
+		class: 'mdl-color-text--blue';
+		callback: [ self call: ERForgotPasswordPage new"self sendEmailWithResetedPassword" ];
+		with: 'Forgot Password'
 ]
 
 { #category : #rendering }
@@ -141,7 +142,7 @@ ERLoginPage >> renderPasswordFieldOn: html [
 		createPasswordField: 'Password'
 		id: 'password-login'
 		with: [:mdlTxtInput | 
-			mdlTxtInput required;
+			mdlTxtInput "required;"
 			callback: [ :value | 
 			self password: (ERUserAccount hashPassword: value) asString ] ]
 		on: html
@@ -163,4 +164,10 @@ ERLoginPage >> renderRegisterButtonOn: html [
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
+]
+
+{ #category : #rendering }
+ERLoginPage >> sendEmailWithResetedPassword [
+	"self resetPasswordFor: anEmail"
+	self wait: [ :cc | self confirm: 'Estas seguro de esto' onAnswer: cc ]
 ]

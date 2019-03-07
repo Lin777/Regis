@@ -183,6 +183,12 @@ ERUserAccount >> initialize [
 		yourself
 ]
 
+{ #category : #initialization }
+ERUserAccount >> initializePasswordHashFrom: aString [
+	self password: (self class hashPassword: aString) asString
+	
+]
+
 { #category : #testing }
 ERUserAccount >> isAdmin [
 		^ self role anySatisfy: [ :each | each = 'admin']
@@ -226,6 +232,29 @@ ERUserAccount >> password [
 { #category : #accessing }
 ERUserAccount >> password: anObject [
 	password := anObject
+]
+
+{ #category : #initialization }
+ERUserAccount >> resetPassword [
+    
+    | passwordCharacters random newPasswordStream newPassword |
+    
+    passwordCharacters := '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&/()=?*-_.:,;[]{}'.
+    random := Random seed: Time millisecondClockValue.
+    newPasswordStream := WriteStream on: String new.
+    self resetedPasswordSize timesRepeat: [ | newPasswordChar |
+        newPasswordChar := passwordCharacters at: (random nextInt: passwordCharacters size).
+        newPasswordStream nextPut: newPasswordChar ].
+    
+    newPassword := newPasswordStream contents.
+    self initializePasswordHashFrom: newPassword.
+    
+    ^ newPassword
+]
+
+{ #category : #initialization }
+ERUserAccount >> resetedPasswordSize [
+	^ 8
 ]
 
 { #category : #accessing }
