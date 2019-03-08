@@ -37,12 +37,6 @@ ERSession >> logout [
 	self unregister
 ]
 
-{ #category : #actions }
-ERSession >> responseForRequest: aRequest [
-	
-	^ super responseForRequest: aRequest
-]
-
 { #category : #updating }
 ERSession >> updateRoot: anHtmlRoot [
 	super updateRoot: anHtmlRoot.
