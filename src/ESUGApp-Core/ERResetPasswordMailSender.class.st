@@ -16,7 +16,7 @@ ERResetPasswordMailSender class >> on: anUser [
 
 { #category : #accessing }
 ERResetPasswordMailSender >> conference [
-	^ conference ifNil: [ conference := ERController uniqueInstance conference ]
+	^ conference ifNil: [ conference := ERController new conference ]
 ]
 
 { #category : #rendering }

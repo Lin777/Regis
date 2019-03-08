@@ -194,7 +194,7 @@ ESUGSetUp class >> initializeDataFromScratch [
 
 { #category : #accessing }
 ESUGSetUp class >> restoreData [
-	[ERBackupRestore new restoreBackup ]
+	[ERBackupRestore uniqueInstance restoreBackup ]
 	on: Exception 
 	do: [ :ex | ex signal ]
 ]

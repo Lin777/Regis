@@ -37,6 +37,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	conference addAttendee: anAttendeeSaved.
 	self group addAttendee: anAttendeeSaved.
 	conference save.
+	self notifyAllObservers .
 	^ self updateGroup: self group
 ]
 
@@ -48,6 +49,7 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
+	self notifyAllObservers .
 ]
 
 { #category : #accessing }

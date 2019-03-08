@@ -50,6 +50,7 @@ ERAdminView >> children [
 ERAdminView >> closeRegistration [
 	controller conference configuration openRegistration: false.
 	controller conference save.
+	controller notifyAllObservers
 	
 	
 ]

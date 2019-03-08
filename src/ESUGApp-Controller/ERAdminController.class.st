@@ -15,7 +15,9 @@ ERAdminController class >> attendee: anAtteendee [
 { #category : #'as yet unclassified' }
 ERAdminController >> changePasswordTo: aString [
 	attendee password: (ERUserAccount hashPassword: aString) asString.
-	^ attendee save.
+	attendee save.
+	self notifyAllObservers .
+	^ attendee
 ]
 
 { #category : #'as yet unclassified' }

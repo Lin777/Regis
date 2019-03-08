@@ -62,6 +62,7 @@ ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
+	self notifyAllObservers 
 ]
 
 { #category : #accessing }
@@ -77,7 +78,8 @@ ERLoggedController >> deleteUserForConference: anAttendee [
 		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
 	self conference save.
 	userOfAttendee delete.
-	self conference users
+	self conference users.
+	self notifyAllObservers 
 ]
 
 { #category : #accessing }
