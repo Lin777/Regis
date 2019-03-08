@@ -21,12 +21,6 @@ ERAdminController >> changePasswordTo: aString [
 ]
 
 { #category : #'as yet unclassified' }
-ERAdminController >> updateUser: anUser [
-	self validateIfEmailIsAlreadyRegistered: anUser.
-	^anUser save
-]
-
-{ #category : #'as yet unclassified' }
 ERAdminController >> validateCurrentPassword: confirmPassword [
 	^ attendee password
 		= (ERUserAccount hashPassword: confirmPassword) asString

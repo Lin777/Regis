@@ -462,7 +462,9 @@ ERController >> updatePaymentRateForGroup: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
 	[self validateIfEmailIsAlreadyRegistered: anUser.
-	^ anUser save]
+	anUser save.
+	self notifyAllObservers .
+	^ anUser]
 	on: ERException 
 	do: [ :exp | ^ exp ]
 ]
