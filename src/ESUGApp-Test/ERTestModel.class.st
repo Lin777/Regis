@@ -58,8 +58,7 @@ ERTestModel class >> testConferenceConfigurationModel [
 ERTestModel class >> testConferenceEmailConfiguration [
 	^ ERConferenceEmailConfiguration new
 		senderEmailAddress: 'registration@esug.org';
-		smptServerAddress: 'localhost';
-		smptClient: '';
+		apiKey: 'xxxxx';
 		welcomeText: 'Welcome to this great conference';
 		yourself
 ]
