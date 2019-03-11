@@ -42,6 +42,8 @@ ERUsersTab >> createUser: anUser [
 
 { #category : #rendering }
 ERUsersTab >> deleteUser: user [
+	controller deleteUser: user.
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

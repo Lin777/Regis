@@ -162,7 +162,6 @@ ERGroupRegistrationSummaryTab >> title [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> updateAffiliation: aff [
-	controller groupManager affiliationInformation: aff.
-	controller group save.
+	controller updateAffiliation: aff.
 	self cancel.
 ]

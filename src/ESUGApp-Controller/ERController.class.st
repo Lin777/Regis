@@ -259,6 +259,12 @@ ERController >> getGroupOfAttendee: aAttendee [
 		ifNone: [ nil ] ].
 ]
 
+{ #category : #rendering }
+ERController >> groupOfUser: aGroupManager [
+	^ conference groups
+		detect: [ :each | each groupManager userAccount = aGroupManager ].
+]
+
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
@@ -316,6 +322,12 @@ ERController >> payPalUrlForGroup: aGroup [
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
+]
+
+{ #category : #rendering }
+ERController >> paymentAmountOf: aGroup [
+	aGroup listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
+	ifEmpty: [ ^ 0 ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -420,13 +432,11 @@ ERController >> updateAllAttendeesOf: aGroup [
 	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
 												aGroup paymentInformation hasPaid.
 											  each save. ].
-	self notifyAllObservers .
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
-	"self generateInvoiceOf: anAttendee."
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ].
 	self notifyAllObservers .
@@ -434,8 +444,7 @@ ERController >> updateAttendee: anAttendee [
 
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
-	self updatePaymentRateForGroup: aGroup .
-	"self generateInvoiceOf: aGroup."
+	self updatePaymentRateForGroup: aGroup.
 	self updateAllAttendeesOf: aGroup.
 	self notifyAllObservers .
 	^ aGroup save.
@@ -454,7 +463,7 @@ ERController >> updatePaymentRate: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRateForGroup: aGroup [ 
 	| amount |
-	amount := aGroup listAttends sum: [ :each | each paymentAmount ].
+	amount := self paymentAmountOf: aGroup.
 	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
 	aGroup paymentInformation paymentAmount: amount.
 ]

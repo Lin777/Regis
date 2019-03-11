@@ -72,11 +72,11 @@ ERGroupManagerController >> groupManager [
 	^ group groupManager
 ]
 
-{ #category : #adding }
-ERGroupManagerController >> groupOfUser: aGroupManager [
-	^ conference groups
-		detect: [ :each | each groupManager userAccount = aGroupManager ].
-	
+{ #category : #rendering }
+ERGroupManagerController >> updateAffiliation: aff [
+	self groupManager affiliationInformation: aff.
+	self group save.
+	self notifyAllObservers  
 ]
 
 { #category : #adding }

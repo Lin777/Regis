@@ -94,6 +94,21 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
+ERConfigurationController >> deleteDependencesOfAttendee: anUser [
+	|att|
+	att := self attendeeFromUser: anUser.
+	self deleteAttendeeFromGroupAndConference: att
+]
+
+{ #category : #rendering }
+ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
+	anUser isGroupManager ifTrue: [ |group|
+		group := self groupOfUser: anUser.
+		self deleteGroup: group
+		 ]
+]
+
+{ #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
@@ -119,7 +134,9 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
-		self notifyAllObservers ]
+		self deleteDependencesOfAttendee: anUser.
+		self deleteDependencesOfGroupManager: anUser.
+		self deleteUserForConference: anUser]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
@@ -302,7 +319,8 @@ ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: veg
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
-	self saveTicket: aTicket
+	self saveTicket: aTicket.
+	self notifyAllObservers 
 ]
 
 { #category : #'as yet unclassified' }
