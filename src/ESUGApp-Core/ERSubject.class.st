@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'observers'
 	],
-	#category : #'ESUGApp-Core'
+	#category : #'ESUGApp-Controller'
 }
 
 { #category : #accessing }
