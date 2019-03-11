@@ -466,7 +466,7 @@ ERController >> updateUser: anUser [
 	self notifyAllObservers .
 	^ anUser]
 	on: ERException 
-	do: [ :exp | ^ exp ]
+	do: [ :exp | ^ exp signal ]
 ]
 
 { #category : #action }
@@ -475,7 +475,7 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 		do: [ :each | 
 			each email = anUser email
 				ifTrue: [each = anUser ifFalse:[
-					ERException emailAlreadyRegistered signal ] ]]
+					ERException emailAlreadyRegistered signal ] ]].
 ]
 
 { #category : #rendering }
