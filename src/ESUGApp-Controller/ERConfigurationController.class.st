@@ -96,6 +96,7 @@ ERConfigurationController >> attends [
 { #category : #rendering }
 ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
+	anUser isAttendee ifFalse: [ ^ self ].
 	att := self attendeeFromUser: anUser.
 	self deleteAttendeeFromGroupAndConference: att
 ]
@@ -134,9 +135,10 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
-		self deleteDependencesOfAttendee: anUser.
+		"Fix ToDo"
+		"self deleteDependencesOfAttendee: anUser.
 		self deleteDependencesOfGroupManager: anUser.
-		self deleteUserForConference: anUser]
+		self deleteUserForConference: anUser"]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
