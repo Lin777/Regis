@@ -60,6 +60,30 @@ ERMenuPage >> createMyRegistrationItem [
 	^ ERItemNav label: 'My Registration' icon: 'assignment' callback: (availableItemsOfMenu at: 'myRegistration')
 ]
 
+{ #category : #'as yet unclassified' }
+ERMenuPage >> createProposalsItem [
+	^ ERItemNav
+		label: 'Proposals'
+		icon: 'note'
+		callback: (availableItemsOfMenu at: 'proposal')
+]
+
+{ #category : #'as yet unclassified' }
+ERMenuPage >> createStatisticsItem [
+	^ ERItemNav
+		label: 'Statistics'
+		icon: 'show_chart'
+		callback: (availableItemsOfMenu at: 'statistics')
+]
+
+{ #category : #'as yet unclassified' }
+ERMenuPage >> createUsersItem [
+	^ ERItemNav
+		label: 'Users'
+		icon: 'group'
+		callback: (availableItemsOfMenu at: 'users')
+]
+
 { #category : #initialization }
 ERMenuPage >> initialize [
 	super initialize.
