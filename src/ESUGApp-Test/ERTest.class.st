@@ -207,6 +207,14 @@ ERTest >> defaultStore [
 	^ SDMemoryStore new
 ]
 
+{ #category : #running }
+ERTest >> deleteBackupFolderIfExist [
+	|path|
+	path := (Smalltalk imageDirectory / 'Backup').
+	path exists ifTrue:
+		 [ path deleteAll ] .
+]
+
 { #category : #rendering }
 ERTest >> groupOfUser: anUser [
 	^ ERGroupManagerController new groupOfUser: anUser.
@@ -330,6 +338,8 @@ ERTest >> tearDown [
 				do: [  ] ].
 	ERConference coolDown.
 	ESUGSetUp stop.
+	"Delete folder backup"
+	self deleteBackupFolderIfExist.
 	Smalltalk garbageCollectMost
 ]
 

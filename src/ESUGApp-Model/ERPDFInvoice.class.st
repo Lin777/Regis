@@ -359,7 +359,7 @@ ERPDFInvoice >> paymentStatus: user [
 { #category : #'as yet unclassified' }
 ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	| pharoLogo pdfDoc pdfPage |
-	controller := ERController uniqueInstance .
+	controller := ERController new .
 	pharoLogo := CssForLoginMDL new esugJpg.
 	pdfDoc := PDFDocument new.
 	pdfDoc styleSheet > #noBorder drawColor: self colorBorder.

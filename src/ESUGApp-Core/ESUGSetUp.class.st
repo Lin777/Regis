@@ -8,8 +8,6 @@ Class {
 ESUGSetUp class >> activateOnlyThisConference: aConference [
 	ERConference findAll do: [ :each | each active: false ].
 	aConference active: true; save
-	"
-ERAttendee findAll."
 ]
 
 { #category : #accessing }
@@ -127,9 +125,7 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 { #category : #accessing }
 ESUGSetUp class >> createESUGConfiguration [
 	| esugEmailConfiguration conferenName esugOrganizer |
-	"Set Postmark key"
-	"PatSmtpToPostMarkClientAdapter key: 'xxxxx'. 
-	"
+
 	esugEmailConfiguration := ERConferenceEmailConfiguration new
 		senderEmailAddress: 'dev@esug.org';
 		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71';
@@ -156,6 +152,14 @@ ESUGSetUp class >> createESUGConfiguration [
 ]
 
 { #category : #accessing }
+ESUGSetUp class >> existBackupToRestart [
+	|path|
+	path := (Smalltalk imageDirectory / 'Backup').
+	^ path hasFiles
+	
+]
+
+{ #category : #accessing }
 ESUGSetUp class >> initialize [
 	
 	Metacello new
@@ -176,10 +180,8 @@ ESUGSetUp class >> initialize [
 ]
 
 { #category : #accessing }
-ESUGSetUp class >> start [
+ESUGSetUp class >> initializeDataFromScratch [
 	| esugConferenceConfiguration entryPoint conference |
-	"self start"
-	self startAndCleanSeaside.
 	esugConferenceConfiguration := self createESUGConfiguration.
 	entryPoint := 'esug'.
 	conference := self
@@ -187,7 +189,22 @@ ESUGSetUp class >> start [
 		atEntryPoint: entryPoint.
 	self configureESUGFeesForConference: conference.
 	self configureESUGReductionCodesForConference: conference.
-	self activateOnlyThisConference: conference.
+	self activateOnlyThisConference: conference
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> restoreData [
+	[ERBackupRestore uniqueInstance restoreBackup ]
+	on: Exception 
+	do: [ :ex | ex signal ]
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> start [
+	"self start"
+	self startAndCleanSeaside.
+	self existBackupToRestart ifTrue: [ self restoreData ]	
+	ifFalse: [ self initializeDataFromScratch].
 	EREsugApp initialize
 ]
 

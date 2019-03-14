@@ -6,7 +6,7 @@ Class {
 
 { #category : #rendering }
 ERMailSender >> senderEmailAddress [
-	^ ERController uniqueInstance senderEmailAddress
+	^ ERController new senderEmailAddress
 ]
 
 { #category : #rendering }

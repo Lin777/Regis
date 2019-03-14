@@ -14,7 +14,7 @@ ERTestLoginController >> setUp [
 ERTestLoginController >> testLoginWhenPasswordDontMatch [
 	| anUser |
 	self registerAttendee.
-	anUser := ERController uniqueInstance validateLoginFor: self class testUserAccount email 
+	anUser := ERController new validateLoginFor: self class testUserAccount email 
 								password: (ERUserAccount hashPassword:
 								 'anotherPassword') asString.
 	self assert: anUser isNil
@@ -33,7 +33,7 @@ ERTestLoginController >> testLoginWhenUserExist [
 { #category : #tests }
 ERTestLoginController >> testLoginWhenUserNotExist [
 	| anUser |
-	anUser := ERController uniqueInstance validateLoginFor: ERTest testUserAccount email 
+	anUser := ERController new validateLoginFor: ERTest testUserAccount email 
 			password: (ERUserAccount hashPassword: '1234567') asString.
 	self assert: anUser isNil
 ]

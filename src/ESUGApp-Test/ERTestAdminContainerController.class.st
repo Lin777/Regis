@@ -39,8 +39,12 @@ ERTestAdminContainerController >> testUpdateUserWithAEmailAlreadyRegistered [
 	self registerAttendee: ERTest testExampleAttendee.
 	self
 		should: [ controller
-				updateUser: ERTest testExampleAttendee userAccount ]
-		raise: ERException
+				updateUser: (controller attendee email: 'admin@esug.org') ]
+		raise: ERException .
+	self
+		should: [ controller
+				updateUser: (controller attendee email: 'example@gmail.com') ]
+		raise: ERException 
 ]
 
 { #category : #tests }

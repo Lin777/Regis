@@ -14,6 +14,7 @@ ERConfigurationController >> addAttendee: anAttendee [
 	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
 	conference addAttendee: anAttendeeSaved.
 	conference save.
+	self notifyAllObservers .
 	^ anAttendeeSaved
 ]
 
@@ -66,6 +67,7 @@ ERConfigurationController >> addNormal: normal vegan: vegan vegetarian: vegetari
 ERConfigurationController >> addReductionTicketToConference: ticketRegistered [
 	conference addReductionTicket: ticketRegistered .
 	conference save.
+	self notifyAllObservers 
 ]
 
 { #category : #adding }
@@ -78,7 +80,7 @@ ERConfigurationController >> addTicket: aReductionTicket [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(ERController uniqueInstance findUserByEmail: anAttendee email)
+	(ERController new findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.
@@ -92,14 +94,31 @@ ERConfigurationController >> attends [
 ]
 
 { #category : #rendering }
+ERConfigurationController >> deleteDependencesOfAttendee: anUser [
+	|att|
+	anUser isAttendee ifFalse: [ ^ self ].
+	att := self attendeeFromUser: anUser.
+	self deleteAttendeeFromGroupAndConference: att
+]
+
+{ #category : #rendering }
+ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
+	anUser isGroupManager ifTrue: [ |group|
+		group := self groupOfUser: anUser.
+		self deleteGroup: group
+		 ]
+]
+
+{ #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
 	attendees do: [ :each | self deleteAttendee: (ERAttendee find: [:att | att = each]) ].
-	self deleteUserForConference: aGroup groupManager.
+	self deleteUserForConference: aGroup groupManager userAccount.
 	(self conference groups)
 		removeAllSuchThat: [ :each | aGroup id = each id ].
 	aGroup delete.
+	self notifyAllObservers
 ]
 
 { #category : #'as yet unclassified' }
@@ -108,14 +127,18 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 		ifTrue: [ ERException deletionOfTicketNotValid signal ].
 	conference reductionTickets
 		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
-	aReductionTicket delete
+	aReductionTicket delete.
+	self notifyAllObservers 
 ]
 
 { #category : #rendering }
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
-		self  ]
+		"Fix ToDo"
+		self deleteDependencesOfAttendee: anUser.
+		self deleteDependencesOfGroupManager: anUser.
+		self deleteUserForConference: anUser]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
@@ -231,43 +254,43 @@ ERConfigurationController >> groups [
 	^ conference groups 
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headerAttendee [
 	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headerGroups [
 	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
 	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headerTalks [
 	^ #('Name' 'Submitted By' 'Uploaded File')
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headerUser [
 	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headersParticipantsToLunches [
 	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headersParticipantsToSocialDinner [
 	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> headersShirtsStatistics [
 	^ #('Size of the shirt' 'Man' 'Women' 'Total')
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing-headers' }
 ERConfigurationController >> hearderAwards [
 	^ #('Name' 'Submitted by')
 ]
@@ -298,7 +321,8 @@ ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: veg
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
-	self saveTicket: aTicket
+	self saveTicket: aTicket.
+	self notifyAllObservers 
 ]
 
 { #category : #'as yet unclassified' }
@@ -347,6 +371,7 @@ ERConfigurationController >> saveConferenceWithConfiguration: configuration emai
 	self conference configuration emailConfiguration: emailConfig .
 	self conference configuration organizer: organizer .
 	self conference save.
+	self notifyAllObservers 
 ]
 
 { #category : #'as yet unclassified' }
@@ -383,7 +408,9 @@ ERConfigurationController >> submittedTalks [
 
 { #category : #adding }
 ERConfigurationController >> updateFee: aFee [
-	^ aFee save.
+	aFee save.
+	self notifyAllObservers.
+	^ aFee
 	
 ]
 
@@ -392,17 +419,17 @@ ERConfigurationController >> users [
 	^ conference users
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConfigurationController >> validateConferenceConfiguration: configuration [
 	configuration dateFrom asDate < configuration dateTo asDate
 	ifFalse: [ ERException invalidEsugDates signal ]
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConfigurationController >> validateEmailConfiguration: emailConfiguration [
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConfigurationController >> validateOrganizerConfiguration: organizer [
 ]

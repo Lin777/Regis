@@ -30,7 +30,7 @@ ERUsersTab >> blockTableToExecute [
 
 { #category : #'as yet unclassified' }
 ERUsersTab >> createUser: anUser [
-	ERController uniqueInstance validateIfEmailIsAlreadyRegistered: anUser; 
+	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
 			validateNewPassword: anUser password with: anUser confirmPassword.
 	anUser password: (ERUserAccount hashPassword: anUser password) asString.
 	anUser role: (Heap new
@@ -42,6 +42,10 @@ ERUsersTab >> createUser: anUser [
 
 { #category : #rendering }
 ERUsersTab >> deleteUser: user [
+	[controller deleteUser: user]
+	on: ERException 
+	do: [ :exception | messageComponent errorMessage: exception messageText ].
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }
@@ -126,6 +130,7 @@ ERUsersTab >> renderContainerOn: html [
 		id: 'formAllUsers';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
+			html render: messageComponent .
 			self renderTableOfUsersOn: html ]
 ]
 

@@ -53,6 +53,7 @@ ERRegistrationController >> saveAttendee [
 	attendeeSaved := self attendee save.
 	conference addAttendee: attendeeSaved .
 	conference save.
+	self notifyAllObservers .
 	^ attendeeSaved userAccount 
 ]
 
@@ -65,6 +66,7 @@ ERRegistrationController >> saveGroupManager [
 	groupSaved := groupSaved save.
 	conference addGroup: groupSaved .
 	conference save.
+	self notifyAllObservers .
 	^ self attendee userAccount 
 ]
 

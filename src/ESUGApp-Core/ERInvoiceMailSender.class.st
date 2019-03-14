@@ -20,7 +20,7 @@ ERInvoiceMailSender >> attendee: anAttendee [
 
 { #category : #rendering }
 ERInvoiceMailSender >> conference [
-	^ conference ifNil: [ conference := ERController uniqueInstance conference ]
+	^ conference ifNil: [ conference := ERController new conference ]
 ]
 
 { #category : #rendering }

@@ -1,6 +1,6 @@
 Class {
 	#name : #ERController,
-	#superclass : #Object,
+	#superclass : #ERSubject,
 	#instVars : [
 		'conference'
 	],
@@ -23,7 +23,8 @@ ERController >> addAward: anAward [
 	anAward submittionDate: Date today.
 	award := anAward save.
 	conference addSubmittedAward: award.
-	conference save
+	conference save.
+	self notifyAllObservers .
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,7 +48,8 @@ ERController >> addTalk: aTalk [
 	aTalk submittionDate: Date today.
 	talk := aTalk save.
 	conference addSubmittedTalk: talk.
-	conference save
+	conference save.
+	self notifyAllObservers .
 ]
 
 { #category : #adding }
@@ -56,6 +58,7 @@ ERController >> addUser: anUser [
 	userSaved := (anUser as: ERUserAccount ).
 	userSaved := userSaved save.
 	conference addUser: userSaved.
+	self notifyAllObservers .
 	^ userSaved
 ]
 
@@ -213,10 +216,12 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 
 { #category : #rendering }
 ERController >> deleteGroup: aGroupManager [
+	self notifyAllObservers .
 ]
 
 { #category : #rendering }
 ERController >> deleteUser: anUser [
+	self notifyAllObservers .
 ]
 
 { #category : #'as yet unclassified' }
@@ -254,9 +259,16 @@ ERController >> getGroupOfAttendee: aAttendee [
 		ifNone: [ nil ] ].
 ]
 
+{ #category : #rendering }
+ERController >> groupOfUser: aGroupManager [
+	^ conference groups
+		detect: [ :each | each groupManager userAccount = aGroupManager ].
+]
+
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
+	ERBackupObserver of: self.
 	conference := ERConference find: [ :each | each active ]
 ]
 
@@ -310,6 +322,12 @@ ERController >> payPalUrlForGroup: aGroup [
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
+]
+
+{ #category : #rendering }
+ERController >> paymentAmountOf: aGroup [
+	aGroup listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
+	ifEmpty: [ ^ 0 ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -413,22 +431,22 @@ ERController >> submittedTalksFor: anAttendee [
 ERController >> updateAllAttendeesOf: aGroup [
 	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
 												aGroup paymentInformation hasPaid.
-											  each save. ]
+											  each save. ].
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
-	"self generateInvoiceOf: anAttendee."
 	anAttendee save.
-	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ]
+	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ].
+	self notifyAllObservers .
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
-	self updatePaymentRateForGroup: aGroup .
-	"self generateInvoiceOf: aGroup."
+	self updatePaymentRateForGroup: aGroup.
 	self updateAllAttendeesOf: aGroup.
+	self notifyAllObservers .
 	^ aGroup save.
 ]
 
@@ -445,7 +463,7 @@ ERController >> updatePaymentRate: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRateForGroup: aGroup [ 
 	| amount |
-	amount := aGroup listAttends sum: [ :each | each paymentAmount ].
+	amount := self paymentAmountOf: aGroup.
 	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
 	aGroup paymentInformation paymentAmount: amount.
 ]
@@ -453,9 +471,11 @@ ERController >> updatePaymentRateForGroup: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
 	[self validateIfEmailIsAlreadyRegistered: anUser.
-	^ anUser save]
+	anUser save.
+	self notifyAllObservers .
+	^ anUser]
 	on: ERException 
-	do: [ :exp | ^ exp ]
+	do: [ :exp | ^ exp signal ]
 ]
 
 { #category : #action }
@@ -464,7 +484,7 @@ ERController >> validateIfEmailIsAlreadyRegistered: anUser [
 		do: [ :each | 
 			each email = anUser email
 				ifTrue: [each = anUser ifFalse:[
-					ERException emailAlreadyRegistered signal ] ]]
+					ERException emailAlreadyRegistered signal ] ]].
 ]
 
 { #category : #rendering }
@@ -490,7 +510,7 @@ ERController >> validateRegister: anAttendee [
 
 { #category : #action }
 ERController >> verifyIfTheTicketIsStillAvailable: aString [
-	ERController uniqueInstance conference reductionTickets 
+	ERController new conference reductionTickets 
 	detect: [ :each | each ticketId = aString ] 
 	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
 	ifNone: [ ERException ticketDoesNotExist signal ]

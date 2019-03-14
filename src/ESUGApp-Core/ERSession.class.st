@@ -11,7 +11,7 @@ Class {
 { #category : #actions }
 ERSession >> findUserByEmail: anEmail [
 
- ^ ERController uniqueInstance findUserByEmail: anEmail
+ ^ ERController new findUserByEmail: anEmail
 
 ]
 
@@ -35,12 +35,6 @@ ERSession >> login: aUser [
 ERSession >> logout [
 	self user: nil.
 	self unregister
-]
-
-{ #category : #actions }
-ERSession >> responseForRequest: aRequest [
-	
-	^ super responseForRequest: aRequest
 ]
 
 { #category : #updating }
