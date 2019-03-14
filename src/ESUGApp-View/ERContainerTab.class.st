@@ -1,8 +1,7 @@
 Class {
 	#name : #ERContainerTab,
-	#superclass : #ERContentTab,
+	#superclass : #ERTab,
 	#instVars : [
-		'messageComponent',
 		'controller',
 		'callback',
 		'mofidyUserForm',

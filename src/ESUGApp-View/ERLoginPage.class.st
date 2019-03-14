@@ -73,7 +73,7 @@ ERLoginPage >> registerUser [
 
 { #category : #rendering }
 ERLoginPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh;';
+	html div style: self styleBackgound ;
 	with: [ 
 		html mdlLayout	with: aBlock
 	]

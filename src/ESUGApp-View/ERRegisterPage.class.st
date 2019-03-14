@@ -24,11 +24,11 @@ ERRegisterPage class >> content: aContent [
 { #category : #'as yet unclassified' }
 ERRegisterPage >> actionsBody: html [
 	^ [
-	html mdlCardActions border with: [	
+	"html mdlCardActions border with: [	
 			self renderBackLoginButtonOn: html.
 			self renderBackButtonOn: html.
 			self renderNextButtonOn: html.
-		].
+		]."
 	]
 ]
 
@@ -112,7 +112,7 @@ ERRegisterPage >> renderBackLoginButtonOn: html [
 
 { #category : #rendering }
 ERRegisterPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
+	html div style: self styleBackgound ;
 	with: [ 
 		html break. html break. html break. 
 		aBlock value	
@@ -150,7 +150,7 @@ ERRegisterPage >> renderPageOn: html [
 	html form
 		id: 'registerForm';
 		with: [ html mdlTabs rippleEffect with: 
-			[ html render: (ERTabs tabs: self tabs) ] ].
+			[ html render: (ERTabs tabs: self tabs) ] ]
 ]
 
 { #category : #initialize }

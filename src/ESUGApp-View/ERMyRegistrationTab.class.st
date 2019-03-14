@@ -22,6 +22,6 @@ ERMyRegistrationTab >> initialize [
 
 { #category : #rendering }
 ERMyRegistrationTab >> proposalsAreAllowed [
-	^ ERController uniqueInstance conference configuration 
+	^ ERController new conference configuration 
 	dateSubmissionDeadline asDate >= Date today 
 ]

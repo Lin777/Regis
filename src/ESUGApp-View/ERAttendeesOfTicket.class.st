@@ -55,7 +55,7 @@ ERAttendeesOfTicket >> listDataToRenderButton [
 
 { #category : #accessing }
 ERAttendeesOfTicket >> listOfAttendees [
-	^ ERController uniqueInstance attendeesForATicket: ticket ticketId
+	^ ERController new attendeesForATicket: ticket ticketId
 ]
 
 { #category : #accessing }

@@ -28,7 +28,7 @@ ERForgotPasswordPage >> initialize [
 
 { #category : #rendering }
 ERForgotPasswordPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh;';
+	html div style: self styleBackgound ;
 	with: [ 
 		html mdlLayout	with: aBlock
 	]
@@ -74,14 +74,14 @@ ERForgotPasswordPage >> renderPageOn: html [
 { #category : #rendering }
 ERForgotPasswordPage >> renderTextOn: html [
 	html horizontalRule .
-	html text: 'Enter your email address and we will send you a link to reset your password.'.
+	html text: 'Enter your email address and we will send you a mail with your reseted password.'.
 	html break.
 	html break.
 ]
 
 { #category : #rendering }
 ERForgotPasswordPage >> sendResetedPassword [
-	[ ERController uniqueInstance sendResetPasswordTo: email.
+	[ ERController new sendResetPasswordTo: email.
 	self answer: true ]
 	on: ERException 
 	do: [ :exception | messageComponent errorMessage: exception messageText]

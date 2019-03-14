@@ -142,8 +142,7 @@ ERFinishRegisterPage >> renderAffiliation: html [
 { #category : #rendering }
 ERFinishRegisterPage >> renderBody: html with: aBlock [
 	html div
-		style:
-			'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
+		style: self styleBackgound ;
 		with: [ html break.
 			html break.
 			aBlock value ]

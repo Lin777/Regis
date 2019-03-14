@@ -1,6 +1,6 @@
 Class {
 	#name : #ERDoneButton,
-	#superclass : #ERContentTab,
+	#superclass : #ERTab,
 	#instVars : [
 		'button'
 	],
