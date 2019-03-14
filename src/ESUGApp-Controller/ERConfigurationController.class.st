@@ -114,7 +114,7 @@ ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
 	attendees do: [ :each | self deleteAttendee: (ERAttendee find: [:att | att = each]) ].
-	self deleteUserForConference: aGroup groupManager.
+	self deleteUserForConference: aGroup groupManager userAccount.
 	(self conference groups)
 		removeAllSuchThat: [ :each | aGroup id = each id ].
 	aGroup delete.
@@ -136,9 +136,9 @@ ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
 		"Fix ToDo"
-		"self deleteDependencesOfAttendee: anUser.
+		self deleteDependencesOfAttendee: anUser.
 		self deleteDependencesOfGroupManager: anUser.
-		self deleteUserForConference: anUser"]
+		self deleteUserForConference: anUser]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 

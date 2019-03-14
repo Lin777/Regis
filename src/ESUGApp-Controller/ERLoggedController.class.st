@@ -46,7 +46,7 @@ ERLoggedController >> attendeeFromUser: anUser [
 ERLoggedController >> deleteAttendee: anAttendee [
 	self deleteAttendeeFromGroupAndConference: anAttendee.
 	anAttendee userAccount isGroupManager
-		ifFalse: [ self deleteUserForConference: anAttendee ]
+		ifFalse: [ self deleteUserForConference: anAttendee userAccount]
 		ifTrue: [ self deleteAttendeeRoleFromUser: anAttendee ].
 	anAttendee delete.
 ]
@@ -72,14 +72,11 @@ ERLoggedController >> deleteAttendeeRoleFromUser: anAttendee [
 ]
 
 { #category : #removing }
-ERLoggedController >> deleteUserForConference: anAttendee [
-	| userOfAttendee |
-	userOfAttendee := anAttendee userAccount.
+ERLoggedController >> deleteUserForConference: anUser [
 	self conference users
-		removeAllSuchThat: [ :each | userOfAttendee id = each id ].
+		removeAllSuchThat: [ :each | anUser id = each id ].
 	self conference save.
-	userOfAttendee delete.
-	self conference users.
+	anUser delete.
 	self notifyAllObservers 
 ]
 

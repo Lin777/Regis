@@ -42,7 +42,9 @@ ERUsersTab >> createUser: anUser [
 
 { #category : #rendering }
 ERUsersTab >> deleteUser: user [
-	controller deleteUser: user.
+	[controller deleteUser: user]
+	on: ERException 
+	do: [ :exception | messageComponent errorMessage: exception messageText ].
 	self updateStateTab: self tabName
 ]
 
@@ -128,6 +130,7 @@ ERUsersTab >> renderContainerOn: html [
 		id: 'formAllUsers';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
+			html render: messageComponent .
 			self renderTableOfUsersOn: html ]
 ]
 
