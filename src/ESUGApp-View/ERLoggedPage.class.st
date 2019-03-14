@@ -5,7 +5,10 @@ Class {
 		'pageController',
 		'navbar',
 		'content',
-		'attendee'
+		'attendee',
+		'configurationTabs',
+		'proposalTabs',
+		'usersTabs'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -13,6 +16,17 @@ Class {
 { #category : #hooks }
 ERLoggedPage >> children [ 
 	^ Array with: navbar with: content
+]
+
+{ #category : #rendering }
+ERLoggedPage >> configurationTabs [ 
+	configurationTabs ifNil: [
+		configurationTabs := OrderedCollection new add: (ERConferenceForm on: attendee withContent: content container: self);
+	add: (ERFeeForm on: attendee withContent: content container: self);
+	add: (ERReductionTicketsTab on: attendee withContent: content container: self);
+	add: (ERInvoicesTab on: attendee withContent: content container: self); yourself.
+	(configurationTabs at: 1) activate].
+	^ configurationTabs
 ]
 
 { #category : #accessing }
@@ -68,9 +82,20 @@ ERLoggedPage >> itemList [
 				attendee: attendee
 				content: content ];
 		at: 'configuration'
-			put: [ ERConfigurationView
-				attendee: attendee
-				content: content ];
+			put: [ ERTabsOfView
+				content: content
+				tabs: self configurationTabs ];
+		at: 'proposal'
+			put: [ ERTabsOfView
+				content: content
+				tabs: self proposalTabs];
+		at: 'users'
+			put: [ ERTabsOfView
+				content: content
+				tabs: self usersTabs ];
+		at: 'statistics'
+			put: [ ERStatisticsView
+				withContent: content ];
 		yourself
 ]
 
@@ -84,7 +109,10 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 	self session user isGroupManager
 		ifTrue: [ list add: aMenuFactory createGroupManagerItem ].
 	self session user isAdmin
-		ifTrue: [ list add: aMenuFactory createConfigurationItem ].
+		ifTrue: [ list add: aMenuFactory createConfigurationItem.
+			list add: aMenuFactory createUsersItem .
+			list add: aMenuFactory createProposalsItem.
+			list add: aMenuFactory createStatisticsItem ].
 	self session user isStudent
 		ifTrue: [  ].
 	list add: aMenuFactory createAdminItem.
@@ -103,6 +131,15 @@ ERLoggedPage >> pageController [
 ]
 
 { #category : #rendering }
+ERLoggedPage >> proposalTabs [ 
+	proposalTabs ifNil: [
+		proposalTabs := OrderedCollection new add: (ERTalksTab on: attendee withContent: content container: self);
+	add: (ERAwardsTab on: attendee withContent: content container: self); yourself.
+	(proposalTabs at: 1) activate].
+	^ proposalTabs
+]
+
+{ #category : #rendering }
 ERLoggedPage >> renderContentOn: html [
 	self initializeNabvar.
 	html mdlLayout
@@ -118,4 +155,14 @@ ERLoggedPage >> renderContentOn: html [
 { #category : #hooks }
 ERLoggedPage >> states [
     ^ Array with: self
+]
+
+{ #category : #rendering }
+ERLoggedPage >> usersTabs [ 
+	usersTabs ifNil: [
+		usersTabs := OrderedCollection new add: (ERUsersTab on: attendee withContent: content container: self);
+	add: (ERAttendeesTab on: attendee withContent: content container: self);
+	add: (ERGroupManagersTab on: attendee withContent: content container: self); yourself.
+	(usersTabs at: 1) activate].
+	^ usersTabs
 ]

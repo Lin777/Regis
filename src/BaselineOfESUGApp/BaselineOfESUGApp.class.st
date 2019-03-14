@@ -15,7 +15,7 @@ BaselineOfESUGApp >> baseline: spec [
 		do: [
 			self setUpDependencies: spec.
 			spec
-				package: 'PostMark-Core' with: [ spec requires: 'NeoJSON' ];
+				package: 'ESUGApp-PostMark-Core' with: [ spec requires: 'NeoJSON' ];
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View' 'Seaside3' 'ESUGApp-Model') ];		
