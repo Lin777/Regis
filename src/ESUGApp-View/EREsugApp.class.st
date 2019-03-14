@@ -92,5 +92,9 @@ EREsugApp >> updateRoot: anHtmlRoot [
 	anHtmlRoot meta
 		attributeAt: 'name' put: 'viewport';
 		content: 'width=device-width, initial-scale=1'.
+	anHtmlRoot link
+				relationship: 'icon';
+				type: 'image/png';
+				url: (CssForLoginMDL urlOf: #esugPng).
 	anHtmlRoot javascript add: 'hljs.initHighlightingOnLoad();'
 ]
