@@ -5,7 +5,7 @@ Class {
 		'controller',
 		'content'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #registry }

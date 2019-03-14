@@ -1,7 +1,7 @@
 Class {
 	#name : #ERTestGroupManagerController,
 	#superclass : #ERTest,
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #initialization }

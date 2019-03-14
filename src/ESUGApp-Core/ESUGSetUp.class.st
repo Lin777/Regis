@@ -8,8 +8,6 @@ Class {
 ESUGSetUp class >> activateOnlyThisConference: aConference [
 	ERConference findAll do: [ :each | each active: false ].
 	aConference active: true; save
-	"
-ERAttendee findAll."
 ]
 
 { #category : #accessing }
@@ -127,9 +125,7 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 { #category : #accessing }
 ESUGSetUp class >> createESUGConfiguration [
 	| esugEmailConfiguration conferenName esugOrganizer |
-	"Set Postmark key"
-	"PatSmtpToPostMarkClientAdapter key: 'xxxxx'. 
-	"
+	
 	esugEmailConfiguration := ERConferenceEmailConfiguration new
 		senderEmailAddress: 'dev@esug.org';
 		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71';
@@ -157,22 +153,42 @@ ESUGSetUp class >> createESUGConfiguration [
 
 { #category : #accessing }
 ESUGSetUp class >> initialize [
-	
-	Metacello new
-	baseline: 'Magritte';
-		repository: 'github://magritte-metamodel/magritte:master/source';
-		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		load: #('Magritte-Seaside').
-	Metacello new 
-		baseline: 'MaterialDesignLite'; 
-		repository: 'github://DuneSt/MaterialDesignLite:v2.1.2/src';
-		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
-		load: 'all'.
+	self installDependencesWithConflicts
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> installArtefact [
 	Metacello new
         githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
         baseline: 'Artefact';
         onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
         load: #('default' 'seaside').
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> installDependencesWithConflicts [
+	self installMagritte.
+	self installMDLForMagritte.
+	self installArtefact.
+	
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> installMDLForMagritte [
+	Metacello new 
+		baseline: 'MaterialDesignLite'; 
+		repository: 'github://DuneSt/MaterialDesignLite:v2.1.2/src';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: 'all'
+]
+
+{ #category : #accessing }
+ESUGSetUp class >> installMagritte [
+	Metacello new
+	baseline: 'Magritte';
+		repository: 'github://magritte-metamodel/magritte:master/source';
+		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
+		load: #('Magritte-Seaside')
 ]
 
 { #category : #accessing }

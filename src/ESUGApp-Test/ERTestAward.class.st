@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'attendee'
 	],
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ERTestLoggedController,
 	#superclass : #ERTest,
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }

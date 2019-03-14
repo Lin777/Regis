@@ -5,7 +5,7 @@ Class {
 		'store',
 		'controller'
 	],
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }

@@ -22,7 +22,10 @@ ERMenuPage >> availableItemsOfMenu: anObject [
 
 { #category : #'as yet unclassified' }
 ERMenuPage >> createAdminItem [
-	^ ERItemNav label: 'Admin' icon: 'person' callback: (availableItemsOfMenu at: 'admin')
+	^ ERItemNav 
+		label: 'Admin' 
+		icon: 'person' 
+		callback: (availableItemsOfMenu at: 'admin')
 ]
 
 { #category : #'as yet unclassified' }
@@ -35,17 +38,26 @@ ERMenuPage >> createConfigurationItem [
 
 { #category : #'as yet unclassified' }
 ERMenuPage >> createGroupManagerItem [
-	^ ERItemNav label: 'Group Registration' icon: 'group' callback: (availableItemsOfMenu at: 'groupRegistration')
+	^ ERItemNav 
+		label: 'Group Registration' 
+		icon: 'group' 
+		callback: (availableItemsOfMenu at: 'groupRegistration')
 ]
 
 { #category : #'as yet unclassified' }
 ERMenuPage >> createHomeItem [
-	^ ERItemNav label: 'Home' icon: 'home' callback: (availableItemsOfMenu at: 'home')
+	^ ERItemNav 
+		label: 'Home' 
+		icon: 'home' 
+		callback: (availableItemsOfMenu at: 'home')
 ]
 
 { #category : #'as yet unclassified' }
 ERMenuPage >> createLogoutItem [
-	^ ERItemNav label: 'Logout' icon: 'backspace' callback: (availableItemsOfMenu at: 'logout')
+	^ ERItemNav 
+		label: 'Logout' 
+		icon: 'backspace' 
+		callback: (availableItemsOfMenu at: 'logout')
 ]
 
 { #category : #'as yet unclassified' }
@@ -57,7 +69,10 @@ ERMenuPage >> createMenuWith: aList [
 
 { #category : #'as yet unclassified' }
 ERMenuPage >> createMyRegistrationItem [
-	^ ERItemNav label: 'My Registration' icon: 'assignment' callback: (availableItemsOfMenu at: 'myRegistration')
+	^ ERItemNav 
+		label: 'My Registration' 
+		icon: 'assignment' 
+		callback: (availableItemsOfMenu at: 'myRegistration')
 ]
 
 { #category : #'as yet unclassified' }
