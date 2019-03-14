@@ -96,12 +96,14 @@ ERContentTab >> renderBackButtonOn: html [
 		colored;
 		rippleEffect;
 		id: self tabId ,'-previousButton';
+		callback: self actionBackBlock;
 		with: 'Previous']
 ]
 
 { #category : #rendering }
 ERContentTab >> renderButtonsOn: html [
 	html horizontalRule.
+	self renderGoBackToLogin: html.
 	self renderBackButtonOn: html.
 	self renderNextButtonOn: html
 ]
@@ -117,6 +119,18 @@ ERContentTab >> renderContentOn: html [
 	html render: contentTab.
 	self renderButtonsOn: html]
 	
+]
+
+{ #category : #rendering }
+ERContentTab >> renderGoBackToLogin: html [
+	html mdlButton
+		colored;
+		beSubmit;
+		rippleEffect;
+		id: self tabId ,'-goBackLoginButton';
+		callback: [self session logout.
+    ^ self requestContext redirectTo: self application url];
+		with: 'Back Login'
 ]
 
 { #category : #rendering }
