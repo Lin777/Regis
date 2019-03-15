@@ -15,6 +15,7 @@ ERUserAccountForAdminRegister >> descriptionRole [
 		beRequired;
 		options: ERAttendee rolesForAdminRegister;
 		withoutLabel: true;
+		id: 'role';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]

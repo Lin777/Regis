@@ -1,6 +1,17 @@
 Extension { #name : #MADescription }
 
 { #category : #'*ESUGApp-Extensions' }
+MADescription >> id [
+	^ self propertyAt: #id 
+	ifAbsent: [ nil ]
+]
+
+{ #category : #'*ESUGApp-Extensions' }
+MADescription >> id: aString [
+	self propertyAt: #id put: aString
+]
+
+{ #category : #'*ESUGApp-Extensions' }
 MADescription >> withoutLabel [
 	^ self propertyAt: #withoutLabel 
 	ifAbsent: [ false ]

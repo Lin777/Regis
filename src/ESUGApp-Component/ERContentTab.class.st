@@ -127,6 +127,7 @@ ERContentTab >> renderGoBackToLogin: html [
 		colored;
 		beSubmit;
 		rippleEffect;
+		onClick: 'return confirm(''You are sure to return to the login? You will lose all your changes'');';
 		id: self tabId ,'-goBackLoginButton';
 		callback: [self session logout.
     ^ self requestContext redirectTo: self application url];
@@ -140,6 +141,11 @@ ERContentTab >> renderNextButtonOn: html [
 		colored;
 		beSubmit;
 		rippleEffect;
+		"onClick: (html jQuery ajax
+						callback: self actionNextBlock;
+						context: 'this' js;
+						onSuccess: ((html jQuery id: 'tab-',nextTabName) 
+						removeClass: 'disabled' ));"
 		id: self tabId ,'-nextButton';
 		callback: self actionNextBlock;
 		with: 'Next']

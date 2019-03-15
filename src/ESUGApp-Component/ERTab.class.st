@@ -7,7 +7,8 @@ Class {
 		'container',
 		'tabId',
 		'messageComponent',
-		'tabName'
+		'tabName',
+		'disabled'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -37,10 +38,21 @@ ERTab >> deactivate [
 	active := false.
 ]
 
+{ #category : #accessing }
+ERTab >> disabled [
+	^ disabled 	
+]
+
+{ #category : #accessing }
+ERTab >> disabled: anObject [
+	disabled := anObject
+]
+
 { #category : #activation }
 ERTab >> initialize [
 	super initialize.
 	active := false.
+	disabled := false.
 	messageComponent := ERAlert warningAlert id: 'tabAlert'.
 ]
 

@@ -71,6 +71,7 @@ ERConferenceConfigurationModel >> descriptionDateFrom [
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateFrom';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -89,6 +90,7 @@ ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 		cssClass: 'half';
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateSubmissionDeadline';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -107,6 +109,7 @@ ERConferenceConfigurationModel >> descriptionDateTo [
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateTo';
 		componentClass: MDLMATextInputComponent .
 	^ tmp2 yourself
 ]
@@ -121,6 +124,7 @@ ERConferenceConfigurationModel >> descriptionDescription [
 		priority: 20;
 		required: false;
 		withoutLabel: true;
+		id: 'description';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -139,6 +143,7 @@ ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 		cssClass: 'half';
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'earlyRegistrationDeadline';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -153,6 +158,7 @@ ERConferenceConfigurationModel >> descriptionHomePageUrl [
 		priority: 30;
 		required: false;
 		withoutLabel: true;
+		id: 'homePageUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -167,6 +173,7 @@ ERConferenceConfigurationModel >> descriptionName [
 		priority: 10;
 		beRequired;
 		withoutLabel: true;
+		id: 'name';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

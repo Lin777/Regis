@@ -31,6 +31,7 @@ ERConferenceOrganizer >> descriptionAddressString [
 		required: false;
 		lineCount: 5;
 		withoutLabel: true;
+		id: 'addressString';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
@@ -45,6 +46,7 @@ ERConferenceOrganizer >> descriptionFiscalSituation [
 		priority: 20;
 		required: false;
 		withoutLabel: true;
+		id: 'fiscalSituation';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -59,6 +61,7 @@ ERConferenceOrganizer >> descriptionName [
 		priority: 10;
 		required: false;
 		withoutLabel: true;
+		id: 'name';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -73,6 +76,7 @@ ERConferenceOrganizer >> descriptionWebPageUrl [
 		priority: 30;
 		required: false;
 		withoutLabel: true;
+		id: 'webPageUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

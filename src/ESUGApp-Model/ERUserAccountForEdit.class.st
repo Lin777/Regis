@@ -15,6 +15,7 @@ ERUserAccountForEdit >> descriptionRole [
 		beRequired;
 		options: ERAttendee roles;
 		withoutLabel: true;
+		id: 'role';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]

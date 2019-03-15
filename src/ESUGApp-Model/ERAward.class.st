@@ -65,6 +65,7 @@ ERAward >> descriptionAffilitation [
 		beRequired;
 		label: 'Affiliation (Required)';
 		withoutLabel: true;
+		id: 'affiliation';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -80,6 +81,7 @@ ERAward >> descriptionCountry [
 		required: false;
 		options: ERAttendee countries;
 		withoutLabel: true;
+		id: 'country';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -94,6 +96,7 @@ ERAward >> descriptionDemoUrl [
 		priority: 80;
 		required: false;
 		withoutLabel: true;
+		id: 'demoUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -109,6 +112,7 @@ ERAward >> descriptionDownloadUrl [
 		beRequired;
 		label: 'Download Url (Required)';
 		withoutLabel: true;
+		id: 'downloadUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -123,6 +127,7 @@ ERAward >> descriptionKeywords [
 		priority: 90;
 		required: false;
 		withoutLabel: true;
+		id: 'keywords';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -137,6 +142,7 @@ ERAward >> descriptionLicence [
 		priority: 100;
 		required: false;
 		withoutLabel: true;
+		id: 'licence';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -152,6 +158,7 @@ ERAward >> descriptionNameAward [
 		beRequired;
 		label: 'Name (Required)';
 		withoutLabel: true;
+		id: 'nameAward';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -163,6 +170,7 @@ ERAward >> descriptionOtherDevelopers [
 			accessor: #otherDevelopers;
 			priority: 30;
 			lineCount: 5;
+			id: 'otherDevelopers';
 			yourself 
 ]
 
@@ -176,6 +184,7 @@ ERAward >> descriptionSmalltalkDialect [
 		priority: 40;
 		required: false;
 		withoutLabel: true;
+		id: 'smalltalkDialect';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

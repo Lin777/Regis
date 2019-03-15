@@ -57,6 +57,7 @@ ERFee >> descriptionBankPayPalUrl [
 		beRequired;
 		label: 'PayPal URL (Required)';
 		withoutLabel: true;
+		id: 'bankPayPalUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -74,6 +75,7 @@ ERFee >> descriptionErfAllDaysFee [
 		label: 'All Days Fee (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'erfAllDaysFee';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -90,6 +92,7 @@ ERFee >> descriptionErfOneDayFee [
 		label: 'One Day Fee (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'erfOneDayFee';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -106,6 +109,7 @@ ERFee >> descriptionExtraPersonSD [
 		label: 'Price for add person to the Social Dinner (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'extraPersonSD';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -123,6 +127,7 @@ ERFee >> descriptionLrfAllDaysFee [
 		label: 'All Days Fee (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'lrfAllDaysFee';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -139,6 +144,7 @@ ERFee >> descriptionLrfOneDayFee [
 		label: 'One Day Fee (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'lrfOneDayFee';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -155,6 +161,7 @@ ERFee >> descriptionPayPalCommissionPercentage [
 		label: 'Paypal Commission Percentage (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'payPalCommissionPercentage';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -171,6 +178,7 @@ ERFee >> descriptionPaymentCurrency [
 		options: ERAttendee currencyTypes;
 		cssClass: 'half';
 		withoutLabel: true;
+		id: 'currency';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -187,6 +195,7 @@ ERFee >> descriptionStaticPayPalCommission [
 		label: 'Static Commission Paypal (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'staticCommissionPaypal';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

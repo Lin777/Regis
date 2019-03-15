@@ -35,7 +35,7 @@ ERRegisterPage >> actionsBody: html [
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
 	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
-								withContent: self).
+								withContent: self) disabled: true.
 	self
 		addTab: affiliationInfo .
 ]

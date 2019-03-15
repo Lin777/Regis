@@ -16,7 +16,7 @@ MDLMASelectListComponent >> renderEditorForGroupedOn: html [
 				with: self magritteDescription label.
 				html select
 		class: 'mdl-textfield__input';
-		id: self labelId;
+		id: inputId;
 		dispatchCallback;
 		with: [ self renderGroupsOn: html ] ]
 	

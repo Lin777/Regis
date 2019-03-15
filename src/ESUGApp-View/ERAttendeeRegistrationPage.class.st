@@ -13,7 +13,7 @@ Class {
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 	addInfo := (self createAdditionalInfoTab: pageController attendee
-						withContent: self).
+						withContent: self) disabled: true.
 	self
 		addTab: addInfo.
 ]
@@ -21,7 +21,7 @@ ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addContactInfoTab [
 	contactInfoTab := (self createContactInfoTab: pageController attendee 
-								withContent: self ).
+								withContent: self ) disabled: true.
 	self
 		addTab: contactInfoTab.
 ]
@@ -29,7 +29,7 @@ ERAttendeeRegistrationPage >> addContactInfoTab [
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addPaymentInfoTab [
 	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
-								 withContent: self ).
+								 withContent: self ) disabled: true.
 	self
 		addTab: paymentInfoTab.
 ]
@@ -37,7 +37,7 @@ ERAttendeeRegistrationPage >> addPaymentInfoTab [
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 	regConfInfo := (self createRegConferenceInfoTab: pageController attendee
-							 withContent: self ).
+							 withContent: self )disabled: true.
 	self
 		addTab: regConfInfo .
 ]

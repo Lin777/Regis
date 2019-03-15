@@ -29,6 +29,7 @@ ERConferenceEmailConfiguration >> descriptionApiKey [
 		priority: 30;
 		required: true;
 		withoutLabel: true;
+		id: 'apiKey';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -43,6 +44,7 @@ ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 		priority: 10;
 		required: false;
 		withoutLabel: true;
+		id: 'senderEmailAddress';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -58,6 +60,7 @@ ERConferenceEmailConfiguration >> descriptionWelcomeText [
 		required: false;
 		lineCount: 5;
 		withoutLabel: true;
+		id: 'welcomeText';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
