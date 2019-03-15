@@ -406,6 +406,13 @@ ERConfigurationController >> submittedTalks [
 	^ conference submittedTalks
 ]
 
+{ #category : #rendering }
+ERConfigurationController >> updateAffiliation: aff on: aGroup [
+	aGroup groupManager affiliationInformation: aff.
+	aGroup save.
+	self notifyAllObservers 
+]
+
 { #category : #adding }
 ERConfigurationController >> updateFee: aFee [
 	aFee save.

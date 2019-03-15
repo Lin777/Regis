@@ -179,8 +179,7 @@ ERContainerTab >> title [
 
 { #category : #rendering }
 ERContainerTab >> updateAffiliation: aff on: aGroup [
-	aGroup groupManager affiliationInformation: aff.
-	aGroup save.
+	controller updateAffiliation: aff on: aGroup.
 	self cancel.
 ]
 

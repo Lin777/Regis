@@ -30,10 +30,9 @@ ERAlert >> class: anObject [
 
 { #category : #rendering }
 ERAlert >> errorMessage: aString [
-
- self
-  message: aString;
-  wasShown: false.
+	aString ifNotEmpty: [
+		self message: aString;
+  		wasShown: false.]
 ]
 
 { #category : #initialization }

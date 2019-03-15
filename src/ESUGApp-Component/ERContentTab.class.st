@@ -116,7 +116,7 @@ ERContentTab >> tabName: anObject [
 
 { #category : #'as yet unclassified' }
 ERContentTab >> updateStateTab: aString [
-self halt.
+
 	container tabs detect: [ :tab | (tab tabName = aString) ]
 	ifFound: [ :tab | tab activate.
 		container tabs reject: [ :aTab | (aTab tabName = aString) ]
