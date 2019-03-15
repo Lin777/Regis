@@ -80,7 +80,7 @@ ERBankInformation >> descriptionBic [
 		label: 'BIC (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
-		description: 'bic';
+		id: 'bic';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

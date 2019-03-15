@@ -48,8 +48,7 @@ ERAdminView >> children [
 
 { #category : #initialization }
 ERAdminView >> closeRegistration [
-	controller conference configuration openRegistration: false.
-	controller conference save.
+	controller closeRegistration
 	
 	
 ]
@@ -76,9 +75,7 @@ ERAdminView >> initializeTabForms [
 
 { #category : #initialization }
 ERAdminView >> openRegistration [
-	controller conference configuration
-		openRegistration: true.
-	controller conference	save
+	controller openRegistration
 ]
 
 { #category : #initialization }

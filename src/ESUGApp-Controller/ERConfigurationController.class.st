@@ -91,6 +91,14 @@ ERConfigurationController >> attends [
 	^ conference attends 
 ]
 
+{ #category : #initialization }
+ERConfigurationController >> closeRegistration [
+	self conference configuration openRegistration: false.
+	self conference save.
+	
+	"self notifyAllObservers"
+]
+
 { #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
@@ -299,6 +307,14 @@ ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: veg
 ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
 	self saveTicket: aTicket
+]
+
+{ #category : #initialization }
+ERConfigurationController >> openRegistration [
+	self conference configuration
+		openRegistration: true.
+	self conference	save.
+		"self notifyAllObservers"
 ]
 
 { #category : #'as yet unclassified' }

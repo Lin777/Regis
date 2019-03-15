@@ -103,6 +103,7 @@ ERLoginPage >> renderFieldsLoginOn: html [
 ERLoginPage >> renderForgotPasswordButtonOn: html [
 	html mdlAnchorButton 
 		class: 'mdl-color-text--blue';
+		id: 'forgot-password';
 		callback: [ self call: ERForgotPasswordPage new"self sendEmailWithResetedPassword" ];
 		with: 'Forgot Password'
 ]
