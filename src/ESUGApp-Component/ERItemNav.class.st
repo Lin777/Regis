@@ -37,6 +37,7 @@ ERItemNav >> label: anObject [
 { #category : #rendering }
 ERItemNav >> renderContentOn: html [
 	html mdlNavigationLink
+		id: label,'-option';
 		callback: callback;
 		with: [ 
 			html mdlIcon
