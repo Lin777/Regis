@@ -6,7 +6,18 @@ Class {
 
 { #category : #accessing }
 ERLibrary class >> applicationName [ 
-	^ 'ESUG app'
+	^ 'ESUG'
+]
+
+{ #category : #'as yet unclassified' }
+ERLibrary >> disabledCss [
+	^ 'a[disabled="disabled"] {
+        pointer-events: none;
+		color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+    }'
 ]
 
 { #category : #updating }
@@ -24,7 +35,7 @@ ERLibrary >> errorCss [
 
 { #category : #updating }
 ERLibrary >> esugCss [
-	^ self errorCss
+	^ self errorCss, self disabledCss 
 ]
 
 { #category : #updating }

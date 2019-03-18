@@ -90,6 +90,7 @@ ERTab >> tabName: anObject [
 ERTab >> updateStateTab: aString [
 	container tabs detect: [ :tab | (tab tabName = aString) ]
 	ifFound: [ :tab | tab activate.
+		tab disabled: false.
 		container tabs reject: [ :aTab | (aTab tabName = aString) ]
 		thenDo: [ :aTab | aTab deactivate ]
 	]

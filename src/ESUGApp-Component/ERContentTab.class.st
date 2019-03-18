@@ -40,7 +40,7 @@ ERContentTab >> actionBackBlock [
 
 { #category : #rendering }
 ERContentTab >> actionNextBlock [
-	^ [[ |model|
+	^ [ [ |model|
 		model := (self contentTab save) model.
 		action value: model.
 		self updateStateTab: nextTabName ]
@@ -141,11 +141,8 @@ ERContentTab >> renderNextButtonOn: html [
 		colored;
 		beSubmit;
 		rippleEffect;
-		"onClick: (html jQuery ajax
-						callback: self actionNextBlock;
-						context: 'this' js;
-						onSuccess: ((html jQuery id: 'tab-',nextTabName) 
-						removeClass: 'disabled' ));"
+		"onClick: ((html jQuery id: 'tab-',nextTabName) 
+						removeAttribute: 'disabled');"
 		id: self tabId ,'-nextButton';
 		callback: self actionNextBlock;
 		with: 'Next']

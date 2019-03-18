@@ -53,7 +53,8 @@ ERRegisterPage >> addDoneTab [
 	doneTab := (ERDoneButton
 				on: self controller attendee
 				button: [ :html | self renderDoneButtonOn: html ]
-				container: self).
+				container: self) 
+	disabled: true.
 	self
 		addTab: doneTab .
 ]

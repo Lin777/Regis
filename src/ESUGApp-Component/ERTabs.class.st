@@ -34,8 +34,8 @@ ERTabs >> renderTabNamesOn: html [
 						id: 'tab-',tab tabName;
 						url: '#' , 'tab-',tab tabId;
 						class: 'mdl-tabs__tab', activeClass.
-					tab disabled ifTrue: [ anchor disabled ].
-					anchor with: [html paragraph: (tab tabName)]]].
+					tab disabled ifTrue: [ anchor disabled: 'disabled' ].
+					anchor with: tab tabName]].
 ]
 
 { #category : #rendering }
