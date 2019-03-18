@@ -29,6 +29,7 @@ ERAdditionalInformation >> descriptionAdditionalText [
 		required: false;
 		lineCount: 13;
 		withoutLabel: true;
+		id: 'additionalText';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
@@ -43,6 +44,7 @@ ERAdditionalInformation >> descriptionKeywords [
 		priority: 10;
 		required: false;
 		withoutLabel: true;
+		id: 'keywords';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

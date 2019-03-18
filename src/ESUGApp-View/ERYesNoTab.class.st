@@ -80,26 +80,6 @@ ERYesNoTab >> stateBlock: anObject [
 ]
 
 { #category : #accessing }
-ERYesNoTab >> tabId [
-	^ tabId 
-]
-
-{ #category : #accessing }
-ERYesNoTab >> tabId: anId [
-	tabId := anId 
-]
-
-{ #category : #accessing }
-ERYesNoTab >> tabName [
-	^ name
-]
-
-{ #category : #accessing }
-ERYesNoTab >> tabName: aName [
-	name := aName
-]
-
-{ #category : #accessing }
 ERYesNoTab >> title [
 	stateBlock value ifTrue: [ ^ titleTrue ].
 	^ titleFalse

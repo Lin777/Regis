@@ -84,6 +84,11 @@ ERPage >> renderPageOn: html [
 	
 ]
 
+{ #category : #rendering }
+ERPage >> styleBackgound [
+	^ 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; '
+]
+
 { #category : #accessing }
 ERPage >> title: anObject [
 	title := anObject

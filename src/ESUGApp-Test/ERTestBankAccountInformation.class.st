@@ -1,7 +1,7 @@
 Class {
 	#name : #ERTestBankAccountInformation,
 	#superclass : #ERTestModel,
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }

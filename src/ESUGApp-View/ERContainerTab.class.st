@@ -1,8 +1,7 @@
 Class {
 	#name : #ERContainerTab,
-	#superclass : #ERContentTab,
+	#superclass : #ERTab,
 	#instVars : [
-		'messageComponent',
 		'controller',
 		'callback',
 		'mofidyUserForm',
@@ -122,7 +121,7 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 ERContainerTab >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
-								callback: [:aff | self updateAffiliation: aff];
+								callback: [:aff | self updateAffiliation: aff on: controller group];
 								cancelCallback: [self cancel]; initializeForm. 
 	content state: formMofidyAffiliation.
 	self updateStateTab: self tabName.

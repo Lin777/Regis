@@ -1,5 +1,5 @@
 Class {
-	#name : #ERAttendeesOfTicket,
+	#name : #ERAttendeesOfTicketView,
 	#superclass : #ERTittledView,
 	#instVars : [
 		'ticket',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERAttendeesOfTicket class >> on: anAttendee withContent: aContent [
+ERAttendeesOfTicketView class >> on: anAttendee withContent: aContent [
 	| form |
 	form := self new.
 	form ticket: anAttendee.
@@ -18,7 +18,7 @@ ERAttendeesOfTicket class >> on: anAttendee withContent: aContent [
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> blockTableToExecute [
+ERAttendeesOfTicketView >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
 		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
@@ -33,33 +33,33 @@ ERAttendeesOfTicket >> blockTableToExecute [
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> children [ 
+ERAttendeesOfTicketView >> children [ 
 	^ Array with: tableComponent
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> content: anObject [
+ERAttendeesOfTicketView >> content: anObject [
 	content := anObject
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> headers [
+ERAttendeesOfTicketView >> headers [
 	^ #(
 '#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?')
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> listDataToRenderButton [
+ERAttendeesOfTicketView >> listDataToRenderButton [
 	^ OrderedCollection new
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> listOfAttendees [
+ERAttendeesOfTicketView >> listOfAttendees [
 	^ ERController new attendeesForATicket: ticket ticketId
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> renderButtonsOn: html [
+ERAttendeesOfTicketView >> renderButtonsOn: html [
 	html mdlAnchorButton
         colored;
         id: 'accept';
@@ -68,7 +68,7 @@ ERAttendeesOfTicket >> renderButtonsOn: html [
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> renderPageOn: html [
+ERAttendeesOfTicketView >> renderPageOn: html [
 	self listOfAttendees isEmpty ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
 	ifFalse: [self renderTableOfAttendsOn: html ].
 	html horizontalRule .
@@ -76,7 +76,7 @@ ERAttendeesOfTicket >> renderPageOn: html [
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> renderTableOfAttendsOn: html [
+ERAttendeesOfTicketView >> renderTableOfAttendsOn: html [
 	tableComponent := ERTable new
 		headers: self headers;
 		levelTotal: 6;
@@ -88,16 +88,16 @@ ERAttendeesOfTicket >> renderTableOfAttendsOn: html [
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> ticket [
+ERAttendeesOfTicketView >> ticket [
 	^ ticket
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> ticket: anObject [
+ERAttendeesOfTicketView >> ticket: anObject [
 	ticket := anObject 
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicket >> title [
+ERAttendeesOfTicketView >> title [
 	^ 'Attendees of ', ticket ticketId asUppercase 
 ]

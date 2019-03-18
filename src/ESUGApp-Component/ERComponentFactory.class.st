@@ -32,7 +32,9 @@ ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent 
 	 contentTab: (self createAdditionalInformationComponent: anAttendee);
 			 tabId: 'additionalInfoForm'; 
 			 tabName: 'Additional';
-			 container: aContent
+			 container: aContent;
+			previousTabName: 'Affiliation';
+			nextTabName: 'Payment'
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,7 +49,9 @@ ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent
 		contentTab: (self createAffiliationInformationComponentOn: anAttendee);
 			 tabId: 'affiliationInfoForm'; 
 			 tabName: 'Affiliation';
-			 container: aContent
+			 container: aContent;
+			nextTabName: 'Additional';
+			previousTabName: 'Conference'
 ]
 
 { #category : #'as yet unclassified' }
@@ -61,7 +65,8 @@ ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 		contentTab: (self createBasicInformationComponent: anAttendee);
 			 tabId: 'basicInfoForm'; 
 			 tabName: 'User';
-			 container: aContent
+			 container: aContent;
+			nextTabName: 'Contact'
 ]
 
 { #category : #'as yet unclassified' }
@@ -76,7 +81,9 @@ ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
 		contentTab: (self createContactInformationComponent: anAttendee);
 			 tabId: 'contactInfoForm'; 
 			 tabName: 'Contact';
-			 container: aContent
+			 container: aContent;
+			previousTabName: 'User';
+			nextTabName: 'Conference'
 ]
 
 { #category : #'as yet unclassified' }
@@ -113,7 +120,9 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
 			 tabId: 'paymentInformationForm'; 
 			 tabName: 'Payment';
-			 container: aContent
+			 container: aContent;
+			nextTabName: 'Done';
+			previousTabName: 'Additional'
 ]
 
 { #category : #'as yet unclassified' }
@@ -127,7 +136,9 @@ ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aConte
 			contentTab: (self createRegConferenceInformationComponent: anAttendee);
 			 tabId: 'conferenceOptionsForm'; 
 			 tabName: 'Conference';
-			 container: aContent
+			 container: aContent;
+			nextTabName: 'Affiliation';
+			previousTabName: 'Contact'.
 ]
 
 { #category : #'as yet unclassified' }

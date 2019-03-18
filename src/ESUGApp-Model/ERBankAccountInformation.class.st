@@ -49,6 +49,7 @@ ERBankAccountInformation >> descriptionNumber [
 		label: 'Number (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'number';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -65,6 +66,7 @@ ERBankAccountInformation >> descriptionOwner [
 		label: 'Owner (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'owner';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -81,6 +83,7 @@ ERBankAccountInformation >> descriptionRibKey [
 		label: 'Rib Key (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'ribKey';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

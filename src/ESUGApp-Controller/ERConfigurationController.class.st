@@ -93,6 +93,21 @@ ERConfigurationController >> attends [
 	^ conference attends 
 ]
 
+{ #category : #initialization }
+ERConfigurationController >> closeRegistration [
+	self conference configuration openRegistration: false.
+	self conference save.
+	
+	"self notifyAllObservers"
+]
+
+{ #category : #rendering }
+ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
+	anAttendee userAccount isStudent ifFalse:[
+	(anAttendee userAccount) roleAdd: 'studentVolunter'; save.
+	"self notifyAllObservers"]
+]
+
 { #category : #rendering }
 ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
@@ -129,6 +144,13 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
 	aReductionTicket delete.
 	self notifyAllObservers 
+]
+
+{ #category : #rendering }
+ERConfigurationController >> deleteStudentVolunterRoleFrom: anAttendee [
+	anAttendee userAccount isStudent ifTrue: [
+	(anAttendee userAccount) deleteRole: 'studentVolunter'; save. 
+	"self notifyAllObservers"]
 ]
 
 { #category : #rendering }
@@ -323,6 +345,14 @@ ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
 	self saveTicket: aTicket.
 	self notifyAllObservers 
+]
+
+{ #category : #initialization }
+ERConfigurationController >> openRegistration [
+	self conference configuration
+		openRegistration: true.
+	self conference	save.
+		"self notifyAllObservers"
 ]
 
 { #category : #'as yet unclassified' }

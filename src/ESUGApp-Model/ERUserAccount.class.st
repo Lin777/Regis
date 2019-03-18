@@ -117,6 +117,7 @@ ERUserAccount >> descriptionEmail [
 		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
 		labelled: 'Please enter a valid email';
 		withoutLabel: true;
+		id: 'email';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -134,6 +135,7 @@ ERUserAccount >> descriptionFirstName [
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
 		labelled: 'This field only accept a text';
+		id: 'firstName';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -151,6 +153,7 @@ ERUserAccount >> descriptionLastName [
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
 		labelled: 'This field only accept a text';
+		id: 'lastName';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

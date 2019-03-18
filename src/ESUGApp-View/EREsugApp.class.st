@@ -5,7 +5,7 @@ Class {
 		'controller',
 		'content'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Page'
 }
 
 { #category : #registry }
@@ -86,7 +86,7 @@ EREsugApp >> renderContentOn: html [
 ]
 
 { #category : #initialization }
-EREsugApp >> updateRoot: anHtmlRoot [ 
+EREsugApp >> updateRoot: anHtmlRoot [
 	super updateRoot: anHtmlRoot.
 	anHtmlRoot beHtml5.
 	anHtmlRoot meta
@@ -97,5 +97,4 @@ EREsugApp >> updateRoot: anHtmlRoot [
 				type: 'image/png';
 				url: (CssForLoginMDL urlOf: #esugPng).
 	anHtmlRoot javascript add: 'hljs.initHighlightingOnLoad();'
-
 ]

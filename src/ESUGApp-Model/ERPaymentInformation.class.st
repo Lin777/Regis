@@ -36,6 +36,7 @@ ERPaymentInformation >> descriptionCoupon [
 		labelled: 'There is no ticket with the ticket id provided.';
 		label: 'Reduction Ticket Code';
 		withoutLabel: true;
+		id: 'coupon';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -51,6 +52,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		required: false;
 		options: ERAttendee currencyTypes;
 		withoutLabel: true;
+		id: 'paymentCurrency';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -66,6 +68,7 @@ ERPaymentInformation >> descriptionPaymentType [
 		required: false;
 		options: ERAttendee paymentTypes;
 		withoutLabel: true;
+		id: 'paymentType';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]

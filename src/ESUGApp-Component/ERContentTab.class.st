@@ -1,14 +1,13 @@
 Class {
 	#name : #ERContentTab,
-	#superclass : #ERStateContent,
+	#superclass : #ERTab,
 	#instVars : [
-		'active',
-		'id',
-		'container',
-		'tabId',
-		'tabName',
 		'contentTab',
-		'previousContentTab'
+		'previousContentTab',
+		'action',
+		'nextTabName',
+		'previousTabName',
+		'cancelCallback'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -30,24 +29,38 @@ ERContentTab class >> on: anAttendee container: aContainer [
 	^ form
 ]
 
-{ #category : #activation }
-ERContentTab >> activate [
-	active := true.
+{ #category : #accessing }
+ERContentTab >> action: anObject [
+	action := anObject
 ]
 
 { #category : #accessing }
-ERContentTab >> attendee: anObject [
-	attendee := anObject
+ERContentTab >> actionBackBlock [
+	^ [self updateStateTab: previousTabName]
 ]
 
 { #category : #rendering }
-ERContentTab >> children [ 	
-	^ Array with: contentTab 
+ERContentTab >> actionNextBlock [
+	^ [ [ |model|
+		model := (self contentTab save) model.
+		action value: model.
+		self updateStateTab: nextTabName ]
+	on: ERException 
+	do: [:exception | 
+			self updateStateTab: self tabName .
+			messageComponent errorMessage: exception messageText ]]
 ]
 
 { #category : #accessing }
-ERContentTab >> container: aContainer [
-	container := aContainer
+ERContentTab >> cancelCallback: anObject [
+	cancelCallback := anObject
+]
+
+{ #category : #rendering }
+ERContentTab >> children [
+	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
+		add: contentTab;
+		yourself); yourself
 ]
 
 { #category : #accessing }
@@ -60,20 +73,17 @@ ERContentTab >> contentTab: anObject [
 	contentTab := anObject
 ]
 
-{ #category : #private }
-ERContentTab >> deactivate [
-	active := false.
-]
-
 { #category : #initialization }
 ERContentTab >> initialize [
 	super initialize.
-	active := false.
+	messageComponent := ERAlert warningAlert.
+	cancelCallback := [ container content state: container content lastState ].
+	action := [ :aValue |  ]
 ]
 
-{ #category : #testing }
-ERContentTab >> isActive [
-	^ active.
+{ #category : #accessing }
+ERContentTab >> nextTabName: anObject [
+	nextTabName := anObject
 ]
 
 { #category : #accessing }
@@ -81,11 +91,66 @@ ERContentTab >> previousContentTab: anObject [
 	previousContentTab := anObject
 ]
 
+{ #category : #accessing }
+ERContentTab >> previousTabName: anObject [
+	previousTabName := anObject
+]
+
+{ #category : #rendering }
+ERContentTab >> renderBackButtonOn: html [
+	previousTabName ifNotNil: [
+	html mdlAnchorButton
+		colored;
+		rippleEffect;
+		id: self tabId ,'-previousButton';
+		callback: self actionBackBlock;
+		with: 'Previous']
+]
+
+{ #category : #rendering }
+ERContentTab >> renderButtonsOn: html [
+	html horizontalRule.
+	self renderGoBackToLogin: html.
+	self renderBackButtonOn: html.
+	self renderNextButtonOn: html
+]
+
 { #category : #rendering }
 ERContentTab >> renderContentOn: html [
+	html form
+		method: 'post';
+		id: self tabId,'-form';
+		with: [ 
+	html render: messageComponent.
 	self renderPreviousContentOn: html.
-	html render: contentTab  
+	html render: contentTab.
+	self renderButtonsOn: html]
 	
+]
+
+{ #category : #rendering }
+ERContentTab >> renderGoBackToLogin: html [
+	html mdlButton
+		colored;
+		beSubmit;
+		rippleEffect;
+		onClick: 'return confirm(''You are sure to return? You will lose all your changes'');';
+		id: self tabId ,'-goBackLoginButton';
+		callback: cancelCallback "[self session logout.
+    ^ self requestContext redirectTo: self application url]";
+		with: 'Cancel'
+]
+
+{ #category : #rendering }
+ERContentTab >> renderNextButtonOn: html [
+	nextTabName ifNotNil: [
+	html mdlButton
+		colored;
+		beSubmit;
+		rippleEffect;
+		id: self tabId ,'-nextButton';
+		callback: self actionNextBlock;
+		with: 'Next']
 ]
 
 { #category : #rendering }
@@ -94,32 +159,8 @@ ERContentTab >> renderPreviousContentOn: html [
 		ifTrue: [ html html: previousContentTab ]
 ]
 
-{ #category : #accessing }
-ERContentTab >> tabId [
-	^ tabId 
-]
-
-{ #category : #accessing }
-ERContentTab >> tabId: anObject [
-	tabId := anObject
-]
-
-{ #category : #accessing }
-ERContentTab >> tabName [
-	^ tabName 
-]
-
-{ #category : #accessing }
-ERContentTab >> tabName: anObject [
-	tabName := anObject
-]
-
-{ #category : #'as yet unclassified' }
-ERContentTab >> updateStateTab: aString [
-
-	container tabs detect: [ :tab | (tab tabName = aString) ]
-	ifFound: [ :tab | tab activate.
-		container tabs reject: [ :aTab | (aTab tabName = aString) ]
-		thenDo: [ :aTab | aTab deactivate ]
-	]
+{ #category : #rendering }
+ERContentTab >> tabId: aString [
+	tabId := aString.
+	messageComponent  id: self tabId ,'-tabAlert'.
 ]

@@ -51,6 +51,7 @@ ERTalk >> descriptionDescription [
 		lineCount: 5;
 		label: 'Description (Required)';
 		withoutLabel: true;
+		id: 'description';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
@@ -66,6 +67,7 @@ ERTalk >> descriptionName [
 		beRequired;
 		label: 'Name (Required)';
 		withoutLabel: true;
+		id: 'name';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -77,6 +79,7 @@ ERTalk >> descriptionOtherAuthors [
          accessor: #authorsWithoutSubmitter; 
 			priority: 40;
 		   lineCount: 5;
+			id: 'authorsWithoutSubmitter';
          yourself
 ]
 

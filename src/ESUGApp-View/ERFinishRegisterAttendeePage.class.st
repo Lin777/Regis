@@ -179,7 +179,7 @@ ERFinishRegisterAttendeePage >> renderDaysOfAssistanceOn: html [
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> renderFacebookUrlOn: html [
-	html strong: 'Email: '.
+	html strong: 'Facebook URL: '.
 			html text: (attendee contactInformation facebookURL).
 	html break.
 ]

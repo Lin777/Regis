@@ -67,10 +67,11 @@ ERConferenceConfigurationModel >> descriptionDateFrom [
 		beRequired;
 		cssClass: 'half';
 		group: 'Dates:';
-		label: 'From';
+		label: 'From (Required)';
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateFrom';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -84,11 +85,12 @@ ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 		accessor: #dateSubmissionDeadline; 
 		priority: 60;
 		beRequired;
-		label: 'Submission Deadline';
+		label: 'Submission Deadline (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateSubmissionDeadline';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -102,11 +104,12 @@ ERConferenceConfigurationModel >> descriptionDateTo [
 		accessor: #dateTo; 
 		priority: 50;
 		beRequired;
-		label: 'To';
+		label: 'To (Required)';
 		cssClass: 'half';
 		withoutLabel: true;
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'dateTo';
 		componentClass: MDLMATextInputComponent .
 	^ tmp2 yourself
 ]
@@ -121,6 +124,7 @@ ERConferenceConfigurationModel >> descriptionDescription [
 		priority: 20;
 		required: false;
 		withoutLabel: true;
+		id: 'description';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -134,11 +138,12 @@ ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 		accessor: #earlyRegistrationDeadline; 
 		priority: 70;
 		beRequired;
-		label: 'Early Registration Deadline';
+		label: 'Early Registration Deadline (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
 		addCondition: [ :value | value matchesRegex: self patternDate ] 
 		labelled: self messageInvalidDate;
+		id: 'earlyRegistrationDeadline';
 		componentClass: MDLMATextInputComponent.
 	^ tmp2 yourself
 ]
@@ -153,6 +158,7 @@ ERConferenceConfigurationModel >> descriptionHomePageUrl [
 		priority: 30;
 		required: false;
 		withoutLabel: true;
+		id: 'homePageUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -167,6 +173,8 @@ ERConferenceConfigurationModel >> descriptionName [
 		priority: 10;
 		beRequired;
 		withoutLabel: true;
+		label: 'Name (Required)';
+		id: 'name';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

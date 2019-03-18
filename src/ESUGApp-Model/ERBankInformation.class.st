@@ -63,6 +63,7 @@ ERBankInformation >> descriptionAddressString [
 		lineCount: 5;
 		label: 'AddressString (Required)';
 		withoutLabel: true;
+		id: 'addressString';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
@@ -79,6 +80,7 @@ ERBankInformation >> descriptionBic [
 		label: 'BIC (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'bic';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -95,6 +97,7 @@ ERBankInformation >> descriptionCode [
 		label: 'Code (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'code';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -111,6 +114,7 @@ ERBankInformation >> descriptionCounterCode [
 		label: 'Counter code (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'counterCode';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -127,6 +131,7 @@ ERBankInformation >> descriptionName [
 		label: 'Name (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'name';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

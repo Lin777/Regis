@@ -24,27 +24,27 @@ ERRegisterPage class >> content: aContent [
 { #category : #'as yet unclassified' }
 ERRegisterPage >> actionsBody: html [
 	^ [
-	html mdlCardActions border with: [	
+	"html mdlCardActions border with: [	
 			self renderBackLoginButtonOn: html.
 			self renderBackButtonOn: html.
 			self renderNextButtonOn: html.
-		].
+		]."
 	]
 ]
 
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
 	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
-								withContent: self).
-	self
+								withContent: self) disabled: true; cancelCallback: self cancelRegister.
+	^ self
 		addTab: affiliationInfo .
 ]
 
 { #category : #adding }
 ERRegisterPage >> addBasicInfoTab [
 	basicInfoTab := (self createBasicInfoTab: pageController attendee
-							withContent: self).
-	self
+							withContent: self) cancelCallback: self cancelRegister.
+	^ self
 		addTab: basicInfoTab .
 ]
 
@@ -53,14 +53,21 @@ ERRegisterPage >> addDoneTab [
 	doneTab := (ERDoneButton
 				on: self controller attendee
 				button: [ :html | self renderDoneButtonOn: html ]
-				container: self).
-	self
+				container: self) 
+	disabled: true.
+	^ self
 		addTab: doneTab .
 ]
 
 { #category : #adding }
 ERRegisterPage >> addTab: aAttendeeTabForm [
-	self tabs add: aAttendeeTabForm
+	^ self tabs add: aAttendeeTabForm
+]
+
+{ #category : #adding }
+ERRegisterPage >> cancelRegister [
+	^ [self session logout.
+    ^ self requestContext redirectTo: self application url]
 ]
 
 { #category : #initialization }
@@ -112,7 +119,7 @@ ERRegisterPage >> renderBackLoginButtonOn: html [
 
 { #category : #rendering }
 ERRegisterPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; ';
+	html div style: self styleBackgound ;
 	with: [ 
 		html break. html break. html break. 
 		aBlock value	
@@ -150,7 +157,7 @@ ERRegisterPage >> renderPageOn: html [
 	html form
 		id: 'registerForm';
 		with: [ html mdlTabs rippleEffect with: 
-			[ html render: (ERTabs tabs: self tabs) ] ].
+			[ html render: (ERTabs tabs: self tabs) ] ]
 ]
 
 { #category : #initialize }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'messageInputRequired'
 	],
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }

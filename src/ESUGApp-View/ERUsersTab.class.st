@@ -36,7 +36,7 @@ ERUsersTab >> createUser: anUser [
 	anUser role: (Heap new
 		add: anUser role;
 		yourself).
-	ERController uniqueInstance addUser: anUser .
+	ERController new addUser: anUser .
 	self cancel
 ]
 

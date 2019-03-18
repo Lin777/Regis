@@ -78,6 +78,7 @@ ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 120;
+		id: 'addPersonToSocialDinner';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -93,6 +94,7 @@ ERRegisterConferenceInformation >> descriptionAddedToMainList [
 		beRequired;
 		componentClass: MDLMACheckboxComponent;
 		priority: 110;
+		id: 'addedToMainList';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -108,6 +110,7 @@ ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 100;
+		id: 'attendSocialEvent';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -124,6 +127,7 @@ ERRegisterConferenceInformation >> descriptionFood [
 		cssClass: 'third';
 		options: ERAttendee foodPreferences;
 		withoutLabel: true;
+		id: 'foodPreference';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -140,6 +144,7 @@ ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 		default: 'Normal';
 		options: ERAttendee foodPreferences;
 		withoutLabel: true;
+		id: 'personAddedFoodPreference';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -154,6 +159,7 @@ ERRegisterConferenceInformation >> descriptionFriday [
 		accessor: #friday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 50;
+		id: 'friday';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -170,6 +176,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 		cssClass: 'third';
 		options: ERAttendee genders;
 		withoutLabel: true;
+		id: 'gender';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -185,6 +192,7 @@ ERRegisterConferenceInformation >> descriptionMonday [
 		group: 'Days: ';
 		componentClass: MDLMACheckboxComponent;
 		priority: 10;
+		id: 'monday';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -199,6 +207,7 @@ ERRegisterConferenceInformation >> descriptionThursday [
 		accessor: #thursday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 40;
+		id: 'thursday';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -215,6 +224,7 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		cssClass: 'third';
 		options: ERAttendee tShirtSizes;
 		withoutLabel: true;
+		id: 'tshirtSize';
 		componentClass: MDLMASelectListComponent .
 	^ tmp1 yourself
 ]
@@ -229,6 +239,7 @@ ERRegisterConferenceInformation >> descriptionTuesday [
 		accessor: #tuesday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 20;
+		id: 'tuesday';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]
@@ -243,6 +254,7 @@ ERRegisterConferenceInformation >> descriptionWednesday [
 		accessor: #wednesday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 30;
+		id: 'wednesday';
 		withoutLabel: true.
 	^ tmp2 yourself
 ]

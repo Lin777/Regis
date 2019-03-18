@@ -73,7 +73,7 @@ ERLoginPage >> registerUser [
 
 { #category : #rendering }
 ERLoginPage >> renderBody: html with: aBlock [
-	html div style: 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh;';
+	html div style: self styleBackgound ;
 	with: [ 
 		html mdlLayout	with: aBlock
 	]
@@ -103,6 +103,7 @@ ERLoginPage >> renderFieldsLoginOn: html [
 ERLoginPage >> renderForgotPasswordButtonOn: html [
 	html mdlAnchorButton 
 		class: 'mdl-color-text--blue';
+		id: 'forgot-password';
 		callback: [ self call: ERForgotPasswordPage new"self sendEmailWithResetedPassword" ];
 		with: 'Forgot Password'
 ]

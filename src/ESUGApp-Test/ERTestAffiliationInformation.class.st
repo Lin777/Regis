@@ -1,7 +1,7 @@
 Class {
 	#name : #ERTestAffiliationInformation,
 	#superclass : #ERTestModel,
-	#category : #'ESUGApp-Test'
+	#category : #'ESUGApp-Test-UnitTest'
 }
 
 { #category : #tests }
