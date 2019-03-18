@@ -6,7 +6,8 @@ Class {
 		'previousContentTab',
 		'action',
 		'nextTabName',
-		'previousTabName'
+		'previousTabName',
+		'cancelCallback'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -50,6 +51,11 @@ ERContentTab >> actionNextBlock [
 			messageComponent errorMessage: exception messageText ]]
 ]
 
+{ #category : #accessing }
+ERContentTab >> cancelCallback: anObject [
+	cancelCallback := anObject
+]
+
 { #category : #rendering }
 ERContentTab >> children [
 	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
@@ -71,6 +77,7 @@ ERContentTab >> contentTab: anObject [
 ERContentTab >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert.
+	cancelCallback := [ container content state: container content lastState ].
 	action := [ :aValue |  ]
 ]
 
@@ -127,11 +134,11 @@ ERContentTab >> renderGoBackToLogin: html [
 		colored;
 		beSubmit;
 		rippleEffect;
-		onClick: 'return confirm(''You are sure to return to the login? You will lose all your changes'');';
+		onClick: 'return confirm(''You are sure to return? You will lose all your changes'');';
 		id: self tabId ,'-goBackLoginButton';
-		callback: [self session logout.
-    ^ self requestContext redirectTo: self application url];
-		with: 'Back Login'
+		callback: cancelCallback "[self session logout.
+    ^ self requestContext redirectTo: self application url]";
+		with: 'Cancel'
 ]
 
 { #category : #rendering }
@@ -141,8 +148,6 @@ ERContentTab >> renderNextButtonOn: html [
 		colored;
 		beSubmit;
 		rippleEffect;
-		"onClick: ((html jQuery id: 'tab-',nextTabName) 
-						removeAttribute: 'disabled');"
 		id: self tabId ,'-nextButton';
 		callback: self actionNextBlock;
 		with: 'Next']

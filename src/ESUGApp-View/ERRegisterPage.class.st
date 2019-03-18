@@ -35,16 +35,16 @@ ERRegisterPage >> actionsBody: html [
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
 	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
-								withContent: self) disabled: true.
-	self
+								withContent: self) disabled: true; cancelCallback: self cancelRegister.
+	^ self
 		addTab: affiliationInfo .
 ]
 
 { #category : #adding }
 ERRegisterPage >> addBasicInfoTab [
 	basicInfoTab := (self createBasicInfoTab: pageController attendee
-							withContent: self).
-	self
+							withContent: self) cancelCallback: self cancelRegister.
+	^ self
 		addTab: basicInfoTab .
 ]
 
@@ -55,13 +55,19 @@ ERRegisterPage >> addDoneTab [
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self) 
 	disabled: true.
-	self
+	^ self
 		addTab: doneTab .
 ]
 
 { #category : #adding }
 ERRegisterPage >> addTab: aAttendeeTabForm [
-	self tabs add: aAttendeeTabForm
+	^ self tabs add: aAttendeeTabForm
+]
+
+{ #category : #adding }
+ERRegisterPage >> cancelRegister [
+	^ [self session logout.
+    ^ self requestContext redirectTo: self application url]
 ]
 
 { #category : #initialization }

@@ -100,6 +100,13 @@ ERConfigurationController >> closeRegistration [
 ]
 
 { #category : #rendering }
+ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
+	anAttendee userAccount isStudent ifFalse:[
+	(anAttendee userAccount) roleAdd: 'studentVolunter'; save.
+	"self notifyAllObservers"]
+]
+
+{ #category : #rendering }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
@@ -117,6 +124,13 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 	conference reductionTickets
 		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].
 	aReductionTicket delete
+]
+
+{ #category : #rendering }
+ERConfigurationController >> deleteStudentVolunterRoleFrom: anAttendee [
+	anAttendee userAccount isStudent ifTrue: [
+	(anAttendee userAccount) deleteRole: 'studentVolunter'; save. 
+	"self notifyAllObservers"]
 ]
 
 { #category : #rendering }

@@ -13,32 +13,32 @@ Class {
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 	addInfo := (self createAdditionalInfoTab: pageController attendee
-						withContent: self) disabled: true.
-	self
+						withContent: self) disabled: true; cancelCallback: self cancelRegister.
+	^ self
 		addTab: addInfo.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addContactInfoTab [
 	contactInfoTab := (self createContactInfoTab: pageController attendee 
-								withContent: self ) disabled: true.
-	self
+								withContent: self ) disabled: true; cancelCallback: self cancelRegister.
+	^ self
 		addTab: contactInfoTab.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addPaymentInfoTab [
 	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
-								 withContent: self ) disabled: true.
-	self
+								 withContent: self ) disabled: true; cancelCallback: self cancelRegister.
+	^self
 		addTab: paymentInfoTab.
 ]
 
 { #category : #initialize }
 ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 	regConfInfo := (self createRegConferenceInfoTab: pageController attendee
-							 withContent: self )disabled: true.
-	self
+							 withContent: self )disabled: true; cancelCallback: self cancelRegister.
+	^ self
 		addTab: regConfInfo .
 ]
 

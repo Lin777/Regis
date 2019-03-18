@@ -13,8 +13,8 @@ ERGroupManagerRegistrationPage >> initialize [
 
 { #category : #initialization }
 ERGroupManagerRegistrationPage >> initializeTabForms [
-	self addBasicInfoTab.
-	self addAffiliationInfoTab.
+	self addBasicInfoTab nextTabName: 'Affiliation'.
+	self addAffiliationInfoTab previousTabName: 'User'; nextTabName: 'Done'.
 	self addDoneTab.
 	
 	currentTab := basicInfoTab.
