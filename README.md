@@ -41,6 +41,30 @@ You can see the registered users by logging in as admin.
 ### Note: 
 All the users generated automatically have as password: 12345678
 
+## Deploy with Docker:
+
+### Prerequisites:
+- Install a maintained version of Docker Community Edition (CE) or Enterprise Edition (EE) on a supported platform. [Install docker](https://docs.docker.com/install/).
+- Download the [Docker](https://github.com/Lin777/ESUGConfRegistrationApp/tree/master/Docker) folder of this repo.
+
+### Steps to follow
+
+- On your terminal locate inside the docker folder that you downloaded.
+- Run the following script to build the image with all the prerequisites from the Dockerfile file:
+```bash
+docker build -t esug .
+``` 
+- Run the following script to create a container from the esug image:
+```bash
+docker run -it -p 8000:8000 esug bash
+``` 
+- The above script will make you enter a container terminal, where you must execute the following script:
+```bash
+screen -Sdm esug ./pharo esug.image --no-quit
+``` 
+- To exit the container terminal press Ctr + p + q
+- Now you can see the page running in: http://localhost:8000/ESUG
+
 ## Progress Status
 
 ### Roles
