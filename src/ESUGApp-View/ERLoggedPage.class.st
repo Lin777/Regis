@@ -96,6 +96,8 @@ ERLoggedPage >> itemList [
 		at: 'statistics'
 			put: [ ERStatisticsView
 				withContent: content ];
+		at: 'search'
+			put: [ ERStudentVolunterView withContent: content ];
 		yourself
 ]
 
@@ -114,7 +116,7 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 			list add: aMenuFactory createProposalsItem.
 			list add: aMenuFactory createStatisticsItem ].
 	self session user isStudent
-		ifTrue: [  ].
+		ifTrue: [ list add: aMenuFactory createStudentVolunterSearch ].
 	list add: aMenuFactory createAdminItem.
 	list add: aMenuFactory createLogoutItem .
 	^ list

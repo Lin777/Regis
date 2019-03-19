@@ -63,7 +63,7 @@ ERBankInformation >> descriptionAddressString [
 		lineCount: 5;
 		label: 'AddressString (Required)';
 		withoutLabel: true;
-		id: 'addressString';
+		id: 'addressStringBank';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
 ]
@@ -131,7 +131,7 @@ ERBankInformation >> descriptionName [
 		label: 'Name (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
-		id: 'name';
+		id: 'nameBank';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]

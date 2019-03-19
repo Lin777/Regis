@@ -85,7 +85,7 @@ ERTestController >> testEncodeFileToUTF8 [
 
 { #category : #tests }
 ERTestController >> testExistReductionTicketWithName [
-	self assert: (controller existReductionTicketWithName: self validCoupon).
+	self assert: (controller existReductionTicketWithName: self validCoupon ticketId).
 	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
 ]
 

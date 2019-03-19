@@ -80,12 +80,11 @@ ERConfigurationController >> addTicket: aReductionTicket [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(ERController new findUserByEmail: anAttendee email)
+	(self findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.
-			^ userSaved ].
-	^ nil
+			^ userSaved ]
 ]
 
 { #category : #accessing }
@@ -98,14 +97,14 @@ ERConfigurationController >> closeRegistration [
 	self conference configuration openRegistration: false.
 	self conference save.
 	
-	"self notifyAllObservers"
+	self notifyAllObservers
 ]
 
 { #category : #rendering }
 ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
 	anAttendee userAccount isStudent ifFalse:[
 	(anAttendee userAccount) roleAdd: 'studentVolunter'; save.
-	"self notifyAllObservers"]
+	self notifyAllObservers]
 ]
 
 { #category : #rendering }
@@ -352,7 +351,7 @@ ERConfigurationController >> openRegistration [
 	self conference configuration
 		openRegistration: true.
 	self conference	save.
-		"self notifyAllObservers"
+	self notifyAllObservers
 ]
 
 { #category : #'as yet unclassified' }
@@ -459,12 +458,13 @@ ERConfigurationController >> users [
 { #category : #validations }
 ERConfigurationController >> validateConferenceConfiguration: configuration [
 	configuration dateFrom asDate < configuration dateTo asDate
-	ifFalse: [ ERException invalidEsugDates signal ]
+	ifFalse: [ ^ ERException invalidEsugDates signal ]
 	
 ]
 
 { #category : #validations }
 ERConfigurationController >> validateEmailConfiguration: emailConfiguration [
+	
 ]
 
 { #category : #validations }

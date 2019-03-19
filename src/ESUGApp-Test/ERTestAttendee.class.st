@@ -11,6 +11,6 @@ ERTestAttendee >> testHasCoupon [
 	self deny: attendee hasCoupon.
 	attendee paymentInformation coupon: ''.
 	self deny: attendee hasCoupon.
-	attendee paymentInformation coupon: self validCoupon .
+	attendee paymentInformation coupon: self validCoupon ticketId.
 	self assert: attendee hasCoupon 
 ]

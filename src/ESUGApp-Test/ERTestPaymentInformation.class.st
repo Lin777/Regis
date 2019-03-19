@@ -32,7 +32,7 @@ ERTestPaymentInformation >> testNonValidTicketIdCouponField [
 ERTestPaymentInformation >> testValidTicketIdCouponField [
 	| errors paymentInfo |
 	paymentInfo := (self class testPaymentInformation) 
-	coupon: self validCoupon; yourself.
+	coupon: self validCoupon ticketId; yourself.
 	errors := paymentInfo asComponent validate; errors.
 	self assert: 0 equals: errors size.
 ]
