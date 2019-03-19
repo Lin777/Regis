@@ -39,21 +39,58 @@ ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self selectFeeTab .
 ]
 
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> moveToTicketsOption [
+	self pressOptionConfiguration .
+	self selectTicketTab .
+]
+
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionConfiguration [
 	(driver findElementByID: 'Configuration-option') click.
 ]
 
-{ #category : #tests }
+{ #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	(driver findElementByID: 'tab-Fee') click.
 ]
 
-{ #category : #accessing }
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> selectTicketTab [
+
+	(driver findElementByID: 'tab-Tickets') click.
+]
+
+{ #category : #tests }
 ERLoggedPageAsAdminTest >> setUp [
 	super setUp.
 	self loginAsAdmin .
 	ERTest generateDataForTest .
+	controller := ERConfigurationController new.
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testPressDeleteATicketAcceptAlert [
+	|delete coupon|
+	coupon := self validCoupon id.
+	self moveToTicketsOption.
+	delete := driver findElementByID: coupon, '-delete'.
+	delete click.
+	driver acceptAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: nil
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
+	|delete coupon|
+	coupon := self validCoupon id.
+	self moveToTicketsOption.
+	delete := driver findElementByID: coupon, '-delete'.
+	delete click.
+	driver dismissAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
 ]
 
 { #category : #configurationFeeTests }

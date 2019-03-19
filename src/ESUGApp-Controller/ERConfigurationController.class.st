@@ -80,12 +80,11 @@ ERConfigurationController >> addTicket: aReductionTicket [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(ERController new findUserByEmail: anAttendee email)
+	(self findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.
-			^ userSaved ].
-	^ nil
+			^ userSaved ]
 ]
 
 { #category : #accessing }

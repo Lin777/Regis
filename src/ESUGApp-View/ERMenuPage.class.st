@@ -92,6 +92,14 @@ ERMenuPage >> createStatisticsItem [
 ]
 
 { #category : #'as yet unclassified' }
+ERMenuPage >> createStudentVolunterSearch [
+	^ ERItemNav 
+		label: 'Search' 
+		icon: 'search' 
+		callback: (availableItemsOfMenu at: 'search')
+]
+
+{ #category : #'as yet unclassified' }
 ERMenuPage >> createUsersItem [
 	^ ERItemNav
 		label: 'Users'

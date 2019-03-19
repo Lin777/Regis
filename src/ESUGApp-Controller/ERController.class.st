@@ -398,15 +398,6 @@ ERController >> senderEmailAddress [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> stateUpdateNotPaidAttendees: aGroup [
-	aGroup listAttends do: [ :attend | 
-		self stateUpdatePaidAttendee: attend with: false
-	].
-	aGroup paymentAmount: nil.
-	aGroup save.
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee paymentInformation hasPaid: aBoolean.
 	anAttendee userAccount isGroupManager ifTrue: [
@@ -510,7 +501,7 @@ ERController >> validateRegister: anAttendee [
 
 { #category : #action }
 ERController >> verifyIfTheTicketIsStillAvailable: aString [
-	ERController new conference reductionTickets 
+	self conference reductionTickets 
 	detect: [ :each | each ticketId = aString ] 
 	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
 	ifNone: [ ERException ticketDoesNotExist signal ]
