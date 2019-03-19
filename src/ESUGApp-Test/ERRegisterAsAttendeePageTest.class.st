@@ -1,6 +1,6 @@
 Class {
 	#name : #ERRegisterAsAttendeePageTest,
-	#superclass : #ERParasolTest,
+	#superclass : #ERRegisterTest,
 	#category : #'ESUGApp-Test-Parasol'
 }
 
@@ -36,38 +36,8 @@ ERRegisterAsAttendeePageTest >> coupon: aString [
 ]
 
 { #category : #tests }
-ERRegisterAsAttendeePageTest >> fillAllAffiliationFields [
-	self organizationName: 'Semantics' organizationAddrees1: 'Example Av.' organizationAddrees2: 'Example St.' organizationCity: 'Cochabamba' organizationCountry: 'Bolivia' organizationProvince: 'Cercado' organizationPostal: '0000' membershipType: 'Academic'
-]
-
-{ #category : #tests }
 ERRegisterAsAttendeePageTest >> fillAllContactFields [
 	self address: 'Example Av.' address2: 'Example St.' city: 'Cochabamba' contactCountry: 'Bolivia' province: 'Cercado' postal: '0000' facebookURL: 'https://es-la.facebook.com/' twitterURL: '' homePageURL: ''
-]
-
-{ #category : #tests }
-ERRegisterAsAttendeePageTest >> fillAllUserFields [
-	self firstName: 'register' lastName: 'register' email: 'register@gmail.com' password: '12345678' confirmPassword: '12345678'.
-]
-
-{ #category : #tests }
-ERRegisterAsAttendeePageTest >> firstName: aString1 lastName: aString2 email: aString3 password: aString4 confirmPassword: aString5 [
-	|firstName lastName email password confirmPassword|
-	firstName := driver findElementByID: 'firstName'.
-	lastName := driver findElementByID: 'lastName'.
-	email := driver findElementByID: 'email'.
-	password := driver findElementByID: 'password'.
-	confirmPassword := driver findElementByID: 'confirmPassword'.
-	firstName sendKeys: aString1 .
-	lastName sendKeys: aString2.
-	email sendKeys: aString3.
-	password sendKeys: aString4.
-	confirmPassword sendKeys: aString5.
-]
-
-{ #category : #'as yet unclassified' }
-ERRegisterAsAttendeePageTest >> getTextOfError [
-	^ (((((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li')findElementByTagName: 'ul')findElementByTagName: 'li') getText
 ]
 
 { #category : #tests }
@@ -79,27 +49,6 @@ ERRegisterAsAttendeePageTest >> keywords: aString1 additionalText: aString2 [
 	keywords sendKeys: aString1 .
 	additionalText sendKeys: aString2.
 	
-]
-
-{ #category : #tests }
-ERRegisterAsAttendeePageTest >> organizationName: aString1 organizationAddrees1: aString2 organizationAddrees2: aString3 organizationCity: aString4 organizationCountry: aString5 organizationProvince: aString6 organizationPostal: aString7 membershipType: aString8 [
-	|organizationName organizationAddrees1 organizationAddrees2 organizationCity organizationCountry organizationProvince organizationPostal membershipType|
-	organizationName := driver findElementByID: 'organizationName'.
-	organizationAddrees1 := driver findElementByID: 'organizationAddrees1'.
-	organizationAddrees2 := driver findElementByID: 'organizationAddrees2'.
-	organizationCity := driver findElementByID: 'organizationCity'.
-	organizationCountry := driver findElementByID: 'organizationCountry'.
-	organizationProvince := driver findElementByID: 'organizationProvince'.
-	organizationPostal := driver findElementByID: 'organizationPostal'.
-	membershipType := driver findElementByID: 'membershipType'.
-	organizationName sendKeys: aString1 .
-	organizationAddrees1 sendKeys: aString2.
-	organizationAddrees2 sendKeys: aString3.
-	organizationCity sendKeys: aString4.
-	organizationCountry sendKeys: aString5.
-	organizationProvince sendKeys: aString6.
-	organizationPostal sendKeys: aString7.
-	membershipType sendKeys: aString8
 ]
 
 { #category : #'as yet unclassified' }
@@ -138,10 +87,10 @@ ERRegisterAsAttendeePageTest >> pressNextButtonContact [
 ]
 
 { #category : #'as yet unclassified' }
-ERRegisterAsAttendeePageTest >> pressNextButtonUser [
+ERRegisterAsAttendeePageTest >> pressNextButtonPayment [
 	|next|
-	self fillAllUserFields.
-	next := driver findElementByID: 'basicInfoForm-nextButton'.
+	self pressNextButtonAdditional.
+	next := driver findElementByID: 'paymentInformationForm-nextButton'.
 	next click.
 ]
 
@@ -160,6 +109,16 @@ ERRegisterAsAttendeePageTest >> setUp [
 ]
 
 { #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
+	|next|
+	self pressNextButtonAffiliation  .
+	next := driver findElementByID: 'additionalInfoForm-previousButton'.
+	next click.
+	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Affiliation')
+]
+
+{ #category : #tests }
 ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilledCorrectly [
 	|next|
 	self pressNextButtonAffiliation .
@@ -168,6 +127,16 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Payment')
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
+	|next|
+	self pressNextButtonConference  .
+	next := driver findElementByID: 'affiliationInfoForm-previousButton'.
+	next click.
+	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Conference')
 ]
 
 { #category : #tests }
@@ -248,6 +217,34 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 ]
 
 { #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressCancelButtonAcceptAlert [
+	|cancel|
+	cancel := driver findElementByID: 'basicInfoForm-goBackLoginButton'.
+	cancel click.
+	driver acceptAlert .
+	self assert: (driver findElementByID: 'card-heading') getText = 'User Login'
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressCancelButtonDismissAlert [
+	|cancel|
+	cancel := driver findElementByID: 'basicInfoForm-goBackLoginButton'.
+	cancel click.
+	driver dismissAlert .
+	self assert: (driver findElementByID: 'card-heading') getText = 'Registration'
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressConferenceBackButton [
+	|next|
+	self pressNextButtonContact .
+	next := driver findElementByID: 'conferenceOptionsForm-previousButton'.
+	next click.
+	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Contact')
+]
+
+{ #category : #tests }
 ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilledCorrectly [
 	|next|
 	self pressNextButtonContact .
@@ -258,13 +255,53 @@ ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilled
 ]
 
 { #category : #tests }
-ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCorrectly [
+ERRegisterAsAttendeePageTest >> testPressContactBackButton [
 	|next|
-	self fillAllUserFields.
-	next := driver findElementByID: 'basicInfoForm-nextButton'.
+	self pressNextButtonUser.
+	next := driver findElementByID: 'contactInfoForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Contact')
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-User')
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCorrectly [
+	|next|
+	self pressNextButtonUser .
+	next := driver findElementByID: 'contactInfoForm-nextButton'.
+	next click.
+	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Conference')
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressDoneButton [
+	|next|
+	self pressNextButtonPayment .
+	next := driver findElementByID: 'registerButton'.
+	next click.
+	self assert: (driver findElementByID: 'card-heading') getText = 'Registration Summary'
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
+	|next|
+	self pressNextButtonAdditional   .
+	next := driver findElementByID: 'paymentInformationForm-previousButton'.
+	next click.
+	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Additional')
+]
+
+{ #category : #tests }
+ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
+	|next|
+	self pressNextButtonAdditional .
+	self coupon: 'invalidCoupon'.
+	next := driver findElementByID: 'paymentInformationForm-nextButton'.
+	next click.
+	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self assert: self getTextOfError equals: 'Reduction Ticket Code: There is no ticket with the ticket id provided.'
 ]
 
 { #category : #tests }
