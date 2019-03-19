@@ -115,7 +115,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	next := driver findElementByID: 'additionalInfoForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
 
 { #category : #tests }
@@ -126,7 +126,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 	next := driver findElementByID: 'additionalInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Payment')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Payment')
 ]
 
 { #category : #tests }
@@ -136,7 +136,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
 	next := driver findElementByID: 'affiliationInfoForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Conference')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
 { #category : #tests }
@@ -147,7 +147,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFille
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Additional')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
 { #category : #tests }
@@ -170,7 +170,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Address 1 (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Address 1')
 	
 ]
 
@@ -184,7 +184,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'City (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'City')
 	
 ]
 
@@ -198,7 +198,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Organization Name (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Organization Name')
 	
 ]
 
@@ -212,7 +212,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Postal/Zipcode (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Postal/Zipcode')
 	
 ]
 
@@ -222,7 +222,7 @@ ERRegisterAsAttendeePageTest >> testPressCancelButtonAcceptAlert [
 	cancel := driver findElementByID: 'basicInfoForm-goBackLoginButton'.
 	cancel click.
 	driver acceptAlert .
-	self assert: (driver findElementByID: 'card-heading') getText = 'User Login'
+	self assert: (driver findElementByID: 'card-heading') getText equals: 'User Login'
 ]
 
 { #category : #tests }
@@ -231,7 +231,7 @@ ERRegisterAsAttendeePageTest >> testPressCancelButtonDismissAlert [
 	cancel := driver findElementByID: 'basicInfoForm-goBackLoginButton'.
 	cancel click.
 	driver dismissAlert .
-	self assert: (driver findElementByID: 'card-heading') getText = 'Registration'
+	self assert: (driver findElementByID: 'card-heading') getText equals: 'Registration'
 ]
 
 { #category : #tests }
@@ -241,7 +241,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceBackButton [
 	next := driver findElementByID: 'conferenceOptionsForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Contact')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Contact')
 ]
 
 { #category : #tests }
@@ -251,7 +251,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilled
 	next := driver findElementByID: 'conferenceOptionsForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
 
 { #category : #tests }
@@ -261,7 +261,7 @@ ERRegisterAsAttendeePageTest >> testPressContactBackButton [
 	next := driver findElementByID: 'contactInfoForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-User')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-User')
 ]
 
 { #category : #tests }
@@ -271,7 +271,7 @@ ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCor
 	next := driver findElementByID: 'contactInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Conference')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
 { #category : #tests }
@@ -280,7 +280,7 @@ ERRegisterAsAttendeePageTest >> testPressDoneButton [
 	self pressNextButtonPayment .
 	next := driver findElementByID: 'registerButton'.
 	next click.
-	self assert: (driver findElementByID: 'card-heading') getText = 'Registration Summary'
+	self assert: (driver findElementByID: 'card-heading') getText equals: 'Registration Summary'
 ]
 
 { #category : #tests }
@@ -290,7 +290,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
 	next := driver findElementByID: 'paymentInformationForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Additional')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
 { #category : #tests }
@@ -311,7 +311,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField
 	next := driver findElementByID: 'paymentInformationForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Done')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
 	
 ]
 
@@ -322,7 +322,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithAllFieldsFilledCorrec
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Contact')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Contact')
 ]
 
 { #category : #tests }
@@ -333,7 +333,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutConfirmPasswordFie
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Confirm Password (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Confirm Password')
 ]
 
 { #category : #tests }
@@ -344,7 +344,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutEmailField [
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Email (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Email')
 ]
 
 { #category : #tests }
@@ -364,7 +364,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFirstNameField [
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'First Name (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'First Name')
 ]
 
 { #category : #tests }
@@ -375,5 +375,5 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutLastNameField [
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: 'Last Name (Required): Input is required but no input given'
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Last Name')
 ]

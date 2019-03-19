@@ -24,7 +24,7 @@ ERRegisterAsGroupManagerPageTest >> testPressAffiliationBackButton [
 	next := driver findElementByID: 'affiliationInfoForm-previousButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-User')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-User')
 ]
 
 { #category : #tests }
@@ -35,7 +35,7 @@ ERRegisterAsGroupManagerPageTest >> testPressAffiliationNextButtonWithAllFieldsF
 	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Done')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
 ]
 
 { #category : #tests }
@@ -45,5 +45,5 @@ ERRegisterAsGroupManagerPageTest >> testPressUserNextButtonWithAllFieldsFilledCo
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
 	next click.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') = (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]

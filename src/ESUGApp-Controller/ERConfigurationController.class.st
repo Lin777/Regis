@@ -98,14 +98,14 @@ ERConfigurationController >> closeRegistration [
 	self conference configuration openRegistration: false.
 	self conference save.
 	
-	"self notifyAllObservers"
+	self notifyAllObservers
 ]
 
 { #category : #rendering }
 ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
 	anAttendee userAccount isStudent ifFalse:[
 	(anAttendee userAccount) roleAdd: 'studentVolunter'; save.
-	"self notifyAllObservers"]
+	self notifyAllObservers]
 ]
 
 { #category : #rendering }
@@ -352,7 +352,7 @@ ERConfigurationController >> openRegistration [
 	self conference configuration
 		openRegistration: true.
 	self conference	save.
-		"self notifyAllObservers"
+	self notifyAllObservers
 ]
 
 { #category : #'as yet unclassified' }
@@ -459,12 +459,13 @@ ERConfigurationController >> users [
 { #category : #validations }
 ERConfigurationController >> validateConferenceConfiguration: configuration [
 	configuration dateFrom asDate < configuration dateTo asDate
-	ifFalse: [ ERException invalidEsugDates signal ]
+	ifFalse: [ ^ ERException invalidEsugDates signal ]
 	
 ]
 
 { #category : #validations }
 ERConfigurationController >> validateEmailConfiguration: emailConfiguration [
+	
 ]
 
 { #category : #validations }

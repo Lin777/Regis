@@ -29,11 +29,6 @@ ERRegisterTest >> firstName: aString1 lastName: aString2 email: aString3 passwor
 	confirmPassword sendKeys: aString5.
 ]
 
-{ #category : #'as yet unclassified' }
-ERRegisterTest >> getTextOfError [
-	^ (((((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li')findElementByTagName: 'ul')findElementByTagName: 'li') getText
-]
-
 { #category : #tests }
 ERRegisterTest >> organizationName: aString1 organizationAddrees1: aString2 organizationAddrees2: aString3 organizationCity: aString4 organizationCountry: aString5 organizationProvince: aString6 organizationPostal: aString7 membershipType: aString8 [
 	|organizationName organizationAddrees1 organizationAddrees2 organizationCity organizationCountry organizationProvince organizationPostal membershipType|

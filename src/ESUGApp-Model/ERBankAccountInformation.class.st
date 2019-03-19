@@ -33,6 +33,7 @@ ERBankAccountInformation >> descriptionIban [
 		label: 'Iban (Required)';
 		withoutLabel: true;
 		cssClass: 'half';
+		id: 'iban';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
