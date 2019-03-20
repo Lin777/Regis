@@ -93,6 +93,19 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
 ]
 
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testPressEditTicket [
+	|delete coupon|
+	coupon := self validCoupon.
+	self moveToTicketsOption.
+	delete := driver findElementByID: coupon id, '-modify'.
+	delete click.
+	self assert: (driver findElementByTagName: 'h3') getText 
+	equals: 'Reduction Tickets'.
+	self assert: ((driver findElementByID: 'ticketId') getAttribute: 'value')
+	equals: coupon ticketId .
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 

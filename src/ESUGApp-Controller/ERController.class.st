@@ -262,6 +262,11 @@ ERController >> filterAttendsByFirstNameWith: aString [
 	^ self filterAttendsBy: #firstName beginsWith: aString
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> filterAttendsByLastNameWith: aString [
+	^ self filterAttendsBy: #lastName beginsWith: aString
+]
+
 { #category : #actions }
 ERController >> findUserByEmail: aString [
 	^ conference users 

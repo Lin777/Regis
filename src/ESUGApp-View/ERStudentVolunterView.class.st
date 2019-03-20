@@ -18,11 +18,17 @@ ERStudentVolunterView class >> withContent: content [
 ]
 
 { #category : #rendering }
+ERStudentVolunterView >> allAttends [ 
+	^ controller conference attends
+]
+
+{ #category : #rendering }
 ERStudentVolunterView >> attends [
 	aStringToMatch 
 		ifNil: [
-			^ controller conference attends ]
-		ifNotNil: [ ^ self filteredAssistants ]
+			^ self allAttends ]
+		ifNotNil: [
+			^ self filteredAssistants ]
 ]
 
 { #category : #rendering }
@@ -58,9 +64,16 @@ ERStudentVolunterView >> filterByFirstName [
 ]
 
 { #category : #rendering }
+ERStudentVolunterView >> filterByLastName [
+	^ controller filterAttendsByLastNameWith: aStringToMatch
+]
+
+{ #category : #rendering }
 ERStudentVolunterView >> filteredAssistants [
+	aStringToMatch isEmpty ifTrue: [ ^ self allAttends ].
 	self strategyIsByEmail ifTrue: [ ^ self filterByEmail ].
-	self strategyIsByName ifTrue: [ ^ self filterByFirstName  ]
+	self strategyIsByName ifTrue: [ ^ self filterByFirstName ].
+	self strategyIsByLastName ifTrue: [ ^ self filterByLastName ]
 ]
 
 { #category : #accessing }
@@ -87,7 +100,7 @@ ERStudentVolunterView >> renderFieldToSearchOn: html [
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
 				for: 'is_register';
-				with: 'Email attendee'.
+				with: strategy.
 			html mdlTextFieldInput
 				onChange: 'submit()';
 				id: 'is_register';
@@ -116,7 +129,7 @@ ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
 				onChange: 'submit()';
 				class: 'mdl-textfield__input';
 				id: 'selectStrategy';
-				list: #('Email' 'First Name');
+				list: #('Email' 'First Name' 'Last Name');
 				selected: strategy;
 				callback: [ :value | strategy := value ] ] ]
 ]
@@ -136,6 +149,11 @@ ERStudentVolunterView >> renderTableOfAttendsOn: html [
 { #category : #rendering }
 ERStudentVolunterView >> strategyIsByEmail [
 	^ strategy = 'Email'
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> strategyIsByLastName [
+	^ strategy = 'Last Name'
 ]
 
 { #category : #rendering }

@@ -14,3 +14,9 @@ ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 	password sendKeys: '12345678'.
 	signIn click.
 ]
+
+{ #category : #accessing }
+ERLoggedPageAsAttendeeTest >> setUp [
+	super setUp.
+	self loginAsAttendee.
+]

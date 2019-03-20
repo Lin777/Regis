@@ -14,3 +14,9 @@ ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
 	password sendKeys: '12345678'.
 	signIn click.
 ]
+
+{ #category : #accessing }
+ERLoggedPageAsGroupManagerTest >> setUp [
+	super setUp.
+	self loginAsGroupManager .
+]
