@@ -19,8 +19,10 @@ ERStudentVolunterView class >> withContent: content [
 
 { #category : #rendering }
 ERStudentVolunterView >> attends [
-	"aStringToMatch ifNil: ["
-	^ ERController new conference attends"]"
+	aStringToMatch 
+		ifNil: [
+			^ controller conference attends ]
+		ifNotNil: [ ^ self filteredAssistants ]
 ]
 
 { #category : #rendering }
@@ -29,8 +31,8 @@ ERStudentVolunterView >> blockTableToExecute [
 	OrderedCollection new
 		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
 		add: ([ :att | att userAccount firstName ] value: user);
+		add: ([ :att | att userAccount lastName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: ([ :att | att contactInformation country ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
@@ -45,14 +47,31 @@ ERStudentVolunterView >> dictToRenderDownloadButton [
 	^ Dictionary new	yourself
 ]
 
+{ #category : #rendering }
+ERStudentVolunterView >> filterByEmail [
+	^ controller filterAttendsByEmailWith: aStringToMatch 
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> filterByFirstName [
+	^ controller filterAttendsByFirstNameWith: aStringToMatch 
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> filteredAssistants [
+	self strategyIsByEmail ifTrue: [ ^ self filterByEmail ].
+	self strategyIsByName ifTrue: [ ^ self filterByFirstName  ]
+]
+
 { #category : #accessing }
 ERStudentVolunterView >> headers [
-	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Has paid?' '')
+	^ #('#Invoice'	'First Name'	 'Last Name' 'Email'	'Affiliation	' 'Fee' 'Has paid?' '')
 ]
 
 { #category : #rendering }
 ERStudentVolunterView >> initialize [ 	
-	strategy := 'Email'
+	strategy := 'Email'.
+	controller := ERController new.
 ]
 
 { #category : #rendering }
@@ -62,16 +81,18 @@ ERStudentVolunterView >> listDataToRenderButton [
 
 { #category : #rendering }
 ERStudentVolunterView >> renderFieldToSearchOn: html [
+	html div class: 'half'; with: [
 	html mdlTextFieldContainer
 		style: 'display: block';
-		class: 'half';
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
 				for: 'is_register';
 				with: 'Email attendee'.
 			html mdlTextFieldInput
+				onChange: 'submit()';
 				id: 'is_register';
-				callback: [ :val | aStringToMatch := val ] ]
+				value: aStringToMatch ;
+				callback: [ :val | aStringToMatch := val ] ] ]
 	
 ]
 
@@ -85,11 +106,10 @@ ERStudentVolunterView >> renderPageOn: html [
 
 { #category : #rendering }
 ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
-	
+	html div class: 'half'; with: [
 	html mdlTextFieldContainer
 		style: 'display: block';
 		floatingLabel;
-		class: 'half';
 		with: [ html mdlTextFieldLabel for: 'selectStrategy';
 			 with: 'Strategy of Search'.
 			html select
@@ -97,8 +117,8 @@ ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
 				class: 'mdl-textfield__input';
 				id: 'selectStrategy';
 				list: #('Email' 'First Name');
-				selected: 'Email';
-				callback: [ :value | strategy := value ] ]
+				selected: strategy;
+				callback: [ :value | strategy := value ] ] ]
 ]
 
 { #category : #rendering }
@@ -111,6 +131,16 @@ ERStudentVolunterView >> renderTableOfAttendsOn: html [
 		listToRenderButton: self listDataToRenderButton;
 		dictToRenderDownloadButton: self dictToRenderDownloadButton.
 	html render: table
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> strategyIsByEmail [
+	^ strategy = 'Email'
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> strategyIsByName [
+	^ strategy = 'First Name'
 ]
 
 { #category : #rendering }

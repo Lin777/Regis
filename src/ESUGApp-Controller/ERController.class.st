@@ -244,6 +244,24 @@ ERController >> existReductionTicketWithName: aString [
 		anySatisfy: [ :each | each ticketId = aString  ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERController >> filterAttendsBy: aSymbol beginsWith: aString [
+	^ self conference attends select: 
+		[ :att | (att userAccount perform: aSymbol) asLowercase 
+		beginsWith: aString asLowercase ]
+
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> filterAttendsByEmailWith: aString [
+	^ self filterAttendsBy: #email beginsWith: aString
+]
+
+{ #category : #'as yet unclassified' }
+ERController >> filterAttendsByFirstNameWith: aString [
+	^ self filterAttendsBy: #firstName beginsWith: aString
+]
+
 { #category : #actions }
 ERController >> findUserByEmail: aString [
 	^ conference users 
