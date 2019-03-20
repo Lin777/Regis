@@ -33,6 +33,12 @@ ERLoggedPageAsAdminTest >> messageWrongDateFormatFor: aString [
 	^ aString, ': This field only supports dates with the following format "MM/DD/YYYY"'
 ]
 
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> moveToAttendeeOption [
+	self pressOptionUsers .
+	self selectAttendeesTab .
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self pressOptionConfiguration .
@@ -40,6 +46,12 @@ ERLoggedPageAsAdminTest >> moveToFeeOption [
 ]
 
 { #category : #configurationInvoicesTests }
+ERLoggedPageAsAdminTest >> moveToInvoicesOption [
+	self pressOptionConfiguration .
+	self selectInovicesTab .
+]
+
+{ #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
 	self pressOptionConfiguration .
 	self selectTicketTab .
@@ -78,6 +90,11 @@ ERLoggedPageAsAdminTest >> pressOptionUsers [
 	(driver findElementByID: 'Users-option') click.
 ]
 
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> selectAttendeesTab [
+	(driver findElementByID: 'tab-Attendees') click.
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	(driver findElementByID: 'tab-Fee') click.
@@ -103,11 +120,43 @@ ERLoggedPageAsAdminTest >> setUp [
 	controller := ERConfigurationController new.
 ]
 
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
+	|select attendee coupon|
+	coupon := self validCoupon .
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	(driver findElementByID: attendee id, '-applyReduction') click.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Apply Reduction Ticket'.
+	select := driver findElementByID: 'selectTickets'.
+	self assert: (select getAttribute: 'value') equals: '1'.
+	select sendKeys: coupon ticketId .
+	 (driver findElementByID: 'accept-change-affiliation') click.
+	self assert: attendee paymentInformation coupon equals: coupon ticketId 
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testCancelEditAttendee [
+	|attendee updateAttendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	(driver findElementByID: attendee id, '-modify')click.
+	(driver findElementByID: 'contactInfoForm-goBackLoginButton')click.
+	driver acceptAlert .
+	updateAttendee := (ERAttendee find: [:att | att id = attendee id]).
+	self assert: updateAttendee userAccount equals: attendee userAccount .
+	self assert: updateAttendee contactInformation equals: attendee contactInformation .
+	self assert: updateAttendee conferenceInformation equals: attendee conferenceInformation .
+	self assert: updateAttendee affiliationInformation equals: attendee affiliationInformation .
+	self assert: updateAttendee additionalInformation equals: attendee additionalInformation .
+	self assert: updateAttendee paymentInformation equals: attendee paymentInformation .
+]
+
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 	|delete invoice|
 	invoice := controller invoices first.
-	self moveToTicketsOption.
+	self moveToInvoicesOption .
 	delete := driver findElementByID: invoice id, '-hasPaid'.
 	delete click.
 	self assert: (controller invoices first paymentInformation hasPaid)
@@ -150,6 +199,26 @@ ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 		(ERUserAccount find: [ :anUser | anUser id =user id ]) equals: user
 ]
 
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testEditAttendee [
+	|check attendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	check := driver findElementByID: attendee id, '-modify'.
+	check click.
+	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
+	|check attendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	check := driver findElementByID: attendee id, '-modifyUser'.
+	check click.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
+]
+
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 	self pressEditUser .
@@ -184,6 +253,16 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 	self update: 'firstName' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'First Name')
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
+	|check attendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	check := driver findElementByID: attendee id, '-isVolunter'.
+	check click.
+	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 
 { #category : #configurationUsersTests }
@@ -226,11 +305,35 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
 ]
 
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
+	|delete attendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	delete := driver findElementByID: attendee id, '-delete'.
+	delete click.
+	driver acceptAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: nil
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
+	|delete attendee|
+	attendee := controller attends first.
+	self moveToAttendeeOption .
+	delete := driver findElementByID: attendee id, '-delete'.
+	delete click.
+	driver dismissAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: attendee
+]
+
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	|delete invoice|
 	invoice := controller invoices first.
-	self moveToTicketsOption.
+	self moveToInvoicesOption.
 	delete := driver findElementByID: invoice id, '-export'.
 	delete click.
 	(Delay forSeconds: 2) wait.
@@ -256,7 +359,7 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
 	|button |
 	
-	self moveToTicketsOption.
+	self moveToInvoicesOption .
 	button := driver findElementByID: 'exportAllInvoices'.
 	button click.
 	"(Delay forSeconds: 2) wait.

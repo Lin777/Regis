@@ -25,6 +25,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
+				id: att id, '-isVolunter';
 				value: att userAccount isStudent;
 				onTrue: [ controller convertToStudentVolunterThis: att ] 
 				onFalse: [ controller deleteStudentVolunterRoleFrom: att];
