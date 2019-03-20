@@ -39,10 +39,23 @@ ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self selectFeeTab .
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
 	self pressOptionConfiguration .
 	self selectTicketTab .
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> pressEditUser [
+	| user|
+	user := controller findUserByEmail: 'ana@gmail.com'.
+	self pressOptionUsers.
+	(driver findElementByID: user id, '-modify') click.
+]
+
+{ #category : #tests }
+ERLoggedPageAsAdminTest >> pressOptionAdmin [
+	(driver findElementByID: 'Admin-option') click.
 ]
 
 { #category : #tests }
@@ -50,9 +63,30 @@ ERLoggedPageAsAdminTest >> pressOptionConfiguration [
 	(driver findElementByID: 'Configuration-option') click.
 ]
 
+{ #category : #tests }
+ERLoggedPageAsAdminTest >> pressOptionProposals [
+	(driver findElementByID: 'Proposals-option') click.
+]
+
+{ #category : #tests }
+ERLoggedPageAsAdminTest >> pressOptionStatistics [
+	(driver findElementByID: 'Statistics-option') click.
+]
+
+{ #category : #tests }
+ERLoggedPageAsAdminTest >> pressOptionUsers [
+	(driver findElementByID: 'Users-option') click.
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	(driver findElementByID: 'tab-Fee') click.
+]
+
+{ #category : #configurationInvoicesTests }
+ERLoggedPageAsAdminTest >> selectInovicesTab [
+
+	(driver findElementByID: 'tab-Invoices') click.
 ]
 
 { #category : #configurationTicketTest }
@@ -67,6 +101,105 @@ ERLoggedPageAsAdminTest >> setUp [
 	self loginAsAdmin .
 	ERTest generateDataForTest .
 	controller := ERConfigurationController new.
+]
+
+{ #category : #configurationInvoicesTests }
+ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
+	|delete invoice|
+	invoice := controller invoices first.
+	self moveToTicketsOption.
+	delete := driver findElementByID: invoice id, '-hasPaid'.
+	delete click.
+	self assert: (controller invoices first paymentInformation hasPaid)
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
+	|delete user|
+	user := controller findUserByEmail: 'ana@gmail.com'.
+	self pressOptionUsers .
+	delete := driver findElementByID: user id, '-delete'.
+	delete click.
+	driver acceptAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERUserAccount find: [ :anUser | anUser id =user id ]) equals: nil
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
+	|delete user|
+	user := controller findUserByEmail: 'admin@esug.org'.
+	self pressOptionUsers .
+	delete := driver findElementByID: user id, '-delete'.
+	delete click.
+	driver acceptAlert.
+	self assert: (driver findElementByID: 'tabAlert') getText equals: 
+	ERException adminUserDoesNotDelete messageText
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
+	|delete user|
+	user := controller findUserByEmail: 'ana@gmail.com'.
+	self pressOptionUsers .
+	delete := driver findElementByID: user id, '-delete'.
+	delete click.
+	driver dismissAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: 
+		(ERUserAccount find: [ :anUser | anUser id =user id ]) equals: user
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
+	self pressEditUser .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'email' with: 'admin@esug.org'.
+	self assert: (driver findElementByID: 'formAlert') getText equals: 
+		ERException emailAlreadyRegistered messageText 
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testEditUserWithEmptyEmail [
+	self pressEditUser .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'email' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Email')
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testEditUserWithEmptyLastName [
+	self pressEditUser .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'lastName' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Last Name')
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
+	self pressEditUser .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'firstName' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'First Name')
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
+	|cancel user userUpdate|
+	user := controller findUserByEmail: 'ana@gmail.com'.
+	self pressOptionUsers.
+	(driver findElementByID: user id, '-modify') click.
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'email' with: ''.
+	(driver findElementByID: 'cancelButton') click.
+	self assert: ((driver findElementByID: 'buttonClose-dialog') getAttribute: 'open') equals: 'true'.
+	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
+	cancel click.
+	userUpdate := ERUserAccount detect: [ :each | each id = user id].
+	self deny: userUpdate email equals: ''
 ]
 
 { #category : #configurationTicketTest }
@@ -93,6 +226,19 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
 ]
 
+{ #category : #configurationInvoicesTests }
+ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
+	|delete invoice|
+	invoice := controller invoices first.
+	self moveToTicketsOption.
+	delete := driver findElementByID: invoice id, '-export'.
+	delete click.
+	(Delay forSeconds: 2) wait.
+	
+	"self assert: (controller invoices first paymentInformation hasPaid)"
+	
+]
+
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> testPressEditTicket [
 	|delete coupon|
@@ -104,6 +250,29 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 	equals: 'Reduction Tickets'.
 	self assert: ((driver findElementByID: 'ticketId') getAttribute: 'value')
 	equals: coupon ticketId .
+]
+
+{ #category : #configurationInvoicesTests }
+ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
+	|button |
+	
+	self moveToTicketsOption.
+	button := driver findElementByID: 'exportAllInvoices'.
+	button click.
+	"(Delay forSeconds: 2) wait.
+	self deny: 
+	((driver findElementByID: 'downloadAllInvoices') isDisabled)"
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testPressModifyUser [
+	|update user|
+	user := controller findUserByEmail: 'ana@gmail.com'.
+	self pressOptionUsers.
+	update := driver findElementByID: user id, '-modify'.
+	update click.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 
+	'User'
 ]
 
 { #category : #configurationFeeTests }

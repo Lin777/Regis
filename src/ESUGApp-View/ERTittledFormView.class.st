@@ -75,6 +75,7 @@ ERTittledFormView >> renderAcceptButtonOn: html [
 ERTittledFormView >> renderCancelButtonOn: html [
 	self initializeDialog .
 	html mdlAnchorButton 
+		id: 'cancelButton';
 		openDialogWithId: 'cancel'; 
 		colored;
 		with: 'Cancel'.
