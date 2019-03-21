@@ -182,8 +182,8 @@ ERLoggedPageAsAdminTest >> testAdminOptionModifyPassword [
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionTabBackup [
-	self moveToBackupTab .
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Are you sure want to do a backup?'
+	"self moveToBackupTab .
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Are you sure want to do a backup?'"
 ]
 
 { #category : #configurationAdminOptionTests }
