@@ -13,10 +13,12 @@ Class {
 
 { #category : #actions }
 ERFeeForm >> cancelForm [
-	feeForm cancel.
+	"feeForm cancel.
 	bankAccountInfoForm cancel .
 	bankInfoForm cancel.
-	fee := fee abortChanges 
+	fee := fee abortChanges "
+	fee := fee abortChanges .
+	self initializeForms .
 ]
 
 { #category : #hooks }

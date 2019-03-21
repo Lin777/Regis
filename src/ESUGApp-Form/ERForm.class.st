@@ -11,7 +11,8 @@ ERForm >> acceptAction [
 	self save.
 	self updateStateTab: self tabName]
 	on: ERException 
-	do: [ :exception | messageComponent errorMessage: exception messageText ]]
+	do: [ :exception | messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName ]]
 ]
 
 { #category : #accessing }
