@@ -160,6 +160,16 @@ ERLoggedPageAsAdminTest >> selectTabChangePassword [
 	(driver findElementByID: 'tab-Change Password') click
 ]
 
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> selectTabOpenCloseRegistration [
+	(driver findElementByID: 'tab-Open / Close registration') click
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> selectTabRestore [
+	(driver findElementByID: 'tab-Restore') click
+]
+
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> selectTicketTab [
 
@@ -177,13 +187,35 @@ ERLoggedPageAsAdminTest >> setUp [
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionModifyPassword [
 	self moveToChangePasswordTab .
-	self shouldnt: [ driver findElementByID: 'groupManagerFunctions' ] raise: BPNoSuchElementException.
+	self shouldnt: [ driver findElementByID: 'groupManagerFunctions' ] raise: BPNoSuchElementException
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionTabBackup [
-	"self moveToBackupTab .
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Are you sure want to do a backup?'"
+	self moveToBackupTab . 
+	self shouldnt: [ driver findElementByID: 'yes-tabBackup' ] raise: BPNoSuchElementException
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
+	|value isOpen|
+	self pressOptionAdmin .
+	self selectTabOpenCloseRegistration .
+	self shouldnt: [ driver findElementByID: 'yes-tabOpenClose' ] raise: BPNoSuchElementException.
+	value := ((driver findElementByID: 'tab-tabOpenClose') findElementByTagName: 'h3') getText.
+	isOpen := controller conferenceIsOpenRegistration .
+	isOpen
+		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
+		ifFalse: [ self assert: value equals: 'Registration is closed. Are you sure you want open it?' ].
+	(driver findElementByID: 'yes-tabOpenClose') click.
+	self deny: controller conferenceIsOpenRegistration equals: isOpen 
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> testAdminOptionTabRestore [
+	self pressOptionAdmin .
+	self selectTabRestore .
+	self shouldnt: [ driver findElementByID: 'yes-tabRestore' ] raise: BPNoSuchElementException
 ]
 
 { #category : #configurationAdminOptionTests }
@@ -372,6 +404,21 @@ ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 	check := driver findElementByID: attendee id, '-isVolunter'.
 	check click.
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
+]
+
+{ #category : #configurationConferenceTests }
+ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
+	|cancel newValue|
+	newValue := '10/10/dsfd'.
+	self pressOptionConfiguration .
+	acceptFormButton := 'acceptConferenceConfiguration'.
+	self update: 'dateTo' with: newValue .
+	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
+	(driver findElementByID: 'cancelUpdate') click.
+	self assert: ((driver findElementByID: 'closeConferenceConfiguration-dialog') getAttribute: 'open') equals: 'true'.
+	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
+	cancel click.
+	self deny: controller conference configuration dateTo equals: newValue 
 ]
 
 { #category : #configurationUsersTests }
@@ -655,6 +702,14 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self update: 'dateFrom' with: '10/10/2019' .
 	self assert: ERController new conference configuration dateFrom equals: '10/10/2019' 
+]
+
+{ #category : #configurationConferenceTests }
+ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo [
+	self pressOptionConfiguration .
+	acceptFormButton := 'acceptConferenceConfiguration'.
+	self update: 'dateFrom' with: '10/10/2019'.
+	self assert: (driver findElementByID: 'formConferenceConfigurationAlert' ) getText equals: ERException invalidEsugDates messageText
 ]
 
 { #category : #configurationConferenceTests }

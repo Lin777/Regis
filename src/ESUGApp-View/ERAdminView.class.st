@@ -24,6 +24,7 @@ ERAdminView class >> on: anAttendee withContent: aContent withController: aContr
 
 { #category : #initialization }
 ERAdminView >> addTabsForAdmin [
+	controller := ERConfigurationController new.
 	self renderBackupTab.
 	self renderRestoreTab.
 	self renderOpenCloseRegistration.
