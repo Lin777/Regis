@@ -454,6 +454,7 @@ ERController >> updateAttendee: anAttendee [
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ].
 	self notifyAllObservers .
+	^ anAttendee 
 ]
 
 { #category : #'as yet unclassified' }

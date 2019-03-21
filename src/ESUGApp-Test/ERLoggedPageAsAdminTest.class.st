@@ -1,9 +1,6 @@
 Class {
 	#name : #ERLoggedPageAsAdminTest,
 	#superclass : #ERParasolTest,
-	#instVars : [
-		'acceptFormButton'
-	],
 	#category : #'ESUGApp-Test-Parasol'
 }
 
@@ -305,11 +302,10 @@ ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testEditAttendee [
-	|check attendee|
+	| attendee|
 	attendee := controller attends first.
 	self moveToAttendeeOption .
-	check := driver findElementByID: attendee id, '-modify'.
-	check click.
+	(driver findElementByID: attendee id, '-modify')click.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
 ]
 
@@ -408,7 +404,7 @@ ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 
 { #category : #configurationConferenceTests }
 ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
-	|cancel newValue|
+	| newValue|
 	newValue := '10/10/dsfd'.
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -416,8 +412,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
 	(driver findElementByID: 'cancelUpdate') click.
 	self assert: ((driver findElementByID: 'closeConferenceConfiguration-dialog') getAttribute: 'open') equals: 'true'.
-	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
-	cancel click.
+	((driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a') click.
 	self deny: controller conference configuration dateTo equals: newValue 
 ]
 

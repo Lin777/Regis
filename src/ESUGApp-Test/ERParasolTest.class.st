@@ -2,7 +2,8 @@ Class {
 	#name : #ERParasolTest,
 	#superclass : #ERTest,
 	#instVars : [
-		'driver'
+		'driver',
+		'acceptFormButton'
 	],
 	#category : #'ESUGApp-Test-Parasol'
 }
@@ -50,4 +51,14 @@ ERParasolTest >> tearDown [
 	super tearDown .
 	self deleteDownloadFolderIfExist.
 	driver quit
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> updateField: anID with: aString [
+	| confName acceptButton |
+	confName := driver findElementByID: anID.
+	confName clear.
+	confName sendKeys: aString.
+	acceptButton := driver findElementByID: acceptFormButton.
+	acceptButton click.
 ]

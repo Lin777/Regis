@@ -147,3 +147,9 @@ ERPaymentInformation >> paymentTypeIsBankTransfer [
 ERPaymentInformation >> paymentTypeIsCreditCard [
 	^  'Credit Card' = paymentType
 ]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> swapPaymentType [
+	self paymentTypeIsBankTransfer ifTrue: [ ^ paymentType := 'Credit Card' ].
+	self paymentTypeIsCreditCard ifTrue: [ ^ paymentType := 'Bank transfer' ]
+]
