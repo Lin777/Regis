@@ -13,6 +13,22 @@ ERParasolTest >> baseURL [
 ]
 
 { #category : #'as yet unclassified' }
+ERParasolTest >> createDownloadDirectory [
+	(FileSystem workingDirectory asFileReference / 'Download')
+		 ensureCreateDirectory
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> downloadFileOf: href to: directory [
+	[ZnClient new
+   url: href;
+   downloadTo: directory.
+	(Delay forSeconds: 2) wait]
+	on: Exception 
+	do: [ self assert: false ]
+]
+
+{ #category : #'as yet unclassified' }
 ERParasolTest >> getTextOfError [
 	^ (((((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li')findElementByTagName: 'ul')findElementByTagName: 'li') getText
 ]
@@ -32,5 +48,6 @@ ERParasolTest >> setUp [
 { #category : #accessing }
 ERParasolTest >> tearDown [
 	super tearDown .
+	self deleteDownloadFolderIfExist.
 	driver quit
 ]

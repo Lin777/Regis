@@ -209,8 +209,18 @@ ERTest >> defaultStore [
 
 { #category : #running }
 ERTest >> deleteBackupFolderIfExist [
+	self deleteFolder: 'Backup'
+]
+
+{ #category : #running }
+ERTest >> deleteDownloadFolderIfExist [
+	self deleteFolder: 'Download'
+]
+
+{ #category : #running }
+ERTest >> deleteFolder: aString [
 	|path|
-	path := (Smalltalk imageDirectory / 'Backup').
+	path := (Smalltalk imageDirectory / aString).
 	path exists ifTrue:
 		 [ path deleteAll ] .
 ]

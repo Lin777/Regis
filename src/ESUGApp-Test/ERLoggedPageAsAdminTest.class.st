@@ -39,10 +39,34 @@ ERLoggedPageAsAdminTest >> moveToAttendeeOption [
 	self selectAttendeesTab .
 ]
 
+{ #category : #configurationProposalsTests }
+ERLoggedPageAsAdminTest >> moveToAwardsOption [
+	self pressOptionProposals  .
+	self selectAwardsTab  .
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> moveToBackupTab [
+	self pressOptionAdmin .
+	self selectTabBackup . 
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> moveToChangePasswordTab [
+	self pressOptionAdmin .
+	self selectTabChangePassword 
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self pressOptionConfiguration .
 	self selectFeeTab .
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> moveToGroupManagerOption [
+	self pressOptionUsers .
+	self selectGroupManagerTab  .
 ]
 
 { #category : #configurationInvoicesTests }
@@ -55,6 +79,16 @@ ERLoggedPageAsAdminTest >> moveToInvoicesOption [
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
 	self pressOptionConfiguration .
 	self selectTicketTab .
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> pressEditGroup [
+	|edit group|
+	group := controller groups first.
+	self moveToGroupManagerOption .
+	edit := driver findElementByID: group id, '-modify'.
+	edit click.
+	
 ]
 
 { #category : #configurationUsersTests }
@@ -95,15 +129,35 @@ ERLoggedPageAsAdminTest >> selectAttendeesTab [
 	(driver findElementByID: 'tab-Attendees') click.
 ]
 
+{ #category : #configurationProposalsTests }
+ERLoggedPageAsAdminTest >> selectAwardsTab [
+	(driver findElementByID: 'tab-Awards') click.
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	(driver findElementByID: 'tab-Fee') click.
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> selectGroupManagerTab [
+	(driver findElementByID: 'tab-Group Manager') click.
 ]
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> selectInovicesTab [
 
 	(driver findElementByID: 'tab-Invoices') click.
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> selectTabBackup [
+	(driver findElementByID: 'tab-Backup') click
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> selectTabChangePassword [
+	(driver findElementByID: 'tab-Change Password') click
 ]
 
 { #category : #configurationTicketTest }
@@ -118,6 +172,24 @@ ERLoggedPageAsAdminTest >> setUp [
 	self loginAsAdmin .
 	ERTest generateDataForTest .
 	controller := ERConfigurationController new.
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> testAdminOptionModifyPassword [
+	self moveToChangePasswordTab .
+	self shouldnt: [ driver findElementByID: 'groupManagerFunctions' ] raise: BPNoSuchElementException.
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> testAdminOptionTabBackup [
+	self moveToBackupTab .
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Are you sure want to do a backup?'
+]
+
+{ #category : #configurationAdminOptionTests }
+ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
+	self pressOptionAdmin.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
 ]
 
 { #category : #configurationAttendeesTest }
@@ -207,6 +279,43 @@ ERLoggedPageAsAdminTest >> testEditAttendee [
 	check := driver findElementByID: attendee id, '-modify'.
 	check click.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testEditGroup [
+	|edit group|
+	group := controller groups first.
+	self moveToGroupManagerOption .
+	edit := driver findElementByID: group id, '-modify'.
+	edit click.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Affiliation Information'
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
+	self pressEditGroup  .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'organizationAddrees1' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Address 1')
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [	
+	self pressEditGroup  .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'organizationName' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Organization Name')
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
+	self pressEditGroup  .
+	acceptFormButton := 'accept-change-affiliation'.
+	self update: 'organizationPostal' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Postal/Zipcode')
 ]
 
 { #category : #configurationAttendeesTest }
@@ -329,17 +438,38 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: attendee
 ]
 
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
+	|delete group|
+	group := controller groups first.
+	self moveToGroupManagerOption .
+	delete := driver findElementByID: group id, '-delete'.
+	delete click.
+	driver acceptAlert .
+	(Delay forSeconds: 2) wait.
+	self assert: (ERGroup find: [ :ticket | ticket id =group id ]) equals: nil
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
+	|delete group|
+	group := controller groups first.
+	self moveToGroupManagerOption .
+	delete := driver findElementByID: group id, '-delete'.
+	delete click.
+	driver dismissAlert .
+	(Delay forSeconds: 2) wait.
+	self deny: (ERGroup find: [ :ticket | ticket id =group id ]) equals: nil
+]
+
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
-	|delete invoice|
+	|invoice href|
+	self createDownloadDirectory .
 	invoice := controller invoices first.
 	self moveToInvoicesOption.
-	delete := driver findElementByID: invoice id, '-export'.
-	delete click.
-	(Delay forSeconds: 2) wait.
-	
-	"self assert: (controller invoices first paymentInformation hasPaid)"
-	
+	href := (driver findElementByID: invoice id, '-export') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'invoice.pdf'
 ]
 
 { #category : #configurationTicketTest }
@@ -357,14 +487,68 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
-	|button |
-	
+	|button href|
 	self moveToInvoicesOption .
 	button := driver findElementByID: 'exportAllInvoices'.
 	button click.
-	"(Delay forSeconds: 2) wait.
-	self deny: 
-	((driver findElementByID: 'downloadAllInvoices') isDisabled)"
+	(Delay forSeconds: 3) wait.
+	href := (driver findElementByID: 'downloadAllInvoices') getAttribute: 'href'.
+	self deny: href equals: nil
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testPressExportAttendeees [
+	| href|
+	self createDownloadDirectory .
+	self moveToAttendeeOption.
+	href := (driver findElementByID: 'exportAttends') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'attendees.csv'
+]
+
+{ #category : #configurationProposalsTests }
+ERLoggedPageAsAdminTest >> testPressExportAwards [
+	| href|
+	self createDownloadDirectory .
+	self moveToAwardsOption .
+	href := (driver findElementByID: 'exportAwards') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'awards.csv'
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testPressExportGroups [
+	| href|
+	self createDownloadDirectory .
+	self moveToGroupManagerOption .
+	href := (driver findElementByID: 'exportGroups') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'groups.csv'
+]
+
+{ #category : #configurationProposalsTests }
+ERLoggedPageAsAdminTest >> testPressExportTalks [
+	| href|
+	self createDownloadDirectory .
+	self pressOptionProposals .
+	href := (driver findElementByID: 'exportTalks') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'talks.csv'
+]
+
+{ #category : #configurationUsersTests }
+ERLoggedPageAsAdminTest >> testPressExportUsers [
+	| href|
+	self createDownloadDirectory .
+	self pressOptionUsers .
+	href := (driver findElementByID: 'exportUsers') getAttribute: 'href'.
+	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'users.csv'
+]
+
+{ #category : #configurationGroupManagerTests }
+ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
+	|edit group|
+	group := controller groups first.
+	self moveToGroupManagerOption .
+	edit := driver findElementByID: group id, '-modifyUser'.
+	edit click.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
 ]
 
 { #category : #configurationUsersTests }
@@ -376,6 +560,30 @@ ERLoggedPageAsAdminTest >> testPressModifyUser [
 	update click.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 
 	'User'
+]
+
+{ #category : #configurationProposalsTests }
+ERLoggedPageAsAdminTest >> testPressProposalsOption [
+	self pressOptionProposals .
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Submitted Talks'
+]
+
+{ #category : #configurationStatistics }
+ERLoggedPageAsAdminTest >> testStatisticsView [
+	self pressOptionStatistics .
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Statistics'.
+	self assert: (driver findElementsByTagName: 'table') size equals: 3
+]
+
+{ #category : #configurationAttendeesTest }
+ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
+	|check attendee|
+	attendee := controller attends first.
+	controller convertToStudentVolunterThis: attendee.
+	self moveToAttendeeOption .
+	check := driver findElementByID: attendee id, '-isVolunter'.
+	check click.
+	self deny: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 
 { #category : #configurationFeeTests }
