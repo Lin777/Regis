@@ -7,9 +7,25 @@ Class {
 	#category : #'ESUGApp-Test-Parasol'
 }
 
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> currentPassword: aString1 password: aString2 confirmPassword: aString3 [ 
+	|currentPassword password confirmPassword|
+	currentPassword := driver findElementByID: 'currentPassword'.
+	password := driver findElementByID: 'password'.
+	confirmPassword := driver findElementByID: 'confirmPassword'.
+	currentPassword sendKeys: aString1 .
+	password sendKeys: aString2.
+	confirmPassword sendKeys: aString3.
+]
+
 { #category : #myRegistrationProposedAwardsTests }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfAward [
 	self nameAward: 'Award' otherDevelopers: 'Devs' smalltalkDialect: 'French' affiliation: 'Inria' downloadUrl: 'https://drive.google.com/accounts' demoUrl: 'https://drive.google.com/accounts' keywords: 'Pharo' licence: 'MIT'
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> fillAllFieldsOfChangePassword [
+	self currentPassword: '12345678' password: '123456789' confirmPassword: '123456789'
 ]
 
 { #category : #myRegistrationProposedTalksTest }
@@ -61,6 +77,11 @@ ERLoggedPageAsAttendeeTest >> nameAward: aString1 otherDevelopers: aString2 smal
 ]
 
 { #category : #tests }
+ERLoggedPageAsAttendeeTest >> pressOptionAdmin [
+	(driver findElementByID: 'Admin-option') click.
+]
+
+{ #category : #tests }
 ERLoggedPageAsAttendeeTest >> pressOptionMyRegistration [
 	(driver findElementByID: 'My Registration-option') click.
 ]
@@ -72,6 +93,11 @@ ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 		ifFalse: [ "This test takes a lot time"
 			"(Delay forSeconds: 10) wait.
 			self assert: (driver getCurrentURL beginsWith: 'https://www.paypal.com')" ]
+]
+
+{ #category : #tests }
+ERLoggedPageAsAttendeeTest >> selectChangePasswordTab [
+	(driver findElementByID: 'tab-Change Password') click.
 ]
 
 { #category : #tests }
@@ -165,6 +191,81 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyName [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserObtainAnErrorAndAfterCancelEdition [
+	|emailAfterUpdate|
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	"Update that generate an error"
+	self updateField: 'email' with: 'mike@gmail.com'.
+	"Cancel update"
+	(driver findElementByID: 'cancel-user')	 click.
+	emailAfterUpdate := ERUserAccount find: [ :each | each id = attendee userAccount id ].
+	self deny: emailAfterUpdate email equals: 'mike@gmail.com'.
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'email' with: 'mike@gmail.com'.
+	self assert: (driver findElementByID: 'adminUserAlert') getText equals: 'This email is already registered'
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyEmail [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'email' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Email')
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyFirstName [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'firstName' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'First Name')
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyLastName [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'lastName' with: ''.
+	self assert: self getTextOfError 
+		equals: (self messageIsRequiredFor: 'Last Name')
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithInvalidFormatOfEmail [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'email' with: 'evelyn@.com'.
+	self assert: self getTextOfError 
+		equals: 'Email (Required): Please enter a valid email'
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithNoValidFirstName [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'firstName' with: 'Evelyn123'.
+	self assert: self getTextOfError 
+		equals: (self messageOnlyTextIsAcceptedFor: 'First Name')
+]
+
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testEditUserWithNoValidLastName [
+	self pressOptionAdmin  .
+	acceptFormButton := 'accept-user'.
+	self updateField: 'lastName' with: 'Evelyn123'.
+	self assert: self getTextOfError 
+		equals: (self messageOnlyTextIsAcceptedFor: 'Last Name')
+]
+
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> testModifyRegistrationOfSummary [
 	self pressOptionMyRegistration.
@@ -190,12 +291,27 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 	
 ]
 
+{ #category : #adminUserTests }
+ERLoggedPageAsAttendeeTest >> testPressAdminOption [
+	self pressOptionAdmin .
+	self assert: ((driver findElementByID: 'tab-adminUser')findElementByTagName: 'h3') getText equals: 'User'.
+	
+]
+
 { #category : #myRegistrationProposedAwardsTests }
 ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
 	self assert: ((driver findElementByID: 'tab-proposedAwards')findElementByTagName: 'h3') getText equals: 'Submitted Awards'.
 	
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
+	self pressOptionAdmin .
+	self selectChangePasswordTab .
+	self assert: ((driver findElementByID: 'tab-changePassword') findElementByTagName: 'h3') getText 
+		equals: 'Modify Password'
 ]
 
 { #category : #myRegistrationSummaryTests }
@@ -218,15 +334,14 @@ ERLoggedPageAsAttendeeTest >> testPressMyRegistrationOption [
 
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> testPressPayButtonOfSummary [
-	self pressOptionMyRegistration.
+	"self pressOptionMyRegistration.
 	(driver findElementByID: 'pay') click.
-	"(Delay forSeconds: 10) wait."
 	self redirectByTypeOfPayment.
 	attendee paymentInformation swapPaymentType.
 	attendee := controller updateAttendee: attendee.
 	driver goBack.
 	(driver findElementByID: 'pay') click.
-	self redirectByTypeOfPayment.
+	self redirectByTypeOfPayment."
 ]
 
 { #category : #myRegistrationProposedTalksTest }
@@ -235,4 +350,45 @@ ERLoggedPageAsAttendeeTest >> testPressTalksTab [
 	self selectProposedTalksTab .
 	self assert: ((driver findElementByID: 'tab-proposedTalks')findElementByTagName: 'h3') getText equals: 'Submitted Talks'.
 	
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithANewPasswordLessThanEightCharacters [
+	self pressOptionAdmin .
+	self selectChangePasswordTab .
+	self fillAllFieldsOfChangePassword .
+	acceptFormButton := 'accept-change-password'.
+	self updateField: 'password' with: '1234'.
+	self shouldnt: [ driver findElementByClassName: 'is-invalid' ] raise: BPNoSuchElementException.
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithAllFieldsCorrectly [
+	|newAttendee|
+	self pressOptionAdmin .
+	self selectChangePasswordTab .
+	self fillAllFieldsOfChangePassword .
+	(driver findElementByID: 'accept-change-password') click.
+	newAttendee := ERUserAccount find: [ :each | each id = attendee userAccount id ].
+	self assert: newAttendee password equals: (ERUserAccount hashPassword: '123456789') .
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectConfirmPassword [
+	self pressOptionAdmin .
+	self selectChangePasswordTab .
+	self fillAllFieldsOfChangePassword .
+	acceptFormButton := 'accept-change-password'.
+	self updateField: 'confirmPassword' with: '123456789111'.
+	self shouldnt: [ driver findElementByClassName: 'is-invalid' ] raise: BPNoSuchElementException.
+]
+
+{ #category : #adminChangePasswordTests }
+ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectCurrentPassword [
+	self pressOptionAdmin .
+	self selectChangePasswordTab .
+	self fillAllFieldsOfChangePassword .
+	acceptFormButton := 'accept-change-password'.
+	self updateField: 'currentPassword' with: '123456789'.
+	self assert: (driver findElementByID: 'adminChangePasswordAlert') getText equals: 'The password entered does not match the current password'
 ]

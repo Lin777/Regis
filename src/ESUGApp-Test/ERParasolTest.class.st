@@ -39,6 +39,11 @@ ERParasolTest >> messageIsRequiredFor: aString [
 	^  aString ,' (Required): Input is required but no input given'
 ]
 
+{ #category : #'as yet unclassified' }
+ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
+	^  aString ,' (Required): This field only accept a text'
+]
+
 { #category : #accessing }
 ERParasolTest >> setUp [
 	super setUp.

@@ -56,8 +56,8 @@ ERChangePasswordForm >> renderAcceptButtonOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderButtonsOn: html [
+	self renderCancelButtonOn: html.
 	self renderAcceptButtonOn: html.
-	self renderCancelButtonOn: html
 ]
 
 { #category : #rendering }
