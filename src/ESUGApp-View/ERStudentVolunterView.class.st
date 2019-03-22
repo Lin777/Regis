@@ -99,11 +99,11 @@ ERStudentVolunterView >> renderFieldToSearchOn: html [
 		style: 'display: block';
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
-				for: 'is_register';
+				for: 'stringForStrategy';
 				with: strategy.
 			html mdlTextFieldInput
 				onChange: 'submit()';
-				id: 'is_register';
+				id: 'stringForStrategy';
 				value: aStringToMatch ;
 				callback: [ :val | aStringToMatch := val ] ] ]
 	

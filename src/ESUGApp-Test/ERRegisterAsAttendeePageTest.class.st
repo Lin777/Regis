@@ -52,6 +52,12 @@ ERRegisterAsAttendeePageTest >> keywords: aString1 additionalText: aString2 [
 ]
 
 { #category : #'as yet unclassified' }
+ERRegisterAsAttendeePageTest >> pressDoneButton [
+	self pressNextButtonPayment .
+	(driver findElementByID: 'registerButton') click.
+]
+
+{ #category : #'as yet unclassified' }
 ERRegisterAsAttendeePageTest >> pressNextButtonAdditional [
 	|next|
 	self pressNextButtonAffiliation .
@@ -108,7 +114,7 @@ ERRegisterAsAttendeePageTest >> setUp [
 	self pushRegisterButton 
 ]
 
-{ #category : #tests }
+{ #category : #registerAdditionalInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	|next|
 	self pressNextButtonAffiliation  .
@@ -118,7 +124,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
 
-{ #category : #tests }
+{ #category : #registerAdditionalInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilledCorrectly [
 	|next|
 	self pressNextButtonAffiliation .
@@ -129,7 +135,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Payment')
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
 	|next|
 	self pressNextButtonConference  .
@@ -139,7 +145,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFilledCorrectly [
 	|next|
 	self pressNextButtonConference .
@@ -150,7 +156,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFille
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutFillingAnyField [
 	|next|
 	self pressNextButtonConference.
@@ -160,7 +166,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutFillingAnyF
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationAddrees1Field [
 	|next|
 	self pressNextButtonConference .
@@ -174,7 +180,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationCityField [
 	|next|
 	self pressNextButtonConference .
@@ -188,7 +194,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationNameField [
 	|next|
 	self pressNextButtonConference .
@@ -202,7 +208,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerAffiliationInformationTests }
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationPostalField [
 	|next|
 	self pressNextButtonConference .
@@ -283,7 +289,7 @@ ERRegisterAsAttendeePageTest >> testPressDoneButton [
 	self assert: (driver findElementByID: 'card-heading') getText equals: 'Registration Summary'
 ]
 
-{ #category : #tests }
+{ #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
 	|next|
 	self pressNextButtonAdditional   .
@@ -293,7 +299,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
-{ #category : #tests }
+{ #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 	|next|
 	self pressNextButtonAdditional .
@@ -304,7 +310,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 	self assert: self getTextOfError equals: 'Reduction Ticket Code: There is no ticket with the ticket id provided.'
 ]
 
-{ #category : #tests }
+{ #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField [
 	|next|
 	self pressNextButtonAdditional .
@@ -315,7 +321,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithAllFieldsFilledCorrectly [
 	|next|
 	self fillAllUserFields.
@@ -325,7 +331,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithAllFieldsFilledCorrec
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Contact')
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutConfirmPasswordField [
 	|next|
 	self fillAllUserFields.
@@ -336,7 +342,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutConfirmPasswordFie
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Confirm Password')
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutEmailField [
 	|next|
 	self fillAllUserFields.
@@ -347,7 +353,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutEmailField [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Email')
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFillingAnyField [
 	|next|
 	next := driver findElementByID: 'basicInfoForm-nextButton'.
@@ -356,7 +362,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFillingAnyField [
 	
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFirstNameField [
 	|next|
 	self fillAllUserFields.
@@ -367,7 +373,7 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFirstNameField [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'First Name')
 ]
 
-{ #category : #tests }
+{ #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutLastNameField [
 	|next|
 	self fillAllUserFields.

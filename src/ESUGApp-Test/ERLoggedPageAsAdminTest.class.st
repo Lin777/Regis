@@ -80,11 +80,10 @@ ERLoggedPageAsAdminTest >> moveToTicketsOption [
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> pressEditGroup [
-	|edit group|
+	| group|
 	group := controller groups first.
 	self moveToGroupManagerOption .
-	edit := driver findElementByID: group id, '-modify'.
-	edit click.
+	(driver findElementByID: group id, '-modify') click.
 	
 ]
 
