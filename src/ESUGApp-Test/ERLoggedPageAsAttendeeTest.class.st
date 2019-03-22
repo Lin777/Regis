@@ -164,7 +164,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkCorrectly [
 	(driver findElementByID: 'addTalk')click.
 	self fillAllFieldsOfTalk.
 	(driver findElementByID: 'accept-change-affiliation')click.
-	self deny: (ERTalk find: [ :talk | talk name = 'Talk Example' ] ) equals: nil
+	self deny: (ERTalk find: [ :talk | talk name = 'Talk Example' ] ) = nil
 ]
 
 { #category : #myRegistrationProposedTalksTest }
@@ -201,7 +201,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserObtainAnErrorAndAfterCancelEdition [
 	"Cancel update"
 	(driver findElementByID: 'cancel-user')	 click.
 	emailAfterUpdate := ERUserAccount find: [ :each | each id = attendee userAccount id ].
-	self deny: emailAfterUpdate email equals: 'mike@gmail.com'.
+	self deny: emailAfterUpdate email = 'mike@gmail.com'.
 ]
 
 { #category : #adminUserTests }

@@ -163,6 +163,26 @@ ERConfigurationController >> deleteUser: anUser [
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> dictionaryOfFoodPreference [
+	^ Dictionary new 	
+		at: 'vegan' put: 0;
+		at: 'normal' put: 0;
+		at: 'vegetarian' put: 0;
+		yourself 
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> dictionaryWeekendLunch [
+	^ Dictionary new 	
+		at: #monday put: self dictionaryOfFoodPreference ;
+		at: #tuesday put: self dictionaryOfFoodPreference;
+		at: #wednesday put: self dictionaryOfFoodPreference;
+		at: #thursday put: self dictionaryOfFoodPreference;
+		at: #friday put: self dictionaryOfFoodPreference;
+		yourself 
+]
+
 { #category : #rendering }
 ERConfigurationController >> exportAttends: fileName [
 	| cvs |

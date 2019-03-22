@@ -173,8 +173,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert
 	(Delay forSeconds: 2) wait.
 	self assert: group listAttends size equals: cantOfAttendees - 1.
 	self deny:
-	 (ERUserAccount detect: [:user | user id = group groupManager userAccount id])
-	equals: nil
+	 (ERUserAccount detect: [:user | user id = group groupManager userAccount id])= nil
 	
 ]
 
@@ -207,7 +206,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	self assert: group listAttends size equals: cantOfAttendees + 1.
 	self assert: group groupManager userAccount isAttendee .
 	self deny: (group listAttends detect: 
-		[:att | att userAccount id = group groupManager userAccount id]) equals: nil
+		[:att | att userAccount id = group groupManager userAccount id]) = nil
 	
 ]
 

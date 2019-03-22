@@ -204,7 +204,7 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
 		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
 		ifFalse: [ self assert: value equals: 'Registration is closed. Are you sure you want open it?' ].
 	(driver findElementByID: 'yes-tabOpenClose') click.
-	self deny: controller conferenceIsOpenRegistration equals: isOpen 
+	self deny: controller conferenceIsOpenRegistration = isOpen 
 ]
 
 { #category : #configurationAdminOptionTests }
@@ -412,7 +412,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	(driver findElementByID: 'cancelUpdate') click.
 	self assert: ((driver findElementByID: 'closeConferenceConfiguration-dialog') getAttribute: 'open') equals: 'true'.
 	((driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a') click.
-	self deny: controller conference configuration dateTo equals: newValue 
+	self deny: controller conference configuration dateTo = newValue 
 ]
 
 { #category : #configurationUsersTests }
@@ -428,7 +428,7 @@ ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
 	cancel click.
 	userUpdate := ERUserAccount detect: [ :each | each id = user id].
-	self deny: userUpdate email equals: ''
+	self deny: userUpdate email = ''
 ]
 
 { #category : #configurationTicketTest }
@@ -500,7 +500,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 	delete click.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
-	self deny: (ERGroup find: [ :ticket | ticket id =group id ]) equals: nil
+	self deny: (ERGroup find: [ :ticket | ticket id =group id ]) = nil
 ]
 
 { #category : #configurationInvoicesTests }
@@ -528,13 +528,13 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
-	|button href|
+	"|button href|
 	self moveToInvoicesOption .
 	button := driver findElementByID: 'exportAllInvoices'.
 	button click.
-	(Delay forSeconds: 3) wait.
+	(Delay forSeconds: 5) wait.
 	href := (driver findElementByID: 'downloadAllInvoices') getAttribute: 'href'.
-	self deny: href equals: nil
+	self deny: (href = nil)"
 ]
 
 { #category : #configurationAttendeesTest }
