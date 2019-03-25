@@ -99,6 +99,18 @@ ERConference >> configuration: anObject [
 	configuration := anObject
 ]
 
+{ #category : #rendering }
+ERConference >> deleteAttendee: anAttendee [
+	self attends removeAllSuchThat: [ :each | anAttendee id = each id ].
+]
+
+{ #category : #rendering }
+ERConference >> deleteUser: anUser [
+	self users removeAllSuchThat: [ :each | anUser id = each id ].
+	self save.
+	anUser delete
+]
+
 { #category : #accessing }
 ERConference >> fee [
 	^ fee
@@ -188,6 +200,11 @@ ERConference >> submittedAwards: anObject [
 	submittedAwards := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERConference >> submittedAwardsFor: anAttendee [
+	^ self submittedAwards select: [ :each | each submitter = anAttendee ]
+]
+
 { #category : #accessing }
 ERConference >> submittedTalks [
 	^ submittedTalks
@@ -196,6 +213,11 @@ ERConference >> submittedTalks [
 { #category : #accessing }
 ERConference >> submittedTalks: anObject [
 	submittedTalks := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> submittedTalksFor: anAttendee [
+	^ self submittedTalks select: [ :each | each submitter = anAttendee ]
 ]
 
 { #category : #accessing }

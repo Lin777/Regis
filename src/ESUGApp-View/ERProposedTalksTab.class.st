@@ -93,7 +93,7 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 
 { #category : #accessing }
 ERProposedTalksTab >> submittedTalks [ 
-	^ controller submittedTalksFor: attendee
+	^ controller conference submittedTalksFor: attendee
 ]
 
 { #category : #accessing }

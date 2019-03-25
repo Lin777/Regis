@@ -385,18 +385,6 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> submittedAwardsFor: anAttendee [
-	^ self conference submittedAwards 
-  select: [ :each | each submitter = anAttendee ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> submittedTalksFor: anAttendee [
-	^ self conference submittedTalks 
-		select: [ :each | each submitter = anAttendee ]
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> updateAllAttendeesOf: aGroup [
 	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
 												aGroup paymentInformation hasPaid.

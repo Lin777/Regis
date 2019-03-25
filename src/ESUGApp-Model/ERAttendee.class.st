@@ -110,6 +110,13 @@ ERAttendee >> convertToStudentVolunter [
 	(self userAccount) roleAdd: 'studentVolunter'; save]
 ]
 
+{ #category : #'as yet unclassified' }
+ERAttendee >> deleteAttendeeRole [
+	self userAccount isAttendee ifTrue: [
+		self userAccount deleteRole: 'attendee'
+	]
+]
+
 { #category : #accessing }
 ERAttendee >> descriptionAdd [
 	<magritteDescription>

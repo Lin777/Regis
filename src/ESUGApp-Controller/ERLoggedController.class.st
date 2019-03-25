@@ -54,27 +54,21 @@ ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	anAttendee idGroup isNotNil ifTrue: [ 
 	|group|
 	group := self getGroupOfAttendee: anAttendee.
-	(group listAttends)
-		removeAllSuchThat: [ :each | anAttendee id = each id ].
-	group save.	
+	group deleteAttendee: anAttendee; save.	
 	].
-	(self conference attends)
-		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self conference deleteAttendee: anAttendee.
 	self conference save.
 	self notifyAllObservers 
 ]
 
 { #category : #accessing }
 ERLoggedController >> deleteAttendeeRoleFromUser: anAttendee [
-	anAttendee userAccount deleteRole: 'attendee'
+	anAttendee deleteAttendeeRole 
 ]
 
 { #category : #removing }
 ERLoggedController >> deleteUserForConference: anUser [
-	self conference users
-		removeAllSuchThat: [ :each | anUser id = each id ].
-	self conference save.
-	anUser delete.
+	self conference deleteUser: anUser.
 	self notifyAllObservers 
 ]
 

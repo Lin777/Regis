@@ -20,6 +20,11 @@ ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]
 
+{ #category : #rendering }
+ERGroup >> deleteAttendee: anAttendee [
+	self listAttends removeAllSuchThat: [ :each | anAttendee id = each id ]
+]
+
 { #category : #accessing }
 ERGroup >> encodedInvoice [
 	^ encodedInvoice

@@ -93,7 +93,7 @@ ERProposedAwardsTab >> renderTableOn: html [
 
 { #category : #accessing }
 ERProposedAwardsTab >> submittedAwards [ 
-	^ controller submittedAwardsFor: attendee
+	^ controller conference submittedAwardsFor: attendee
 ]
 
 { #category : #accessing }
