@@ -294,7 +294,8 @@ ERTest >> setUp [
 	ERTalk warmUp.
 	ERConference warmUp.
 	ERSandstoneDatabase initialize.
-	ESUGSetUp start
+	ESUGSetUp start.
+	controller := ERController new.
 ]
 
 { #category : #running }
@@ -355,5 +356,5 @@ ERTest >> tearDown [
 
 { #category : #'as yet unclassified' }
 ERTest >> validCoupon [
-	^ ERController new conference reductionTickets first 
+	^ controller conference reductionTickets first 
 ]

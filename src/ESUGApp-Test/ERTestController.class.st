@@ -4,13 +4,6 @@ Class {
 	#category : #'ESUGApp-Test-UnitTest'
 }
 
-{ #category : #initialization }
-ERTestController >> setUp [
-	super setUp.
-	controller := ERController new.
-	
-]
-
 { #category : #tests }
 ERTestController >> testAmountToPay [
 ]

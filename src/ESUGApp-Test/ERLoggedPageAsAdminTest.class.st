@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> getNameOfConference [
-	^ ERController new conference configuration name 
+	^ controller conference configuration name 
 ]
 
 { #category : #'as yet unclassified' }
@@ -695,7 +695,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self update: 'dateFrom' with: '10/10/2019' .
-	self assert: ERController new conference configuration dateFrom equals: '10/10/2019' 
+	self assert: controller conference configuration dateFrom equals: '10/10/2019' 
 ]
 
 { #category : #configurationConferenceTests }
@@ -738,7 +738,7 @@ ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self update: 'description' with: newValue .
-	self assert: ERController new conference configuration description equals: newValue 
+	self assert: controller conference configuration description equals: newValue 
 ]
 
 { #category : #configurationConferenceTests }
@@ -748,7 +748,7 @@ ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self update: 'homePageUrl' with: newValue .
-	self assert: ERController new conference configuration homePageUrl equals: newValue 
+	self assert: controller conference configuration homePageUrl equals: newValue 
 ]
 
 { #category : #configurationFeeTests }

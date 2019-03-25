@@ -22,11 +22,6 @@ ERStatisticsView >> children [
 	^ OrderedCollection withAll: tables
 ]
 
-{ #category : #accessing }
-ERStatisticsView >> controller: anObject [
-	controller := anObject
-]
-
 { #category : #initialization }
 ERStatisticsView >> initialize [ 	
 	super initialize .
@@ -46,7 +41,7 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	tab := ERDictionaryTable new
 		headers: controller headersParticipantsToLunches;
 		levelTotal: 6;
-		listObject: controller participantsToLunches.
+		listObject: controller statisticsOfLuch.
 	self renderTable: tab withTitle: 'Participants to lunches per day' on: html
 ]
 
@@ -56,7 +51,7 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	tab := ERDictionaryTable new
 		headers: controller headersParticipantsToSocialDinner;
 		levelTotal: 6;
-		listObject: controller participantsToSocialDinner.
+		listObject: controller statisticsOfSocialDinner.
 	self renderTable: tab withTitle: 'Participants To Social Dinner' on: html
 ]
 
@@ -66,7 +61,7 @@ ERStatisticsView >> renderShirtsStatisticsOn: html [
 	tab := ERDictionaryTable new
 		headers: controller headersShirtsStatistics;
 		levelTotal: 6;
-		listObject: controller shirtsStatistics.
+		listObject: controller statisticsOfTShirts .
 	self renderTable: tab withTitle: 'Shirts' on: html
 ]
 

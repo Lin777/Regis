@@ -26,11 +26,6 @@ ERHomeView class >> withContent: aContent withController: aController [
 	^ form
 ]
 
-{ #category : #accessing }
-ERHomeView >> controller: anObject [
-	controller := anObject
-]
-
 { #category : #rendering }
 ERHomeView >> renderPageOn: html [
 	html heading level6

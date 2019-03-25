@@ -1,12 +1,20 @@
 Class {
 	#name : #ERMailSender,
 	#superclass : #Object,
+	#instVars : [
+		'controller'
+	],
 	#category : #'ESUGApp-Core'
 }
 
+{ #category : #initialization }
+ERMailSender >> initialize [ 	
+	controller := ERController new
+]
+
 { #category : #rendering }
 ERMailSender >> senderEmailAddress [
-	^ ERController new senderEmailAddress
+	^ controller senderEmailAddress
 ]
 
 { #category : #rendering }

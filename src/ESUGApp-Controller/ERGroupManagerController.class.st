@@ -63,11 +63,6 @@ ERGroupManagerController >> group: anObject [
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> groupForGroupManager [
-	^ self groupOfUser: attendee.
-]
-
-{ #category : #accessing }
 ERGroupManagerController >> groupManager [ 
 	^ group groupManager
 ]
@@ -83,12 +78,6 @@ ERGroupManagerController >> updateAffiliation: aff [
 ERGroupManagerController >> updateGroup: aGroup [
 	self updatePaymentForAttendees: aGroup.
 	super updateGroup: aGroup 
-]
-
-{ #category : #adding }
-ERGroupManagerController >> updateNumberInvoiceOn: anAttendee [
-	^ anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber
-	
 ]
 
 { #category : #adding }

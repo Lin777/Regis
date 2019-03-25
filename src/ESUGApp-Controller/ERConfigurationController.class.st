@@ -19,51 +19,6 @@ ERConfigurationController >> addAttendee: anAttendee [
 ]
 
 { #category : #adding }
-ERConfigurationController >> addAttendsToLunchPer: day to: list [
-	| normal vegetarian vegan |
-	normal :=((self attends select: [:each | each conferenceInformation isNormal]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
-	vegan :=((self attends select: [:each | each conferenceInformation isVegan]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
-	vegetarian :=((self attends select: [:each | each conferenceInformation isVegetarian]) select: [:each | each conferenceInformation perform: (day asSymbol)]) size.
-	
-	self addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list.
-	
-]
-
-{ #category : #adding }
-ERConfigurationController >> addItemTo: aList of: each [
-	| man women |
-	man := 0.
-	women := 0.
-	self attends
-		do: [ :anAttendee | 
-			anAttendee conferenceInformation tshirtSize = each
-				ifTrue: [ anAttendee conferenceInformation isMale
-						ifTrue: [ man := man + 1 ].
-					anAttendee conferenceInformation isFemale
-						ifTrue: [ women := women + 1 ] ]].
-			aList
-				add:
-					(Dictionary new
-						at: 'Size of the shirt' put: each;
-						at: 'Man' put: man;
-						at: 'Women' put: women;
-						at: 'Total' put: man + women;
-						yourself)
-]
-
-{ #category : #adding }
-ERConfigurationController >> addNormal: normal vegan: vegan vegetarian: vegetarian per: day to: list [
-	list
-		add:
-			(Dictionary new
-				at: 'Day' put: day capitalized;
-				at: 'Normal' put: normal;
-				at: 'Vegetarian' put: vegetarian;
-				at: 'Vegan' put: vegan;
-				yourself)
-]
-
-{ #category : #adding }
 ERConfigurationController >> addReductionTicketToConference: ticketRegistered [
 	conference addReductionTicket: ticketRegistered .
 	conference save.
@@ -94,9 +49,7 @@ ERConfigurationController >> attends [
 
 { #category : #initialization }
 ERConfigurationController >> closeRegistration [
-	self conference configuration openRegistration: false.
-	self conference save.
-	
+	self conference closeRegistration.
 	self notifyAllObservers
 ]
 
@@ -149,14 +102,13 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 ERConfigurationController >> deleteStudentVolunterRoleFrom: anAttendee [
 	anAttendee userAccount isStudent ifTrue: [
 	(anAttendee userAccount) deleteRole: 'studentVolunter'; save. 
-	"self notifyAllObservers"]
+	self notifyAllObservers]
 ]
 
 { #category : #rendering }
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
-		"Fix ToDo"
 		self deleteDependencesOfAttendee: anUser.
 		self deleteDependencesOfGroupManager: anUser.
 		self deleteUserForConference: anUser]
@@ -164,23 +116,31 @@ ERConfigurationController >> deleteUser: anUser [
 ]
 
 { #category : #'as yet unclassified' }
+ERConfigurationController >> dictionaryForLunch [
+	|dic|
+	dic := OrderedDictionary new.
+	#(#monday #tuesday #wednesday #thursday #friday) do: [ :each |
+		dic at: each put: self dictionaryOfFoodPreference ].
+	^ dic
+]
+
+{ #category : #'as yet unclassified' }
 ERConfigurationController >> dictionaryOfFoodPreference [
 	^ Dictionary new 	
-		at: 'vegan' put: 0;
-		at: 'normal' put: 0;
-		at: 'vegetarian' put: 0;
+		at: 'Vegan' put: 0;
+		at: 'Normal' put: 0;
+		at: 'Vegetarian' put: 0;
 		yourself 
 ]
 
 { #category : #'as yet unclassified' }
-ERConfigurationController >> dictionaryWeekendLunch [
-	^ Dictionary new 	
-		at: #monday put: self dictionaryOfFoodPreference ;
-		at: #tuesday put: self dictionaryOfFoodPreference;
-		at: #wednesday put: self dictionaryOfFoodPreference;
-		at: #thursday put: self dictionaryOfFoodPreference;
-		at: #friday put: self dictionaryOfFoodPreference;
-		yourself 
+ERConfigurationController >> dictionaryOfShirts [
+	|dict|
+	dict := OrderedDictionary new.
+	ERAttendee tShirtSizes do: [ :each | dict at: each put: 
+		(Dictionary new at: 'Male' put: 0; 
+		at: 'Female' put: 0; yourself) ].
+	^ dict
 ]
 
 { #category : #rendering }
@@ -290,6 +250,17 @@ ERConfigurationController >> exportUsers: fileName [
 	^ cvs
 ]
 
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> flat: dictionary with: aString [
+	|list|
+	list := OrderedCollection new.
+	dictionary keysDo: [:key ||value|
+		value := dictionary at: key.
+		value at: aString put: key asString capitalized.
+		list add: value].
+	^ list
+]
+
 { #category : #accessing }
 ERConfigurationController >> groups [
 	^ conference groups 
@@ -323,12 +294,12 @@ ERConfigurationController >> headersParticipantsToLunches [
 
 { #category : #'accessing-headers' }
 ERConfigurationController >> headersParticipantsToSocialDinner [
-	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
+	^ #( 'Normal' 'Vegetarian' 'Vegan')	
 ]
 
 { #category : #'accessing-headers' }
 ERConfigurationController >> headersShirtsStatistics [
-	^ #('Size of the shirt' 'Man' 'Women' 'Total')
+	^ #('Size of the shirt' 'Female' 'Male')
 ]
 
 { #category : #'accessing-headers' }
@@ -341,22 +312,6 @@ ERConfigurationController >> invoices [
 	^ (conference groups), 
 	(conference attends 
 		select: [ :each | each idGroup isNil ])
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> listFoodPreferenceOfList: list symbolList: symbolList with: aSymbol [
-	|result|
-	result := OrderedCollection new.
-	symbolList 
-		do: [:symbol | result add:
-			 (list select: [:each | each conferenceInformation perform: symbol 
-				with: (each conferenceInformation perform: aSymbol)]) size ].
-	^ result
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> listWithNormal: normal vegan: vegan vegetarian: vegetarian [ 
-	^ OrderedCollection new add: (Dictionary new at: 'Normal' put: normal; at: 'Vegetarian' put: vegetarian ; at: 'Vegan' put: vegan; at: 'Total' put: normal +vegan +vegetarian ; yourself );yourself 
 ]
 
 { #category : #adding }
@@ -372,33 +327,6 @@ ERConfigurationController >> openRegistration [
 		openRegistration: true.
 	self conference	save.
 	self notifyAllObservers
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> participantsToLunches [
-	| list |
-	list := OrderedCollection new.
-	ERAttendee days
-		do: [ :day | self addAttendsToLunchPer: day to: list ].
-	^ list
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> participantsToSocialDinner [
-	|attendees addedPeople list symbolList|
-	
-	symbolList := #(#isNormal: #isVegan: #isVegetarian:).
-	
-	attendees := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation attendSocialEvent])
- 		symbolList: symbolList 
-		with: #foodPreference).
-		
-   addedPeople := (self listFoodPreferenceOfList: (self attends select: [:each | each conferenceInformation addPersonToSocialDinner ])
- 		symbolList: symbolList 
-		with: #personAddedFoodPreference).
-	list := attendees + addedPeople .
-	
-	^ self listWithNormal: (list at:1) vegan: (list at:2) vegetarian: (list at:3) 
 ]
 
 { #category : #adding }
@@ -438,11 +366,33 @@ ERConfigurationController >> saveTicket: aReductionTicket [
 ]
 
 { #category : #'as yet unclassified' }
-ERConfigurationController >> shirtsStatistics [
-	| list |
-	list := OrderedCollection new.
-	ERAttendee tShirtSizes do: [ :each | self addItemTo: list of: each ].
-	^ list
+ERConfigurationController >> statisticsOfLuch [
+	|dict|
+	dict := self dictionaryForLunch.
+	conference attends do: [ :att |
+		dict := att conferenceInformation addMyPreferenceForLuchTo: dict ].
+	dict := self flat: dict with: 'Day'. 
+	^ dict
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> statisticsOfSocialDinner [
+	|dict|
+	dict := self dictionaryOfFoodPreference.
+	conference attends do: [ :att |
+		dict := att conferenceInformation addMyPreferenceForSocialDinnerTo: dict ].
+	dict := OrderedCollection with: dict.
+	^ dict
+]
+
+{ #category : #'as yet unclassified' }
+ERConfigurationController >> statisticsOfTShirts [
+	|dict|
+	dict := self dictionaryOfShirts.
+	conference attends do: [ :att |
+		dict := att conferenceInformation addMytShirtTo: dict ].
+	dict := self flat: dict with: 'Size of the shirt'.
+	^ dict
 ]
 
 { #category : #accessing }

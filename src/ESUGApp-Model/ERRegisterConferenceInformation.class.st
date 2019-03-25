@@ -14,6 +14,27 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
+{ #category : #adding }
+ERRegisterConferenceInformation >> addMyPreferenceForLuchTo: aDictionary [
+	aDictionary keysDo: [ :key | (self perform: key) 
+		ifTrue: [ 
+			(aDictionary at: key) at: foodPreference put: ((aDictionary at: key) at: foodPreference) + 1 ] ] .
+	^ aDictionary 
+]
+
+{ #category : #adding }
+ERRegisterConferenceInformation >> addMyPreferenceForSocialDinnerTo: aDictionary [
+	self addPersonToSocialDinner ifTrue: [ aDictionary at: foodPreference put: (aDictionary at: foodPreference) + 1 ].
+	self attendSocialEvent ifTrue: [ aDictionary at: personAddedFoodPreference put: (aDictionary at: foodPreference) + 1 ].
+	^ aDictionary 
+]
+
+{ #category : #adding }
+ERRegisterConferenceInformation >> addMytShirtTo: aDictionary [
+	(aDictionary at: tshirtSize) at: gender put: ((aDictionary at: tshirtSize) at: gender) + 1.
+	^ aDictionary 
+]
+
 { #category : #accessing }
 ERRegisterConferenceInformation >> addPersonToSocialDinner [
 	^ addPersonToSocialDinner

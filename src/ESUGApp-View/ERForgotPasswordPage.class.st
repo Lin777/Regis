@@ -81,7 +81,7 @@ ERForgotPasswordPage >> renderTextOn: html [
 
 { #category : #rendering }
 ERForgotPasswordPage >> sendResetedPassword [
-	[ ERController new sendResetPasswordTo: email.
+	[ pageController sendResetPasswordTo: email.
 	self answer: true ]
 	on: ERException 
 	do: [ :exception | messageComponent errorMessage: exception messageText]

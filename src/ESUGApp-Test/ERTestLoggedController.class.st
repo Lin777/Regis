@@ -6,17 +6,19 @@ Class {
 
 { #category : #tests }
 ERTestLoggedController >> testGetAttendeeWhenUserExist [
-	| anUserAccountRegistered anUser |
+	self
+		shouldnt: [
+			| anUserAccountRegistered |
 	anUserAccountRegistered := self registerAttendee.
-	anUser := (ERLoggedController user: anUserAccountRegistered)
-		attendeeFromUser.
-	self deny: anUser isNil
+	(ERLoggedController user: anUserAccountRegistered)
+		attendeeFromUser]
+		raise: ERException.
 ]
 
 { #category : #tests }
 ERTestLoggedController >> testGetAttendeeWhenUserNotExist [
-	|anUser|
-	anUser := (ERLoggedController
-		user: ERTest testUserAccount) attendeeFromUser.
-	self assert: anUser isNil
+	self
+		should: [
+			(ERLoggedController user: ERTest testUserAccount) attendeeFromUser]
+		raise: ERException.
 ]

@@ -50,7 +50,8 @@ ERPage >> id: anObject [
 { #category : #initialization }
 ERPage >> initialize [
 	super initialize.
-	classContainer:= ''
+	pageController := ERController new.
+	classContainer:= ''.
 ]
 
 { #category : #accessing }

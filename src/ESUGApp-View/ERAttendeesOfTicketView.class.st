@@ -55,7 +55,7 @@ ERAttendeesOfTicketView >> listDataToRenderButton [
 
 { #category : #accessing }
 ERAttendeesOfTicketView >> listOfAttendees [
-	^ ERController new attendeesForATicket: ticket ticketId
+	^ controller attendeesForATicket: ticket ticketId
 ]
 
 { #category : #accessing }
@@ -69,18 +69,20 @@ ERAttendeesOfTicketView >> renderButtonsOn: html [
 
 { #category : #accessing }
 ERAttendeesOfTicketView >> renderPageOn: html [
-	self listOfAttendees isEmpty ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
-	ifFalse: [self renderTableOfAttendsOn: html ].
+	|list|
+	list := self listOfAttendees.
+	list isEmpty ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
+	ifFalse: [self renderTableOfAttendsWith: list on: html ].
 	html horizontalRule .
 	self renderButtonsOn: html
 ]
 
 { #category : #accessing }
-ERAttendeesOfTicketView >> renderTableOfAttendsOn: html [
+ERAttendeesOfTicketView >> renderTableOfAttendsWith: aList on: html [
 	tableComponent := ERTable new
 		headers: self headers;
 		levelTotal: 6;
-		listObject: self listOfAttendees ;
+		listObject: aList ;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: tableComponent 

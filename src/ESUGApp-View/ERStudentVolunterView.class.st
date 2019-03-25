@@ -83,8 +83,8 @@ ERStudentVolunterView >> headers [
 
 { #category : #rendering }
 ERStudentVolunterView >> initialize [ 	
+	super initialize.
 	strategy := 'Email'.
-	controller := ERController new.
 ]
 
 { #category : #rendering }

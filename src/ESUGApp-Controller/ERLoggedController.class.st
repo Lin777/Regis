@@ -28,9 +28,7 @@ ERLoggedController >> attendee: anObject [
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser [
-	^ conference attends 
-		detect: [ :each | each userAccount = user ]
-		ifNone: [ nil ]
+	^ self attendeeFromUser: user
 	
 ]
 
@@ -39,7 +37,7 @@ ERLoggedController >> attendeeFromUser: anUser [
 	^ conference attends 
 			detect: [ :each | 
 				each userAccount = anUser ]
-			ifNone: [ Transcript show: 'None'. nil ]
+			ifNone: [ ERException notFoundAttendeeFromUser signal ]
 ]
 
 { #category : #rendering }

@@ -68,6 +68,13 @@ ERException class >> limitStrategyNotAllowedd [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> notFoundAttendeeFromUser [
+		^ self new
+			messageText: 'Not exist Attendee from this user ';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> passwordDoesNotMatchWithConfirmPass [
 		^ self new 
 			messageText: 'The password does not match with confirm password';

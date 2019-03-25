@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 ERTestConfigurationController >> idOfAdmin [
-	^ (ERController new findUserByEmail: 'admin@esug.org') id asString
+	^ (controller findUserByEmail: 'admin@esug.org') id asString
 ]
 
 { #category : #tests }

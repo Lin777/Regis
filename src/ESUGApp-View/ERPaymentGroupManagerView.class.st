@@ -30,9 +30,7 @@ ERPaymentGroupManagerView >> renderAcceptButtonOn: html [
 	html mdlButton
 		colored;
 		id: 'accept-change-affiliation' ;
-		callback: updatePayment "[ updatePayment
-				on: ERException
-				do: [ :exception | messageComponent errorMessage: exception messageText ] ]";
+		callback: updatePayment;
 		with: 'Accept'
 ]
 
@@ -47,7 +45,6 @@ ERPaymentGroupManagerView >> renderCancelButtonOn: html [
 
 { #category : #rendering }
 ERPaymentGroupManagerView >> renderPageOn: html [
-	"html render: messageComponent ."
 	html form
 		method: 'post';
 		id: 'formPaymentGroupManager';

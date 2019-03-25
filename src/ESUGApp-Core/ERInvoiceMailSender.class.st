@@ -19,11 +19,6 @@ ERInvoiceMailSender >> attendee: anAttendee [
 ]
 
 { #category : #rendering }
-ERInvoiceMailSender >> conference [
-	^ conference ifNil: [ conference := ERController new conference ]
-]
-
-{ #category : #rendering }
 ERInvoiceMailSender >> getInvoiceAsStreamOf: user [
 	|file stream|
 	file := ERPDFInvoice pdfDocOf: user.
@@ -34,7 +29,7 @@ ERInvoiceMailSender >> getInvoiceAsStreamOf: user [
 
 { #category : #rendering }
 ERInvoiceMailSender >> subjectDescription [
-	^ 'Registration Invoice of ', self conference configuration name asString
+	^ 'Registration Invoice of ', controller conference configuration name asString
 ]
 
 { #category : #rendering }

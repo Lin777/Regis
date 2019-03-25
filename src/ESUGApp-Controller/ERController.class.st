@@ -62,12 +62,6 @@ ERController >> addUser: anUser [
 	^ userSaved
 ]
 
-{ #category : #rendering }
-ERController >> allAttendeesHasPaid: aGroup [
-	^ aGroup listAttends ifEmpty: [ false ] 
-	ifNotEmpty: [ aGroup listAttends allSatisfy: [:attend | attend paymentInformation hasPaid ] ]
-]
-
 { #category : #'as yet unclassified' }
 ERController >> amountForCurrentDateFor: aFee [
 	conference configuration earlyRegistrationDeadline asDate < Date today
@@ -108,12 +102,6 @@ ERController >> applyToAddComission: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> attendAllDays: anAttendee [
- ^ (anAttendee conferenceInformation attendance 
-		values count: [ :each | each ]) = 5
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> attendeesForATicket: ticketId [
 	^ conference attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
@@ -130,20 +118,6 @@ ERController >> cleanZip: zip with: zipFile subDir: subDir [
 			subDir ensureDeleteAll.
 			zipFile ensureDelete.	
 		]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> codingZipFile: nameSubDirectory [
-	| zip subDir zipFile codingZipFile |
-	zip := ZipArchive new.
-	zipFile := nameSubDirectory asFileReference, 'zip'.
-	self cleanZip: zip with: zipFile subDir: subDir.
-	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path pathString ].
-	zip writeToFileNamed: zipFile fullName.
-	codingZipFile := self encodeFiletoBase64: zipFile.
-	self cleanZip: zip with: zipFile subDir: subDir.
-	self cleanSubDirectory: nameSubDirectory asFileReference.
-	^ codingZipFile
 ]
 
 { #category : #'as yet unclassified' }
@@ -212,16 +186,6 @@ ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
-]
-
-{ #category : #rendering }
-ERController >> deleteGroup: aGroupManager [
-	self notifyAllObservers .
-]
-
-{ #category : #rendering }
-ERController >> deleteUser: anUser [
-	self notifyAllObservers .
 ]
 
 { #category : #'as yet unclassified' }
@@ -351,15 +315,6 @@ ERController >> payPalUrlForGroup: aGroup [
 ERController >> paymentAmountOf: aGroup [
 	aGroup listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
 	ifEmpty: [ ^ 0 ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> paymentRateFor: anAttendee [
-	conference configuration earlyRegistrationDeadline 
-		asDate < anAttendee createdOn asDate
-		ifTrue: [ ^ conference fee lrfAllDaysFee ]
-		ifFalse: [ ^ conference fee erfAllDaysFee ].
-	^ ERException errorWhenCalculatingPaymentAmount raised
 ]
 
 { #category : #'as yet unclassified' }

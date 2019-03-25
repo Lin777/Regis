@@ -72,6 +72,12 @@ ERConference >> attends: anObject [
 	attends := anObject
 ]
 
+{ #category : #initialization }
+ERConference >> closeRegistration [
+	self configuration openRegistration: false.
+	self save.
+]
+
 { #category : #accessing }
 ERConference >> configuration [
 	^ configuration

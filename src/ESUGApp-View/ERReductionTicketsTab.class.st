@@ -108,7 +108,7 @@ ERReductionTicketsTab >> listDataToRenderButton [
 
 { #category : #accessing }
 ERReductionTicketsTab >> listOfAttendees: aTicket [
-	^ ERController new attendeesForATicket: aTicket ticketId
+	^ controller attendeesForATicket: aTicket ticketId
 ]
 
 { #category : #rendering }
