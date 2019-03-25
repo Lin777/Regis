@@ -6,7 +6,7 @@ Class {
 
 { #category : #adding }
 ERConfigurationController >> addAttendee: anAttendee [
-	| anAttendeeSaved userSaved |
+"	| anAttendeeSaved userSaved |
 	
 	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	userSaved := anAttendee userAccount save.
@@ -14,23 +14,18 @@ ERConfigurationController >> addAttendee: anAttendee [
 	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
 	conference addAttendee: anAttendeeSaved.
 	conference save.
-	self notifyAllObservers .
+	self notifyAllObservers.
+	^ anAttendeeSaved"
+	| anAttendeeSaved |
+	anAttendeeSaved := conference addAttendee: anAttendee.
+	self notifyAllObservers.
 	^ anAttendeeSaved
 ]
 
 { #category : #adding }
 ERConfigurationController >> addReductionTicketToConference: ticketRegistered [
-	conference addReductionTicket: ticketRegistered .
-	conference save.
+	conference addReductionTicket: ticketRegistered.
 	self notifyAllObservers 
-]
-
-{ #category : #adding }
-ERConfigurationController >> addTicket: aReductionTicket [
-	| ticketRegistered |
-	self reductionTicketAlreadyExist: aReductionTicket.
-	ticketRegistered := self saveTicket: aReductionTicket .
-	self addReductionTicketToConference: ticketRegistered
 ]
 
 { #category : #adding }
@@ -55,9 +50,8 @@ ERConfigurationController >> closeRegistration [
 
 { #category : #rendering }
 ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
-	anAttendee userAccount isStudent ifFalse:[
-	(anAttendee userAccount) roleAdd: 'studentVolunter'; save.
-	self notifyAllObservers]
+	anAttendee convertToStudentVolunter.
+	self notifyAllObservers
 ]
 
 { #category : #rendering }
@@ -100,9 +94,8 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 
 { #category : #rendering }
 ERConfigurationController >> deleteStudentVolunterRoleFrom: anAttendee [
-	anAttendee userAccount isStudent ifTrue: [
-	(anAttendee userAccount) deleteRole: 'studentVolunter'; save. 
-	self notifyAllObservers]
+	anAttendee removeStudentVolunterRole.
+	self notifyAllObservers
 ]
 
 { #category : #rendering }
@@ -323,18 +316,8 @@ ERConfigurationController >> modifyTicket: aTicket [
 
 { #category : #initialization }
 ERConfigurationController >> openRegistration [
-	self conference configuration
-		openRegistration: true.
-	self conference	save.
+	conference openRegistration.
 	self notifyAllObservers
-]
-
-{ #category : #adding }
-ERConfigurationController >> reductionTicketAlreadyExist: aReductionTicket [
-	conference reductionTickets
-		do: [ :each | 
-			aReductionTicket ticketId = each ticketId
-				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
 ]
 
 { #category : #accessing }

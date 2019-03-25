@@ -26,7 +26,7 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-Test' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
 				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
 			spec 
-				group: 'default' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
+				group: 'Core' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
 				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Test' 'ESUGApp-Extensions' 'ESUGApp-Core')]
 ]
 

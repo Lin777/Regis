@@ -25,8 +25,7 @@ ERReductionTicketsTab >> addTicket [
 
 { #category : #rendering }
 ERReductionTicketsTab >> addTicketToConference [
-	controller addTicket: ticket.
-
+	controller addReductionTicketToConference: ticket.
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
 

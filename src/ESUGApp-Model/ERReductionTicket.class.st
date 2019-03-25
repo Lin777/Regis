@@ -10,19 +10,6 @@ Class {
 	#category : #'ESUGApp-Model'
 }
 
-{ #category : #adding }
-ERReductionTicket >> addAttendeeOfTicket: anAttendee [
-	^ usersOfTickets add: anAttendee
-]
-
-{ #category : #adding }
-ERReductionTicket >> addAttendeeOfTicketLimited: anAttendee [
-	self usersOfTickets size < self limitStrategy limit
-		ifTrue: [ ^ self addAttendeeOfTicket: anAttendee ]
-		ifFalse: [ anAttendee coupon: ''.
-			ERException ticketWasExceeded signal ]
-]
-
 { #category : #accessing }
 ERReductionTicket >> discountStrategy [
 	^ discountStrategy

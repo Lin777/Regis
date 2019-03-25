@@ -27,15 +27,6 @@ ERDoneButton >> initialize [
 	super initialize.
 ]
 
-{ #category : #'as yet unclassified' }
-ERDoneButton >> registerAttendee [
-	|user|
-	user :=attendee userAccount save.
-	attendee userAccount: user.
-	^ attendee save.
-	
-]
-
 { #category : #rendering }
 ERDoneButton >> renderContentOn: html [
 	html heading level2 with: 'Complete'.

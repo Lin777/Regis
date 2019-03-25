@@ -29,7 +29,15 @@ ERConference >> active: anObject [
 
 { #category : #initialization }
 ERConference >> addAttendee: anAttendee [
-	attends add: anAttendee 
+	| anAttendeeSaved userSaved |
+	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
+	userSaved := anAttendee userAccount save.
+	self addUser: userSaved.
+	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
+	attends add: anAttendeeSaved.
+	self save.
+	^ anAttendeeSaved
+	"attends add: anAttendee "
 ]
 
 { #category : #initialization }
@@ -44,7 +52,10 @@ ERConference >> addPayment: aPayment [
 
 { #category : #accessing }
 ERConference >> addReductionTicket: aReductionTicket [
-	reductionTickets add: aReductionTicket 
+	self reductionTicketAlreadyExist: aReductionTicket.
+	aReductionTicket save.
+	reductionTickets add: aReductionTicket .
+	self save.
 ]
 
 { #category : #accessing }
@@ -133,6 +144,12 @@ ERConference >> invoiceNumber [
 	 ^ invoiceNumber
 ]
 
+{ #category : #initialization }
+ERConference >> openRegistration [
+	self configuration openRegistration: true.
+	self save.
+]
+
 { #category : #accessing }
 ERConference >> payments [
 	^ payments
@@ -141,6 +158,14 @@ ERConference >> payments [
 { #category : #accessing }
 ERConference >> payments: anObject [
 	payments := anObject
+]
+
+{ #category : #accessing }
+ERConference >> reductionTicketAlreadyExist: aReductionTicket [
+	self reductionTickets
+		do: [ :each | 
+			aReductionTicket ticketId = each ticketId
+				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
 ]
 
 { #category : #accessing }
@@ -181,4 +206,13 @@ ERConference >> users [
 { #category : #accessing }
 ERConference >> users: anObject [
 	users := anObject
+]
+
+{ #category : #accessing }
+ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
+	self users
+		do: [ :each | 
+			each email = anUser email
+				ifTrue: [each = anUser ifFalse:[
+					ERException emailAlreadyRegistered signal ] ]].
 ]

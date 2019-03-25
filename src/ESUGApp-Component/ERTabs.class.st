@@ -25,7 +25,7 @@ ERTabs >> renderContentOn: html [
 ERTabs >> renderTabNamesOn: html [
 	html div
 		class: 'mdl-tabs__tab-bar';
-		with: [ self tabs
+		with: [ tabs
 				do: [ :tab | 
 					|activeClass anchor|
 					activeClass := ''.
@@ -40,7 +40,7 @@ ERTabs >> renderTabNamesOn: html [
 
 { #category : #rendering }
 ERTabs >> renderTabsOn: html [
-	self tabs
+	tabs
 		do: [ :tab | 
 			|activeClass |		
 			activeClass := ''.
@@ -49,11 +49,6 @@ ERTabs >> renderTabsOn: html [
 				class: 'mdl-tabs__panel', activeClass ;	
 				id: 'tab-',tab tabId;
 				with: [ html render: tab ] ].
-]
-
-{ #category : #accessing }
-ERTabs >> tabs [
-	^ tabs
 ]
 
 { #category : #accessing }
