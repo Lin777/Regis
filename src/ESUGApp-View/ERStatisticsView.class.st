@@ -2,7 +2,6 @@ Class {
 	#name : #ERStatisticsView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'tables'
 	],
 	#category : #'ESUGApp-View'
@@ -25,6 +24,7 @@ ERStatisticsView >> children [
 { #category : #initialization }
 ERStatisticsView >> initialize [ 	
 	super initialize .
+	controller := ERConfigurationController new.
 	tables:= OrderedCollection new.
 ]
 
