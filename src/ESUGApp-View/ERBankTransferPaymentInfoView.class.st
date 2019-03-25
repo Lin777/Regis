@@ -2,7 +2,6 @@ Class {
 	#name : #ERBankTransferPaymentInfoView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'fee',
 		'bankAccountInformation',
 		'bankInformation',

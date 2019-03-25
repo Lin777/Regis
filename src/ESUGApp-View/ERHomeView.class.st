@@ -1,9 +1,6 @@
 Class {
 	#name : #ERHomeView,
 	#superclass : #ERTittledView,
-	#instVars : [
-		'controller'
-	],
 	#category : #'ESUGApp-View'
 }
 

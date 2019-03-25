@@ -2,7 +2,6 @@ Class {
 	#name : #ERStudentVolunterView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'strategy',
 		'table',
 		'attends',
