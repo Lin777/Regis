@@ -112,6 +112,141 @@ ERConference >> deleteUser: anUser [
 ]
 
 { #category : #accessing }
+ERConference >> dictionaryForLunch [
+	|dic|
+	dic := OrderedDictionary new.
+	#(#monday #tuesday #wednesday #thursday #friday) do: [ :each |
+		dic at: each put: self dictionaryOfFoodPreference ].
+	^ dic
+]
+
+{ #category : #accessing }
+ERConference >> dictionaryOfFoodPreference [
+	^ Dictionary new 	
+		at: 'Vegan' put: 0;
+		at: 'Normal' put: 0;
+		at: 'Vegetarian' put: 0;
+		yourself 
+]
+
+{ #category : #accessing }
+ERConference >> dictionaryOfShirts [
+	|dict|
+	dict := OrderedDictionary new.
+	ERAttendee tShirtSizes do: [ :each | dict at: each put: 
+		(Dictionary new at: 'Male' put: 0; 
+		at: 'Female' put: 0; yourself) ].
+	^ dict
+]
+
+{ #category : #rendering }
+ERConference >> exportAttends: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerAttendee.
+			self attends 
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{ each paymentInformation invoiceNumber.
+							each userAccount firstName.
+							each userAccount lastName.
+							each userAccount email.
+							each contactInformation country.
+							each affiliationInformation organizationName} ].
+			neoWriter close ].
+	^ cvs
+]
+
+{ #category : #rendering }
+ERConference >> exportAwards: fileName [
+	|  cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self hearderAwards.
+			self submittedAwards
+				do: [ :each | 
+					neoWriter
+						nextPut:
+					{each nameAward.
+					each submitter userAccount email}].
+
+			neoWriter close ].
+	^ cvs
+]
+
+{ #category : #rendering }
+ERConference >> exportGroupManagers: fileName [
+	|  cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerGroups.
+			self groups
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{each paymentInformation invoiceNumber.
+							each groupManager userAccount firstName.
+							each groupManager userAccount lastName.
+							each groupManager userAccount email.
+							each groupManager affiliationInformation organizationName.
+							each groupManager affiliationInformation organizationAddrees1.
+							each groupManager affiliationInformation organizationCity.
+							each groupManager affiliationInformation organizationCountry.
+							each groupManager affiliationInformation organizationPostal.
+							each groupManager affiliationInformation membershipType} ].
+				neoWriter close ].
+	^ cvs
+]
+
+{ #category : #rendering }
+ERConference >> exportTalks: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerTalks.
+			self submittedTalks
+				do: [ :each | neoWriter 
+				nextPut:
+					{each name.
+					each submitter userAccount email.
+					each presentation} ].
+			neoWriter close ].
+	^ cvs
+]
+
+{ #category : #rendering }
+ERConference >> exportUsers: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerUser.
+			self users
+				do: [ :each | 
+					neoWriter
+						nextPut:
+							{each id.
+							each firstName.
+							each lastName.
+							each email.
+							each password.
+							each rolesAsString} ].
+				neoWriter close ].
+	^ cvs
+]
+
+{ #category : #accessing }
 ERConference >> fee [
 	^ fee
 ]
@@ -122,6 +257,17 @@ ERConference >> fee: anObject [
 ]
 
 { #category : #accessing }
+ERConference >> flat: dictionary with: aString [
+	|list|
+	list := OrderedCollection new.
+	dictionary keysDo: [:key ||value|
+		value := dictionary at: key.
+		value at: aString put: key asString capitalized.
+		list add: value].
+	^ list
+]
+
+{ #category : #accessing }
 ERConference >> groups [
 	^ groups
 ]
@@ -129,6 +275,47 @@ ERConference >> groups [
 { #category : #accessing }
 ERConference >> groups: anObject [
 	groups := anObject
+]
+
+{ #category : #rendering }
+ERConference >> headerAttendee [
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
+]
+
+{ #category : #rendering }
+ERConference >> headerGroups [
+	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
+	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
+]
+
+{ #category : #rendering }
+ERConference >> headerTalks [
+	^ #('Name' 'Submitted By' 'Uploaded File')
+]
+
+{ #category : #rendering }
+ERConference >> headerUser [
+	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
+]
+
+{ #category : #rendering }
+ERConference >> headersParticipantsToLunches [
+	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
+]
+
+{ #category : #rendering }
+ERConference >> headersParticipantsToSocialDinner [
+	^ #( 'Normal' 'Vegetarian' 'Vegan')	
+]
+
+{ #category : #rendering }
+ERConference >> headersShirtsStatistics [
+	^ #('Size of the shirt' 'Female' 'Male')
+]
+
+{ #category : #rendering }
+ERConference >> hearderAwards [
+	^ #('Name' 'Submitted by')
 ]
 
 { #category : #initialization }
@@ -154,6 +341,13 @@ ERConference >> initialize [
 ERConference >> invoiceNumber [
 	invoiceNumber ifNil: [ invoiceNumber := 0 ].
 	 ^ invoiceNumber
+]
+
+{ #category : #rendering }
+ERConference >> invoices [
+	^ (self groups), 
+	(self attends 
+		select: [ :each | each idGroup isNil ])
 ]
 
 { #category : #initialization }
@@ -188,6 +382,36 @@ ERConference >> reductionTickets [
 { #category : #accessing }
 ERConference >> reductionTickets: anObject [
 	reductionTickets := anObject
+]
+
+{ #category : #accessing }
+ERConference >> statisticsOfLuch [
+	|dict|
+	dict := self dictionaryForLunch.
+	self attends do: [ :att |
+		dict := att conferenceInformation addMyPreferenceForLuchTo: dict ].
+	dict := self flat: dict with: 'Day'. 
+	^ dict
+]
+
+{ #category : #accessing }
+ERConference >> statisticsOfSocialDinner [
+	|dict|
+	dict := self dictionaryOfFoodPreference.
+	self attends do: [ :att |
+		dict := att conferenceInformation addMyPreferenceForSocialDinnerTo: dict ].
+	dict := OrderedCollection with: dict.
+	^ dict
+]
+
+{ #category : #accessing }
+ERConference >> statisticsOfTShirts [
+	|dict|
+	dict := self dictionaryOfShirts.
+	self attends do: [ :att |
+		dict := att conferenceInformation addMytShirtTo: dict ].
+	dict := self flat: dict with: 'Size of the shirt'.
+	^ dict
 ]
 
 { #category : #accessing }

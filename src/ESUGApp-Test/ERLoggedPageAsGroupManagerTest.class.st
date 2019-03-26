@@ -1,3 +1,6 @@
+"
+A ERLoggedPageAsGroupManagerTest is a test class for testing the behavior of page when the user sign in as GroupManager
+"
 Class {
 	#name : #ERLoggedPageAsGroupManagerTest,
 	#superclass : #ERParasolTest,

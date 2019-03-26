@@ -51,7 +51,7 @@ ERUsersTab >> deleteUser: user [
 { #category : #rendering }
 ERUsersTab >> exportUsers [
 	| file |
-	file := controller exportUsers: 'users'.
+	file := controller conference exportUsers: 'users'.
 	self exportFile: file wihtName: 'users.csv'
 ]
 
@@ -166,5 +166,5 @@ ERUsersTab >> title [
 
 { #category : #rendering }
 ERUsersTab >> users [
-	^ controller users
+	^ controller conference users
 ]

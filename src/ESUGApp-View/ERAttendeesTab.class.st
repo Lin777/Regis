@@ -10,7 +10,7 @@ Class {
 
 { #category : #rendering }
 ERAttendeesTab >> attends [
-	^ controller attends
+	^ controller conference attends
 ]
 
 { #category : #rendering }
@@ -49,7 +49,7 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
 	| file |
-	file := controller exportAttends: 'attends'.
+	file := controller conference exportAttends: 'attends'.
 	self exportFile: file wihtName: 'attends.csv'
 ]
 

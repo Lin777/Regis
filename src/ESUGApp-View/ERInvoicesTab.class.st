@@ -60,7 +60,7 @@ ERInvoicesTab >> headers [
 
 { #category : #rendering }
 ERInvoicesTab >> invoices [
-	^ controller invoices 
+	^ controller conference invoices 
 		sort: [ :a :b | a paymentInformation invoiceNumber <
 							 b paymentInformation invoiceNumber ]
 ]

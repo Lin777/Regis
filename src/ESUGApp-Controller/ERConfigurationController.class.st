@@ -37,11 +37,6 @@ ERConfigurationController >> addUser: anAttendee [
 			^ userSaved ]
 ]
 
-{ #category : #accessing }
-ERConfigurationController >> attends [
-	^ conference attends 
-]
-
 { #category : #initialization }
 ERConfigurationController >> closeRegistration [
 	self conference closeRegistration.
@@ -108,205 +103,6 @@ ERConfigurationController >> deleteUser: anUser [
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> dictionaryForLunch [
-	|dic|
-	dic := OrderedDictionary new.
-	#(#monday #tuesday #wednesday #thursday #friday) do: [ :each |
-		dic at: each put: self dictionaryOfFoodPreference ].
-	^ dic
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> dictionaryOfFoodPreference [
-	^ Dictionary new 	
-		at: 'Vegan' put: 0;
-		at: 'Normal' put: 0;
-		at: 'Vegetarian' put: 0;
-		yourself 
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> dictionaryOfShirts [
-	|dict|
-	dict := OrderedDictionary new.
-	ERAttendee tShirtSizes do: [ :each | dict at: each put: 
-		(Dictionary new at: 'Male' put: 0; 
-		at: 'Female' put: 0; yourself) ].
-	^ dict
-]
-
-{ #category : #rendering }
-ERConfigurationController >> exportAttends: fileName [
-	| cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self headerAttendee.
-			self attends 
-				do: [ :each | 
-					neoWriter
-						nextPut:
-							{ each paymentInformation invoiceNumber.
-							each userAccount firstName.
-							each userAccount lastName.
-							each userAccount email.
-							each contactInformation country.
-							each affiliationInformation organizationName} ].
-			neoWriter close ].
-	^ cvs
-]
-
-{ #category : #rendering }
-ERConfigurationController >> exportAwards: fileName [
-	|  cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self hearderAwards.
-			self submittedAwards
-				do: [ :each | 
-					neoWriter
-						nextPut:
-					{each nameAward.
-					each submitter userAccount email}].
-
-			neoWriter close ].
-	^ cvs
-]
-
-{ #category : #rendering }
-ERConfigurationController >> exportGroupManagers: fileName [
-	|  cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self headerGroups.
-			self groups
-				do: [ :each | 
-					neoWriter
-						nextPut:
-							{each paymentInformation invoiceNumber.
-							each groupManager userAccount firstName.
-							each groupManager userAccount lastName.
-							each groupManager userAccount email.
-							each groupManager affiliationInformation organizationName.
-							each groupManager affiliationInformation organizationAddrees1.
-							each groupManager affiliationInformation organizationCity.
-							each groupManager affiliationInformation organizationCountry.
-							each groupManager affiliationInformation organizationPostal.
-							each groupManager affiliationInformation membershipType} ].
-				neoWriter close ].
-	^ cvs
-]
-
-{ #category : #rendering }
-ERConfigurationController >> exportTalks: fileName [
-	| cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self headerTalks.
-			self submittedTalks
-				do: [ :each | neoWriter 
-				nextPut:
-					{each name.
-					each submitter userAccount email.
-					each presentation} ].
-			neoWriter close ].
-	^ cvs
-]
-
-{ #category : #rendering }
-ERConfigurationController >> exportUsers: fileName [
-	| cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self headerUser.
-			self users
-				do: [ :each | 
-					neoWriter
-						nextPut:
-							{each id.
-							each firstName.
-							each lastName.
-							each email.
-							each password.
-							each rolesAsString} ].
-				neoWriter close ].
-	^ cvs
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> flat: dictionary with: aString [
-	|list|
-	list := OrderedCollection new.
-	dictionary keysDo: [:key ||value|
-		value := dictionary at: key.
-		value at: aString put: key asString capitalized.
-		list add: value].
-	^ list
-]
-
-{ #category : #accessing }
-ERConfigurationController >> groups [
-	^ conference groups 
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headerAttendee [
-	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headerGroups [
-	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
-	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headerTalks [
-	^ #('Name' 'Submitted By' 'Uploaded File')
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headerUser [
-	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headersParticipantsToLunches [
-	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headersParticipantsToSocialDinner [
-	^ #( 'Normal' 'Vegetarian' 'Vegan')	
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> headersShirtsStatistics [
-	^ #('Size of the shirt' 'Female' 'Male')
-]
-
-{ #category : #'accessing-headers' }
-ERConfigurationController >> hearderAwards [
-	^ #('Name' 'Submitted by')
-]
-
-{ #category : #rendering }
-ERConfigurationController >> invoices [
-	^ (conference groups), 
-	(conference attends 
-		select: [ :each | each idGroup isNil ])
-]
-
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
@@ -318,11 +114,6 @@ ERConfigurationController >> modifyTicket: aTicket [
 ERConfigurationController >> openRegistration [
 	conference openRegistration.
 	self notifyAllObservers
-]
-
-{ #category : #accessing }
-ERConfigurationController >> reductionTickets [
-	^ conference reductionTickets
 ]
 
 { #category : #'as yet unclassified' }
@@ -348,46 +139,6 @@ ERConfigurationController >> saveTicket: aReductionTicket [
 	^ aReductionTicket save.
 ]
 
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> statisticsOfLuch [
-	|dict|
-	dict := self dictionaryForLunch.
-	conference attends do: [ :att |
-		dict := att conferenceInformation addMyPreferenceForLuchTo: dict ].
-	dict := self flat: dict with: 'Day'. 
-	^ dict
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> statisticsOfSocialDinner [
-	|dict|
-	dict := self dictionaryOfFoodPreference.
-	conference attends do: [ :att |
-		dict := att conferenceInformation addMyPreferenceForSocialDinnerTo: dict ].
-	dict := OrderedCollection with: dict.
-	^ dict
-]
-
-{ #category : #'as yet unclassified' }
-ERConfigurationController >> statisticsOfTShirts [
-	|dict|
-	dict := self dictionaryOfShirts.
-	conference attends do: [ :att |
-		dict := att conferenceInformation addMytShirtTo: dict ].
-	dict := self flat: dict with: 'Size of the shirt'.
-	^ dict
-]
-
-{ #category : #accessing }
-ERConfigurationController >> submittedAwards [
-	^ conference submittedAwards
-]
-
-{ #category : #accessing }
-ERConfigurationController >> submittedTalks [
-	^ conference submittedTalks
-]
-
 { #category : #rendering }
 ERConfigurationController >> updateAffiliation: aff on: aGroup [
 	aGroup groupManager affiliationInformation: aff.
@@ -401,11 +152,6 @@ ERConfigurationController >> updateFee: aFee [
 	self notifyAllObservers.
 	^ aFee
 	
-]
-
-{ #category : #accessing }
-ERConfigurationController >> users [
-	^ conference users
 ]
 
 { #category : #validations }

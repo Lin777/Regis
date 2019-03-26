@@ -1,3 +1,6 @@
+"
+A ERLoggedPageAsAttendeeTest is a test class for testing the behavior of page when the user sign in as Attendee
+"
 Class {
 	#name : #ERLoggedPageAsAttendeeTest,
 	#superclass : #ERParasolTest,
@@ -115,7 +118,7 @@ ERLoggedPageAsAttendeeTest >> setUp [
 	super setUp.
 	ERTest generateDataForTest .
 	controller := ERConfigurationController new.
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self loginAsAttendee .
 	
 ]

@@ -161,7 +161,7 @@ ERReductionTicketsTab >> tabName [
 
 { #category : #rendering }
 ERReductionTicketsTab >> tickets [
-	^ controller reductionTickets
+	^ controller conference reductionTickets
 ]
 
 { #category : #accessing }

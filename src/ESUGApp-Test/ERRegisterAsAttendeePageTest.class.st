@@ -1,3 +1,6 @@
+"
+A ERRegisterAsAttendeePageTest is a test class for testing the behavior of page when the user is registering as Attendee
+"
 Class {
 	#name : #ERRegisterAsAttendeePageTest,
 	#superclass : #ERRegisterTest,

@@ -1,3 +1,6 @@
+"
+A ERLoggedPageAsAdminTest is a test class for testing the behavior of page when the user sign in as Admin
+"
 Class {
 	#name : #ERLoggedPageAsAdminTest,
 	#superclass : #ERParasolTest,
@@ -81,7 +84,7 @@ ERLoggedPageAsAdminTest >> moveToTicketsOption [
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> pressEditGroup [
 	| group|
-	group := controller groups first.
+	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	(driver findElementByID: group id, '-modify') click.
 	
@@ -224,7 +227,7 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
 ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 	|select attendee coupon|
 	coupon := self validCoupon .
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	(driver findElementByID: attendee id, '-applyReduction') click.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Apply Reduction Ticket'.
@@ -238,7 +241,7 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	|attendee updateAttendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	(driver findElementByID: attendee id, '-modify')click.
 	(driver findElementByID: 'contactInfoForm-goBackLoginButton')click.
@@ -255,7 +258,7 @@ ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 	|delete invoice|
-	invoice := controller invoices first.
+	invoice := controller conference invoices first.
 	self moveToInvoicesOption .
 	delete := driver findElementByID: invoice id, '-hasPaid'.
 	delete click.
@@ -302,7 +305,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testEditAttendee [
 	| attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	(driver findElementByID: attendee id, '-modify')click.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
@@ -311,7 +314,7 @@ ERLoggedPageAsAdminTest >> testEditAttendee [
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testEditGroup [
 	|edit group|
-	group := controller groups first.
+	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	edit := driver findElementByID: group id, '-modify'.
 	edit click.
@@ -322,7 +325,7 @@ ERLoggedPageAsAdminTest >> testEditGroup [
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'organizationAddrees1' with: ''.
+	self updateField: 'organizationAddrees1' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'Address 1')
 ]
@@ -331,7 +334,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [	
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'organizationName' with: ''.
+	self updateField: 'organizationName' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'Organization Name')
 ]
@@ -340,7 +343,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'organizationPostal' with: ''.
+	self updateField: 'organizationPostal' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'Postal/Zipcode')
 ]
@@ -348,7 +351,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 	|check attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	check := driver findElementByID: attendee id, '-modifyUser'.
 	check click.
@@ -359,7 +362,7 @@ ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'email' with: 'admin@esug.org'.
+	self updateField: 'email' with: 'admin@esug.org'.
 	self assert: (driver findElementByID: 'formAlert') getText equals: 
 		ERException emailAlreadyRegistered messageText 
 ]
@@ -368,7 +371,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyEmail [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'email' with: ''.
+	self updateField: 'email' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'Email')
 ]
@@ -377,7 +380,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyEmail [
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyLastName [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'lastName' with: ''.
+	self updateField: 'lastName' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'Last Name')
 ]
@@ -386,7 +389,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyLastName [
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'firstName' with: ''.
+	self updateField: 'firstName' with: ''.
 	self assert: self getTextOfError 
 		equals: (self messageIsRequiredFor: 'First Name')
 ]
@@ -394,7 +397,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 	|check attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	check := driver findElementByID: attendee id, '-isVolunter'.
 	check click.
@@ -407,7 +410,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	newValue := '10/10/dsfd'.
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateTo' with: newValue .
+	self updateField: 'dateTo' with: newValue .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
 	(driver findElementByID: 'cancelUpdate') click.
 	self assert: ((driver findElementByID: 'closeConferenceConfiguration-dialog') getAttribute: 'open') equals: 'true'.
@@ -422,7 +425,7 @@ ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	self pressOptionUsers.
 	(driver findElementByID: user id, '-modify') click.
 	acceptFormButton := 'accept-change-affiliation'.
-	self update: 'email' with: ''.
+	self updateField: 'email' with: ''.
 	(driver findElementByID: 'cancelButton') click.
 	self assert: ((driver findElementByID: 'buttonClose-dialog') getAttribute: 'open') equals: 'true'.
 	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
@@ -458,7 +461,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
 	|delete attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	delete := driver findElementByID: attendee id, '-delete'.
 	delete click.
@@ -470,7 +473,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 	|delete attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	delete := driver findElementByID: attendee id, '-delete'.
 	delete click.
@@ -482,7 +485,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 	|delete group|
-	group := controller groups first.
+	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	delete := driver findElementByID: group id, '-delete'.
 	delete click.
@@ -494,7 +497,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 	|delete group|
-	group := controller groups first.
+	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	delete := driver findElementByID: group id, '-delete'.
 	delete click.
@@ -507,7 +510,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	|invoice href|
 	self createDownloadDirectory .
-	invoice := controller invoices first.
+	invoice := controller conference invoices first.
 	self moveToInvoicesOption.
 	href := (driver findElementByID: invoice id, '-export') getAttribute: 'href'.
 	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'invoice.pdf'
@@ -585,7 +588,7 @@ ERLoggedPageAsAdminTest >> testPressExportUsers [
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
 	|edit group|
-	group := controller groups first.
+	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	edit := driver findElementByID: group id, '-modifyUser'.
 	edit click.
@@ -619,7 +622,7 @@ ERLoggedPageAsAdminTest >> testStatisticsView [
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
 	|check attendee|
-	attendee := controller attends first.
+	attendee := controller conference attends first.
 	controller convertToStudentVolunterThis: attendee.
 	self moveToAttendeeOption .
 	check := driver findElementByID: attendee id, '-isVolunter'.
@@ -632,7 +635,7 @@ ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'addressStringBank' with: '' .
+	self updateField: 'addressStringBank' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'AddressString')
 ]
 
@@ -641,7 +644,7 @@ ERLoggedPageAsAdminTest >> testUpdateApiKeyConferenceWithEmptyValue [
 
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'apiKey' with: '' .
+	self updateField: 'apiKey' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Api key')
 ]
 
@@ -650,7 +653,7 @@ ERLoggedPageAsAdminTest >> testUpdateBankPayPalUrlFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'bankPayPalUrl' with: '' .
+	self updateField: 'bankPayPalUrl' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'PayPal URL')
 ]
 
@@ -659,7 +662,7 @@ ERLoggedPageAsAdminTest >> testUpdateBicBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'bic' with: '' .
+	self updateField: 'bic' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'BIC')
 ]
 
@@ -668,7 +671,7 @@ ERLoggedPageAsAdminTest >> testUpdateCodeBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'code' with: '' .
+	self updateField: 'code' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Code')
 ]
 
@@ -677,7 +680,7 @@ ERLoggedPageAsAdminTest >> testUpdateCounterCodeBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'counterCode' with: '' .
+	self updateField: 'counterCode' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Counter code')
 ]
 
@@ -686,7 +689,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWith
 	
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'earlyRegistrationDeadline' with: '10/10/dsfd' .
+	self updateField: 'earlyRegistrationDeadline' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'Early Registration Deadline (Required)')
 ]
 
@@ -694,7 +697,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWith
 ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateFrom' with: '10/10/2019' .
+	self updateField: 'dateFrom' with: '10/10/2019' .
 	self assert: controller conference configuration dateFrom equals: '10/10/2019' 
 ]
 
@@ -702,7 +705,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateFrom' with: '10/10/2019'.
+	self updateField: 'dateFrom' with: '10/10/2019'.
 	self assert: (driver findElementByID: 'formConferenceConfigurationAlert' ) getText equals: ERException invalidEsugDates messageText
 ]
 
@@ -710,7 +713,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo 
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateFrom' with: '10/10/dsfd'.
+	self updateField: 'dateFrom' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: ( self messageWrongDateFormatFor: 'From (Required)')
 ]
 
@@ -718,7 +721,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFormat [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateSubmissionDeadline' with: '10/10/dsfd'.
+	self updateField: 'dateSubmissionDeadline' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor:'Submission Deadline (Required)')
 ]
 
@@ -727,7 +730,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 	
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'dateTo' with: '10/10/dsfd' .
+	self updateField: 'dateTo' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)')
 ]
 
@@ -737,7 +740,7 @@ ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 	newValue := 'The European Smalltalk User Group (ESUG) is a non-profit users organization that supports all kinds of Smalltalk initiatives, especially free-open source ones that benefit the whole Smalltalk community'.
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'description' with: newValue .
+	self updateField: 'description' with: newValue .
 	self assert: controller conference configuration description equals: newValue 
 ]
 
@@ -747,7 +750,7 @@ ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
 	newValue := 'http://www.esug.org/wiki/'.
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'homePageUrl' with: newValue .
+	self updateField: 'homePageUrl' with: newValue .
 	self assert: controller conference configuration homePageUrl equals: newValue 
 ]
 
@@ -756,7 +759,7 @@ ERLoggedPageAsAdminTest >> testUpdateIbanBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'iban' with: '' .
+	self updateField: 'iban' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Iban')
 ]
 
@@ -765,7 +768,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'nameBank' with: '' .
+	self updateField: 'nameBank' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
@@ -774,7 +777,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameConferenceWithEmptyValue [
 	
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'name' with: '' .
+	self updateField: 'name' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
@@ -783,7 +786,7 @@ ERLoggedPageAsAdminTest >> testUpdateNumberBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'number' with: '' .
+	self updateField: 'number' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Number')
 ]
 
@@ -792,7 +795,7 @@ ERLoggedPageAsAdminTest >> testUpdateOwnerBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'owner' with: '' .
+	self updateField: 'owner' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Owner')
 ]
 
@@ -801,7 +804,7 @@ ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'payPalCommissionPercentage' with: '' .
+	self updateField: 'payPalCommissionPercentage' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Paypal Commission Percentage')
 ]
 
@@ -810,7 +813,7 @@ ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'payPalCommissionPercentage' with: 'One' .
+	self updateField: 'payPalCommissionPercentage' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Paypal Commission Percentage')
 ]
 
@@ -819,7 +822,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'extraPersonSD' with: '' .
+	self updateField: 'extraPersonSD' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Price for add person to the Social Dinner')
 ]
 
@@ -828,7 +831,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'extraPersonSD' with: 'One' .
+	self updateField: 'extraPersonSD' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Price for add person to the Social Dinner')
 ]
 
@@ -837,7 +840,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'erfAllDaysFee' with: '' .
+	self updateField: 'erfAllDaysFee' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'All Days Fee')
 ]
 
@@ -846,7 +849,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'erfAllDaysFee' with: 'asdf' .
+	self updateField: 'erfAllDaysFee' with: 'asdf' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'All Days Fee')
 ]
 
@@ -855,7 +858,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'erfOneDayFee' with: '' .
+	self updateField: 'erfOneDayFee' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'One Day Fee')
 ]
 
@@ -864,7 +867,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'erfOneDayFee' with: 'One' .
+	self updateField: 'erfOneDayFee' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'One Day Fee')
 ]
 
@@ -873,7 +876,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'lrfAllDaysFee' with: '' .
+	self updateField: 'lrfAllDaysFee' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'All Days Fee')
 ]
 
@@ -882,7 +885,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'lrfAllDaysFee' with: 'One' .
+	self updateField: 'lrfAllDaysFee' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'All Days Fee')
 ]
 
@@ -891,7 +894,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'lrfOneDayFee' with: '' .
+	self updateField: 'lrfOneDayFee' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'One Day Fee')
 ]
 
@@ -900,7 +903,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithNoNumericValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'lrfOneDayFee' with: 'One' .
+	self updateField: 'lrfOneDayFee' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'One Day Fee')
 ]
 
@@ -909,7 +912,7 @@ ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'ribKey' with: '' .
+	self updateField: 'ribKey' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Rib Key')
 ]
 
@@ -917,7 +920,7 @@ ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 ERLoggedPageAsAdminTest >> testUpdateSenderEmailAddressConferenceWithEmptyValue [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
-	self update: 'senderEmailAddress' with: '' .
+	self updateField: 'senderEmailAddress' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Sender email address')
 ]
 
@@ -926,7 +929,7 @@ ERLoggedPageAsAdminTest >> testUpdateStaticCommisionPaypalFeeWithEmptyValue [
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'staticCommissionPaypal' with: '' .
+	self updateField: 'staticCommissionPaypal' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Static Commission Paypal')
 ]
 
@@ -935,16 +938,6 @@ ERLoggedPageAsAdminTest >> testUpdateStaticCommisionPaypalFeeWithNoNumericValue 
 
 	self moveToFeeOption.
 	acceptFormButton := 'acceptTabFees'.
-	self update: 'staticCommissionPaypal' with: 'One' .
+	self updateField: 'staticCommissionPaypal' with: 'One' .
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Static Commission Paypal')
-]
-
-{ #category : #tests }
-ERLoggedPageAsAdminTest >> update: anID with: aString [
-	| confName acceptButton |
-	confName := driver findElementByID: anID.
-	confName clear.
-	confName sendKeys: aString.
-	acceptButton := driver findElementByID: acceptFormButton.
-	acceptButton click.
 ]

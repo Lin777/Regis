@@ -1,3 +1,6 @@
+"
+A ERLoggedPageAsStudentVolunter is a test class for testing the behavior of page when the user sign in as StudentVolunter
+"
 Class {
 	#name : #ERLoggedPageAsStudentVolunter,
 	#superclass : #ERParasolTest,
@@ -28,7 +31,7 @@ ERLoggedPageAsStudentVolunter >> setUp [
 	super setUp.
 	ERTest generateDataForTest .
 	controller := ERConfigurationController new.
-	studentVolunter := controller attends first.
+	studentVolunter := controller conference attends first.
 	controller convertToStudentVolunterThis: studentVolunter .
 	self loginAsStudentVolunter .
 	
