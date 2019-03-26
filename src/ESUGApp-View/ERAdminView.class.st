@@ -103,7 +103,7 @@ ERAdminView >> renderOpenCloseRegistration [
 	tabs add:((ERYesNoTab on: attendee withContent: content container: self)
 				tabId: 'tabOpenClose';
 				tabName: 'Open / Close registration';
-				stateBlock: [ controller conferenceIsOpenRegistration ];
+				stateBlock: [ controller conference conferenceIsOpenRegistration ];
 				titleTrue: 'Registration is opened. Are you sure you want close it?';
 				titleFalse:  'Registration is closed. Are you sure you want open it?';
 				callbackTrue: [ :aTab | self closeRegistration. aTab updateStateTab: aTab tabName ];
@@ -142,7 +142,7 @@ ERAdminView >> titleBackup [
 ERAdminView >> titleOpenClose [
 	
 	callbackNo := [ :aTab | self cancel. aTab updateStateTab: aTab tabName ].
-	controller conferenceIsOpenRegistration
+	controller conference conferenceIsOpenRegistration
 		ifTrue:
 			[ callbackYes := [ :aTab | self closeRegistration. aTab updateStateTab: aTab tabName ].
 			 ^ 'Registration is opened. Are you sure you want close it?' ]

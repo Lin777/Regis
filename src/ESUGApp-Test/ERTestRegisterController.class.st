@@ -57,7 +57,7 @@ ERTestRegisterController >> testRegisterGroupManager [
 ERTestRegisterController >> testValidateIfEmailIsAlreadyRegistered [
 	self registerAttendee.
 	self
-		should: [controller validateIfEmailIsAlreadyRegistered: 
+		should: [controller conference validateIfEmailIsAlreadyRegistered: 
 					self class testUserAccount]
 		raise: ERException.
 ]

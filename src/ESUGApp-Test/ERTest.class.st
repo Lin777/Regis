@@ -227,7 +227,7 @@ ERTest >> deleteFolder: aString [
 
 { #category : #rendering }
 ERTest >> groupOfUser: anUser [
-	^ ERGroupManagerController new groupOfUser: anUser.
+	^ controller conference groupOfUser: anUser.
 ]
 
 { #category : #rendering }

@@ -30,7 +30,7 @@ ERUsersTab >> blockTableToExecute [
 
 { #category : #'as yet unclassified' }
 ERUsersTab >> createUser: anUser [
-	controller validateIfEmailIsAlreadyRegistered: anUser; 
+	controller conference validateIfEmailIsAlreadyRegistered: anUser; 
 			validateNewPassword: anUser password with: anUser confirmPassword.
 	anUser password: (ERUserAccount hashPassword: anUser password) asString.
 	anUser role: (Heap new

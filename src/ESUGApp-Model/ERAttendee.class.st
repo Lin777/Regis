@@ -111,6 +111,12 @@ ERAttendee >> convertToStudentVolunter [
 ]
 
 { #category : #'as yet unclassified' }
+ERAttendee >> daysOfAssistance [
+ ^ (self conferenceInformation attendance 
+		values count: [ :each | each ])
+]
+
+{ #category : #'as yet unclassified' }
 ERAttendee >> deleteAttendeeRole [
 	self userAccount isAttendee ifTrue: [
 		self userAccount deleteRole: 'attendee'

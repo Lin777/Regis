@@ -60,7 +60,7 @@ ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 { #category : #rendering }
 ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
 	anUser isGroupManager ifTrue: [ |group|
-		group := self groupOfUser: anUser.
+		group := conference groupOfUser: anUser.
 		self deleteGroup: group
 		 ]
 ]
@@ -79,7 +79,7 @@ ERConfigurationController >> deleteGroup: aGroup [
 
 { #category : #'as yet unclassified' }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
-	(self attendeesForATicket: aReductionTicket ticketId) isNotEmpty
+	(conference attendeesForATicket: aReductionTicket ticketId) isNotEmpty
 		ifTrue: [ ERException deletionOfTicketNotValid signal ].
 	conference reductionTickets
 		removeAllSuchThat: [ :each | each ticketId = aReductionTicket ticketId ].

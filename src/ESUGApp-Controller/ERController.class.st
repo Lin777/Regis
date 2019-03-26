@@ -63,14 +63,6 @@ ERController >> addUser: anUser [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> amountForCurrentDateFor: aFee [
-	conference configuration earlyRegistrationDeadline asDate < Date today
-		ifTrue: [ ^ aFee lrfAllDaysFee ]
-		ifFalse: [ ^ aFee erfAllDaysFee ].
-	^ ERException errorWhenCalculatingPaymentAmount raised
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> amountOfPayToGroup: list [
 	| generalAmount |
 	generalAmount := 0.
@@ -88,7 +80,7 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 	|ticket|
 	aTicket = 'No reduction ticket'
 	ifTrue: [ anAttendee paymentInformation coupon: '' ]
-	ifFalse: [ ticket := self reductionTicketWithName: aTicket.
+	ifFalse: [ ticket := conference reductionTicketWithName: aTicket.
 		(self verifyIfTicketCanApply: ticket) 
 		ifTrue: [anAttendee paymentInformation coupon: aTicket].
 		 ].
@@ -99,11 +91,6 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 ERController >> applyToAddComission: anObject [
 	anObject userAccount isGroupManager ifTrue: [ ^ true ].
 	^ anObject idGroup isNil
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> attendeesForATicket: ticketId [
-	^ conference attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -149,41 +136,17 @@ ERController >> conference: anObject [
 
 { #category : #'as yet unclassified' }
 ERController >> conferenceFeeFor: anAttendee [
-	| fee amount |
-	fee := self conference fee.
-	amount := self amountForCurrentDateFor: fee.
-	amount := amount + (self costPerExtraPerson: anAttendee on: fee).
+	| amount |
+	amount := conference amountForCurrentDate.
+	amount := amount + (conference costPerExtraPerson: anAttendee).
 	^ self decreaseCouponAmountFor: amount to: anAttendee
-]
-
-{ #category : #accessing }
-ERController >> conferenceIsOpenRegistration [
-	^ self conference configuration openRegistration
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> costPerExtraPerson: anAttendee [ 
-	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
-	ifTrue: [ ^ conference fee extraPersonSD asNumber]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> costPerExtraPerson: anAttendee on: fee [
-	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
-	ifTrue: [ ^ fee extraPersonSD asNumber]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> daysOfAssistanceOf: anAttendee [
- ^ (anAttendee conferenceInformation attendance 
-		values count: [ :each | each ])
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> decreaseCouponAmountFor: amount to: anAttendee [
 	anAttendee hasCoupon
 		ifTrue: [ | coupon |
-			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
+			coupon := conference reductionTicketWithName: anAttendee paymentInformation coupon.
 		^ coupon obtainNewAmountAfterDiscountFor: amount ].
 	^ amount
 ]
@@ -238,31 +201,11 @@ ERController >> findUserByEmail: aString [
     ifNone: nil.
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> getGroupOfAttendee: aAttendee [
-	^ aAttendee idGroup 
-	ifNotNil: [ self conference groups 
-		detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
-		ifNone: [ nil ] ].
-]
-
-{ #category : #rendering }
-ERController >> groupOfUser: aGroupManager [
-	^ conference groups
-		detect: [ :each | each groupManager userAccount = aGroupManager ].
-]
-
 { #category : #accessing }
 ERController >> initialize [
 	super initialize.
 	ERBackupObserver of: self.
 	conference := ERConference find: [ :each | each active ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> isEarlyRegistrationOf: anAttendee [
-	^ conference configuration earlyRegistrationDeadline 
-		asDate > anAttendee createdOn asDate
 ]
 
 { #category : #'as yet unclassified' }
@@ -311,16 +254,10 @@ ERController >> payPalUrlForGroup: aGroup [
 	^ url
 ]
 
-{ #category : #rendering }
-ERController >> paymentAmountOf: aGroup [
-	aGroup listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
-	ifEmpty: [ ^ 0 ]
-]
-
 { #category : #'as yet unclassified' }
 ERController >> priceAccordingToAttendanceDaysOf: anAttendee [
 	|daysOfAssistance |
-	daysOfAssistance := self daysOfAssistanceOf: anAttendee.
+	daysOfAssistance := anAttendee daysOfAssistance.
 	(daysOfAssistance < 5) ifTrue: 
 		[ ^ self priceForNDays: daysOfAssistance Of: anAttendee ].
 	^ self priceForAllDaysOf: anAttendee
@@ -329,25 +266,16 @@ ERController >> priceAccordingToAttendanceDaysOf: anAttendee [
 
 { #category : #'as yet unclassified' }
 ERController >> priceForAllDaysOf: anAttendee [
-	(self isEarlyRegistrationOf: anAttendee)
+	(conference isEarlyRegistrationOf: anAttendee)
 		ifTrue: [ ^ conference fee erfAllDaysFee ].
 		^ conference fee lrfAllDaysFee
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> priceForNDays: aNumber Of: anAttendee [
-	(self isEarlyRegistrationOf: anAttendee) 
+	(conference isEarlyRegistrationOf: anAttendee) 
 		ifTrue: [ ^ conference fee erfOneDayFee * aNumber ].
 		^ conference fee lrfOneDayFee * aNumber 
-]
-
-{ #category : #action }
-ERController >> reductionTicketWithName: aString [
-	[ ^ conference reductionTickets detect: [ :each | 
-			each ticketId = aString] ]
-	on: NotFound 
-	do: [ ERException invalidTicketId
-		signal ]
 ]
 
 { #category : #rendering }
@@ -366,7 +294,7 @@ ERController >> sendResetPasswordTo: aString [
 	user ifNil: [ ERException emailDoesNotExistToResetPassword signal ].
 	stream := NeoJSONWriter toString: (ERResetPasswordMailSender on: user) value.
 	PMInterface new 
-		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71'; 
+		apiKey: conference configuration emailConfiguration apiKey; 
 		send: stream.
 ]
 
@@ -395,7 +323,7 @@ ERController >> updateAllAttendeesOf: aGroup [
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
-	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (self getGroupOfAttendee: anAttendee) ].
+	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
 	self notifyAllObservers .
 	^ anAttendee 
 ]
@@ -412,7 +340,7 @@ ERController >> updateGroup: aGroup [
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
 	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
-	amount := amount + (self costPerExtraPerson: anAttendee).
+	amount := amount + (conference costPerExtraPerson: anAttendee).
 	amount := self decreaseCouponAmountFor: amount to: anAttendee.
 	amount :=self addPayPalComissionIfApplyOn: amount of: anAttendee.
 	anAttendee paymentInformation paymentAmount: amount
@@ -421,28 +349,19 @@ ERController >> updatePaymentRate: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRateForGroup: aGroup [ 
 	| amount |
-	amount := self paymentAmountOf: aGroup.
+	amount := aGroup totalAmount.
 	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
 	aGroup paymentInformation paymentAmount: amount.
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> updateUser: anUser [
-	[self validateIfEmailIsAlreadyRegistered: anUser.
+	[conference validateIfEmailIsAlreadyRegistered: anUser.
 	anUser save.
 	self notifyAllObservers .
 	^ anUser]
 	on: ERException 
 	do: [ :exp | ^ exp signal ]
-]
-
-{ #category : #action }
-ERController >> validateIfEmailIsAlreadyRegistered: anUser [
-	conference users
-		do: [ :each | 
-			each email = anUser email
-				ifTrue: [each = anUser ifFalse:[
-					ERException emailAlreadyRegistered signal ] ]].
 ]
 
 { #category : #rendering }
@@ -460,7 +379,7 @@ ERController >> validateNewPassword: aString1 with: aString2 [
 
 { #category : #'as yet unclassified' }
 ERController >> validateRegister: anAttendee [
-	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
+	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
 	with: anAttendee userAccount confirmPassword.
 	anAttendee userAccount isAttendee ifTrue: [self updatePaymentRate: anAttendee]
@@ -478,7 +397,7 @@ ERController >> verifyIfTheTicketIsStillAvailable: aString [
 ERController >> verifyIfTicketCanApply: ticket [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
-	[ ((self attendeesForATicket: ticket ticketId) size 
+	[ ((conference attendeesForATicket: ticket ticketId) size 
 	< ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ 
 		ERException ticketWasExceeded signal ] ]

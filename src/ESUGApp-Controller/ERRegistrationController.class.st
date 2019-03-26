@@ -34,7 +34,7 @@ ERRegistrationController >> initialize [
 { #category : #action }
 ERRegistrationController >> save [
 	| user|
-	self validateIfEmailIsAlreadyRegistered: attendee userAccount.
+	conference validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
 	user := self attendee userAccount save.
 	conference addUser: user.

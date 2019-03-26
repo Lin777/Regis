@@ -55,7 +55,7 @@ ERAttendeesOfTicketView >> listDataToRenderButton [
 
 { #category : #accessing }
 ERAttendeesOfTicketView >> listOfAttendees [
-	^ controller attendeesForATicket: ticket ticketId
+	^ controller conference attendeesForATicket: ticket ticketId
 ]
 
 { #category : #accessing }

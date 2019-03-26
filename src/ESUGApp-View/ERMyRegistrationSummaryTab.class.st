@@ -8,7 +8,7 @@ Class {
 ERMyRegistrationSummaryTab >> encodedInvoice [
 	attendee idGroup isNotNil
 	ifTrue: [ |group|
-		group := controller getGroupOfAttendee: attendee.
+		group := controller conference getGroupOfAttendee: attendee.
 		^ group encodedInvoice ]
 	ifFalse: [ ^ attendee encodedInvoice] 
 ]
@@ -24,7 +24,7 @@ ERMyRegistrationSummaryTab >> exportInvoice [
 ERMyRegistrationSummaryTab >> managerOfInvoice [
 	attendee idGroup isNotNil
 	ifTrue: [ |group|
-		group := controller getGroupOfAttendee: attendee.
+		group := controller conference getGroupOfAttendee: attendee.
 		^ group ]
 	ifFalse: [ ^ attendee ] 
 ]

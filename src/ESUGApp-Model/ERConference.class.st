@@ -73,6 +73,19 @@ ERConference >> addUser: anUser [
 	users add: anUser 
 ]
 
+{ #category : #'as yet unclassified' }
+ERConference >> amountForCurrentDate [
+	self configuration earlyRegistrationDeadline asDate < Date today
+		ifTrue: [ ^ fee lrfAllDaysFee ]
+		ifFalse: [ ^ fee erfAllDaysFee ].
+	^ ERException errorWhenCalculatingPaymentAmount raised
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> attendeesForATicket: ticketId [
+	^ self attends select: [ :each | each paymentInformation coupon = ticketId ]
+]
+
 { #category : #accessing }
 ERConference >> attends [
 	^ attends
@@ -89,6 +102,11 @@ ERConference >> closeRegistration [
 	self save.
 ]
 
+{ #category : #initialization }
+ERConference >> conferenceIsOpenRegistration [
+	^ self configuration openRegistration
+]
+
 { #category : #accessing }
 ERConference >> configuration [
 	^ configuration
@@ -97,6 +115,12 @@ ERConference >> configuration [
 { #category : #accessing }
 ERConference >> configuration: anObject [
 	configuration := anObject
+]
+
+{ #category : #accessing }
+ERConference >> costPerExtraPerson: anAttendee [
+	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
+	ifTrue: [ ^ fee extraPersonSD asNumber]
 ]
 
 { #category : #rendering }
@@ -268,6 +292,20 @@ ERConference >> flat: dictionary with: aString [
 ]
 
 { #category : #accessing }
+ERConference >> getGroupOfAttendee: aAttendee [
+	^ aAttendee idGroup 
+	ifNotNil: [ self groups 
+		detect: [ :aGroup | aGroup id = aAttendee idGroup ] 
+		ifNone: [ nil ] ].
+]
+
+{ #category : #accessing }
+ERConference >> groupOfUser: aGroupManager [
+	^ self groups
+		detect: [ :each | each groupManager userAccount = aGroupManager ].
+]
+
+{ #category : #accessing }
 ERConference >> groups [
 	^ groups
 ]
@@ -350,6 +388,12 @@ ERConference >> invoices [
 		select: [ :each | each idGroup isNil ])
 ]
 
+{ #category : #accessing }
+ERConference >> isEarlyRegistrationOf: anAttendee [
+	^ self configuration earlyRegistrationDeadline 
+		asDate > anAttendee createdOn asDate
+]
+
 { #category : #initialization }
 ERConference >> openRegistration [
 	self configuration openRegistration: true.
@@ -372,6 +416,15 @@ ERConference >> reductionTicketAlreadyExist: aReductionTicket [
 		do: [ :each | 
 			aReductionTicket ticketId = each ticketId
 				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
+]
+
+{ #category : #accessing }
+ERConference >> reductionTicketWithName: aString [
+	[ ^ self reductionTickets detect: [ :each | 
+			each ticketId = aString] ]
+	on: NotFound 
+	do: [ ERException invalidTicketId
+		signal ]
 ]
 
 { #category : #accessing }

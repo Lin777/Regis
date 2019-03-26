@@ -53,7 +53,7 @@ ERLoggedController >> deleteAttendee: anAttendee [
 ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	anAttendee idGroup isNotNil ifTrue: [ 
 	|group|
-	group := self getGroupOfAttendee: anAttendee.
+	group := conference getGroupOfAttendee: anAttendee.
 	group deleteAttendee: anAttendee; save.	
 	].
 	self conference deleteAttendee: anAttendee.

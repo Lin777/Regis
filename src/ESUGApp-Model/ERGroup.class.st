@@ -118,6 +118,12 @@ ERGroup >> paymentInformation: anObject [
 ]
 
 { #category : #accessing }
+ERGroup >> totalAmount [
+	self listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
+	ifEmpty: [ ^ 0 ]
+]
+
+{ #category : #accessing }
 ERGroup >> userAccount [
 	^ groupManager userAccount
 ]

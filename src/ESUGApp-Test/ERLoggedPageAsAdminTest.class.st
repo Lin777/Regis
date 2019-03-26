@@ -202,12 +202,12 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
 	self selectTabOpenCloseRegistration .
 	self shouldnt: [ driver findElementByID: 'yes-tabOpenClose' ] raise: BPNoSuchElementException.
 	value := ((driver findElementByID: 'tab-tabOpenClose') findElementByTagName: 'h3') getText.
-	isOpen := controller conferenceIsOpenRegistration .
+	isOpen := controller conference conferenceIsOpenRegistration .
 	isOpen
 		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
 		ifFalse: [ self assert: value equals: 'Registration is closed. Are you sure you want open it?' ].
 	(driver findElementByID: 'yes-tabOpenClose') click.
-	self deny: controller conferenceIsOpenRegistration = isOpen 
+	self deny: controller conference conferenceIsOpenRegistration = isOpen 
 ]
 
 { #category : #configurationAdminOptionTests }

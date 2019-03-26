@@ -19,7 +19,7 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: 
 
 { #category : #accessing }
 ERGroupRegistrationTab >> attends [
-	^ (ERGroupManagerController new groupOfUser: attendee)
+	^ (controller conference groupOfUser: attendee)
 		listAttends
 ]
 
@@ -30,7 +30,7 @@ ERGroupRegistrationTab >> cancel [
 
 { #category : #accessing }
 ERGroupRegistrationTab >> group [
-	^ (ERGroupManagerController new groupOfUser: attendee)
+	^ controller conference groupOfUser: attendee
 		
 ]
 
@@ -43,7 +43,7 @@ ERGroupRegistrationTab >> groupManager [
 { #category : #initialization }
 ERGroupRegistrationTab >> initializeController [
 	controller := ERGroupManagerController new.
-	controller group: (controller groupOfUser: attendee)
+	controller group: (controller conference groupOfUser: attendee)
 ]
 
 { #category : #rendering }

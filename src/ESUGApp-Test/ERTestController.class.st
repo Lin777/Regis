@@ -45,10 +45,10 @@ ERTestController >> testCompressFilesToZip [
 { #category : #initialization }
 ERTestController >> testConferenceIsOpenRegistration [
 	controller conference configuration openRegistration: true.
-	self assert: controller conferenceIsOpenRegistration . 
+	self assert: controller conference conferenceIsOpenRegistration . 
 	
 	controller conference configuration openRegistration: false.
-	self deny: controller conferenceIsOpenRegistration .
+	self deny: controller conference conferenceIsOpenRegistration .
 ]
 
 { #category : #tests }
@@ -87,8 +87,8 @@ ERTestController >> testGroupOfAttendee [
 	| group attendee |
 	group := self registerGroup.
 	attendee := group listAttends first.
-	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
+	self assert: (controller conference getGroupOfAttendee: attendee) isNotNil.
 	"the attendee does not belong to the group"
 	attendee := ERLoggedController new attendeeFromUser: self registerAttendee.
-	self assert: (controller getGroupOfAttendee: attendee) isNil.
+	self assert: (controller conference getGroupOfAttendee: attendee) isNil.
 ]
