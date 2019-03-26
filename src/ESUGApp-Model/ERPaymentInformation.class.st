@@ -31,7 +31,7 @@ ERPaymentInformation >> descriptionCoupon [
 		accessor: #coupon; 
 		priority: 20;
 		required: false;
-		addCondition: [ :value | ERController new 
+		addCondition: [ :value | ERController new conference
 			existReductionTicketWithName: value]
 		labelled: 'There is no ticket with the ticket id provided.';
 		label: 'Reduction Ticket Code';

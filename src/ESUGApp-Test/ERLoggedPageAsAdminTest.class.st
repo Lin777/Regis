@@ -93,7 +93,7 @@ ERLoggedPageAsAdminTest >> pressEditGroup [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> pressEditUser [
 	| user|
-	user := controller findUserByEmail: 'ana@gmail.com'.
+	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
 	(driver findElementByID: user id, '-modify') click.
 ]
@@ -268,7 +268,7 @@ ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
 	|delete user|
-	user := controller findUserByEmail: 'ana@gmail.com'.
+	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers .
 	delete := driver findElementByID: user id, '-delete'.
 	delete click.
@@ -280,7 +280,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 	|delete user|
-	user := controller findUserByEmail: 'admin@esug.org'.
+	user := controller conference findUserByEmail: 'admin@esug.org'.
 	self pressOptionUsers .
 	delete := driver findElementByID: user id, '-delete'.
 	delete click.
@@ -292,7 +292,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 	|delete user|
-	user := controller findUserByEmail: 'ana@gmail.com'.
+	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers .
 	delete := driver findElementByID: user id, '-delete'.
 	delete click.
@@ -421,7 +421,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	|cancel user userUpdate|
-	user := controller findUserByEmail: 'ana@gmail.com'.
+	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
 	(driver findElementByID: user id, '-modify') click.
 	acceptFormButton := 'accept-change-affiliation'.
@@ -598,7 +598,7 @@ ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testPressModifyUser [
 	|update user|
-	user := controller findUserByEmail: 'ana@gmail.com'.
+	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
 	update := driver findElementByID: user id, '-modify'.
 	update click.

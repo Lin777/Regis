@@ -76,14 +76,6 @@ ERGroupManagerController >> updateAffiliation: aff [
 
 { #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
-	self updatePaymentForAttendees: aGroup.
+	aGroup updatePaymentForAttendees.
 	super updateGroup: aGroup 
-]
-
-{ #category : #adding }
-ERGroupManagerController >> updatePaymentForAttendees: aGroup [
-	aGroup listAttends do: [ :att | 
-		att paymentInformation paymentType: aGroup paymentInformation paymentType .
-		att paymentInformation paymentCurrency: aGroup paymentInformation paymentCurrency. 
-		att save ]
 ]

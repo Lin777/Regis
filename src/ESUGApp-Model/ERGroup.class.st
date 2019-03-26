@@ -123,6 +123,14 @@ ERGroup >> totalAmount [
 	ifEmpty: [ ^ 0 ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroup >> updatePaymentForAttendees [
+	self listAttends do: [ :att | 
+		att paymentInformation paymentType: self paymentInformation paymentType .
+		att paymentInformation paymentCurrency: self paymentInformation paymentCurrency. 
+		att save ]
+]
+
 { #category : #accessing }
 ERGroup >> userAccount [
 	^ groupManager userAccount

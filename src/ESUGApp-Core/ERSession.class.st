@@ -11,7 +11,7 @@ Class {
 { #category : #actions }
 ERSession >> findUserByEmail: anEmail [
 
- ^ ERController new findUserByEmail: anEmail
+ ^ ERController new conference findUserByEmail: anEmail
 
 ]
 

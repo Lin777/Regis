@@ -54,17 +54,17 @@ ERStudentVolunterView >> dictToRenderDownloadButton [
 
 { #category : #rendering }
 ERStudentVolunterView >> filterByEmail [
-	^ controller filterAttendsByEmailWith: aStringToMatch 
+	^ controller conference filterAttendsByEmailWith: aStringToMatch 
 ]
 
 { #category : #rendering }
 ERStudentVolunterView >> filterByFirstName [
-	^ controller filterAttendsByFirstNameWith: aStringToMatch 
+	^ controller conference filterAttendsByFirstNameWith: aStringToMatch 
 ]
 
 { #category : #rendering }
 ERStudentVolunterView >> filterByLastName [
-	^ controller filterAttendsByLastNameWith: aStringToMatch
+	^ controller conference filterAttendsByLastNameWith: aStringToMatch
 ]
 
 { #category : #rendering }

@@ -14,7 +14,7 @@ ERMailSender >> initialize [
 
 { #category : #rendering }
 ERMailSender >> senderEmailAddress [
-	^ controller senderEmailAddress
+	^ controller conference senderEmailAddress
 ]
 
 { #category : #rendering }

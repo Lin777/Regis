@@ -69,7 +69,7 @@ ERController >> amountOfPayToGroup: list [
 	list
 		do: [ :each | 
 			| amount |
-			amount := self conferenceFeeFor: each.
+			amount := conference conferenceFeeFor: each.
 			generalAmount := generalAmount + amount ].
 	^ generalAmount.
 	
@@ -135,23 +135,6 @@ ERController >> conference: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> conferenceFeeFor: anAttendee [
-	| amount |
-	amount := conference amountForCurrentDate.
-	amount := amount + (conference costPerExtraPerson: anAttendee).
-	^ self decreaseCouponAmountFor: amount to: anAttendee
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> decreaseCouponAmountFor: amount to: anAttendee [
-	anAttendee hasCoupon
-		ifTrue: [ | coupon |
-			coupon := conference reductionTicketWithName: anAttendee paymentInformation coupon.
-		^ coupon obtainNewAmountAfterDiscountFor: amount ].
-	^ amount
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> encodeFileToUTF8: aFile [
 	^ aFile exists 
 		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
@@ -163,42 +146,6 @@ ERController >> encodeFiletoBase64: aFile [
 	^ aFile exists 
 		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
 		ifFalse: [ nil ]. 
-]
-
-{ #category : #action }
-ERController >> existReductionTicketWithName: aString [
-	^ conference reductionTickets
-		anySatisfy: [ :each | each ticketId = aString  ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> filterAttendsBy: aSymbol beginsWith: aString [
-	^ self conference attends select: 
-		[ :att | (att userAccount perform: aSymbol) asLowercase 
-		beginsWith: aString asLowercase ]
-
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> filterAttendsByEmailWith: aString [
-	^ self filterAttendsBy: #email beginsWith: aString
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> filterAttendsByFirstNameWith: aString [
-	^ self filterAttendsBy: #firstName beginsWith: aString
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> filterAttendsByLastNameWith: aString [
-	^ self filterAttendsBy: #lastName beginsWith: aString
-]
-
-{ #category : #actions }
-ERController >> findUserByEmail: aString [
-	^ conference users 
-		detect: [ :each | each email = aString ] 
-    ifNone: nil.
 ]
 
 { #category : #accessing }
@@ -221,7 +168,7 @@ ERController >> payPalInvoiceNumberToken [
 { #category : #'as yet unclassified' }
 ERController >> payPalUrlFor: anAttendeeOrGroupManager [
 	| conferenceFee url fee |
-	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
+	conferenceFee := conference conferenceFeeFor: anAttendeeOrGroupManager.
 	fee := conference fee .
 	url := fee bankPayPalUrl.
 	url := url
@@ -254,30 +201,6 @@ ERController >> payPalUrlForGroup: aGroup [
 	^ url
 ]
 
-{ #category : #'as yet unclassified' }
-ERController >> priceAccordingToAttendanceDaysOf: anAttendee [
-	|daysOfAssistance |
-	daysOfAssistance := anAttendee daysOfAssistance.
-	(daysOfAssistance < 5) ifTrue: 
-		[ ^ self priceForNDays: daysOfAssistance Of: anAttendee ].
-	^ self priceForAllDaysOf: anAttendee
-	
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> priceForAllDaysOf: anAttendee [
-	(conference isEarlyRegistrationOf: anAttendee)
-		ifTrue: [ ^ conference fee erfAllDaysFee ].
-		^ conference fee lrfAllDaysFee
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> priceForNDays: aNumber Of: anAttendee [
-	(conference isEarlyRegistrationOf: anAttendee) 
-		ifTrue: [ ^ conference fee erfOneDayFee * aNumber ].
-		^ conference fee lrfOneDayFee * aNumber 
-]
-
 { #category : #rendering }
 ERController >> sendInvoiceTo: user [
 	|stream |
@@ -290,17 +213,12 @@ ERController >> sendInvoiceTo: user [
 { #category : #'as yet unclassified' }
 ERController >> sendResetPasswordTo: aString [
 	| user stream |
-	user := self findUserByEmail: aString.
+	user := conference findUserByEmail: aString.
 	user ifNil: [ ERException emailDoesNotExistToResetPassword signal ].
 	stream := NeoJSONWriter toString: (ERResetPasswordMailSender on: user) value.
 	PMInterface new 
 		apiKey: conference configuration emailConfiguration apiKey; 
 		send: stream.
-]
-
-{ #category : #rendering }
-ERController >> senderEmailAddress [
-	^ self conference configuration emailConfiguration senderEmailAddress
 ]
 
 { #category : #'as yet unclassified' }
@@ -339,9 +257,9 @@ ERController >> updateGroup: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
-	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
+	amount := (conference priceAccordingToAttendanceDaysOf: anAttendee).
 	amount := amount + (conference costPerExtraPerson: anAttendee).
-	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	amount := conference decreaseCouponAmountFor: amount to: anAttendee.
 	amount :=self addPayPalComissionIfApplyOn: amount of: anAttendee.
 	anAttendee paymentInformation paymentAmount: amount
 ]

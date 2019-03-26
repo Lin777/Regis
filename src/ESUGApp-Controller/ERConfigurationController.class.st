@@ -30,7 +30,7 @@ ERConfigurationController >> addReductionTicketToConference: ticketRegistered [
 
 { #category : #adding }
 ERConfigurationController >> addUser: anAttendee [
-	(self findUserByEmail: anAttendee email)
+	(conference findUserByEmail: anAttendee email)
 		ifNil: [ | userSaved |
 			userSaved := anAttendee userAccount save.
 			conference addUser: userSaved.

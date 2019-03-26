@@ -29,11 +29,11 @@ ERLoggedPageAsStudentVolunter >> pressOptionAdmin [
 { #category : #accessing }
 ERLoggedPageAsStudentVolunter >> setUp [
 	super setUp.
-	ERTest generateDataForTest .
-	controller := ERConfigurationController new.
+	ERTest generateDataForTest.
 	studentVolunter := controller conference attends first.
+	controller := ERConfigurationController new.
 	controller convertToStudentVolunterThis: studentVolunter .
-	self loginAsStudentVolunter .
+	self loginAsStudentVolunter
 	
 ]
 

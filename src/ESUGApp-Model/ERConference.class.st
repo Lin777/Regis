@@ -102,6 +102,14 @@ ERConference >> closeRegistration [
 	self save.
 ]
 
+{ #category : #'as yet unclassified' }
+ERConference >> conferenceFeeFor: anAttendee [
+	| amount |
+	amount := self amountForCurrentDate.
+	amount := amount + (self costPerExtraPerson: anAttendee).
+	^ self decreaseCouponAmountFor: amount to: anAttendee
+]
+
 { #category : #initialization }
 ERConference >> conferenceIsOpenRegistration [
 	^ self configuration openRegistration
@@ -121,6 +129,15 @@ ERConference >> configuration: anObject [
 ERConference >> costPerExtraPerson: anAttendee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
 	ifTrue: [ ^ fee extraPersonSD asNumber]
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> decreaseCouponAmountFor: amount to: anAttendee [
+	anAttendee hasCoupon
+		ifTrue: [ | coupon |
+			coupon := self reductionTicketWithName: anAttendee paymentInformation coupon.
+		^ coupon obtainNewAmountAfterDiscountFor: amount ].
+	^ amount
 ]
 
 { #category : #rendering }
@@ -161,6 +178,11 @@ ERConference >> dictionaryOfShirts [
 		(Dictionary new at: 'Male' put: 0; 
 		at: 'Female' put: 0; yourself) ].
 	^ dict
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> existReductionTicketWithName: aString [
+	^ reductionTickets anySatisfy: [ :each | each ticketId = aString  ]
 ]
 
 { #category : #rendering }
@@ -278,6 +300,34 @@ ERConference >> fee [
 { #category : #accessing }
 ERConference >> fee: anObject [
 	fee := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> filterAttendsBy: aSymbol beginsWith: aString [
+	^ self attends select: 
+		[ :att | (att userAccount perform: aSymbol) asLowercase 
+		beginsWith: aString asLowercase ]
+
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> filterAttendsByEmailWith: aString [
+	^ self filterAttendsBy: #email beginsWith: aString
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> filterAttendsByFirstNameWith: aString [
+	^ self filterAttendsBy: #firstName beginsWith: aString
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> filterAttendsByLastNameWith: aString [
+	^ self filterAttendsBy: #lastName beginsWith: aString
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> findUserByEmail: aString [
+	^ users detect: [ :each | each email = aString ] ifNone: nil.
 ]
 
 { #category : #accessing }
@@ -410,6 +460,30 @@ ERConference >> payments: anObject [
 	payments := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERConference >> priceAccordingToAttendanceDaysOf: anAttendee [
+	|daysOfAssistance |
+	daysOfAssistance := anAttendee daysOfAssistance.
+	(daysOfAssistance < 5) ifTrue: 
+		[ ^ self priceForNDays: daysOfAssistance of: anAttendee ].
+	^ self priceForAllDaysOf: anAttendee
+	
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> priceForAllDaysOf: anAttendee [
+	(self isEarlyRegistrationOf: anAttendee)
+		ifTrue: [ ^ fee erfAllDaysFee ].
+		^ fee lrfAllDaysFee
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> priceForNDays: aNumber of: anAttendee [
+	(self isEarlyRegistrationOf: anAttendee) 
+		ifTrue: [ ^ fee erfOneDayFee * aNumber ].
+		^ fee lrfOneDayFee * aNumber 
+]
+
 { #category : #accessing }
 ERConference >> reductionTicketAlreadyExist: aReductionTicket [
 	self reductionTickets
@@ -435,6 +509,11 @@ ERConference >> reductionTickets [
 { #category : #accessing }
 ERConference >> reductionTickets: anObject [
 	reductionTickets := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> senderEmailAddress [
+	^ self configuration emailConfiguration senderEmailAddress
 ]
 
 { #category : #accessing }
