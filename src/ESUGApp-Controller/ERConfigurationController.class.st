@@ -53,7 +53,7 @@ ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
 ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
 	anUser isAttendee ifFalse: [ ^ self ].
-	att := self attendeeFromUser: anUser.
+	att := conference attendeeFromUser: anUser.
 	self deleteAttendeeFromGroupAndConference: att
 ]
 

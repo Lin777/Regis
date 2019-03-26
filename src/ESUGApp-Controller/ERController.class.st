@@ -30,16 +30,9 @@ ERController >> addAward: anAward [
 { #category : #'as yet unclassified' }
 ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
 	((self applyToAddComission: anAttendee )
-		and: [ anAttendee paymentInformation paymentType = 'Credit Card' ])
-		ifTrue: [ ^ (amount + (self addPayPalComissionOn: amount))].
+		and: [ anAttendee paymentInformation paymentTypeIsCreditCard ])
+		ifTrue: [ ^ (amount + (conference addPayPalComissionOn: amount))].
 	^ amount
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> addPayPalComissionOn: amount [
-
-	^ ((conference fee payPalCommissionPercentage)/100) * amount + 
-	(conference fee staticCommissionPaypal)
 ]
 
 { #category : #adding }
@@ -81,7 +74,7 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 	aTicket = 'No reduction ticket'
 	ifTrue: [ anAttendee paymentInformation coupon: '' ]
 	ifFalse: [ ticket := conference reductionTicketWithName: aTicket.
-		(self verifyIfTicketCanApply: ticket) 
+		(conference verifyIfTicketCanApply: ticket) 
 		ifTrue: [anAttendee paymentInformation coupon: aTicket].
 		 ].
 	self updateAttendee: anAttendee.
@@ -156,34 +149,6 @@ ERController >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> payPalAmountToken [
-	^ '[AMOUNT]'
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> payPalInvoiceNumberToken [
-	^ '[INVOICENUMBER]'
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> payPalUrlFor: anAttendeeOrGroupManager [
-	| conferenceFee url fee |
-	conferenceFee := conference conferenceFeeFor: anAttendeeOrGroupManager.
-	fee := conference fee .
-	url := fee bankPayPalUrl.
-	url := url
-		copyReplaceAll: fee payPalAmountToken
-		with: (conferenceFee printShowingDecimalPlaces: 2).
-	url := url
-		copyReplaceAll: fee payPalInvoiceNumberToken
-		with:
-			(anAttendeeOrGroupManager paymentInformation
-				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
-				printString.
-	^ url
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> payPalUrlForGroup: aGroup [
 	| conferenceFee url fee |
 	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
@@ -231,13 +196,6 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> updateAllAttendeesOf: aGroup [
-	aGroup listAttends do: [ :each | each paymentInformation hasPaid: 
-												aGroup paymentInformation hasPaid.
-											  each save. ].
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
@@ -249,7 +207,7 @@ ERController >> updateAttendee: anAttendee [
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup.
-	self updateAllAttendeesOf: aGroup.
+	aGroup updateHasPaidOfAll.
 	self notifyAllObservers .
 	^ aGroup save.
 ]
@@ -282,14 +240,6 @@ ERController >> updateUser: anUser [
 	do: [ :exp | ^ exp signal ]
 ]
 
-{ #category : #rendering }
-ERController >> validateLoginFor: aString1 password: aString2 [
-	^  conference users 
-			detect: [:each | each email = aString1 and: [each password = aString2]] 
-			ifNone: nil
-	
-]
-
 { #category : #'as yet unclassified' }
 ERController >> validateNewPassword: aString1 with: aString2 [
 	(aString1 = aString2) ifFalse: [ ERException passwordDoesNotMatchWithConfirmPass signal ].
@@ -307,16 +257,6 @@ ERController >> validateRegister: anAttendee [
 ERController >> verifyIfTheTicketIsStillAvailable: aString [
 	self conference reductionTickets 
 	detect: [ :each | each ticketId = aString ] 
-	ifFound: [ :ticket | self verifyIfTicketCanApply: ticket ] 
+	ifFound: [ :ticket | conference verifyIfTicketCanApply: ticket ] 
 	ifNone: [ ERException ticketDoesNotExist signal ]
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> verifyIfTicketCanApply: ticket [
-	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
-	ticket limitStrategyIsLimited ifTrue: 
-	[ ((conference attendeesForATicket: ticket ticketId) size 
-	< ticket limitStrategy limit) ifTrue: [ ^ true ]
-	ifFalse: [ 
-		ERException ticketWasExceeded signal ] ]
 ]

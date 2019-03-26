@@ -68,6 +68,13 @@ ERException class >> limitStrategyNotAllowedd [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> loginFailed [
+		^ self new 
+			messageText: 'Login failed';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> notFoundAttendeeFromUser [
 		^ self new
 			messageText: 'Not exist Attendee from this user ';

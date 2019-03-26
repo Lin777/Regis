@@ -89,6 +89,6 @@ ERTestController >> testGroupOfAttendee [
 	attendee := group listAttends first.
 	self assert: (controller conference getGroupOfAttendee: attendee) isNotNil.
 	"the attendee does not belong to the group"
-	attendee := ERLoggedController new attendeeFromUser: self registerAttendee.
+	attendee := controller conference attendeeFromUser: self registerAttendee.
 	self assert: (controller conference getGroupOfAttendee: attendee) isNil.
 ]

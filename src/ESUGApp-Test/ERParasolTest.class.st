@@ -14,6 +14,11 @@ ERParasolTest >> baseURL [
 ]
 
 { #category : #'as yet unclassified' }
+ERParasolTest >> clickElementWithID: aString [
+	(driver findElementByID: aString) click.
+]
+
+{ #category : #'as yet unclassified' }
 ERParasolTest >> createDownloadDirectory [
 	(FileSystem workingDirectory asFileReference / 'Download')
 		 ensureCreateDirectory
@@ -44,6 +49,13 @@ ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
 	^  aString ,' (Required): This field only accept a text'
 ]
 
+{ #category : #'as yet unclassified' }
+ERParasolTest >> selectElementWithID: aString1 send: aString2 [
+	|element|
+	element := driver findElementByID: aString1.
+	element sendKeys: aString2
+]
+
 { #category : #accessing }
 ERParasolTest >> setUp [
 	super setUp.
@@ -60,10 +72,9 @@ ERParasolTest >> tearDown [
 
 { #category : #'as yet unclassified' }
 ERParasolTest >> updateField: anID with: aString [
-	| confName acceptButton |
+	| confName |
 	confName := driver findElementByID: anID.
 	confName clear.
 	confName sendKeys: aString.
-	acceptButton := driver findElementByID: acceptFormButton.
-	acceptButton click.
+	self clickElementWithID: acceptFormButton.
 ]

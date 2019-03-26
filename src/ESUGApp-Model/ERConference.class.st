@@ -45,6 +45,11 @@ ERConference >> addGroup: aGroup [
 	groups add: aGroup 
 ]
 
+{ #category : #adding }
+ERConference >> addPayPalComissionOn: amount [
+	^ ((fee payPalCommissionPercentage)/100) * amount + (fee staticCommissionPaypal)
+]
+
 { #category : #initialization }
 ERConference >> addPayment: aPayment [
 	payments add: aPayment 
@@ -79,6 +84,13 @@ ERConference >> amountForCurrentDate [
 		ifTrue: [ ^ fee lrfAllDaysFee ]
 		ifFalse: [ ^ fee erfAllDaysFee ].
 	^ ERException errorWhenCalculatingPaymentAmount raised
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> attendeeFromUser: anUser [
+	^ attends detect: [ :each | 
+					each userAccount = anUser ]
+				 ifNone: [ ERException notFoundAttendeeFromUser signal ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -450,6 +462,23 @@ ERConference >> openRegistration [
 	self save.
 ]
 
+{ #category : #'as yet unclassified' }
+ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
+	| conferenceFee url |
+	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
+	url := fee bankPayPalUrl.
+	url := url
+		copyReplaceAll: fee payPalAmountToken
+		with: (conferenceFee printShowingDecimalPlaces: 2).
+	url := url
+		copyReplaceAll: fee payPalInvoiceNumberToken
+		with:
+			(anAttendeeOrGroupManager paymentInformation
+				invoiceNumberIfNone: [ self incrementInvoiceNumber ])
+				printString.
+	^ url
+]
+
 { #category : #accessing }
 ERConference >> payments [
 	^ payments
@@ -593,4 +622,19 @@ ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
 			each email = anUser email
 				ifTrue: [each = anUser ifFalse:[
 					ERException emailAlreadyRegistered signal ] ]].
+]
+
+{ #category : #accessing }
+ERConference >> validateLoginFor: aString1 password: aString2 [
+	^ users detect: [:each | each email = aString1 and: [each password = aString2]] 
+			ifNone: [ nil ]
+	
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> verifyIfTicketCanApply: ticket [
+	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
+	ticket limitStrategyIsLimited ifTrue: 
+	[ ((self attendeesForATicket: ticket ticketId) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
+	ifFalse: [ ERException ticketWasExceeded signal ] ]
 ]

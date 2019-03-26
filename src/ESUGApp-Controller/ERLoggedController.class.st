@@ -28,16 +28,8 @@ ERLoggedController >> attendee: anObject [
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser [
-	^ self attendeeFromUser: user
+	^ conference attendeeFromUser: user
 	
-]
-
-{ #category : #'as yet unclassified' }
-ERLoggedController >> attendeeFromUser: anUser [
-	^ conference attends 
-			detect: [ :each | 
-				each userAccount = anUser ]
-			ifNone: [ ERException notFoundAttendeeFromUser signal ]
 ]
 
 { #category : #rendering }

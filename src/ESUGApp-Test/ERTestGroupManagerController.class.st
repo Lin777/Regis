@@ -10,5 +10,5 @@ ERTestGroupManagerController >> setUp [
 	super setUp.
 	anUser := self registerAsGroupManager.
 	controller := ERGroupManagerController new.
-	controller attendee: (controller attendeeFromUser: anUser)
+	controller attendee: (controller conference attendeeFromUser: anUser)
 ]

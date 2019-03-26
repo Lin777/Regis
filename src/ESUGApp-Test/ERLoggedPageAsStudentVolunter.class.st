@@ -12,18 +12,14 @@ Class {
 
 { #category : #accessing }
 ERLoggedPageAsStudentVolunter >> loginAsStudentVolunter [
-	|email password signIn|
-	email := driver findElementByID: 'email-login'.
-	password := driver findElementByID: 'password-login'.
-	signIn := driver findElementByID: 'login-button'.
-	email sendKeys: studentVolunter userAccount email.
-	password sendKeys: '12345678'.
-	signIn click.
+	self selectElementWithID: 'email-login' send: studentVolunter userAccount email.
+	self selectElementWithID: 'password-login' send: '12345678'.
+	self clickElementWithID: 'login-button'
 ]
 
 { #category : #tests }
 ERLoggedPageAsStudentVolunter >> pressOptionAdmin [
-	(driver findElementByID: 'Search-option') click.
+	self clickElementWithID: 'Search-option'
 ]
 
 { #category : #accessing }

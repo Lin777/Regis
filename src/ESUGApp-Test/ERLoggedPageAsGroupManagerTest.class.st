@@ -12,17 +12,21 @@ Class {
 
 { #category : #groupManagerMembersTabTests }
 ERLoggedPageAsGroupManagerTest >> addGroupManagerAsAttendee [
-	(driver findElementByID: 'contactInfoForm-nextButton') click.
-	(driver findElementByID: 'conferenceOptionsForm-nextButton') click.
-	(driver findElementByID: 'affiliationInfoForm-nextButton')click.
-	 (driver findElementByID: 'additionalInfoForm-nextButton') click.
-	(driver findElementByID: 'paymentInformationForm-nextButton')click.
-	(driver findElementByID: 'registerButton') click.
+	self clickElementWithID: 'contactInfoForm-nextButton'.
+	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
+	self clickElementWithID: 'affiliationInfoForm-nextButton'.
+	self clickElementWithID: 'additionalInfoForm-nextButton'.
+	self clickElementWithID: 'paymentInformationForm-nextButton'.
+	self clickElementWithID: 'registerButton'.
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> fillAllUserFields [
-	self firstName: 'register' lastName: 'register' email: 'register@gmail.com' password: '12345678' confirmPassword: '12345678'.
+	self selectElementWithID: 'firstName' send: 'register'.
+	self selectElementWithID: 'lastName' send: 'register'.
+	self selectElementWithID: 'email' send: 'register@gmail.com'.
+	self selectElementWithID: 'password' send: '12345678'.
+	self selectElementWithID: 'confirmPassword' send: '12345678'
 ]
 
 { #category : #accessing }
@@ -42,77 +46,62 @@ ERLoggedPageAsGroupManagerTest >> firstName: aString1 lastName: aString2 email: 
 
 { #category : #'as yet unclassified' }
 ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
-	|email password signIn|
-	email := driver findElementByID: 'email-login'.
-	password := driver findElementByID: 'password-login'.
-	signIn := driver findElementByID: 'login-button'.
-	email sendKeys: group groupManager userAccount email.
-	password sendKeys: '12345678'.
-	signIn click.
+	self selectElementWithID: 'email-login' send: group groupManager userAccount email.
+	self selectElementWithID: 'password-login' send: '12345678'.
+	self clickElementWithID:'login-button'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressDoneButton [
 	self pressNextButtonPayment .
-	(driver findElementByID: 'registerButton') click.
+	self clickElementWithID: 'registerButton'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonAdditional [
-	|next|
 	self pressNextButtonAffiliation .
-	next := driver findElementByID: 'additionalInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'additionalInfoForm-nextButton'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonAffiliation [ 
-	|next|
 	self pressNextButtonConference .
-	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'affiliationInfoForm-nextButton'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonConference [
-	|next|
 	self pressNextButtonContact .
-	next := driver findElementByID: 'conferenceOptionsForm-nextButton'.
-	next click.
+	self clickElementWithID: 'conferenceOptionsForm-nextButton'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonContact [
-	|next|
 	self pressNextButtonUser.
-	next := driver findElementByID: 'contactInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'contactInfoForm-nextButton'
+	
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonPayment [
-	|next|
 	self pressNextButtonAdditional.
-	next := driver findElementByID: 'paymentInformationForm-nextButton'.
-	next click.
+	self clickElementWithID: 'paymentInformationForm-nextButton'
 ]
 
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonUser [
-	|next|
 	self fillAllUserFields.
-	next := driver findElementByID: 'basicInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'basicInfoForm-nextButton'
 ]
 
 { #category : #'as yet unclassified' }
 ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
-	(driver findElementByID: 'Group Registration-option') click.
+	self clickElementWithID: 'Group Registration-option'
 ]
 
 { #category : #'as yet unclassified' }
 ERLoggedPageAsGroupManagerTest >> selectMembersTab [
-	(driver findElementByID: 'tab-Members') click.
+	self clickElementWithID: 'tab-Members'
 ]
 
 { #category : #accessing }
@@ -127,7 +116,7 @@ ERLoggedPageAsGroupManagerTest >> setUp [
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testModifyAffiliationOfSummary [
 	self pressOptionGroupRegistration.
-	(driver findElementByID: 'modifyAffiliation') click.
+	self clickElementWithID: 'modifyAffiliation'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Affiliation Information'
 ]
 
@@ -138,7 +127,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeAcceptAlert [
 	self pressOptionGroupRegistration .
 	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: attendee id, '-delete') click.
+	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: group listAttends size equals: cantOfAttendees - 1
@@ -152,7 +141,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 	self pressOptionGroupRegistration .
 	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: attendee id, '-delete') click.
+	self clickElementWithID: attendee id, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: group listAttends size equals: cantOfAttendees
@@ -165,13 +154,13 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert
 	self pressOptionGroupRegistration .
 	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: 'registerMyselfAsAttendee') click.
+	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
 	attendee := group listAttends detect: [:att | att userAccount id = group groupManager userAccount id].
 	self pressOptionGroupRegistration .
 	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: attendee id, '-delete') click.
+	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: group listAttends size equals: cantOfAttendees - 1.
@@ -204,7 +193,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	self pressOptionGroupRegistration .
 	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: 'registerMyselfAsAttendee') click.
+	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
 	self assert: group listAttends size equals: cantOfAttendees + 1.
 	self assert: group groupManager userAccount isAttendee .
@@ -219,7 +208,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 	self pressOptionGroupRegistration .
 	self selectMembersTab .
 	cantOfAttendees := group listAttends size.
-	(driver findElementByID: 'registerAttendee') click.
+	self clickElementWithID: 'registerAttendee'.
 	self pressDoneButton .
 	self assert: group listAttends size equals: cantOfAttendees + 1
 	
@@ -228,7 +217,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationAddress [
 	self pressOptionGroupRegistration .
-	(driver findElementByID: 'modifyAffiliation') click.
+	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationAddrees1' with: ''.
 	self assert: self getTextOfError 
@@ -238,7 +227,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationAddr
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationCity [
 	self pressOptionGroupRegistration .
-	(driver findElementByID: 'modifyAffiliation') click.
+	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationCity' with: ''.
 	self assert: self getTextOfError 
@@ -248,7 +237,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationCity
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName [
 	self pressOptionGroupRegistration .
-	(driver findElementByID: 'modifyAffiliation') click.
+	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationName' with: ''.
 	self assert: self getTextOfError 
@@ -258,7 +247,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationPostal [
 	self pressOptionGroupRegistration .
-	(driver findElementByID: 'modifyAffiliation') click.
+	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationPostal' with: ''.
 	self assert: self getTextOfError 

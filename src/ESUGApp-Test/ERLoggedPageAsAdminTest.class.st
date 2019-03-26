@@ -14,13 +14,9 @@ ERLoggedPageAsAdminTest >> getNameOfConference [
 
 { #category : #'as yet unclassified' }
 ERLoggedPageAsAdminTest >> loginAsAdmin [
-	|email password signIn|
-	email := driver findElementByID: 'email-login'.
-	password := driver findElementByID: 'password-login'.
-	signIn := driver findElementByID: 'login-button'.
-	email sendKeys: 'admin@esug.org'.
-	password sendKeys: '12345678'.
-	signIn click.
+	self selectElementWithID: 'email-login' send: 'admin@esug.org'.
+	self selectElementWithID: 'password-login' send: '12345678'.
+	self clickElementWithID: 'login-button'
 ]
 
 { #category : #configurationFeeTests }
@@ -86,7 +82,7 @@ ERLoggedPageAsAdminTest >> pressEditGroup [
 	| group|
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
-	(driver findElementByID: group id, '-modify') click.
+	self clickElementWithID: group id, '-modify'
 	
 ]
 
@@ -95,84 +91,82 @@ ERLoggedPageAsAdminTest >> pressEditUser [
 	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
-	(driver findElementByID: user id, '-modify') click.
+	self clickElementWithID:  user id, '-modify'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionAdmin [
-	(driver findElementByID: 'Admin-option') click.
+	self clickElementWithID:  'Admin-option'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionConfiguration [
-	(driver findElementByID: 'Configuration-option') click.
+	self clickElementWithID:  'Configuration-option'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionProposals [
-	(driver findElementByID: 'Proposals-option') click.
+	self clickElementWithID:  'Proposals-option'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionStatistics [
-	(driver findElementByID: 'Statistics-option') click.
+	self clickElementWithID:  'Statistics-option'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionUsers [
-	(driver findElementByID: 'Users-option') click.
+	self clickElementWithID: 'Users-option'
 ]
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> selectAttendeesTab [
-	(driver findElementByID: 'tab-Attendees') click.
+	self clickElementWithID: 'tab-Attendees'
 ]
 
 { #category : #configurationProposalsTests }
 ERLoggedPageAsAdminTest >> selectAwardsTab [
-	(driver findElementByID: 'tab-Awards') click.
+	self clickElementWithID: 'tab-Awards'
 ]
 
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
-	(driver findElementByID: 'tab-Fee') click.
+	self clickElementWithID: 'tab-Fee'
 ]
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> selectGroupManagerTab [
-	(driver findElementByID: 'tab-Group Manager') click.
+	self clickElementWithID: 'tab-Group Manager'
 ]
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> selectInovicesTab [
-
-	(driver findElementByID: 'tab-Invoices') click.
+	self clickElementWithID: 'tab-Invoices'
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> selectTabBackup [
-	(driver findElementByID: 'tab-Backup') click
+	self clickElementWithID: 'tab-Backup'
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> selectTabChangePassword [
-	(driver findElementByID: 'tab-Change Password') click
+	self clickElementWithID: 'tab-Change Password'
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> selectTabOpenCloseRegistration [
-	(driver findElementByID: 'tab-Open / Close registration') click
+	self clickElementWithID: 'tab-Open / Close registration'
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> selectTabRestore [
-	(driver findElementByID: 'tab-Restore') click
+	self clickElementWithID: 'tab-Restore'
 ]
 
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> selectTicketTab [
-
-	(driver findElementByID: 'tab-Tickets') click.
+	self clickElementWithID: 'tab-Tickets'
 ]
 
 { #category : #tests }
@@ -206,7 +200,7 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
 	isOpen
 		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
 		ifFalse: [ self assert: value equals: 'Registration is closed. Are you sure you want open it?' ].
-	(driver findElementByID: 'yes-tabOpenClose') click.
+	self clickElementWithID: 'yes-tabOpenClose'.
 	self deny: controller conference conferenceIsOpenRegistration = isOpen 
 ]
 
@@ -229,12 +223,12 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 	coupon := self validCoupon .
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	(driver findElementByID: attendee id, '-applyReduction') click.
+	self clickElementWithID: attendee id, '-applyReduction'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Apply Reduction Ticket'.
 	select := driver findElementByID: 'selectTickets'.
 	self assert: (select getAttribute: 'value') equals: '1'.
 	select sendKeys: coupon ticketId .
-	 (driver findElementByID: 'accept-change-affiliation') click.
+	self clickElementWithID: 'accept-change-affiliation'.
 	self assert: attendee paymentInformation coupon equals: coupon ticketId 
 ]
 
@@ -243,8 +237,8 @@ ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	|attendee updateAttendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	(driver findElementByID: attendee id, '-modify')click.
-	(driver findElementByID: 'contactInfoForm-goBackLoginButton')click.
+	self clickElementWithID: attendee id, '-modify'.
+	self clickElementWithID: 'contactInfoForm-goBackLoginButton'.
 	driver acceptAlert .
 	updateAttendee := (ERAttendee find: [:att | att id = attendee id]).
 	self assert: updateAttendee userAccount equals: attendee userAccount .
@@ -257,21 +251,19 @@ ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
-	|delete invoice|
+	|invoice|
 	invoice := controller conference invoices first.
 	self moveToInvoicesOption .
-	delete := driver findElementByID: invoice id, '-hasPaid'.
-	delete click.
-	self assert: (controller invoices first paymentInformation hasPaid)
+	self clickElementWithID: invoice id, '-hasPaid'.
+	self assert: (controller conference invoices first paymentInformation hasPaid)
 ]
 
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
-	|delete user|
+	|user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers .
-	delete := driver findElementByID: user id, '-delete'.
-	delete click.
+	self clickElementWithID: user id, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERUserAccount find: [ :anUser | anUser id =user id ]) equals: nil
@@ -279,11 +271,10 @@ ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
 
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
-	|delete user|
+	| user|
 	user := controller conference findUserByEmail: 'admin@esug.org'.
 	self pressOptionUsers .
-	delete := driver findElementByID: user id, '-delete'.
-	delete click.
+	self clickElementWithID: user id, '-delete'.
 	driver acceptAlert.
 	self assert: (driver findElementByID: 'tabAlert') getText equals: 
 	ERException adminUserDoesNotDelete messageText
@@ -291,11 +282,10 @@ ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
-	|delete user|
+	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers .
-	delete := driver findElementByID: user id, '-delete'.
-	delete click.
+	self clickElementWithID: user id, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: 
@@ -307,17 +297,16 @@ ERLoggedPageAsAdminTest >> testEditAttendee [
 	| attendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	(driver findElementByID: attendee id, '-modify')click.
+	self clickElementWithID: attendee id, '-modify'.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
 ]
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testEditGroup [
-	|edit group|
+	| group|
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
-	edit := driver findElementByID: group id, '-modify'.
-	edit click.
+	self clickElementWithID: group id, '-modify'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Affiliation Information'
 ]
 
@@ -350,11 +339,10 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
-	|check attendee|
+	|attendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	check := driver findElementByID: attendee id, '-modifyUser'.
-	check click.
+	self clickElementWithID: attendee id, '-modifyUser'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
 ]
 
@@ -396,11 +384,10 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
-	|check attendee|
+	| attendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	check := driver findElementByID: attendee id, '-isVolunter'.
-	check click.
+	self clickElementWithID: attendee id, '-isVolunter'.
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 
@@ -412,7 +399,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateTo' with: newValue .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
-	(driver findElementByID: 'cancelUpdate') click.
+	self clickElementWithID: 'cancelUpdate'.
 	self assert: ((driver findElementByID: 'closeConferenceConfiguration-dialog') getAttribute: 'open') equals: 'true'.
 	((driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a') click.
 	self deny: controller conference configuration dateTo = newValue 
@@ -423,10 +410,10 @@ ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	|cancel user userUpdate|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
-	(driver findElementByID: user id, '-modify') click.
+	self clickElementWithID: user id, '-modify'.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'email' with: ''.
-	(driver findElementByID: 'cancelButton') click.
+	self clickElementWithID: 'cancelButton'.
 	self assert: ((driver findElementByID: 'buttonClose-dialog') getAttribute: 'open') equals: 'true'.
 	cancel := (driver findElementByClassName: 'mdl-dialog__actions') findElementByTagName: 'a'.
 	cancel click.
@@ -436,11 +423,10 @@ ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> testPressDeleteATicketAcceptAlert [
-	|delete coupon|
+	|coupon|
 	coupon := self validCoupon id.
 	self moveToTicketsOption.
-	delete := driver findElementByID: coupon, '-delete'.
-	delete click.
+	self clickElementWithID: coupon, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: nil
@@ -448,11 +434,10 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketAcceptAlert [
 
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
-	|delete coupon|
+	| coupon|
 	coupon := self validCoupon id.
 	self moveToTicketsOption.
-	delete := driver findElementByID: coupon, '-delete'.
-	delete click.
+	self clickElementWithID: coupon, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
@@ -460,11 +445,10 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
-	|delete attendee|
+	| attendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	delete := driver findElementByID: attendee id, '-delete'.
-	delete click.
+	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: nil
@@ -472,11 +456,10 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
-	|delete attendee|
+	| attendee|
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
-	delete := driver findElementByID: attendee id, '-delete'.
-	delete click.
+	self clickElementWithID: attendee id, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: attendee
@@ -484,11 +467,10 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
-	|delete group|
+	| group|
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
-	delete := driver findElementByID: group id, '-delete'.
-	delete click.
+	self clickElementWithID: group id, '-delete'.
 	driver acceptAlert .
 	(Delay forSeconds: 2) wait.
 	self assert: (ERGroup find: [ :ticket | ticket id =group id ]) equals: nil
@@ -496,11 +478,10 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
-	|delete group|
+	| group|
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
-	delete := driver findElementByID: group id, '-delete'.
-	delete click.
+	self clickElementWithID: group id, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
 	self deny: (ERGroup find: [ :ticket | ticket id =group id ]) = nil
@@ -518,11 +499,10 @@ ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 
 { #category : #configurationTicketTest }
 ERLoggedPageAsAdminTest >> testPressEditTicket [
-	|delete coupon|
+	| coupon|
 	coupon := self validCoupon.
 	self moveToTicketsOption.
-	delete := driver findElementByID: coupon id, '-modify'.
-	delete click.
+	self clickElementWithID: coupon id, '-modify'.
 	self assert: (driver findElementByTagName: 'h3') getText 
 	equals: 'Reduction Tickets'.
 	self assert: ((driver findElementByID: 'ticketId') getAttribute: 'value')
@@ -531,10 +511,9 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
-	"|button href|
+	"| href|
 	self moveToInvoicesOption .
-	button := driver findElementByID: 'exportAllInvoices'.
-	button click.
+	self selectElementWithID: 'exportAllInvoices'.
 	(Delay forSeconds: 5) wait.
 	href := (driver findElementByID: 'downloadAllInvoices') getAttribute: 'href'.
 	self deny: (href = nil)"
@@ -587,21 +566,19 @@ ERLoggedPageAsAdminTest >> testPressExportUsers [
 
 { #category : #configurationGroupManagerTests }
 ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
-	|edit group|
+	| group|
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
-	edit := driver findElementByID: group id, '-modifyUser'.
-	edit click.
+	self clickElementWithID: group id, '-modifyUser'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
 ]
 
 { #category : #configurationUsersTests }
 ERLoggedPageAsAdminTest >> testPressModifyUser [
-	|update user|
+	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
-	update := driver findElementByID: user id, '-modify'.
-	update click.
+	self clickElementWithID: user id, '-modify'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 
 	'User'
 ]
@@ -621,12 +598,11 @@ ERLoggedPageAsAdminTest >> testStatisticsView [
 
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
-	|check attendee|
+	| attendee|
 	attendee := controller conference attends first.
 	controller convertToStudentVolunterThis: attendee.
 	self moveToAttendeeOption .
-	check := driver findElementByID: attendee id, '-isVolunter'.
-	check click.
+	self clickElementWithID: attendee id, '-isVolunter'.
 	self deny: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 

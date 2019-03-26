@@ -124,6 +124,13 @@ ERGroup >> totalAmount [
 ]
 
 { #category : #'as yet unclassified' }
+ERGroup >> updateHasPaidOfAll [
+	self listAttends do: [ :each | each paymentInformation hasPaid: 
+												self paymentInformation hasPaid.
+											  each save. ].
+]
+
+{ #category : #'as yet unclassified' }
 ERGroup >> updatePaymentForAttendees [
 	self listAttends do: [ :att | 
 		att paymentInformation paymentType: self paymentInformation paymentType .

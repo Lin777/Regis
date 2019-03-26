@@ -8,7 +8,7 @@ Class {
 ERTestLoginController >> testLoginWhenPasswordDontMatch [
 	| anUser |
 	self registerAttendee.
-	anUser := controller validateLoginFor: self class testUserAccount email 
+	anUser := controller conference validateLoginFor: self class testUserAccount email 
 								password: (ERUserAccount hashPassword:
 								 'anotherPassword') asString.
 	self assert: anUser isNil
@@ -18,7 +18,7 @@ ERTestLoginController >> testLoginWhenPasswordDontMatch [
 ERTestLoginController >> testLoginWhenUserExist [
 	| anUser |
 	self registerAttendee.
-	anUser := controller validateLoginFor: self class testUserAccount email 
+	anUser := controller conference validateLoginFor: self class testUserAccount email 
 								password: (ERUserAccount hashPassword:
 								 self class testUserAccount password) asString.
 	self deny: anUser isNil
@@ -27,7 +27,7 @@ ERTestLoginController >> testLoginWhenUserExist [
 { #category : #tests }
 ERTestLoginController >> testLoginWhenUserNotExist [
 	| anUser |
-	anUser := controller validateLoginFor: ERTest testUserAccount email 
+	anUser := controller conference validateLoginFor: ERTest testUserAccount email 
 			password: (ERUserAccount hashPassword: '1234567') asString.
 	self assert: anUser isNil
 ]

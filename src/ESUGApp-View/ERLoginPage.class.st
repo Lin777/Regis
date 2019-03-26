@@ -36,7 +36,7 @@ ERLoginPage >> initialize [
 { #category : #rendering }
 ERLoginPage >> loginUser [
 	| userValidate |
-	userValidate := self controller validateLoginFor: email password: password.
+	userValidate := self controller conference validateLoginFor: email password: password.
 	userValidate notNil
 		ifTrue: [ 
 			self session login: userValidate.

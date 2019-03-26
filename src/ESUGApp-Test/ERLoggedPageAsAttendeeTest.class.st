@@ -10,83 +10,47 @@ Class {
 	#category : #'ESUGApp-Test-Parasol'
 }
 
-{ #category : #adminChangePasswordTests }
-ERLoggedPageAsAttendeeTest >> currentPassword: aString1 password: aString2 confirmPassword: aString3 [ 
-	|currentPassword password confirmPassword|
-	currentPassword := driver findElementByID: 'currentPassword'.
-	password := driver findElementByID: 'password'.
-	confirmPassword := driver findElementByID: 'confirmPassword'.
-	currentPassword sendKeys: aString1 .
-	password sendKeys: aString2.
-	confirmPassword sendKeys: aString3.
-]
-
 { #category : #myRegistrationProposedAwardsTests }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfAward [
-	self nameAward: 'Award' otherDevelopers: 'Devs' smalltalkDialect: 'French' affiliation: 'Inria' downloadUrl: 'https://drive.google.com/accounts' demoUrl: 'https://drive.google.com/accounts' keywords: 'Pharo' licence: 'MIT'
+	self selectElementWithID: 'nameAward' send: 'Award'.
+	self selectElementWithID: 'otherDevelopers' send: 'Devs'.
+	self selectElementWithID: 'smalltalkDialect' send: 'French' .
+	self selectElementWithID: 'affiliation' send: 'Inria'.
+	self selectElementWithID: 'downloadUrl' send: 'https://drive.google.com/accounts' .
+	self selectElementWithID: 'demoUrl' send: 'https://drive.google.com/accounts'.
+	self selectElementWithID: 'licence' send: 'Pharo'.
+	self selectElementWithID: 'keywords' send: 'MIT'.
 ]
 
 { #category : #adminChangePasswordTests }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfChangePassword [
-	self currentPassword: '12345678' password: '123456789' confirmPassword: '123456789'
+	self selectElementWithID: 'currentPassword' send: '12345678'.
+	self selectElementWithID: 'password' send: '123456789'.
+	self selectElementWithID: 'confirmPassword' send: '123456789'
 ]
 
 { #category : #myRegistrationProposedTalksTest }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
-	self name: 'Talk Example' description: 'This is a talk to ....' authorsWithoutSubmitter: 'Example Dev' 
+	self selectElementWithID: 'name' send: 'Talk Example'.
+	self selectElementWithID: 'description' send: 'This is a talk to ....'.
+	self selectElementWithID: 'authorsWithoutSubmitter' send: 'Example Dev'
 ]
 
 { #category : #'as yet unclassified' }
 ERLoggedPageAsAttendeeTest >> loginAsAttendee [
-	|email password signIn|
-	email := driver findElementByID: 'email-login'.
-	password := driver findElementByID: 'password-login'.
-	signIn := driver findElementByID: 'login-button'.
-	email sendKeys: attendee userAccount email.
-	password sendKeys: '12345678'.
-	signIn click.
-]
-
-{ #category : #myRegistrationProposedTalksTest }
-ERLoggedPageAsAttendeeTest >> name: aString1 description: aString2 authorsWithoutSubmitter: aString3 [ 
-	|firstName lastName email|
-	firstName := driver findElementByID: 'name'.
-	lastName := driver findElementByID: 'description'.
-	email := driver findElementByID: 'authorsWithoutSubmitter'.
-	firstName sendKeys: aString1 .
-	lastName sendKeys: aString2.
-	email sendKeys: aString3.
-]
-
-{ #category : #myRegistrationProposedAwardsTests }
-ERLoggedPageAsAttendeeTest >> nameAward: aString1 otherDevelopers: aString2 smalltalkDialect: aString3 affiliation: aString4 downloadUrl: aString5 demoUrl: aString6 keywords: aString7 licence: aString8 [
-	|nameAward otherDevelopers smalltalkDialect affiliation downloadUrl demoUrl keywords licence|
-	nameAward := driver findElementByID: 'nameAward'.
-	otherDevelopers := driver findElementByID: 'otherDevelopers'.
-	smalltalkDialect := driver findElementByID: 'smalltalkDialect'.
-	affiliation := driver findElementByID: 'affiliation'.
-	downloadUrl := driver findElementByID: 'downloadUrl'.
-	demoUrl := driver findElementByID: 'demoUrl'.
-	licence := driver findElementByID: 'licence'.
-	keywords := driver findElementByID: 'keywords'.
-	nameAward sendKeys: aString1 .
-	otherDevelopers sendKeys: aString2.
-	smalltalkDialect sendKeys: aString3.
-	affiliation sendKeys: aString4.
-	downloadUrl sendKeys: aString5.
-	demoUrl sendKeys: aString6.
-	keywords sendKeys: aString7.
-	licence sendKeys: aString8 
+	self selectElementWithID: 'email-login' send: attendee userAccount email.
+	self selectElementWithID: 'password-login' send: '12345678'.
+	self clickElementWithID: 'login-button'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> pressOptionAdmin [
-	(driver findElementByID: 'Admin-option') click.
+	self clickElementWithID: 'Admin-option'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> pressOptionMyRegistration [
-	(driver findElementByID: 'My Registration-option') click.
+	self clickElementWithID: 'My Registration-option'
 ]
 
 { #category : #myRegistrationSummaryTests }
@@ -100,17 +64,17 @@ ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> selectChangePasswordTab [
-	(driver findElementByID: 'tab-Change Password') click.
+	self clickElementWithID: 'tab-Change Password'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> selectProposedAwardsTab [
-	(driver findElementByID: 'tab-Proposed Awards') click.
+	self clickElementWithID: 'tab-Proposed Awards'
 ]
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> selectProposedTalksTab [
-	(driver findElementByID: 'tab-Proposed Talks') click.
+	self clickElementWithID: 'tab-Proposed Talks'
 ]
 
 { #category : #accessing }
@@ -128,7 +92,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyAffiliation [
 	
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
-	(driver findElementByID: 'addAward')click.
+	self clickElementWithID: 'addAward'.
 	self fillAllFieldsOfAward.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'affiliation' with: ''.
@@ -140,7 +104,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyDownloadURL [
 	
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
-	(driver findElementByID: 'addAward')click.
+	self clickElementWithID: 'addAward'.
 	self fillAllFieldsOfAward.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'downloadUrl' with: ''.
@@ -152,7 +116,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyName [
 	
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
-	(driver findElementByID: 'addAward')click.
+	self clickElementWithID: 'addAward'.
 	self fillAllFieldsOfAward.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'nameAward' with: ''.
@@ -164,9 +128,9 @@ ERLoggedPageAsAttendeeTest >> testAddTalkCorrectly [
 	
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
-	(driver findElementByID: 'addTalk')click.
+	self clickElementWithID: 'addTalk'.
 	self fillAllFieldsOfTalk.
-	(driver findElementByID: 'accept-change-affiliation')click.
+	self clickElementWithID: 'accept-change-affiliation'.
 	self deny: (ERTalk find: [ :talk | talk name = 'Talk Example' ] ) = nil
 ]
 
@@ -175,7 +139,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyDescription [
 	
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
-	(driver findElementByID: 'addTalk')click.
+	self clickElementWithID: 'addTalk'.
 	self fillAllFieldsOfTalk.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'description' with: ''.
@@ -187,7 +151,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyName [
 	
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
-	(driver findElementByID: 'addTalk')click.
+	self clickElementWithID: 'addTalk'.
 	self fillAllFieldsOfTalk.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'name' with: ''.
@@ -202,7 +166,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserObtainAnErrorAndAfterCancelEdition [
 	"Update that generate an error"
 	self updateField: 'email' with: 'mike@gmail.com'.
 	"Cancel update"
-	(driver findElementByID: 'cancel-user')	 click.
+	self clickElementWithID: 'cancel-user'.
 	emailAfterUpdate := ERUserAccount find: [ :each | each id = attendee userAccount id ].
 	self deny: emailAfterUpdate email = 'mike@gmail.com'.
 ]
@@ -272,7 +236,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithNoValidLastName [
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> testModifyRegistrationOfSummary [
 	self pressOptionMyRegistration.
-	(driver findElementByID: 'modifyRegistration') click.
+	self clickElementWithID: 'modifyRegistration'.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
 ]
 
@@ -280,7 +244,7 @@ ERLoggedPageAsAttendeeTest >> testModifyRegistrationOfSummary [
 ERLoggedPageAsAttendeeTest >> testPressAddAward [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
-	(driver findElementByID: 'addAward')click.
+	self clickElementWithID: 'addAward'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Award'.
 	
 ]
@@ -289,7 +253,7 @@ ERLoggedPageAsAttendeeTest >> testPressAddAward [
 ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
-	(driver findElementByID: 'addTalk')click.
+	self clickElementWithID: 'addTalk'.
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Talk'.
 	
 ]
@@ -371,7 +335,7 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithAllFieldsCorrectly [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
 	self fillAllFieldsOfChangePassword .
-	(driver findElementByID: 'accept-change-password') click.
+	self clickElementWithID: 'accept-change-password'.
 	newAttendee := ERUserAccount find: [ :each | each id = attendee userAccount id ].
 	self assert: newAttendee password equals: (ERUserAccount hashPassword: '123456789') .
 ]
