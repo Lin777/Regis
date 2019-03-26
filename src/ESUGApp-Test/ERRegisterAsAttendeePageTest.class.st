@@ -68,7 +68,7 @@ ERRegisterAsAttendeePageTest >> pressNextButtonPayment [
 { #category : #'as yet unclassified' }
 ERRegisterAsAttendeePageTest >> pushRegisterButton [
 	self clickElementWithID: 'register-button'.
-	self assert: (driver findElementByID: 'card-heading') getText = 'Registration'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration'
 ]
 
 { #category : #'as yet unclassified' }
@@ -170,14 +170,14 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 ERRegisterAsAttendeePageTest >> testPressCancelButtonAcceptAlert [
 	self clickElementWithID: 'basicInfoForm-goBackLoginButton'.
 	driver acceptAlert .
-	self assert: (driver findElementByID: 'card-heading') getText equals: 'User Login'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'User Login'
 ]
 
 { #category : #tests }
 ERRegisterAsAttendeePageTest >> testPressCancelButtonDismissAlert [
 	self clickElementWithID: 'basicInfoForm-goBackLoginButton'.
 	driver dismissAlert .
-	self assert: (driver findElementByID: 'card-heading') getText equals: 'Registration'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration'
 ]
 
 { #category : #tests }
@@ -216,7 +216,7 @@ ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCor
 ERRegisterAsAttendeePageTest >> testPressDoneButton [
 	self pressNextButtonPayment .
 	self clickElementWithID: 'registerButton'.
-	self assert: (driver findElementByID: 'card-heading') getText equals: 'Registration Summary'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration Summary'
 ]
 
 { #category : #registerPaymentInformationTabTests }

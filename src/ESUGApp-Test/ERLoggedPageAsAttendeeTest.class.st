@@ -56,7 +56,7 @@ ERLoggedPageAsAttendeeTest >> pressOptionMyRegistration [
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 	attendee paymentInformation paymentTypeIsBankTransfer 
-		ifTrue: [ self assert: (driver findElementByTagName: 'h3') getText equals: 'Bank Transfer' ]
+		ifTrue: [ self assert: (self textOfTagName: 'h3') equals: 'Bank Transfer' ]
 		ifFalse: [ "This test takes a lot time"
 			"(Delay forSeconds: 10) wait.
 			self assert: (driver getCurrentURL beginsWith: 'https://www.paypal.com')" ]
@@ -176,7 +176,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
 	self updateField: 'email' with: 'mike@gmail.com'.
-	self assert: (driver findElementByID: 'adminUserAlert') getText equals: 'This email is already registered'
+	self assert: (self textOfElementWithID: 'adminUserAlert') equals: 'This email is already registered'
 ]
 
 { #category : #adminUserTests }
@@ -245,7 +245,7 @@ ERLoggedPageAsAttendeeTest >> testPressAddAward [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
 	self clickElementWithID: 'addAward'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Award'.
+	self assert: (self textOfTagName: 'h3') equals: 'Award'.
 	
 ]
 
@@ -254,14 +254,14 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
 	self clickElementWithID: 'addTalk'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Talk'.
+	self assert: (self textOfTagName: 'h3') equals: 'Talk'.
 	
 ]
 
 { #category : #adminUserTests }
 ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 	self pressOptionAdmin .
-	self assert: ((driver findElementByID: 'tab-adminUser')findElementByTagName: 'h3') getText equals: 'User'.
+	self assert: (self textOfElementWithID: 'tab-adminUser' andTagName: 'h3') equals: 'User'.
 	
 ]
 
@@ -269,7 +269,7 @@ ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
-	self assert: ((driver findElementByID: 'tab-proposedAwards')findElementByTagName: 'h3') getText equals: 'Submitted Awards'.
+	self assert: (self textOfElementWithID: 'tab-proposedAwards' andTagName: 'h3') equals: 'Submitted Awards'.
 	
 ]
 
@@ -277,8 +277,7 @@ ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
-	self assert: ((driver findElementByID: 'tab-changePassword') findElementByTagName: 'h3') getText 
-		equals: 'Modify Password'
+	self assert: (self textOfElementWithID: 'tab-changePassword' andTagName: 'h3') equals: 'Modify Password'
 ]
 
 { #category : #myRegistrationSummaryTests }
@@ -293,7 +292,7 @@ ERLoggedPageAsAttendeeTest >> testPressExportInvoiceButtonOfSummary [
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> testPressMyRegistrationOption [
 	self pressOptionMyRegistration.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Registration Summary'.
+	self assert: (self textOfTagName:'h3') equals: 'Registration Summary'.
 	self shouldnt: [driver findElementByID: 'modifyRegistration'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'pay'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'exportInvoice'] raise: BPNoSuchElementException .
@@ -315,7 +314,7 @@ ERLoggedPageAsAttendeeTest >> testPressPayButtonOfSummary [
 ERLoggedPageAsAttendeeTest >> testPressTalksTab [
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
-	self assert: ((driver findElementByID: 'tab-proposedTalks')findElementByTagName: 'h3') getText equals: 'Submitted Talks'.
+	self assert: (self textOfElementWithID: 'tab-proposedTalks' andTagName: 'h3') equals: 'Submitted Talks'.
 	
 ]
 
@@ -357,5 +356,5 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectCurrentPassword [
 	self fillAllFieldsOfChangePassword .
 	acceptFormButton := 'accept-change-password'.
 	self updateField: 'currentPassword' with: '123456789'.
-	self assert: (driver findElementByID: 'adminChangePasswordAlert') getText equals: 'The password entered does not match the current password'
+	self assert: (self textOfElementWithID: 'adminChangePasswordAlert') equals: 'The password entered does not match the current password'
 ]

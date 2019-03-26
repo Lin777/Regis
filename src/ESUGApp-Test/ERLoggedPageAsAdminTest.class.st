@@ -195,7 +195,7 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
 	self pressOptionAdmin .
 	self selectTabOpenCloseRegistration .
 	self shouldnt: [ driver findElementByID: 'yes-tabOpenClose' ] raise: BPNoSuchElementException.
-	value := ((driver findElementByID: 'tab-tabOpenClose') findElementByTagName: 'h3') getText.
+	value := self textOfElementWithID: 'tab-tabOpenClose' andTagName: 'h3'.
 	isOpen := controller conference conferenceIsOpenRegistration .
 	isOpen
 		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
@@ -214,7 +214,7 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabRestore [
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
 	self pressOptionAdmin.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
+	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
 { #category : #configurationAttendeesTest }
@@ -224,7 +224,7 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	self clickElementWithID: attendee id, '-applyReduction'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Apply Reduction Ticket'.
+	self assert: (self textOfTagName: 'h3') equals: 'Apply Reduction Ticket'.
 	select := driver findElementByID: 'selectTickets'.
 	self assert: (select getAttribute: 'value') equals: '1'.
 	select sendKeys: coupon ticketId .
@@ -276,7 +276,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 	self pressOptionUsers .
 	self clickElementWithID: user id, '-delete'.
 	driver acceptAlert.
-	self assert: (driver findElementByID: 'tabAlert') getText equals: 
+	self assert: (self textOfElementWithID: 'tabAlert') equals: 
 	ERException adminUserDoesNotDelete messageText
 ]
 
@@ -307,7 +307,7 @@ ERLoggedPageAsAdminTest >> testEditGroup [
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	self clickElementWithID: group id, '-modify'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Affiliation Information'
+	self assert: (self textOfTagName: 'h3')equals: 'Affiliation Information'
 ]
 
 { #category : #configurationGroupManagerTests }
@@ -343,7 +343,7 @@ ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 	attendee := controller conference attends first.
 	self moveToAttendeeOption .
 	self clickElementWithID: attendee id, '-modifyUser'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
+	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
 { #category : #configurationUsersTests }
@@ -351,7 +351,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'email' with: 'admin@esug.org'.
-	self assert: (driver findElementByID: 'formAlert') getText equals: 
+	self assert: (self textOfElementWithID: 'formAlert') equals: 
 		ERException emailAlreadyRegistered messageText 
 ]
 
@@ -503,8 +503,7 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 	coupon := self validCoupon.
 	self moveToTicketsOption.
 	self clickElementWithID: coupon id, '-modify'.
-	self assert: (driver findElementByTagName: 'h3') getText 
-	equals: 'Reduction Tickets'.
+	self assert: (self textOfTagName: 'h3') equals: 'Reduction Tickets'.
 	self assert: ((driver findElementByID: 'ticketId') getAttribute: 'value')
 	equals: coupon ticketId .
 ]
@@ -570,7 +569,7 @@ ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
 	group := controller conference groups first.
 	self moveToGroupManagerOption .
 	self clickElementWithID: group id, '-modifyUser'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'User'
+	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
 { #category : #configurationUsersTests }
@@ -579,20 +578,19 @@ ERLoggedPageAsAdminTest >> testPressModifyUser [
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
 	self clickElementWithID: user id, '-modify'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 
-	'User'
+	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
 { #category : #configurationProposalsTests }
 ERLoggedPageAsAdminTest >> testPressProposalsOption [
 	self pressOptionProposals .
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Submitted Talks'
+	self assert: (self textOfTagName: 'h3') equals: 'Submitted Talks'
 ]
 
 { #category : #configurationStatistics }
 ERLoggedPageAsAdminTest >> testStatisticsView [
 	self pressOptionStatistics .
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Statistics'.
+	self assert: (self textOfTagName: 'h3') equals: 'Statistics'.
 	self assert: (driver findElementsByTagName: 'table') size equals: 3
 ]
 
@@ -682,7 +680,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo 
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '10/10/2019'.
-	self assert: (driver findElementByID: 'formConferenceConfigurationAlert' ) getText equals: ERException invalidEsugDates messageText
+	self assert: (self textOfElementWithID: 'formConferenceConfigurationAlert' ) equals: ERException invalidEsugDates messageText
 ]
 
 { #category : #configurationConferenceTests }

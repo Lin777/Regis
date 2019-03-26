@@ -11,7 +11,7 @@ Class {
 ERLoginPageTest >> testForgotPassword [
 	ERConfigurationController new closeRegistration .
 	self clickElementWithID: 'forgot-password'.
-	self assert: (driver findElementByID: 'card-heading') getText = 'Reset Password'.
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Reset Password'.
 ]
 
 { #category : #accessing }
@@ -19,7 +19,7 @@ ERLoginPageTest >> testLoginRegisteredUser [
 	self selectElementWithID: 'email-login' send: 'admin@esug.org'.
 	self selectElementWithID: 'password-login' send: '12345678'.
 	self clickElementWithID: 'login-button'.
-	self assert: (driver findElementByTagName: 'h3') getText = 'Welcome to this great conference'.
+	self assert: (self textOfTagName: 'h3') equals: 'Welcome to this great conference'.
 ]
 
 { #category : #accessing }
@@ -27,31 +27,31 @@ ERLoginPageTest >> testLoginUnregisteredUser [
 	self selectElementWithID: 'email-login' send: 'xxx@xxx.xx'.
 	self selectElementWithID: 'password-login' send: 'xxxxxxxx'.
 	self clickElementWithID: 'login-button'.
-	self assert: (driver findElementByID: 'loginAlert') getText = 'Login failed.'.
+	self assert: (self textOfElementWithID: 'loginAlert') equals: 'Login failed.'.
 ]
 
 { #category : #accessing }
 ERLoginPageTest >> testRegisterAsGroupManagerButton [
 	self clickElementWithID: 'register-button-as-group-manager'.
-	self assert: (driver findElementByID: 'card-heading') getText = 'Group Manager'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Group Manager'
 ]
 
 { #category : #accessing }
 ERLoginPageTest >> testRegisterAsGroupManagerWhenRegistrationIsClosed [
 	ERConfigurationController new closeRegistration .
 	self clickElementWithID: 'register-button-as-group-manager'.
-	self assert: (driver findElementByID: 'loginAlert') getText = 'The registration is not open'.
+	self assert: (self textOfElementWithID: 'loginAlert') equals: 'The registration is not open'.
 ]
 
 { #category : #accessing }
 ERLoginPageTest >> testRegisterButton [
 	self clickElementWithID: 'register-button'.
-	self assert: (driver findElementByID: 'card-heading') getText = 'Registration'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration'
 ]
 
 { #category : #accessing }
 ERLoginPageTest >> testRegisterWhenRegistrationIsClosed [
 	ERConfigurationController new closeRegistration .
 	self clickElementWithID: 'register-button'.
-	self assert: (driver findElementByID: 'loginAlert') getText = 'The registration is not open'.
+	self assert: (self textOfElementWithID: 'loginAlert') equals: 'The registration is not open'.
 ]

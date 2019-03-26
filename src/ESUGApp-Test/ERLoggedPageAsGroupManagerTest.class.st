@@ -117,7 +117,7 @@ ERLoggedPageAsGroupManagerTest >> setUp [
 ERLoggedPageAsGroupManagerTest >> testModifyAffiliationOfSummary [
 	self pressOptionGroupRegistration.
 	self clickElementWithID: 'modifyAffiliation'.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Affiliation Information'
+	self assert: (self textOfTagName: 'h3') equals: 'Affiliation Information'
 ]
 
 { #category : #groupManagerMembersTabTests }
@@ -181,7 +181,7 @@ ERLoggedPageAsGroupManagerTest >> testPressExportInvoiceButtonOfSummary [
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 	self pressOptionGroupRegistration.
-	self assert: (driver findElementByTagName: 'h3') getText equals: 'Group Manager Short Description'.
+	self assert: (self textOfTagName: 'h3') equals: 'Group Manager Short Description'.
 	self shouldnt: [driver findElementByID: 'modifyAffiliation'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'pay'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'exportInvoice'] raise: BPNoSuchElementException .

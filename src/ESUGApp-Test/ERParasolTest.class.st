@@ -71,6 +71,21 @@ ERParasolTest >> tearDown [
 ]
 
 { #category : #'as yet unclassified' }
+ERParasolTest >> textOfElementWithID: aString [
+	^ (driver findElementByID: aString) getText
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> textOfElementWithID: aString1 andTagName: aString2 [
+	^ ((driver findElementByID: aString1) findElementByTagName: aString2) getText
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> textOfTagName: aString [
+	^ (driver findElementByTagName: aString) getText
+]
+
+{ #category : #'as yet unclassified' }
 ERParasolTest >> updateField: anID with: aString [
 	| confName |
 	confName := driver findElementByID: anID.
