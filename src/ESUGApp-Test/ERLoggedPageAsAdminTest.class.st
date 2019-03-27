@@ -7,6 +7,26 @@ Class {
 	#category : #'ESUGApp-Test-Parasol'
 }
 
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> fillAmount [
+	self selectElementWithID: 'amount' send: '25'.
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> fillLimit [
+	self selectElementWithID: 'limit' send: '5'.
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> fillPercentage [
+	self selectElementWithID: 'percentage' send: '25'
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> fillTicketId [
+	self selectElementWithID: 'ticketId' send: 'example123'
+]
+
 { #category : #tests }
 ERLoggedPageAsAdminTest >> getNameOfConference [
 	^ controller conference configuration name 
@@ -119,6 +139,12 @@ ERLoggedPageAsAdminTest >> pressOptionUsers [
 	self clickElementWithID: 'Users-option'
 ]
 
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> selectAddTicket [
+	self moveToTicketsOption.
+	self clickElementWithID: 'addTicket'
+]
+
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> selectAttendeesTab [
 	self clickElementWithID: 'tab-Attendees'
@@ -175,6 +201,81 @@ ERLoggedPageAsAdminTest >> setUp [
 	self loginAsAdmin .
 	ERTest generateDataForTest .
 	controller := ERConfigurationController new.
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketSuccesfull [
+	|amountOfTickets|
+	amountOfTickets := controller conference reductionTickets size.
+	self selectAddTicket .
+	self fillTicketId .
+	self fillLimit .
+	self fillPercentage.
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: controller conference reductionTickets size equals: amountOfTickets +1.
+	self deny: (controller conference reductionTickets detect: 
+		[:ticket | ticket ticketId = 'example123']) = nil
+	
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithAlreadyRegisteredTicketID [
+	|coupon|
+	coupon := self validCoupon.
+	self selectAddTicket.
+	self selectElementWithID: 'ticketId' send: coupon ticketId .
+	self fillPercentage .
+	self fillLimit .
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: (self textOfElementWithID: 'formTicketAlert') 
+			equals: ERException ticketWithIdAlreadyExist messageText
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithEmptyLimit [
+	self selectAddTicket.
+	self fillTicketId .
+	self fillPercentage .
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Limit')
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithEmptyPercentage [
+	self selectAddTicket.
+	self fillTicketId .
+	self fillLimit .
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Percentage')
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithEmptyTicketID [
+	self selectAddTicket.
+	self fillPercentage .
+	self fillLimit .
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Id')
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericLimit [
+	self selectAddTicket .
+	self fillTicketId .
+	self fillPercentage .
+	self selectElementWithID: 'limit' send: 'text'.
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Limit')
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericPercentage [
+	self selectAddTicket .
+	self fillTicketId .
+	self fillLimit .
+	self selectElementWithID: 'percentage' send: 'text'.
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Percentage')
 ]
 
 { #category : #configurationAdminOptionTests }
@@ -337,6 +438,20 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 		equals: (self messageIsRequiredFor: 'Postal/Zipcode')
 ]
 
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testEditTicketSuccesfull [
+	| coupon |
+	coupon := self validCoupon.
+	self moveToTicketsOption.
+	self clickElementWithID: coupon id, '-modify'.
+	self selectElementWithID: 'selectLimitStrategy' send: 'Unlimit strategy'.
+	self selectElementWithID: 'selectStrategy' send: 'Fix Discount'.
+	self fillAmount.
+	self clickElementWithID: 'acceptAddTicket'.
+	self assert: coupon strategyIsFixDiscount.
+	self assert: coupon limitStrategyIsUnlimited
+]
+
 { #category : #configurationAttendeesTest }
 ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 	|attendee|
@@ -389,6 +504,13 @@ ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 	self moveToAttendeeOption .
 	self clickElementWithID: attendee id, '-isVolunter'.
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
+]
+
+{ #category : #configurationTicketTest }
+ERLoggedPageAsAdminTest >> testPressAddTicket [
+	self moveToTicketsOption.
+	self clickElementWithID: 'addTicket'.
+	self assert: (self textOfTagName: 'h3') equals: 'Reduction Tickets'
 ]
 
 { #category : #configurationConferenceTests }

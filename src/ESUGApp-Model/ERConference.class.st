@@ -518,7 +518,8 @@ ERConference >> reductionTicketAlreadyExist: aReductionTicket [
 	self reductionTickets
 		do: [ :each | 
 			aReductionTicket ticketId = each ticketId
-				ifTrue: [ ERException ticketWithIdAlreadyExist signal ] ]
+				ifTrue: [ each = aReductionTicket ifFalse: [
+						ERException ticketWithIdAlreadyExist signal ] ] ]
 ]
 
 { #category : #accessing }
@@ -622,6 +623,15 @@ ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
 			each email = anUser email
 				ifTrue: [each = anUser ifFalse:[
 					ERException emailAlreadyRegistered signal ] ]].
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
+	reductionTickets 
+		do: [ :each | 
+			each ticketId = aTicket ticketId
+				ifTrue: [each = aTicket ifFalse:[
+					ERException ticketIdAlreadyRegistered signal ] ]].
 ]
 
 { #category : #accessing }

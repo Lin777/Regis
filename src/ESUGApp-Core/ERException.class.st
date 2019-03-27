@@ -118,6 +118,13 @@ ERException class >> ticketDoesNotExist [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> ticketIdAlreadyRegistered [
+		^ self new
+				messageText: 'This Ticket ID is already registered';
+				yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> ticketWasExceeded [
 		^ self new 
 			messageText: 'The limit of the ticket was exceeded, you can not use it';

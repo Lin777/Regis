@@ -17,6 +17,22 @@ ERLimitedReductionTicketUse >> description [
 	^ 'Used limited to ' , limit asString 
 ]
 
+{ #category : #'as yet unclassified' }
+ERLimitedReductionTicketUse >> descriptionLimit [
+	<magritteDescription>
+	| tmp |
+	tmp := MANumberDescription new.
+	tmp 
+		accessor: #limit; 
+		priority: 50;
+		required: true;
+		withoutLabel: true;
+		id: 'limit';
+		label: 'Limit (Required)';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
 { #category : #accessing }
 ERLimitedReductionTicketUse >> limit [
 	^ limit

@@ -19,6 +19,22 @@ ERPercentageDiscount >> description [
 	^ 'Discount of ' , percentage asString , ' %'
 ]
 
+{ #category : #'as yet unclassified' }
+ERPercentageDiscount >> descriptionPercentage [
+	<magritteDescription>
+	| tmp |
+	tmp := MANumberDescription new.
+	tmp 
+		accessor: #percentage; 
+		priority: 30;
+		required: true;
+		withoutLabel: true;
+		id: 'percentage';
+		label: 'Percentage (Required)';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
 { #category : #initialization }
 ERPercentageDiscount >> initialize [
 	super initialize.

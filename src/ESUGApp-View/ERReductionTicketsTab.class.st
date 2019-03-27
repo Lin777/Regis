@@ -67,7 +67,7 @@ ERReductionTicketsTab >> headers [
 ERReductionTicketsTab >> initializeFormAddTicket [
 	ticket := ERReductionTicket new.
 	formAddTicket := (ERReductionTicketForm on: ticket withContent: content).
-	formAddTicket callback: [ self addTicketToConference ]
+	formAddTicket callback: [ self addTicketToConference ].
 ]
 
 { #category : #rendering }

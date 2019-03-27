@@ -106,6 +106,7 @@ ERConfigurationController >> deleteUser: anUser [
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
 	"Add validator for not accept use a ticket id name it was already exist"
+	conference reductionTicketAlreadyExist: aTicket.
 	self saveTicket: aTicket.
 	self notifyAllObservers 
 ]
