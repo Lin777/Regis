@@ -9,7 +9,7 @@ Class {
 
 { #category : #rendering }
 ERAwardsTab >> awards [
-	^ controller submittedAwards
+	^ controller conference submittedAwards
 ]
 
 { #category : #rendering }
@@ -24,7 +24,7 @@ ERAwardsTab >> blockTableToExecute [
 { #category : #'as yet unclassified' }
 ERAwardsTab >> exportAwards [
 	| file |
-	file := controller exportAwards: 'awards'.
+	file := controller conference exportAwards: 'awards'.
 	self exportFile: file wihtName: 'awards.csv'
 ]
 

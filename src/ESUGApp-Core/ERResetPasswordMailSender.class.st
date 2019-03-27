@@ -14,11 +14,6 @@ ERResetPasswordMailSender class >> on: anUser [
 	^ self new user: anUser  
 ]
 
-{ #category : #accessing }
-ERResetPasswordMailSender >> conference [
-	^ conference ifNil: [ conference := ERController new conference ]
-]
-
 { #category : #rendering }
 ERResetPasswordMailSender >> newPassword [
 	^ user resetPassword
@@ -26,7 +21,7 @@ ERResetPasswordMailSender >> newPassword [
 
 { #category : #rendering }
 ERResetPasswordMailSender >> subjectDescription [
-	^ 'New Password for ', self conference configuration name asString
+	^ 'New Password for ', controller conference configuration name asString
 ]
 
 { #category : #rendering }

@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 ERException class >> adminUserDoesNotDelete [
 		^ self new 
-			messageText: 'Users with administrator role can not be deletedD';
+			messageText: 'Users with administrator role can not be deleted';
 			yourself
 ]
 
@@ -68,6 +68,20 @@ ERException class >> limitStrategyNotAllowedd [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> loginFailed [
+		^ self new 
+			messageText: 'Login failed';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERException class >> notFoundAttendeeFromUser [
+		^ self new
+			messageText: 'Not exist Attendee from this user ';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> passwordDoesNotMatchWithConfirmPass [
 		^ self new 
 			messageText: 'The password does not match with confirm password';
@@ -101,6 +115,13 @@ ERException class >> ticketDoesNotExist [
 		^ self new
 			messageText: 'The ticket does not exist for this conference';
 			yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERException class >> ticketIdAlreadyRegistered [
+		^ self new
+				messageText: 'This Ticket ID is already registered';
+				yourself
 ]
 
 { #category : #'as yet unclassified' }

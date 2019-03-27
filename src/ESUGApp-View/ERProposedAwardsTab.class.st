@@ -26,7 +26,7 @@ ERProposedAwardsTab >> blockTableToExecute [
 
 { #category : #initialization }
 ERProposedAwardsTab >> createAward: anAward [
-	ERController new addAward: anAward.
+	controller addAward: anAward.
 	self cancel
 ]
 
@@ -93,7 +93,7 @@ ERProposedAwardsTab >> renderTableOn: html [
 
 { #category : #accessing }
 ERProposedAwardsTab >> submittedAwards [ 
-	^ ERController new submittedAwardsFor: attendee
+	^ controller conference submittedAwardsFor: attendee
 ]
 
 { #category : #accessing }

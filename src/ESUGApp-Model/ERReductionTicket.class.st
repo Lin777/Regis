@@ -4,23 +4,25 @@ Class {
 	#instVars : [
 		'ticketId',
 		'discountStrategy',
-		'limitStrategy',
-		'usersOfTickets'
+		'limitStrategy'
 	],
 	#category : #'ESUGApp-Model'
 }
 
-{ #category : #adding }
-ERReductionTicket >> addAttendeeOfTicket: anAttendee [
-	^ usersOfTickets add: anAttendee
-]
-
-{ #category : #adding }
-ERReductionTicket >> addAttendeeOfTicketLimited: anAttendee [
-	self usersOfTickets size < self limitStrategy limit
-		ifTrue: [ ^ self addAttendeeOfTicket: anAttendee ]
-		ifFalse: [ anAttendee coupon: ''.
-			ERException ticketWasExceeded signal ]
+{ #category : #'as yet unclassified' }
+ERReductionTicket >> descriptionTicketId [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #ticketId; 
+		priority: 10;
+		required: true;
+		label: 'Id (Required)';
+		withoutLabel: true;
+		id: 'ticketId';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }
@@ -44,7 +46,6 @@ ERReductionTicket >> discountStrategyAsString [
 { #category : #accessing }
 ERReductionTicket >> initialize [
 	super initialize.
-	usersOfTickets := OrderedCollection new.
 	discountStrategy := ERPercentageDiscount new.
 	limitStrategy := ERLimitedReductionTicketUse new
 ]
@@ -112,14 +113,4 @@ ERReductionTicket >> ticketId [
 { #category : #accessing }
 ERReductionTicket >> ticketId: anObject [
 	ticketId := anObject
-]
-
-{ #category : #accessing }
-ERReductionTicket >> usersOfTickets [
-	^ usersOfTickets
-]
-
-{ #category : #accessing }
-ERReductionTicket >> usersOfTickets: anObject [
-	usersOfTickets := anObject
 ]

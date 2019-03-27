@@ -165,6 +165,19 @@ ESUGSetUp class >> initialize [
 ]
 
 { #category : #accessing }
+ESUGSetUp class >> initializeDataFromScratch [
+	| esugConferenceConfiguration entryPoint conference |
+	esugConferenceConfiguration := self createESUGConfiguration.
+	entryPoint := 'esug'.
+	conference := self
+		createAndRegisterConferenceWithConfiguration: esugConferenceConfiguration
+		atEntryPoint: entryPoint.
+	self configureESUGFeesForConference: conference.
+	self configureESUGReductionCodesForConference: conference.
+	self activateOnlyThisConference: conference
+]
+
+{ #category : #accessing }
 ESUGSetUp class >> installArtefact [
 	Metacello new
         githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
@@ -197,19 +210,6 @@ ESUGSetUp class >> installMagritte [
 		repository: 'github://magritte-metamodel/magritte:master/source';
 		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
 		load: #('Magritte-Seaside')
-]
-
-{ #category : #accessing }
-ESUGSetUp class >> initializeDataFromScratch [
-	| esugConferenceConfiguration entryPoint conference |
-	esugConferenceConfiguration := self createESUGConfiguration.
-	entryPoint := 'esug'.
-	conference := self
-		createAndRegisterConferenceWithConfiguration: esugConferenceConfiguration
-		atEntryPoint: entryPoint.
-	self configureESUGFeesForConference: conference.
-	self configureESUGReductionCodesForConference: conference.
-	self activateOnlyThisConference: conference
 ]
 
 { #category : #accessing }

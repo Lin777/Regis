@@ -55,11 +55,10 @@ ERAlert >> message: anObject [
 
 { #category : #rendering }
 ERAlert >> renderContentOn: html [
-	self wasShown
-		ifTrue: [ ^ self ].
+	wasShown ifTrue: [ ^ self ].
 	html div
 		id: self id;
-		class: self class1;
+		class: self class1, ' alert';
 		attributeAt: 'role' put: self role;
 		with: self message .
 	self wasShown: true
@@ -73,11 +72,6 @@ ERAlert >> role [
 { #category : #accessing }
 ERAlert >> role: anObject [
 	role := anObject
-]
-
-{ #category : #accessing }
-ERAlert >> wasShown [
-	^ wasShown
 ]
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ERTestAward >> setUp [
 	super setUp.
-	attendee := ERLoggedController new attendeeFromUser: self registerAttendee 
+	attendee := controller conference attendeeFromUser: self registerAttendee 
 ]
 
 { #category : #tests }

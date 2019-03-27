@@ -25,8 +25,7 @@ ERReductionTicketsTab >> addTicket [
 
 { #category : #rendering }
 ERReductionTicketsTab >> addTicketToConference [
-	controller addTicket: ticket.
-
+	controller addReductionTicketToConference: ticket.
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
 
@@ -68,7 +67,7 @@ ERReductionTicketsTab >> headers [
 ERReductionTicketsTab >> initializeFormAddTicket [
 	ticket := ERReductionTicket new.
 	formAddTicket := (ERReductionTicketForm on: ticket withContent: content).
-	formAddTicket callback: [ self addTicketToConference ]
+	formAddTicket callback: [ self addTicketToConference ].
 ]
 
 { #category : #rendering }
@@ -108,7 +107,7 @@ ERReductionTicketsTab >> listDataToRenderButton [
 
 { #category : #accessing }
 ERReductionTicketsTab >> listOfAttendees: aTicket [
-	^ ERController new attendeesForATicket: aTicket ticketId
+	^ controller conference attendeesForATicket: aTicket ticketId
 ]
 
 { #category : #rendering }
@@ -162,7 +161,7 @@ ERReductionTicketsTab >> tabName [
 
 { #category : #rendering }
 ERReductionTicketsTab >> tickets [
-	^ controller reductionTickets
+	^ controller conference reductionTickets
 ]
 
 { #category : #accessing }

@@ -1,3 +1,6 @@
+"
+A ERRegisterAsGroupManagerPageTest is a test class for testing the behavior of page when the user is registering as GroupManager
+"
 Class {
 	#name : #ERRegisterAsGroupManagerPageTest,
 	#superclass : #ERRegisterTest,
@@ -6,9 +9,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 ERRegisterAsGroupManagerPageTest >> pushRegisterAsGroupManagerButton [
-	|register|
-	register := driver findElementByID: 'register-button-as-group-manager'.
-	register click.
+	self clickElementWithID: 'register-button-as-group-manager'
 ]
 
 { #category : #accessing }
@@ -19,31 +20,25 @@ ERRegisterAsGroupManagerPageTest >> setUp [
 
 { #category : #tests }
 ERRegisterAsGroupManagerPageTest >> testPressAffiliationBackButton [
-	|next|
 	self pressNextButtonUser   .
-	next := driver findElementByID: 'affiliationInfoForm-previousButton'.
-	next click.
+	self clickElementWithID: 'affiliationInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-User')
 ]
 
 { #category : #tests }
 ERRegisterAsGroupManagerPageTest >> testPressAffiliationNextButtonWithAllFieldsFilledCorrectly [
-	|next|
 	self pressNextButtonUser .
 	self fillAllAffiliationFields .
-	next := driver findElementByID: 'affiliationInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'affiliationInfoForm-nextButton'.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
 ]
 
 { #category : #tests }
 ERRegisterAsGroupManagerPageTest >> testPressUserNextButtonWithAllFieldsFilledCorrectly [
-	|next|
 	self fillAllUserFields.
-	next := driver findElementByID: 'basicInfoForm-nextButton'.
-	next click.
+	self clickElementWithID: 'basicInfoForm-nextButton'.
 	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]

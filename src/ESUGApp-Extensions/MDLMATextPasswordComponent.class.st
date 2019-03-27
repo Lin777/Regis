@@ -1,3 +1,6 @@
+"
+MDL component class for a MAPasswordDescription
+"
 Class {
 	#name : #MDLMATextPasswordComponent,
 	#superclass : #MDLMATextInputComponent,

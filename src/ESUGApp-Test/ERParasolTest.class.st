@@ -2,7 +2,8 @@ Class {
 	#name : #ERParasolTest,
 	#superclass : #ERTest,
 	#instVars : [
-		'driver'
+		'driver',
+		'acceptFormButton'
 	],
 	#category : #'ESUGApp-Test-Parasol'
 }
@@ -10,6 +11,27 @@ Class {
 { #category : #accessing }
 ERParasolTest >> baseURL [
 	^ 'http://localhost:8000/ESUG/'
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> clickElementWithID: aString [
+	(driver findElementByID: aString) click.
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> createDownloadDirectory [
+	('Download' asFileReference)
+		 ensureCreateDirectory
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> downloadFileOf: href to: directory [
+	[ZnClient new
+   url: href;
+   downloadTo: directory.
+	(Delay forSeconds: 2) wait]
+	on: Exception 
+	do: [ self assert: false ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -22,6 +44,18 @@ ERParasolTest >> messageIsRequiredFor: aString [
 	^  aString ,' (Required): Input is required but no input given'
 ]
 
+{ #category : #'as yet unclassified' }
+ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
+	^  aString ,' (Required): This field only accept a text'
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> selectElementWithID: aString1 send: aString2 [
+	|element|
+	element := driver findElementByID: aString1.
+	element sendKeys: aString2
+]
+
 { #category : #accessing }
 ERParasolTest >> setUp [
 	super setUp.
@@ -32,5 +66,30 @@ ERParasolTest >> setUp [
 { #category : #accessing }
 ERParasolTest >> tearDown [
 	super tearDown .
+	self deleteDownloadFolderIfExist.
 	driver quit
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> textOfElementWithID: aString [
+	^ (driver findElementByID: aString) getText
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> textOfElementWithID: aString1 andTagName: aString2 [
+	^ ((driver findElementByID: aString1) findElementByTagName: aString2) getText
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> textOfTagName: aString [
+	^ (driver findElementByTagName: aString) getText
+]
+
+{ #category : #'as yet unclassified' }
+ERParasolTest >> updateField: anID with: aString [
+	| confName |
+	confName := driver findElementByID: anID.
+	confName clear.
+	confName sendKeys: aString.
+	self clickElementWithID: acceptFormButton.
 ]

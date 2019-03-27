@@ -10,7 +10,7 @@ Class {
 
 { #category : #rendering }
 ERAttendeesTab >> attends [
-	^ controller attends
+	^ controller conference attends
 ]
 
 { #category : #rendering }
@@ -25,6 +25,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
+				id: att id, '-isVolunter';
 				value: att userAccount isStudent;
 				onTrue: [ controller convertToStudentVolunterThis: att ] 
 				onFalse: [ controller deleteStudentVolunterRoleFrom: att];
@@ -48,7 +49,7 @@ ERAttendeesTab >> dictToRenderDownloadButton [
 { #category : #rendering }
 ERAttendeesTab >> exportAttends [
 	| file |
-	file := controller exportAttends: 'attends'.
+	file := controller conference exportAttends: 'attends'.
 	self exportFile: file wihtName: 'attends.csv'
 ]
 
@@ -91,7 +92,7 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'send'
-				with: [ :user | self sendInvoiceTo: user ]
+				with: [ :user | self sendInvoiceTo: user]
 				with: [ :user | user id , '-sendInvoice' ]
 				with: 'Send invoice'
 				with: '');
@@ -115,6 +116,7 @@ ERAttendeesTab >> renderContainerOn: html [
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
 			html render: messageComponent .
+			html break.
 			self renderTableOfAttendsOn: html ]
 ]
 
@@ -133,10 +135,14 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 { #category : #rendering }
 ERAttendeesTab >> sendInvoiceTo: user [
 	[controller sendInvoiceTo: user.
-	self updateStateTab: self tabName.]
-	on: Exception
-	do: [ :exception | messageComponent errorMessage: exception messageText.
-		self updateStateTab: self tabName]
+	self updateStateTab: self tabName.
+	messageComponent class: 'alert-success'.
+	messageComponent errorMessage: 'Sent succesfull']
+	on: PMException
+	do: [ :exception | 
+		messageComponent class: 'errors'.
+		messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName].
 ]
 
 { #category : #accessing }

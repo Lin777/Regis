@@ -11,12 +11,6 @@ ERMembersTab >> attendeeFrom: aGroupManager [
 		affiliationInformation: aGroupManager affiliationInformation 
 ]
 
-{ #category : #accessing }
-ERMembersTab >> attends [
-	^ (ERGroupManagerController new
-		groupOfUser: attendee ) listAttends
-]
-
 { #category : #'as yet unclassified' }
 ERMembersTab >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new

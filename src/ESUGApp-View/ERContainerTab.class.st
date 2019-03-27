@@ -52,6 +52,13 @@ ERContainerTab >> cancel [
 	self updateStateTab: self tabName.
 ]
 
+{ #category : #actions }
+ERContainerTab >> cancel: anObject [
+	anObject abortChanges.
+	self returnToThePreviousState.
+	self updateStateTab: self tabName.
+]
+
 { #category : #rendering }
 ERContainerTab >> children [
 	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
@@ -155,7 +162,7 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := (ERTittledFormView on: anUser 
 								withContent: content) title: 'User';
 								callback: [:user | self updateUser: user];
-								cancelCallback: [self cancel]; initializeForm. 
+								cancelCallback: [self cancel: anUser]; initializeForm. 
 	content state: mofidyUserForm.
 	self updateStateTab: self tabName.
 ]

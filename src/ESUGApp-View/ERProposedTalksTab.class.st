@@ -25,7 +25,7 @@ ERProposedTalksTab >> blockTableToExecute [
 
 { #category : #rendering }
 ERProposedTalksTab >> createTalk: aTalk [
-	ERController new addTalk: aTalk.
+	controller addTalk: aTalk.
 	self cancel
 ]
 
@@ -93,7 +93,7 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 
 { #category : #accessing }
 ERProposedTalksTab >> submittedTalks [ 
-	^ ERController new submittedTalksFor: attendee
+	^ controller conference submittedTalksFor: attendee
 ]
 
 { #category : #accessing }

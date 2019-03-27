@@ -17,6 +17,7 @@ ERInvoicesTab >> blockTableToExecute [
 		add: ([ :att | att organizationAddress1 ] value: anTicket);
 		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
+				id: att id, '-hasPaid';
 				value: att paymentInformation hasPaid;
 				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
 				onFalse: [ controller stateUpdatePaidAttendee: att with: false];
@@ -59,7 +60,7 @@ ERInvoicesTab >> headers [
 
 { #category : #rendering }
 ERInvoicesTab >> invoices [
-	^ controller invoices 
+	^ controller conference invoices 
 		sort: [ :a :b | a paymentInformation invoiceNumber <
 							 b paymentInformation invoiceNumber ]
 ]

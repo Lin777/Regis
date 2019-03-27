@@ -3,7 +3,8 @@ Class {
 	#superclass : #ERContainer,
 	#instVars : [
 		'title',
-		'cancelCallback'
+		'cancelCallback',
+		'controller'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -20,6 +21,22 @@ ERTittledView class >> on: anAttendee withContent: aContent [
 { #category : #accessing }
 ERTittledView >> cancelCallback: anObject [
 	cancelCallback := anObject
+]
+
+{ #category : #accessing }
+ERTittledView >> controller [
+	^ controller 
+]
+
+{ #category : #accessing }
+ERTittledView >> controller: anObject [
+	controller := anObject
+]
+
+{ #category : #initialization }
+ERTittledView >> initialize [ 	
+	super initialize.
+	controller := ERController new.
 ]
 
 { #category : #rendering }

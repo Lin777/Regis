@@ -20,6 +20,11 @@ ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]
 
+{ #category : #rendering }
+ERGroup >> deleteAttendee: anAttendee [
+	self listAttends removeAllSuchThat: [ :each | anAttendee id = each id ]
+]
+
 { #category : #accessing }
 ERGroup >> encodedInvoice [
 	^ encodedInvoice
@@ -110,6 +115,27 @@ ERGroup >> paymentInformation [
 { #category : #accessing }
 ERGroup >> paymentInformation: anObject [
 	paymentInformation := anObject
+]
+
+{ #category : #accessing }
+ERGroup >> totalAmount [
+	self listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
+	ifEmpty: [ ^ 0 ]
+]
+
+{ #category : #'as yet unclassified' }
+ERGroup >> updateHasPaidOfAll [
+	self listAttends do: [ :each | each paymentInformation hasPaid: 
+												self paymentInformation hasPaid.
+											  each save. ].
+]
+
+{ #category : #'as yet unclassified' }
+ERGroup >> updatePaymentForAttendees [
+	self listAttends do: [ :att | 
+		att paymentInformation paymentType: self paymentInformation paymentType .
+		att paymentInformation paymentCurrency: self paymentInformation paymentCurrency. 
+		att save ]
 ]
 
 { #category : #accessing }

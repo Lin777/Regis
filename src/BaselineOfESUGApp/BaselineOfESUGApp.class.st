@@ -18,23 +18,16 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-PostMark-Core' with: [ spec requires: 'NeoJSON' ];
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
-				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View' 'Seaside3' 'ESUGApp-Model') ];		
-				package: 'ESUGApp-Library'
-					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
-				package: 'ESUGApp-Form'
-					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Component' 'ESUGApp-View') ];
-				package: 'ESUGApp-Component'
-					with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Controller') ];
-				package: 'ESUGApp-View'
-					with: [ spec
-						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Library' 'ESUGApp-Controller' 'ESUGApp-Component') ];
-				package: 'ESUGApp-Test'
-					with: [ spec
-						requires: #('Parasol' 'SandstoneDb' 'ESUGApp-View' 'ESUGApp-Core') ];
-				package: 'ESUGApp-Extensions' with: [ spec
-						requires:
-							#('Seaside3' 'MaterialDesignLite' 'ESUGApp-Core' 'SandstoneDb')]]
+				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View') ];		
+				package: 'ESUGApp-Library' with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
+				package: 'ESUGApp-Form' with: [ spec requires: #('ESUGApp-View') ];
+				package: 'ESUGApp-Component' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Controller') ];
+				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component') ];
+				package: 'ESUGApp-Test' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
+				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
+			spec 
+				group: 'Core' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
+				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Test' 'ESUGApp-Extensions' 'ESUGApp-Core')]
 ]
 
 { #category : #baselines }

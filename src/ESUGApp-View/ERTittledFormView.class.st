@@ -52,13 +52,7 @@ ERTittledFormView >> initializeDialog [
 { #category : #initialization }
 ERTittledFormView >> initializeForm [
 	form := attendee asComponent 
-	addDecoration: MAValidationDecoration new;"
-	addDecoration: 
-			(MDLMAFormDecoration 
-				buttons: 
-					(Array with: 
-						cancelCallback -> 'Cancel'
-						with: callback -> 'Accept'));"
+	addDecoration: MAValidationDecoration new;
 	 yourself
 ]
 
@@ -75,6 +69,7 @@ ERTittledFormView >> renderAcceptButtonOn: html [
 ERTittledFormView >> renderCancelButtonOn: html [
 	self initializeDialog .
 	html mdlAnchorButton 
+		id: 'cancelButton';
 		openDialogWithId: 'cancel'; 
 		colored;
 		with: 'Cancel'.
@@ -93,7 +88,6 @@ ERTittledFormView >> renderPageOn: html [
 { #category : #initialization }
 ERTittledFormView >> saveForm [
 	[|object|
-	"self halt."
 	object := form save.
 	callback cull: object model]
 	on: ERException 

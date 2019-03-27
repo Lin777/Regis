@@ -79,7 +79,7 @@ ERLoggedPage >> itemList [
 				content: content ];
 		at: 'myRegistration'
 			put: [ ERMyRegistrationView
-				attendee: (pageController attendeeFromUser: self session user )
+				attendee: (pageController conference attendeeFromUser: self session user )
 				content: content ];
 		at: 'configuration'
 			put: [ ERTabsOfView

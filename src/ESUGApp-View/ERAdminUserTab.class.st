@@ -18,19 +18,31 @@ ERAdminUserTab class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
+{ #category : #'as yet unclassified' }
+ERAdminUserTab class >> on: anAttendee withContent: aContent container: aContainer [
+	| form |
+	form := super on: anAttendee withContent: aContent.
+	form initializeController .
+	form container: aContainer.
+	form initializeModifyUser .
+	^ form
+]
+
 { #category : #rendering }
 ERAdminUserTab >> acceptUser [
+
 	[ controller updateUser: (modifiedUser save) model ]
 		on: ERException
 		do: [ :exception | 
-			messageComponent errorMessage: exception messageText ].
-	self updateStateTab: self tabName
+			messageComponent errorMessage: exception messageText].
+	
 ]
 
 { #category : #rendering }
 ERAdminUserTab >> cancel [
-	"attendee abortChanges."
+	attendee abortChanges.
 	self updateStateTab: self tabName.
+	self initializeModifyUser 
 ]
 
 { #category : #rendering }
@@ -62,8 +74,8 @@ ERAdminUserTab >> renderAcceptButtonOn: html [
 
 { #category : #rendering }
 ERAdminUserTab >> renderButtonsOn: html [
-	self renderAcceptButtonOn: html.
 	self renderCancelButtonOn: html.
+	self renderAcceptButtonOn: html.
 ]
 
 { #category : #rendering }
@@ -84,7 +96,6 @@ ERAdminUserTab >> renderContainerOn: html [
 
 { #category : #rendering }
 ERAdminUserTab >> renderFormOn: html [
-	self initializeModifyUser.
 	html form
 		method: 'post';
 		id: 'groupManagerFunctionsUser';

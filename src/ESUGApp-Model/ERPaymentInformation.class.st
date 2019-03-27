@@ -31,7 +31,7 @@ ERPaymentInformation >> descriptionCoupon [
 		accessor: #coupon; 
 		priority: 20;
 		required: false;
-		addCondition: [ :value | ERController new 
+		addCondition: [ :value | ERController new conference
 			existReductionTicketWithName: value]
 		labelled: 'There is no ticket with the ticket id provided.';
 		label: 'Reduction Ticket Code';
@@ -146,4 +146,10 @@ ERPaymentInformation >> paymentTypeIsBankTransfer [
 { #category : #'as yet unclassified' }
 ERPaymentInformation >> paymentTypeIsCreditCard [
 	^  'Credit Card' = paymentType
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation >> swapPaymentType [
+	self paymentTypeIsBankTransfer ifTrue: [ ^ paymentType := 'Credit Card' ].
+	self paymentTypeIsCreditCard ifTrue: [ ^ paymentType := 'Bank transfer' ]
 ]

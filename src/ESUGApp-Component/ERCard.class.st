@@ -26,28 +26,13 @@ ERCard class >> title: aString icon: anIcon content: aBlock id: anId colorIcon: 
 ]
 
 { #category : #accessing }
-ERCard >> actionsBody [
-	^ actionsBody
-]
-
-{ #category : #accessing }
 ERCard >> actionsBody: anObject [
 	actionsBody := anObject
 ]
 
 { #category : #accessing }
-ERCard >> classColorIcon [
-	^ classColorIcon
-]
-
-{ #category : #accessing }
 ERCard >> classColorIcon: anObject [
 	classColorIcon := anObject
-]
-
-{ #category : #accessing }
-ERCard >> classContainer [
-	^ classContainer
 ]
 
 { #category : #accessing }
@@ -63,11 +48,6 @@ ERCard >> content [
 { #category : #accessing }
 ERCard >> content: anObject [
 	content := anObject
-]
-
-{ #category : #accessing }
-ERCard >> iconPage [
-	^ iconPage
 ]
 
 { #category : #accessing }
@@ -94,17 +74,17 @@ ERCard >> renderContentOn: html [
 			with: self title.
 			self content value.
 		].	
-		self actionsBody value.
+		actionsBody value.
 	].
 ]
 
 { #category : #rendering }
 ERCard >> renderIconCardOn: html [
 	html div id: 'login-fab';
-	class: self classColorIcon, ' mdl-color-text--white';
+	class: classColorIcon, ' mdl-color-text--white';
 	with: [ 
 		html mdlIcon id: 'lock-icon';
-		with: self iconPage
+		with: iconPage
 	].
 ]
 

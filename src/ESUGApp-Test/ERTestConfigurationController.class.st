@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 ERTestConfigurationController >> idOfAdmin [
-	^ (ERController new findUserByEmail: 'admin@esug.org') id asString
+	^ (controller conference findUserByEmail: 'admin@esug.org') id asString
 ]
 
 { #category : #tests }
@@ -30,7 +30,7 @@ ERTestConfigurationController >> tearDown [
 { #category : #tests }
 ERTestConfigurationController >> testExportAttends [
 	| aFile |
-	aFile := controller exportAttends: 'attendees'.
+	aFile := controller conference exportAttends: 'attendees'.
 	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Email","Country","Org. Name"', String crlf
 ]
 
@@ -38,7 +38,7 @@ ERTestConfigurationController >> testExportAttends [
 ERTestConfigurationController >> testExportAwards [
 	
 	| aFile |
-	aFile := controller exportAwards: 'awards'.
+	aFile := controller conference exportAwards: 'awards'.
 	self assert: aFile equals: '"Name","Submitted by"', String crlf
 ]
 
@@ -46,7 +46,7 @@ ERTestConfigurationController >> testExportAwards [
 ERTestConfigurationController >> testExportGroupManagers [
 	
 	| aFile |
-	aFile := controller exportGroupManagers: 'groupManagers'.
+	aFile := controller conference exportGroupManagers: 'groupManagers'.
 	self assert: aFile equals: '"Invoice Number","First Name","Last Name","Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership"', String crlf
 ]
 
@@ -54,14 +54,14 @@ ERTestConfigurationController >> testExportGroupManagers [
 ERTestConfigurationController >> testExportTalks [
 	
 	| aFile |
-	aFile := controller exportTalks: 'talks'.
+	aFile := controller conference exportTalks: 'talks'.
 	self assert: aFile equals: '"Name","Submitted By","Uploaded File"', String crlf 
 ]
 
 { #category : #tests }
 ERTestConfigurationController >> testExportUsers [
 	| aFile |
-	aFile := controller exportUsers: 'users'.
+	aFile := controller conference exportUsers: 'users'.
 	self assert: aFile equals: '"id","firstName","lastName","email","password","role"',
 	String crlf,
 '"',self idOfAdmin,'","Admin","Admin","admin@esug.org","|""/²}ò/Y!4è$c|

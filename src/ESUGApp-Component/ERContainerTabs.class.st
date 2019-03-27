@@ -190,11 +190,6 @@ ERContainerTabs >> saveUserAccountAt: index [
 ]
 
 { #category : #accessing }
-ERContainerTabs >> tabView [
-	^ tabView
-]
-
-{ #category : #accessing }
 ERContainerTabs >> tabView: anObject [
 	tabView := anObject
 ]

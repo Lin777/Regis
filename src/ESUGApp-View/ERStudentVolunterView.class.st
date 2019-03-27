@@ -2,7 +2,6 @@ Class {
 	#name : #ERStudentVolunterView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'strategy',
 		'table',
 		'attends',
@@ -18,11 +17,17 @@ ERStudentVolunterView class >> withContent: content [
 ]
 
 { #category : #rendering }
+ERStudentVolunterView >> allAttends [ 
+	^ controller conference attends
+]
+
+{ #category : #rendering }
 ERStudentVolunterView >> attends [
 	aStringToMatch 
 		ifNil: [
-			^ controller conference attends ]
-		ifNotNil: [ ^ self filteredAssistants ]
+			^ self allAttends ]
+		ifNotNil: [
+			^ self filteredAssistants ]
 ]
 
 { #category : #rendering }
@@ -49,18 +54,25 @@ ERStudentVolunterView >> dictToRenderDownloadButton [
 
 { #category : #rendering }
 ERStudentVolunterView >> filterByEmail [
-	^ controller filterAttendsByEmailWith: aStringToMatch 
+	^ controller conference filterAttendsByEmailWith: aStringToMatch 
 ]
 
 { #category : #rendering }
 ERStudentVolunterView >> filterByFirstName [
-	^ controller filterAttendsByFirstNameWith: aStringToMatch 
+	^ controller conference filterAttendsByFirstNameWith: aStringToMatch 
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> filterByLastName [
+	^ controller conference filterAttendsByLastNameWith: aStringToMatch
 ]
 
 { #category : #rendering }
 ERStudentVolunterView >> filteredAssistants [
+	aStringToMatch isEmpty ifTrue: [ ^ self allAttends ].
 	self strategyIsByEmail ifTrue: [ ^ self filterByEmail ].
-	self strategyIsByName ifTrue: [ ^ self filterByFirstName  ]
+	self strategyIsByName ifTrue: [ ^ self filterByFirstName ].
+	self strategyIsByLastName ifTrue: [ ^ self filterByLastName ]
 ]
 
 { #category : #accessing }
@@ -70,8 +82,8 @@ ERStudentVolunterView >> headers [
 
 { #category : #rendering }
 ERStudentVolunterView >> initialize [ 	
+	super initialize.
 	strategy := 'Email'.
-	controller := ERController new.
 ]
 
 { #category : #rendering }
@@ -86,11 +98,11 @@ ERStudentVolunterView >> renderFieldToSearchOn: html [
 		style: 'display: block';
 		floatingLabel;
 		with: [ html mdlTextFieldLabel
-				for: 'is_register';
-				with: 'Email attendee'.
+				for: 'stringForStrategy';
+				with: strategy.
 			html mdlTextFieldInput
 				onChange: 'submit()';
-				id: 'is_register';
+				id: 'stringForStrategy';
 				value: aStringToMatch ;
 				callback: [ :val | aStringToMatch := val ] ] ]
 	
@@ -116,7 +128,7 @@ ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
 				onChange: 'submit()';
 				class: 'mdl-textfield__input';
 				id: 'selectStrategy';
-				list: #('Email' 'First Name');
+				list: #('Email' 'First Name' 'Last Name');
 				selected: strategy;
 				callback: [ :value | strategy := value ] ] ]
 ]
@@ -136,6 +148,11 @@ ERStudentVolunterView >> renderTableOfAttendsOn: html [
 { #category : #rendering }
 ERStudentVolunterView >> strategyIsByEmail [
 	^ strategy = 'Email'
+]
+
+{ #category : #rendering }
+ERStudentVolunterView >> strategyIsByLastName [
+	^ strategy = 'Last Name'
 ]
 
 { #category : #rendering }

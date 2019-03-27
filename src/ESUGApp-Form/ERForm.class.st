@@ -6,10 +6,13 @@ Class {
 
 { #category : #accessing }
 ERForm >> acceptAction [
-	^ [self saveForms.
+	^ [[self saveForms.
 	self validateForms.
 	self save.
 	self updateStateTab: self tabName]
+	on: ERException 
+	do: [ :exception | messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName ]]
 ]
 
 { #category : #accessing }
@@ -46,7 +49,7 @@ ERForm >> initialize [
 ERForm >> initializeDialog [
 	dialog := ERDialog cancelDialog
 		idOpen: ('cancel', self tabId capitalized);
-		okCallback: [ self cancel ];
+		okCallback: [ self cancel  ];
 		idClose: ('close', self tabId capitalized)
 ]
 
@@ -73,6 +76,7 @@ ERForm >> renderButtonsOn: html [
 { #category : #rendering }
 ERForm >> renderCancelButtonOn: html [
 	html mdlAnchorButton 
+		id: 'cancelUpdate';
 		openDialogWithId: ('cancel', self tabId capitalized); 
 		colored;
 		with: 'Cancel'.

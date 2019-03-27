@@ -1,3 +1,6 @@
+"
+MDL component class for a MASingleOptionDescription
+"
 Class {
 	#name : #MDLMASelectListComponent,
 	#superclass : #MASelectListComponent,

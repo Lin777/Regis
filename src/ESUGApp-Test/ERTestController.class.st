@@ -4,13 +4,6 @@ Class {
 	#category : #'ESUGApp-Test-UnitTest'
 }
 
-{ #category : #initialization }
-ERTestController >> setUp [
-	super setUp.
-	controller := ERController new.
-	
-]
-
 { #category : #tests }
 ERTestController >> testAmountToPay [
 ]
@@ -52,10 +45,10 @@ ERTestController >> testCompressFilesToZip [
 { #category : #initialization }
 ERTestController >> testConferenceIsOpenRegistration [
 	controller conference configuration openRegistration: true.
-	self assert: controller conferenceIsOpenRegistration . 
+	self assert: controller conference conferenceIsOpenRegistration . 
 	
 	controller conference configuration openRegistration: false.
-	self deny: controller conferenceIsOpenRegistration .
+	self deny: controller conference conferenceIsOpenRegistration .
 ]
 
 { #category : #tests }
@@ -85,8 +78,8 @@ ERTestController >> testEncodeFileToUTF8 [
 
 { #category : #tests }
 ERTestController >> testExistReductionTicketWithName [
-	self assert: (controller existReductionTicketWithName: self validCoupon ticketId).
-	self deny: (controller existReductionTicketWithName: 'NonValidCoupon')
+	self assert: (controller conference existReductionTicketWithName: self validCoupon ticketId).
+	self deny: (controller conference existReductionTicketWithName: 'NonValidCoupon')
 ]
 
 { #category : #tests }
@@ -94,8 +87,8 @@ ERTestController >> testGroupOfAttendee [
 	| group attendee |
 	group := self registerGroup.
 	attendee := group listAttends first.
-	self assert: (controller getGroupOfAttendee: attendee) isNotNil.
+	self assert: (controller conference getGroupOfAttendee: attendee) isNotNil.
 	"the attendee does not belong to the group"
-	attendee := ERLoggedController new attendeeFromUser: self registerAttendee.
-	self assert: (controller getGroupOfAttendee: attendee) isNil.
+	attendee := controller conference attendeeFromUser: self registerAttendee.
+	self assert: (controller conference getGroupOfAttendee: attendee) isNil.
 ]

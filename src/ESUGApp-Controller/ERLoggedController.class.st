@@ -28,18 +28,8 @@ ERLoggedController >> attendee: anObject [
 
 { #category : #'as yet unclassified' }
 ERLoggedController >> attendeeFromUser [
-	^ conference attends 
-		detect: [ :each | each userAccount = user ]
-		ifNone: [ nil ]
+	^ conference attendeeFromUser: user
 	
-]
-
-{ #category : #'as yet unclassified' }
-ERLoggedController >> attendeeFromUser: anUser [
-	^ conference attends 
-			detect: [ :each | 
-				each userAccount = anUser ]
-			ifNone: [ Transcript show: 'None'. nil ]
 ]
 
 { #category : #rendering }
@@ -55,28 +45,22 @@ ERLoggedController >> deleteAttendee: anAttendee [
 ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	anAttendee idGroup isNotNil ifTrue: [ 
 	|group|
-	group := self getGroupOfAttendee: anAttendee.
-	(group listAttends)
-		removeAllSuchThat: [ :each | anAttendee id = each id ].
-	group save.	
+	group := conference getGroupOfAttendee: anAttendee.
+	group deleteAttendee: anAttendee; save.	
 	].
-	(self conference attends)
-		removeAllSuchThat: [ :each | anAttendee id = each id ].
+	self conference deleteAttendee: anAttendee.
 	self conference save.
 	self notifyAllObservers 
 ]
 
 { #category : #accessing }
 ERLoggedController >> deleteAttendeeRoleFromUser: anAttendee [
-	anAttendee userAccount deleteRole: 'attendee'
+	anAttendee deleteAttendeeRole 
 ]
 
 { #category : #removing }
 ERLoggedController >> deleteUserForConference: anUser [
-	self conference users
-		removeAllSuchThat: [ :each | anUser id = each id ].
-	self conference save.
-	anUser delete.
+	self conference deleteUser: anUser.
 	self notifyAllObservers 
 ]
 

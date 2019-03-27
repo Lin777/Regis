@@ -63,11 +63,6 @@ ERGroupManagerController >> group: anObject [
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> groupForGroupManager [
-	^ self groupOfUser: attendee.
-]
-
-{ #category : #accessing }
 ERGroupManagerController >> groupManager [ 
 	^ group groupManager
 ]
@@ -81,20 +76,6 @@ ERGroupManagerController >> updateAffiliation: aff [
 
 { #category : #adding }
 ERGroupManagerController >> updateGroup: aGroup [
-	self updatePaymentForAttendees: aGroup.
+	aGroup updatePaymentForAttendees.
 	super updateGroup: aGroup 
-]
-
-{ #category : #adding }
-ERGroupManagerController >> updateNumberInvoiceOn: anAttendee [
-	^ anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber
-	
-]
-
-{ #category : #adding }
-ERGroupManagerController >> updatePaymentForAttendees: aGroup [
-	aGroup listAttends do: [ :att | 
-		att paymentInformation paymentType: aGroup paymentInformation paymentType .
-		att paymentInformation paymentCurrency: aGroup paymentInformation paymentCurrency. 
-		att save ]
 ]

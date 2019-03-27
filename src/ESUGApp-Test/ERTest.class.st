@@ -209,15 +209,28 @@ ERTest >> defaultStore [
 
 { #category : #running }
 ERTest >> deleteBackupFolderIfExist [
+	self deleteFolder: 'Backup'
+]
+
+{ #category : #running }
+ERTest >> deleteDownloadFolderIfExist [
 	|path|
-	path := (Smalltalk imageDirectory / 'Backup').
+	path := ('Download' asFileReference ).
+	path exists ifTrue:
+		 [ path deleteAll ] 
+]
+
+{ #category : #running }
+ERTest >> deleteFolder: aString [
+	|path|
+	path := (Smalltalk imageDirectory / aString).
 	path exists ifTrue:
 		 [ path deleteAll ] .
 ]
 
 { #category : #rendering }
 ERTest >> groupOfUser: anUser [
-	^ ERGroupManagerController new groupOfUser: anUser.
+	^ ERController new conference groupOfUser: anUser.
 ]
 
 { #category : #rendering }
@@ -284,7 +297,8 @@ ERTest >> setUp [
 	ERTalk warmUp.
 	ERConference warmUp.
 	ERSandstoneDatabase initialize.
-	ESUGSetUp start
+	ESUGSetUp start.
+	controller := ERController new.
 ]
 
 { #category : #running }
@@ -345,5 +359,5 @@ ERTest >> tearDown [
 
 { #category : #'as yet unclassified' }
 ERTest >> validCoupon [
-	^ ERController new conference reductionTickets first 
+	^ controller conference reductionTickets first 
 ]

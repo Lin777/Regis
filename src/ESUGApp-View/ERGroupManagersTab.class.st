@@ -41,13 +41,13 @@ ERGroupManagersTab >> dictToRenderDownloadButton [
 { #category : #rendering }
 ERGroupManagersTab >> exportGroups [
 	| file |
-	file := controller exportGroupManagers: 'groupManagers'.
+	file := controller conference exportGroupManagers: 'groupManagers'.
 	self exportFile: file wihtName: 'groupManagers.csv'
 ]
 
 { #category : #accessing }
 ERGroupManagersTab >> groups [
-	^ controller groups
+	^ controller conference groups
 ]
 
 { #category : #accessing }

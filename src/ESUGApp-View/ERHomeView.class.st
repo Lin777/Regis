@@ -1,9 +1,6 @@
 Class {
 	#name : #ERHomeView,
 	#superclass : #ERTittledView,
-	#instVars : [
-		'controller'
-	],
 	#category : #'ESUGApp-View'
 }
 
@@ -24,11 +21,6 @@ ERHomeView class >> withContent: aContent withController: aController [
 	form content: aContent.
 	form controller: aController.
 	^ form
-]
-
-{ #category : #accessing }
-ERHomeView >> controller: anObject [
-	controller := anObject
 ]
 
 { #category : #rendering }

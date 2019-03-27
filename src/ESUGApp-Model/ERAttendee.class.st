@@ -104,6 +104,25 @@ ERAttendee >> contactInformation: anObject [
 	contactInformation := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERAttendee >> convertToStudentVolunter [
+	self userAccount isStudent ifFalse:[
+	(self userAccount) roleAdd: 'studentVolunter'; save]
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> daysOfAssistance [
+ ^ (self conferenceInformation attendance 
+		values count: [ :each | each ])
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> deleteAttendeeRole [
+	self userAccount isAttendee ifTrue: [
+		self userAccount deleteRole: 'attendee'
+	]
+]
+
 { #category : #accessing }
 ERAttendee >> descriptionAdd [
 	<magritteDescription>
@@ -223,6 +242,12 @@ ERAttendee >> paymentInformation [
 { #category : #accessing }
 ERAttendee >> paymentInformation: anObject [
 	paymentInformation := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> removeStudentVolunterRole [
+	self userAccount isStudent ifTrue: [
+	(self userAccount) deleteRole: 'studentVolunter'; save. ]
 ]
 
 { #category : #accessing }

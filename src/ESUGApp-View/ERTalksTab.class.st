@@ -20,7 +20,7 @@ ERTalksTab >> blockTableToExecute [
 { #category : #rendering }
 ERTalksTab >> exportTalks [
 	| file |
-	file := controller exportTalks: 'talks'.
+	file := controller conference exportTalks: 'talks'.
 	self exportFile: file wihtName: 'talks.csv'
 ]
 
@@ -73,7 +73,7 @@ ERTalksTab >> tabName [
 
 { #category : #accessing }
 ERTalksTab >> talks [
-	^ controller submittedTalks
+	^ controller conference submittedTalks
 ]
 
 { #category : #accessing }

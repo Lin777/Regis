@@ -2,7 +2,6 @@ Class {
 	#name : #ERConferenceForm,
 	#superclass : #ERForm,
 	#instVars : [
-		'conference',
 		'configuration',
 		'emailConf',
 		'organizer',
@@ -15,10 +14,8 @@ Class {
 
 { #category : #rendering }
 ERConferenceForm >> cancelForm [
-	configurationForm cancel.
-	emailConfigurationForm cancel.
-	organizerForm cancel.
-	conference := conference abortChanges 
+	controller conference abortChanges .
+	self initializeForms .
 ]
 
 { #category : #rendering }
@@ -35,15 +32,14 @@ ERConferenceForm >> children [
 { #category : #rendering }
 ERConferenceForm >> initialize [
 	super initialize.
-	conference := controller conference.
 	self initializeForms.
 ]
 
 { #category : #rendering }
 ERConferenceForm >> initializeForms [
-	configurationForm := self createFormOf: conference configuration .
-	emailConfigurationForm := self createFormOf: conference configuration emailConfiguration .
-	organizerForm := self createFormOf: conference configuration organizer 
+	configurationForm := self createFormOf: controller conference configuration .
+	emailConfigurationForm := self createFormOf: controller conference configuration emailConfiguration .
+	organizerForm := self createFormOf: controller conference configuration organizer 
 ]
 
 { #category : #rendering }

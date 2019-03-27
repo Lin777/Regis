@@ -30,13 +30,13 @@ ERUsersTab >> blockTableToExecute [
 
 { #category : #'as yet unclassified' }
 ERUsersTab >> createUser: anUser [
-	ERController new validateIfEmailIsAlreadyRegistered: anUser; 
+	controller conference validateIfEmailIsAlreadyRegistered: anUser; 
 			validateNewPassword: anUser password with: anUser confirmPassword.
 	anUser password: (ERUserAccount hashPassword: anUser password) asString.
 	anUser role: (Heap new
 		add: anUser role;
 		yourself).
-	ERController new addUser: anUser .
+	ERController new addUser: anUser.
 	self cancel
 ]
 
@@ -51,7 +51,7 @@ ERUsersTab >> deleteUser: user [
 { #category : #rendering }
 ERUsersTab >> exportUsers [
 	| file |
-	file := controller exportUsers: 'users'.
+	file := controller conference exportUsers: 'users'.
 	self exportFile: file wihtName: 'users.csv'
 ]
 
@@ -166,5 +166,5 @@ ERUsersTab >> title [
 
 { #category : #rendering }
 ERUsersTab >> users [
-	^ controller users
+	^ controller conference users
 ]

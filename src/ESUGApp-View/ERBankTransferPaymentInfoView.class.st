@@ -2,7 +2,6 @@ Class {
 	#name : #ERBankTransferPaymentInfoView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'fee',
 		'bankAccountInformation',
 		'bankInformation',
@@ -40,9 +39,7 @@ ERBankTransferPaymentInfoView >> initializeDialog [
 
 { #category : #rendering }
 ERBankTransferPaymentInfoView >> initializeFee [
-	| pageController |
-	pageController := ERController new.
-	fee := pageController conference fee.
+	fee := controller conference fee.
 	bankAccountInformation := fee bankAccountInformation.
 	bankInformation := bankAccountInformation bankInformation
 ]

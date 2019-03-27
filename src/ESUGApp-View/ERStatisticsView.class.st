@@ -2,7 +2,6 @@ Class {
 	#name : #ERStatisticsView,
 	#superclass : #ERTittledView,
 	#instVars : [
-		'controller',
 		'tables'
 	],
 	#category : #'ESUGApp-View'
@@ -22,14 +21,10 @@ ERStatisticsView >> children [
 	^ OrderedCollection withAll: tables
 ]
 
-{ #category : #accessing }
-ERStatisticsView >> controller: anObject [
-	controller := anObject
-]
-
 { #category : #initialization }
 ERStatisticsView >> initialize [ 	
 	super initialize .
+	controller := ERConfigurationController new.
 	tables:= OrderedCollection new.
 ]
 
@@ -44,9 +39,9 @@ ERStatisticsView >> renderPageOn: html [
 ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
-		headers: controller headersParticipantsToLunches;
+		headers: controller conference headersParticipantsToLunches;
 		levelTotal: 6;
-		listObject: controller participantsToLunches.
+		listObject: controller conference statisticsOfLuch.
 	self renderTable: tab withTitle: 'Participants to lunches per day' on: html
 ]
 
@@ -54,9 +49,9 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	|tab|
 	tab := ERDictionaryTable new
-		headers: controller headersParticipantsToSocialDinner;
+		headers: controller conference headersParticipantsToSocialDinner;
 		levelTotal: 6;
-		listObject: controller participantsToSocialDinner.
+		listObject: controller conference statisticsOfSocialDinner.
 	self renderTable: tab withTitle: 'Participants To Social Dinner' on: html
 ]
 
@@ -64,9 +59,9 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 ERStatisticsView >> renderShirtsStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
-		headers: controller headersShirtsStatistics;
+		headers: controller conference headersShirtsStatistics;
 		levelTotal: 6;
-		listObject: controller shirtsStatistics.
+		listObject: controller conference statisticsOfTShirts .
 	self renderTable: tab withTitle: 'Shirts' on: html
 ]
 
