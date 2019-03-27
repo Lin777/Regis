@@ -23,13 +23,7 @@ ERRegisterPage class >> content: aContent [
 
 { #category : #'as yet unclassified' }
 ERRegisterPage >> actionsBody: html [
-	^ [
-	"html mdlCardActions border with: [	
-			self renderBackLoginButtonOn: html.
-			self renderBackButtonOn: html.
-			self renderNextButtonOn: html.
-		]."
-	]
+	
 ]
 
 { #category : #adding }

@@ -15,6 +15,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+ERAffiliationInformation class >> membershipTypes [
+	^ #('Industrial' 'Other' 'Academic')
+]
+
+{ #category : #'as yet unclassified' }
 ERAffiliationInformation >> descriptionMembershipType [
 	<magritteDescription>
 	| tmp1 |
@@ -23,7 +28,7 @@ ERAffiliationInformation >> descriptionMembershipType [
 		accessor: #membershipType;
 		priority: 80;
 		required: false;
-		options: ERAttendee membershipTypes;
+		options: self class membershipTypes;
 		withoutLabel: true;
 		id: 'membershipType';
 		componentClass: MDLMASelectListComponent .

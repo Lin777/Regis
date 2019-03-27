@@ -1,3 +1,17 @@
+"
+Description
+--------------------
+
+I am div with alert style by default.
+I am a component to display messages of success or error.
+I am visible when they change the content of the message that I have to show.
+	
+Instance Variables
+--------------------
+	class:     string with class of type of alert { 'errors', 'alert-success' }, only chnge the color of alert.
+	message:   string of the message that will showed.
+	wasShown:  state of visibility of alert
+"
 Class {
 	#name : #ERAlert,
 	#superclass : #ERComponent,

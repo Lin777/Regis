@@ -186,7 +186,7 @@ ERConference >> dictionaryOfFoodPreference [
 ERConference >> dictionaryOfShirts [
 	|dict|
 	dict := OrderedDictionary new.
-	ERAttendee tShirtSizes do: [ :each | dict at: each put: 
+	ERRegisterConferenceInformation tShirtSizes do: [ :each | dict at: each put: 
 		(Dictionary new at: 'Male' put: 0; 
 		at: 'Female' put: 0; yourself) ].
 	^ dict

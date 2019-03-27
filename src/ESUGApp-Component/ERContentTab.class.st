@@ -12,23 +12,6 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'instance creation' }
-ERContentTab class >> on: anAttendee [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	^ form
-]
-
-{ #category : #'instance creation' }
-ERContentTab class >> on: anAttendee container: aContainer [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form container: aContainer.
-	^ form
-]
-
 { #category : #accessing }
 ERContentTab >> action: anObject [
 	action := anObject

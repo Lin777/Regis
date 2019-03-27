@@ -175,7 +175,7 @@ ERFee >> descriptionPaymentCurrency [
 		accessor: #currency;
 		priority: 10;
 		beRequired;
-		options: ERAttendee currencyTypes;
+		options: ERPaymentInformation currencyTypes;
 		cssClass: 'half';
 		withoutLabel: true;
 		id: 'currency';

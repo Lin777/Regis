@@ -10,13 +10,6 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #accessing }
-ERController class >> uniqueInstance [ 
-     uniqueInstance ifNil: [uniqueInstance := self new]. 
-     ^ uniqueInstance
- 
-]
-
 { #category : #adding }
 ERController >> addAward: anAward [
 	|award|

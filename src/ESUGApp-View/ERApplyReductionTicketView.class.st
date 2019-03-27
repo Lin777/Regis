@@ -65,8 +65,8 @@ ERApplyReductionTicketView >> renderPageOn: html [
 		method: 'post';
 		id: 'formApplyTicket';
 		with: [ self renderSelectorOfTickets: html.
-			self renderAcceptButtonOn: html.
-			self renderCancelButtonOn: html ]
+			self renderCancelButtonOn: html.
+			self renderAcceptButtonOn: html ]
 ]
 
 { #category : #accessing }

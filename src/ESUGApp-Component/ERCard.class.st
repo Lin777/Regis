@@ -1,3 +1,18 @@
+"
+Description
+--------------------
+
+I am a personalized card.
+
+Instance Variables
+--------------------
+	content: 			 a block renderizable
+	title: 			 string that will be title of the card
+	iconPage: 		 name of icon as string
+	classContainer: additional class of card
+	classColorIcon: string with color of icon, e.g. ""mdl-color--green""
+	actionsBody:    additional block with renderible objects, this will be at the bottom of card
+"
 Class {
 	#name : #ERCard,
 	#superclass : #ERComponent,

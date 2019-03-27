@@ -58,7 +58,7 @@ ERFixDiscount >> descriptionCurrency [
 		accessor: #currency;
 		priority: 40;
 		beRequired;
-		options: ERAttendee currencyTypes;
+		options: ERPaymentInformation currencyTypes;
 		withoutLabel: true;
 		id: 'currency';
 		componentClass: MDLMASelectListComponent .

@@ -1,3 +1,10 @@
+"
+Description
+--------------------
+
+Abstract superclass of all ESUG components. 
+
+"
 Class {
 	#name : #ERComponent,
 	#superclass : #WAComponent,
