@@ -175,7 +175,7 @@ ERLoggedPageAsGroupManagerTest >> testPressExportInvoiceButtonOfSummary [
 	self createDownloadDirectory .
 	self pressOptionGroupRegistration .
 	href := (driver findElementByID: 'exportInvoice') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'invoice.pdf'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) /'invoice.pdf'
 ]
 
 { #category : #groupManagerSumaryTests }

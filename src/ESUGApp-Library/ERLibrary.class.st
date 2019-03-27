@@ -9,33 +9,46 @@ ERLibrary class >> applicationName [
 	^ 'ESUG'
 ]
 
+{ #category : #updating }
+ERLibrary >> alertCss [
+	^ '
+	.errors {
+		color: #c09853;
+		background-color: #fcf8e3;
+		border: 1px solid #fbeed5;
+	}
+
+	.alert-success {
+		color: #468847;
+		background-color: #dff0d8;
+		border: 1px solid #d6e9c6;
+	}
+	
+	.alert{
+		padding: 8px 35px 8px 14px;
+		margin-bottom: 18px;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+	}
+  '
+]
+
 { #category : #'as yet unclassified' }
 ERLibrary >> disabledCss [
 	^ 'a[disabled="disabled"] {
         pointer-events: none;
-		color: currentColor;
-  cursor: not-allowed;
-  opacity: 0.5;
-  text-decoration: none;
-    }'
-]
-
-{ #category : #updating }
-ERLibrary >> errorCss [
-	^ '
-.errors {
-  min-width: 150px;
-  margin-bottom: 10px;
-  border: 1px solid transparent;
-  border-radius: 3px;
-	background-color: lightgoldenrodyellow;
-    border-color: lightgoldenrodyellow;}
-  '
+		  color: currentColor;
+  		  cursor: not-allowed;
+  		  opacity: 0.5;
+  		  text-decoration: none;
+      }'
 ]
 
 { #category : #updating }
 ERLibrary >> esugCss [
-	^ self errorCss, self disabledCss 
+	^ self alertCss, self disabledCss 
 ]
 
 { #category : #updating }

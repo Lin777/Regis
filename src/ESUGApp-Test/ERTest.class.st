@@ -214,7 +214,10 @@ ERTest >> deleteBackupFolderIfExist [
 
 { #category : #running }
 ERTest >> deleteDownloadFolderIfExist [
-	self deleteFolder: 'Download'
+	|path|
+	path := ('Download' asFileReference ).
+	path exists ifTrue:
+		 [ path deleteAll ] 
 ]
 
 { #category : #running }

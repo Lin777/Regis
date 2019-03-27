@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 ERException class >> adminUserDoesNotDelete [
 		^ self new 
-			messageText: 'Users with administrator role can not be deletedD';
+			messageText: 'Users with administrator role can not be deleted';
 			yourself
 ]
 

@@ -616,7 +616,7 @@ ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	invoice := controller conference invoices first.
 	self moveToInvoicesOption.
 	href := (driver findElementByID: invoice id, '-export') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'invoice.pdf'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'invoice.pdf'
 ]
 
 { #category : #configurationTicketTest }
@@ -646,7 +646,7 @@ ERLoggedPageAsAdminTest >> testPressExportAttendeees [
 	self createDownloadDirectory .
 	self moveToAttendeeOption.
 	href := (driver findElementByID: 'exportAttends') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'attendees.csv'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'attendees.csv'  
 ]
 
 { #category : #configurationProposalsTests }
@@ -655,7 +655,7 @@ ERLoggedPageAsAdminTest >> testPressExportAwards [
 	self createDownloadDirectory .
 	self moveToAwardsOption .
 	href := (driver findElementByID: 'exportAwards') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'awards.csv'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'awards.csv'
 ]
 
 { #category : #configurationGroupManagerTests }
@@ -664,7 +664,7 @@ ERLoggedPageAsAdminTest >> testPressExportGroups [
 	self createDownloadDirectory .
 	self moveToGroupManagerOption .
 	href := (driver findElementByID: 'exportGroups') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'groups.csv'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'groups.csv'
 ]
 
 { #category : #configurationProposalsTests }
@@ -673,7 +673,7 @@ ERLoggedPageAsAdminTest >> testPressExportTalks [
 	self createDownloadDirectory .
 	self pressOptionProposals .
 	href := (driver findElementByID: 'exportTalks') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'talks.csv'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'talks.csv'
 ]
 
 { #category : #configurationUsersTests }
@@ -682,7 +682,7 @@ ERLoggedPageAsAdminTest >> testPressExportUsers [
 	self createDownloadDirectory .
 	self pressOptionUsers .
 	href := (driver findElementByID: 'exportUsers') getAttribute: 'href'.
-	self downloadFileOf: href to: Smalltalk imageDirectory / 'Download' / 'users.csv'
+	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'users.csv'
 ]
 
 { #category : #configurationGroupManagerTests }

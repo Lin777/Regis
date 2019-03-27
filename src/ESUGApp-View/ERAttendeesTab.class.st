@@ -92,7 +92,7 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'send'
-				with: [ :user | self sendInvoiceTo: user ]
+				with: [ :user | self sendInvoiceTo: user]
 				with: [ :user | user id , '-sendInvoice' ]
 				with: 'Send invoice'
 				with: '');
@@ -116,6 +116,7 @@ ERAttendeesTab >> renderContainerOn: html [
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
 			html render: messageComponent .
+			html break.
 			self renderTableOfAttendsOn: html ]
 ]
 
@@ -134,10 +135,14 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 { #category : #rendering }
 ERAttendeesTab >> sendInvoiceTo: user [
 	[controller sendInvoiceTo: user.
-	self updateStateTab: self tabName.]
-	on: Exception
-	do: [ :exception | messageComponent errorMessage: exception messageText.
-		self updateStateTab: self tabName]
+	self updateStateTab: self tabName.
+	messageComponent class: 'alert-success'.
+	messageComponent errorMessage: 'Sent succesfull']
+	on: PMException
+	do: [ :exception | 
+		messageComponent class: 'errors'.
+		messageComponent errorMessage: exception messageText.
+		self updateStateTab: self tabName].
 ]
 
 { #category : #accessing }

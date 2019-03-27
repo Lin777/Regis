@@ -58,7 +58,7 @@ ERAlert >> renderContentOn: html [
 	wasShown ifTrue: [ ^ self ].
 	html div
 		id: self id;
-		class: self class1;
+		class: self class1, ' alert';
 		attributeAt: 'role' put: self role;
 		with: self message .
 	self wasShown: true

@@ -20,7 +20,7 @@ ERParasolTest >> clickElementWithID: aString [
 
 { #category : #'as yet unclassified' }
 ERParasolTest >> createDownloadDirectory [
-	(FileSystem workingDirectory asFileReference / 'Download')
+	('Download' asFileReference)
 		 ensureCreateDirectory
 ]
 
