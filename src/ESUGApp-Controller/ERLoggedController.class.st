@@ -36,34 +36,10 @@ ERLoggedController >> attendeeFromUser [
 ERLoggedController >> deleteAttendee: anAttendee [
 	|anUser|
 	anUser := anAttendee userAccount .
-	self deleteAttendeeFromGroupAndConference: anAttendee.
+	conference deleteAttendeeFromGroupAndConference: anAttendee .
 	anUser isGroupManager
-		ifFalse: [ self deleteUserForConference: anUser]
-		ifTrue: [ self deleteAttendeeRoleFromUser: anUser ]
-]
-
-{ #category : #accessing }
-ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
-	anAttendee idGroup isNotNil ifTrue: [ 
-	|group|
-	group := conference getGroupOfAttendee: anAttendee.
-	group deleteAttendee: anAttendee; save.	
-	].
-	self conference deleteAttendee: anAttendee.
-	"Linea agregada"
-	anAttendee delete.
-	self conference save.
-	self notifyAllObservers 
-]
-
-{ #category : #accessing }
-ERLoggedController >> deleteAttendeeRoleFromUser: anUser [
-	anUser deleteAttendeeRole 
-]
-
-{ #category : #removing }
-ERLoggedController >> deleteUserForConference: anUser [
-	self conference deleteUser: anUser.
+		ifFalse: [ conference deleteUser: anUser]
+		ifTrue: [ anUser deleteAttendeeRole  ].
 	self notifyAllObservers 
 ]
 
