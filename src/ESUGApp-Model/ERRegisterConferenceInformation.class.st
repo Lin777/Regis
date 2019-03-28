@@ -14,6 +14,21 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
+{ #category : #'as yet unclassified' }
+ERRegisterConferenceInformation class >> foodPreferences [
+	^ #('Normal' 'Vegan' 'Vegetarian')
+]
+
+{ #category : #accessing }
+ERRegisterConferenceInformation class >> genders [
+	^ #('Male' 'Female')
+]
+
+{ #category : #'as yet unclassified' }
+ERRegisterConferenceInformation class >> tShirtSizes [
+	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
+]
+
 { #category : #adding }
 ERRegisterConferenceInformation >> addMyPreferenceForLuchTo: aDictionary [
 	aDictionary keysDo: [ :key | (self perform: key) 
@@ -146,7 +161,7 @@ ERRegisterConferenceInformation >> descriptionFood [
 		priority: 80;
 		required: false;
 		cssClass: 'third';
-		options: ERAttendee foodPreferences;
+		options: self class foodPreferences;
 		withoutLabel: true;
 		id: 'foodPreference';
 		componentClass: MDLMASelectListComponent .
@@ -163,7 +178,7 @@ ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 		priority: 130;
 		required: false;
 		default: 'Normal';
-		options: ERAttendee foodPreferences;
+		options: self class foodPreferences;
 		withoutLabel: true;
 		id: 'personAddedFoodPreference';
 		componentClass: MDLMASelectListComponent .
@@ -195,7 +210,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 		priority: 60;
 		required: false;
 		cssClass: 'third';
-		options: ERAttendee genders;
+		options: self class genders;
 		withoutLabel: true;
 		id: 'gender';
 		componentClass: MDLMASelectListComponent .
@@ -243,7 +258,7 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		priority: 70;
 		required: false;
 		cssClass: 'third';
-		options: ERAttendee tShirtSizes;
+		options: self class tShirtSizes;
 		withoutLabel: true;
 		id: 'tshirtSize';
 		componentClass: MDLMASelectListComponent .

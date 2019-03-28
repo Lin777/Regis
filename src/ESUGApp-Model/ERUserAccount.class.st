@@ -168,6 +168,12 @@ ERUserAccount >> email: anObject [
 	email := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERUserAccount >> encryptMyPassword [
+	self password: (self class hashPassword: (self password )asString).
+	self confirmPassword: ''.
+]
+
 { #category : #accessing }
 ERUserAccount >> firstName [
 	^ firstName

@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a component used for render a list of tabs.
+
+Instance Variables
+--------------------
+	tabs:  a OrderedCollection of renderizable objets (must be subclasses of ERTab)
+"
 Class {
 	#name : #ERTabs,
 	#superclass : #ERComponent,

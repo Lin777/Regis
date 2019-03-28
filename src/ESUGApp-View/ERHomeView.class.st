@@ -5,16 +5,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERHomeView class >> on: anAttendee withContent: aContent withController: aController [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form controller: aController.
-	^ form
-]
-
-{ #category : #'as yet unclassified' }
 ERHomeView class >> withContent: aContent withController: aController [
 	| form |
 	form := self new.

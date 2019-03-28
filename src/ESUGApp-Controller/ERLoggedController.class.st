@@ -34,6 +34,7 @@ ERLoggedController >> attendeeFromUser [
 
 { #category : #rendering }
 ERLoggedController >> deleteAttendee: anAttendee [
+	"self halt."
 	self deleteAttendeeFromGroupAndConference: anAttendee.
 	anAttendee userAccount isGroupManager
 		ifFalse: [ self deleteUserForConference: anAttendee userAccount]
@@ -49,6 +50,8 @@ ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	group deleteAttendee: anAttendee; save.	
 	].
 	self conference deleteAttendee: anAttendee.
+	"Linea agregada"
+	anAttendee delete.
 	self conference save.
 	self notifyAllObservers 
 ]

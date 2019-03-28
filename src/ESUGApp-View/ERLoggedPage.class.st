@@ -42,7 +42,7 @@ ERLoggedPage >> content: anObject [
 { #category : #rendering }
 ERLoggedPage >> initialize [
 	super initialize.
-	pageController := ERLoggedController new user: self session user.
+	pageController := ERLoggedController user: self session user.
 	attendee := pageController attendeeFromUser.
 	content := ERContent new.
 	(ERHomeView

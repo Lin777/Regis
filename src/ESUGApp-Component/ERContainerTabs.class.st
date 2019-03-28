@@ -36,16 +36,6 @@ ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock
 	^ form
 ]
 
-{ #category : #'as yet unclassified' }
-ERContainerTabs class >> on: anAttendee withContent: aContent [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form initializeForm.
-	^ form
-]
-
 { #category : #accessing }
 ERContainerTabs >> callback: anObject [
 	callback := anObject

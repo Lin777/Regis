@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a personalized mdlNavigationLink, I have an icon, a label and callback
+"
 Class {
 	#name : #ERItemNav,
 	#superclass : #ERComponent,

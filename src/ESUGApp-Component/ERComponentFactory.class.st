@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a factory of some components like: ERContentTab with content of magritte forms and fields of password
+"
 Class {
 	#name : #ERComponentFactory,
 	#superclass : #WAComponent,

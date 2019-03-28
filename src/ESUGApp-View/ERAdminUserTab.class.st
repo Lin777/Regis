@@ -8,17 +8,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERAdminUserTab class >> on: anAttendee withContent: aContent [
-	| form |
-	form := self new.
-	form attendee: anAttendee.
-	form content: aContent.
-	form initializeController.
-	
-	^ form
-]
-
-{ #category : #'as yet unclassified' }
 ERAdminUserTab class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
 	form := super on: anAttendee withContent: aContent.

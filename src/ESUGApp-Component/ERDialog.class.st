@@ -1,3 +1,10 @@
+"
+Description
+--------------------
+
+I am a personalized Dialog.
+
+"
 Class {
 	#name : #ERDialog,
 	#superclass : #ERComponent,

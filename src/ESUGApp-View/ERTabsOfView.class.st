@@ -8,24 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-ERTabsOfView class >> attendee: anAttendee content: aContent [
-	| instance |
-	instance := self new.
-	instance attendee: anAttendee.
-	instance content: aContent .
-	instance initializeTabForms.
-	^ instance
-]
-
-{ #category : #accessing }
-ERTabsOfView class >> content: aContent [ 
-	| instance |
-	instance := self new.
-	instance content: aContent.
-	^ instance
-]
-
-{ #category : #accessing }
 ERTabsOfView class >> content: aContent tabs: list [
 	| instance |
 	instance := self new.

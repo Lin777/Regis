@@ -12,6 +12,16 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
+{ #category : #'as yet unclassified' }
+ERPaymentInformation class >> currencyTypes [
+	^ #('Euro')
+]
+
+{ #category : #'as yet unclassified' }
+ERPaymentInformation class >> paymentTypes [
+	^ #('Bank transfer' 'Credit Card')
+]
+
 { #category : #accessing }
 ERPaymentInformation >> coupon [
 	^ coupon
@@ -50,7 +60,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		accessor: #paymentCurrency;
 		priority: 30;
 		required: false;
-		options: ERAttendee currencyTypes;
+		options: self class currencyTypes;
 		withoutLabel: true;
 		id: 'paymentCurrency';
 		componentClass: MDLMASelectListComponent .
@@ -66,7 +76,7 @@ ERPaymentInformation >> descriptionPaymentType [
 		accessor: #paymentType;
 		priority: 10;
 		required: false;
-		options: ERAttendee paymentTypes;
+		options: self class paymentTypes;
 		withoutLabel: true;
 		id: 'paymentType';
 		componentClass: MDLMASelectListComponent .

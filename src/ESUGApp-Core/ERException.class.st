@@ -1,3 +1,9 @@
+"
+An ERException is the abstract class for any Exception caused by behavior of the page.
+
+Instance Variables
+
+"
 Class {
 	#name : #ERException,
 	#superclass : #Exception,

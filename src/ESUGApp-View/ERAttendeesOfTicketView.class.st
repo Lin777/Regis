@@ -44,8 +44,7 @@ ERAttendeesOfTicketView >> content: anObject [
 
 { #category : #accessing }
 ERAttendeesOfTicketView >> headers [
-	^ #(
-'#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?')
+	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?')
 ]
 
 { #category : #accessing }

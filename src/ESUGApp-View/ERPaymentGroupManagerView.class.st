@@ -50,8 +50,8 @@ ERPaymentGroupManagerView >> renderPageOn: html [
 		id: 'formPaymentGroupManager';
 		with: [ self renderSelectorOfPayment: html.
 			self renderSelectorOfCurrency: html.
-			self renderAcceptButtonOn: html.
-			self renderCancelButtonOn: html ]
+			self renderCancelButtonOn: html.
+			self renderAcceptButtonOn: html ]
 ]
 
 { #category : #rendering }
@@ -61,7 +61,7 @@ ERPaymentGroupManagerView >> renderSelectorOfCurrency: html [
 		with: [ html mdlTextFieldLabel with: 'Currency type: '.
 			html select
 				class: 'mdl-textfield__input';
-				list: ERAttendee currencyTypes ;
+				list: ERPaymentInformation currencyTypes ;
 				selected: attendee paymentInformation paymentCurrency;
 				callback: [ :value | attendee paymentInformation paymentCurrency: value asString ] ].
 ]
@@ -73,7 +73,7 @@ ERPaymentGroupManagerView >> renderSelectorOfPayment: html [
 		with: [ html mdlTextFieldLabel with: 'Payment type: '.
 			html select
 				class: 'mdl-textfield__input';
-				list: ERAttendee paymentTypes;
+				list: ERPaymentInformation paymentTypes;
 				selected: attendee paymentInformation paymentType;
 				callback: [ :value | attendee paymentInformation paymentType: value asString ] ].
 ]

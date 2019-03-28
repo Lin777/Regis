@@ -175,7 +175,7 @@ ERFee >> descriptionPaymentCurrency [
 		accessor: #currency;
 		priority: 10;
 		beRequired;
-		options: ERAttendee currencyTypes;
+		options: ERPaymentInformation currencyTypes;
 		cssClass: 'half';
 		withoutLabel: true;
 		id: 'currency';
@@ -286,4 +286,17 @@ ERFee >> staticCommissionPaypal [
 { #category : #accessing }
 ERFee >> staticCommissionPaypal: anObject [
 	staticCommissionPaypal := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ERFee >> urlWithAmount: aString1 invoiceNumber: aString2 [
+	|url|
+	url := self bankPayPalUrl.
+	url := url
+		copyReplaceAll: self payPalAmountToken
+		with: aString1.
+	url := url
+		copyReplaceAll: self payPalInvoiceNumberToken
+		with: aString2.
+	^ url
 ]

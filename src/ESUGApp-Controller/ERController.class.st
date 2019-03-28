@@ -10,20 +10,19 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #accessing }
-ERController class >> uniqueInstance [ 
-     uniqueInstance ifNil: [uniqueInstance := self new]. 
-     ^ uniqueInstance
- 
+{ #category : #adding }
+ERController >> addAttendee: anAttendee [
+	| anAttendeeSaved |
+	anAttendee userAccount encryptMyPassword.
+	anAttendeeSaved := conference addAttendee: anAttendee.
+	self notifyAllObservers.
+	^ anAttendeeSaved
 ]
 
 { #category : #adding }
 ERController >> addAward: anAward [
-	|award|
 	anAward submittionDate: Date today.
-	award := anAward save.
-	conference addSubmittedAward: award.
-	conference save.
+	conference addSubmittedAward: anAward save.
 	self notifyAllObservers .
 ]
 
@@ -37,22 +36,9 @@ ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
 
 { #category : #adding }
 ERController >> addTalk: aTalk [
-	|talk|
 	aTalk submittionDate: Date today.
-	talk := aTalk save.
-	conference addSubmittedTalk: talk.
-	conference save.
+	conference addSubmittedTalk: aTalk save.
 	self notifyAllObservers .
-]
-
-{ #category : #adding }
-ERController >> addUser: anUser [
-	|userSaved|
-	userSaved := (anUser as: ERUserAccount ).
-	userSaved := userSaved save.
-	conference addUser: userSaved.
-	self notifyAllObservers .
-	^ userSaved
 ]
 
 { #category : #'as yet unclassified' }
@@ -150,17 +136,10 @@ ERController >> initialize [
 
 { #category : #'as yet unclassified' }
 ERController >> payPalUrlForGroup: aGroup [
-	| conferenceFee url fee |
+	| conferenceFee url |
 	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	fee := conference fee.
-	url := fee bankPayPalUrl.
-	url := url
-		copyReplaceAll: fee payPalAmountToken
-		with: (conferenceFee printShowingDecimalPlaces: 2).
-	url := url
-		copyReplaceAll: fee payPalInvoiceNumberToken
-		with:
-			(aGroup paymentInformation 
+	url := conference fee urlWithAmount: (conferenceFee printShowingDecimalPlaces: 2)
+	 invoiceNumber: (aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
