@@ -34,12 +34,12 @@ ERLoggedController >> attendeeFromUser [
 
 { #category : #rendering }
 ERLoggedController >> deleteAttendee: anAttendee [
-	"self halt."
+	|anUser|
+	anUser := anAttendee userAccount .
 	self deleteAttendeeFromGroupAndConference: anAttendee.
-	anAttendee userAccount isGroupManager
-		ifFalse: [ self deleteUserForConference: anAttendee userAccount]
-		ifTrue: [ self deleteAttendeeRoleFromUser: anAttendee ].
-	anAttendee delete.
+	anUser isGroupManager
+		ifFalse: [ self deleteUserForConference: anUser]
+		ifTrue: [ self deleteAttendeeRoleFromUser: anUser ]
 ]
 
 { #category : #accessing }
@@ -57,8 +57,8 @@ ERLoggedController >> deleteAttendeeFromGroupAndConference: anAttendee [
 ]
 
 { #category : #accessing }
-ERLoggedController >> deleteAttendeeRoleFromUser: anAttendee [
-	anAttendee deleteAttendeeRole 
+ERLoggedController >> deleteAttendeeRoleFromUser: anUser [
+	anUser deleteAttendeeRole 
 ]
 
 { #category : #removing }

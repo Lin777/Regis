@@ -29,6 +29,13 @@ ERReductionTicketForm >> callback: anObject [
 ]
 
 { #category : #rendering }
+ERReductionTicketForm >> cancel [
+	ticket version = 0 ifFalse: [ticket := ticket abortChanges] .
+	self initializeForms .
+	self returnToThePreviousState
+]
+
+{ #category : #rendering }
 ERReductionTicketForm >> changeDiscountStrategy: value [
 	(ERDiscountStrategy isPercentageStrategy: value)
 		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: 
@@ -81,9 +88,7 @@ ERReductionTicketForm >> initialize [
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'.
 	dialog := ERDialog cancelDialog 
 		idOpen: 'cancelAddTicket';
-		okCallback: [ ticket := ticket abortChanges .
-	self initializeForms .
-	self returnToThePreviousState  ]
+		okCallback: [ self cancel  ]
 ]
 
 { #category : #initialization }
