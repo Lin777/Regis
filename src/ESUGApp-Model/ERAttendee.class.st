@@ -129,12 +129,6 @@ ERAttendee >> encodedInvoice: anObject [
 	encodedInvoice := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-ERAttendee >> encryptMyPassword [
-	self userAccount password: (ERUserAccount hashPassword: (self userAccount password )asString).
-	self userAccount confirmPassword: ''.
-]
-
 { #category : #accessing }
 ERAttendee >> firstName [ 
 	^ userAccount firstName

@@ -13,7 +13,7 @@ Class {
 { #category : #adding }
 ERController >> addAttendee: anAttendee [
 	| anAttendeeSaved |
-	anAttendee encryptMyPassword.
+	anAttendee userAccount encryptMyPassword.
 	anAttendeeSaved := conference addAttendee: anAttendee.
 	self notifyAllObservers.
 	^ anAttendeeSaved
@@ -21,10 +21,8 @@ ERController >> addAttendee: anAttendee [
 
 { #category : #adding }
 ERController >> addAward: anAward [
-	|award|
 	anAward submittionDate: Date today.
-	award := anAward save.
-	conference addSubmittedAward: award.
+	conference addSubmittedAward: anAward save.
 	self notifyAllObservers .
 ]
 
@@ -38,21 +36,9 @@ ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
 
 { #category : #adding }
 ERController >> addTalk: aTalk [
-	|talk|
 	aTalk submittionDate: Date today.
-	talk := aTalk save.
-	conference addSubmittedTalk: talk.
+	conference addSubmittedTalk: aTalk save.
 	self notifyAllObservers .
-]
-
-{ #category : #adding }
-ERController >> addUser: anUser [
-	|userSaved|
-	userSaved := (anUser as: ERUserAccount ).
-	userSaved := userSaved save.
-	conference addUser: userSaved.
-	self notifyAllObservers .
-	^ userSaved
 ]
 
 { #category : #'as yet unclassified' }

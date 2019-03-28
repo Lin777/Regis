@@ -30,13 +30,13 @@ ERUsersTab >> blockTableToExecute [
 
 { #category : #'as yet unclassified' }
 ERUsersTab >> createUser: anUser [
-	controller conference validateIfEmailIsAlreadyRegistered: anUser; 
-			validateNewPassword: anUser password with: anUser confirmPassword.
-	anUser password: (ERUserAccount hashPassword: anUser password) asString.
+	controller conference validateIfEmailIsAlreadyRegistered: anUser. 
+	controller validateNewPassword: anUser password with: anUser confirmPassword.
+	anUser encryptMyPassword.
 	anUser role: (Heap new
 		add: anUser role;
 		yourself).
-	ERController new addUser: anUser.
+	controller addUser: (anUser as: ERUserAccount ).
 	self cancel
 ]
 

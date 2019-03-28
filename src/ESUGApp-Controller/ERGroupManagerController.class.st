@@ -12,7 +12,7 @@ ERGroupManagerController >> addAttendee: anAttendee [
 	| anAttendeeSaved |
 	self validateRegister: anAttendee.
 	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
-	anAttendee encryptMyPassword.
+	anAttendee userAccount encryptMyPassword.
 	anAttendee userAccount: (anAttendee userAccount as: ERUserAccount).
 	anAttendeeSaved := conference addAttendee: anAttendee.
 	self group addAttendee: anAttendeeSaved.
