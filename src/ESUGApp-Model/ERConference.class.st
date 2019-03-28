@@ -159,6 +159,17 @@ ERConference >> deleteAttendee: anAttendee [
 ]
 
 { #category : #rendering }
+ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
+	anAttendee idGroup isNotNil ifTrue: [ 
+		|group|
+		group := self getGroupOfAttendee: anAttendee.
+		group deleteAttendee: anAttendee; save].
+	self deleteAttendee: anAttendee.
+	anAttendee delete.
+	self save
+]
+
+{ #category : #rendering }
 ERConference >> deleteUser: anUser [
 	self users removeAllSuchThat: [ :each | anUser id = each id ].
 	self save.
