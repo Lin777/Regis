@@ -5,24 +5,6 @@ Class {
 }
 
 { #category : #adding }
-ERConfigurationController >> addAttendee: anAttendee [
-"	| anAttendeeSaved userSaved |
-	
-	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
-	userSaved := anAttendee userAccount save.
-	conference addUser: userSaved.
-	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-	conference addAttendee: anAttendeeSaved.
-	conference save.
-	self notifyAllObservers.
-	^ anAttendeeSaved"
-	| anAttendeeSaved |
-	anAttendeeSaved := conference addAttendee: anAttendee.
-	self notifyAllObservers.
-	^ anAttendeeSaved
-]
-
-{ #category : #adding }
 ERConfigurationController >> addReductionTicketToConference: ticketRegistered [
 	conference addReductionTicket: ticketRegistered.
 	self notifyAllObservers 

@@ -36,6 +36,7 @@ ERRegistrationController >> save [
 	| user|
 	conference validateIfEmailIsAlreadyRegistered: attendee userAccount.
 	self attendee userAccount password: (ERUserAccount hashPassword: self attendee userAccount password)asString.
+	self attendee userAccount confirmPassword: ''.
 	user := self attendee userAccount save.
 	conference addUser: user.
 	^ user
@@ -43,17 +44,15 @@ ERRegistrationController >> save [
 
 { #category : #action }
 ERRegistrationController >> saveAttendee [
-	|attendeeSaved|
-	self attendee userAccount: self save.
+	|savedAttendee|
 	self attendee paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ].
 	self attendee conferenceInformation addPersonToSocialDinner ifFalse:
 	 [ self attendee conferenceInformation personAddedFoodPreference: ''].
 	self updatePaymentRate: self attendee.
-	attendeeSaved := self attendee save.
-	conference addAttendee: attendeeSaved .
+	savedAttendee := self addAttendee: attendee .
 	conference save.
 	self notifyAllObservers .
-	^ attendeeSaved userAccount 
+	^ savedAttendee userAccount 
 ]
 
 { #category : #action }

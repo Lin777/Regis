@@ -37,7 +37,6 @@ ERConference >> addAttendee: anAttendee [
 	attends add: anAttendeeSaved.
 	self save.
 	^ anAttendeeSaved
-	"attends add: anAttendee "
 ]
 
 { #category : #initialization }
@@ -65,12 +64,14 @@ ERConference >> addReductionTicket: aReductionTicket [
 
 { #category : #accessing }
 ERConference >> addSubmittedAward: aSubmittedAward [
-	submittedAwards add: aSubmittedAward 
+	submittedAwards add: aSubmittedAward .
+	self save.
 ]
 
 { #category : #accessing }
 ERConference >> addSubmittedTalk: aSubmittedTalk [
-	submittedTalks add: aSubmittedTalk 
+	submittedTalks add: aSubmittedTalk .
+	self save.
 ]
 
 { #category : #accessing }

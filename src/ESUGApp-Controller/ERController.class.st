@@ -11,12 +11,20 @@ Class {
 }
 
 { #category : #adding }
+ERController >> addAttendee: anAttendee [
+	| anAttendeeSaved |
+	anAttendee encryptMyPassword.
+	anAttendeeSaved := conference addAttendee: anAttendee.
+	self notifyAllObservers.
+	^ anAttendeeSaved
+]
+
+{ #category : #adding }
 ERController >> addAward: anAward [
 	|award|
 	anAward submittionDate: Date today.
 	award := anAward save.
 	conference addSubmittedAward: award.
-	conference save.
 	self notifyAllObservers .
 ]
 
@@ -34,7 +42,6 @@ ERController >> addTalk: aTalk [
 	aTalk submittionDate: Date today.
 	talk := aTalk save.
 	conference addSubmittedTalk: talk.
-	conference save.
 	self notifyAllObservers .
 ]
 
@@ -143,17 +150,10 @@ ERController >> initialize [
 
 { #category : #'as yet unclassified' }
 ERController >> payPalUrlForGroup: aGroup [
-	| conferenceFee url fee |
+	| conferenceFee url |
 	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	fee := conference fee.
-	url := fee bankPayPalUrl.
-	url := url
-		copyReplaceAll: fee payPalAmountToken
-		with: (conferenceFee printShowingDecimalPlaces: 2).
-	url := url
-		copyReplaceAll: fee payPalInvoiceNumberToken
-		with:
-			(aGroup paymentInformation 
+	url := conference fee urlWithAmount: (conferenceFee printShowingDecimalPlaces: 2)
+	 invoiceNumber: (aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
 				printString.
 	^ url
