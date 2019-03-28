@@ -23,7 +23,7 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 ERGroupRegistrationSummaryTab >> initializePaymentForm [
 	^ ( ERPaymentGroupManagerView on: self group
 		withContent: content) 
-	updatePayment: [ self payForGroup ];
+	updatePayment: [ :aGroup | self payForGroup: aGroup ];
 	cancel: [ self returnToThePreviousState .
 		self updateStateTab: self tabName. ];
 	amountString:
@@ -56,6 +56,16 @@ ERGroupRegistrationSummaryTab >> payForGroup [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> payForGroup: aGroup [
+	aGroup save.
+	controller updateGroup: aGroup.
+	aGroup paymentInformation  paymentTypeIsBankTransfer
+		ifTrue: [ ^ self redirectViewForBankTransfer ].
+	aGroup paymentInformation paymentTypeIsCreditCard
+		ifTrue: [ ^ self redirectionPayPAL: aGroup ]
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> paymentStatus [
 	| listAttends |
 	listAttends := self attends.
@@ -83,6 +93,13 @@ ERGroupRegistrationSummaryTab >> redirectViewForBankTransfer [
 ERGroupRegistrationSummaryTab >> redirectionPayPAL [
 	| url |
 	url := controller payPalUrlForGroup: self group.
+	self requestContext redirectTo: url
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> redirectionPayPAL: aGroup [
+	| url |
+	url := controller payPalUrlForGroup: aGroup.
 	self requestContext redirectTo: url
 ]
 

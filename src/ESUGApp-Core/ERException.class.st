@@ -117,6 +117,13 @@ ERException class >> paymentInvalid [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> paymentTypeNoValid [
+		^ self new 
+			messageText: 'The payment type is not valid';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> ticketDoesNotExist [
 		^ self new
 			messageText: 'The ticket does not exist for this conference';

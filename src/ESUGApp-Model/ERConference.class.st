@@ -474,23 +474,6 @@ ERConference >> openRegistration [
 	self save.
 ]
 
-{ #category : #'as yet unclassified' }
-ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
-	| conferenceFee url |
-	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
-	url := fee bankPayPalUrl.
-	url := url
-		copyReplaceAll: fee payPalAmountToken
-		with: (conferenceFee printShowingDecimalPlaces: 2).
-	url := url
-		copyReplaceAll: fee payPalInvoiceNumberToken
-		with:
-			(anAttendeeOrGroupManager paymentInformation
-				invoiceNumberIfNone: [ self incrementInvoiceNumber ])
-				printString.
-	^ url
-]
-
 { #category : #accessing }
 ERConference >> payments [
 	^ payments

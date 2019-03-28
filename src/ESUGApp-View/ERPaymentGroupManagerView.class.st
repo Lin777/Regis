@@ -10,6 +10,13 @@ Class {
 	#category : #'ESUGApp-View'
 }
 
+{ #category : #rendering }
+ERPaymentGroupManagerView >> acceptAction [
+	|saved|
+	saved := attendee save.
+	updatePayment cull: saved.
+]
+
 { #category : #accessing }
 ERPaymentGroupManagerView >> amountString: aString [
 	amountString := aString
@@ -30,7 +37,7 @@ ERPaymentGroupManagerView >> renderAcceptButtonOn: html [
 	html mdlButton
 		colored;
 		id: 'accept-change-affiliation' ;
-		callback: updatePayment;
+		callback: [self acceptAction];
 		with: 'Accept'
 ]
 
@@ -72,18 +79,28 @@ ERPaymentGroupManagerView >> renderSelectorOfPayment: html [
 		floatingLabel;
 		with: [ html mdlTextFieldLabel with: 'Payment type: '.
 			html select
+				onChange: 'submit()';
 				class: 'mdl-textfield__input';
 				list: ERPaymentInformation paymentTypes;
 				selected: attendee paymentInformation paymentType;
-				callback: [ :value | attendee paymentInformation paymentType: value asString ] ].
+				callback: [ :value | self updatePaymentInformation: value ] ].
 ]
 
 { #category : #accessing }
 ERPaymentGroupManagerView >> title [
-	^ 'Amount to pay : ', amountString, '. Please choose payment Type'
+	^ 'Amount to pay : ', attendee paymentInformation paymentAmount asString, '. Please choose payment Type'
 ]
 
 { #category : #accessing }
 ERPaymentGroupManagerView >> updatePayment: aBlock [
 	updatePayment := aBlock
+]
+
+{ #category : #rendering }
+ERPaymentGroupManagerView >> updatePaymentInformation: value [
+	({value} includesAnyOf: ERPaymentInformation paymentTypes )
+		ifTrue: [ attendee paymentInformation paymentType: value asString ]
+		ifFalse: [ ERException paymentTypeNoValid signal ]
+
+	
 ]
