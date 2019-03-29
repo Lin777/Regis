@@ -25,7 +25,7 @@ WORKDIR /esug
 
 COPY esugDocker.sh esug.sh
 
-RUN chmod +x esug.sh
-RUN ./esug.sh
+RUN chmod +x scriptEsug.sh
+RUN ./scriptEsug.sh
 
 EXPOSE 8000
