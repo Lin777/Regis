@@ -11,7 +11,6 @@ Class {
 { #category : #rendering }
 ERReductionTicketsTab >> actionModifyTicket: aReductionTicket [
 	controller modifyTicket: aReductionTicket.
-
 	self returnToThePreviousState.
 	self updateStateTab: self tabName.
 ]

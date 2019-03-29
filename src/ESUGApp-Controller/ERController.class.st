@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a controller for page.
+
+Instance Variables
+--------------------
+	conference:  is a ERConference object (with active state)
+"
 Class {
 	#name : #ERController,
 	#superclass : #ERSubject,
