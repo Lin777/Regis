@@ -33,7 +33,8 @@ ERLoggedPageAsAttendeeTest >> fillAllFieldsOfChangePassword [
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
 	self selectElementWithID: 'name' send: 'Talk Example'.
 	self selectElementWithID: 'description' send: 'This is a talk to ....'.
-	self selectElementWithID: 'authorsWithoutSubmitter' send: 'Example Dev'
+	self selectElementWithID: 'authorsWithoutSubmitter' send: 'Example Dev'.
+	self selectElementWithID: 'presentation' send: 'https://www.google.com/' 
 ]
 
 { #category : #'as yet unclassified' }
