@@ -23,7 +23,7 @@ WORKDIR /home
 RUN mkdir esug
 WORKDIR /esug
 
-COPY esugDocker.sh esug.sh
+COPY esugDocker.sh scriptEsug.sh
 
 RUN chmod +x scriptEsug.sh
 RUN ./scriptEsug.sh
