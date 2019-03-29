@@ -26,9 +26,8 @@ ERGroupRegistrationSummaryTab >> initializePaymentForm [
 	updatePayment: [ :aGroup | self payForGroup: aGroup ];
 	cancel: [ self returnToThePreviousState .
 		self updateStateTab: self tabName. ];
-	amountString:
-	(controller amountOfPayToGroup: self attends) asString.
-
+	amountString: [ :aGroup | aGroup save.
+	controller updateGroup: aGroup ]
 ]
 
 { #category : #rendering }

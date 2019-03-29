@@ -53,6 +53,13 @@ ERException class >> errorWhenCalculatingPaymentAmount [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> incorrectPatternOfPassword [
+		^ self new 
+			messageText: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> invalidEsugDates [
 		^ self new 
 			messageText: 'The date "From" must be less than date "To"';
@@ -84,6 +91,13 @@ ERException class >> loginFailed [
 ERException class >> notFoundAttendeeFromUser [
 		^ self new
 			messageText: 'Not exist Attendee from this user ';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERException class >> passwordDoesNotMatch [
+		^ self new 
+			messageText: 'The password entered does not match the current password';
 			yourself
 ]
 

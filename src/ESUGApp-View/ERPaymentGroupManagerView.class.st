@@ -5,7 +5,7 @@ Class {
 		'updatePayment',
 		'cancel',
 		'messageComponent',
-		'amountString'
+		'blockForUpdate'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -18,8 +18,8 @@ ERPaymentGroupManagerView >> acceptAction [
 ]
 
 { #category : #accessing }
-ERPaymentGroupManagerView >> amountString: aString [
-	amountString := aString
+ERPaymentGroupManagerView >> blockForUpdate: aBlock [
+	blockForUpdate := aBlock
 ]
 
 { #category : #accessing }
@@ -99,7 +99,8 @@ ERPaymentGroupManagerView >> updatePayment: aBlock [
 { #category : #rendering }
 ERPaymentGroupManagerView >> updatePaymentInformation: value [
 	({value} includesAnyOf: ERPaymentInformation paymentTypes )
-		ifTrue: [ attendee paymentInformation paymentType: value asString ]
+		ifTrue: [ attendee paymentInformation paymentType: value asString.
+			blockForUpdate cull: attendee ]
 		ifFalse: [ ERException paymentTypeNoValid signal ]
 
 	

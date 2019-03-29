@@ -32,6 +32,16 @@ ERAlert class >> warningAlert [
 		yourself .
 ]
 
+{ #category : #'as yet unclassified' }
+ERAlert >> changeToAlertOfError [
+	class := 'errors'
+]
+
+{ #category : #'as yet unclassified' }
+ERAlert >> changeToAlertSuccess [
+	class := 'alert-success'
+]
+
 { #category : #accessing }
 ERAlert >> class1 [
 	^ class
@@ -45,9 +55,9 @@ ERAlert >> class: anObject [
 { #category : #rendering }
 ERAlert >> errorMessage: aString [
 	aString ifNotEmpty: [
-		self
-			message: aString;
-			wasShown: false]
+		self message: aString;
+			  wasShown: false
+			]
 ]
 
 { #category : #initialization }
