@@ -12,7 +12,8 @@ Class {
 		'users',
 		'configuration',
 		'active',
-		'invoiceNumber'
+		'invoiceNumber',
+		'configurationOfHomePage'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -136,6 +137,16 @@ ERConference >> configuration [
 { #category : #accessing }
 ERConference >> configuration: anObject [
 	configuration := anObject
+]
+
+{ #category : #accessing }
+ERConference >> configurationOfHomePage [
+	^ configurationOfHomePage
+]
+
+{ #category : #accessing }
+ERConference >> configurationOfHomePage: anObject [
+	configurationOfHomePage := anObject
 ]
 
 { #category : #accessing }

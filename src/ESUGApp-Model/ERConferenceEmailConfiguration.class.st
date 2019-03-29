@@ -45,6 +45,8 @@ ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 		priority: 10;
 		required: true;
 		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
+		labelled: 'Please enter a valid email';
 		id: 'senderEmailAddress';
 		label: 'Sender email address (Required)';
 		componentClass: MDLMATextInputComponent.

@@ -15,15 +15,10 @@ ERHomeView class >> withContent: aContent withController: aController [
 
 { #category : #rendering }
 ERHomeView >> renderPageOn: html [
-	html heading level6
-		with: [ html strong: 'Conference Home Page: '.
-			html anchor
-				url: controller conference configuration homePageUrl;
-				with: controller conference configuration homePageUrl ]
+	html html: controller conference configurationOfHomePage htmlContent
 ]
 
 { #category : #rendering }
 ERHomeView >> title [
-	^ controller conference configuration emailConfiguration
-		welcomeText
+	^ controller conference configurationOfHomePage title
 ]

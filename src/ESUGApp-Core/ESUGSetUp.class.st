@@ -33,6 +33,23 @@ ESUGSetUp class >> addReductionFeeForPlatiniumSponsor: sponsorName forConference
 ]
 
 { #category : #accessing }
+ESUGSetUp class >> configurationOfHome [
+	^ (ERConfigurationOfHomePage new 
+		title: 'ESUG 2019 Date and Location Announced';
+		htmlContent: '<article id="post-19044" class="blog-single">
+<div class="blog-meta"><span class="byline"> by <span class="author vcard"><span class="screen-reader-text">Author </span><a class="url fn n" href="http://www.cincomsmalltalk.com/main/author/jjordan/">Jeremy Jordan</a></span></span><span class="cat-links"> in <span class="screen-reader-text">Categories </span><a href="http://www.cincomsmalltalk.com/main/category/esug/" rel="category tag">ESUG</a>, <a href="http://www.cincomsmalltalk.com/main/category/events/" rel="category tag">Events</a></span></div><p>Smalltalk users from around the world will be coming to Cologne, Germany to attend ESUG 2019. German software development company, ZWEIDENKER, will be hosting the conference, which will take place on August 26-30.</p>
+<p>The address of the conference venue (Stadtgarten) is:</p>
+<blockquote><p>Venloer Strasse 40, 50672 Köln/Germany<br>
+<a href="https://www.stadtgarten.de/en/stadtgarten/anfahrt" target="_blank">https://www.stadtgarten.de/en/stadtgarten/anfahrt</a></p></blockquote>
+<p>As soon as more information regarding hotel accommodations and how to make reservations develops, we will be sure to pass it along.</p>
+<p><strong>About ESUG</strong></p>
+<p><img src="http://www.cincomsmalltalk.com/main/wp-content/uploads/2015/02/esug-logo-e1423067433765.png" alt="" width="250" height="102" align="right">ESUG (European Smalltalk User Group) is a non-profit association that gathers European users of all Smalltalk dialects. With goals of promoting the use of the Smalltalk programming language and communication between Smalltalk users, the association also helps in creating and linking Smalltalk user groups and representing Smalltalk users in discussions with vendors.</p>
+<p>This is the 27<sup>th</sup> ESUG Conference, and it promises to be one of the best in its successful history.</p>
+<p>We hope to see you there!</p>
+</article>')
+]
+
+{ #category : #accessing }
 ESUGSetUp class >> configureESUGFeesForConference: conference [
 	| esugEuroBankAccountInformation esugEuroFee |
 	esugEuroBankAccountInformation := ERBankAccountInformation new
@@ -108,6 +125,7 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 	conference := ERConference new
 		configuration: esugConferenceConfiguration;
 		save.
+	conference configurationOfHomePage: self configurationOfHome.
 	adminPassword := '12345678'.
 	adminUser := ERUserAccount new
 		firstName: 'Admin';

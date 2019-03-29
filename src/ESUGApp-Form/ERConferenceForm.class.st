@@ -7,7 +7,8 @@ Class {
 		'organizer',
 		'configurationForm',
 		'emailConfigurationForm',
-		'organizerForm'
+		'organizerForm',
+		'configurationOfHomeForm'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -39,7 +40,8 @@ ERConferenceForm >> initialize [
 ERConferenceForm >> initializeForms [
 	configurationForm := self createFormOf: controller conference configuration .
 	emailConfigurationForm := self createFormOf: controller conference configuration emailConfiguration .
-	organizerForm := self createFormOf: controller conference configuration organizer 
+	organizerForm := self createFormOf: controller conference configuration organizer .
+	configurationOfHomeForm := self createFormOf: controller conference configurationOfHomePage 
 ]
 
 { #category : #rendering }
@@ -50,6 +52,15 @@ ERConferenceForm >> renderFormConferenceConfigurationOn: html [
 	html horizontalRule.
 	html render: messageComponent .
 	html render: configurationForm
+]
+
+{ #category : #rendering }
+ERConferenceForm >> renderFormConfigurationOfHomeOn: html [
+	html heading
+		level3;
+		with: 'Configuration of Home Page'.
+	html horizontalRule.
+	html render: configurationOfHomeForm  
 ]
 
 { #category : #rendering }
@@ -66,6 +77,7 @@ ERConferenceForm >> renderFormOn: html [
 	self renderFormConferenceConfigurationOn: html.
 	self renderFormEmailConfigurationOn: html.
 	self renderFormOrganizerOn: html.
+	self renderFormConfigurationOfHomeOn: html.
 	self renderButtonsOn: html
 ]
 
@@ -91,6 +103,7 @@ ERConferenceForm >> saveForms [
 	configurationForm save.
 	emailConfigurationForm save.
 	organizerForm save.
+	configurationOfHomeForm save.
 ]
 
 { #category : #accessing }

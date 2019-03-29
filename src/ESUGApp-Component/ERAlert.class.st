@@ -43,11 +43,6 @@ ERAlert >> changeToAlertSuccess [
 ]
 
 { #category : #accessing }
-ERAlert >> class1 [
-	^ class
-]
-
-{ #category : #accessing }
 ERAlert >> class: anObject [
 	class := anObject
 ]
@@ -68,11 +63,6 @@ ERAlert >> initialize [
 ]
 
 { #category : #accessing }
-ERAlert >> message [
-	^ message
-]
-
-{ #category : #accessing }
 ERAlert >> message: anObject [
 	message := anObject
 ]
@@ -81,16 +71,11 @@ ERAlert >> message: anObject [
 ERAlert >> renderContentOn: html [
 	wasShown ifTrue: [ ^ self ].
 	html div
-		id: self id;
-		class: self class1, ' alert';
-		attributeAt: 'role' put: self role;
-		with: self message .
+		id: id;
+		class: class, ' alert';
+		attributeAt: 'role' put: role;
+		with: message .
 	self wasShown: true
-]
-
-{ #category : #accessing }
-ERAlert >> role [
-	^ role
 ]
 
 { #category : #accessing }
