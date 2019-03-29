@@ -65,6 +65,20 @@ screen -Sdm esug ./pharo esug.image --no-quit
 - To exit the container terminal press Ctr + p + q
 - Now you can see the page running in: http://localhost:8000/ESUG
 
+## Restore the data if the image breaks
+
+The page generates a backup file after each modification to the database, to restore this data, follow the following steps:
+
+- Connect to the container in which I create the image (docker attach xx).
+- Run the following script to upload a new image with page
+```bash
+./scriptEsug.sh
+``` 
+- And finally execute this command
+```bash
+screen -Sdm esug ./pharo esug.image --no-quit
+``` 
+
 ## Progress Status
 
 ### Roles
@@ -72,7 +86,7 @@ screen -Sdm esug ./pharo esug.image --no-quit
 * [x] Admin / Organizer
 * [x] Attendee
 * [x] Team Manager / Secretary
-* [ ] Student Volunter
+* [x] Student Volunter
 
 ### Attendee
 
@@ -97,7 +111,7 @@ screen -Sdm esug ./pharo esug.image --no-quit
 * [x] ESUG dates : start & stop
 * [x] prices : early 1 day, early full, late 1 day, late full
 * [x] price for extra person to the social dinner
-* [ ] STMP server : currently we use a REST service to send emails (PatSmtpToPostMarkClientAdapter) and this is  easier than having its own SMTP server
+* [x] STMP server : currently we use a REST service to send emails (PatSmtpToPostMarkClientAdapter) and this is  easier than having its own SMTP server
 * [x] Open / close registration
 * [x] create coupons : percentage discount, fixed reduction, limited usage
 	cf. https://esug.github.io/become_sponsor.html when clicking on a coupon -> see all registrations that used it 
@@ -119,7 +133,7 @@ screen -Sdm esug ./pharo esug.image --no-quit
 
 ## Student Volunter
 
-* [ ] check that a participant has been registered
+* [x] check that a participant has been registered
 * [ ] add an extra person to the social diner to an attendee -> email to pay extra fee + invoice?
 
 
