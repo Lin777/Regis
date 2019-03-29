@@ -15,7 +15,6 @@ wget -O- https://get.pharo.org | bash
 | application |
 ERSandstoneDatabase initialize.
 ESUGSetUp start.
-ERTest generateDataForTest.
 application := WAAdmin defaultDispatcher handlerAt: 'config'.
 application configuration addParent: WAAuthConfiguration instance.
 application
