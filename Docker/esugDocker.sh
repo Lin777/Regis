@@ -9,7 +9,7 @@ wget -O- https://get.pharo.org | bash
 
 ./pharo Pharo.image save esug
 
-./pharo esug.image metacello install github://Lin777/ESUGConfRegistrationApp:master/src BaselineOfESUGApp --install=stable
+./pharo esug.image metacello install github://Lin777/ESUGConfRegistrationApp:master/src BaselineOfESUGApp --groups=Core
 
 ./pharo esug.image eval --save "
 | application |
