@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a personalized table, I render a dictionary
+"
 Class {
 	#name : #ERDictionaryTable,
 	#superclass : #ERTable,

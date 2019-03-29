@@ -12,7 +12,8 @@ Class {
 		'users',
 		'configuration',
 		'active',
-		'invoiceNumber'
+		'invoiceNumber',
+		'configurationOfHomePage'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -136,6 +137,16 @@ ERConference >> configuration [
 { #category : #accessing }
 ERConference >> configuration: anObject [
 	configuration := anObject
+]
+
+{ #category : #accessing }
+ERConference >> configurationOfHomePage [
+	^ configurationOfHomePage
+]
+
+{ #category : #accessing }
+ERConference >> configurationOfHomePage: anObject [
+	configurationOfHomePage := anObject
 ]
 
 { #category : #accessing }
@@ -472,23 +483,6 @@ ERConference >> isEarlyRegistrationOf: anAttendee [
 ERConference >> openRegistration [
 	self configuration openRegistration: true.
 	self save.
-]
-
-{ #category : #'as yet unclassified' }
-ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
-	| conferenceFee url |
-	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
-	url := fee bankPayPalUrl.
-	url := url
-		copyReplaceAll: fee payPalAmountToken
-		with: (conferenceFee printShowingDecimalPlaces: 2).
-	url := url
-		copyReplaceAll: fee payPalInvoiceNumberToken
-		with:
-			(anAttendeeOrGroupManager paymentInformation
-				invoiceNumberIfNone: [ self incrementInvoiceNumber ])
-				printString.
-	^ url
 ]
 
 { #category : #accessing }

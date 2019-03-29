@@ -14,23 +14,23 @@ ERTestAdminContainerController >> setUp [
 
 { #category : #tests }
 ERTestAdminContainerController >> testFailValidateCurrentPassword [
-	self deny: (controller validateCurrentPassword: '87654321').
-	self deny: (controller validateCurrentPassword: 'asdfghjk').
-	self deny: (controller validateCurrentPassword: 'asdfg123').
+	self should: [ controller validateCurrentPassword: '87654321'] raise: ERException.
+	self should: [ controller validateCurrentPassword: 'asdfghjk'] raise: ERException.
+	self should: [ controller validateCurrentPassword: 'asdfg123'] raise: ERException
 ]
 
 { #category : #tests }
 ERTestAdminContainerController >> testFailValidatePatternPassword [
-	self deny: (controller validatePatternPassword: '1234567').
-	self deny: (controller validatePatternPassword: 'test').
-	self deny: (controller validatePatternPassword: 'TEST2').
-	self deny: (controller validatePatternPassword: '<test>123').
-	self deny: (controller validatePatternPassword: ';as!2#$%%^@#').
-	self deny: (controller validatePatternPassword: '.et~@#$^*').
-	self deny: (controller validatePatternPassword: '1231234><').
-	self deny: (controller validatePatternPassword: 'ASD.asd./asd').
-	self deny: (controller validatePatternPassword: '.123*test_1!').
-	self deny: (controller validatePatternPassword: '+qweweA234').
+	self should: [ controller validateCurrentPassword: '1234567'] raise: ERException.
+	self should: [ controller validateCurrentPassword: 'test'] raise: ERException.
+	self should: [ controller validateCurrentPassword: 'TEST2'] raise: ERException.
+	self should: [ controller validateCurrentPassword: '<test>123'] raise: ERException.
+	self should: [ controller validateCurrentPassword: ';as!2#$%%^@#'] raise: ERException.
+	self should: [ controller validateCurrentPassword: '.et~@#$^*'] raise: ERException.
+	self should: [ controller validateCurrentPassword: '1231234><'] raise: ERException.
+	self should: [ controller validateCurrentPassword: 'ASD.asd./asd'] raise: ERException.
+	self should: [ controller validateCurrentPassword: '.123*test_1!'] raise: ERException.
+	self should: [ controller validateCurrentPassword: '+qweweA234'] raise: ERException.
 ]
 
 { #category : #tests }
@@ -55,19 +55,19 @@ ERTestAdminContainerController >> testValidChangePasswordTo [
 
 { #category : #tests }
 ERTestAdminContainerController >> testValidateCurrentPassword [
-	self assert: (controller validateCurrentPassword: '12345678').
+	self shouldnt: [ controller validateCurrentPassword: '12345678'] raise: ERException
 ]
 
 { #category : #tests }
 ERTestAdminContainerController >> testValidatePatternPassword [
-	self assert: (controller validatePatternPassword: '12345678').
-	self assert: (controller validatePatternPassword: 'passtest').
-	self assert: (controller validatePatternPassword: 'testPass').
-	self assert: (controller validatePatternPassword: '123password').
-	self assert: (controller validatePatternPassword: 'test1234567').
-	self assert: (controller validatePatternPassword: 'test.128.test').
-	self assert: (controller validatePatternPassword: '123_test.1234').
-	self assert: (controller validatePatternPassword: 'test_1234.0983').
-	self assert: (controller validatePatternPassword: '.123_test_1.').
-	self assert: (controller validatePatternPassword: '_asd.test_123a').
+	self shouldnt: [ controller validatePatternPassword:  '12345678'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: 'passtest'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: 'testPass'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: '123password'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: 'test1234567'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: 'test.128.test'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: '123_test.1234'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: 'test_1234.0983'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: '.123_test_1.'] raise: ERException.
+	self shouldnt: [ controller validatePatternPassword: '_asd.test_123a'] raise: ERException
 ]

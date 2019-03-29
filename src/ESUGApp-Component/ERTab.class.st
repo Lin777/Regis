@@ -1,3 +1,11 @@
+"
+Description
+--------------------
+
+I am aa abstract tab object, I know my tab Id and my tabName (necessary for render tab), I have a state active or inactive.
+
+All my subclasses should be implement the ""renderContentOn: html "" method
+"
 Class {
 	#name : #ERTab,
 	#superclass : #ERStateContent,

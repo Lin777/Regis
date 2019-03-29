@@ -32,9 +32,14 @@ ERAlert class >> warningAlert [
 		yourself .
 ]
 
-{ #category : #accessing }
-ERAlert >> class1 [
-	^ class
+{ #category : #'as yet unclassified' }
+ERAlert >> changeToAlertOfError [
+	class := 'errors'
+]
+
+{ #category : #'as yet unclassified' }
+ERAlert >> changeToAlertSuccess [
+	class := 'alert-success'
 ]
 
 { #category : #accessing }
@@ -45,9 +50,9 @@ ERAlert >> class: anObject [
 { #category : #rendering }
 ERAlert >> errorMessage: aString [
 	aString ifNotEmpty: [
-		self
-			message: aString;
-			wasShown: false]
+		self message: aString;
+			  wasShown: false
+			]
 ]
 
 { #category : #initialization }
@@ -55,11 +60,6 @@ ERAlert >> initialize [
 
  super initialize.
  self wasShown: true
-]
-
-{ #category : #accessing }
-ERAlert >> message [
-	^ message
 ]
 
 { #category : #accessing }
@@ -71,16 +71,11 @@ ERAlert >> message: anObject [
 ERAlert >> renderContentOn: html [
 	wasShown ifTrue: [ ^ self ].
 	html div
-		id: self id;
-		class: self class1, ' alert';
-		attributeAt: 'role' put: self role;
-		with: self message .
+		id: id;
+		class: class, ' alert';
+		attributeAt: 'role' put: role;
+		with: message .
 	self wasShown: true
-]
-
-{ #category : #accessing }
-ERAlert >> role [
-	^ role
 ]
 
 { #category : #accessing }

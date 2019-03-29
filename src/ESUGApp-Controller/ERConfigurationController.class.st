@@ -88,9 +88,8 @@ ERConfigurationController >> deleteUser: anUser [
 
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
-	"Add validator for not accept use a ticket id name it was already exist"
 	conference reductionTicketAlreadyExist: aTicket.
-	self saveTicket: aTicket.
+	aTicket save.
 	self notifyAllObservers 
 ]
 
@@ -116,11 +115,6 @@ ERConfigurationController >> saveFileOn: aFile withStream: stream [
 		binaryWriteStreamDo: [ :outputStream | 
 			(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
 				nextPutAll: stream contents ]
-]
-
-{ #category : #adding }
-ERConfigurationController >> saveTicket: aReductionTicket [
-	^ aReductionTicket save.
 ]
 
 { #category : #rendering }

@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a controller for page.
+
+Instance Variables
+--------------------
+	conference:  is a ERConference object (with active state)
+"
 Class {
 	#name : #ERController,
 	#superclass : #ERSubject,
@@ -136,13 +146,10 @@ ERController >> initialize [
 
 { #category : #'as yet unclassified' }
 ERController >> payPalUrlForGroup: aGroup [
-	| conferenceFee url |
-	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	url := conference fee urlWithAmount: (conferenceFee printShowingDecimalPlaces: 2)
+	^ conference fee urlWithAmount: aGroup paymentInformation paymentAmount asString
 	 invoiceNumber: (aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
-				printString.
-	^ url
+				printString
 ]
 
 { #category : #rendering }
