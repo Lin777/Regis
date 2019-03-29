@@ -96,6 +96,8 @@ ERAward >> descriptionDemoUrl [
 		priority: 80;
 		required: false;
 		withoutLabel: true;
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
 		id: 'demoUrl';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -111,6 +113,8 @@ ERAward >> descriptionDownloadUrl [
 		priority: 70;
 		beRequired;
 		label: 'Download Url (Required)';
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
 		withoutLabel: true;
 		id: 'downloadUrl';
 		componentClass: MDLMATextInputComponent.

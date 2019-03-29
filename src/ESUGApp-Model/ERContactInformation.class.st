@@ -124,6 +124,8 @@ ERContactInformation >> descriptionFacebookURL [
 		priority: 70;
 		required: false;
 		withoutLabel: true;
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
 		cssClass: 'half';
 		id: 'facebookURL';
 		componentClass: MDLMATextInputComponent.
@@ -140,6 +142,8 @@ ERContactInformation >> descriptionHomePageURL [
 		priority: 90;
 		required: false;
 		withoutLabel: true;
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
 		id: 'homePageURL';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -190,6 +194,8 @@ ERContactInformation >> descriptionTwitterURL [
 		required: false;
 		withoutLabel: true;
 		cssClass: 'half';
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
 		id: 'twitterURL';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself

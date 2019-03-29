@@ -181,6 +181,18 @@ ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
 ]
 
 { #category : #rendering }
+ERConference >> deleteAward: anAward [
+	self submittedAwards removeAllSuchThat: [ :each | anAward id = each id ].
+	self save.
+]
+
+{ #category : #rendering }
+ERConference >> deleteTalk: aTalk [
+	self submittedTalks removeAllSuchThat: [ :each | aTalk id = each id ].
+	self save.
+]
+
+{ #category : #rendering }
 ERConference >> deleteUser: anUser [
 	self users removeAllSuchThat: [ :each | anUser id = each id ].
 	self save.
