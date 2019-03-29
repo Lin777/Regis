@@ -83,6 +83,24 @@ ERTalk >> descriptionOtherAuthors [
          yourself
 ]
 
+{ #category : #'acessing-magritte' }
+ERTalk >> descriptionPresentation [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #presentation; 
+		priority: 50;
+		beRequired;
+		label: 'Presentation Download URL (Required)';
+		addCondition: [ :value | value asUrl isAbsolute ]
+		labelled: 'Please enter a valid URL';
+		withoutLabel: true;
+		id: 'presentation';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
 { #category : #accessing }
 ERTalk >> name [
 	^ name

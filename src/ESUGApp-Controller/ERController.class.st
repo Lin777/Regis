@@ -123,6 +123,18 @@ ERController >> conference: anObject [
 	conference := anObject
 ]
 
+{ #category : #rendering }
+ERController >> deleteAward: anAward [
+	conference deleteAward: anAward.
+	self notifyAllObservers 
+]
+
+{ #category : #rendering }
+ERController >> deleteTalk: aTalk [
+	conference deleteTalk: aTalk.
+	self notifyAllObservers 
+]
+
 { #category : #'as yet unclassified' }
 ERController >> encodeFileToUTF8: aFile [
 	^ aFile exists 
@@ -190,6 +202,13 @@ ERController >> updateAttendee: anAttendee [
 	^ anAttendee 
 ]
 
+{ #category : #rendering }
+ERController >> updateAward: anAward [
+	anAward save.
+	conference save.
+	self notifyAllObservers 
+]
+
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup.
@@ -214,6 +233,13 @@ ERController >> updatePaymentRateForGroup: aGroup [
 	amount := aGroup totalAmount.
 	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
 	aGroup paymentInformation paymentAmount: amount.
+]
+
+{ #category : #rendering }
+ERController >> updateTalk: aTalk [
+	aTalk save.
+	conference save.
+	self notifyAllObservers 
 ]
 
 { #category : #'as yet unclassified' }

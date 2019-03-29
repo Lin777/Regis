@@ -1,26 +1,14 @@
 Class {
 	#name : #ERProposedTalksTab,
 	#superclass : #ERMyRegistrationTab,
-	#instVars : [
-		'formAddTalk'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #rendering }
 ERProposedTalksTab >> addTalk [
 	self initializeFormAddTalk.
-	content state: formAddTalk.
+	content state: formTalk.
 	self updateStateTab: self tabName.
-]
-
-{ #category : #rendering }
-ERProposedTalksTab >> blockTableToExecute [
-	^ [ :talk | 
-	OrderedCollection new
-		add: ([ :att | att name ] value: talk);
-		add: ([ :att | att description ] value: talk);
-		yourself ]
 ]
 
 { #category : #rendering }
@@ -30,15 +18,15 @@ ERProposedTalksTab >> createTalk: aTalk [
 ]
 
 { #category : #rendering }
-ERProposedTalksTab >> headers [
-	^ #('Name' 'Description' '')
+ERProposedTalksTab >> headers [ 	
+	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
 ]
 
 { #category : #rendering }
 ERProposedTalksTab >> initializeFormAddTalk [
 	|talk|
 	talk := ERTalk submitter: attendee.
-	formAddTalk := (ERTittledFormView 
+	formTalk := (ERTittledFormView 
 							on: talk 
 							withContent: content) title: 'Talk'; 
 							callback: [:aTalk | self createTalk: aTalk];
@@ -48,7 +36,33 @@ ERProposedTalksTab >> initializeFormAddTalk [
 
 { #category : #rendering }
 ERProposedTalksTab >> listDataToRenderButton [
-	^ OrderedCollection new
+	|list|
+	list := OrderedCollection new.
+	self proposalsAreAllowed ifTrue: [ 
+		list add:
+			(Array
+				with: 'edit'
+				with: [ :talk | self modifyTalk: talk.
+					self updateStateTab: self tabName. ]
+				with: [ :talk | talk id , '-modify' ]
+				with: 'Modify'
+				with: '');
+		add:
+			(Array
+				with: 'delete'
+				with: [ :talk | self deleteTalk: talk.
+					self updateStateTab: self tabName. ]
+				with: [ :talk | talk id , '-delete' ]
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');')].
+		^ list
+]
+
+{ #category : #rendering }
+ERProposedTalksTab >> modifyTalk: aTalk [
+	self initializeFormEditTalk: aTalk.
+	content state: formTalk.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -86,7 +100,7 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self submittedTalks;
-		blockToExecute: self blockTableToExecute;
+		blockToExecute: self blockTableTalksToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
 ]
