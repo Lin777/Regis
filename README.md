@@ -67,7 +67,7 @@ screen -Sdm esug ./pharo esug.image --no-quit
 
 ## Restore the data if the image breaks
 
-The page generates a backup file after each modification to the database, to restore this data, follow the following steps:
+The page generates a backup file after each modification to the database, to restore this data, follow the next steps:
 
 - Connect to the container in which I create the image (docker attach xx).
 - Run the following script to upload a new image with page
