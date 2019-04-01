@@ -35,7 +35,7 @@ To automatically register attendees and group managers execute the following scr
 ```Smalltalk
 ERTest generateDataForTest 
 ```
-
+This scripts fill the website with contrived information for testing purpose.
 You can see the registered users by logging in as admin. 
 
 ### Note: 
@@ -49,7 +49,7 @@ All the users generated automatically have as password: 12345678
 
 ### Steps to follow
 
-- On your terminal locate inside the docker folder that you downloaded.
+- Locate your terminal inside the docker folder that you recently downloaded.
 - Run the following script to build the image with all the prerequisites from the Dockerfile file:
 ```bash
 docker build -t esug .
