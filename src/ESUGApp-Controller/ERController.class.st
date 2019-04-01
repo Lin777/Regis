@@ -21,8 +21,7 @@ ERController >> addAttendee: anAttendee [
 
 { #category : #adding }
 ERController >> addAward: anAward [
-	anAward submittionDate: Date today.
-	conference addSubmittedAward: anAward save.
+	conference addSubmittedAward: anAward.
 	self notifyAllObservers .
 ]
 
@@ -36,8 +35,7 @@ ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
 
 { #category : #adding }
 ERController >> addTalk: aTalk [
-	aTalk submittionDate: Date today.
-	conference addSubmittedTalk: aTalk save.
+	conference addSubmittedTalk: aTalk.
 	self notifyAllObservers .
 ]
 

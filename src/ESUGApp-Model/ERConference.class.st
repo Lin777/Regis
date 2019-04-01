@@ -64,13 +64,15 @@ ERConference >> addReductionTicket: aReductionTicket [
 
 { #category : #accessing }
 ERConference >> addSubmittedAward: aSubmittedAward [
-	submittedAwards add: aSubmittedAward .
+	aSubmittedAward submittionDate: Date today.
+	submittedAwards add: aSubmittedAward save.
 	self save.
 ]
 
 { #category : #accessing }
 ERConference >> addSubmittedTalk: aSubmittedTalk [
-	submittedTalks add: aSubmittedTalk .
+	aSubmittedTalk submittionDate: Date today.
+	submittedTalks add: aSubmittedTalk save.
 	self save.
 ]
 
