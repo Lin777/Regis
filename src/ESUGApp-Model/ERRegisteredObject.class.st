@@ -9,6 +9,18 @@ Class {
 }
 
 { #category : #accessing }
+ERRegisteredObject >> addPayPalComissionifApply: payPalComission [
+	(self applyToAddComission and: paymentInformation paymentTypeIsCreditCard)
+	ifTrue: [ paymentInformation paymentAmount: 
+					(paymentInformation paymentAmount + payPalComission ) ]
+]
+
+{ #category : #accessing }
+ERRegisteredObject >> applyToAddComission [
+	^ self userAccount isGroupManager or: (self idGroup isNil) 
+]
+
+{ #category : #accessing }
 ERRegisteredObject >> encodedInvoice [
 	^ encodedInvoice
 ]
@@ -20,6 +32,11 @@ ERRegisteredObject >> encodedInvoice: anObject [
 
 { #category : #accessing }
 ERRegisteredObject >> firstName [ 
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERRegisteredObject >> idGroup [
 	self subclassResponsibility 
 ]
 

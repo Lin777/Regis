@@ -49,11 +49,6 @@ ERConference >> addPayPalComissionOn: amount [
 	^ ((fee payPalCommissionPercentage)/100) * amount + (fee staticCommissionPaypal)
 ]
 
-{ #category : #initialization }
-ERConference >> addPayment: aPayment [
-	payments add: aPayment 
-]
-
 { #category : #accessing }
 ERConference >> addReductionTicket: aReductionTicket [
 	self reductionTicketAlreadyExist: aReductionTicket.
@@ -82,14 +77,6 @@ ERConference >> addUser: anUser [
 ]
 
 { #category : #'as yet unclassified' }
-ERConference >> amountForCurrentDate [
-	self configuration earlyRegistrationDeadline asDate < Date today
-		ifTrue: [ ^ fee lrfAllDaysFee ]
-		ifFalse: [ ^ fee erfAllDaysFee ].
-	^ ERException errorWhenCalculatingPaymentAmount raised
-]
-
-{ #category : #'as yet unclassified' }
 ERConference >> attendeeFromUser: anUser [
 	^ attends detect: [ :each | 
 					each userAccount = anUser ]
@@ -115,14 +102,6 @@ ERConference >> attends: anObject [
 ERConference >> closeRegistration [
 	self configuration openRegistration: false.
 	self save.
-]
-
-{ #category : #'as yet unclassified' }
-ERConference >> conferenceFeeFor: anAttendee [
-	| amount |
-	amount := self amountForCurrentDate.
-	amount := amount + (self costPerExtraPerson: anAttendee).
-	^ self decreaseCouponAmountFor: amount to: anAttendee
 ]
 
 { #category : #initialization }
@@ -468,7 +447,7 @@ ERConference >> openRegistration [
 { #category : #'as yet unclassified' }
 ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
 	| conferenceFee url |
-	conferenceFee := self conferenceFeeFor: anAttendeeOrGroupManager.
+	conferenceFee := self paymentAmountFor: anAttendeeOrGroupManager.
 	url := fee bankPayPalUrl.
 	url := url
 		copyReplaceAll: fee payPalAmountToken
@@ -480,6 +459,15 @@ ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
 				invoiceNumberIfNone: [ self incrementInvoiceNumber ])
 				printString.
 	^ url
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> paymentAmountFor: anAttendee [
+	|  amount |
+	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
+	amount := amount + (self costPerExtraPerson: anAttendee).
+	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	^ amount
 ]
 
 { #category : #accessing }

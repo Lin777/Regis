@@ -38,6 +38,11 @@ ERGroup >> groupManager: anObject [
 	groupManager := anObject
 ]
 
+{ #category : #accessing }
+ERGroup >> idGroup [
+	^ self id
+]
+
 { #category : #'initialize-release' }
 ERGroup >> initialize [
 	super initialize .
