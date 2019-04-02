@@ -39,6 +39,11 @@ ERFinishRegisterPage >> finishAction [
 ]
 
 { #category : #rendering }
+ERFinishRegisterPage >> finishAction: html [
+	self finishRegister
+]
+
+{ #category : #rendering }
 ERFinishRegisterPage >> finishRegister [
 	self subclassResponsibility 
 ]

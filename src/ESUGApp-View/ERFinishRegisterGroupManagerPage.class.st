@@ -27,6 +27,13 @@ ERFinishRegisterGroupManagerPage >> finishRegister [
 ]
 
 { #category : #rendering }
+ERFinishRegisterGroupManagerPage >> finishRegister: html [
+	| user |
+	user := pageController saveGroupManager.
+	self redirectLoggedPage: user
+]
+
+{ #category : #rendering }
 ERFinishRegisterGroupManagerPage >> renderPageOn: html [
 	html mdlGrid
 		noSpacing;

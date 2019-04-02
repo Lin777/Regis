@@ -49,6 +49,11 @@ ERGroup >> initialize [
 	listAttends := OrderedCollection new.
 ]
 
+{ #category : #testing }
+ERGroup >> isAbleToPay [
+	^ paymentInformation hasPaid
+]
+
 { #category : #accessing }
 ERGroup >> lastName [ 
 	^ groupManager userAccount lastName

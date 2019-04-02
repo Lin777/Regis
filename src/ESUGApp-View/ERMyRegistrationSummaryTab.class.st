@@ -31,12 +31,6 @@ ERMyRegistrationSummaryTab >> managerOfInvoice [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> modifyRegistration [
-	"callback := [ self updateMyRegistration ].
-	formWithoutBasicInfo := ERContainerTabs
-		formWithoutBasicInfoOn: attendee
-		withCallback: callback
-		content: content.
-	content state: formWithoutBasicInfo."
 	self modifyRegistrationInformation: attendee.
 	
 ]
@@ -115,6 +109,7 @@ ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html. [
 		raised;
 		rippleEffect;
 		id: 'modifyRegistration';
+		disabled: (attendee isAbleToModifyRegister);
 		callback: [ self modifyRegistration ];
 		with: 'Modify Registration Information'.
 ]
@@ -125,7 +120,7 @@ ERMyRegistrationSummaryTab >> renderPayButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'pay';
-		disabled: (attendee idGroup isNotNil);
+		disabled: (attendee isAbleToPay);
 		callback: [ self pay ];
 		with: 'Pay'.
 ]

@@ -151,6 +151,16 @@ ERAttendee >> initialize [
 	additionalInformation := ERAdditionalInformation new.
 ]
 
+{ #category : #testing }
+ERAttendee >> isAbleToModifyRegister [
+	^ paymentInformation hasPaid
+]
+
+{ #category : #testing }
+ERAttendee >> isAbleToPay [
+	^ (idGroup isNotNil) or: (paymentInformation hasPaid)
+]
+
 { #category : #accessing }
 ERAttendee >> lastName [ 
 	^ userAccount lastName
