@@ -64,6 +64,18 @@ ESUGSetUp class >> addReductionFeeForPlatiniumSponsor: sponsorName forConference
 	conference addReductionTicket: platiniumSponsorReductionTicket
 ]
 
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> addStudentVolunterTicketTo: conference [
+	|studentVolunteerReductionTicket|
+   "students"
+	studentVolunteerReductionTicket := ERReductionTicket new
+		ticketId: 'students' , (1 to: 9999) atRandom asString;
+		discountStrategy: (ERPercentageDiscount of: 100);
+		limitStrategy: (ERLimitedReductionTicketUse of: 15); save.
+	conference
+		addReductionTicket: studentVolunteerReductionTicket.
+]
+
 { #category : #accessing }
 ESUGSetUp class >> configurationOfHome [
 	^ (ERConfigurationOfHomePage new 
@@ -79,19 +91,6 @@ ESUGSetUp class >> configurationOfHome [
 <p>This is the 27<sup>th</sup> ESUG Conference, and it promises to be one of the best in its successful history.</p>
 <p>We hope to see you there!</p>
 </article>')
-]
-   
-  
-{ #category : #configurationOfReductionTickets }
-ESUGSetUp class >> addStudentVolunterTicketTo: conference [
-	|studentVolunteerReductionTicket|
-   "students"
-	studentVolunteerReductionTicket := ERReductionTicket new
-		ticketId: 'students' , (1 to: 9999) atRandom asString;
-		discountStrategy: (ERPercentageDiscount of: 100);
-		limitStrategy: (ERLimitedReductionTicketUse of: 15); save.
-	conference
-		addReductionTicket: studentVolunteerReductionTicket.
 ]
 
 { #category : #configurationOfFee }
@@ -132,6 +131,7 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 	conference := ERConference new
 		configuration: esugConferenceConfiguration;
 		save.
+	conference configurationOfHomePage: self configurationOfHome.
 	adminPassword := '12345678'.
 	conference
 		addUser: (self createAdminUserWithPassword: adminPassword);
