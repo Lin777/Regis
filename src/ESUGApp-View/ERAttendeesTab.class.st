@@ -67,35 +67,40 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :user | self modifyRegistrationInformation: user ]
 				with: [ :user | user id , '-modify' ]
 				with: 'Modify'
-				with: '');
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'delete'
 				with: [ :user | self deleteAttendee: user ]
 				with: [ :user | user id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');');
+				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with:  false);
 		add:
 			(Array
 				with: 'person'
 				with: [ :user | self modifyUserFormGroup: user userAccount]
 				with: [ :user | user id , '-modifyUser' ]
 				with: 'Modify User'
-				with: '');
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'payment'
 				with: [ :user | self applyReductionTicketTo: user ]
 				with: [ :user | user id , '-applyReduction' ]
 				with: 'Apply reduction'
-				with: '');
+				with: ''
+				with:  false);
 		add:
 			(Array
 				with: 'send'
 				with: [ :user | self sendInvoiceTo: user]
 				with: [ :user | user id , '-sendInvoice' ]
 				with: 'Send invoice'
-				with: '');
+				with: ''
+				with: false);
 		yourself
 ]
 

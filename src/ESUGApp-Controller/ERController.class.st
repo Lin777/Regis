@@ -31,23 +31,13 @@ ERController >> addAttendee: anAttendee [
 
 { #category : #adding }
 ERController >> addAward: anAward [
-	anAward submittionDate: Date today.
-	conference addSubmittedAward: anAward save.
+	conference addSubmittedAward: anAward.
 	self notifyAllObservers .
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> addPayPalComissionIfApplyOn: amount of: anAttendee [
-	((self applyToAddComission: anAttendee )
-		and: [ anAttendee paymentInformation paymentTypeIsCreditCard ])
-		ifTrue: [ ^ (amount + (conference addPayPalComissionOn: amount))].
-	^ amount
 ]
 
 { #category : #adding }
 ERController >> addTalk: aTalk [
-	aTalk submittionDate: Date today.
-	conference addSubmittedTalk: aTalk save.
+	conference addSubmittedTalk: aTalk.
 	self notifyAllObservers .
 ]
 
@@ -58,7 +48,7 @@ ERController >> amountOfPayToGroup: list [
 	list
 		do: [ :each | 
 			| amount |
-			amount := conference conferenceFeeFor: each.
+			amount := conference paymentAmountFor: each.
 			generalAmount := generalAmount + amount ].
 	^ generalAmount.
 	
@@ -74,12 +64,6 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 		ifTrue: [anAttendee paymentInformation coupon: aTicket].
 		 ].
 	self updateAttendee: anAttendee.
-]
-
-{ #category : #'as yet unclassified' }
-ERController >> applyToAddComission: anObject [
-	anObject userAccount isGroupManager ifTrue: [ ^ true ].
-	^ anObject idGroup isNil
 ]
 
 { #category : #'as yet unclassified' }
@@ -220,19 +204,18 @@ ERController >> updateGroup: aGroup [
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
-	amount := (conference priceAccordingToAttendanceDaysOf: anAttendee).
-	amount := amount + (conference costPerExtraPerson: anAttendee).
-	amount := conference decreaseCouponAmountFor: amount to: anAttendee.
-	amount :=self addPayPalComissionIfApplyOn: amount of: anAttendee.
-	anAttendee paymentInformation paymentAmount: amount
+	amount := conference paymentAmountFor: anAttendee .
+	anAttendee paymentInformation paymentAmount: amount.
+	anAttendee addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
 ]
 
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRateForGroup: aGroup [ 
 	| amount |
 	amount := aGroup totalAmount.
-	amount := self addPayPalComissionIfApplyOn: amount of: aGroup.
 	aGroup paymentInformation paymentAmount: amount.
+	aGroup addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
+	
 ]
 
 { #category : #rendering }

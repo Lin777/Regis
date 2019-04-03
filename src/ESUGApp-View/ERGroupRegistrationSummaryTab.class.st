@@ -140,8 +140,7 @@ ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
 ERGroupRegistrationSummaryTab >> renderOrganizationNameOn: html [
 	html
 		paragraph: [ html strong: 'Organization Name: '.
-			html text: (self groupManager affiliationInformation organizationName) ]."
-	self createTextStrong: 'Organization Name: ' with: #orgName on: html"
+			html text: (self groupManager affiliationInformation organizationName) ]
 ]
 
 { #category : #rendering }
@@ -150,6 +149,7 @@ ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'pay';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self pay ];
 		with: 'Pay'
 ]

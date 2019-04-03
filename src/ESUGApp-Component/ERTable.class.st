@@ -92,6 +92,7 @@ ERTable >> renderButton: html with: aObject [
 			html mdlAnchorButton colored; rippleEffect;
 				id: (dataButton third value: aObject);
 				onClick: dataButton fifth ;
+				disabled: (dataButton sixth ifTrue: 'disabled');
 				callback: [ dataButton second value: aObject ];
 				icon: dataButton first.
 			html div	class: 'mdl-tooltip'; 

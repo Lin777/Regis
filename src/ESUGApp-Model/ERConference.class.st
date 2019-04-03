@@ -50,11 +50,6 @@ ERConference >> addPayPalComissionOn: amount [
 	^ ((fee payPalCommissionPercentage)/100) * amount + (fee staticCommissionPaypal)
 ]
 
-{ #category : #initialization }
-ERConference >> addPayment: aPayment [
-	payments add: aPayment 
-]
-
 { #category : #accessing }
 ERConference >> addReductionTicket: aReductionTicket [
 	self reductionTicketAlreadyExist: aReductionTicket.
@@ -65,27 +60,21 @@ ERConference >> addReductionTicket: aReductionTicket [
 
 { #category : #accessing }
 ERConference >> addSubmittedAward: aSubmittedAward [
-	submittedAwards add: aSubmittedAward .
+	aSubmittedAward submittionDate: Date today.
+	submittedAwards add: aSubmittedAward save.
 	self save.
 ]
 
 { #category : #accessing }
 ERConference >> addSubmittedTalk: aSubmittedTalk [
-	submittedTalks add: aSubmittedTalk .
+	aSubmittedTalk submittionDate: Date today.
+	submittedTalks add: aSubmittedTalk save.
 	self save.
 ]
 
 { #category : #accessing }
 ERConference >> addUser: anUser [
 	users add: anUser 
-]
-
-{ #category : #'as yet unclassified' }
-ERConference >> amountForCurrentDate [
-	self configuration earlyRegistrationDeadline asDate < Date today
-		ifTrue: [ ^ fee lrfAllDaysFee ]
-		ifFalse: [ ^ fee erfAllDaysFee ].
-	^ ERException errorWhenCalculatingPaymentAmount raised
 ]
 
 { #category : #'as yet unclassified' }
@@ -114,14 +103,6 @@ ERConference >> attends: anObject [
 ERConference >> closeRegistration [
 	self configuration openRegistration: false.
 	self save.
-]
-
-{ #category : #'as yet unclassified' }
-ERConference >> conferenceFeeFor: anAttendee [
-	| amount |
-	amount := self amountForCurrentDate.
-	amount := amount + (self costPerExtraPerson: anAttendee).
-	^ self decreaseCouponAmountFor: amount to: anAttendee
 ]
 
 { #category : #initialization }
@@ -495,6 +476,32 @@ ERConference >> isEarlyRegistrationOf: anAttendee [
 ERConference >> openRegistration [
 	self configuration openRegistration: true.
 	self save.
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
+	| conferenceFee url |
+	conferenceFee := self paymentAmountFor: anAttendeeOrGroupManager.
+	url := fee bankPayPalUrl.
+	url := url
+		copyReplaceAll: fee payPalAmountToken
+		with: (conferenceFee printShowingDecimalPlaces: 2).
+	url := url
+		copyReplaceAll: fee payPalInvoiceNumberToken
+		with:
+			(anAttendeeOrGroupManager paymentInformation
+				invoiceNumberIfNone: [ self incrementInvoiceNumber ])
+				printString.
+	^ url
+]
+
+{ #category : #'as yet unclassified' }
+ERConference >> paymentAmountFor: anAttendee [
+	|  amount |
+	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
+	amount := amount + (self costPerExtraPerson: anAttendee).
+	amount := self decreaseCouponAmountFor: amount to: anAttendee.
+	^ amount
 ]
 
 { #category : #accessing }

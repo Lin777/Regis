@@ -1,14 +1,12 @@
 Class {
 	#name : #ERAttendee,
-	#superclass : #SDActiveRecord,
+	#superclass : #ERRegisteredObject,
 	#instVars : [
 		'userAccount',
 		'contactInformation',
 		'conferenceInformation',
 		'affiliationInformation',
 		'additionalInformation',
-		'paymentInformation',
-		'encodedInvoice',
 		'idGroup'
 	],
 	#category : #'ESUGApp-Model-Magritte'
@@ -113,16 +111,6 @@ ERAttendee >> descriptionUser [
 ]
 
 { #category : #accessing }
-ERAttendee >> encodedInvoice [
-	^ encodedInvoice
-]
-
-{ #category : #accessing }
-ERAttendee >> encodedInvoice: anObject [
-	encodedInvoice := anObject
-]
-
-{ #category : #accessing }
 ERAttendee >> firstName [ 
 	^ userAccount firstName
 ]
@@ -154,12 +142,16 @@ ERAttendee >> initialize [
 	conferenceInformation := ERRegisterConferenceInformation new.
 	affiliationInformation := ERAffiliationInformation new.
 	additionalInformation := ERAdditionalInformation new.
-	paymentInformation := ERPaymentInformation new.
 ]
 
-{ #category : #accessing }
-ERAttendee >> invoiceNumber [
-	^ paymentInformation invoiceNumber 
+{ #category : #testing }
+ERAttendee >> isAbleToModifyRegister [
+	^ paymentInformation hasPaid
+]
+
+{ #category : #testing }
+ERAttendee >> isAbleToPay [
+	^ (idGroup isNotNil) or: (paymentInformation hasPaid)
 ]
 
 { #category : #accessing }
@@ -185,26 +177,6 @@ ERAttendee >> organizationName [
 { #category : #accessing }
 ERAttendee >> organizationPostal [
 	^ affiliationInformation organizationPostal 
-]
-
-{ #category : #accessing }
-ERAttendee >> paymentAmount [
-	^ paymentInformation paymentAmount
-]
-
-{ #category : #accessing }
-ERAttendee >> paymentAmount: anObject [
-	^ paymentInformation paymentAmount: anObject
-]
-
-{ #category : #accessing }
-ERAttendee >> paymentInformation [
-	^ paymentInformation
-]
-
-{ #category : #accessing }
-ERAttendee >> paymentInformation: anObject [
-	paymentInformation := anObject
 ]
 
 { #category : #'as yet unclassified' }

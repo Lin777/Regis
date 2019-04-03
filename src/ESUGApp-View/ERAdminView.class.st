@@ -26,7 +26,6 @@ ERAdminView class >> on: anAttendee withContent: aContent withController: aContr
 ERAdminView >> addTabsForAdmin [
 	controller := ERConfigurationController new.
 	self renderBackupTab.
-	self renderRestoreTab.
 	self renderOpenCloseRegistration.
 ]
 
@@ -111,21 +110,6 @@ ERAdminView >> renderOpenCloseRegistration [
 				callbackNo: [ :aTab | self cancel: aTab ])
 ]
 
-{ #category : #initialization }
-ERAdminView >> renderRestoreTab [
-	tabs add:
-			((ERYesNoTab on: attendee withContent: content container: self)
-				tabId: 'tabRestore';
-				tabName: 'Restore';
-				titleTrue: self titleRestore;
-				callbackTrue: callbackYes ;
-				callbackNo: callbackNo )
-]
-
-{ #category : #initialization }
-ERAdminView >> restoreToLastBackup [
-]
-
 { #category : #accessing }
 ERAdminView >> tabs [
 	^ tabs
@@ -148,11 +132,4 @@ ERAdminView >> titleOpenClose [
 			 ^ 'Registration is opened. Are you sure you want close it?' ]
 		ifFalse: [ callbackYes := [ :aTab | self openRegistration. self cancel: aTab ].
 			 ^ 'Registration is closed. Are you sure you want open it?' ]
-]
-
-{ #category : #initialization }
-ERAdminView >> titleRestore [
-	callbackYes := [:aTab | self restoreToLastBackup. self cancel: aTab ].
-	callbackNo := [:aTab | self cancel: aTab ].
-	^ 'Are you sure you want to restore the last backup? The current ata will be lost'
 ]

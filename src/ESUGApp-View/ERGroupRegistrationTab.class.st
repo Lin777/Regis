@@ -2,7 +2,8 @@ Class {
 	#name : #ERGroupRegistrationTab,
 	#superclass : #ERContainerTab,
 	#instVars : [
-		'newAttendee'
+		'newAttendee',
+		'group'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -30,7 +31,8 @@ ERGroupRegistrationTab >> cancel [
 
 { #category : #accessing }
 ERGroupRegistrationTab >> group [
-	^ controller conference groupOfUser: attendee
+	group ifNil: [ group := controller conference groupOfUser: attendee ].
+	^ group
 		
 ]
 

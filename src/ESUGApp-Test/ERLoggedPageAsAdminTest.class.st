@@ -306,13 +306,6 @@ ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
 ]
 
 { #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> testAdminOptionTabRestore [
-	self pressOptionAdmin .
-	self selectTabRestore .
-	self shouldnt: [ driver findElementByID: 'yes-tabRestore' ] raise: BPNoSuchElementException
-]
-
-{ #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
 	self pressOptionAdmin.
 	self assert: (self textOfTagName: 'h3') equals: 'User'

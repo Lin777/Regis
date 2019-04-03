@@ -1,11 +1,9 @@
 Class {
 	#name : #ERGroup,
-	#superclass : #SDActiveRecord,
+	#superclass : #ERRegisteredObject,
 	#instVars : [
 		'groupManager',
-		'listAttends',
-		'paymentInformation',
-		'encodedInvoice'
+		'listAttends'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -26,16 +24,6 @@ ERGroup >> deleteAttendee: anAttendee [
 ]
 
 { #category : #accessing }
-ERGroup >> encodedInvoice [
-	^ encodedInvoice
-]
-
-{ #category : #accessing }
-ERGroup >> encodedInvoice: anObject [
-	encodedInvoice := anObject
-]
-
-{ #category : #accessing }
 ERGroup >> firstName [ 
 	^ groupManager userAccount firstName
 ]
@@ -50,16 +38,20 @@ ERGroup >> groupManager: anObject [
 	groupManager := anObject
 ]
 
+{ #category : #accessing }
+ERGroup >> idGroup [
+	^ self id
+]
+
 { #category : #'initialize-release' }
 ERGroup >> initialize [
 	super initialize .
 	listAttends := OrderedCollection new.
-	paymentInformation := ERPaymentInformation new.
 ]
 
-{ #category : #accessing }
-ERGroup >> invoiceNumber [
-	^ paymentInformation invoiceNumber 
+{ #category : #testing }
+ERGroup >> isAbleToPay [
+	^ paymentInformation hasPaid
 ]
 
 { #category : #accessing }
@@ -95,26 +87,6 @@ ERGroup >> organizationName [
 { #category : #accessing }
 ERGroup >> organizationPostal [
 	^ groupManager affiliationInformation organizationPostal 
-]
-
-{ #category : #accessing }
-ERGroup >> paymentAmount [
-	^ paymentInformation paymentAmount
-]
-
-{ #category : #accessing }
-ERGroup >> paymentAmount: anObject [
-	^ paymentInformation paymentAmount: anObject
-]
-
-{ #category : #accessing }
-ERGroup >> paymentInformation [
-	^ paymentInformation
-]
-
-{ #category : #accessing }
-ERGroup >> paymentInformation: anObject [
-	paymentInformation := anObject
 ]
 
 { #category : #accessing }

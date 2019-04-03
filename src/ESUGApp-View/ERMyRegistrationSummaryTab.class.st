@@ -109,6 +109,7 @@ ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html. [
 		raised;
 		rippleEffect;
 		id: 'modifyRegistration';
+		disabled: (attendee isAbleToModifyRegister ifTrue: 'disabled');
 		callback: [ self modifyRegistration ];
 		with: 'Modify Registration Information'.
 ]
@@ -119,7 +120,7 @@ ERMyRegistrationSummaryTab >> renderPayButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'pay';
-		disabled: (attendee idGroup isNotNil);
+		disabled: (attendee isAbleToPay ifTrue: 'disabled');
 		callback: [ self pay ];
 		with: 'Pay'.
 ]

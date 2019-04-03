@@ -4,13 +4,45 @@ Class {
 	#category : #'ESUGApp-Core'
 }
 
-{ #category : #accessing }
+{ #category : #conferenceConfiguration }
 ESUGSetUp class >> activateOnlyThisConference: aConference [
 	ERConference findAll do: [ :each | each active: false ].
 	aConference active: true; save
 ]
 
-{ #category : #accessing }
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> addFreeEntranceTicketTo: conference [
+	|freeEntranceReductionTicket|
+	"free entrance"
+	freeEntranceReductionTicket := ERReductionTicket new
+		ticketId: 'free' , (1 to: 9999) atRandom asString;
+		discountStrategy: (ERPercentageDiscount of: 100) ;
+		limitStrategy: (ERLimitedReductionTicketUse of: 1) ; save.
+	conference
+		addReductionTicket: freeEntranceReductionTicket.
+]
+
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> addGoldSponsorsTo: conference [
+   "gold sponsors"
+  #(stic heegek deltalloyd)
+		do: [ :sponsorName | 
+			self
+				addReductionFeeForGoldSponsor: sponsorName asString
+				forConference: conference ]
+]
+
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> addPlatiniumSponsorsTo: conference [
+   "platinium sponsors"
+	#(cincom instantiations gemtalk)
+		do: [ :sponsorName | 
+			self
+				addReductionFeeForPlatiniumSponsor: sponsorName asString
+				forConference: conference ].
+]
+
+{ #category : #configurationOfReductionTickets }
 ESUGSetUp class >> addReductionFeeForGoldSponsor: sponsorName forConference: conference [
 	| goldSponsorReductionTicket |
 	"10% to 5 at most"
@@ -21,7 +53,7 @@ ESUGSetUp class >> addReductionFeeForGoldSponsor: sponsorName forConference: con
 	conference addReductionTicket: goldSponsorReductionTicket
 ]
 
-{ #category : #accessing }
+{ #category : #configurationOfReductionTickets }
 ESUGSetUp class >> addReductionFeeForPlatiniumSponsor: sponsorName forConference: conference [
 	| platiniumSponsorReductionTicket |
 	"20% to 10 at most"
@@ -48,11 +80,68 @@ ESUGSetUp class >> configurationOfHome [
 <p>We hope to see you there!</p>
 </article>')
 ]
+   
+  
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> addStudentVolunterTicketTo: conference [
+	|studentVolunteerReductionTicket|
+   "students"
+	studentVolunteerReductionTicket := ERReductionTicket new
+		ticketId: 'students' , (1 to: 9999) atRandom asString;
+		discountStrategy: (ERPercentageDiscount of: 100);
+		limitStrategy: (ERLimitedReductionTicketUse of: 15); save.
+	conference
+		addReductionTicket: studentVolunteerReductionTicket.
+]
 
-{ #category : #accessing }
+{ #category : #configurationOfFee }
 ESUGSetUp class >> configureESUGFeesForConference: conference [
-	| esugEuroBankAccountInformation esugEuroFee |
-	esugEuroBankAccountInformation := ERBankAccountInformation new
+	conference fee: self createFee
+]
+
+{ #category : #configurationOfReductionTickets }
+ESUGSetUp class >> configureESUGReductionCodesForConference: conference [
+
+	"students"
+	self addStudentVolunterTicketTo: conference.
+
+	"free entrance"
+	self addFreeEntranceTicketTo: conference.
+
+	"platinium sponsors"
+	self addPlatiniumSponsorsTo: conference.
+
+	"gold sponsors"
+	self addGoldSponsorsTo: conference
+]
+
+{ #category : #conferenceConfiguration }
+ESUGSetUp class >> createAdminUserWithPassword: adminPassword [
+	^ ERUserAccount new
+		firstName: 'Admin';
+		lastName: 'Admin';
+		password: (ERUserAccount hashPassword: adminPassword) asString;
+		email: 'admin@esug.org';
+		role: ERUserAccount adminRole;
+		save.
+]
+
+{ #category : #conferenceConfiguration }
+ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceConfiguration atEntryPoint: entryPoint [
+	| conference adminPassword  |
+	conference := ERConference new
+		configuration: esugConferenceConfiguration;
+		save.
+	adminPassword := '12345678'.
+	conference
+		addUser: (self createAdminUserWithPassword: adminPassword);
+		save.
+	^ conference
+]
+
+{ #category : #configurationOfFee }
+ESUGSetUp class >> createBankAccountInformation [
+	^ ERBankAccountInformation new
 		owner: 'ESUG - EUROPEAN SMALLTALK USERS GROUP';
 		number: 'W751167780';
 		iban: 'FR76 1562 9027 0100 0433 0600 144';
@@ -68,7 +157,43 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 92 rue de Paris
 59500 Douai
 ').
-	esugEuroFee := ERFee new
+]
+
+{ #category : #conferenceConfiguration }
+ESUGSetUp class >> createESUGConfiguration [
+	^ ERConferenceConfigurationModel new
+		organizer: self createEsugConferenceOrganizer;
+		name: 'ESUG';
+		description: 'ESUG International Smalltalk Conference';
+		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
+		dateFrom: '09/10/2019';
+		dateTo: '09/14/2019';
+		dateSubmissionDeadline:  '09/14/2019';
+		earlyRegistrationDeadline: '07/25/2019';
+		emailConfiguration: self createEsugEmailConfiguration
+]
+
+{ #category : #conferenceConfiguration }
+ESUGSetUp class >> createEsugConferenceOrganizer [
+	^ ERConferenceOrganizer new
+		name: 'ESUG';
+		fiscalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
+		webPageUrl: 'http://www.esug.org';
+		addressString:
+			'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'.
+]
+
+{ #category : #conferenceConfiguration }
+ESUGSetUp class >> createEsugEmailConfiguration [
+	^ ERConferenceEmailConfiguration new
+		senderEmailAddress: 'dev@esug.org';
+		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71';
+		welcomeText: 'Welcome to this great conference'.
+]
+
+{ #category : #configurationOfFee }
+ESUGSetUp class >> createFee [
+	^ ERFee new
 		erfAllDaysFee: 470;
 		erfOneDayFee: 170;
 		lrfAllDaysFee: 660;
@@ -77,99 +202,12 @@ ESUGSetUp class >> configureESUGFeesForConference: conference [
 		currency: 'Euro';
 		payPalCommissionPercentage: 5.4;
 		staticCommissionPaypal: 0.3;
-		bankAccountInformation: esugEuroBankAccountInformation;
+		bankAccountInformation: self createBankAccountInformation;
 		bankPayPalUrl:
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=board%40esug.org&item_name=ESUG+Conference+Registration&item_number=[INVOICENUMBER]&amount=[AMOUNT]&no_shipping=1&no_note=1&currency_code=EUR&charset=UTF-8'; save.
-	conference fee: esugEuroFee
 ]
 
-{ #category : #accessing }
-ESUGSetUp class >> configureESUGReductionCodesForConference: conference [
-	| studentVolunteerReductionTicket platiniumSponsors goldSponsors |
-	"students"
-	studentVolunteerReductionTicket := ERReductionTicket new
-		ticketId: 'students' , (1 to: 9999) atRandom asString;
-		discountStrategy: (ERPercentageDiscount of: 100);
-		limitStrategy: (ERLimitedReductionTicketUse of: 15); save.
-	conference
-		addReductionTicket: studentVolunteerReductionTicket.
-
-	"free entrance"
-	studentVolunteerReductionTicket := ERReductionTicket new
-		ticketId: 'free' , (1 to: 9999) atRandom asString;
-		discountStrategy: (ERPercentageDiscount of: 100) ;
-		limitStrategy: (ERLimitedReductionTicketUse of: 1) ; save.
-	conference
-		addReductionTicket: studentVolunteerReductionTicket.
-
-	"platinium sponsors"
-	platiniumSponsors := #(cincom instantiations gemtalk).
-	platiniumSponsors
-		do: [ :sponsorName | 
-			self
-				addReductionFeeForPlatiniumSponsor: sponsorName asString
-				forConference: conference ].
-
-	"gold sponsors"
-	goldSponsors := #(stic heegek deltalloyd).
-	goldSponsors
-		do: [ :sponsorName | 
-			self
-				addReductionFeeForGoldSponsor: sponsorName asString
-				forConference: conference ]
-]
-
-{ #category : #accessing }
-ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceConfiguration atEntryPoint: entryPoint [
-	| conference adminPassword adminUser |
-	conference := ERConference new
-		configuration: esugConferenceConfiguration;
-		save.
-	conference configurationOfHomePage: self configurationOfHome.
-	adminPassword := '12345678'.
-	adminUser := ERUserAccount new
-		firstName: 'Admin';
-		lastName: 'Admin';
-		password: (ERUserAccount hashPassword: adminPassword) asString;
-		email: 'admin@esug.org';
-		role: ERUserAccount adminRole;
-		save.
-	conference
-		addUser: adminUser;
-		save.
-	^ conference
-]
-
-{ #category : #accessing }
-ESUGSetUp class >> createESUGConfiguration [
-	| esugEmailConfiguration conferenName esugOrganizer |
-	
-	esugEmailConfiguration := ERConferenceEmailConfiguration new
-		senderEmailAddress: 'dev@esug.org';
-		apiKey: '3d9cd16a-3d91-4a2d-a4e3-1c8644767d71';
-		welcomeText: 'Welcome to this great conference'.
-	
-	esugOrganizer := ERConferenceOrganizer new
-		name: 'ESUG';
-		fiscalSituation: 'Association Loi 1901 n°W751167780 (not subjected to  V.A.T.)';
-		webPageUrl: 'http://www.esug.org';
-		addressString:
-			'c/o Mr. Stéphane Ducasse - 1 rue Cesar Franck 59800 Lille - France'.
-		
-	conferenName := 'ESUG'.
-	^ ERConferenceConfigurationModel new
-		organizer: esugOrganizer;
-		name: conferenName;
-		description: 'ESUG International Smalltalk Conference';
-		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
-		dateFrom: '09/10/2019';
-		dateTo: '09/14/2019';
-		dateSubmissionDeadline:  '09/14/2019';
-		earlyRegistrationDeadline: '07/25/2019';
-		emailConfiguration: esugEmailConfiguration
-]
-
-{ #category : #accessing }
+{ #category : #backupAndRestoreData }
 ESUGSetUp class >> existBackupToRestart [
 	|path|
 	path := (Smalltalk imageDirectory / 'Backup').
@@ -177,7 +215,7 @@ ESUGSetUp class >> existBackupToRestart [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #installationOfConflictLibraries }
 ESUGSetUp class >> initialize [
 	self installDependencesWithConflicts
 ]
@@ -195,7 +233,7 @@ ESUGSetUp class >> initializeDataFromScratch [
 	self activateOnlyThisConference: conference
 ]
 
-{ #category : #accessing }
+{ #category : #installationOfConflictLibraries }
 ESUGSetUp class >> installArtefact [
 	Metacello new
         githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
@@ -204,7 +242,7 @@ ESUGSetUp class >> installArtefact [
         load: #('default' 'seaside').
 ]
 
-{ #category : #accessing }
+{ #category : #installationOfConflictLibraries }
 ESUGSetUp class >> installDependencesWithConflicts [
 	self installMagritte.
 	self installMDLForMagritte.
@@ -212,7 +250,7 @@ ESUGSetUp class >> installDependencesWithConflicts [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #installationOfConflictLibraries }
 ESUGSetUp class >> installMDLForMagritte [
 	Metacello new 
 		baseline: 'MaterialDesignLite'; 
@@ -221,7 +259,7 @@ ESUGSetUp class >> installMDLForMagritte [
 		load: 'all'
 ]
 
-{ #category : #accessing }
+{ #category : #installationOfConflictLibraries }
 ESUGSetUp class >> installMagritte [
 	Metacello new
 	baseline: 'Magritte';
@@ -230,7 +268,7 @@ ESUGSetUp class >> installMagritte [
 		load: #('Magritte-Seaside')
 ]
 
-{ #category : #accessing }
+{ #category : #backupAndRestoreData }
 ESUGSetUp class >> restoreData [
 	[ERBackupRestore uniqueInstance restoreBackup ]
 	on: Exception 

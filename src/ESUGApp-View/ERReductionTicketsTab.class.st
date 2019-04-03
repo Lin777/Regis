@@ -86,21 +86,24 @@ ERReductionTicketsTab >> listDataToRenderButton [
 				with: [ :anTicket | self modifyTicket: anTicket ]
 				with: [ :anTicket | anTicket id , '-modify' ]
 				with: 'Modify'
-				with: '');
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'delete'
 				with: [ :anTicket | self deleteTicket: anTicket ]
 				with: [ :anTicket | anTicket id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');');
+				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: false);
 		add:
 			(Array
 				with: 'list'
 				with: [ :anTicket | self listOfTicket: anTicket ]
 				with: [ :anTicket | anTicket id , '-list' ]
 				with: 'List of Assistants'
-				with: '');
+				with: ''
+				with: false);
 		yourself
 ]
 
