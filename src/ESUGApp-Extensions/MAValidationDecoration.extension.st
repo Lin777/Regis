@@ -4,7 +4,6 @@ Extension { #name : #MAValidationDecoration }
 MAValidationDecoration >> renderErrorsOn: html [
 	html break .
 	html div class: 'errors'; with:[
-	html unorderedList
-		list: self errors;
-		with: nil]
+		self errors do: [:error | html render: error]
+	]
 ]

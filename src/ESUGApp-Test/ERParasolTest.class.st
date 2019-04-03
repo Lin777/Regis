@@ -36,7 +36,7 @@ ERParasolTest >> downloadFileOf: href to: directory [
 
 { #category : #'as yet unclassified' }
 ERParasolTest >> getTextOfError [
-	^ (((((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li')findElementByTagName: 'ul')findElementByTagName: 'li') getText
+	^ (((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li') getText
 ]
 
 { #category : #'as yet unclassified' }
