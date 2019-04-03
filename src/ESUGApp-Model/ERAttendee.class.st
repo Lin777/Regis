@@ -84,13 +84,6 @@ ERAttendee >> daysOfAssistance [
 		values count: [ :each | each ])
 ]
 
-{ #category : #'as yet unclassified' }
-ERAttendee >> deleteAttendeeRole [
-	self userAccount isAttendee ifTrue: [
-		self userAccount deleteRole: 'attendee'
-	]
-]
-
 { #category : #accessing }
 ERAttendee >> descriptionAdd [
 	<magritteDescription>
@@ -190,6 +183,12 @@ ERAttendee >> organizationPostal [
 ERAttendee >> removeStudentVolunterRole [
 	self userAccount isStudent ifTrue: [
 	(self userAccount) deleteRole: 'studentVolunter'; save. ]
+]
+
+{ #category : #'as yet unclassified' }
+ERAttendee >> updateValuesFor: aGroup [
+	self paymentInformation invoiceNumber: aGroup paymentInformation invoiceNumber.
+	self idGroup: aGroup id.
 ]
 
 { #category : #accessing }

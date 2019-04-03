@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a personalized mdlNavigation for page.
+"
 Class {
 	#name : #ERNav,
 	#superclass : #WAComponent,

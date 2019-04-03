@@ -161,7 +161,7 @@ ERTest class >> testTalk: anAttendee [
 	^ (ERTalk submitter: anAttendee) 
 			name: 'Talk test';
 			description: 'Description test';
-			presentation: 'Test Org.';
+			presentation: 'https://www.google.com/';
 			authorsWithoutSubmitter: nil;
 			submittionDate: Date today;
 			yourself 

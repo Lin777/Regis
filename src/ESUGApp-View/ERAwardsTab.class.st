@@ -12,15 +12,6 @@ ERAwardsTab >> awards [
 	^ controller conference submittedAwards
 ]
 
-{ #category : #rendering }
-ERAwardsTab >> blockTableToExecute [
-	^ [ :award | 
-	OrderedCollection new
-		add: ([ :att | att nameAward ] value: award);
-		add: ([ :att | att submitter userAccount email ] value: award);
-		yourself ]
-]
-
 { #category : #'as yet unclassified' }
 ERAwardsTab >> exportAwards [
 	| file |
@@ -30,12 +21,21 @@ ERAwardsTab >> exportAwards [
 
 { #category : #rendering }
 ERAwardsTab >> headers [
-	^ #('Name'	'Submitted By' '')
+	^ #('Name'	'Submitted By' 'Download URL' 'Demo URL' '')
 ]
 
 { #category : #rendering }
 ERAwardsTab >> listDataToRenderButton [
 	^ OrderedCollection new
+		add:
+			(Array
+				with: 'delete'
+				with: [ :award | self deleteAward: award.
+					self updateStateTab: self tabName. ]
+				with: [ :award | award id , '-delete' ]
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
+		yourself
 ]
 
 { #category : #rendering }
@@ -60,7 +60,7 @@ ERAwardsTab >> renderTableOfAwardsOn: html [
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self awards;
-		blockToExecute: self blockTableToExecute;
+		blockToExecute: self blockTableAwardsToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
 ]

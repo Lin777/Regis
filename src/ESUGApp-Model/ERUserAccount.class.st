@@ -99,6 +99,18 @@ ERUserAccount >> confirmPassword: anObject [
 	confirmPassword := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERUserAccount >> convertAttendee [
+	self isAttendee ifFalse: [ self roleAdd: 'attendee' ]
+]
+
+{ #category : #'as yet unclassified' }
+ERUserAccount >> deleteAttendeeRole [
+	self isAttendee ifTrue: [
+		self deleteRole: 'attendee'
+	]
+]
+
 { #category : #testing }
 ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]

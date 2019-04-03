@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a container in tab
+"
 Class {
 	#name : #ERContentTab,
 	#superclass : #ERTab,

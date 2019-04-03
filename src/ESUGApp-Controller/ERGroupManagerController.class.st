@@ -25,14 +25,12 @@ ERGroupManagerController >> addAttendee: anAttendee [
 { #category : #adding }
 ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	| anAttendeeSaved |
-	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
-	(anAttendee userAccount) roleAdd: 'attendee'; save.
-	anAttendee idGroup: self group id.
-	"Prueba"
+	anAttendee updateValuesFor: self group.
+	(anAttendee userAccount) convertAttendee; save.
 	self updatePaymentRate: anAttendee.
 	anAttendeeSaved := anAttendee save.
-	conference addAttendee: anAttendeeSaved.
 	self group addAttendee: anAttendeeSaved.
+	(conference attends) add: anAttendeeSaved.
 	conference save.
 	self notifyAllObservers .
 	^ self updateGroup: self group

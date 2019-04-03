@@ -10,7 +10,9 @@ Class {
 		'attenteeRegisterForm',
 		'formApplyReductionTicket',
 		'formMofidyAffiliation',
-		'table'
+		'table',
+		'formAward',
+		'formTalk'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -34,6 +36,33 @@ ERContainerTab >> applyReductionTicketTo: user [
 	self initializeApplyReductionTicketForm: user.
 	content state: formApplyReductionTicket .
 	self updateStateTab: self tabName.
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> blockTableAwardsToExecute [
+	^ [ :award :html | 
+	OrderedCollection new
+		add: ([ :att | att nameAward ] value: award);
+		add: ([ :att | att submitter userAccount email ] value: award);
+		add: ([ :att :aHtml | [ aHtml anchor target: '_blank';
+				url: award downloadUrl; 
+				with: award downloadUrl ] ] valueWithArguments: {award. html});
+		add: ([ :att :aHtml | [ aHtml anchor target: '_blank';
+				url: award demoUrl; 
+				with: award demoUrl ] ] valueWithArguments: {award. html});
+		yourself ]
+]
+
+{ #category : #'as yet unclassified' }
+ERContainerTab >> blockTableTalksToExecute [
+	^ [ :talk :html| 
+	OrderedCollection new
+		add: ([ :att | att name ] value: talk);
+		add: ([ :att | att submitter userAccount email ] value: talk);
+		add: ([ :att :aHtml | [ aHtml anchor target: '_blank';
+				url: talk presentation; 
+				with: talk presentation ] ] valueWithArguments: {talk. html});
+		yourself ]
 ]
 
 { #category : #accessing }
@@ -82,6 +111,16 @@ ERContainerTab >> controller: anObject [
 ]
 
 { #category : #rendering }
+ERContainerTab >> deleteAward: anAward [
+	controller deleteAward: anAward
+]
+
+{ #category : #rendering }
+ERContainerTab >> deleteTalk: aTalk [
+	controller deleteTalk: aTalk
+]
+
+{ #category : #rendering }
 ERContainerTab >> exportInvoiceOf: groupOrAttendee [
 	self requestContext respond: [ :response |
 		|stream file |
@@ -113,6 +152,24 @@ ERContainerTab >> initializeApplyReductionTicketForm: user [
 		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
 		cancel: [ self returnToThePreviousState. 
 			self updateStateTab: self tabName.]
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeFormEditAward: anAward [
+	formAward := (ERTittledFormView 
+							on: anAward 
+							withContent: content) title: 'Award'; 
+							callback: [:object | self updateAward: object];
+							cancelCallback: [self cancel]; initializeForm
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeFormEditTalk: aTalk [
+	formTalk := (ERTittledFormView 
+							on: aTalk 
+							withContent: content) title: 'Talk'; 
+							callback: [:object | self updateTalk: object];
+							cancelCallback: [self cancel]; initializeForm
 ]
 
 { #category : #initialization }
@@ -189,10 +246,24 @@ ERContainerTab >> updateAffiliation: aff on: aGroup [
 	self cancel.
 ]
 
+{ #category : #initialization }
+ERContainerTab >> updateAward: anAward. [
+	controller updateAward: anAward.
+	self cancel
+	
+]
+
 { #category : #accessing }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
 	controller updateAttendee: anAttendee.
 	content state: content lastState
+]
+
+{ #category : #initialization }
+ERContainerTab >> updateTalk: aTalk. [
+	controller updateTalk: aTalk.
+	self cancel
+	
 ]
 
 { #category : #initialization }

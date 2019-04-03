@@ -36,7 +36,7 @@ ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
 	anUser isAttendee ifFalse: [ ^ self ].
 	att := conference attendeeFromUser: anUser.
-	self deleteAttendeeFromGroupAndConference: att
+	"self"conference deleteAttendeeFromGroupAndConference: att
 ]
 
 { #category : #rendering }
@@ -52,7 +52,7 @@ ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
 	attendees do: [ :each | self deleteAttendee: (ERAttendee find: [:att | att = each]) ].
-	self deleteUserForConference: aGroup groupManager userAccount.
+	conference deleteUser: aGroup groupManager userAccount.
 	(self conference groups)
 		removeAllSuchThat: [ :each | aGroup id = each id ].
 	aGroup delete.
@@ -81,15 +81,15 @@ ERConfigurationController >> deleteUser: anUser [
 	anUser isAdmin ifFalse: [ 
 		self deleteDependencesOfAttendee: anUser.
 		self deleteDependencesOfGroupManager: anUser.
-		self deleteUserForConference: anUser]
+		conference deleteUser: anUser.
+		self notifyAllObservers ]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
 { #category : #adding }
 ERConfigurationController >> modifyTicket: aTicket [
-	"Add validator for not accept use a ticket id name it was already exist"
 	conference reductionTicketAlreadyExist: aTicket.
-	self saveTicket: aTicket.
+	aTicket save.
 	self notifyAllObservers 
 ]
 
@@ -115,11 +115,6 @@ ERConfigurationController >> saveFileOn: aFile withStream: stream [
 		binaryWriteStreamDo: [ :outputStream | 
 			(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
 				nextPutAll: stream contents ]
-]
-
-{ #category : #adding }
-ERConfigurationController >> saveTicket: aReductionTicket [
-	^ aReductionTicket save.
 ]
 
 { #category : #rendering }

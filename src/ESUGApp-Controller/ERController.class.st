@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a controller for page.
+
+Instance Variables
+--------------------
+	conference:  is a ERConference object (with active state)
+"
 Class {
 	#name : #ERController,
 	#superclass : #ERSubject,
@@ -97,6 +107,18 @@ ERController >> conference: anObject [
 	conference := anObject
 ]
 
+{ #category : #rendering }
+ERController >> deleteAward: anAward [
+	conference deleteAward: anAward.
+	self notifyAllObservers 
+]
+
+{ #category : #rendering }
+ERController >> deleteTalk: aTalk [
+	conference deleteTalk: aTalk.
+	self notifyAllObservers 
+]
+
 { #category : #'as yet unclassified' }
 ERController >> encodeFileToUTF8: aFile [
 	^ aFile exists 
@@ -120,13 +142,10 @@ ERController >> initialize [
 
 { #category : #'as yet unclassified' }
 ERController >> payPalUrlForGroup: aGroup [
-	| conferenceFee url |
-	conferenceFee := self amountOfPayToGroup: aGroup listAttends .
-	url := conference fee urlWithAmount: (conferenceFee printShowingDecimalPlaces: 2)
+	^ conference fee urlWithAmount: aGroup paymentInformation paymentAmount asString
 	 invoiceNumber: (aGroup paymentInformation 
 				invoiceNumberIfNone: [ conference incrementInvoiceNumber ])
-				printString.
-	^ url
+				printString
 ]
 
 { #category : #rendering }
@@ -167,6 +186,13 @@ ERController >> updateAttendee: anAttendee [
 	^ anAttendee 
 ]
 
+{ #category : #rendering }
+ERController >> updateAward: anAward [
+	anAward save.
+	conference save.
+	self notifyAllObservers 
+]
+
 { #category : #'as yet unclassified' }
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup.
@@ -190,6 +216,13 @@ ERController >> updatePaymentRateForGroup: aGroup [
 	aGroup paymentInformation paymentAmount: amount.
 	aGroup addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
 	
+]
+
+{ #category : #rendering }
+ERController >> updateTalk: aTalk [
+	aTalk save.
+	conference save.
+	self notifyAllObservers 
 ]
 
 { #category : #'as yet unclassified' }

@@ -16,20 +16,20 @@ ERChangePasswordForm >> cancel [
 
 { #category : #rendering }
 ERChangePasswordForm >> changePassword [
-	(controller validateCurrentPassword: password) 
-	ifTrue: [(controller validatePatternPassword: passwordChanged)
-		ifTrue: [ (controller validateNewPassword: passwordChanged with: passwordChangedConfirm) 
-			ifTrue: [ controller changePasswordTo: passwordChanged ] 
-			ifFalse: [ messageComponent errorMessage: 'Passwords Dont Match' ].
-		]
-		ifFalse: [ 
-			messageComponent errorMessage: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters'.
-		]
-	] ifFalse: [ 
-		messageComponent errorMessage: 'The password entered does not match the current password'.
+	[controller validateCurrentPassword: password.
+	controller validatePatternPassword: passwordChanged.
+	controller validateNewPassword: passwordChanged with: passwordChangedConfirm. 
+	controller changePasswordTo: passwordChanged.
+	messageComponent changeToAlertSuccess.
+	messageComponent errorMessage: 'Change password succesfull'
+	]
+	on: ERException
+	do: [ :exception |
+		messageComponent changeToAlertOfError.
+		messageComponent errorMessage: exception messageText.
 		].
-	self updateStateTab: self tabName
-
+	
+self updateStateTab: self tabName
 ]
 
 { #category : #hooks }

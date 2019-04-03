@@ -7,16 +7,6 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #accessing }
-ERTalksTab >> blockTableToExecute [
-	^ [ :talk| 
-	OrderedCollection new
-		add: ([ :att | att name ] value: talk);
-		add: ([ :att | att submitter userAccount email ] value: talk);
-		add: ([ :att | att presentation ] value: talk);
-		yourself ]
-]
-
 { #category : #rendering }
 ERTalksTab >> exportTalks [
 	| file |
@@ -26,12 +16,21 @@ ERTalksTab >> exportTalks [
 
 { #category : #accessing }
 ERTalksTab >> headers [ 	
-	^ #('Name'	'Submitted By'	'Uploaded File' '')
+	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
 ]
 
 { #category : #rendering }
 ERTalksTab >> listDataToRenderButton [
 	^ OrderedCollection new
+		add:
+			(Array
+				with: 'delete'
+				with: [ :talk | self deleteTalk: talk.
+					self updateStateTab: self tabName. ]
+				with: [ :talk | talk id , '-delete' ]
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');');
+		yourself
 ]
 
 { #category : #rendering }
@@ -56,7 +55,7 @@ ERTalksTab >> renderTableOfTalksOn: html [
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self talks;
-		blockToExecute: self blockTableToExecute;
+		blockToExecute: self blockTableTalksToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
 ]

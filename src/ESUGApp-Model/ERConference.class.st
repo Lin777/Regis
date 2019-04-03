@@ -12,7 +12,8 @@ Class {
 		'users',
 		'configuration',
 		'active',
-		'invoiceNumber'
+		'invoiceNumber',
+		'configurationOfHomePage'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -120,6 +121,16 @@ ERConference >> configuration: anObject [
 ]
 
 { #category : #accessing }
+ERConference >> configurationOfHomePage [
+	^ configurationOfHomePage
+]
+
+{ #category : #accessing }
+ERConference >> configurationOfHomePage: anObject [
+	configurationOfHomePage := anObject
+]
+
+{ #category : #accessing }
 ERConference >> costPerExtraPerson: anAttendee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
 	ifTrue: [ ^ fee extraPersonSD asNumber]
@@ -137,6 +148,29 @@ ERConference >> decreaseCouponAmountFor: amount to: anAttendee [
 { #category : #rendering }
 ERConference >> deleteAttendee: anAttendee [
 	self attends removeAllSuchThat: [ :each | anAttendee id = each id ].
+]
+
+{ #category : #rendering }
+ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
+	anAttendee idGroup isNotNil ifTrue: [ 
+		|group|
+		group := self getGroupOfAttendee: anAttendee.
+		group deleteAttendee: anAttendee; save].
+	self deleteAttendee: anAttendee.
+	anAttendee delete.
+	self save
+]
+
+{ #category : #rendering }
+ERConference >> deleteAward: anAward [
+	self submittedAwards removeAllSuchThat: [ :each | anAward id = each id ].
+	self save.
+]
+
+{ #category : #rendering }
+ERConference >> deleteTalk: aTalk [
+	self submittedTalks removeAllSuchThat: [ :each | aTalk id = each id ].
+	self save.
 ]
 
 { #category : #rendering }

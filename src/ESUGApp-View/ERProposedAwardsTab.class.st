@@ -1,27 +1,14 @@
 Class {
 	#name : #ERProposedAwardsTab,
 	#superclass : #ERMyRegistrationTab,
-	#instVars : [
-		'formAddAward'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #adding }
 ERProposedAwardsTab >> addAward [
 	self initializeFormAddAward.
-	content state: formAddAward.
+	content state: formAward.
 	self updateStateTab: self tabName.
-]
-
-{ #category : #rendering }
-ERProposedAwardsTab >> blockTableToExecute [
-	^ [ :award | 
-	OrderedCollection new
-		add: ([ :att | att nameAward ] value: award);
-		add: ([ :att | att affiliation ] value: award);
-		add: ([ :att | att downloadUrl ] value: award);
-		yourself ]
 ]
 
 { #category : #initialization }
@@ -32,14 +19,14 @@ ERProposedAwardsTab >> createAward: anAward [
 
 { #category : #accessing }
 ERProposedAwardsTab >> headers [
-	^ #('Name' 'Affiliation' 'Download Url' '')
+	^ #('Name'	'Submitted By' 'Download URL' 'Demo URL' '')
 ]
 
 { #category : #initialization }
 ERProposedAwardsTab >> initializeFormAddAward [
 	|award|
 	award := ERAward submitter: attendee.
-	formAddAward := (ERTittledFormView 
+	formAward := (ERTittledFormView 
 							on: award 
 							withContent: content) title: 'Award'; 
 							callback: [:anAward | self createAward: anAward];
@@ -48,7 +35,35 @@ ERProposedAwardsTab >> initializeFormAddAward [
 
 { #category : #rendering }
 ERProposedAwardsTab >> listDataToRenderButton [
-	^ OrderedCollection new
+	|list|
+	list := OrderedCollection new.
+	self proposalsAreAllowed ifTrue: [
+	list
+		add:
+			(Array
+				with: 'edit'
+				with: [ :award | self modifyAward: award.
+					self updateStateTab: self tabName. ]
+				with: [ :award | award id , '-modify' ]
+				with: 'Modify'
+				with: '');
+		add:
+			(Array
+				with: 'delete'
+				with: [ :award | self deleteAward: award.
+					self updateStateTab: self tabName. ]
+				with: [ :award | award id , '-delete' ]
+				with: 'Delete'
+				with: 'return confirm(''Are you sure you want to delete this item?'');')].
+		
+	^ list
+]
+
+{ #category : #rendering }
+ERProposedAwardsTab >> modifyAward: anAward [
+	self initializeFormEditAward: anAward.
+	content state: formAward.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #rendering }
@@ -57,7 +72,7 @@ ERProposedAwardsTab >> renderAwardsTableOn: html [
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self submittedAwards;
-		blockToExecute: self blockTableToExecute;
+		blockToExecute: self blockTableAwardsToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
 ]

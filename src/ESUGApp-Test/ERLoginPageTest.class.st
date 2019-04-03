@@ -19,7 +19,7 @@ ERLoginPageTest >> testLoginRegisteredUser [
 	self selectElementWithID: 'email-login' send: 'admin@esug.org'.
 	self selectElementWithID: 'password-login' send: '12345678'.
 	self clickElementWithID: 'login-button'.
-	self assert: (self textOfTagName: 'h3') equals: 'Welcome to this great conference'.
+	self assert: (self textOfTagName: 'h3') equals: controller conference configurationOfHomePage title.
 ]
 
 { #category : #accessing }

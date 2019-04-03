@@ -1,3 +1,16 @@
+"
+Description
+--------------------
+
+I am a personalized table, I render la list of objects.
+
+Instance Variables
+--------------------
+	headers:     			list of strings.
+	listObject:  			list of object.
+	blockToExecute:    	block with info how render each object of the list.
+	listToRenderButton:   block only necesary if tht table will have a buttons for each row (e.g. delete, update)
+"
 Class {
 	#name : #ERTable,
 	#superclass : #ERComponentFactory,

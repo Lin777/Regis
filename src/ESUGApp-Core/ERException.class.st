@@ -53,6 +53,13 @@ ERException class >> errorWhenCalculatingPaymentAmount [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> incorrectPatternOfPassword [
+		^ self new 
+			messageText: 'Must contain: numbers, letters, ''.'' or ''_'', and at least 8 or more characters';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> invalidEsugDates [
 		^ self new 
 			messageText: 'The date "From" must be less than date "To"';
@@ -88,6 +95,13 @@ ERException class >> notFoundAttendeeFromUser [
 ]
 
 { #category : #'as yet unclassified' }
+ERException class >> passwordDoesNotMatch [
+		^ self new 
+			messageText: 'The password entered does not match the current password';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
 ERException class >> passwordDoesNotMatchWithConfirmPass [
 		^ self new 
 			messageText: 'The password does not match with confirm password';
@@ -113,6 +127,13 @@ ERException class >> paymentCurrencyNotAvailable [
 ERException class >> paymentInvalid [
 		^ self new
 			messageText: 'The type of payment entered is not valid. ';
+			yourself
+]
+
+{ #category : #'as yet unclassified' }
+ERException class >> paymentTypeNoValid [
+		^ self new 
+			messageText: 'The payment type is not valid';
 			yourself
 ]
 
