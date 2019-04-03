@@ -133,7 +133,7 @@ ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'pay';
-		disabled: (self group isAbleToPay);
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self pay ];
 		with: 'Pay'
 ]

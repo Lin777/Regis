@@ -121,7 +121,7 @@ ERMembersTab >> renderRegisterAttendee: html [
 	html mdlAnchorButton
 		colored;
 		id: 'registerAttendee';
-		disabled: (self group isAbleToPay);
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback:  [ self registerAttendee ];
 		with: 'Register Attendee'
 ]
@@ -131,7 +131,7 @@ ERMembersTab >> renderRegisterMyselfAsAttendee: html [
 	html mdlAnchorButton
 		colored;
 		id: 'registerMyselfAsAttendee';
-		disabled: (self group isAbleToPay);
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self registerMyselfAsAttendee ];
 		with: 'Register Myself as Attendee'
 ]

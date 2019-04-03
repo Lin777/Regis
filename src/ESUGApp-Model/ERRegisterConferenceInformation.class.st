@@ -39,8 +39,8 @@ ERRegisterConferenceInformation >> addMyPreferenceForLuchTo: aDictionary [
 
 { #category : #adding }
 ERRegisterConferenceInformation >> addMyPreferenceForSocialDinnerTo: aDictionary [
-	self addPersonToSocialDinner ifTrue: [ aDictionary at: foodPreference put: (aDictionary at: foodPreference) + 1 ].
-	self attendSocialEvent ifTrue: [ aDictionary at: personAddedFoodPreference put: (aDictionary at: foodPreference) + 1 ].
+	self addPersonToSocialDinner ifTrue: [ aDictionary at: personAddedFoodPreference put: (aDictionary at: foodPreference) + 1 ].
+	self attendSocialEvent ifTrue: [ aDictionary at: foodPreference put: (aDictionary at: foodPreference) + 1 ].
 	^ aDictionary 
 ]
 
