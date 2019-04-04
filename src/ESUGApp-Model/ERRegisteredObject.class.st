@@ -96,6 +96,15 @@ ERRegisteredObject >> paymentInformation: anObject [
 	paymentInformation := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ERRegisteredObject >> stateUpdatePaidWith: aBoolean actions: aCollection [
+	self paymentInformation hasPaid: aBoolean.
+	self userAccount isGroupManager ifTrue: [
+		aCollection first cull: self.
+	]
+	ifFalse: [ aCollection second cull: self ]
+]
+
 { #category : #accessing }
 ERRegisteredObject >> userAccount [
 	self subclassResponsibility 

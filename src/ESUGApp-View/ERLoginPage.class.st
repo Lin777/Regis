@@ -36,12 +36,14 @@ ERLoginPage >> initialize [
 { #category : #rendering }
 ERLoginPage >> loginUser [
 	| userValidate |
+	self controller conference ifNotNil: [
 	userValidate := self controller conference validateLoginFor: email password: password.
 	userValidate notNil
 		ifTrue: [ 
 			self session login: userValidate.
 			self call: ERLoggedPage new ]
-		ifFalse: [ messageComponent errorMessage: 'Login failed.' ]
+		ifFalse: [ messageComponent errorMessage: 'Login failed.' ]]
+	ifNil: [ messageComponent errorMessage: 'You can not perform this action at the moment' ]
 ]
 
 { #category : #accessing }

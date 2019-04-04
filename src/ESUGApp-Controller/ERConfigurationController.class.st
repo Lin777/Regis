@@ -36,7 +36,7 @@ ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
 	anUser isAttendee ifFalse: [ ^ self ].
 	att := conference attendeeFromUser: anUser.
-	"self"conference deleteAttendeeFromGroupAndConference: att
+	conference deleteAttendeeFromGroupAndConference: att
 ]
 
 { #category : #rendering }

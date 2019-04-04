@@ -110,6 +110,14 @@ ERGroup >> updatePaymentForAttendees [
 		att save ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroup >> updatePaymentRateWith: aBlock [
+	| amount |
+	amount := self totalAmount.
+	self paymentInformation paymentAmount: amount.
+	self addPayPalComissionifApply: (aBlock cull: amount)
+]
+
 { #category : #accessing }
 ERGroup >> userAccount [
 	^ groupManager userAccount

@@ -26,7 +26,7 @@ ERRegisterConferenceInformation class >> genders [
 
 { #category : #'as yet unclassified' }
 ERRegisterConferenceInformation class >> tShirtSizes [
-	^ #('XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
+	^ #('No thanks' 'XS' 'S' 'M' 'L' 'XL' 'XXL' 'XXXL' 'XXXXL')
 ]
 
 { #category : #adding }
@@ -159,8 +159,9 @@ ERRegisterConferenceInformation >> descriptionFood [
 	tmp1
 		accessor: #foodPreference;
 		priority: 80;
-		required: false;
+		required: true;
 		cssClass: 'third';
+		default: 'Normal';
 		options: self class foodPreferences;
 		withoutLabel: true;
 		id: 'foodPreference';
@@ -176,7 +177,7 @@ ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 	tmp1
 		accessor: #personAddedFoodPreference;
 		priority: 130;
-		required: false;
+		required: true;
 		default: 'Normal';
 		options: self class foodPreferences;
 		withoutLabel: true;
@@ -208,7 +209,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 	tmp1
 		accessor: #gender;
 		priority: 60;
-		required: false;
+		required: true;
 		cssClass: 'third';
 		options: self class genders;
 		withoutLabel: true;
@@ -256,8 +257,9 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 	tmp1
 		accessor: #tshirtSize;
 		priority: 70;
-		required: false;
+		required: true;
 		cssClass: 'third';
+		default: 'L';
 		options: self class tShirtSizes;
 		withoutLabel: true;
 		id: 'tshirtSize';

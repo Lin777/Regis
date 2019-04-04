@@ -59,7 +59,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 	tmp1
 		accessor: #paymentCurrency;
 		priority: 30;
-		required: false;
+		required: true;
 		options: self class currencyTypes;
 		withoutLabel: true;
 		id: 'paymentCurrency';
@@ -75,7 +75,7 @@ ERPaymentInformation >> descriptionPaymentType [
 	tmp1
 		accessor: #paymentType;
 		priority: 10;
-		required: false;
+		required: true;
 		options: self class paymentTypes;
 		withoutLabel: true;
 		id: 'paymentType';

@@ -42,19 +42,6 @@ ERController >> addTalk: aTalk [
 ]
 
 { #category : #'as yet unclassified' }
-ERController >> amountOfPayToGroup: list [
-	| generalAmount |
-	generalAmount := 0.
-	list
-		do: [ :each | 
-			| amount |
-			amount := conference paymentAmountFor: each.
-			generalAmount := generalAmount + amount ].
-	^ generalAmount.
-	
-]
-
-{ #category : #'as yet unclassified' }
 ERController >> applyReductionTicket: aTicket To: anAttendee [
 	|ticket|
 	aTicket = 'No reduction ticket'
@@ -170,11 +157,7 @@ ERController >> sendResetPasswordTo: aString [
 
 { #category : #'as yet unclassified' }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
-	anAttendee paymentInformation hasPaid: aBoolean.
-	anAttendee userAccount isGroupManager ifTrue: [
-		 self updateGroup: anAttendee
-	]
-	ifFalse: [ self updateAttendee: anAttendee ]
+	anAttendee stateUpdatePaidWith: aBoolean actions: { [ :att | self updateGroup: att ] . [ :att | self updateAttendee: att ] }
 ]
 
 { #category : #'as yet unclassified' }
@@ -211,11 +194,7 @@ ERController >> updatePaymentRate: anAttendee [
 
 { #category : #'as yet unclassified' }
 ERController >> updatePaymentRateForGroup: aGroup [ 
-	| amount |
-	amount := aGroup totalAmount.
-	aGroup paymentInformation paymentAmount: amount.
-	aGroup addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
-	
+	aGroup updatePaymentRateWith: [:amount | conference addPayPalComissionOn: amount]
 ]
 
 { #category : #rendering }

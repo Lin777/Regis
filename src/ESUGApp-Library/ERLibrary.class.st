@@ -46,6 +46,15 @@ ERLibrary >> disabledCss [
       }'
 ]
 
+{ #category : #'as yet unclassified' }
+ERLibrary >> enterAsTabJs [
+	^ ''"'$(''input,textarea'').keypress(function(e){
+  			if(e.keyCode==13) {
+   				$(this).nextAll(''input,textarea'').first().focus();
+  			}
+		});'"
+]
+
 { #category : #updating }
 ERLibrary >> esugCss [
 	^ self alertCss, self disabledCss 
@@ -53,7 +62,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self registerButtonsJs
+	^ self registerButtonsJs, self enterAsTabJs
 ]
 
 { #category : #updating }
@@ -221,7 +230,10 @@ ERLibrary >> registerButtonsJs [
 
 { #category : #updating }
 ERLibrary >> registerCss [
-	^ '.body-all {
+	^ '
+	.mdl-checkbox {height: auto;}
+	
+	.body-all {
 	background-image: url("../CssForLoginMDL/profile_city.jpg");
 	background-size: cover;
 	background-position: center;
