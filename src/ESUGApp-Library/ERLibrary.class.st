@@ -62,7 +62,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self registerButtonsJs, self enterAsTabJs
+	^ self registerButtonsJs, self enterAsTabJs, self validationRegisterJs
 ]
 
 { #category : #updating }
@@ -366,14 +366,14 @@ ERLibrary >> tabsCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> tabsJs [
-	^ ''"'$().ready(function() {$(''.btnNext'').click(function(){
+	^ '$().ready(function() {$(''.btnNext'').click(function(){
 	console.log(''next'');
 	$(''.mdl-tabs__tab-bar > .is-active'').next(''a'').trigger(''click'');
 });
 
   $(''.btnPrevious'').click(function(){
 console.log(''prev'');
-  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'"
+  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
 ]
 
 { #category : #'as yet unclassified' }
@@ -395,4 +395,33 @@ ERLibrary >> validationInputsJs [
 	confNewPassword.onkeyup = validatePassword;
 	});
 	'
+]
+
+{ #category : #'as yet unclassified' }
+ERLibrary >> validationRegisterJs [
+	^ '$(function() {
+    $("#registerForm").validate({
+        ignore: ":hidden",
+		  errorClass: "mdl-textfield__label",
+		  errorElement: "span"    
+		});
+		
+	$("#firstName").rules("add", {required:true});
+    $("#lastName").rules("add", {required:true});
+    $("#email").rules("add", {required:true, email: true});
+    $("#password").rules("add", {required:true, minlength: 8});
+    $("#confirmPassword").rules("add", {required:true, equalTo: "#password"});
+
+    $("#facebookURL").rules("add", {url: true});
+    $("#twitterURL").rules("add", {url: true});
+    $("#homePageURL").rules("add", {url: true});
+
+    $("#organizationName").rules("add", {required:true});
+    $("#organizationAddrees1").rules("add", {required:true});
+    $("#organizationCity").rules("add", {required:true});
+    $("#organizationPostal").rules("add", {required:true});
+
+    $("#paymentType").rules("add", {required:true});
+    $("#paymentCurrency").rules("add", {required:true});
+});'
 ]

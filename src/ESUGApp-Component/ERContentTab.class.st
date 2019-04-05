@@ -91,8 +91,9 @@ ERContentTab >> renderBackButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		rippleEffect;
-		id: self tabId ,'-previousButton';
-		callback: self actionBackBlock;
+		class: 'btnPrevious';
+		id: self tabId ,'-previousButton';"
+		callback: self actionBackBlock;"
 		with: 'Previous']
 ]
 
@@ -106,14 +107,10 @@ ERContentTab >> renderButtonsOn: html [
 
 { #category : #rendering }
 ERContentTab >> renderContentOn: html [
-	html form
-		method: 'post';
-		id: self tabId,'-form';
-		with: [ 
 	html render: messageComponent.
 	self renderPreviousContentOn: html.
 	html render: contentTab.
-	self renderButtonsOn: html]
+	self renderButtonsOn: html
 	
 ]
 
@@ -137,8 +134,9 @@ ERContentTab >> renderNextButtonOn: html [
 		colored;
 		beSubmit;
 		rippleEffect;
-		id: self tabId ,'-nextButton';
-		callback: self actionNextBlock;
+		class: 'btnNext';
+		id: self tabId ,'-nextButton';"
+		callback: self actionNextBlock;"
 		with: 'Next']
 ]
 
