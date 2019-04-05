@@ -46,15 +46,6 @@ ERLibrary >> disabledCss [
       }'
 ]
 
-{ #category : #'as yet unclassified' }
-ERLibrary >> enterAsTabJs [
-	^ ''"'$(''input,textarea'').keypress(function(e){
-  			if(e.keyCode==13) {
-   				$(this).nextAll(''input,textarea'').first().focus();
-  			}
-		});'"
-]
-
 { #category : #updating }
 ERLibrary >> esugCss [
 	^ self alertCss, self disabledCss 
@@ -62,7 +53,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self registerButtonsJs, self enterAsTabJs, self validationRegisterJs
+	^ self validationRegisterJs
 ]
 
 { #category : #updating }
@@ -218,17 +209,6 @@ ERLibrary >> loginCss [
 ]
 
 { #category : #updating }
-ERLibrary >> registerButtonsJs [
-	^ '$().ready(function() {
-	$(''.btnNext'').click(function(){
-  $(''.mdl-tabs__tab-bar > .is-active'').next("a").find("span").trigger(''click'');});
-
-  $(''.btnPrevious'').click(function(){
-  $(''.mdl-tabs__tab-bar > .is-active'').prev("a").find("span").trigger(''click'');
-}); });'
-]
-
-{ #category : #updating }
 ERLibrary >> registerCss [
 	^ '
 	.mdl-checkbox {height: auto;}
@@ -365,18 +345,6 @@ ERLibrary >> tabsCss [
 ]
 
 { #category : #'as yet unclassified' }
-ERLibrary >> tabsJs [
-	^ '$().ready(function() {$(''.btnNext'').click(function(){
-	console.log(''next'');
-	$(''.mdl-tabs__tab-bar > .is-active'').next(''a'').trigger(''click'');
-});
-
-  $(''.btnPrevious'').click(function(){
-console.log(''prev'');
-  $(''.mdl-tabs__tab-bar > .is-active'').prev(''a'').trigger(''click'');}); });'
-]
-
-{ #category : #'as yet unclassified' }
 ERLibrary >> validationInputsJs [
 	^ '
 		$(window).bind("load", function(){
@@ -399,32 +367,47 @@ ERLibrary >> validationInputsJs [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> validationRegisterJs [
-	^ '$(function() {
-    $("#registerForm").validate({
-        ignore: ":hidden",
-		  errorClass: "mdl-textfield__error",
-		  errorElement: "span"    ,
-		  highlight: function(element, errorClass) {
-		     $(element).parent().addClass("is-invalid");
-		}
-		});
-		
-	$("#firstName").rules("add", {required:true});
-    $("#lastName").rules("add", {required:true});
-    $("#email").rules("add", {required:true, email: true});
-    $("#password").rules("add", {required:true, minlength: 8});
-    $("#confirmPassword").rules("add", {required:true, equalTo: "#password"});
+	^ '$().ready(function() {
+    
+    $(".btnNext").click(function(){
+	
+        $("#registerForm").validate({
+            ignore: ":hidden",
+            errorClass: "mdl-textfield__error",
+            errorElement: "span"    ,
+            highlight: function(element, errorClass) {
+                $(element).parent().addClass("is-invalid");
+            }
+            });
+            
+        $("#firstName").rules("add", {required:true});
+        $("#lastName").rules("add", {required:true});
+        $("#email").rules("add", {required:true, email: true});
+        $("#password").rules("add", {required:true, minlength: 8});
+        $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#password"});
 
-    $("#facebookURL").rules("add", {url: true});
-    $("#twitterURL").rules("add", {url: true});
-    $("#homePageURL").rules("add", {url: true});
+        $("#facebookURL").rules("add", {url: true});
+        $("#twitterURL").rules("add", {url: true});
+        $("#homePageURL").rules("add", {url: true});
 
-    $("#organizationName").rules("add", {required:true});
-    $("#organizationAddrees1").rules("add", {required:true});
-    $("#organizationCity").rules("add", {required:true});
-    $("#organizationPostal").rules("add", {required:true});
+        $("#organizationName").rules("add", {required:true});
+        $("#organizationAddrees1").rules("add", {required:true});
+        $("#organizationCity").rules("add", {required:true});
+        $("#organizationPostal").rules("add", {required:true});
 
-    $("#paymentType").rules("add", {required:true});
-    $("#paymentCurrency").rules("add", {required:true});
+        $("#paymentType").rules("add", {required:true});
+        $("#paymentCurrency").rules("add", {required:true});
+
+        if ((!$("#registerForm").valid())) {
+            
+            return false;
+        }
+        var $active = $(".mdl-tabs__tab-bar > .is-active");
+        $active.next("a").removeClass("disabled");
+        $active.next("a").find("span").trigger("click");});
+
+    $(".btnPrevious").click(function(){
+          $(".mdl-tabs__tab-bar > .is-active").prev("a").find("span").trigger("click");
+});
 });'
 ]

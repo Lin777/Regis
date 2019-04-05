@@ -132,7 +132,7 @@ ERContentTab >> renderNextButtonOn: html [
 	nextTabName ifNotNil: [
 	html mdlButton
 		colored;
-		beSubmit;
+		type: 'button';
 		rippleEffect;
 		class: 'btnNext';
 		id: self tabId ,'-nextButton';"

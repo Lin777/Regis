@@ -29,7 +29,7 @@ ERRegisterPage >> actionsBody: html [
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
 	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
-								withContent: self) disabled: true; cancelCallback: self cancelRegister.
+								withContent: self) disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
 	^ self
 		addTab: affiliationInfo .
 ]
@@ -48,7 +48,8 @@ ERRegisterPage >> addDoneTab [
 				on: self controller attendee
 				button: [ :html | self renderDoneButtonOn: html ]
 				container: self) 
-	disabled: true.
+	disabled: true
+	"disabled: false".
 	^ self
 		addTab: doneTab .
 ]

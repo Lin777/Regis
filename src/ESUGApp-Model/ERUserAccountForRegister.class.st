@@ -15,7 +15,7 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 		beRequired;
 		label: 'Confirm Password (Required)';
 		withoutLabel: true;
-		id: 'confirmPassword';
+		id: 'confirmPasswordRegister';
 		componentClass: MDLMATextPasswordComponent.
 	^ tmp yourself
 ]

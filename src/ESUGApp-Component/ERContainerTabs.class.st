@@ -98,7 +98,7 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 ERContainerTabs >> renderContentPageOn: html [
 	html form
 		method: 'post';
-		id: 'formRegisterInTabs';
+		id: 'registerForm';
 		with: [
 	html mdlTabs rippleEffect
 		with: [ html div
