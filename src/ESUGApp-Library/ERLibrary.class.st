@@ -402,8 +402,11 @@ ERLibrary >> validationRegisterJs [
 	^ '$(function() {
     $("#registerForm").validate({
         ignore: ":hidden",
-		  errorClass: "mdl-textfield__label",
-		  errorElement: "span"    
+		  errorClass: "mdl-textfield__error",
+		  errorElement: "span"    ,
+		  highlight: function(element, errorClass) {
+		     $(element).parent().addClass("is-invalid");
+		}
 		});
 		
 	$("#firstName").rules("add", {required:true});
