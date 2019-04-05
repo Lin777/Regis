@@ -106,14 +106,10 @@ ERContentTab >> renderButtonsOn: html [
 
 { #category : #rendering }
 ERContentTab >> renderContentOn: html [
-	html form
-		method: 'post';
-		id: self tabId,'-form';
-		with: [ 
 	html render: messageComponent.
 	self renderPreviousContentOn: html.
 	html render: contentTab.
-	self renderButtonsOn: html]
+	self renderButtonsOn: html
 	
 ]
 
