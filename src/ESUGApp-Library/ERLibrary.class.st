@@ -53,7 +53,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self validationRegisterJs
+	^ self validationRegisterJs, self onChangeTab
 ]
 
 { #category : #updating }
@@ -206,6 +206,24 @@ ERLibrary >> loginCss [
 	float: right;
 }
 '
+]
+
+{ #category : #'as yet unclassified' }
+ERLibrary >> onChangeTab [
+	^ '
+$(function(){
+    $(".mdl-tabs__tab-bar").children({
+        select: function(event, ui){
+				alert("PRESSED TAB!");
+            if ((!$("#registerForm").valid())) {
+            		event.preventDefault();
+                return false;
+            }else{
+                event.preventDefault();
+            };
+        }
+    });
+});'
 ]
 
 { #category : #updating }
@@ -403,7 +421,8 @@ ERLibrary >> validationRegisterJs [
             return false;
         }
         var $active = $(".mdl-tabs__tab-bar > .is-active");
-        $active.next("a").removeClass("disabled");
+        //$active.next("a").removeClass("disabled");
+		  $active.next("a").removeAttr("disabled");
         $active.next("a").find("span").trigger("click");});
 
     $(".btnPrevious").click(function(){
