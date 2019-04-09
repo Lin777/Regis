@@ -53,7 +53,7 @@ ERLibrary >> esugCss [
 
 { #category : #updating }
 ERLibrary >> esugJs [
-	^ self validationRegisterJs, self onChangeTab
+	^ self validationRegisterJs", self onChangeTab"
 ]
 
 { #category : #updating }
@@ -210,20 +210,19 @@ ERLibrary >> loginCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> onChangeTab [
-	^ '
-$(function(){
-    $(".mdl-tabs__tab-bar").children({
-        select: function(event, ui){
-				alert("PRESSED TAB!");
-            if ((!$("#registerForm").valid())) {
+	^ '$().ready(function() {
+	
+			$(".mdl-tabs__tab > span").unbind().click(function(event){
+			
+			debugger;
+			alert("fds");
+				if ((!$("#registerForm").valid())) {
             		event.preventDefault();
                 return false;
-            }else{
-                event.preventDefault();
-            };
-        }
-    });
-});'
+            }
+event.preventDefault();
+//e.stopImmediatePropagation();
+});});'
 ]
 
 { #category : #updating }
@@ -386,47 +385,56 @@ ERLibrary >> validationInputsJs [
 { #category : #'as yet unclassified' }
 ERLibrary >> validationRegisterJs [
 	^ '$().ready(function() {
+    $("#registerForm").validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+    });
+        
+    $("#firstName").rules("add", {required:true});
+    $("#lastName").rules("add", {required:true});
+    $("#email").rules("add", {required:true, email: true});
+    $("#passwordRegister").rules("add", {required:true, minlength: 8});
+    $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#passwordRegister"});
+
+    $("#facebookURL").rules("add", {url: true});
+    $("#twitterURL").rules("add", {url: true});
+    $("#homePageURL").rules("add", {url: true});
+
+    $("#organizationName").rules("add", {required:true});
+    $("#organizationAddrees1").rules("add", {required:true});
+    $("#organizationCity").rules("add", {required:true});
+    $("#organizationPostal").rules("add", {required:true});
+
+    $("#paymentType").rules("add", {required:true});
+    $("#paymentCurrency").rules("add", {required:true});
     
-    $(".btnNext").click(function(){
-	
-        $("#registerForm").validate({
-            ignore: ":hidden",
-            errorClass: "mdl-textfield__error",
-            errorElement: "span"    ,
-            highlight: function(element, errorClass) {
-                $(element).parent().addClass("is-invalid");
-            }
-            });
-            
-        $("#firstName").rules("add", {required:true});
-        $("#lastName").rules("add", {required:true});
-        $("#email").rules("add", {required:true, email: true});
-        $("#password").rules("add", {required:true, minlength: 8});
-        $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#password"});
-
-        $("#facebookURL").rules("add", {url: true});
-        $("#twitterURL").rules("add", {url: true});
-        $("#homePageURL").rules("add", {url: true});
-
-        $("#organizationName").rules("add", {required:true});
-        $("#organizationAddrees1").rules("add", {required:true});
-        $("#organizationCity").rules("add", {required:true});
-        $("#organizationPostal").rules("add", {required:true});
-
-        $("#paymentType").rules("add", {required:true});
-        $("#paymentCurrency").rules("add", {required:true});
-
+    $(".btnNext").click(function(e){
+        e.stopPropagation();
         if ((!$("#registerForm").valid())) {
-            
+            //alert("non valid");
             return false;
         }
         var $active = $(".mdl-tabs__tab-bar > .is-active");
-        //$active.next("a").removeClass("disabled");
-		  $active.next("a").removeAttr("disabled");
-        $active.next("a").find("span").trigger("click");});
+		$active.next("a").removeAttr("disabled");
+        //alert("remove disabled");
+        $active.next("a").find("span").trigger("click");
+        //alert("finish click");
+    });
 
     $(".btnPrevious").click(function(){
           $(".mdl-tabs__tab-bar > .is-active").prev("a").find("span").trigger("click");
-});
+    });
+     
+    //$("#registerForm").find(".mdl-tabs__tab").find("span").on("click", function(e){
+    /*$("span.mdl-js-ripple-effect").on("click", function(e){
+			alert("click");
+			if ((!$("#registerForm").valid())) {
+                return false;
+            }
+     });*/
 });'
 ]

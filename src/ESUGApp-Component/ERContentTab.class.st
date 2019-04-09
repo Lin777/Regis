@@ -92,8 +92,7 @@ ERContentTab >> renderBackButtonOn: html [
 		colored;
 		rippleEffect;
 		class: 'btnPrevious';
-		id: self tabId ,'-previousButton';"
-		callback: self actionBackBlock;"
+		id: self tabId ,'-previousButton';
 		with: 'Previous']
 ]
 
@@ -116,27 +115,23 @@ ERContentTab >> renderContentOn: html [
 
 { #category : #rendering }
 ERContentTab >> renderGoBackToLogin: html [
-	html mdlButton
+	html mdlAnchorButton 
 		colored;
-		beSubmit;
 		rippleEffect;
 		onClick: 'return confirm(''You are sure to return? You will lose all your changes'');';
 		id: self tabId ,'-goBackLoginButton';
-		callback: cancelCallback "[self session logout.
-    ^ self requestContext redirectTo: self application url]";
+		callback: cancelCallback;
 		with: 'Cancel'
 ]
 
 { #category : #rendering }
 ERContentTab >> renderNextButtonOn: html [
 	nextTabName ifNotNil: [
-	html mdlButton
+	html mdlAnchorButton 
 		colored;
-		type: 'button';
 		rippleEffect;
 		class: 'btnNext';
-		id: self tabId ,'-nextButton';"
-		callback: self actionNextBlock;"
+		id: self tabId ,'-nextButton';
 		with: 'Next']
 ]
 
