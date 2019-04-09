@@ -46,7 +46,8 @@ ERProposedTalksTab >> listDataToRenderButton [
 					self updateStateTab: self tabName. ]
 				with: [ :talk | talk id , '-modify' ]
 				with: 'Modify'
-				with: '');
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'delete'
@@ -54,7 +55,8 @@ ERProposedTalksTab >> listDataToRenderButton [
 					self updateStateTab: self tabName. ]
 				with: [ :talk | talk id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');')].
+				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: false)].
 		^ list
 ]
 

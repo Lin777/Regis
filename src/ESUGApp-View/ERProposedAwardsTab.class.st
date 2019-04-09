@@ -46,7 +46,8 @@ ERProposedAwardsTab >> listDataToRenderButton [
 					self updateStateTab: self tabName. ]
 				with: [ :award | award id , '-modify' ]
 				with: 'Modify'
-				with: '');
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'delete'
@@ -54,7 +55,8 @@ ERProposedAwardsTab >> listDataToRenderButton [
 					self updateStateTab: self tabName. ]
 				with: [ :award | award id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');')].
+				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: false)].
 		
 	^ list
 ]
