@@ -21,8 +21,8 @@ ERRegisterTest >> fillAllUserFields [
 	self selectElementWithID: 'firstName' send: 'register'.
 	self selectElementWithID: 'lastName' send: 'register'.
 	self selectElementWithID: 'email' send: 'register@gmail.com'.
-	self selectElementWithID: 'password' send: '12345678'.
-	self selectElementWithID: 'confirmPassword' send: '12345678'
+	self selectElementWithID: 'passwordRegister' send: '12345678'.
+	self selectElementWithID: 'confirmPasswordRegister' send: '12345678'
 ]
 
 { #category : #'as yet unclassified' }

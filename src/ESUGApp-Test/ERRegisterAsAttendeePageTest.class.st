@@ -81,7 +81,7 @@ ERRegisterAsAttendeePageTest >> setUp [
 ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	self pressNextButtonAffiliation  .
 	self clickElementWithID: 'additionalInfoForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
 
@@ -91,7 +91,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 	self selectElementWithID: 'keywords' send: 'Example'.
 	self selectElementWithID: 'additionalText' send: 'Example'.
 	self clickElementWithID: 'additionalInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Payment')
 ]
 
@@ -99,7 +99,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
 	self pressNextButtonConference  .
 	self clickElementWithID: 'affiliationInfoForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
@@ -108,7 +108,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFille
 	self pressNextButtonConference .
 	self fillAllAffiliationFields.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
@@ -116,7 +116,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFille
 ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutFillingAnyField [
 	self pressNextButtonConference.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	
 ]
 
@@ -126,8 +126,8 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	self fillAllAffiliationFields .
 	(driver findElementByID: 'organizationAddrees1') clear.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Address 1')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'organizationAddrees1') equals: 'This field is required.'
 	
 ]
 
@@ -138,8 +138,8 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	
 	(driver findElementByID: 'organizationCity') clear.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'City')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'organizationCity') equals: 'This field is required.'
 	
 ]
 
@@ -150,8 +150,8 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	
 	(driver findElementByID: 'organizationName') clear.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Organization Name')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'organizationName') equals: 'This field is required.'.
 	
 ]
 
@@ -161,9 +161,8 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 	self fillAllAffiliationFields .
 	(driver findElementByID: 'organizationPostal') clear.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Postal/Zipcode')
-	
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'organizationPostal') equals: 'This field is required.'
 ]
 
 { #category : #tests }
@@ -184,7 +183,7 @@ ERRegisterAsAttendeePageTest >> testPressCancelButtonDismissAlert [
 ERRegisterAsAttendeePageTest >> testPressConferenceBackButton [
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Contact')
 ]
 
@@ -192,7 +191,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceBackButton [
 ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilledCorrectly [
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
 
@@ -200,7 +199,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilled
 ERRegisterAsAttendeePageTest >> testPressContactBackButton [
 	self pressNextButtonUser.
 	self clickElementWithID: 'contactInfoForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-User')
 ]
 
@@ -208,7 +207,7 @@ ERRegisterAsAttendeePageTest >> testPressContactBackButton [
 ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCorrectly [
 	self pressNextButtonUser .
 	self clickElementWithID: 'contactInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
@@ -223,7 +222,7 @@ ERRegisterAsAttendeePageTest >> testPressDoneButton [
 ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
 	self pressNextButtonAdditional   .
 	self clickElementWithID: 'paymentInformationForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
 ]
 
@@ -232,6 +231,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 	self pressNextButtonAdditional .
 	self coupon: 'invalidCoupon'.
 	self clickElementWithID: 'paymentInformationForm-nextButton'.
+	self clickElementWithID: 'registerButton'.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: self getTextOfError equals: 'Reduction Ticket Code: There is no ticket with the ticket id provided.'
 ]
@@ -240,7 +240,7 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField [
 	self pressNextButtonAdditional .
 	self clickElementWithID: 'paymentInformationForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
 	
 ]
@@ -249,17 +249,17 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithAllFieldsFilledCorrectly [
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Contact')
 ]
 
 { #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutConfirmPasswordField [
 	self fillAllUserFields.
-	(driver findElementByID: 'confirmPassword') clear.
+	(driver findElementByID: 'confirmPasswordRegister') clear.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Confirm Password')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'confirmPasswordRegister') equals: 'This field is required.'
 ]
 
 { #category : #registerBasicInformationTabTests }
@@ -267,14 +267,14 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutEmailField [
 	self fillAllUserFields.
 	(driver findElementByID: 'email') clear.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Email')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'email') equals: 'This field is required.'
 ]
 
 { #category : #registerBasicInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFillingAnyField [
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	
 ]
 
@@ -283,8 +283,8 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutFirstNameField [
 	self fillAllUserFields.
 	(driver findElementByID: 'firstName') clear.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'First Name')
+	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
+	self assert: (self getTextErrorOf: 'firstName') equals: 'This field is required.'
 ]
 
 { #category : #registerBasicInformationTabTests }
@@ -292,6 +292,5 @@ ERRegisterAsAttendeePageTest >> testPressUserNextButtonWithoutLastNameField [
 	self fillAllUserFields.
 	(driver findElementByID: 'lastName') clear.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Last Name')
+	self assert: (self getTextErrorOf: 'lastName') equals: 'This field is required.'
 ]

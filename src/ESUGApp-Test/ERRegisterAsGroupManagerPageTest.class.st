@@ -22,7 +22,7 @@ ERRegisterAsGroupManagerPageTest >> setUp [
 ERRegisterAsGroupManagerPageTest >> testPressAffiliationBackButton [
 	self pressNextButtonUser   .
 	self clickElementWithID: 'affiliationInfoForm-previousButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-User')
 ]
 
@@ -31,7 +31,7 @@ ERRegisterAsGroupManagerPageTest >> testPressAffiliationNextButtonWithAllFieldsF
 	self pressNextButtonUser .
 	self fillAllAffiliationFields .
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
 ]
 
@@ -39,6 +39,6 @@ ERRegisterAsGroupManagerPageTest >> testPressAffiliationNextButtonWithAllFieldsF
 ERRegisterAsGroupManagerPageTest >> testPressUserNextButtonWithAllFieldsFilledCorrectly [
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
+	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
 ]
