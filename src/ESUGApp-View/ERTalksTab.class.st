@@ -29,7 +29,8 @@ ERTalksTab >> listDataToRenderButton [
 					self updateStateTab: self tabName. ]
 				with: [ :talk | talk id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');');
+				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: false);
 		yourself
 ]
 
