@@ -28,4 +28,4 @@ WAAdmin defaultDispatcher defaultName: 'ESUG'.
 "
 
 # Launch the server in a new screen.
-#screen -Sdm esug ./pharo esug.image --no-quit
+# screen -Sdm esug ./pharo esug.image --no-quit

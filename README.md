@@ -2,6 +2,7 @@
 ESUG Conference Registration Application
 
 ## Installation 
+
 ### Prerequisites
 - Latest Pharo 6.1+ image.
 - Pharo VM for Pharo 6.1+.
@@ -39,45 +40,12 @@ This scripts fill the website with contrived information for testing purpose.
 You can see the registered users by logging in as admin. 
 
 ### Note: 
+
 All the users generated automatically have as password: 12345678
 
-## Deploy with Docker:
+## Deploy with Docker
 
-### Prerequisites:
-- Install a maintained version of Docker Community Edition (CE) or Enterprise Edition (EE) on a supported platform. [Install docker](https://docs.docker.com/install/).
-- Download the [Docker](https://github.com/Lin777/ESUGConfRegistrationApp/tree/master/Docker) folder of this repo.
-
-### Steps to follow
-
-- Locate your terminal inside the docker folder that you recently downloaded.
-- Run the following script to build the image with all the prerequisites from the Dockerfile file:
-```bash
-docker build -t esug .
-``` 
-- Run the following script to create a container from the esug image:
-```bash
-docker run -it -p 8000:8000 esug bash
-``` 
-- The above script will make you enter a container terminal, where you must execute the following script:
-```bash
-screen -Sdm esug ./pharo esug.image --no-quit
-``` 
-- To exit the container terminal press Ctr + p + q
-- Now you can see the page running in: http://localhost:8000/ESUG
-
-## Restore the data if the image breaks
-
-The page generates a backup file after each modification to the database, to restore this data, follow the next steps:
-
-- Connect to the container in which I create the image (docker attach xx).
-- Run the following script to upload a new image with page
-```bash
-./scriptEsug.sh
-``` 
-- And finally execute this command
-```bash
-screen -Sdm esug ./pharo esug.image --no-quit
-``` 
+See documentation in [Docker/README.md](Docker/README.md)
 
 ## Progress Status
 
