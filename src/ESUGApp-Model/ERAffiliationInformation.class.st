@@ -91,11 +91,13 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 ERAffiliationInformation >> descriptionOrganizationCountry [
 	<magritteDescription>
 	^ ERAward new descriptionCountry copy
-              accessor: #organizationCountry;
-				  priority: 50;
-				  cssClass: 'half';
-				  id: 'organizationCountry';
-              yourself
+         accessor: #organizationCountry;
+		   beRequired;
+			priority: 50;
+			cssClass: 'half';
+			label: 'Country (Required)';
+		   id: 'organizationCountry';
+         yourself
 ]
 
 { #category : #'as yet unclassified' }

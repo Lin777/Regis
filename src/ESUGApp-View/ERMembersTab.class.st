@@ -78,14 +78,6 @@ ERMembersTab >> listDataToRenderButton [
 				with: 'Modify user'
 				with: ''
 				with: false);
-		add:
-			(Array
-				with: 'payment'
-				with: [ :user | self applyReductionTicketTo: user  ]
-				with: [ :user | user id , '-applyReduction' ]
-				with: 'Apply reduction'
-				with: ''
-				with:  self group isAbleToPay);
 		yourself
 ]
 

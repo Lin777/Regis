@@ -23,7 +23,7 @@ ERMenuPage >> availableItemsOfMenu: anObject [
 { #category : #'as yet unclassified' }
 ERMenuPage >> createAdminItem [
 	^ ERItemNav 
-		label: 'Admin' 
+		label: 'Account' 
 		icon: 'person' 
 		callback: (availableItemsOfMenu at: 'admin')
 ]

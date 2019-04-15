@@ -408,6 +408,7 @@ ERLibrary >> validationRegisterJs [
     $("#organizationAddrees1").rules("add", {required:true});
     $("#organizationCity").rules("add", {required:true});
     $("#organizationPostal").rules("add", {required:true});
+    $("#organizationCountry").rules("add", {required:true});
 
     $("#paymentType").rules("add", {required:true});
     $("#paymentCurrency").rules("add", {required:true});
