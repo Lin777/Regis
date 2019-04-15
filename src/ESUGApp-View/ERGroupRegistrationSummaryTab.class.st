@@ -173,7 +173,7 @@ ERGroupRegistrationSummaryTab >> tabName [
 
 { #category : #accessing }
 ERGroupRegistrationSummaryTab >> title [
-	^ 'Group Manager Short Description'
+	^ 'Group Registration'
 ]
 
 { #category : #rendering }

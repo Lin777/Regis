@@ -10,16 +10,6 @@ ERFinishRegisterGroupManagerPage >> actionsBody: html [
 ]
 
 { #category : #rendering }
-ERFinishRegisterGroupManagerPage >> backAction [
-	self returnToThePreviousState
-]
-
-{ #category : #rendering }
-ERFinishRegisterGroupManagerPage >> cancelAction [
-	self returnToThePreviousState
-]
-
-{ #category : #rendering }
 ERFinishRegisterGroupManagerPage >> finishRegister [
 	| user |
 	user := pageController saveGroupManager.
@@ -27,10 +17,15 @@ ERFinishRegisterGroupManagerPage >> finishRegister [
 ]
 
 { #category : #rendering }
-ERFinishRegisterGroupManagerPage >> finishRegister: html [
-	| user |
-	user := pageController saveGroupManager.
-	self redirectLoggedPage: user
+ERFinishRegisterGroupManagerPage >> renderActions: html [
+	html mdlCardActions
+		class: 'mdl-card--border';
+		with: [ 
+			html mdlAnchorButton
+		colored;
+		id: 'okButton';
+		callback: [ self finishRegister ];
+		with: 'Ok']
 ]
 
 { #category : #rendering }

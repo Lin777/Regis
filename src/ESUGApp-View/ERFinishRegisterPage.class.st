@@ -13,16 +13,6 @@ ERFinishRegisterPage class >> on: anAttendee withContent: content withController
 		
 ]
 
-{ #category : #rendering }
-ERFinishRegisterPage >> backAction [
-	self subclassResponsibility
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> cancelAction [
-	self subclassResponsibility
-]
-
 { #category : #'as yet unclassified' }
 ERFinishRegisterPage >> colorIcon [
 	^ 'mdl-color--green'
@@ -33,21 +23,6 @@ ERFinishRegisterPage >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
-ERFinishRegisterPage >> finishAction [
-	self finishRegister 
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> finishAction: html [
-	self finishRegister
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> finishRegister [
-	self subclassResponsibility 
-]
-
 { #category : #initialization }
 ERFinishRegisterPage >> initialize [
 	super initialize.
@@ -55,11 +30,6 @@ ERFinishRegisterPage >> initialize [
 	icon := 'done'.
 	id := 'login-conatiner'.
 	classContainer := 'mdl-card-register'
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> nextAction [
-	self finishRegister
 ]
 
 { #category : #'as yet unclassified' }
@@ -80,29 +50,8 @@ ERFinishRegisterPage >> register [
 
 { #category : #rendering }
 ERFinishRegisterPage >> renderActions: html [
-	html mdlCardActions
-		class: 'mdl-card--border';
-		with: [ 
-			html mdlAnchorButton
-		colored;
-		id: 'back';
-		callback: [ self backAction ];
-		with: 'Back'.
-		html mdlAnchorButton
-		colored;
-		id: 'next';
-		callback:  [ self nextAction ];
-		with: 'Next'.
-		html mdlAnchorButton
-		colored;
-		id: 'cancel';
-		callback: [ self cancelAction ];
-		with: 'Cancel'.
-		html mdlAnchorButton
-		colored;
-		id: 'finish';
-		callback: [ self finishAction ];
-		with: 'Finish']
+	self subclassResponsibility  
+	
 ]
 
 { #category : #rendering }

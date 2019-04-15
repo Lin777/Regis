@@ -416,17 +416,17 @@ ERConference >> headerUser [
 
 { #category : #rendering }
 ERConference >> headersParticipantsToLunches [
-	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
+	^ #('Day' 'Normal' 'Vegetarian' 'Vegan' 'Total')	
 ]
 
 { #category : #rendering }
-ERConference >> headersParticipantsToSocialDinner [
-	^ #( 'Normal' 'Vegetarian' 'Vegan')	
+ERConference >> headersParticipantsToSocialDinner [ 
+	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
 ]
 
 { #category : #rendering }
 ERConference >> headersShirtsStatistics [
-	^ #('Size of the shirt' 'Female' 'Male')
+	^ #('Size of the shirt' 'Female' 'Male' 'Total')
 ]
 
 { #category : #rendering }
@@ -578,7 +578,9 @@ ERConference >> statisticsOfLuch [
 	self attends do: [ :att |
 		dict := att conferenceInformation addMyPreferenceForLuchTo: dict ].
 	dict := self flat: dict with: 'Day'. 
-	^ dict
+	dict := self sumEachRowOf: dict.
+	dict := self sumEachColumnOf: dict withHeader: self headersParticipantsToLunches .
+	^ dict 
 ]
 
 { #category : #accessing }
@@ -588,6 +590,7 @@ ERConference >> statisticsOfSocialDinner [
 	self attends do: [ :att |
 		dict := att conferenceInformation addMyPreferenceForSocialDinnerTo: dict ].
 	dict := OrderedCollection with: dict.
+	dict := self sumEachRowOf: dict.
 	^ dict
 ]
 
@@ -598,6 +601,8 @@ ERConference >> statisticsOfTShirts [
 	self attends do: [ :att |
 		dict := att conferenceInformation addMytShirtTo: dict ].
 	dict := self flat: dict with: 'Size of the shirt'.
+	dict := self sumEachRowOf: dict.
+	dict := self sumEachColumnOf: dict withHeader: self headersShirtsStatistics.
 	^ dict
 ]
 
@@ -629,6 +634,24 @@ ERConference >> submittedTalks: anObject [
 { #category : #'as yet unclassified' }
 ERConference >> submittedTalksFor: anAttendee [
 	^ self submittedTalks select: [ :each | each submitter = anAttendee ]
+]
+
+{ #category : #accessing }
+ERConference >> sumEachColumnOf: aList withHeader: header [
+	|dict|
+	dict := Dictionary new.
+	dict at: header first put: 'Total'.
+	header do: [ :aString | aString = header first 
+		ifFalse: [ dict at: aString put: (aList collect: [ :each | each at: aString ])sum ] ].
+	aList add: dict.
+	^ aList
+]
+
+{ #category : #accessing }
+ERConference >> sumEachRowOf: aList [
+	aList do: [ :li | li at: 'Total' put: 
+		(li select: [ :each | each isString not ]) sum  ].
+	^ aList
 ]
 
 { #category : #accessing }
