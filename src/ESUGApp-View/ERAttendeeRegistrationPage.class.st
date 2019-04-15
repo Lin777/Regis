@@ -106,6 +106,15 @@ ERAttendeeRegistrationPage >> saveRegConfInfo [
 ]
 
 { #category : #initialize }
+ERAttendeeRegistrationPage >> saveRegistration [
+	| user |
+	user := pageController saveAttendee.
+	pageController attendee userAccount: user.
+	self sendEmailTo: user.
+	^ user
+]
+
+{ #category : #initialize }
 ERAttendeeRegistrationPage >> saveTabs [
 	self saveBasicInfo.
 	self saveContactInfo.
@@ -113,4 +122,9 @@ ERAttendeeRegistrationPage >> saveTabs [
 	self saveAffilInfo.
 	self saveAddInfo.
 	self savePaymentInfo.
+]
+
+{ #category : #initialize }
+ERAttendeeRegistrationPage >> sendEmailTo: user [
+	pageController sendInvoiceTo: (pageController conference attendeeFromUser: user)
 ]

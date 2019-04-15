@@ -32,6 +32,14 @@ ERGroupManagerRegistrationPage >> redirectFinishRegister [
 ]
 
 { #category : #initialize }
+ERGroupManagerRegistrationPage >> saveRegistration [
+	| user |
+	user := pageController saveGroupManager.
+	pageController attendee userAccount: user.
+	^ user
+]
+
+{ #category : #initialize }
 ERGroupManagerRegistrationPage >> saveTabs [
 	self saveBasicInfo.
 	self saveAffilInfo.

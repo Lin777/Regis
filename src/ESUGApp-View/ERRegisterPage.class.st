@@ -171,6 +171,11 @@ ERRegisterPage >> saveBasicInfo [
 ]
 
 { #category : #initialize }
+ERRegisterPage >> saveRegistration [
+	self subclassResponsibility 
+]
+
+{ #category : #initialize }
 ERRegisterPage >> saveTabs [
 	self subclassResponsibility 
 ]
@@ -185,7 +190,10 @@ ERRegisterPage >> tabs [
 ERRegisterPage >> validateAndRegister [
 	 [self saveTabs.
 		currentTab := tabs first. 
-	pageController validateRegister.] 
+	pageController validateRegister.
+	self saveRegistration.
+	"pageController attendee: nil"
+	"Add validator to when go back and press register not save this again"] 
 	on: ERException 
 	do: [ :exception | messageComponent errorMessage: exception messageText.
 		currentTab updateStateTab: currentTab tabName.

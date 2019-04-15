@@ -11,9 +11,10 @@ ERFinishRegisterGroupManagerPage >> actionsBody: html [
 
 { #category : #rendering }
 ERFinishRegisterGroupManagerPage >> finishRegister [
-	| user |
+	"| user |
 	user := pageController saveGroupManager.
-	self redirectLoggedPage: user
+	self redirectLoggedPage: user"
+	self redirectLoggedPage: attendee userAccount
 ]
 
 { #category : #rendering }

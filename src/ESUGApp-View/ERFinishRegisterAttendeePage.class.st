@@ -14,10 +14,24 @@ ERFinishRegisterAttendeePage >> content: anObject [
 ]
 
 { #category : #rendering }
+ERFinishRegisterAttendeePage >> downloadInvoice [
+	self requestContext respond: [ :response |
+		|stream file |
+		file := ERPDFInvoice pdfDocOf: attendee.
+		stream := (RWBinaryOrTextStream on: String new) binary.
+		file exportTo: stream.
+		response
+            contentType: (WAMimeType main: 'application' sub: 'pdf');
+            document: stream close; contents ;
+            attachmentWithFileName: ('invoice-', attendee id asString, '.pdf') ]
+]
+
+{ #category : #rendering }
 ERFinishRegisterAttendeePage >> okAction [
-	| user |
+	"| user |
 	user := pageController saveAttendee.
-	self redirectLoggedPage:user
+	self redirectLoggedPage:user"
+	self redirectLoggedPage: attendee userAccount
 	
 ]
 
@@ -30,7 +44,13 @@ ERFinishRegisterAttendeePage >> renderActions: html [
 		colored;
 		id: 'okButton';
 		callback: [ self okAction ];
-		with: 'Ok']
+		with: 'Ok'.
+		
+		html mdlAnchorButton
+		colored;
+		id: 'next';
+		callback:  [ self downloadInvoice ];
+		with: 'Get Invoice'.]
 ]
 
 { #category : #rendering }
