@@ -110,7 +110,8 @@ ERAttendeeRegistrationPage >> saveRegistration [
 	| user |
 	user := pageController saveAttendee.
 	pageController attendee userAccount: user.
-	self sendEmailTo: user.
+	"Comentado mientras testeamos"
+	"self sendEmailTo: user."
 	^ user
 ]
 

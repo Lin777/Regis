@@ -116,7 +116,7 @@ ERLoggedPageAsAdminTest >> pressEditUser [
 
 { #category : #tests }
 ERLoggedPageAsAdminTest >> pressOptionAdmin [
-	self clickElementWithID:  'Admin-option'
+	self clickElementWithID:  'Account-option'
 ]
 
 { #category : #tests }

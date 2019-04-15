@@ -46,7 +46,7 @@ ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> pressOptionAdmin [
-	self clickElementWithID: 'Admin-option'
+	self clickElementWithID: 'Account-option'
 ]
 
 { #category : #tests }
