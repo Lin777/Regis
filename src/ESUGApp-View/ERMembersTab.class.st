@@ -57,37 +57,28 @@ ERMembersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :user | self modifyRegistrationInformation: user ]
-				with: [ :user | user id , '-modify' ]
+				with: [ :att | self modifyRegistrationInformation: att ]
+				with: [ :att | att id , '-modify' ]
 				with: 'Modify'
 				with: ''
 				with:  self group isAbleToPay );
 		add:
 			(Array
 				with: 'delete'
-				with: [ :user | self deleteAttendeeFromGroup: user ]
-				with: [ :user | user id , '-delete' ]
+				with: [ :att | self deleteAttendeeFromGroup: att ]
+				with: [ :att | att id , '-delete' ]
 				with: 'Delete'
 				with: 'return confirm(''Are you sure you want to delete this item?'');'
 				with:  self group isAbleToPay);
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user userAccount ]
-				with: [ :user | user id , '-modifyUser' ]
+				with: [ :att | self modifyUserFormGroup: att userAccount ]
+				with: [ :att | att id , '-modifyUser' ]
 				with: 'Modify user'
 				with: ''
 				with: false);
 		yourself
-]
-
-{ #category : #accessing }
-ERMembersTab >> registerMyselfAsAttendee [
-	callback := [ :att | controller addGroupManagerAsAttendee: att.
-								content state: content lastState ].
-	self initializeFormWithoutBasicInformationFor:
-	 (self attendeeFrom: self groupManager).
-	self updateStateTab: self tabName
 ]
 
 { #category : #accessing }
@@ -103,7 +94,7 @@ ERMembersTab >> renderContainerOn: html [
 		method: 'post';
 		id: 'formMembers';
 		with: [
-	self renderButtonsOn: html.
+	"self renderButtonsOn: html."
 	html horizontalRule.
 	self renderTableOfAttendsOn: html]
 ]
@@ -152,5 +143,5 @@ ERMembersTab >> tabName [
 
 { #category : #rendering }
 ERMembersTab >> title [
-	^ 'Attends'
+	^ ''
 ]

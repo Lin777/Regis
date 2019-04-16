@@ -64,40 +64,40 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :user | self modifyRegistrationInformation: user ]
-				with: [ :user | user id , '-modify' ]
+				with: [ :att | self modifyRegistrationInformation: att ]
+				with: [ :att | att id , '-modify' ]
 				with: 'Modify'
 				with: ''
 				with: false);
 		add:
 			(Array
 				with: 'delete'
-				with: [ :user | self deleteAttendee: user ]
-				with: [ :user | user id , '-delete' ]
+				with: [ :att | self deleteAttendee: att ]
+				with: [ :att | att id , '-delete' ]
 				with: 'Delete'
 				with: 'return confirm(''Are you sure you want to delete this item?'');'
 				with:  false);
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user userAccount]
-				with: [ :user | user id , '-modifyUser' ]
+				with: [ :att | self modifyUserFormGroup: att userAccount]
+				with: [ :att | att id , '-modifyUser' ]
 				with: 'Modify User'
 				with: ''
 				with: false);
 		add:
 			(Array
 				with: 'payment'
-				with: [ :user | self applyReductionTicketTo: user ]
-				with: [ :user | user id , '-applyReduction' ]
+				with: [ :att | self applyReductionTicketTo: att ]
+				with: [ :att | att id , '-applyReduction' ]
 				with: 'Apply reduction'
 				with: ''
 				with:  false);
 		add:
 			(Array
 				with: 'send'
-				with: [ :user | self sendInvoiceTo: user]
-				with: [ :user | user id , '-sendInvoice' ]
+				with: [ :att | self sendInvoiceTo: att]
+				with: [ :att | att id , '-sendInvoice' ]
 				with: 'Send invoice'
 				with: ''
 				with: false);

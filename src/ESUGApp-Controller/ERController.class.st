@@ -160,6 +160,13 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee stateUpdatePaidWith: aBoolean actions: { [ :att | self updateGroup: att ] . [ :att | self updateAttendee: att ] }
 ]
 
+{ #category : #rendering }
+ERController >> updateAffiliation: aff on: aGroup [
+	aGroup groupManager affiliationInformation: aff.
+	aGroup save.
+	self notifyAllObservers 
+]
+
 { #category : #'as yet unclassified' }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.

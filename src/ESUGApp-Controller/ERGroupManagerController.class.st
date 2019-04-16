@@ -44,6 +44,7 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
+	self updateGroup: self group.
 	self notifyAllObservers .
 ]
 

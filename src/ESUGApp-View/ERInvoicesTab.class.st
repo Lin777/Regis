@@ -71,8 +71,8 @@ ERInvoicesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'get_app'
-				with: [ :user | self downloadInvoiceOf: user ]
-				with: [ :user | user id , '-export' ]
+				with: [ :invoice | self downloadInvoiceOf: invoice ]
+				with: [ :invoice | invoice id , '-export' ]
 				with: 'Download invoice'
 				with: ''
 				with: false);

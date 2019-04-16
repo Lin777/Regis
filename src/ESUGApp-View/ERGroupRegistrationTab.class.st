@@ -85,6 +85,15 @@ ERGroupRegistrationTab >> registerAttendeeToGroupManager: anAttendee [
 ]
 
 { #category : #rendering }
+ERGroupRegistrationTab >> registerMyselfAsAttendee [
+	callback := [ :att | controller addGroupManagerAsAttendee: att.
+								content state: content lastState ].
+	self initializeFormWithoutBasicInformationFor:
+	 (self attendeeFrom: self groupManager).
+	self updateStateTab: self tabName
+]
+
+{ #category : #rendering }
 ERGroupRegistrationTab >> returnToThePreviousState [
 	content state: content lastState.
 	self updateStateTab: self tabName.

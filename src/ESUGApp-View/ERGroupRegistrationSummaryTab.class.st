@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #rendering }
+ERGroupRegistrationSummaryTab >> attendeeFrom: aGroupManager [
+	^ ERAttendee new 
+		userAccount: aGroupManager userAccount; 
+		affiliationInformation: aGroupManager affiliationInformation 
+]
+
+{ #category : #rendering }
 ERGroupRegistrationSummaryTab >> exportInvoice [
 	self exportInvoiceOf: self group.
 ]
@@ -74,7 +81,7 @@ ERGroupRegistrationSummaryTab >> paymentStatus [
 	( self group paymentInformation hasPaid )
 	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ ^ 'Payment no registered yet. Amount due: '
-			, (self group paymentAmount) asString , ' ', 
+			, (self group totalAmount) asString , ' ', 
 			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]].
 		
 ]
@@ -124,6 +131,8 @@ ERGroupRegistrationSummaryTab >> renderFormButtonsOn: html [
 	self renderModifyAffiliationButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderDownloadInvoiceButtonOn: html.
+	self renderRegisterAttendeeButtonOn: html.
+	self renderRegisterMyselfButtonOn: html
 ]
 
 { #category : #rendering }
@@ -159,6 +168,28 @@ ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
 	html
 		paragraph: [ html strong: 'Payment Status: '.
 			html text: self paymentStatus ]
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> renderRegisterAttendeeButtonOn: html [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerAttendee';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
+		callback: [ self registerAttendee ];
+		with: 'Register Attendee'
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryTab >> renderRegisterMyselfButtonOn: html [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerMyselfAsAttendee';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
+		callback: [ self registerMyselfAsAttendee ];
+		with: 'Register Myself as Attendee'
 ]
 
 { #category : #accessing }
