@@ -3,10 +3,10 @@ Class {
 	#superclass : #ERContainer,
 	#instVars : [
 		'controller',
-		'callbackYes',
-		'callbackNo',
-		'tabs',
-		'tabsComponent'
+		'modifiedUser',
+		'messageComponent',
+		'contentBlock',
+		'changePasswordForm'
 	],
 	#category : #'ESUGApp-View'
 }
@@ -18,25 +18,60 @@ ERAdminView class >> on: anAttendee withContent: aContent withController: aContr
 	form attendee: anAttendee.
 	form content: aContent.
 	form controller: aController.
-	form initializeTabForms .
+	form initializeFormUser .
+	form contentBlock: form blockEditUser .
+	form initializeChangePassword.
 	^ form
 ]
 
-{ #category : #actions }
-ERAdminView >> cancel: aTab [
-	aTab updateStateTab: aTab tabName 
+{ #category : #adding }
+ERAdminView >> acceptUser [
+	[ controller updateUser: (modifiedUser save) model.
+	messageComponent changeToAlertSuccess .
+	messageComponent errorMessage: 'Successful user update']
+		on: ERException
+		do: [ :exception | 
+			messageComponent changeToAlertOfError .
+			messageComponent errorMessage: exception messageText].
+	
 ]
 
 { #category : #adding }
-ERAdminView >> children [ 
-	^ Array with: tabsComponent
+ERAdminView >> blockChangePassword [
+	^ [:html | 
+		html render: changePasswordForm ] 
 ]
 
-{ #category : #initialization }
-ERAdminView >> closeRegistration [
-	controller closeRegistration
-	
-	
+{ #category : #adding }
+ERAdminView >> blockEditUser [ 
+	^ [:html | html heading level3 with: 'Edit profile'.
+			html horizontalRule .
+			html form
+				method: 'post';
+				id: 'formUpdateProfile';
+				with: [
+					html render: modifiedUser.
+					self renderAnchorToChangePasswordOn: html.
+					html horizontalRule .
+					self renderButtonsOn: html
+				]
+		]
+]
+
+{ #category : #adding }
+ERAdminView >> cancel [
+	attendee abortChanges.
+	self initializeFormUser 
+]
+
+{ #category : #adding }
+ERAdminView >> contentBlock [ 
+	^ contentBlock
+]
+
+{ #category : #adding }
+ERAdminView >> contentBlock: anObject [
+	contentBlock := anObject
 ]
 
 { #category : #accessing }
@@ -47,26 +82,59 @@ ERAdminView >> controller: anObject [
 { #category : #initialization }
 ERAdminView >> initialize [
 	super initialize.
-	tabs := OrderedCollection new.
+	messageComponent := ERAlert warningAlert id: 'adminAlert'.
 ]
 
-{ #category : #initialization }
-ERAdminView >> initializeTabForms [
-   tabs add: (ERAdminUserTab on: attendee withContent: content container: self).
-   tabs add: (ERChangePasswordForm on: attendee withContent: content container: self).
-	(tabs at: 1) activate.
-	
+{ #category : #adding }
+ERAdminView >> initializeChangePassword [
+		changePasswordForm := (ERChangePasswordForm on: attendee withContent: content container: self) 
+										cancel: [ contentBlock := self blockEditUser  ].
+]
+
+{ #category : #adding }
+ERAdminView >> initializeFormUser [
+	modifiedUser := attendee asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
+]
+
+{ #category : #adding }
+ERAdminView >> renderAcceptButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'accept-user';
+		callback: [ self acceptUser ];
+		with: 'Accept'
+]
+
+{ #category : #adding }
+ERAdminView >> renderAnchorToChangePasswordOn: html [
+	html paragraph with: [ 
+		html text: 'Do you want '.
+		html anchor 
+			callback: [ contentBlock := self blockChangePassword ]; 
+			with: 'change your password?' ]
+]
+
+{ #category : #adding }
+ERAdminView >> renderButtonsOn: html [
+	self renderCancelButtonOn: html.
+	self renderAcceptButtonOn: html.
+]
+
+{ #category : #adding }
+ERAdminView >> renderCancelButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'cancel-user';
+		callback: [ self cancel ];
+		with: 'Cancel'.
 ]
 
 { #category : #adding }
 ERAdminView >> renderContentPageOn: html [
-	tabsComponent := (ERTabs new tabs: tabs).
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: tabsComponent ]
-]
-
-{ #category : #accessing }
-ERAdminView >> tabs [
-	^ tabs
+		with: [ contentBlock cull: html]
+		
 ]

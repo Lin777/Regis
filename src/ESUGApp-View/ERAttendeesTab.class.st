@@ -8,6 +8,13 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
+{ #category : #initialization }
+ERAttendeesTab >> applyReductionTicketTo: user [
+	self initializeApplyReductionTicketForm: user.
+	content state: formApplyReductionTicket .
+	self updateStateTab: self tabName.
+]
+
 { #category : #rendering }
 ERAttendeesTab >> attends [
 	^ controller conference attends
@@ -56,6 +63,20 @@ ERAttendeesTab >> exportAttends [
 { #category : #rendering }
 ERAttendeesTab >> headers [
 	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Is Volunter?' '')
+]
+
+{ #category : #initialization }
+ERAttendeesTab >> initializeApplyReductionTicketForm: user [	
+	| tickets |
+	tickets := controller conference reductionTickets collect: #ticketId.
+	tickets addFirst: 'No reduction ticket'.
+	formApplyReductionTicket := (ERApplyReductionTicketView
+		on: user
+		withContent: content) 
+		listOfTickets: tickets; 
+		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
+		cancel: [ self returnToThePreviousState. 
+			self updateStateTab: self tabName.]
 ]
 
 { #category : #rendering }

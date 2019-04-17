@@ -1,17 +1,32 @@
 Class {
 	#name : #ERChangePasswordForm,
-	#superclass : #ERContentAdminTab,
+	#superclass : #ERContainerTab,
 	#instVars : [
 		'password',
 		'passwordChanged',
-		'passwordChangedConfirm'
+		'passwordChangedConfirm',
+		'cancel'
 	],
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #'as yet unclassified' }
+ERChangePasswordForm class >> on: anAttendee withContent: aContent container: aContainer [
+	| form |
+	form := super on: anAttendee withContent: aContent.
+	form initializeController .
+	form container: aContainer.
+	^ form
+]
+
 { #category : #rendering }
 ERChangePasswordForm >> cancel [
-	self updateStateTab: self tabName 
+	^ cancel
+]
+
+{ #category : #rendering }
+ERChangePasswordForm >> cancel: aBlock [
+	cancel := aBlock
 ]
 
 { #category : #rendering }
@@ -21,15 +36,14 @@ ERChangePasswordForm >> changePassword [
 	controller validateNewPassword: passwordChanged with: passwordChangedConfirm. 
 	controller changePasswordTo: passwordChanged.
 	messageComponent changeToAlertSuccess.
-	messageComponent errorMessage: 'Change password succesfull'
-	]
+	messageComponent errorMessage: 'Change password succesfull'.
+	self cancel value]
 	on: ERException
 	do: [ :exception |
+		"self halt."
 		messageComponent changeToAlertOfError.
 		messageComponent errorMessage: exception messageText.
-		].
-	
-self updateStateTab: self tabName
+		]
 ]
 
 { #category : #hooks }
@@ -42,7 +56,13 @@ ERChangePasswordForm >> children [
 { #category : #initialization }
 ERChangePasswordForm >> initialize [
 	super initialize.
-	messageComponent id: 'adminChangePasswordAlert'.
+	messageComponent id: 'changePasswordAlert'.
+]
+
+{ #category : #initialization }
+ERChangePasswordForm >> initializeController [
+	controller := ERAdminController
+		attendee: attendee
 ]
 
 { #category : #rendering }
@@ -65,7 +85,7 @@ ERChangePasswordForm >> renderCancelButtonOn: html [
 	html mdlButton
 		colored;
 		id: 'cancel-change-password';
-		callback: [ self cancel ];
+		callback:  self cancel ;
 		with: 'Cancel'
 ]
 
@@ -100,8 +120,9 @@ ERChangePasswordForm >> renderFields: html [
 ERChangePasswordForm >> renderFormOn: html [
 	html form
 		method: 'post';
-		id: 'groupManagerFunctions';
-		with: [ 
+		id: 'changePasswordForm';
+		with: [ "
+			self halt."
 			html render: messageComponent.
 			self renderFields: html.
 			self renderButtonsOn: html.

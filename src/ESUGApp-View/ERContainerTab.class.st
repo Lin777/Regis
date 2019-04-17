@@ -31,13 +31,6 @@ ERContainerTab >> alreadyRegisteredAsAttendee [
 	^ self session user isAttendee
 ]
 
-{ #category : #initialization }
-ERContainerTab >> applyReductionTicketTo: user [
-	self initializeApplyReductionTicketForm: user.
-	content state: formApplyReductionTicket .
-	self updateStateTab: self tabName.
-]
-
 { #category : #'as yet unclassified' }
 ERContainerTab >> blockTableAwardsToExecute [
 	^ [ :award :html | 
@@ -131,27 +124,6 @@ ERContainerTab >> exportInvoiceOf: groupOrAttendee [
             contentType: (WAMimeType main: 'application' sub: 'pdf');
             document: stream close; contents ;
             attachmentWithFileName: ('invoice-', groupOrAttendee id asString, '.pdf') ]
-]
-
-{ #category : #initialization }
-ERContainerTab >> initialize [
-	super initialize.
-	messageComponent := ERAlert warningAlert id: 'tabAlert'.
-
-]
-
-{ #category : #initialization }
-ERContainerTab >> initializeApplyReductionTicketForm: user [	
-	| tickets |
-	tickets := controller conference reductionTickets collect: #ticketId.
-	tickets addFirst: 'No reduction ticket'.
-	formApplyReductionTicket := (ERApplyReductionTicketView
-		on: user
-		withContent: content) 
-		listOfTickets: tickets; 
-		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
-		cancel: [ self returnToThePreviousState. 
-			self updateStateTab: self tabName.]
 ]
 
 { #category : #initialization }
