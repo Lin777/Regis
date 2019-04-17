@@ -363,21 +363,17 @@ ERLibrary >> tabsCss [
 
 { #category : #'as yet unclassified' }
 ERLibrary >> validationInputsJs [
-	^ '
-		$(window).bind("load", function(){
-		var newPassword = document.getElementById("password");
-	var confNewPassword = document.getElementById("confirmPassword");
-	
-	function validatePassword(){
-		if(newPassword.value != confNewPassword.value){
-			confNewPassword.setCustomValidity("Passwords Dont Match");
-		} else { 
-			confNewPassword.setCustomValidity("");
-		}
-	}
-	
-	newPassword.onchange = validatePassword;
-	confNewPassword.onkeyup = validatePassword;
+	^ '$().ready(function() {
+	$("#changePasswordForm").validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+    });
+	$("#password").rules("add", {required:true, minlength: 8});
+   $("#confirmPassword").rules("add", {required:true, equalTo: "#password"});
 	});
 	'
 ]

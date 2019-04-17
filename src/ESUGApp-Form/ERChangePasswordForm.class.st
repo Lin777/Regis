@@ -40,7 +40,6 @@ ERChangePasswordForm >> changePassword [
 	self cancel value]
 	on: ERException
 	do: [ :exception |
-		"self halt."
 		messageComponent changeToAlertOfError.
 		messageComponent errorMessage: exception messageText.
 		]
@@ -99,7 +98,6 @@ ERChangePasswordForm >> renderConfirmNewPasswordOn: html [
 				id: 'confirmPassword'; 
 				type: 'password';
 				pattern: '[A-Za-z0-9._-]{8,}';
-				onKeyUp: 'validatePassword();';
 				callback: [:value | passwordChangedConfirm := value ].
 			html mdlTextFieldError: ''].
 ]
@@ -135,8 +133,7 @@ ERChangePasswordForm >> renderFormOn: html [
 	html form
 		method: 'post';
 		id: 'changePasswordForm';
-		with: [ "
-			self halt."
+		with: [ 
 			html render: messageComponent.
 			self renderFields: html.
 			self renderButtonsOn: html.
@@ -153,7 +150,6 @@ ERChangePasswordForm >> renderNewPasswordOn: html [
 				id: 'password'; 
 				type: 'password';
 				pattern: '[A-Za-z0-9._-]{8,}';
-				onChange: 'validatePassword();';
 				callback: [:value |  passwordChanged := value ].
 			html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'].
 ]
