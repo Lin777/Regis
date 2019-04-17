@@ -115,6 +115,7 @@ ERAdminView >> renderAnchorToChangePasswordOn: html [
 	html paragraph with: [ 
 		html text: 'Do you want '.
 		html anchor 
+			id: 'changePassword';
 			callback: [ contentBlock := self blockChangePassword ]; 
 			with: 'change your password?' ]
 ]

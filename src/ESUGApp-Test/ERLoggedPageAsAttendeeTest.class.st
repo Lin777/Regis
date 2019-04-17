@@ -45,11 +45,6 @@ ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 ]
 
 { #category : #tests }
-ERLoggedPageAsAttendeeTest >> pressOptionAdmin [
-	self clickElementWithID: 'Account-option'
-]
-
-{ #category : #tests }
 ERLoggedPageAsAttendeeTest >> pressOptionMyRegistration [
 	self clickElementWithID: 'My Registration-option'
 ]
@@ -65,7 +60,7 @@ ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> selectChangePasswordTab [
-	self clickElementWithID: 'tab-Change Password'
+	self clickElementWithID: 'changePassword'
 ]
 
 { #category : #tests }
@@ -277,7 +272,8 @@ ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
-	self assert: (self textOfElementWithID: 'tab-changePassword' andTagName: 'h3') equals: 'Modify Password'
+	self assert: (driver findElementByTagName: 'h3')  getText
+		equals: 'Modify Password'
 ]
 
 { #category : #myRegistrationSummaryTests }
@@ -356,5 +352,5 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectCurrentPassword [
 	self fillAllFieldsOfChangePassword .
 	acceptFormButton := 'accept-change-password'.
 	self updateField: 'currentPassword' with: '123456789'.
-	self assert: (self textOfElementWithID: 'adminChangePasswordAlert') equals: 'The password entered does not match the current password'
+	self assert: (self textOfElementWithID: 'changePasswordAlert') equals: 'The password entered does not match the current password'
 ]

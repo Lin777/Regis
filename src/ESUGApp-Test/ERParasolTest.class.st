@@ -54,6 +54,11 @@ ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
 	^  aString ,' (Required): This field only accept a text'
 ]
 
+{ #category : #tests }
+ERParasolTest >> pressOptionAdmin [
+	self clickElementWithID: 'Account-option'
+]
+
 { #category : #'as yet unclassified' }
 ERParasolTest >> selectElementWithID: aString1 send: aString2 [
 	|element|

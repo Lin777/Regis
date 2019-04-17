@@ -18,7 +18,7 @@ ERLoggedPageAsStudentVolunter >> loginAsStudentVolunter [
 ]
 
 { #category : #tests }
-ERLoggedPageAsStudentVolunter >> pressOptionAdmin [
+ERLoggedPageAsStudentVolunter >> pressOptionSearch [
 	self clickElementWithID: 'Search-option'
 ]
 
@@ -35,7 +35,7 @@ ERLoggedPageAsStudentVolunter >> setUp [
 
 { #category : #tests }
 ERLoggedPageAsStudentVolunter >> testPressAdminOption [
-	self pressOptionAdmin .
+	self pressOptionSearch .
 	self assert: (self textOfTagName: 'h3') equals: 'Attendees'.
 	self shouldnt: [driver findElementByID: 'selectStrategy'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'stringForStrategy'] raise: BPNoSuchElementException .
