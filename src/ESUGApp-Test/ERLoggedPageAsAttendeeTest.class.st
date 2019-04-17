@@ -263,7 +263,6 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 	self pressOptionAdmin .
 	self assert: (self textOfElementWithID: 'tab-adminUser' andTagName: 'h3') equals: 'User'.
-	
 ]
 
 { #category : #myRegistrationProposedAwardsTests }

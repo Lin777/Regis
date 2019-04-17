@@ -91,9 +91,17 @@ ERChangePasswordForm >> renderCancelButtonOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderConfirmNewPasswordOn: html [
-	self createPasswordField: 'Confirm password: ' id: 'confirmPassword' with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
-		html mdlTextFieldError: ''] on: html.
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'confirmPassword'; with: 'Confirm password: '.
+			html mdlTextFieldInput 
+				id: 'confirmPassword'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				onKeyUp: 'validatePassword();';
+				callback: [:value | passwordChangedConfirm := value ].
+			html mdlTextFieldError: ''].
 ]
 
 { #category : #rendering }
@@ -104,9 +112,15 @@ ERChangePasswordForm >> renderContainerOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderCurrentPasswordOn: html [
-	self createPasswordField: 'Current Password: ' id: 'currentPassword' 
-	with: [:mdlTxtInput | mdlTxtInput callback: [:value | password := value ] ] on: html.
-	
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'currentPassword'; with:'Current Password: '.
+			html mdlTextFieldInput 
+				id: 'currentPassword'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [:value | password := value ]].
 ]
 
 { #category : #rendering }
@@ -131,12 +145,17 @@ ERChangePasswordForm >> renderFormOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderNewPasswordOn: html [
-	self createPasswordField: 'Password: ' id: 'password' 
-	with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value |  passwordChanged := value ].
-		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
-	   on: html .
-	
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'password'; with: 'Password: '.
+			html mdlTextFieldInput 
+				id: 'password'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				onChange: 'validatePassword();';
+				callback: [:value |  passwordChanged := value ].
+			html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'].
 ]
 
 { #category : #accessing }

@@ -137,14 +137,17 @@ ERLoginPage >> renderPageOn: html [
 
 { #category : #rendering }
 ERLoginPage >> renderPasswordFieldOn: html [
-	self
-		createPasswordField: 'Password'
-		id: 'password-login'
-		with: [:mdlTxtInput | 
-			mdlTxtInput "required;"
-			callback: [ :value | 
-			self password: (ERUserAccount hashPassword: value) asString ] ]
-		on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'password-login'; with: 'Password'.
+			html mdlTextFieldInput 
+				id: 'password-login'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [ :value | 
+			self password: (ERUserAccount hashPassword: value) asString ].
+		].
 ]
 
 { #category : #rendering }

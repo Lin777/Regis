@@ -104,19 +104,6 @@ ERComponentFactory >> createFormOf: anObject [
 	 yourself.
 ]
 
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [
-			| mdlTxtInput |
-			html mdlTextFieldLabel for: aId; with: aName.
-			mdlTxtInput := html mdlTextFieldInput id: aId; type: 'password';
-			pattern: '[A-Za-z0-9._-]{8,}'.
-			aBlock ifNotNil: [ aBlock cull: mdlTxtInput ].
-		].
-]
-
 { #category : #'as yet unclassified' }
 ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 

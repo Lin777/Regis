@@ -87,7 +87,10 @@ ERAdminView >> initialize [
 
 { #category : #adding }
 ERAdminView >> initializeChangePassword [
-		changePasswordForm := (ERChangePasswordForm on: attendee withContent: content container: self) 
+		changePasswordForm := (ERChangePasswordForm 
+										on: attendee 
+										withContent: content 
+										container: self) 
 										cancel: [ contentBlock := self blockEditUser  ].
 ]
 
