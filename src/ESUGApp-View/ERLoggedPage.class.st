@@ -24,7 +24,8 @@ ERLoggedPage >> configurationTabs [
 		configurationTabs := OrderedCollection new add: (ERConferenceForm on: attendee withContent: content container: self);
 	add: (ERFeeForm on: attendee withContent: content container: self);
 	add: (ERReductionTicketsTab on: attendee withContent: content container: self);
-	add: (ERInvoicesTab on: attendee withContent: content container: self); yourself.
+	add: (ERInvoicesTab on: attendee withContent: content container: self);
+	add: (ERConfiguration on: attendee withContent: content container: self); yourself.
 	(configurationTabs at: 1) activate].
 	^ configurationTabs
 ]
