@@ -82,7 +82,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	self pressNextButtonAffiliation  .
 	self clickElementWithID: 'additionalInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
 ]
 
 { #category : #registerAdditionalInformationTests }
@@ -192,7 +192,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilled
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
 ]
 
 { #category : #tests }

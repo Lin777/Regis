@@ -207,6 +207,58 @@ ERTest >> defaultStore [
 	^ SDMemoryStore new
 ]
 
+{ #category : #modifying }
+ERTest >> deleteAll [ 	
+	ERAttendee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAttendee coolDown.
+	ERAward
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAward coolDown.	
+	ERFee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERFee coolDown.
+	ERGroup
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERGroup coolDown.
+	ERReductionTicket
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERReductionTicket coolDown.
+	ERTalk
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERTalk coolDown.
+	ERUserAccount
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERUserAccount coolDown.
+	ERConference
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERConference coolDown.
+]
+
 { #category : #running }
 ERTest >> deleteBackupFolderIfExist [
 	self deleteFolder: 'Backup'
@@ -303,54 +355,7 @@ ERTest >> setUp [
 
 { #category : #running }
 ERTest >> tearDown [
-	ERAttendee
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERAttendee coolDown.
-	ERAward
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERAward coolDown.	
-	ERFee
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERFee coolDown.
-	ERGroup
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERGroup coolDown.
-	ERReductionTicket
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERReductionTicket coolDown.
-	ERTalk
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERTalk coolDown.
-	ERUserAccount
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERUserAccount coolDown.
-	ERConference
-		do: [ :each | 
-			[ each delete ]
-				on: Error
-				do: [  ] ].
-	ERConference coolDown.
+	self deleteAll.
 	ESUGSetUp stop.
 	"Delete folder backup"
 	self deleteBackupFolderIfExist.
