@@ -1,3 +1,6 @@
+"
+I am a model of an Attendee
+"
 Class {
 	#name : #ERAttendee,
 	#superclass : #ERRegisteredObject,
@@ -115,7 +118,7 @@ ERAttendee >> firstName [
 	^ userAccount firstName
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 ERAttendee >> hasCoupon [
 	self paymentInformation coupon isNil 
 	ifFalse: [ self paymentInformation coupon isEmpty 
@@ -144,12 +147,12 @@ ERAttendee >> initialize [
 	additionalInformation := ERAdditionalInformation new.
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERAttendee >> isAbleToModifyRegister [
 	^ paymentInformation hasPaid
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERAttendee >> isAbleToPay [
 	^ (idGroup isNotNil) or: (paymentInformation hasPaid)
 ]
@@ -185,7 +188,7 @@ ERAttendee >> removeStudentVolunterRole [
 	(self userAccount) deleteRole: 'studentVolunter'; save. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERAttendee >> updateValuesFor: aGroup [
 	self paymentInformation invoiceNumber: aGroup paymentInformation invoiceNumber.
 	self idGroup: aGroup id.

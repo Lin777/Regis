@@ -1,3 +1,6 @@
+"
+I am a model of Contact Information
+"
 Class {
 	#name : #ERContactInformation,
 	#superclass : #Object,

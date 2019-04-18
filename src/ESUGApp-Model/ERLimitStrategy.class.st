@@ -1,3 +1,6 @@
+"
+I am a model of Limit strategy
+"
 Class {
 	#name : #ERLimitStrategy,
 	#superclass : #Object,

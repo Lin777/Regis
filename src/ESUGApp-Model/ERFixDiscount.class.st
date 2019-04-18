@@ -1,3 +1,6 @@
+"
+I am a model of fix discount
+"
 Class {
 	#name : #ERFixDiscount,
 	#superclass : #ERDiscountStrategy,

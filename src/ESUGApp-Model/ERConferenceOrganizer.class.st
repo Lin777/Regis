@@ -1,3 +1,6 @@
+"
+I am a model of Conference Organizers
+"
 Class {
 	#name : #ERConferenceOrganizer,
 	#superclass : #Object,

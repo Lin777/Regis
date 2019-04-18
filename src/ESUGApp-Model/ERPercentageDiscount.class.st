@@ -1,3 +1,6 @@
+"
+I am a model of percentage discount
+"
 Class {
 	#name : #ERPercentageDiscount,
 	#superclass : #ERDiscountStrategy,

@@ -1,3 +1,6 @@
+"
+I am a model of Configuration Of Home Page
+"
 Class {
 	#name : #ERConfigurationOfHomePage,
 	#superclass : #Object,

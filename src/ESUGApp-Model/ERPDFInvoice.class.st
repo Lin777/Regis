@@ -1,3 +1,16 @@
+"
+Description
+-----------------------------------
+
+I am a model of ERPDFInvoice, I generate a pdf document of invoive of an attendee.
+
+Example
+-----------------------------------
+
+ERPDFInvoice pdfDocOf: groupOrAttendee.
+
+this script generate a invoice file of an attendee
+"
 Class {
 	#name : #ERPDFInvoice,
 	#superclass : #Object,
@@ -120,7 +133,7 @@ ERPDFInvoice >> addHeader: aPage [
 	self addDateInvoice: aPage.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ERPDFInvoice >> addInfoESUG: aPage [
 	| fontHeader |
 	fontHeader := PDFTimesFont size: 10pt.
@@ -342,7 +355,7 @@ ERPDFInvoice >> fontFooter [
 	^ PDFTimesFont size: 10 pt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ERPDFInvoice >> lineElementFrom: aPoint1 to: aPoint2 [
 	^ (PDFLineElement
 		from: aPoint1
@@ -356,7 +369,7 @@ ERPDFInvoice >> paymentStatus: user [
 		^ 'Unpaid'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #templates }
 ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	| pharoLogo pdfDoc pdfPage |
 	controller := ERController new .

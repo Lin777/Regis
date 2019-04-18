@@ -1,3 +1,6 @@
+"
+I am a model of Information of conference preferences of an Attendee, such as: size of T-shirts, food preference, go to social dinner, add person to social dinner, days of assistance
+"
 Class {
 	#name : #ERRegisterConferenceInformation,
 	#superclass : #Object,

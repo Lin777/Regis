@@ -1,3 +1,6 @@
+"
+I am a model of Group Manager
+"
 Class {
 	#name : #ERGroupManager,
 	#superclass : #Object,

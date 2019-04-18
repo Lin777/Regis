@@ -1,3 +1,6 @@
+"
+I am a model of Group
+"
 Class {
 	#name : #ERGroup,
 	#superclass : #ERRegisteredObject,
@@ -13,7 +16,7 @@ ERGroup class >> groupManager: aGroupManager [
 	^ self new groupManager: aGroupManager ; yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #adding }
 ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]

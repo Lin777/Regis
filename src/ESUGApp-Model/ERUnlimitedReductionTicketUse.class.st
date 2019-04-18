@@ -1,3 +1,6 @@
+"
+I am a model of Unlimited Strategy
+"
 Class {
 	#name : #ERUnlimitedReductionTicketUse,
 	#superclass : #ERLimitStrategy,

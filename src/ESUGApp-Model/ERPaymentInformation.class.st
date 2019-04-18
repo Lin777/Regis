@@ -1,3 +1,6 @@
+"
+I am a model of Payment Information
+"
 Class {
 	#name : #ERPaymentInformation,
 	#superclass : #Object,
@@ -112,7 +115,7 @@ ERPaymentInformation >> invoiceNumber: anObject [
 	invoiceNumber := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERPaymentInformation >> invoiceNumberIfNone: aBlock [
 	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
 	^ invoiceNumber
@@ -148,17 +151,17 @@ ERPaymentInformation >> paymentType: anObject [
 	paymentType := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> paymentTypeIsBankTransfer [
 	^ 'Bank transfer' = paymentType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> paymentTypeIsCreditCard [
 	^  'Credit Card' = paymentType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> swapPaymentType [
 	self paymentTypeIsBankTransfer ifTrue: [ ^ paymentType := 'Credit Card' ].
 	self paymentTypeIsCreditCard ifTrue: [ ^ paymentType := 'Bank transfer' ]

@@ -1,3 +1,6 @@
+"
+I am a model of Award
+"
 Class {
 	#name : #ERAward,
 	#superclass : #SDActiveRecord,

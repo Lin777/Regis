@@ -1,3 +1,6 @@
+"
+I am a model of Conference Email Configuration
+"
 Class {
 	#name : #ERConferenceEmailConfiguration,
 	#superclass : #Object,

@@ -111,7 +111,7 @@ ERUserAccount >> deleteAttendeeRole [
 	]
 ]
 
-{ #category : #testing }
+{ #category : #deleteRole }
 ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]
 ]
@@ -210,26 +210,26 @@ ERUserAccount >> initializePasswordHashFrom: aString [
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isAdmin [
 		^ self role anySatisfy: [ :each | each = 'admin']
 
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isAttendee [
 	^ self role anySatisfy: [ :each | each = 'attendee']
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isGroupManager [
 	^ self role
 		anySatisfy: [ :each | each = 'groupManager']
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isStudent [
 	^ self role
 		anySatisfy: [ :each | each = 'studentVolunter']
@@ -255,7 +255,7 @@ ERUserAccount >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #converting }
 ERUserAccount >> resetPassword [
     
     | passwordCharacters random newPasswordStream newPassword |
@@ -273,7 +273,7 @@ ERUserAccount >> resetPassword [
     ^ newPassword
 ]
 
-{ #category : #initialization }
+{ #category : #converting }
 ERUserAccount >> resetedPasswordSize [
 	^ 8
 ]
@@ -288,7 +288,7 @@ ERUserAccount >> role: anObject [
 	role := anObject
 ]
 
-{ #category : #testing }
+{ #category : #addRole }
 ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
 ]

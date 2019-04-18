@@ -1,3 +1,6 @@
+"
+I am a model of Billing Information
+"
 Class {
 	#name : #ERAffiliationInformation,
 	#superclass : #Object,

@@ -1,3 +1,6 @@
+"
+I am a model of Conference of Configuracion Model
+"
 Class {
 	#name : #ERConferenceConfigurationModel,
 	#superclass : #Object,
@@ -215,7 +218,7 @@ ERConferenceConfigurationModel >> initialize [
 	self openRegistration: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #message }
 ERConferenceConfigurationModel >> messageInvalidDate [
 	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
 ]
@@ -250,7 +253,7 @@ ERConferenceConfigurationModel >> organizer: anObject [
 	organizer := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing pattern' }
 ERConferenceConfigurationModel >> patternDate [ 
 	^ '^([0]?[1-9]|[1][0-2])[./-]([0]?[0-9]|[12][0-9]|[3][01])[./-]([0-9]{4}|[0-9]{2})$'
 ]

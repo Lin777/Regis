@@ -1,3 +1,6 @@
+"
+I am a model of Fee
+"
 Class {
 	#name : #ERFee,
 	#superclass : #SDActiveRecord,
@@ -257,7 +260,7 @@ ERFee >> lrfOneDayFee: anObject [
 	lrfOneDayFee := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accesing-tokens' }
 ERFee >> payPalAmountToken [
 	^ '[AMOUNT]'
 ]
@@ -272,7 +275,7 @@ ERFee >> payPalCommissionPercentage: anObject [
 	payPalCommissionPercentage := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accesing-tokens' }
 ERFee >> payPalInvoiceNumberToken [
 	
 	^ '[INVOICENUMBER]'
@@ -288,7 +291,7 @@ ERFee >> staticCommissionPaypal: anObject [
 	staticCommissionPaypal := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERFee >> urlWithAmount: aString1 invoiceNumber: aString2 [
 	|url|
 	url := self bankPayPalUrl.

@@ -1,3 +1,6 @@
+"
+I am a model of Bank Information
+"
 Class {
 	#name : #ERBankInformation,
 	#superclass : #Object,

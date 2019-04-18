@@ -1,3 +1,6 @@
+"
+I am a library for load Css files and JS files
+"
 Class {
 	#name : #ERLibrary,
 	#superclass : #WAFileLibrary,
