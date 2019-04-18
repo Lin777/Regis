@@ -99,12 +99,12 @@ ERUserAccount >> confirmPassword: anObject [
 	confirmPassword := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #addRole }
 ERUserAccount >> convertAttendee [
 	self isAttendee ifFalse: [ self roleAdd: 'attendee' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleteRole }
 ERUserAccount >> deleteAttendeeRole [
 	self isAttendee ifTrue: [
 		self deleteRole: 'attendee'
@@ -116,7 +116,7 @@ ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionEmail [
 	<magritteDescription>
 	| tmp |
@@ -134,7 +134,7 @@ ERUserAccount >> descriptionEmail [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionFirstName [
 	<magritteDescription>
 	| tmp |
@@ -152,7 +152,7 @@ ERUserAccount >> descriptionFirstName [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionLastName [
 	<magritteDescription>
 	| tmp |
@@ -180,7 +180,7 @@ ERUserAccount >> email: anObject [
 	email := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 ERUserAccount >> encryptMyPassword [
 	self password: (self class hashPassword: (self password )asString).
 	self confirmPassword: ''.
@@ -293,7 +293,7 @@ ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERUserAccount >> rolesAsString [
 	| roles |
 	roles := ''.

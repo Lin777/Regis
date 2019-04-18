@@ -302,17 +302,17 @@ ERPDFInvoice >> addTablePayment: pdfPage of: user [
 		text: 'and it is not subjected to VAT, "TVA non applicable - article 293 B du CGI".').
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorBorder [
 	^ PDFColor r: 255 g: 255 b: 255
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorLink [
 	^ PDFColor r: 230 g: 0 b: 115
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorTitle [
 	^ PDFColor r: 0 g: 0 b: 128
 ]
@@ -327,17 +327,17 @@ ERPDFInvoice >> dateToday [
 	^ Date today monthName asString, ' ', Date today dayOfMonth asString, ', ', Date today year asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontBoldContent [
 	^ (self fontContent) bold: true.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontContent [
 	^ PDFTimesFont size: 13pt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontFooter [
 	^ PDFTimesFont size: 10 pt.
 ]

@@ -1,3 +1,14 @@
+"
+Description
+--------------------
+
+I am an class for send emails with invoice of registration.
+
+Instance Variables
+--------------------
+	attendee: an ERAttendee that will be send a mail
+	conference: an ERConference (to find atributtes of ERConferenceEmailConfiguration)
+"
 Class {
 	#name : #ERInvoiceMailSender,
 	#superclass : #ERMailSender,

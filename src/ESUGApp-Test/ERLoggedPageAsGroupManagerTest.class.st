@@ -44,7 +44,7 @@ ERLoggedPageAsGroupManagerTest >> firstName: aString1 lastName: aString2 email: 
 	confirmPassword sendKeys: aString5.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
 	self selectElementWithID: 'email-login' send: group groupManager userAccount email.
 	self selectElementWithID: 'password-login' send: '12345678'.
@@ -94,7 +94,7 @@ ERLoggedPageAsGroupManagerTest >> pressNextButtonUser [
 	self clickElementWithID: 'basicInfoForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
 	self clickElementWithID: 'Group Registration-option'
 ]

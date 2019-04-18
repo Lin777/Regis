@@ -7,7 +7,7 @@ Class {
 	#category : #'ESUGApp-Test-Parasol'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERRegisterAsGroupManagerPageTest >> pushRegisterAsGroupManagerButton [
 	self clickElementWithID: 'register-button-as-group-manager'
 ]

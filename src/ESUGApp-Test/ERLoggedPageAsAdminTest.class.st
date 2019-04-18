@@ -32,7 +32,7 @@ ERLoggedPageAsAdminTest >> getNameOfConference [
 	^ controller conference configuration name 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> loginAsAdmin [
 	self selectElementWithID: 'email-login' send: 'admin@esug.org'.
 	self selectElementWithID: 'password-login' send: '12345678'.
@@ -44,7 +44,7 @@ ERLoggedPageAsAdminTest >> messageInvalidInputFor: aString [
 	^ aString, ' (Required): Invalid input given'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> messageWrongDateFormatFor: aString [
 	^ aString, ': This field only supports dates with the following format "MM/DD/YYYY"'
 ]

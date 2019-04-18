@@ -228,41 +228,41 @@ ERTest >> deleteFolder: aString [
 		 [ path deleteAll ] .
 ]
 
-{ #category : #rendering }
+{ #category : #accesing }
 ERTest >> groupOfUser: anUser [
 	^ ERController new conference groupOfUser: anUser.
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerAsGroupManager [
 	^ (ERRegistrationController
 		attendee: self class testGroupManager) saveGroupManager
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerAsGroupManager: email [
 	^ (ERRegistrationController
 		attendee: (self class testGroupManager: email)) saveGroupManager
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerAttendee [
 	^ (ERRegistrationController attendee:
 			 self class testAttendee) saveAttendee 
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerAttendee: anAttendee [
 	^ (ERRegistrationController attendee: anAttendee)
 		saveAttendee
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerAttendees: aList [
 	aList do: [ :email | self registerAttendee: (self class testAttendee: email) ]
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerGroup [
 	|user group aController|
 	user := self registerAsGroupManager .
@@ -274,7 +274,7 @@ ERTest >> registerGroup [
 	^ group
 ]
 
-{ #category : #rendering }
+{ #category : #'test registration' }
 ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 	|user group aController|
 	user := self registerAsGroupManager: aString.
@@ -357,7 +357,7 @@ ERTest >> tearDown [
 	Smalltalk garbageCollectMost
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accesing }
 ERTest >> validCoupon [
 	^ controller conference reductionTickets first 
 ]

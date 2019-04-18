@@ -2,7 +2,7 @@
 Description
 --------------------
 
-I am a personalized table, I render a dictionary
+I am a personalized table, I render a dictionary in tab format
 "
 Class {
 	#name : #ERDictionaryTable,

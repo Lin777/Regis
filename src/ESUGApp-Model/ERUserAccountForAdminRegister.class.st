@@ -4,7 +4,7 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForAdminRegister >> descriptionRole [
 	<magritteDescription>
 	| tmp1 |

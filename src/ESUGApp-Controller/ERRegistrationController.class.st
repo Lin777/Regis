@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a controller for registration page.
+
+Instance Variables
+--------------------
+	attendee: an ERAttendee will registered 
+"
 Class {
 	#name : #ERRegistrationController,
 	#superclass : #ERController,
@@ -66,7 +76,7 @@ ERRegistrationController >> saveGroupManager [
 	^ self attendee userAccount 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERRegistrationController >> validatePatternPassword: aSymbol [
 	(((attendee perform: aSymbol)
 		matchesRegex: '[A-Za-z0-9._]{8,}')
@@ -74,7 +84,7 @@ ERRegistrationController >> validatePatternPassword: aSymbol [
 		ifFalse: [ ERException passwordFormatException signal ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERRegistrationController >> validateRegister [
 	self validateRegister: attendee
 ]

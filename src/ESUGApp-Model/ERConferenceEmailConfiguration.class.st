@@ -19,7 +19,7 @@ ERConferenceEmailConfiguration >> apiKey: anObject [
 	apiKey := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceEmailConfiguration >> descriptionApiKey [
 	<magritteDescription>
 	| tmp |
@@ -35,7 +35,7 @@ ERConferenceEmailConfiguration >> descriptionApiKey [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 	<magritteDescription>
 	| tmp |
@@ -53,7 +53,7 @@ ERConferenceEmailConfiguration >> descriptionSenderEmailAddress [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceEmailConfiguration >> descriptionWelcomeText [
 	<magritteDescription>
 	| tmp |

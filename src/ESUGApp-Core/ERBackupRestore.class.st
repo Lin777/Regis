@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a class that control the generation of backup of page.
+
+Instance Variables
+--------------------
+	version: a Number with that each backup will be saved
+"
 Class {
 	#name : #ERBackupRestore,
 	#superclass : #Object,
@@ -44,7 +54,7 @@ ERBackupRestore >> fileNamePrefix [
 	^ 'esug'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERBackupRestore >> incrementVersionNumber [
 	^ version := self version + 1
 ]
@@ -74,7 +84,7 @@ ERBackupRestore >> nameDirectory [
 	^ 'Backup'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERBackupRestore >> objectsToBackup [
 	^ OrderedCollection new 
 		add: ERFee findAll;
@@ -88,7 +98,7 @@ ERBackupRestore >> objectsToBackup [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'actions api' }
 ERBackupRestore >> restoreBackup [
 	self lastBackup ifNotNil: [ :backup | backup do: 
 		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]
@@ -100,7 +110,7 @@ ERBackupRestore >> version [
 	 ^ version
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERBackupRestore >> versionOf: fileName [
 	^ (fileName substrings: '.' ) last asInteger 
 ]

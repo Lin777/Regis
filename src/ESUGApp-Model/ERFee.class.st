@@ -46,7 +46,7 @@ ERFee >> currency: anObject [
 	currency := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionBankPayPalUrl [
 	<magritteDescription>
 	| tmp |
@@ -62,7 +62,7 @@ ERFee >> descriptionBankPayPalUrl [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionErfAllDaysFee [
 	<magritteDescription>
 	| tmp |
@@ -80,7 +80,7 @@ ERFee >> descriptionErfAllDaysFee [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionErfOneDayFee [
 	<magritteDescription>
 	| tmp |
@@ -97,7 +97,7 @@ ERFee >> descriptionErfOneDayFee [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionExtraPersonSD [
 	<magritteDescription>
 	| tmp |
@@ -114,7 +114,7 @@ ERFee >> descriptionExtraPersonSD [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionLrfAllDaysFee [
 	<magritteDescription>
 	| tmp |
@@ -132,7 +132,7 @@ ERFee >> descriptionLrfAllDaysFee [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionLrfOneDayFee [
 	<magritteDescription>
 	| tmp |
@@ -149,7 +149,7 @@ ERFee >> descriptionLrfOneDayFee [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionPayPalCommissionPercentage [
 	<magritteDescription>
 	| tmp |
@@ -166,7 +166,7 @@ ERFee >> descriptionPayPalCommissionPercentage [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionPaymentCurrency [
 	<magritteDescription>
 	| tmp1 |
@@ -183,7 +183,7 @@ ERFee >> descriptionPaymentCurrency [
 	^ tmp1 yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERFee >> descriptionStaticPayPalCommission [
 	<magritteDescription>
 	| tmp |

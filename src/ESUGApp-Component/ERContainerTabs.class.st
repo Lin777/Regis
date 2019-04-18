@@ -1,3 +1,17 @@
+"
+Description
+--------------------
+
+I am a card component used for render tabs in the container of page.
+
+Instance Variables
+--------------------
+	tabView: a ERTabs component to render in this component
+	messageComponent: a ERAlert component to show errors of this component
+	callback: aBlock to execute after saveTabs
+	tabs: an OrderedCollection of Tab components (this will be rendered in tabView component)
+	saveTabs: a block to execute when press a Done Button
+"
 Class {
 	#name : #ERContainerTabs,
 	#superclass : #ERContainer,
@@ -60,6 +74,7 @@ ERContainerTabs >> initialize [
 
 { #category : #accessing }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
+	"Initialize tabs for register form"
 	tabs := OrderedCollection new
 	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
 	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true);
@@ -78,6 +93,7 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 
 { #category : #accessing }
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
 	tabs := OrderedCollection new
 	add: ((self createContactInfoTab: anAttendee withContent: self ) 
 				activate; previousTabName: nil);

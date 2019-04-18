@@ -54,7 +54,7 @@ ERAward >> demoUrl: anObject [
 	demoUrl := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionAffilitation [
 	<magritteDescription>
 	| tmp |
@@ -70,7 +70,7 @@ ERAward >> descriptionAffilitation [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionCountry [
 	<magritteDescription>
 	| tmp1 |
@@ -86,7 +86,7 @@ ERAward >> descriptionCountry [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionDemoUrl [
 	<magritteDescription>
 	| tmp |
@@ -103,7 +103,7 @@ ERAward >> descriptionDemoUrl [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionDownloadUrl [
 	<magritteDescription>
 	| tmp |
@@ -121,7 +121,7 @@ ERAward >> descriptionDownloadUrl [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionKeywords [
 	<magritteDescription>
 	| tmp |
@@ -136,7 +136,7 @@ ERAward >> descriptionKeywords [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionLicence [
 	<magritteDescription>
 	| tmp |
@@ -151,7 +151,7 @@ ERAward >> descriptionLicence [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionNameAward [
 	<magritteDescription>
 	| tmp |
@@ -167,7 +167,7 @@ ERAward >> descriptionNameAward [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionOtherDevelopers [
 	<magritteDescription>
 	^ ERAdditionalInformation new descriptionAdditionalText copy
@@ -178,7 +178,7 @@ ERAward >> descriptionOtherDevelopers [
 			yourself 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAward >> descriptionSmalltalkDialect [
 	<magritteDescription>
 	| tmp |

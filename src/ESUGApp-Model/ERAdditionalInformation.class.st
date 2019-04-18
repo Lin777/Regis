@@ -18,7 +18,7 @@ ERAdditionalInformation >> additionalText: anObject [
 	additionalText := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magritte descriptions' }
 ERAdditionalInformation >> descriptionAdditionalText [
 	<magritteDescription>
 	| tmp |
@@ -34,7 +34,7 @@ ERAdditionalInformation >> descriptionAdditionalText [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magritte descriptions' }
 ERAdditionalInformation >> descriptionKeywords [
 	<magritteDescription>
 	| tmp |

@@ -17,7 +17,7 @@ ERLimitedReductionTicketUse >> description [
 	^ 'Used limited to ' , limit asString 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERLimitedReductionTicketUse >> descriptionLimit [
 	<magritteDescription>
 	| tmp |

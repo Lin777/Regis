@@ -19,7 +19,7 @@ ERAffiliationInformation class >> membershipTypes [
 	^ #('Industrial' 'Other' 'Academic')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionMembershipType [
 	<magritteDescription>
 	| tmp1 |
@@ -35,7 +35,7 @@ ERAffiliationInformation >> descriptionMembershipType [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationAddrees1 [
 	<magritteDescription>
 	| tmp |
@@ -53,7 +53,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees1 [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationAddrees2 [
 	<magritteDescription>
 	| tmp |
@@ -70,7 +70,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees2 [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationCity [
 	<magritteDescription>
 	| tmp |
@@ -87,7 +87,7 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationCountry [
 	<magritteDescription>
 	^ ERAward new descriptionCountry copy
@@ -100,7 +100,7 @@ ERAffiliationInformation >> descriptionOrganizationCountry [
          yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationName [
 	<magritteDescription>
 	| tmp |
@@ -116,7 +116,7 @@ ERAffiliationInformation >> descriptionOrganizationName [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationPostal [
 	<magritteDescription>
 	| tmp |
@@ -133,7 +133,7 @@ ERAffiliationInformation >> descriptionOrganizationPostal [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERAffiliationInformation >> descriptionOrganizationProvince [
 	<magritteDescription>
 	| tmp |

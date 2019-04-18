@@ -33,7 +33,7 @@ ERFixDiscount >> description [
 	^ 'Discount of ', amount asString , ' ', currency, '(s)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERFixDiscount >> descriptionAmount [
 	<magritteDescription>
 	| tmp |
@@ -49,7 +49,7 @@ ERFixDiscount >> descriptionAmount [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERFixDiscount >> descriptionCurrency [
 	<magritteDescription>
 	| tmp1 |

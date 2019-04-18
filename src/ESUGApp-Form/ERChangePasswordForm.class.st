@@ -60,7 +60,7 @@ ERChangePasswordForm >> initialize [
 
 { #category : #initialization }
 ERChangePasswordForm >> initializeController [
-	controller := ERAdminController
+	controller := ERLoggedController
 		attendee: attendee
 ]
 

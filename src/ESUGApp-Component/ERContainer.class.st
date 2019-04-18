@@ -1,3 +1,11 @@
+"
+Description
+--------------------
+
+I am a card component used to show the content of page
+
+
+"
 Class {
 	#name : #ERContainer,
 	#superclass : #ERStateContent,
@@ -10,16 +18,6 @@ ERContainer class >> attendee: anAttendee [
 	instance := self new.
 	instance attendee: anAttendee.
 	^ instance
-]
-
-{ #category : #accessing }
-ERContainer >> attendee [
-	^ attendee
-]
-
-{ #category : #accessing }
-ERContainer >> attendee: anObject [
-	attendee := anObject
 ]
 
 { #category : #rendering }

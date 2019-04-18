@@ -32,7 +32,7 @@ ERPaymentInformation >> coupon: anObject [
 	coupon := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionCoupon [
 	<magritteDescription>
 	| tmp |
@@ -51,7 +51,7 @@ ERPaymentInformation >> descriptionCoupon [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionPaymentCurrency [
 	<magritteDescription>
 	| tmp1 |
@@ -67,7 +67,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionPaymentType [
 	<magritteDescription>
 	| tmp1 |

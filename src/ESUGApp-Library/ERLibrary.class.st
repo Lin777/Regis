@@ -35,7 +35,7 @@ ERLibrary >> alertCss [
   '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #css }
 ERLibrary >> disabledCss [
 	^ 'a[disabled="disabled"] {
         pointer-events: none;
@@ -208,23 +208,6 @@ ERLibrary >> loginCss [
 '
 ]
 
-{ #category : #'as yet unclassified' }
-ERLibrary >> onChangeTab [
-	^ '$().ready(function() {
-	
-			$(".mdl-tabs__tab > span").unbind().click(function(event){
-			
-			debugger;
-			alert("fds");
-				if ((!$("#registerForm").valid())) {
-            		event.preventDefault();
-                return false;
-            }
-event.preventDefault();
-//e.stopImmediatePropagation();
-});});'
-]
-
 { #category : #updating }
 ERLibrary >> registerCss [
 	^ '
@@ -362,7 +345,7 @@ ERLibrary >> tabsCss [
 '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #js }
 ERLibrary >> validationInputsJs [
 	^ '$().ready(function() {
 	$("#changePasswordForm").validate({
@@ -379,7 +362,7 @@ ERLibrary >> validationInputsJs [
 	'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #js }
 ERLibrary >> validationRegisterJs [
 	^ '$().ready(function() {
     $("#registerForm").validate({
@@ -424,7 +407,7 @@ ERLibrary >> validationRegisterJs [
 });'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #js }
 ERLibrary >> validationUpdateProfileJs [
 	^ '$().ready(function() {
 	$("#formUpdateProfile").validate({

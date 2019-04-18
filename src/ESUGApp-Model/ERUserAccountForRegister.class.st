@@ -4,7 +4,7 @@ Class {
 	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForRegister >> descriptionConfirmPassword [
 	<magritteDescription>
 	| tmp |
@@ -20,7 +20,7 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForRegister >> descriptionPassword [
 	<magritteDescription>
 	| tmp |

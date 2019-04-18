@@ -56,7 +56,7 @@ ERConferenceConfigurationModel >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateFrom [
 	<magritteDescription>
 	| tmp2 |
@@ -76,7 +76,7 @@ ERConferenceConfigurationModel >> descriptionDateFrom [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 	<magritteDescription>
 	| tmp2 |
@@ -95,7 +95,7 @@ ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateTo [
 	<magritteDescription>
 	| tmp2 |
@@ -114,7 +114,7 @@ ERConferenceConfigurationModel >> descriptionDateTo [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDescription [
 	<magritteDescription>
 	| tmp |
@@ -129,7 +129,7 @@ ERConferenceConfigurationModel >> descriptionDescription [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 	<magritteDescription>
 	| tmp2 |
@@ -148,7 +148,7 @@ ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionHomePageUrl [
 	<magritteDescription>
 	| tmp |
@@ -163,7 +163,7 @@ ERConferenceConfigurationModel >> descriptionHomePageUrl [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionName [
 	<magritteDescription>
 	| tmp |

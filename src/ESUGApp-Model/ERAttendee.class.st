@@ -72,13 +72,13 @@ ERAttendee >> contactInformation: anObject [
 	contactInformation := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #addRole }
 ERAttendee >> convertToStudentVolunter [
 	self userAccount isStudent ifFalse:[
 	(self userAccount) roleAdd: 'studentVolunter'; save]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERAttendee >> daysOfAssistance [
  ^ (self conferenceInformation attendance 
 		values count: [ :each | each ])
@@ -179,7 +179,7 @@ ERAttendee >> organizationPostal [
 	^ affiliationInformation organizationPostal 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleteRole }
 ERAttendee >> removeStudentVolunterRole [
 	self userAccount isStudent ifTrue: [
 	(self userAccount) deleteRole: 'studentVolunter'; save. ]

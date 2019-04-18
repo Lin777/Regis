@@ -12,7 +12,7 @@ ERTestConferenceConfigurationModel >> assertInvalidDate: anOnject [
 	self assert: self messageInvalidDate equals: (self messageTextOf: errors)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #message }
 ERTestConferenceConfigurationModel >> messageInvalidDate [
 	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
 ]

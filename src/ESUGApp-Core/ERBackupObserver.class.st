@@ -1,3 +1,6 @@
+"
+I am an Observer subclass to do a backup (this will use to do an Automatically backup)
+"
 Class {
 	#name : #ERBackupObserver,
 	#superclass : #ERObserver,

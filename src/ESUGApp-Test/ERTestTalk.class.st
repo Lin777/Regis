@@ -13,14 +13,14 @@ ERTestTalk >> setUp [
 	attendee := controller conference attendeeFromUser: self registerAttendee 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ERTestTalk >> testEmptyDescriptionField [
 	| talk |
 	talk := (self class testTalk: attendee) description: nil; yourself .
 	self assertEmptyField: talk
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ERTestTalk >> testEmptyNameField [
 	| talk |
 	talk := (self class testTalk: attendee) name: nil; yourself .

@@ -90,7 +90,7 @@ ERRegisterConferenceInformation >> attendance: anObject [
 	attendance := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERRegisterConferenceInformation >> daysOfAssistance [
 	| aString |
 	aString := ''.
@@ -103,7 +103,7 @@ ERRegisterConferenceInformation >> daysOfAssistance [
 	^ aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 	<magritteDescription>
 	| tmp2 |
@@ -119,7 +119,7 @@ ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionAddedToMainList [
 	<magritteDescription>
 	| tmp2 |
@@ -135,7 +135,7 @@ ERRegisterConferenceInformation >> descriptionAddedToMainList [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 	<magritteDescription>
 	| tmp2 |
@@ -151,7 +151,7 @@ ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionFood [
 	<magritteDescription>
 	| tmp1 |
@@ -169,7 +169,7 @@ ERRegisterConferenceInformation >> descriptionFood [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 	<magritteDescription>
 	| tmp1 |
@@ -186,7 +186,7 @@ ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionFriday [
 	<magritteDescription>
 	| tmp2 |
@@ -201,7 +201,7 @@ ERRegisterConferenceInformation >> descriptionFriday [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionGender [
 	<magritteDescription>
 	| tmp1 |
@@ -218,7 +218,7 @@ ERRegisterConferenceInformation >> descriptionGender [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionMonday [
 	<magritteDescription>
 	| tmp2 |
@@ -234,7 +234,7 @@ ERRegisterConferenceInformation >> descriptionMonday [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionThursday [
 	<magritteDescription>
 	| tmp2 |
@@ -249,7 +249,7 @@ ERRegisterConferenceInformation >> descriptionThursday [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionTshirtSize [
 	<magritteDescription>
 	| tmp1 |
@@ -267,7 +267,7 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionTuesday [
 	<magritteDescription>
 	| tmp2 |
@@ -282,7 +282,7 @@ ERRegisterConferenceInformation >> descriptionTuesday [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERRegisterConferenceInformation >> descriptionWednesday [
 	<magritteDescription>
 	| tmp2 |

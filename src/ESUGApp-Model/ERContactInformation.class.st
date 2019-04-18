@@ -55,7 +55,7 @@ ERContactInformation >> country: anObject [
 	country := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionAddress [
 	<magritteDescription>
 	| tmp |
@@ -72,7 +72,7 @@ ERContactInformation >> descriptionAddress [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionAddress2 [
 	<magritteDescription>
 	| tmp |
@@ -88,7 +88,7 @@ ERContactInformation >> descriptionAddress2 [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionCity [
 	<magritteDescription>
 	| tmp |
@@ -104,7 +104,7 @@ ERContactInformation >> descriptionCity [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionCountry [
 	<magritteDescription>
 	^  ERAward new descriptionCountry copy
@@ -114,7 +114,7 @@ ERContactInformation >> descriptionCountry [
               yourself.
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionFacebookURL [
 	<magritteDescription>
 	| tmp |
@@ -132,7 +132,7 @@ ERContactInformation >> descriptionFacebookURL [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionHomePageURL [
 	<magritteDescription>
 	| tmp |
@@ -149,7 +149,7 @@ ERContactInformation >> descriptionHomePageURL [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionPostal [
 	<magritteDescription>
 	| tmp |
@@ -166,7 +166,7 @@ ERContactInformation >> descriptionPostal [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionProvince [
 	<magritteDescription>
 	| tmp |
@@ -183,7 +183,7 @@ ERContactInformation >> descriptionProvince [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionTwitterURL [
 	<magritteDescription>
 	| tmp |

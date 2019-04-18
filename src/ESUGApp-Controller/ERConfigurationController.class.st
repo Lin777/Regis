@@ -59,7 +59,7 @@ ERConfigurationController >> deleteGroup: aGroup [
 	self notifyAllObservers
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleting }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 	(conference attendeesForATicket: aReductionTicket ticketId) isNotEmpty
 		ifTrue: [ ERException deletionOfTicketNotValid signal ].
@@ -99,7 +99,7 @@ ERConfigurationController >> openRegistration [
 	self notifyAllObservers
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERConfigurationController >> saveConferenceWithConfiguration: configuration emailConfiguration: emailConfig organizer: organizer [
 	self conference configuration:configuration.
 	self conference configuration emailConfiguration: emailConfig .
@@ -108,7 +108,7 @@ ERConfigurationController >> saveConferenceWithConfiguration: configuration emai
 	self notifyAllObservers 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERConfigurationController >> saveFileOn: aFile withStream: stream [
 	aFile
 		ensureDelete;

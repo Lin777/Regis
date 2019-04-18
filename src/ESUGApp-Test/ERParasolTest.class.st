@@ -13,18 +13,18 @@ ERParasolTest >> baseURL [
 	^ 'http://localhost:8000/ESUG/'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> clickElementWithID: aString [
 	(driver findElementByID: aString) click.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> createDownloadDirectory [
 	('Download' asFileReference)
 		 ensureCreateDirectory
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> downloadFileOf: href to: directory [
 	[ZnClient new
    url: href;
@@ -34,22 +34,22 @@ ERParasolTest >> downloadFileOf: href to: directory [
 	do: [ self assert: false ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERParasolTest >> getTextErrorOf: anID [
 	^ (driver findElementByID:  anID,'-error') getText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERParasolTest >> getTextOfError [
 	^ (((driver findElementByClassName: 'errors')findElementByTagName: 'ul')findElementByTagName: 'li') getText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERParasolTest >> messageIsRequiredFor: aString [
 	^  aString ,' (Required): Input is required but no input given'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
 	^  aString ,' (Required): This field only accept a text'
 ]
@@ -59,7 +59,7 @@ ERParasolTest >> pressOptionAdmin [
 	self clickElementWithID: 'Account-option'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> selectElementWithID: aString1 send: aString2 [
 	|element|
 	element := driver findElementByID: aString1.
@@ -80,22 +80,22 @@ ERParasolTest >> tearDown [
 	driver quit
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> textOfElementWithID: aString [
 	^ (driver findElementByID: aString) getText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> textOfElementWithID: aString1 andTagName: aString2 [
 	^ ((driver findElementByID: aString1) findElementByTagName: aString2) getText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> textOfTagName: aString [
 	^ (driver findElementByTagName: aString) getText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERParasolTest >> updateField: anID with: aString [
 	| confName |
 	confName := driver findElementByID: anID.

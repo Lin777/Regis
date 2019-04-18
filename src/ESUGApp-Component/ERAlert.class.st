@@ -32,12 +32,12 @@ ERAlert class >> warningAlert [
 		yourself .
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updateClassOfAlert }
 ERAlert >> changeToAlertOfError [
 	class := 'errors'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updateClassOfAlert }
 ERAlert >> changeToAlertSuccess [
 	class := 'alert-success'
 ]

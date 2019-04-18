@@ -19,7 +19,7 @@ ERPercentageDiscount >> description [
 	^ 'Discount of ' , percentage asString , ' %'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPercentageDiscount >> descriptionPercentage [
 	<magritteDescription>
 	| tmp |

@@ -37,7 +37,7 @@ ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
 	self selectElementWithID: 'presentation' send: 'https://www.google.com/' 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 	self selectElementWithID: 'email-login' send: attendee userAccount email.
 	self selectElementWithID: 'password-login' send: '12345678'.
