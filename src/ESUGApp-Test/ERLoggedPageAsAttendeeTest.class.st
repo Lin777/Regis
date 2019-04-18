@@ -172,7 +172,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
 	self updateField: 'email' with: 'mike@gmail.com'.
-	self assert: (self textOfElementWithID: 'adminUserAlert') equals: 'This email is already registered'
+	self assert: (self textOfElementWithID: 'adminAlert') equals: 'This email is already registered'
 ]
 
 { #category : #adminUserTests }
@@ -257,7 +257,7 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 { #category : #adminUserTests }
 ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 	self pressOptionAdmin .
-	self assert: (self textOfElementWithID: 'tab-adminUser' andTagName: 'h3') equals: 'User'.
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Edit profile'.
 ]
 
 { #category : #myRegistrationProposedAwardsTests }

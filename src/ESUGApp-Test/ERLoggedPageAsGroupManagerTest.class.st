@@ -99,11 +99,6 @@ ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
 	self clickElementWithID: 'Group Registration-option'
 ]
 
-{ #category : #'as yet unclassified' }
-ERLoggedPageAsGroupManagerTest >> selectMembersTab [
-	self clickElementWithID: 'tab-Members'
-]
-
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> setUp [
 	super setUp.
@@ -125,7 +120,6 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
@@ -139,7 +133,6 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver dismissAlert .
@@ -152,13 +145,11 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
 	attendee := group listAttends detect: [:att | att userAccount id = group groupManager userAccount id].
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
@@ -191,7 +182,6 @@ ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
@@ -206,7 +196,6 @@ ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab .
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerAttendee'.
 	self pressDoneButton .

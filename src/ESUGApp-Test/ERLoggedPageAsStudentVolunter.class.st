@@ -34,7 +34,7 @@ ERLoggedPageAsStudentVolunter >> setUp [
 ]
 
 { #category : #tests }
-ERLoggedPageAsStudentVolunter >> testPressAdminOption [
+ERLoggedPageAsStudentVolunter >> testPressSearchOption [
 	self pressOptionSearch .
 	self assert: (self textOfTagName: 'h3') equals: 'Attendees'.
 	self shouldnt: [driver findElementByID: 'selectStrategy'] raise: BPNoSuchElementException .

@@ -50,9 +50,10 @@ ERAdminView >> blockEditUser [
 				method: 'post';
 				id: 'formUpdateProfile';
 				with: [
+					html render: messageComponent.
 					html render: modifiedUser.
 					self renderAnchorToChangePasswordOn: html.
-					html horizontalRule .
+					html horizontalRule.
 					self renderButtonsOn: html
 				]
 		]
