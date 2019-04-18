@@ -39,7 +39,7 @@ ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent 
 			 tabId: 'additionalInfoForm'; 
 			 tabName: 'Additional';
 			 container: aContent;
-			previousTabName: 'Affiliation';
+			previousTabName: 'Billing Information';
 			nextTabName: 'Payment'
 ]
 
@@ -54,7 +54,7 @@ ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent
 	^ ERContentTab new 
 		contentTab: (self createAffiliationInformationComponentOn: anAttendee);
 			 tabId: 'affiliationInfoForm'; 
-			 tabName: 'Affiliation';
+			 tabName: 'Billing Information';
 			 container: aContent;
 			nextTabName: 'Additional';
 			previousTabName: 'Conference'
@@ -130,7 +130,7 @@ ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aConte
 			 tabId: 'conferenceOptionsForm'; 
 			 tabName: 'Conference';
 			 container: aContent;
-			nextTabName: 'Affiliation';
+			nextTabName: 'Billing Information';
 			previousTabName: 'Contact'.
 ]
 

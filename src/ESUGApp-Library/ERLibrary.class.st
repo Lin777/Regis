@@ -300,6 +300,7 @@ ERLibrary >> selectorsToInclude [
 	add: 'esugCss';
 	add: 'esugJs';
 	add: 'validationInputsJs';
+	add: 'validationUpdateProfileJs';
 	yourself
 ]
 
@@ -390,48 +391,50 @@ ERLibrary >> validationRegisterJs [
         }
     });
         
-    $("#firstName").rules("add", {required:true});
-    $("#lastName").rules("add", {required:true});
-    $("#email").rules("add", {required:true, email: true});
-    $("#passwordRegister").rules("add", {required:true, minlength: 8});
-    $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#passwordRegister"});
-
-    $("#facebookURL").rules("add", {url: true});
-    $("#twitterURL").rules("add", {url: true});
-    $("#homePageURL").rules("add", {url: true});
-
-    $("#organizationName").rules("add", {required:true});
-    $("#organizationAddrees1").rules("add", {required:true});
-    $("#organizationCity").rules("add", {required:true});
-    $("#organizationPostal").rules("add", {required:true});
-    $("#organizationCountry").rules("add", {required:true});
-
-    $("#paymentType").rules("add", {required:true});
-    $("#paymentCurrency").rules("add", {required:true});
+    $(".btnNext").on("click", function () {
+        $("#firstName").rules("add", {required:true});
+        $("#lastName").rules("add", {required:true});
+        $("#email").rules("add", {required:true, email: true});
+        $("#passwordRegister").rules("add", {required:true, minlength: 8});
+        $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#passwordRegister"});
     
-    $(".btnNext").click(function(e){
-        e.stopPropagation();
+        $("#facebookURL").rules("add", {url: true});
+        $("#twitterURL").rules("add", {url: true});
+        $("#homePageURL").rules("add", {url: true});
+    
+        $("#organizationName").rules("add", {required:true});
+        $("#organizationAddrees1").rules("add", {required:true});
+        $("#organizationCity").rules("add", {required:true});
+        $("#organizationPostal").rules("add", {required:true});
+        $("#organizationCountry").rules("add", {required:true});
+    
+        $("#paymentType").rules("add", {required:true});
+        $("#paymentCurrency").rules("add", {required:true});
         if ((!$("#registerForm").valid())) {
-            //alert("non valid");
             return false;
         }
         var $active = $(".mdl-tabs__tab-bar > .is-active");
 		$active.next("a").removeAttr("disabled");
-        //alert("remove disabled");
         $active.next("a").find("span").trigger("click");
-        //alert("finish click");
     });
 
     $(".btnPrevious").click(function(){
           $(".mdl-tabs__tab-bar > .is-active").prev("a").find("span").trigger("click");
     });
-     
-    //$("#registerForm").find(".mdl-tabs__tab").find("span").on("click", function(e){
-    /*$("span.mdl-js-ripple-effect").on("click", function(e){
-			alert("click");
-			if ((!$("#registerForm").valid())) {
-                return false;
-            }
-     });*/
 });'
+]
+
+{ #category : #'as yet unclassified' }
+ERLibrary >> validationUpdateProfileJs [
+	^ '$().ready(function() {
+	$("#formUpdateProfile").validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+    });
+	});
+	'
 ]

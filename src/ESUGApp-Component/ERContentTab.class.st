@@ -24,23 +24,6 @@ ERContentTab >> action: anObject [
 ]
 
 { #category : #accessing }
-ERContentTab >> actionBackBlock [
-	^ [self updateStateTab: previousTabName]
-]
-
-{ #category : #rendering }
-ERContentTab >> actionNextBlock [
-	^ [ [ |model|
-		model := (self contentTab save) model.
-		action value: model.
-		self updateStateTab: nextTabName ]
-	on: ERException 
-	do: [:exception | 
-			self updateStateTab: self tabName .
-			messageComponent errorMessage: exception messageText ]]
-]
-
-{ #category : #accessing }
 ERContentTab >> cancelCallback: anObject [
 	cancelCallback := anObject
 ]

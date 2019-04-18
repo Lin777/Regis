@@ -183,13 +183,14 @@ ERGroupRegistrationSummaryTab >> renderRegisterAttendeeButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryTab >> renderRegisterMyselfButtonOn: html [
+	attendee isAttendee ifFalse: [
 	html mdlAnchorButton 
 		raised;
 		rippleEffect;
 		id: 'registerMyselfAsAttendee';
 		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self registerMyselfAsAttendee ];
-		with: 'Register Myself as Attendee'
+		with: 'Register Myself as Attendee']
 ]
 
 { #category : #accessing }
