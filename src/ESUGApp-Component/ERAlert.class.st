@@ -24,7 +24,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERAlert class >> warningAlert [
 	^ self new
 		class: 'errors';

@@ -1,3 +1,6 @@
+"
+I am a model of Additional information
+"
 Class {
 	#name : #ERAdditionalInformation,
 	#superclass : #Object,

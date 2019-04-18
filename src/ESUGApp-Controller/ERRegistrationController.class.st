@@ -17,7 +17,7 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERRegistrationController class >> attendee: anAtteendee [
 	|controller|
 	controller := self new.
@@ -41,7 +41,7 @@ ERRegistrationController >> initialize [
 	attendee := ERAttendee new.
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> save [
 	| user|
 	conference validateIfEmailIsAlreadyRegistered: attendee userAccount.
@@ -52,7 +52,7 @@ ERRegistrationController >> save [
 	^ user
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> saveAttendee [
 	|savedAttendee|
 	self attendee paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ].
@@ -63,7 +63,7 @@ ERRegistrationController >> saveAttendee [
 	^ savedAttendee userAccount 
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> saveGroupManager [
 	|groupSaved|
 	self attendee userAccount: self save.

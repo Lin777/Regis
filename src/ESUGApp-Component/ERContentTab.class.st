@@ -124,7 +124,7 @@ ERContentTab >> renderPreviousContentOn: html [
 		ifTrue: [ html html: previousContentTab ]
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERContentTab >> tabId: aString [
 	tabId := aString.
 	messageComponent  id: self tabId ,'-tabAlert'.

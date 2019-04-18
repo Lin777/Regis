@@ -1,3 +1,6 @@
+"
+I am a form for edit a Fee of conference.
+"
 Class {
 	#name : #ERFeeForm,
 	#superclass : #ERForm,

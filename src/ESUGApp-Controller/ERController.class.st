@@ -94,13 +94,13 @@ ERController >> conference: anObject [
 	conference := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERController >> deleteAward: anAward [
 	conference deleteAward: anAward.
 	self notifyAllObservers 
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERController >> deleteTalk: aTalk [
 	conference deleteTalk: aTalk.
 	self notifyAllObservers 
@@ -120,14 +120,14 @@ ERController >> encodeFiletoBase64: aFile [
 		ifFalse: [ nil ]. 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERController >> initialize [
 	super initialize.
 	ERBackupObserver of: self.
 	conference := ERConference find: [ :each | each active ]
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 ERController >> payPalUrlForGroup: aGroup [
 	^ conference fee urlWithAmount: aGroup paymentInformation paymentAmount asString
 	 invoiceNumber: (aGroup paymentInformation 
@@ -135,7 +135,7 @@ ERController >> payPalUrlForGroup: aGroup [
 				printString
 ]
 
-{ #category : #rendering }
+{ #category : #action }
 ERController >> sendInvoiceTo: user [
 	|stream |
 	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
@@ -160,7 +160,7 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee stateUpdatePaidWith: aBoolean actions: { [ :att | self updateGroup: att ] . [ :att | self updateAttendee: att ] }
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERController >> updateAffiliation: aff on: aGroup [
 	aGroup groupManager affiliationInformation: aff.
 	aGroup save.
@@ -176,7 +176,7 @@ ERController >> updateAttendee: anAttendee [
 	^ anAttendee 
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERController >> updateAward: anAward [
 	anAward save.
 	conference save.
@@ -204,7 +204,7 @@ ERController >> updatePaymentRateForGroup: aGroup [
 	aGroup updatePaymentRateWith: [:amount | conference addPayPalComissionOn: amount]
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERController >> updateTalk: aTalk [
 	aTalk save.
 	conference save.

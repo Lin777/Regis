@@ -19,7 +19,7 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERLoggedController class >> attendee: anAtteendee [
 	| controller |
 	controller := self new.
@@ -27,7 +27,7 @@ ERLoggedController class >> attendee: anAtteendee [
 	^ controller
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERLoggedController class >> user: anUser [
 	| controller |
 	controller := self new.
@@ -59,7 +59,7 @@ ERLoggedController >> changePasswordTo: aString [
 	^ attendee
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERLoggedController >> deleteAttendee: anAttendee [
 	|anUser|
 	anUser := anAttendee userAccount .
@@ -70,7 +70,7 @@ ERLoggedController >> deleteAttendee: anAttendee [
 	self notifyAllObservers 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERLoggedController >> initialize [
 	super initialize.
 	user := ERUserAccount new

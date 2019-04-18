@@ -7,7 +7,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERStateContent class >> content: aContent [
 	| instance |
 	instance := self new.

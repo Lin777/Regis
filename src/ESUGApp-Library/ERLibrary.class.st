@@ -9,7 +9,7 @@ ERLibrary class >> applicationName [
 	^ 'ESUG'
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> alertCss [
 	^ '
 	.errors {
@@ -46,17 +46,17 @@ ERLibrary >> disabledCss [
       }'
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> esugCss [
 	^ self alertCss, self disabledCss 
 ]
 
-{ #category : #updating }
+{ #category : #js }
 ERLibrary >> esugJs [
 	^ self validationRegisterJs", self onChangeTab"
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> generalCss [
 	^ '#all {
 	margin: 0px;
@@ -148,7 +148,7 @@ html, body {
 '
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> loginCss [
 	^ '
 #login-conatiner{
@@ -208,7 +208,7 @@ ERLibrary >> loginCss [
 '
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> registerCss [
 	^ '
 	.mdl-checkbox {height: auto;}
@@ -287,7 +287,7 @@ ERLibrary >> selectorsToInclude [
 	yourself
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> tabsCss [
 	^ '/*Vertical Tabs*/
 .mdl-tabs__panel {

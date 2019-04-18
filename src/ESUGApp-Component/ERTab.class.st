@@ -21,7 +21,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> activate [
 	active := true.
 ]
@@ -36,7 +36,7 @@ ERTab >> container: aContainer [
 	container := aContainer
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> deactivate [
 	active := false.
 ]
@@ -59,7 +59,7 @@ ERTab >> initialize [
 	messageComponent := ERAlert warningAlert id: 'tabAlert'.
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> isActive [
 	^ active.
 ]
@@ -69,27 +69,27 @@ ERTab >> renderContentOn: html [
 	self subclassResponsibility 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabId [
 	^ tabId 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabId: anObject [
 	tabId := anObject
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabName [
 	^ tabName 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabName: anObject [
 	tabName := anObject
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> updateStateTab: aString [
 	container tabs detect: [ :tab | (tab tabName = aString) ]
 	ifFound: [ :tab | tab activate.

@@ -36,7 +36,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	^ self updateGroup: self group
 ]
 
-{ #category : #accessing }
+{ #category : #deleting }
 ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
@@ -63,14 +63,14 @@ ERGroupManagerController >> groupManager [
 	^ group groupManager
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERGroupManagerController >> updateAffiliation: aff [
 	self groupManager affiliationInformation: aff.
 	self group save.
 	self notifyAllObservers  
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 ERGroupManagerController >> updateGroup: aGroup [
 	aGroup updatePaymentForAttendees.
 	super updateGroup: aGroup 

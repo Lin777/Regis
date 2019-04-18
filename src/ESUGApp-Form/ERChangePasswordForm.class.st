@@ -1,3 +1,6 @@
+"
+I am a form for change password of an user
+"
 Class {
 	#name : #ERChangePasswordForm,
 	#superclass : #ERContainerTab,
@@ -10,7 +13,7 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERChangePasswordForm class >> on: anAttendee withContent: aContent container: aContainer [
 	| form |
 	form := super on: anAttendee withContent: aContent.
@@ -19,17 +22,17 @@ ERChangePasswordForm class >> on: anAttendee withContent: aContent container: aC
 	^ form
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERChangePasswordForm >> cancel [
 	^ cancel
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERChangePasswordForm >> cancel: aBlock [
 	cancel := aBlock
 ]
 
-{ #category : #rendering }
+{ #category : #action }
 ERChangePasswordForm >> changePassword [
 	[controller validateCurrentPassword: password.
 	controller validatePatternPassword: passwordChanged.

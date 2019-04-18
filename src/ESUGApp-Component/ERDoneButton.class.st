@@ -13,7 +13,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #callbacks }
+{ #category : #'instance creation' }
 ERDoneButton class >> on: anAttendee button: aBlock container: aContainer [
 	| form |
 	form := self new.

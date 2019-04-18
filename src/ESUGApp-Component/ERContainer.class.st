@@ -12,7 +12,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERContainer class >> attendee: anAttendee [
 	| instance |
 	instance := self new.

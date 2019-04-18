@@ -1,3 +1,21 @@
+"
+Description
+-------------------------------------
+I am a principal class for page
+
+Examples
+--------------------
+
+This class load dependencies with conflicts such as: Artefact, MaterialDesignLite (magritte) and Magritte.
+
+When execute: 
+
+ESUGSetUp start.
+
+If not exist a Backup folder this script will initialize all necesary objects .
+If exist a Backup folder this script will restore all objects of backup
+
+"
 Class {
 	#name : #ESUGSetUp,
 	#superclass : #Object,

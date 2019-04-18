@@ -1,3 +1,6 @@
+"
+I am a form for edit or create a reduction ticket.
+"
 Class {
 	#name : #ERReductionTicketForm,
 	#superclass : #ERTittledView,
@@ -13,7 +16,7 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERReductionTicketForm class >> on: aTicket withContent: aContent [
 	| form |
 	form := self new.
@@ -28,14 +31,14 @@ ERReductionTicketForm >> callback: anObject [
 	callback := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERReductionTicketForm >> cancel [
 	ticket version = 0 ifFalse: [ticket := ticket abortChanges] .
 	self initializeForms .
 	self returnToThePreviousState
 ]
 
-{ #category : #rendering }
+{ #category : #'change-strategy' }
 ERReductionTicketForm >> changeDiscountStrategy: value [
 	(ERDiscountStrategy isPercentageStrategy: value)
 		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: 
@@ -48,7 +51,7 @@ ERReductionTicketForm >> changeDiscountStrategy: value [
 	
 ]
 
-{ #category : #rendering }
+{ #category : #'change-strategy' }
 ERReductionTicketForm >> changeLimitStrategy: value [
 	(ERLimitStrategy isUnlimitStrategy: value)
 		ifTrue: [ ticket limitStrategyIsUnlimited
@@ -72,17 +75,17 @@ ERReductionTicketForm >> children [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERReductionTicketForm >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERReductionTicketForm >> discountStrategy [
 	^ ticket discountStrategyAsString
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERReductionTicketForm >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'.
@@ -108,7 +111,7 @@ ERReductionTicketForm >> initializeLimitStrategyForm [
 	limitStrategyForm := self createFormOf: ticket limitStrategy
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERReductionTicketForm >> limitStrategy [
 	^ ticket limitStrategyAsString
 ]
@@ -195,7 +198,7 @@ ERReductionTicketForm >> renderSelectLimitStrategyOn: html [
 				callback: [ :value | self changeLimitStrategy: value ]. ]
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERReductionTicketForm >> saveForms [
 	ticketForm save.
 	discountStrategyForm save.

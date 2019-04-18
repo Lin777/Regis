@@ -15,7 +15,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERItemNav class >> label: aString icon: anIcon callback: aBlock [
 	|instance|
 	instance := self new.

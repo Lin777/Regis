@@ -25,7 +25,7 @@ ERBackupRestore class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'actions api' }
 ERBackupRestore >> backup [ 	
 	[[self lock critical: [ 
 		self backupDirectory .
@@ -36,20 +36,20 @@ ERBackupRestore >> backup [
 		^ ('' join: {self fileNamePrefix.'.'.self version}) 
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> backupDirectory [
 	^ (FileSystem workingDirectory asFileReference / self nameDirectory)
 		 ensureCreateDirectory
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> backupFilenames [
 
 	^ self backupDirectory files select: [ :fileName |
 		(fileName path basename) beginsWith: self fileNamePrefix ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> fileNamePrefix [
 	^ 'esug'
 ]
@@ -59,7 +59,7 @@ ERBackupRestore >> incrementVersionNumber [
 	^ version := self version + 1
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> lastBackup [
 	|lastBackup|
 	lastBackup := self lastBackupFilename .
@@ -68,7 +68,7 @@ ERBackupRestore >> lastBackup [
 	^ SDFuelSerializer new materializeFromFile: ('' join: {self nameDirectory .'/'.lastBackup path basename })
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> lastBackupFilename [
 	^ self backupFilenames detectMax: [ :fileName | 
 		self versionOf: (fileName path basename)]
@@ -79,7 +79,7 @@ ERBackupRestore >> lock [
 	^ Semaphore forMutualExclusion 
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> nameDirectory [
 	^ 'Backup'
 ]

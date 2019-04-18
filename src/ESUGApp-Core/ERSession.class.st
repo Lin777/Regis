@@ -1,3 +1,6 @@
+"
+I am a custom Session for page
+"
 Class {
 	#name : #ERSession,
 	#superclass : #WASession,
@@ -8,14 +11,7 @@ Class {
 	#category : #'ESUGApp-Core'
 }
 
-{ #category : #actions }
-ERSession >> findUserByEmail: anEmail [
-
- ^ ERController new conference findUserByEmail: anEmail
-
-]
-
-{ #category : #actions }
+{ #category : #intialization }
 ERSession >> initialize [
 	super initialize.
 ]

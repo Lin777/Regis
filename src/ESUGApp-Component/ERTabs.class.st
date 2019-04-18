@@ -17,7 +17,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERTabs class >> tabs: aList [
 	| instance |
 	instance := self new.

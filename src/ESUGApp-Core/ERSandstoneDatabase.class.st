@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I initialize the SDActiveRecord store in SDMemoryStore.
+"
 Class {
 	#name : #ERSandstoneDatabase,
 	#superclass : #Object,
