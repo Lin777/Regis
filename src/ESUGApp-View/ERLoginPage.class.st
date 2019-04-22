@@ -131,8 +131,9 @@ ERLoginPage >> renderPageOn: html [
 		with: [ 
 			self renderMessageComponent: html.
 			self renderFieldsLoginOn:html.
-			self renderLoginButtonOn: html.].
-			self renderRegisterButtonOn: html
+			self renderLoginButtonOn: html.
+			self renderRegisterButtonOn: html].
+			
 ]
 
 { #category : #rendering }
@@ -161,8 +162,8 @@ ERLoginPage >> renderRegisterAsGroupManagerButtonOn: html [
 
 { #category : #rendering }
 ERLoginPage >> renderRegisterButtonOn: html [
-	html mdlAnchorButton
-		class: 'mdl-button login-button mdl-color-text-colored';
+	html mdlButton
+		class: 'mdl-button mdl-color-text-colored login-button ';
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'

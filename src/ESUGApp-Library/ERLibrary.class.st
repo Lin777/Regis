@@ -258,7 +258,7 @@ ERLibrary >> registerCss [
 	line-height: 56px;
 }
 
-#login-button {
+#login-button, #register-button {
   width: 100%;
   height: 40px;
   min-width: initial;
@@ -284,12 +284,12 @@ ERLibrary >> selectorsToInclude [
 	^ OrderedCollection new 
 	add: 'registerCss';
 	add: 'tabsCss';
-	add: 'loginCss';
 	add: 'generalCss';
 	add: 'esugCss';
 	add: 'esugJs';
 	add: 'validationInputsJs';
 	add: 'validationUpdateProfileJs';
+	add: 'loginCss';
 	yourself
 ]
 

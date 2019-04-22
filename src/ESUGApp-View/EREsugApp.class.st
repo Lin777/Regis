@@ -90,10 +90,6 @@ EREsugApp >> updateRoot: anHtmlRoot [
 	anHtmlRoot meta
 		attributeAt: 'name' put: 'viewport';
 		content: 'width=device-width, initial-scale=1'.
-	anHtmlRoot javascript
-		url: 'https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'.
-	anHtmlRoot stylesheet 
-		url: (WAUrl absolute:'https://code.getmdl.io/1.3.0/material.blue-red.min.css').
 	anHtmlRoot link
 				relationship: 'icon';
 				type: 'image/png';
