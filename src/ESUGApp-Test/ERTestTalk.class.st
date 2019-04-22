@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestTalk is a test class for testing the behavior of ERTalk model
+"
 Class {
 	#name : #ERTestTalk,
 	#superclass : #ERTestModel,

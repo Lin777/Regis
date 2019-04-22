@@ -1,3 +1,6 @@
+"
+I am a model of User Account for register, I have all necessary fields to create a new user, except role, this model has a default role
+"
 Class {
 	#name : #ERUserAccountForRegister,
 	#superclass : #ERUserAccount,

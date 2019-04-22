@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am a custom MAComponentRenderer, to render fields inside a div
 "
 Class {

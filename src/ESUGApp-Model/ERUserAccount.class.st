@@ -1,3 +1,6 @@
+"
+I am a model of User Account, I know how change my password and my role.
+"
 Class {
 	#name : #ERUserAccount,
 	#superclass : #SDActiveRecord,

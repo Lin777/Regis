@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestAttendee is a test class for testing the behavior of ERAttendee model
+"
 Class {
 	#name : #ERTestAttendee,
 	#superclass : #ERTestModel,

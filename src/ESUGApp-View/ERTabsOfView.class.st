@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tabs'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #accessing }
@@ -22,7 +22,7 @@ ERTabsOfView >> initialize [
 	tabs := OrderedCollection new.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERTabsOfView >> renderContentPageOn: html [
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';

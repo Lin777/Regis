@@ -1,8 +1,11 @@
 "
+Description
+--------------------
+
 I am a model of Billing Information
 "
 Class {
-	#name : #ERAffiliationInformation,
+	#name : #ERBillingInformation,
 	#superclass : #Object,
 	#instVars : [
 		'organizationName',
@@ -18,12 +21,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-ERAffiliationInformation class >> membershipTypes [
+ERBillingInformation class >> membershipTypes [
 	^ #('Industrial' 'Other' 'Academic')
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionMembershipType [
+ERBillingInformation >> descriptionMembershipType [
 	<magritteDescription>
 	| tmp1 |
 	tmp1 := MASingleOptionDescription new.
@@ -39,7 +42,7 @@ ERAffiliationInformation >> descriptionMembershipType [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationAddrees1 [
+ERBillingInformation >> descriptionOrganizationAddrees1 [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -57,7 +60,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees1 [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationAddrees2 [
+ERBillingInformation >> descriptionOrganizationAddrees2 [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -74,7 +77,7 @@ ERAffiliationInformation >> descriptionOrganizationAddrees2 [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationCity [
+ERBillingInformation >> descriptionOrganizationCity [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -91,7 +94,7 @@ ERAffiliationInformation >> descriptionOrganizationCity [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationCountry [
+ERBillingInformation >> descriptionOrganizationCountry [
 	<magritteDescription>
 	^ ERAward new descriptionCountry copy
          accessor: #organizationCountry;
@@ -104,7 +107,7 @@ ERAffiliationInformation >> descriptionOrganizationCountry [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationName [
+ERBillingInformation >> descriptionOrganizationName [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -113,14 +116,14 @@ ERAffiliationInformation >> descriptionOrganizationName [
 		priority: 10;
 		beRequired;
 		withoutLabel: true;
-		label: 'Organization Name (Required)';
+		label: 'Name (Required)';
 		id: 'organizationName';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationPostal [
+ERBillingInformation >> descriptionOrganizationPostal [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -137,7 +140,7 @@ ERAffiliationInformation >> descriptionOrganizationPostal [
 ]
 
 { #category : #'magrittes-descriptions' }
-ERAffiliationInformation >> descriptionOrganizationProvince [
+ERBillingInformation >> descriptionOrganizationProvince [
 	<magritteDescription>
 	| tmp |
 	tmp := MAStringDescription new.
@@ -154,81 +157,81 @@ ERAffiliationInformation >> descriptionOrganizationProvince [
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> membershipType [
+ERBillingInformation >> membershipType [
 	^ membershipType
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> membershipType: anObject [
+ERBillingInformation >> membershipType: anObject [
 	membershipType := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationAddrees1 [
+ERBillingInformation >> organizationAddrees1 [
 	^ organizationAddrees1
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationAddrees1: anObject [
+ERBillingInformation >> organizationAddrees1: anObject [
 	organizationAddrees1 := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationAddrees2 [
+ERBillingInformation >> organizationAddrees2 [
 	^ organizationAddrees2
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationAddrees2: anObject [
+ERBillingInformation >> organizationAddrees2: anObject [
 	organizationAddrees2 := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationCity [
+ERBillingInformation >> organizationCity [
 	^ organizationCity
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationCity: anObject [
+ERBillingInformation >> organizationCity: anObject [
 	organizationCity := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationCountry [
+ERBillingInformation >> organizationCountry [
 	^ organizationCountry
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationCountry: anObject [
+ERBillingInformation >> organizationCountry: anObject [
 	organizationCountry := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationName [
+ERBillingInformation >> organizationName [
 	^ organizationName
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationName: anObject [
+ERBillingInformation >> organizationName: anObject [
 	organizationName := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationPostal [
+ERBillingInformation >> organizationPostal [
 	^ organizationPostal
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationPostal: anObject [
+ERBillingInformation >> organizationPostal: anObject [
 	organizationPostal := anObject
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationProvince [
+ERBillingInformation >> organizationProvince [
 	^ organizationProvince
 ]
 
 { #category : #accessing }
-ERAffiliationInformation >> organizationProvince: anObject [
+ERBillingInformation >> organizationProvince: anObject [
 	organizationProvince := anObject
 ]

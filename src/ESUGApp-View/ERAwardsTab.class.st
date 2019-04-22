@@ -1,18 +1,21 @@
+"
+Description
+--------------------
+
+Tab to render  all proposal awards of ESUG page in a table.
+"
 Class {
 	#name : #ERAwardsTab,
 	#superclass : #ERConfigurationTab,
-	#instVars : [
-		'encodeCSVFile'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERAwardsTab >> awards [
 	^ controller conference submittedAwards
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERAwardsTab >> exportAwards [
 	| file |
 	file := controller conference exportAwards: 'awards'.
@@ -24,7 +27,7 @@ ERAwardsTab >> headers [
 	^ #('Name'	'Submitted By' 'Download URL' 'Demo URL' '')
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERAwardsTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:

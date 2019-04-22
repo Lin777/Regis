@@ -21,14 +21,9 @@ ERRegisterPage class >> content: aContent [
 	^ instance
 ]
 
-{ #category : #'as yet unclassified' }
-ERRegisterPage >> actionsBody: html [
-	
-]
-
 { #category : #adding }
 ERRegisterPage >> addAffiliationInfoTab [
-	affiliationInfo:= (self createAffiliationInfoTab: pageController attendee
+	affiliationInfo:= (self createBillingInfoTab: pageController attendee
 								withContent: self) disabled: true; cancelCallback: self cancelRegister.
 	^ self
 		addTab: affiliationInfo .

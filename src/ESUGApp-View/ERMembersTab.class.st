@@ -4,14 +4,7 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #accessing }
-ERMembersTab >> attendeeFrom: aGroupManager [
-	^ ERAttendee new 
-		userAccount: aGroupManager userAccount; 
-		affiliationInformation: aGroupManager affiliationInformation 
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #tableBlock }
 ERMembersTab >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
 		add: ([ :att | att userAccount firstName ] value: user);
@@ -22,15 +15,10 @@ ERMembersTab >> blockTableToExecute [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : #deleting }
 ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee
-]
-
-{ #category : #rendering }
-ERMembersTab >> dictToRenderDownloadButton [
-	^ Dictionary new yourself
 ]
 
 { #category : #accessing }
@@ -51,7 +39,7 @@ ERMembersTab >> initializeModifyUserForm [
 	content state: mofidyUserForm
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERMembersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
@@ -81,25 +69,24 @@ ERMembersTab >> listDataToRenderButton [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERMembersTab >> renderButtonsOn: html [
 	self renderRegisterAttendee: html.
 	self alreadyRegisteredAsAttendee ifFalse:[
 	self renderRegisterMyselfAsAttendee: html]
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERMembersTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formMembers';
 		with: [
-	"self renderButtonsOn: html."
-	html horizontalRule.
-	self renderTableOfAttendsOn: html]
+			html horizontalRule.
+			self renderTableOfAttendsOn: html]
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERMembersTab >> renderRegisterAttendee: html [
 	html mdlAnchorButton
 		colored;
@@ -109,7 +96,7 @@ ERMembersTab >> renderRegisterAttendee: html [
 		with: 'Register Attendee'
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERMembersTab >> renderRegisterMyselfAsAttendee: html [
 	html mdlAnchorButton
 		colored;
@@ -127,7 +114,7 @@ ERMembersTab >> renderTableOfAttendsOn: html [
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		dictToRenderDownloadButton: Dictionary new.
 	html render: table
 ]
 

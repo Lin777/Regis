@@ -7,7 +7,7 @@ Class {
 		'bankInformation',
 		'dialog'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -25,19 +25,19 @@ ERBankTransferPaymentInfoView >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERBankTransferPaymentInfoView >> headers [
 	^ #('Bank Code' 'Counter Code' 'Account Number' 'RIB Key' 'Bank Address')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERBankTransferPaymentInfoView >> initializeDialog [
 	dialog := ERDialog cancelDialog
 		idOpen: 'back-state';
 		okCallback: [ self returnToThePreviousState ]
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERBankTransferPaymentInfoView >> initializeFee [
 	fee := controller conference fee.
 	bankAccountInformation := fee bankAccountInformation.

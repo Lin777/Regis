@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 MDL component class for a MASingleOptionDescription
 "
 Class {

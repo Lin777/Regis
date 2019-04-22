@@ -78,7 +78,7 @@ EREsugApp >> initializeLoginView [
 	^ aFormView
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 EREsugApp >> renderContentOn: html [
 	html render: content
 ]

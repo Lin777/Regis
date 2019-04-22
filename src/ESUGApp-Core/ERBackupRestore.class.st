@@ -86,12 +86,12 @@ ERBackupRestore >> nameDirectory [
 
 { #category : #accessing }
 ERBackupRestore >> objectsToBackup [
-	^ OrderedCollection new 
+	^ OrderedCollection new
 		add: ERFee findAll;
 		add: ERUserAccount findAll;
 		add: ERReductionTicket findAll;
 		add: ERAttendee findAll;
-		add: ERAward findAll ;
+		add: ERAward findAll;
 		add: ERGroup findAll;
 		add: ERTalk findAll;
 		add: ERConference findAll;
@@ -100,14 +100,25 @@ ERBackupRestore >> objectsToBackup [
 
 { #category : #'actions api' }
 ERBackupRestore >> restoreBackup [
+	self updateVersionToLastVersionOfBackup.
 	self lastBackup ifNotNil: [ :backup | backup do: 
 		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> updateVersionToLastVersionOfBackup [
+	self version: ( self versionOf: self lastBackupFilename path basename)
 ]
 
 { #category : #accessing }
 ERBackupRestore >> version [
 	version ifNil: [ version := 0 ].
 	 ^ version
+]
+
+{ #category : #accessing }
+ERBackupRestore >> version: aNumber [
+	version := aNumber
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #actions }
 ERConfiguration >> backup [
 	[ ERBackupRestore uniqueInstance backup.] 
 		on: ERException 
@@ -15,7 +15,7 @@ ERConfiguration >> backup [
 { #category : #initialization }
 ERConfiguration >> initialize [
 	super initialize.
-	messageComponent := ERAlert warningAlert id: 'tabAlertOfconfiguration'.
+	messageComponent := messageComponent id: 'tabAlertOfconfiguration'.
 
 ]
 

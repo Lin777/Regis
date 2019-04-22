@@ -102,7 +102,7 @@ ERLoginPage >> renderForgotPasswordButtonOn: html [
 	html mdlAnchorButton 
 		class: 'mdl-color-text--blue';
 		id: 'forgot-password';
-		callback: [ self call: ERForgotPasswordPage new"self sendEmailWithResetedPassword" ];
+		callback: [ self call: ERForgotPasswordPage new ];
 		with: 'Forgot Password'
 ]
 
@@ -166,10 +166,4 @@ ERLoginPage >> renderRegisterButtonOn: html [
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
-]
-
-{ #category : #rendering }
-ERLoginPage >> sendEmailWithResetedPassword [
-	"self resetPasswordFor: anEmail"
-	self wait: [ :cc | self confirm: 'Estas seguro de esto' onAnswer: cc ]
 ]

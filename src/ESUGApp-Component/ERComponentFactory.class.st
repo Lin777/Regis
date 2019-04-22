@@ -50,22 +50,6 @@ ERComponentFactory >> createAdditionalInformationComponent: anAttendee [
 ]
 
 { #category : #factoryFormMethods }
-ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent [
-	^ ERContentTab new 
-		contentTab: (self createAffiliationInformationComponentOn: anAttendee);
-			 tabId: 'affiliationInfoForm'; 
-			 tabName: 'Billing Information';
-			 container: aContent;
-			nextTabName: 'Additional';
-			previousTabName: 'Conference'
-]
-
-{ #category : #factoryFormMethods }
-ERComponentFactory >> createAffiliationInformationComponentOn: anAttendee [
-	^ self createFormOf: anAttendee affiliationInformation
-]
-
-{ #category : #factoryFormMethods }
 ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createBasicInformationComponent: anAttendee);
@@ -79,6 +63,22 @@ ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 ERComponentFactory >> createBasicInformationComponent: anAttendee [
 	^ self createFormOf: ((anAttendee userAccount) 
 	as: ERUserAccountForRegister)
+]
+
+{ #category : #factoryFormMethods }
+ERComponentFactory >> createBillingInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+		contentTab: (self createBillingInformationComponentOn: anAttendee);
+			 tabId: 'affiliationInfoForm'; 
+			 tabName: 'Billing Information';
+			 container: aContent;
+			nextTabName: 'Additional';
+			previousTabName: 'Conference'
+]
+
+{ #category : #factoryFormMethods }
+ERComponentFactory >> createBillingInformationComponentOn: anAttendee [
+	^ self createFormOf: anAttendee affiliationInformation
 ]
 
 { #category : #factoryFormMethods }

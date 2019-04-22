@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERLoginPageTest is a test class for testing the behavior of page when the user is in the principal page of the site
 "
 Class {

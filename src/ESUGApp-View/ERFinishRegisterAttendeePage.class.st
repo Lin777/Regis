@@ -4,16 +4,12 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
-ERFinishRegisterAttendeePage >> actionsBody: html [
-]
-
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERFinishRegisterAttendeePage >> downloadInvoice [
 	self requestContext respond: [ :response |
 		|stream file |
@@ -26,11 +22,8 @@ ERFinishRegisterAttendeePage >> downloadInvoice [
             attachmentWithFileName: ('invoice-', attendee id asString, '.pdf') ]
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERFinishRegisterAttendeePage >> okAction [
-	"| user |
-	user := pageController saveAttendee.
-	self redirectLoggedPage:user"
 	self redirectLoggedPage: attendee userAccount
 	
 ]

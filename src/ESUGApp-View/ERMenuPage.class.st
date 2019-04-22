@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'availableItemsOfMenu'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #accessing }
@@ -20,7 +20,7 @@ ERMenuPage >> availableItemsOfMenu: anObject [
 	availableItemsOfMenu := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createAdminItem [
 	^ ERItemNav 
 		label: 'Account' 
@@ -28,7 +28,7 @@ ERMenuPage >> createAdminItem [
 		callback: (availableItemsOfMenu at: 'admin')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createConfigurationItem [
 	^ ERItemNav
 		label: 'Configuration'
@@ -36,7 +36,7 @@ ERMenuPage >> createConfigurationItem [
 		callback: (availableItemsOfMenu at: 'configuration')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createGroupManagerItem [
 	^ ERItemNav 
 		label: 'Group Registration' 
@@ -44,7 +44,7 @@ ERMenuPage >> createGroupManagerItem [
 		callback: (availableItemsOfMenu at: 'groupRegistration')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createHomeItem [
 	^ ERItemNav 
 		label: 'Home' 
@@ -52,7 +52,7 @@ ERMenuPage >> createHomeItem [
 		callback: (availableItemsOfMenu at: 'home')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createLogoutItem [
 	^ ERItemNav 
 		label: 'Logout' 
@@ -60,14 +60,14 @@ ERMenuPage >> createLogoutItem [
 		callback: (availableItemsOfMenu at: 'logout')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createMenuWith: aList [
 	^ ERNav new
 		listOptions: aList;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createMyRegistrationItem [
 	^ ERItemNav 
 		label: 'My Registration' 
@@ -75,7 +75,7 @@ ERMenuPage >> createMyRegistrationItem [
 		callback: (availableItemsOfMenu at: 'myRegistration')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createProposalsItem [
 	^ ERItemNav
 		label: 'Proposals'
@@ -83,7 +83,7 @@ ERMenuPage >> createProposalsItem [
 		callback: (availableItemsOfMenu at: 'proposal')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createStatisticsItem [
 	^ ERItemNav
 		label: 'Statistics'
@@ -91,7 +91,7 @@ ERMenuPage >> createStatisticsItem [
 		callback: (availableItemsOfMenu at: 'statistics')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createStudentVolunterSearch [
 	^ ERItemNav 
 		label: 'Search' 
@@ -99,16 +99,10 @@ ERMenuPage >> createStudentVolunterSearch [
 		callback: (availableItemsOfMenu at: 'search')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 ERMenuPage >> createUsersItem [
 	^ ERItemNav
 		label: 'Users'
 		icon: 'group'
 		callback: (availableItemsOfMenu at: 'users')
-]
-
-{ #category : #initialization }
-ERMenuPage >> initialize [
-	super initialize.
-	
 ]

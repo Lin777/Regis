@@ -21,7 +21,7 @@ ERGroupManagerRegistrationPage >> initializeTabForms [
 	currentTab updateStateTab: currentTab tabName.
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERGroupManagerRegistrationPage >> redirectFinishRegister [
 	| finishRegisterView |
 	finishRegisterView := ERFinishRegisterGroupManagerPage
@@ -31,7 +31,7 @@ ERGroupManagerRegistrationPage >> redirectFinishRegister [
 	content state: finishRegisterView
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERGroupManagerRegistrationPage >> saveRegistration [
 	| user |
 	user := pageController saveGroupManager.
@@ -39,7 +39,7 @@ ERGroupManagerRegistrationPage >> saveRegistration [
 	^ user
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERGroupManagerRegistrationPage >> saveTabs [
 	self saveBasicInfo.
 	self saveAffilInfo.

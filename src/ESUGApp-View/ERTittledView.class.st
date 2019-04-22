@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract component for content with a Title. My subclasses represent the main content of the page.
+"
 Class {
 	#name : #ERTittledView,
 	#superclass : #ERContainer,
@@ -6,7 +12,7 @@ Class {
 		'cancelCallback',
 		'controller'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }

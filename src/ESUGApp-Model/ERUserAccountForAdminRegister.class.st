@@ -1,3 +1,6 @@
+"
+I am a model of User Account for register, I have all necessary fields to create a new user
+"
 Class {
 	#name : #ERUserAccountForAdminRegister,
 	#superclass : #ERUserAccountForRegister,

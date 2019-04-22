@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestBankAccountInformation is a test class for testing the behavior of ERBankAccountInformation model
+"
 Class {
 	#name : #ERTestBankAccountInformation,
 	#superclass : #ERTestModel,

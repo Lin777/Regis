@@ -4,16 +4,8 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
-ERFinishRegisterGroupManagerPage >> actionsBody: html [
-	
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERFinishRegisterGroupManagerPage >> finishRegister [
-	"| user |
-	user := pageController saveGroupManager.
-	self redirectLoggedPage: user"
 	self redirectLoggedPage: attendee userAccount
 ]
 

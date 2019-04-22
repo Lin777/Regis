@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am an abstract form for objects that have a descriptors of magritte
 "
 Class {

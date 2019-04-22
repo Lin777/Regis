@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am a model of Configuration Of Home Page
 "
 Class {

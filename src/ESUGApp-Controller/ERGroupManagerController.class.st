@@ -1,3 +1,16 @@
+"
+Description
+--------------------
+
+I am a controller for Group Manager of Conference, this is only use for groupManager user.
+
+I can:
+ 
+- add attendees to group
+- delete attendee from group
+- add a group manager as attendee
+- update billing information
+"
 Class {
 	#name : #ERGroupManagerController,
 	#superclass : #ERLoggedController,
@@ -64,7 +77,7 @@ ERGroupManagerController >> groupManager [
 ]
 
 { #category : #updating }
-ERGroupManagerController >> updateAffiliation: aff [
+ERGroupManagerController >> updateBillingInfo: aff [
 	self groupManager affiliationInformation: aff.
 	self group save.
 	self notifyAllObservers  

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestAward is a test class for testing the behavior of ERAward model
+"
 Class {
 	#name : #ERTestAward,
 	#superclass : #ERTestModel,

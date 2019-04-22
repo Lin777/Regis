@@ -8,10 +8,6 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
-ERForgotPasswordPage >> actionsBody: html [
-]
-
 { #category : #rendering }
 ERForgotPasswordPage >> email: aString [
 	email := aString

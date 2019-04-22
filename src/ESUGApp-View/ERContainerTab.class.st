@@ -31,7 +31,7 @@ ERContainerTab >> alreadyRegisteredAsAttendee [
 	^ self session user isAttendee
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tableBlock }
 ERContainerTab >> blockTableAwardsToExecute [
 	^ [ :award :html | 
 	OrderedCollection new
@@ -46,7 +46,7 @@ ERContainerTab >> blockTableAwardsToExecute [
 		yourself ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tableBlock }
 ERContainerTab >> blockTableTalksToExecute [
 	^ [ :talk :html| 
 	OrderedCollection new
@@ -103,17 +103,17 @@ ERContainerTab >> controller: anObject [
 	controller := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERContainerTab >> deleteAward: anAward [
 	controller deleteAward: anAward
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERContainerTab >> deleteTalk: aTalk [
 	controller deleteTalk: aTalk
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERContainerTab >> exportInvoiceOf: groupOrAttendee [
 	self requestContext respond: [ :response |
 		|stream file |
@@ -173,12 +173,12 @@ ERContainerTab >> initializeModifyAffiliationForm: aGroup [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERContainerTab >> modifyAffiliation: aGroup [
 	self initializeModifyAffiliationForm: aGroup .
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERContainerTab >> modifyRegistrationInformation: anAttendee [
 	callback := [ self updateRegistrationInformation: anAttendee ].
 	
@@ -186,7 +186,7 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := (ERTittledFormView on: anUser 
 								withContent: content) title: 'User';
@@ -212,40 +212,40 @@ ERContainerTab >> title [
 	self subclassResponsibility 
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERContainerTab >> updateAffiliation: aff on: aGroup [
 	controller updateAffiliation: aff on: aGroup.
 	self cancel.
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 ERContainerTab >> updateAward: anAward. [
 	controller updateAward: anAward.
 	self cancel
 	
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERContainerTab >> updateRegistrationInformation: anAttendee [
 	controller updateAttendee: anAttendee.
 	content state: content lastState
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 ERContainerTab >> updateTalk: aTalk. [
 	controller updateTalk: aTalk.
 	self cancel
 	
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 ERContainerTab >> updateTicket: aTicket from: anAttendee [
 	controller applyReductionTicket: aTicket To: anAttendee .
 	self returnToThePreviousState. 
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERContainerTab >> updateUser: user [
 	|result|
 	result := controller updateUser: user.

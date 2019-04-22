@@ -7,7 +7,7 @@ Class {
 		'messageComponent',
 		'blockForUpdate'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #rendering }
@@ -17,7 +17,7 @@ ERPaymentGroupManagerView >> acceptAction [
 	updatePayment cull: saved.
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERPaymentGroupManagerView >> blockForUpdate: aBlock [
 	blockForUpdate := aBlock
 ]
@@ -91,12 +91,12 @@ ERPaymentGroupManagerView >> title [
 	^ 'Amount to pay : ', attendee paymentInformation paymentAmount asString, '. Please choose payment Type'
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERPaymentGroupManagerView >> updatePayment: aBlock [
 	updatePayment := aBlock
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERPaymentGroupManagerView >> updatePaymentInformation: value [
 	({value} includesAnyOf: ERPaymentInformation paymentTypes )
 		ifTrue: [ attendee paymentInformation paymentType: value asString.

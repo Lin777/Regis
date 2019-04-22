@@ -4,19 +4,12 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> attendeeFrom: aGroupManager [
-	^ ERAttendee new 
-		userAccount: aGroupManager userAccount; 
-		affiliationInformation: aGroupManager affiliationInformation 
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERGroupRegistrationSummaryTab >> exportInvoice [
 	self exportInvoiceOf: self group.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
@@ -26,7 +19,7 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERGroupRegistrationSummaryTab >> initializePaymentForm [
 	^ ( ERPaymentGroupManagerView on: self group
 		withContent: content) 
@@ -42,7 +35,7 @@ ERGroupRegistrationSummaryTab >> modifyAffiliation [
 	self initializeModifyAffiliationForm .
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERGroupRegistrationSummaryTab >> pay [
 	|formUpdatePayment|
 	formUpdatePayment := self initializePaymentForm.
@@ -50,18 +43,7 @@ ERGroupRegistrationSummaryTab >> pay [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> payForGroup [
-	|group|
-	group := self group.
-	controller updateGroup: group.
-	group paymentInformation  paymentTypeIsBankTransfer
-		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	group paymentInformation paymentTypeIsCreditCard
-		ifTrue: [ ^ self redirectionPayPAL ]
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERGroupRegistrationSummaryTab >> payForGroup: aGroup [
 	aGroup save.
 	controller updateGroup: aGroup.
@@ -208,8 +190,8 @@ ERGroupRegistrationSummaryTab >> title [
 	^ 'Group Registration'
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> updateAffiliation: aff [
-	controller updateAffiliation: aff.
+{ #category : #updating }
+ERGroupRegistrationSummaryTab >> updateBillingInfo: aff [
+	controller updateBillingInfo: aff.
 	self cancel.
 ]

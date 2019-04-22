@@ -1,10 +1,12 @@
+"
+Description
+--------------------
+
+Tab to render all attendees of ESUG page in a table.
+"
 Class {
 	#name : #ERAttendeesTab,
 	#superclass : #ERConfigurationTab,
-	#instVars : [
-		'encodeCSVFile',
-		'encodeZipFile'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -15,12 +17,12 @@ ERAttendeesTab >> applyReductionTicketTo: user [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERAttendeesTab >> attends [
 	^ controller conference attends
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERAttendeesTab >> blockTableToExecute [
 	^ [ :user :html | 
 	OrderedCollection new
@@ -41,26 +43,21 @@ ERAttendeesTab >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee.
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
-ERAttendeesTab >> dictToRenderDownloadButton [
-	^ Dictionary new	yourself
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERAttendeesTab >> exportAttends [
 	| file |
 	file := controller conference exportAttends: 'attends'.
 	self exportFile: file wihtName: 'attends.csv'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERAttendeesTab >> headers [
 	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Is Volunter?' '')
 ]
@@ -79,7 +76,7 @@ ERAttendeesTab >> initializeApplyReductionTicketForm: user [
 			self updateStateTab: self tabName.]
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERAttendeesTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
@@ -154,11 +151,11 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		dictToRenderDownloadButton: Dictionary new.
 	html render: table
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERAttendeesTab >> sendInvoiceTo: user [
 	[controller sendInvoiceTo: user.
 	self updateStateTab: self tabName.

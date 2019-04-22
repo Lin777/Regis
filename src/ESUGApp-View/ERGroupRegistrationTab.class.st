@@ -18,6 +18,13 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: 
 	^ form
 ]
 
+{ #category : #rendering }
+ERGroupRegistrationTab >> attendeeFrom: aGroupManager [
+	^ ERAttendee new 
+		userAccount: aGroupManager userAccount; 
+		affiliationInformation: aGroupManager affiliationInformation 
+]
+
 { #category : #accessing }
 ERGroupRegistrationTab >> attends [
 	^ (controller conference groupOfUser: attendee)

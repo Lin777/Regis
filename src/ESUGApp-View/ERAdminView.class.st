@@ -1,3 +1,19 @@
+"
+Description
+--------------------
+
+I am a Admin View, I can update my user account and password
+
+Instance Variables
+--------------------
+
+	modifiedUser:			<aComponent> form to update UserAccount.
+	messageComponent:		<aComponent>	ERAlert to show messages of page.
+	changePasswordForm:	<aComponent> form ro update password.
+	controller: 				<aController> controller of this view
+	contentBlock: 			aBlock to change the content of view
+
+"
 Class {
 	#name : #ERAdminView,
 	#superclass : #ERContainer,
@@ -8,7 +24,7 @@ Class {
 		'contentBlock',
 		'changePasswordForm'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }

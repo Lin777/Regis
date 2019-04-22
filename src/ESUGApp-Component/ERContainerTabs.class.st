@@ -79,7 +79,7 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
 	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true);
 	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true);
-	add: ((self createAffiliationInfoTab: anAttendee withContent: self)disabled: true);
+	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true);
 	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true);
 	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true);
 		add:
@@ -98,7 +98,7 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	add: ((self createContactInfoTab: anAttendee withContent: self ) 
 				activate; previousTabName: nil);
 	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
-	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createBillingInfoTab: anAttendee withContent: self);
 	add: (self createAdditionalInfoTab: anAttendee withContent: self);
 	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:

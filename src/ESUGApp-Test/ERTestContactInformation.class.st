@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestContactInformation is a test class for testing the behavior of ERContactInformation model
+"
 Class {
 	#name : #ERTestContactInformation,
 	#superclass : #ERTestModel,

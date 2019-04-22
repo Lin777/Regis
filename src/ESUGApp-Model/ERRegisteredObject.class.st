@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am an abstract class for registered objects in conference
 "
 Class {

@@ -1,3 +1,6 @@
+"
+I am a model of Talk
+"
 Class {
 	#name : #ERTalk,
 	#superclass : #SDActiveRecord,

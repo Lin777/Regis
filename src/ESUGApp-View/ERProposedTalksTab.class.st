@@ -4,7 +4,7 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #adding }
 ERProposedTalksTab >> addTalk [
 	self initializeFormAddTalk.
 	content state: formTalk.
@@ -17,12 +17,12 @@ ERProposedTalksTab >> createTalk: aTalk [
 	self cancel
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERProposedTalksTab >> headers [ 	
 	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERProposedTalksTab >> initializeFormAddTalk [
 	|talk|
 	talk := ERTalk submitter: attendee.
@@ -34,7 +34,7 @@ ERProposedTalksTab >> initializeFormAddTalk [
 							initializeForm
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERProposedTalksTab >> listDataToRenderButton [
 	|list|
 	list := OrderedCollection new.
@@ -60,7 +60,7 @@ ERProposedTalksTab >> listDataToRenderButton [
 		^ list
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERProposedTalksTab >> modifyTalk: aTalk [
 	self initializeFormEditTalk: aTalk.
 	content state: formTalk.

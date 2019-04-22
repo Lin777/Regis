@@ -1,5 +1,8 @@
 "
-I am a model of an Attendee
+Description
+--------------------
+
+I am a model of an Attendee, an attendee is a composition of: ERUserAccount, ERContactInformation, ERRegisterConferenceInformation , ERAdditionalInformation , ERPaymentInformation , ERAffiliationInformation 
 "
 Class {
 	#name : #ERAttendee,
@@ -143,7 +146,7 @@ ERAttendee >> initialize [
 	userAccount := ERUserAccount new.
 	contactInformation := ERContactInformation new.
 	conferenceInformation := ERRegisterConferenceInformation new.
-	affiliationInformation := ERAffiliationInformation new.
+	affiliationInformation := ERBillingInformation new.
 	additionalInformation := ERAdditionalInformation new.
 ]
 

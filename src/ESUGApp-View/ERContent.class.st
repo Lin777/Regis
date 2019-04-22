@@ -5,7 +5,7 @@ Class {
 		'state',
 		'states'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #rendering }

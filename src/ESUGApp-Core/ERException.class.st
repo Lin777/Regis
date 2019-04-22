@@ -1,7 +1,8 @@
 "
-An ERException is the abstract class for any Exception caused by behavior of the page.
+Description
+--------------------
 
-Instance Variables
+An ERException is the abstract class for any Exception caused by behavior of the page
 
 "
 Class {

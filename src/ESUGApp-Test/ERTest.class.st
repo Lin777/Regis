@@ -29,7 +29,7 @@ ERTest class >> testAdditionalInformation [
 
 { #category : #tests }
 ERTest class >> testAffiliationInformation [
-	^ ERAffiliationInformation new
+	^ ERBillingInformation new
 		organizationName: 'testOrgName';
 		organizationAddrees1: 'testAddress1';
 		organizationAddrees2: 'testAddress2';

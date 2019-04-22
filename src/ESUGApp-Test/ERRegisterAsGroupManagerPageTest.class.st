@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERRegisterAsGroupManagerPageTest is a test class for testing the behavior of page when the user is registering as GroupManager
 "
 Class {

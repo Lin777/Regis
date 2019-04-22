@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am a model of Fee
 "
 Class {

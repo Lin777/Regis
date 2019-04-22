@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestBackupAndRestore is a test class for testing the behavior of backup and restore of the page
+"
 Class {
 	#name : #ERTestBackupAndRestore,
 	#superclass : #ERTest,

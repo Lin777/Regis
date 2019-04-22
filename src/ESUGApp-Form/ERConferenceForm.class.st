@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am a form for edit options of conference.
 "
 Class {

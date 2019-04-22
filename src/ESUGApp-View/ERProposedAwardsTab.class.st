@@ -11,7 +11,7 @@ ERProposedAwardsTab >> addAward [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 ERProposedAwardsTab >> createAward: anAward [
 	controller addAward: anAward.
 	self cancel
@@ -33,7 +33,7 @@ ERProposedAwardsTab >> initializeFormAddAward [
 							cancelCallback: [self cancel]; initializeForm
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERProposedAwardsTab >> listDataToRenderButton [
 	|list|
 	list := OrderedCollection new.
@@ -61,7 +61,7 @@ ERProposedAwardsTab >> listDataToRenderButton [
 	^ list
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERProposedAwardsTab >> modifyAward: anAward [
 	self initializeFormEditAward: anAward.
 	content state: formAward.

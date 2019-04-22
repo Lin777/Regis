@@ -7,7 +7,7 @@ Class {
 		'messageComponent',
 		'dialog'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -25,7 +25,7 @@ ERTittledFormView >> callback: anObject [
 	callback := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERTittledFormView >> cancelForm [
 	form cancel.
 	cancelCallback value
@@ -42,7 +42,7 @@ ERTittledFormView >> initialize [
 	messageComponent := ERAlert warningAlert id: 'formAlert'.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERTittledFormView >> initializeDialog [ 
 	dialog := ERDialog cancelDialog 
 		idOpen: 'cancel';
@@ -85,7 +85,7 @@ ERTittledFormView >> renderPageOn: html [
 	html render: dialog]
 ]
 
-{ #category : #initialization }
+{ #category : #saving }
 ERTittledFormView >> saveForm [
 	[|object|
 	object := form save.

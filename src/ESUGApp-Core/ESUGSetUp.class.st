@@ -288,7 +288,7 @@ ESUGSetUp class >> installMagritte [
 
 { #category : #backupAndRestoreData }
 ESUGSetUp class >> restoreData [
-	[ERBackupRestore uniqueInstance restoreBackup ]
+	[ ERBackupRestore uniqueInstance restoreBackup ]
 	on: Exception 
 	do: [ :ex | ex signal ]
 ]

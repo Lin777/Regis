@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestRegisterController is a test class for testing the behavior of ERRegisterController
+"
 Class {
 	#name : #ERTestRegisterController,
 	#superclass : #ERTest,

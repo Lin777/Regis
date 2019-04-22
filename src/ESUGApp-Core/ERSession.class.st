@@ -1,5 +1,8 @@
 "
-I am a custom Session for page
+Description
+--------------------
+
+I am a custom Session for ESUG page
 "
 Class {
 	#name : #ERSession,

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestFee is a test class for testing the behavior of ERFee model
+"
 Class {
 	#name : #ERTestFee,
 	#superclass : #ERTestModel,

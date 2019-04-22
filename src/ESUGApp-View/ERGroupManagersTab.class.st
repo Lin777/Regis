@@ -1,15 +1,20 @@
+"
+Description
+--------------------
+
+Tab to render  all group managers of ESUG page in a table.
+"
 Class {
 	#name : #ERGroupManagersTab,
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'groupManagerForm',
-		'newAttendee',
-		'encodeCSVFile'
+		'newAttendee'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERGroupManagersTab >> blockTableToExecute [
 	^ [ :group :html | 
 	OrderedCollection new
@@ -22,23 +27,12 @@ ERGroupManagersTab >> blockTableToExecute [
 		yourself ].
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERGroupManagersTab >> deleteGroup: user [
 	controller deleteGroup: user
 ]
 
-{ #category : #rendering }
-ERGroupManagersTab >> dictToRenderDownloadButton [
-	^ Dictionary new 
-	"at: 'icon' put: 'get_app';
-	at: 'id' put: [ :group | group id , '-get_app' ];
-	at: 'disabled' put: [:group | ((controller allAttendeesHasPaid: group) and: [ group encodedInvoice isNotNil ]) not ];
-	at: 'url' put: [ :group | 'data:text/pdf;base64,', (group encodedInvoice ifNil: [ '' ])];
-	at: 'download' put: [ :group | 'RegistrationInvoice_', group id, '.pdf'];
-	"yourself.
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERGroupManagersTab >> exportGroups [
 	| file |
 	file := controller conference exportGroupManagers: 'groupManagers'.
@@ -55,7 +49,7 @@ ERGroupManagersTab >> headers [
 	^ #('Name' 'Email' 'Organization' 'Remaing Fee' '')
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERGroupManagersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
@@ -113,7 +107,7 @@ ERGroupManagersTab >> renderTableOfGroupsOn: html [
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		dictToRenderDownloadButton: Dictionary new.
 	html render: table
 ]
 

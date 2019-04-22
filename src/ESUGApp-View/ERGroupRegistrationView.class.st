@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tabs'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #accessing }
@@ -23,7 +23,7 @@ ERGroupRegistrationView >> initialize [
 	tabs := OrderedCollection new.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERGroupRegistrationView >> initializeTabForms [
 	tabs add: (ERGroupRegistrationSummaryTab 
 					on: attendee 

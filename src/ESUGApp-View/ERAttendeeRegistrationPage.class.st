@@ -10,7 +10,7 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 	addInfo := (self createAdditionalInfoTab: pageController attendee
 						withContent: self) disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
@@ -18,7 +18,7 @@ ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 		addTab: addInfo.
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> addContactInfoTab [
 	contactInfoTab := (self createContactInfoTab: pageController attendee 
 								withContent: self ) disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
@@ -26,7 +26,7 @@ ERAttendeeRegistrationPage >> addContactInfoTab [
 		addTab: contactInfoTab.
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> addPaymentInfoTab [
 	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
 								 withContent: self ) disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
@@ -34,7 +34,7 @@ ERAttendeeRegistrationPage >> addPaymentInfoTab [
 		addTab: paymentInfoTab.
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 	regConfInfo := (self createRegConferenceInfoTab: pageController attendee
 							 withContent: self )disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
@@ -48,7 +48,7 @@ ERAttendeeRegistrationPage >> initialize [
 	title := 'Registration'
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ERAttendeeRegistrationPage >> initializeTabForms [
 	self addBasicInfoTab.
 	self addContactInfoTab.
@@ -62,7 +62,7 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 	currentTab updateStateTab: currentTab tabName.
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> redirectFinishRegister [
 	| finishRegisterView |
 	finishRegisterView := ERFinishRegisterAttendeePage
@@ -72,7 +72,7 @@ ERAttendeeRegistrationPage >> redirectFinishRegister [
 	content state: finishRegisterView
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> saveAddInfo [
 	currentTab := addInfo.
 	pageController attendee additionalInformation: 
@@ -80,7 +80,7 @@ ERAttendeeRegistrationPage >> saveAddInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> saveContactInfo [
 	currentTab := contactInfoTab.
 	pageController attendee contactInformation: 
@@ -88,7 +88,7 @@ ERAttendeeRegistrationPage >> saveContactInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> savePaymentInfo [
 	currentTab := paymentInfoTab.
 	pageController attendee paymentInformation: 
@@ -97,7 +97,7 @@ ERAttendeeRegistrationPage >> savePaymentInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> saveRegConfInfo [
 	currentTab := regConfInfo.
 	pageController attendee conferenceInformation:  
@@ -105,7 +105,7 @@ ERAttendeeRegistrationPage >> saveRegConfInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> saveRegistration [
 	| user |
 	user := pageController saveAttendee.
@@ -115,7 +115,7 @@ ERAttendeeRegistrationPage >> saveRegistration [
 	^ user
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERAttendeeRegistrationPage >> saveTabs [
 	self saveBasicInfo.
 	self saveContactInfo.
@@ -125,7 +125,7 @@ ERAttendeeRegistrationPage >> saveTabs [
 	self savePaymentInfo.
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERAttendeeRegistrationPage >> sendEmailTo: user [
 	pageController sendInvoiceTo: (pageController conference attendeeFromUser: user)
 ]

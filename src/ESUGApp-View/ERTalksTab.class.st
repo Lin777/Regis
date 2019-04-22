@@ -1,13 +1,16 @@
+"
+Description
+--------------------
+
+Tab to render all proposal talks of ESUG page in a table.
+"
 Class {
 	#name : #ERTalksTab,
 	#superclass : #ERConfigurationTab,
-	#instVars : [
-		'encodeCSVFile'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #actions }
 ERTalksTab >> exportTalks [
 	| file |
 	file := controller conference exportTalks: 'talks'.
@@ -50,7 +53,7 @@ ERTalksTab >> renderContainerOn: html [
 	self renderTableOfTalksOn: html
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERTalksTab >> renderTableOfTalksOn: html [
 	table := ERTable new
 		headers: self headers;

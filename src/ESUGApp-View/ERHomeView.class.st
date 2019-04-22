@@ -1,7 +1,7 @@
 Class {
 	#name : #ERHomeView,
 	#superclass : #ERTittledView,
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }

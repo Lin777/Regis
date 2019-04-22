@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestConferenceConfigurationModel is a test class for testing the behavior of ERConferenceConfigurationModel
+"
 Class {
 	#name : #ERTestConferenceConfigurationModel,
 	#superclass : #ERTestModel,

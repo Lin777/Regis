@@ -14,7 +14,6 @@ Class {
 
 { #category : #'as yet unclassified' }
 ERPage >> actionsBody: html [
-	self subclassResponsibility 
 ]
 
 { #category : #accessing }

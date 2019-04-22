@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestPaymentInformation is a test class for testing the behavior of ERPaymentInformation model
+"
 Class {
 	#name : #ERTestPaymentInformation,
 	#superclass : #ERTestModel,

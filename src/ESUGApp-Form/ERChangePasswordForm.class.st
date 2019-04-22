@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 I am a form for change password of an user
 "
 Class {

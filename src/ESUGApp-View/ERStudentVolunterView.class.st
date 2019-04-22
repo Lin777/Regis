@@ -7,7 +7,7 @@ Class {
 		'attends',
 		'aStringToMatch'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -16,12 +16,12 @@ ERStudentVolunterView class >> withContent: content [
 		content: content; yourself 
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> allAttends [ 
 	^ controller conference attends
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> attends [
 	aStringToMatch 
 		ifNil: [
@@ -30,7 +30,7 @@ ERStudentVolunterView >> attends [
 			^ self filteredAssistants ]
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERStudentVolunterView >> blockTableToExecute [
 	^ [ :user :html | 
 	OrderedCollection new
@@ -47,27 +47,22 @@ ERStudentVolunterView >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #rendering }
-ERStudentVolunterView >> dictToRenderDownloadButton [
-	^ Dictionary new	yourself
-]
-
-{ #category : #rendering }
+{ #category : #filtering }
 ERStudentVolunterView >> filterByEmail [
 	^ controller conference filterAttendsByEmailWith: aStringToMatch 
 ]
 
-{ #category : #rendering }
+{ #category : #filtering }
 ERStudentVolunterView >> filterByFirstName [
 	^ controller conference filterAttendsByFirstNameWith: aStringToMatch 
 ]
 
-{ #category : #rendering }
+{ #category : #filtering }
 ERStudentVolunterView >> filterByLastName [
 	^ controller conference filterAttendsByLastNameWith: aStringToMatch
 ]
 
-{ #category : #rendering }
+{ #category : #filtering }
 ERStudentVolunterView >> filteredAssistants [
 	aStringToMatch isEmpty ifTrue: [ ^ self allAttends ].
 	self strategyIsByEmail ifTrue: [ ^ self filterByEmail ].
@@ -80,15 +75,10 @@ ERStudentVolunterView >> headers [
 	^ #('#Invoice'	'First Name'	 'Last Name' 'Email'	'Affiliation	' 'Fee' 'Has paid?' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERStudentVolunterView >> initialize [ 	
 	super initialize.
 	strategy := 'Email'.
-]
-
-{ #category : #rendering }
-ERStudentVolunterView >> listDataToRenderButton [
-	^ OrderedCollection new
 ]
 
 { #category : #rendering }
@@ -140,27 +130,27 @@ ERStudentVolunterView >> renderTableOfAttendsOn: html [
 		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		listToRenderButton: OrderedCollection new;
+		dictToRenderDownloadButton: Dictionary new.
 	html render: table
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> strategyIsByEmail [
 	^ strategy = 'Email'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> strategyIsByLastName [
 	^ strategy = 'Last Name'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> strategyIsByName [
 	^ strategy = 'First Name'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERStudentVolunterView >> title [
 	^ 'Attendees'
 ]
