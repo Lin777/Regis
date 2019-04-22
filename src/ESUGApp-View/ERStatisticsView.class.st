@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a view to show statistics of participants to lunch, participants to social dinner and statistics of t-shirts in tables
+"
 Class {
 	#name : #ERStatisticsView,
 	#superclass : #ERTittledView,

@@ -233,7 +233,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationName' with: ''.
 	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Organization Name')
+		equals: (self messageIsRequiredFor: 'Name')
 ]
 
 { #category : #groupManagerSumaryTests }

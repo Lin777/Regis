@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract page for finish register page(Summary page of register)
+"
 Class {
 	#name : #ERFinishRegisterPage,
 	#superclass : #ERPage,
@@ -13,7 +19,7 @@ ERFinishRegisterPage class >> on: anAttendee withContent: content withController
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERFinishRegisterPage >> colorIcon [
 	^ 'mdl-color--green'
 ]
@@ -32,7 +38,7 @@ ERFinishRegisterPage >> initialize [
 	classContainer := 'mdl-card-register'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERFinishRegisterPage >> redirectLoggedPage: anUser [
 	anUser
 		ifNotNil: [ self session login: anUser.

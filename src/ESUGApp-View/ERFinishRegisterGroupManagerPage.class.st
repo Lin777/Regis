@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an Summary Page for group manager register
+"
 Class {
 	#name : #ERFinishRegisterGroupManagerPage,
 	#superclass : #ERFinishRegisterPage,

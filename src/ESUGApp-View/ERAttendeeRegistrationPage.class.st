@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an Page of Register ERAttendee, I have all necessary fields to create an Attendee
+"
 Class {
 	#name : #ERAttendeeRegistrationPage,
 	#superclass : #ERRegisterPage,
@@ -53,7 +59,7 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 	self addBasicInfoTab.
 	self addContactInfoTab.
 	self addRegisterConferenceInfoTab.
-	self addAffiliationInfoTab.
+	self addBillingInfoTab.
 	self addAdditionalInfoTab.
 	self addPaymentInfoTab.
 	self addDoneTab.

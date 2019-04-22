@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an Summary Page for register attendee
+"
 Class {
 	#name : #ERFinishRegisterAttendeePage,
 	#superclass : #ERFinishRegisterPage,

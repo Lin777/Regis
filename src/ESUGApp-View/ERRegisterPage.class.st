@@ -1,3 +1,10 @@
+"
+Description
+--------------------
+
+I am an abstract Page for register
+
+"
 Class {
 	#name : #ERRegisterPage,
 	#superclass : #ERPage,
@@ -22,19 +29,19 @@ ERRegisterPage class >> content: aContent [
 ]
 
 { #category : #adding }
-ERRegisterPage >> addAffiliationInfoTab [
-	affiliationInfo:= (self createBillingInfoTab: pageController attendee
-								withContent: self) disabled: true; cancelCallback: self cancelRegister.
-	^ self
-		addTab: affiliationInfo .
-]
-
-{ #category : #adding }
 ERRegisterPage >> addBasicInfoTab [
 	basicInfoTab := (self createBasicInfoTab: pageController attendee
 							withContent: self) cancelCallback: self cancelRegister.
 	^ self
 		addTab: basicInfoTab .
+]
+
+{ #category : #adding }
+ERRegisterPage >> addBillingInfoTab [
+	affiliationInfo:= (self createBillingInfoTab: pageController attendee
+								withContent: self) disabled: true; cancelCallback: self cancelRegister.
+	^ self
+		addTab: affiliationInfo .
 ]
 
 { #category : #adding }
@@ -53,7 +60,7 @@ ERRegisterPage >> addTab: aAttendeeTabForm [
 	^ self tabs add: aAttendeeTabForm
 ]
 
-{ #category : #adding }
+{ #category : #actions }
 ERRegisterPage >> cancelRegister [
 	^ [self session logout.
     ^ self requestContext redirectTo: self application url]
@@ -74,7 +81,7 @@ ERRegisterPage >> initializeTabForms [
 	self subclassResponsibility 
 ]
 
-{ #category : #initialize }
+{ #category : #actions }
 ERRegisterPage >> redirectFinishRegister [
 	self subclassResponsibility 
 ]
@@ -86,7 +93,7 @@ ERRegisterPage >> register [
 	self validateRegister: user
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERRegisterPage >> renderBackButtonOn: html [
 	html mdlAnchorButton
 		colored;
@@ -130,7 +137,7 @@ ERRegisterPage >> renderDoneButtonOn: html [
 		with: 'Save Information'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERRegisterPage >> renderNextButtonOn: html [
 	html mdlAnchorButton
 		colored;
@@ -149,7 +156,7 @@ ERRegisterPage >> renderPageOn: html [
 			[ html render: (ERTabs tabs: self tabs) ] ]
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERRegisterPage >> saveAffilInfo [
 	currentTab := affiliationInfo.
 	pageController attendee affiliationInformation: 
@@ -157,7 +164,7 @@ ERRegisterPage >> saveAffilInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERRegisterPage >> saveBasicInfo [
 	currentTab := basicInfoTab.
 	pageController attendee userAccount: 
@@ -165,12 +172,12 @@ ERRegisterPage >> saveBasicInfo [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERRegisterPage >> saveRegistration [
 	self subclassResponsibility 
 ]
 
-{ #category : #initialize }
+{ #category : #saving }
 ERRegisterPage >> saveTabs [
 	self subclassResponsibility 
 ]
@@ -181,7 +188,7 @@ ERRegisterPage >> tabs [
 	^ tabs.
 ]
 
-{ #category : #initialize }
+{ #category : #validating }
 ERRegisterPage >> validateAndRegister [
 	 [self saveTabs.
 		currentTab := tabs first. 
@@ -196,7 +203,7 @@ ERRegisterPage >> validateAndRegister [
 	self redirectFinishRegister
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validating }
 ERRegisterPage >> validateRegister: user [
 	user notNil
 		ifTrue: [ self answer: user ]

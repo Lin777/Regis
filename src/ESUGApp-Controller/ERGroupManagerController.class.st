@@ -50,6 +50,20 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 ]
 
 { #category : #deleting }
+ERGroupManagerController >> deleteAttendee: anAttendee [
+	|anUser idGroup|
+	idGroup := anAttendee idGroup.
+	anUser := anAttendee userAccount.
+	conference deleteAttendeeFromGroupAndConference: anAttendee .
+	idGroup ifNotNil: [ self updateGroup: self group ].
+	anUser isGroupManager
+		ifFalse: [ conference deleteUser: anUser]
+		ifTrue: [ anUser deleteAttendeeRole ].
+	self conference save.
+	self notifyAllObservers 
+]
+
+{ #category : #deleting }
 ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].

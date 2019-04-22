@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I render a form with an specific title
+"
 Class {
 	#name : #ERTittledFormView,
 	#superclass : #ERTittledView,

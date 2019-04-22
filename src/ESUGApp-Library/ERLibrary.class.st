@@ -2,7 +2,7 @@
 Description
 --------------------
 
-I am a library for load Css files and JS files
+I am a library for load Css files and JS files to ESUG page
 "
 Class {
 	#name : #ERLibrary,

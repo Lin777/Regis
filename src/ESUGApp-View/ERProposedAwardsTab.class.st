@@ -1,3 +1,11 @@
+"
+Description
+--------------------
+
+Tab to render all proposal awards in the database of an especific attendee (attendee of session).
+
+I can edit and delete awards
+"
 Class {
 	#name : #ERProposedAwardsTab,
 	#superclass : #ERMyRegistrationTab,

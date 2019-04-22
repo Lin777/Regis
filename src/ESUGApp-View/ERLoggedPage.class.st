@@ -1,3 +1,20 @@
+"
+Description
+--------------------
+
+I am a principal component when user is logged.
+
+Instance Variables
+--------------------
+
+pageController: 	 an ERController or ERController subclasses of the page
+navbar:            <aComponent> ERNav component
+content:
+attendee:
+configurationTabs: an OrderedCollection with tabs components for configuration option
+proposalTabs:      an OrderedCollection with tabs components for proposals option
+usersTabs:         an OrderedCollection with tabs components for users option
+"
 Class {
 	#name : #ERLoggedPage,
 	#superclass : #WAComponent,
@@ -18,7 +35,7 @@ ERLoggedPage >> children [
 	^ Array with: navbar with: content
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERLoggedPage >> configurationTabs [ 
 	configurationTabs ifNil: [
 		configurationTabs := OrderedCollection new add: (ERConferenceForm on: attendee withContent: content container: self);
@@ -40,7 +57,7 @@ ERLoggedPage >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERLoggedPage >> initialize [
 	super initialize.
 	pageController := ERLoggedController user: self session user.
@@ -52,14 +69,14 @@ ERLoggedPage >> initialize [
 	self initializeNabvar.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERLoggedPage >> initializeNabvar [
 	| menu |
-	menu := ERMenuPage availableItemsOfMenu: self itemList.
+	menu := ERMenuFactory availableItemsOfMenu: self itemList.
 	navbar := menu createMenuWith: (self listOptionsFor: menu)
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERLoggedPage >> itemList [
 	^ Dictionary new
 		at: 'home'
@@ -102,7 +119,7 @@ ERLoggedPage >> itemList [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERLoggedPage >> listOptionsFor: aMenuFactory [
 	| list |
 	list := OrderedCollection new.
@@ -133,7 +150,7 @@ ERLoggedPage >> pageController [
 	^ pageController
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERLoggedPage >> proposalTabs [ 
 	proposalTabs ifNil: [
 		proposalTabs := OrderedCollection new add: (ERTalksTab on: attendee withContent: content container: self);

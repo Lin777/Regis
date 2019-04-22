@@ -3,6 +3,21 @@ Description
 --------------------
 
 I am a model of Conference
+
+Instance Variables
+--------------------
+
+attends:                <OrderedCollection> list of ERAttendees registered in conference
+fee: 						  <ERFee> a fee of conference
+reductionTickets:       <OrderedCollection> list of tickets to conference
+submittedTalks:         <OrderedCollection> list of submitted talks to conference
+submittedAwards:        <OrderedCollection> list of submitted awards to conference
+groups:                 <OrderedCollection> list of groups to conference
+users:                  <OrderedCollection> list of users to conference
+configuration:
+active:                 <Boolean> is the state of conference (active for register in conference)
+invoiceNumber:          <Number> is an incremental number of invoices of conference
+configurationOfHomePage:
 "
 Class {
 	#name : #ERConference,
@@ -450,7 +465,6 @@ ERConference >> initialize [
 	super initialize.
 	attends := OrderedCollection new.
 	groups := OrderedCollection new.
-	payments := OrderedCollection new.
 	reductionTickets := OrderedCollection new.
 	submittedAwards := OrderedCollection new.
 	submittedTalks := OrderedCollection new.
@@ -508,16 +522,6 @@ ERConference >> paymentAmountFor: anAttendee [
 	amount := amount + (self costPerExtraPerson: anAttendee).
 	amount := self decreaseCouponAmountFor: amount to: anAttendee.
 	^ amount
-]
-
-{ #category : #accessing }
-ERConference >> payments [
-	^ payments
-]
-
-{ #category : #accessing }
-ERConference >> payments: anObject [
-	payments := anObject
 ]
 
 { #category : #action }

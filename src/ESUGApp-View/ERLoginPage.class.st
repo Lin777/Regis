@@ -1,3 +1,17 @@
+"
+Description
+--------------------
+
+I am a Login Page for esug.
+
+Instance Variables
+--------------------
+
+messageComponent:  <aComponent> ERAlert to show any type of message
+email: 				 instance variable to save value of email field
+password:          instance variable to save value of password field
+
+"
 Class {
 	#name : #ERLoginPage,
 	#superclass : #ERPage,
@@ -9,7 +23,7 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERLoginPage >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
@@ -33,7 +47,7 @@ ERLoginPage >> initialize [
 	id := 'login-conatiner'.
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> loginUser [
 	| userValidate |
 	self controller conference ifNotNil: [
@@ -51,7 +65,7 @@ ERLoginPage >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> registerAsGroupManager [
 	pageController conference conferenceIsOpenRegistration
 		ifTrue: [ 
@@ -62,7 +76,7 @@ ERLoginPage >> registerAsGroupManager [
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> registerUser [
 	pageController conference conferenceIsOpenRegistration
 		ifTrue: [ ERAttendeeRegistrationPage content: self content ]

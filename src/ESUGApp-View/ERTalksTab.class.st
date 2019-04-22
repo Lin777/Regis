@@ -3,6 +3,8 @@ Description
 --------------------
 
 Tab to render all proposal talks of ESUG page in a table.
+
+I can delete talks, export all talks in the database
 "
 Class {
 	#name : #ERTalksTab,

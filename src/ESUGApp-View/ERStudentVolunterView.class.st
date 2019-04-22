@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a view to search attendees by email, firstname or lastname (only its show to student volunter)
+"
 Class {
 	#name : #ERStudentVolunterView,
 	#superclass : #ERTittledView,

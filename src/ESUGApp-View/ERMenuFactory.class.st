@@ -1,5 +1,11 @@
+"
+Description
+--------------------
+
+I am factory class to create options for menu
+"
 Class {
-	#name : #ERMenuPage,
+	#name : #ERMenuFactory,
 	#superclass : #Object,
 	#instVars : [
 		'availableItemsOfMenu'
@@ -8,7 +14,7 @@ Class {
 }
 
 { #category : #accessing }
-ERMenuPage class >> availableItemsOfMenu: aList [
+ERMenuFactory class >> availableItemsOfMenu: aList [
 	|instance|
 	instance := self new.
 	instance availableItemsOfMenu: aList .
@@ -16,12 +22,12 @@ ERMenuPage class >> availableItemsOfMenu: aList [
 ]
 
 { #category : #accessing }
-ERMenuPage >> availableItemsOfMenu: anObject [
+ERMenuFactory >> availableItemsOfMenu: anObject [
 	availableItemsOfMenu := anObject
 ]
 
 { #category : #factory }
-ERMenuPage >> createAdminItem [
+ERMenuFactory >> createAdminItem [
 	^ ERItemNav 
 		label: 'Account' 
 		icon: 'person' 
@@ -29,7 +35,7 @@ ERMenuPage >> createAdminItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createConfigurationItem [
+ERMenuFactory >> createConfigurationItem [
 	^ ERItemNav
 		label: 'Configuration'
 		icon: 'settings'
@@ -37,7 +43,7 @@ ERMenuPage >> createConfigurationItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createGroupManagerItem [
+ERMenuFactory >> createGroupManagerItem [
 	^ ERItemNav 
 		label: 'Group Registration' 
 		icon: 'group' 
@@ -45,7 +51,7 @@ ERMenuPage >> createGroupManagerItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createHomeItem [
+ERMenuFactory >> createHomeItem [
 	^ ERItemNav 
 		label: 'Home' 
 		icon: 'home' 
@@ -53,7 +59,7 @@ ERMenuPage >> createHomeItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createLogoutItem [
+ERMenuFactory >> createLogoutItem [
 	^ ERItemNav 
 		label: 'Logout' 
 		icon: 'backspace' 
@@ -61,14 +67,14 @@ ERMenuPage >> createLogoutItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createMenuWith: aList [
+ERMenuFactory >> createMenuWith: aList [
 	^ ERNav new
 		listOptions: aList;
 		yourself
 ]
 
 { #category : #factory }
-ERMenuPage >> createMyRegistrationItem [
+ERMenuFactory >> createMyRegistrationItem [
 	^ ERItemNav 
 		label: 'My Registration' 
 		icon: 'assignment' 
@@ -76,7 +82,7 @@ ERMenuPage >> createMyRegistrationItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createProposalsItem [
+ERMenuFactory >> createProposalsItem [
 	^ ERItemNav
 		label: 'Proposals'
 		icon: 'note'
@@ -84,7 +90,7 @@ ERMenuPage >> createProposalsItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createStatisticsItem [
+ERMenuFactory >> createStatisticsItem [
 	^ ERItemNav
 		label: 'Statistics'
 		icon: 'show_chart'
@@ -92,7 +98,7 @@ ERMenuPage >> createStatisticsItem [
 ]
 
 { #category : #factory }
-ERMenuPage >> createStudentVolunterSearch [
+ERMenuFactory >> createStudentVolunterSearch [
 	^ ERItemNav 
 		label: 'Search' 
 		icon: 'search' 
@@ -100,7 +106,7 @@ ERMenuPage >> createStudentVolunterSearch [
 ]
 
 { #category : #factory }
-ERMenuPage >> createUsersItem [
+ERMenuFactory >> createUsersItem [
 	^ ERItemNav
 		label: 'Users'
 		icon: 'group'

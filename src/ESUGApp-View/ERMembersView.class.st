@@ -1,11 +1,11 @@
 Class {
-	#name : #ERMembersTab,
+	#name : #ERMembersView,
 	#superclass : #ERGroupRegistrationTab,
-	#category : #'ESUGApp-View-Tab'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #tableBlock }
-ERMembersTab >> blockTableToExecute [
+ERMembersView >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
@@ -16,31 +16,31 @@ ERMembersTab >> blockTableToExecute [
 ]
 
 { #category : #deleting }
-ERMembersTab >> deleteAttendeeFromGroup: anAttendee [
+ERMembersView >> deleteAttendeeFromGroup: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee
 ]
 
 { #category : #accessing }
-ERMembersTab >> headers [
+ERMembersView >> headers [
 	^ #('Name(D)' 'Email' 'Fee' '')
 ]
 
 { #category : #accessing }
-ERMembersTab >> initialize [
+ERMembersView >> initialize [
 	super initialize .
 	callback := nil
 ]
 
 { #category : #initialization }
-ERMembersTab >> initializeModifyUserForm [
+ERMembersView >> initializeModifyUserForm [
 	mofidyUserForm := (ERTittledFormView on: attendee userAccount 
 								withContent: content) title: 'User'.
 	content state: mofidyUserForm
 ]
 
 { #category : #tableBlock }
-ERMembersTab >> listDataToRenderButton [
+ERMembersView >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
@@ -70,14 +70,14 @@ ERMembersTab >> listDataToRenderButton [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderButtonsOn: html [
+ERMembersView >> renderButtonsOn: html [
 	self renderRegisterAttendee: html.
 	self alreadyRegisteredAsAttendee ifFalse:[
 	self renderRegisterMyselfAsAttendee: html]
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderContainerOn: html [
+ERMembersView >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formMembers';
@@ -87,7 +87,7 @@ ERMembersTab >> renderContainerOn: html [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderRegisterAttendee: html [
+ERMembersView >> renderRegisterAttendee: html [
 	html mdlAnchorButton
 		colored;
 		id: 'registerAttendee';
@@ -97,7 +97,7 @@ ERMembersTab >> renderRegisterAttendee: html [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderRegisterMyselfAsAttendee: html [
+ERMembersView >> renderRegisterMyselfAsAttendee: html [
 	html mdlAnchorButton
 		colored;
 		id: 'registerMyselfAsAttendee';
@@ -107,7 +107,7 @@ ERMembersTab >> renderRegisterMyselfAsAttendee: html [
 ]
 
 { #category : #rendering }
-ERMembersTab >> renderTableOfAttendsOn: html [
+ERMembersView >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;
@@ -119,16 +119,16 @@ ERMembersTab >> renderTableOfAttendsOn: html [
 ]
 
 { #category : #accessing }
-ERMembersTab >> tabId [
+ERMembersView >> tabId [
 	^ 'members'
 ]
 
 { #category : #accessing }
-ERMembersTab >> tabName [
+ERMembersView >> tabName [
 	^ 'Members'
 ]
 
-{ #category : #rendering }
-ERMembersTab >> title [
+{ #category : #accessing }
+ERMembersView >> title [
 	^ ''
 ]

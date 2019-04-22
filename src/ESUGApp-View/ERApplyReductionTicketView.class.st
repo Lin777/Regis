@@ -27,7 +27,7 @@ ERApplyReductionTicketView >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #initializing }
 ERApplyReductionTicketView >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'

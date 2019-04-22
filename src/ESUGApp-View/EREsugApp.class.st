@@ -1,3 +1,11 @@
+"
+Description
+--------------------
+
+Root component of ESUG Registration Application.
+ 
+
+"
 Class {
 	#name : #EREsugApp,
 	#superclass : #WAComponent,
@@ -74,8 +82,7 @@ EREsugApp >> initialize [
 EREsugApp >> initializeLoginView [
 	| aFormView |
 	aFormView := ERLoginPage new.
-	aFormView content: self content.
-	^ aFormView
+	aFormView content: self content
 ]
 
 { #category : #rendering }

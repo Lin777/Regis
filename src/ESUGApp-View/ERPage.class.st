@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract page for all pages of login and register
+"
 Class {
 	#name : #ERPage,
 	#superclass : #ERStateContent,
@@ -12,7 +18,7 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERPage >> actionsBody: html [
 ]
 
@@ -21,7 +27,7 @@ ERPage >> classContainer: anObject [
 	classContainer := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPage >> colorIcon [
 	^ 'mdl-color--blue-700' 
 ]
