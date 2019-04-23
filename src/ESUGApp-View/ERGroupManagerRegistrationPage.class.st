@@ -42,6 +42,7 @@ ERGroupManagerRegistrationPage >> saveRegistration [
 	| user |
 	user := pageController saveGroupManager.
 	pageController attendee userAccount: user.
+	"Coment this line in test mode"
 	self sendEmailTo: user.
 	^ user
 ]
