@@ -1,3 +1,12 @@
+"
+Description
+--------------------
+
+Tab of configuration of page.
+
+- I can Open and Close the registration of conference.
+- I can do a manual Backup
+"
 Class {
 	#name : #ERConfiguration,
 	#superclass : #ERConfigurationTab,
@@ -62,7 +71,7 @@ ERConfiguration >> renderSwitchOpenCloseOn: html [
 { #category : #rendering }
 ERConfiguration >> renderTitleForSwitchOn: html [
 	html horizontalRule .
-	html heading level6 with: 'Change the state of the switch opens or closes the conference record'
+	html heading level6 with: 'Change the state of the switch opens or closes the conference registration'
 ]
 
 { #category : #accessing }

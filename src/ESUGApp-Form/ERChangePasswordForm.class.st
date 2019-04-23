@@ -87,7 +87,7 @@ ERChangePasswordForm >> renderButtonsOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderCancelButtonOn: html [
-	html mdlButton
+	html mdlAnchorButton
 		colored;
 		id: 'cancel-change-password';
 		callback:  self cancel ;
