@@ -124,7 +124,6 @@ ERRegisterPage >> renderBody: html with: aBlock [
 
 { #category : #rendering }
 ERRegisterPage >> renderDoneButtonOn: html [
-	
 	html mdlButton
 		beSubmit;
 		raised;
