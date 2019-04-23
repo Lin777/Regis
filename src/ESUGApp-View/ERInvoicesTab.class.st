@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+Tab to render all Invoices of ESUG page in a table.
+"
 Class {
 	#name : #ERInvoicesTab,
 	#superclass : #ERConfigurationTab,
@@ -7,7 +13,7 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERInvoicesTab >> blockTableToExecute [
 	^ [ :anTicket :html | 
 	OrderedCollection new
@@ -33,13 +39,13 @@ ERInvoicesTab >> children [
 		yourself) yourself
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERInvoicesTab >> downloadInvoiceOf: user [
 	
 	self exportInvoiceOf: user
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERInvoicesTab >> exportAllInvoices [
 	| nameZipFile subDir |
 	nameZipFile := 'Invoices'.
@@ -58,21 +64,21 @@ ERInvoicesTab >> headers [
 	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?' '')
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERInvoicesTab >> invoices [
 	^ controller conference invoices 
 		sort: [ :a :b | a paymentInformation invoiceNumber <
 							 b paymentInformation invoiceNumber ]
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERInvoicesTab >> listDataToRenderButton [
 	^ OrderedCollection new 
 		add:
 			(Array
 				with: 'get_app'
-				with: [ :user | self downloadInvoiceOf: user ]
-				with: [ :user | user id , '-export' ]
+				with: [ :invoice | self downloadInvoiceOf: invoice ]
+				with: [ :invoice | invoice id , '-export' ]
 				with: 'Download invoice'
 				with: ''
 				with: false);

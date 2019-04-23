@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Limited Strategy
+"
 Class {
 	#name : #ERLimitedReductionTicketUse,
 	#superclass : #ERLimitStrategy,
@@ -17,7 +23,7 @@ ERLimitedReductionTicketUse >> description [
 	^ 'Used limited to ' , limit asString 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERLimitedReductionTicketUse >> descriptionLimit [
 	<magritteDescription>
 	| tmp |

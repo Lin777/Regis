@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract form for objects that have a descriptors of magritte
+"
 Class {
 	#name : #ERForm,
 	#superclass : #ERConfigurationTab,
@@ -15,7 +21,7 @@ ERForm >> acceptAction [
 		self updateStateTab: self tabName ]]
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERForm >> action [
 	^ [ self acceptAction
 			on: ERException
@@ -96,17 +102,17 @@ ERForm >> renderFormOn: html [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERForm >> save [
 	self subclassResponsibility 
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERForm >> saveForms [
 	self subclassResponsibility 
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERForm >> validateForms [
 	self subclassResponsibility 
 ]

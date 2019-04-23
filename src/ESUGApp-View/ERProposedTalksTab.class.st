@@ -1,10 +1,18 @@
+"
+Description
+--------------------
+
+Tab to render all proposal talks in the database of an especific attendee (attendee of session).
+
+I can edit and delete talks
+"
 Class {
 	#name : #ERProposedTalksTab,
 	#superclass : #ERMyRegistrationTab,
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #adding }
 ERProposedTalksTab >> addTalk [
 	self initializeFormAddTalk.
 	content state: formTalk.
@@ -17,12 +25,12 @@ ERProposedTalksTab >> createTalk: aTalk [
 	self cancel
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERProposedTalksTab >> headers [ 	
 	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERProposedTalksTab >> initializeFormAddTalk [
 	|talk|
 	talk := ERTalk submitter: attendee.
@@ -34,7 +42,7 @@ ERProposedTalksTab >> initializeFormAddTalk [
 							initializeForm
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERProposedTalksTab >> listDataToRenderButton [
 	|list|
 	list := OrderedCollection new.
@@ -60,7 +68,7 @@ ERProposedTalksTab >> listDataToRenderButton [
 		^ list
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERProposedTalksTab >> modifyTalk: aTalk [
 	self initializeFormEditTalk: aTalk.
 	content state: formTalk.

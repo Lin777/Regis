@@ -24,23 +24,6 @@ ERContentTab >> action: anObject [
 ]
 
 { #category : #accessing }
-ERContentTab >> actionBackBlock [
-	^ [self updateStateTab: previousTabName]
-]
-
-{ #category : #rendering }
-ERContentTab >> actionNextBlock [
-	^ [ [ |model|
-		model := (self contentTab save) model.
-		action value: model.
-		self updateStateTab: nextTabName ]
-	on: ERException 
-	do: [:exception | 
-			self updateStateTab: self tabName .
-			messageComponent errorMessage: exception messageText ]]
-]
-
-{ #category : #accessing }
 ERContentTab >> cancelCallback: anObject [
 	cancelCallback := anObject
 ]
@@ -128,7 +111,9 @@ ERContentTab >> renderGoBackToLogin: html [
 ERContentTab >> renderNextButtonOn: html [
 	nextTabName ifNotNil: [
 	html mdlAnchorButton 
-		colored;
+		style: 'float:right';
+		raised;
+		primaryColor;
 		rippleEffect;
 		class: 'btnNext';
 		id: self tabId ,'-nextButton';
@@ -141,7 +126,7 @@ ERContentTab >> renderPreviousContentOn: html [
 		ifTrue: [ html html: previousContentTab ]
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERContentTab >> tabId: aString [
 	tabId := aString.
 	messageComponent  id: self tabId ,'-tabAlert'.

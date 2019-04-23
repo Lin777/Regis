@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERRegisterAsGroupManagerPageTest is a test class for testing the behavior of page when the user is registering as GroupManager
 "
 Class {
@@ -7,7 +10,7 @@ Class {
 	#category : #'ESUGApp-Test-Parasol'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERRegisterAsGroupManagerPageTest >> pushRegisterAsGroupManagerButton [
 	self clickElementWithID: 'register-button-as-group-manager'
 ]
@@ -40,5 +43,5 @@ ERRegisterAsGroupManagerPageTest >> testPressUserNextButtonWithAllFieldsFilledCo
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
 ]

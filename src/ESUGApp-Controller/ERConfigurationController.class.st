@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a controller for configuration of conference, this is only use for admin user.
+"
 Class {
 	#name : #ERConfigurationController,
 	#superclass : #ERLoggedController,
@@ -19,19 +25,19 @@ ERConfigurationController >> addUser: anUser [
 			^ userSaved ]
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConfigurationController >> closeRegistration [
 	self conference closeRegistration.
 	self notifyAllObservers
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERConfigurationController >> convertToStudentVolunterThis: anAttendee [
 	anAttendee convertToStudentVolunter.
 	self notifyAllObservers
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	|att|
 	anUser isAttendee ifFalse: [ ^ self ].
@@ -39,7 +45,7 @@ ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 	conference deleteAttendeeFromGroupAndConference: att
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
 	anUser isGroupManager ifTrue: [ |group|
 		group := conference groupOfUser: anUser.
@@ -47,7 +53,7 @@ ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
 		 ]
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConfigurationController >> deleteGroup: aGroup [
 	|attendees|
 	attendees := aGroup listAttends deepCopy.
@@ -59,7 +65,7 @@ ERConfigurationController >> deleteGroup: aGroup [
 	self notifyAllObservers
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleting }
 ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 	(conference attendeesForATicket: aReductionTicket ticketId) isNotEmpty
 		ifTrue: [ ERException deletionOfTicketNotValid signal ].
@@ -69,13 +75,13 @@ ERConfigurationController >> deleteReductionTicket: aReductionTicket [
 	self notifyAllObservers 
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConfigurationController >> deleteStudentVolunterRoleFrom: anAttendee [
 	anAttendee removeStudentVolunterRole.
 	self notifyAllObservers
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConfigurationController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	anUser isAdmin ifFalse: [ 
@@ -86,20 +92,20 @@ ERConfigurationController >> deleteUser: anUser [
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 ERConfigurationController >> modifyTicket: aTicket [
 	conference reductionTicketAlreadyExist: aTicket.
 	aTicket save.
 	self notifyAllObservers 
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConfigurationController >> openRegistration [
 	conference openRegistration.
 	self notifyAllObservers
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERConfigurationController >> saveConferenceWithConfiguration: configuration emailConfiguration: emailConfig organizer: organizer [
 	self conference configuration:configuration.
 	self conference configuration emailConfiguration: emailConfig .
@@ -108,7 +114,7 @@ ERConfigurationController >> saveConferenceWithConfiguration: configuration emai
 	self notifyAllObservers 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERConfigurationController >> saveFileOn: aFile withStream: stream [
 	aFile
 		ensureDelete;
@@ -117,14 +123,7 @@ ERConfigurationController >> saveFileOn: aFile withStream: stream [
 				nextPutAll: stream contents ]
 ]
 
-{ #category : #rendering }
-ERConfigurationController >> updateAffiliation: aff on: aGroup [
-	aGroup groupManager affiliationInformation: aff.
-	aGroup save.
-	self notifyAllObservers 
-]
-
-{ #category : #adding }
+{ #category : #updating }
 ERConfigurationController >> updateFee: aFee [
 	aFee save.
 	self notifyAllObservers.

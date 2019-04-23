@@ -1,26 +1,35 @@
+"
+Description
+--------------------
+
+Tab to render all attendees of ESUG page in a table.
+"
 Class {
 	#name : #ERAttendeesTab,
 	#superclass : #ERConfigurationTab,
-	#instVars : [
-		'encodeCSVFile',
-		'encodeZipFile'
-	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #initialization }
+ERAttendeesTab >> applyReductionTicketTo: user [
+	self initializeApplyReductionTicketForm: user.
+	content state: formApplyReductionTicket .
+	self updateStateTab: self tabName.
+]
+
+{ #category : #accessing }
 ERAttendeesTab >> attends [
 	^ controller conference attends
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERAttendeesTab >> blockTableToExecute [
 	^ [ :user :html | 
 	OrderedCollection new
 		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: ([ :att | att contactInformation country ] value: user);
+		add: ([ :att | att affiliationInformation organizationCountry ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
@@ -34,70 +43,79 @@ ERAttendeesTab >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee.
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
-ERAttendeesTab >> dictToRenderDownloadButton [
-	^ Dictionary new	yourself
-]
-
-{ #category : #rendering }
+{ #category : #actions }
 ERAttendeesTab >> exportAttends [
 	| file |
 	file := controller conference exportAttends: 'attends'.
 	self exportFile: file wihtName: 'attends.csv'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERAttendeesTab >> headers [
 	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Is Volunter?' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
+ERAttendeesTab >> initializeApplyReductionTicketForm: user [	
+	| tickets |
+	tickets := controller conference reductionTickets collect: #ticketId.
+	tickets addFirst: 'No reduction ticket'.
+	formApplyReductionTicket := (ERApplyReductionTicketView
+		on: user
+		withContent: content) 
+		listOfTickets: tickets; 
+		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
+		cancel: [ self returnToThePreviousState. 
+			self updateStateTab: self tabName.]
+]
+
+{ #category : #tableBlock }
 ERAttendeesTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
 				with: 'edit'
-				with: [ :user | self modifyRegistrationInformation: user ]
-				with: [ :user | user id , '-modify' ]
+				with: [ :att | self modifyRegistrationInformation: att ]
+				with: [ :att | att id , '-modify' ]
 				with: 'Modify'
 				with: ''
 				with: false);
 		add:
 			(Array
 				with: 'delete'
-				with: [ :user | self deleteAttendee: user ]
-				with: [ :user | user id , '-delete' ]
+				with: [ :att | self deleteAttendee: att ]
+				with: [ :att | att id , '-delete' ]
 				with: 'Delete'
 				with: 'return confirm(''Are you sure you want to delete this item?'');'
 				with:  false);
 		add:
 			(Array
 				with: 'person'
-				with: [ :user | self modifyUserFormGroup: user userAccount]
-				with: [ :user | user id , '-modifyUser' ]
+				with: [ :att | self modifyUserFormGroup: att userAccount]
+				with: [ :att | att id , '-modifyUser' ]
 				with: 'Modify User'
 				with: ''
 				with: false);
 		add:
 			(Array
 				with: 'payment'
-				with: [ :user | self applyReductionTicketTo: user ]
-				with: [ :user | user id , '-applyReduction' ]
+				with: [ :att | self applyReductionTicketTo: att ]
+				with: [ :att | att id , '-applyReduction' ]
 				with: 'Apply reduction'
 				with: ''
 				with:  false);
 		add:
 			(Array
 				with: 'send'
-				with: [ :user | self sendInvoiceTo: user]
-				with: [ :user | user id , '-sendInvoice' ]
+				with: [ :att | self sendInvoiceTo: att]
+				with: [ :att | att id , '-sendInvoice' ]
 				with: 'Send invoice'
 				with: ''
 				with: false);
@@ -133,11 +151,11 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: self dictToRenderDownloadButton.
+		dictToRenderDownloadButton: Dictionary new.
 	html render: table
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERAttendeesTab >> sendInvoiceTo: user [
 	[controller sendInvoiceTo: user.
 	self updateStateTab: self tabName.

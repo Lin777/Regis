@@ -1,3 +1,15 @@
+"
+Description
+--------------------
+
+I am an class for send a reseted password of an user.
+
+Instance Variables
+--------------------
+	user: an ERUserAccount to that will be send a mail
+	newPassword: a reseted password
+	conference: a ERConference
+"
 Class {
 	#name : #ERResetPasswordMailSender,
 	#superclass : #ERMailSender,

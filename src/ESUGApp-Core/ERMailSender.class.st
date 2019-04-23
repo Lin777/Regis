@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am an Abstract class for send emails.
+
+Instance Variables
+--------------------
+	controller: an ERController class, is used to find information of ERConferenceEmailConfiguration of active Conference
+"
 Class {
 	#name : #ERMailSender,
 	#superclass : #Object,

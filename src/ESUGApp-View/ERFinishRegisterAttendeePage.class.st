@@ -1,54 +1,55 @@
+"
+Description
+--------------------
+
+I am an Summary Page for register attendee
+"
 Class {
 	#name : #ERFinishRegisterAttendeePage,
 	#superclass : #ERFinishRegisterPage,
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
-ERFinishRegisterAttendeePage >> actionsBody: html [
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> backAction [
-	
-	self returnToThePreviousState
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> cancelAction [
-	self returnToThePreviousState 
-]
-
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> finishRegister [
-	attendee paymentInformation paymentTypeIsBankTransfer
-		ifTrue: [ ^ self registerAndShowFinishViewForBankTransfer ].
-	attendee paymentInformation paymentTypeIsCreditCard
-		ifTrue: [ ^ self registerAndRedirectionPayPAL ].
-	ERException paymentInvalid signal
+{ #category : #actions }
+ERFinishRegisterAttendeePage >> downloadInvoice [
+	self requestContext respond: [ :response |
+		|stream file |
+		file := ERPDFInvoice pdfDocOf: attendee.
+		stream := (RWBinaryOrTextStream on: String new) binary.
+		file exportTo: stream.
+		response
+            contentType: (WAMimeType main: 'application' sub: 'pdf');
+            document: stream close; contents ;
+            attachmentWithFileName: ('invoice-', attendee id asString, '.pdf') ]
+]
+
+{ #category : #actions }
+ERFinishRegisterAttendeePage >> okAction [
+	self redirectLoggedPage: attendee userAccount
+	
 ]
 
 { #category : #rendering }
-ERFinishRegisterAttendeePage >> registerAndRedirectionPayPAL [
-	| url |
-	pageController saveAttendee.
-	url := pageController payPalUrlForGroup: attendee.
-	self requestContext redirectTo: url
-]
-
-{ #category : #rendering }
-ERFinishRegisterAttendeePage >> registerAndShowFinishViewForBankTransfer [
-	| finishRegisterView |
-	finishRegisterView := ERBankTransferPage
-		on: attendee
-		withContent: content
-		withController: pageController.
-	content state: finishRegisterView
+ERFinishRegisterAttendeePage >> renderActions: html [
+	html mdlCardActions
+		class: 'mdl-card--border';
+		with: [ 
+			html mdlAnchorButton
+		colored;
+		id: 'okButton';
+		callback: [ self okAction ];
+		with: 'Ok'.
+		
+		html mdlAnchorButton
+		colored;
+		id: 'next';
+		callback:  [ self downloadInvoice ];
+		with: 'Get Invoice'.]
 ]
 
 { #category : #rendering }
@@ -310,9 +311,5 @@ ERFinishRegisterAttendeePage >> stringForBooleanForASymbol: aSymbol [
 
 { #category : #rendering }
 ERFinishRegisterAttendeePage >> stringOfDays [
-	|result listOfDays|
-	listOfDays := attendee attendance.
-	result := ''.
-	listOfDays keys do: [ :each | (listOfDays at: each) ifTrue: [ result := result , ' ',  each capitalized  ] ].
-	^ result 
+	^ attendee conferenceInformation daysOfAssistance
 ]

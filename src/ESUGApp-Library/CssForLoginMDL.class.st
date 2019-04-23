@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I load a css for login and images for ESUG page
+"
 Class {
 	#name : #CssForLoginMDL,
 	#superclass : #WAFileLibrary,
@@ -113,4 +119,12 @@ CssForLoginMDL >> profilecityJpg [
 { #category : #accessing }
 CssForLoginMDL >> selectorsToInclude [
 	^ Array with: 'profilecityJpg'
+]
+
+{ #category : #updating }
+CssForLoginMDL >> updateRoot: anHtmlRoot [
+	anHtmlRoot javascript
+		url: 'https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'.
+	anHtmlRoot stylesheet 
+		url: (WAUrl absolute:'https://code.getmdl.io/1.3.0/material.blue-red.min.css').
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #actions }
 ERMyRegistrationSummaryTab >> encodedInvoice [
 	attendee idGroup isNotNil
 	ifTrue: [ |group|
@@ -13,14 +13,14 @@ ERMyRegistrationSummaryTab >> encodedInvoice [
 	ifFalse: [ ^ attendee encodedInvoice] 
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERMyRegistrationSummaryTab >> exportInvoice [
 	|invoice|
 	invoice :=self managerOfInvoice.
 	self exportInvoiceOf: invoice.
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERMyRegistrationSummaryTab >> managerOfInvoice [
 	attendee idGroup isNotNil
 	ifTrue: [ |group|
@@ -29,13 +29,13 @@ ERMyRegistrationSummaryTab >> managerOfInvoice [
 	ifFalse: [ ^ attendee ] 
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERMyRegistrationSummaryTab >> modifyRegistration [
 	self modifyRegistrationInformation: attendee.
 	
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERMyRegistrationSummaryTab >> pay [
 	attendee paymentInformation paymentTypeIsBankTransfer
 		ifTrue: [ ^ self redirectViewForBankTransfer ].
@@ -63,7 +63,7 @@ ERMyRegistrationSummaryTab >> redirectViewForBankTransfer [
 	content state: bankTransferView 
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERMyRegistrationSummaryTab >> redirectionPayPAL [
 	| url |
 	url := controller payPalUrlForGroup: attendee.
@@ -140,7 +140,7 @@ ERMyRegistrationSummaryTab >> title [
 	^ 'Registration Summary'
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERMyRegistrationSummaryTab >> updateMyRegistration [
 	self modifyRegistrationInformation: attendee.
 ]

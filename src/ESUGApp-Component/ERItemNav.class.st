@@ -2,7 +2,7 @@
 Description
 --------------------
 
-I am a personalized mdlNavigationLink, I have an icon, a label and callback
+I am a custom mdlNavigationLink, I have an icon, a label and callback
 "
 Class {
 	#name : #ERItemNav,
@@ -15,7 +15,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERItemNav class >> label: aString icon: anIcon callback: aBlock [
 	|instance|
 	instance := self new.

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Conference of Configuracion Model
+"
 Class {
 	#name : #ERConferenceConfigurationModel,
 	#superclass : #Object,
@@ -56,7 +62,7 @@ ERConferenceConfigurationModel >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateFrom [
 	<magritteDescription>
 	| tmp2 |
@@ -76,7 +82,7 @@ ERConferenceConfigurationModel >> descriptionDateFrom [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 	<magritteDescription>
 	| tmp2 |
@@ -95,7 +101,7 @@ ERConferenceConfigurationModel >> descriptionDateSubmissionDeadline [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDateTo [
 	<magritteDescription>
 	| tmp2 |
@@ -114,7 +120,7 @@ ERConferenceConfigurationModel >> descriptionDateTo [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionDescription [
 	<magritteDescription>
 	| tmp |
@@ -129,7 +135,7 @@ ERConferenceConfigurationModel >> descriptionDescription [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 	<magritteDescription>
 	| tmp2 |
@@ -148,7 +154,7 @@ ERConferenceConfigurationModel >> descriptionEarlyRegistrationDeadline [
 	^ tmp2 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionHomePageUrl [
 	<magritteDescription>
 	| tmp |
@@ -163,7 +169,7 @@ ERConferenceConfigurationModel >> descriptionHomePageUrl [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceConfigurationModel >> descriptionName [
 	<magritteDescription>
 	| tmp |
@@ -215,7 +221,7 @@ ERConferenceConfigurationModel >> initialize [
 	self openRegistration: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #message }
 ERConferenceConfigurationModel >> messageInvalidDate [
 	^ 'This field only supports dates with the following format "MM/DD/YYYY"'
 ]
@@ -250,7 +256,7 @@ ERConferenceConfigurationModel >> organizer: anObject [
 	organizer := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing pattern' }
 ERConferenceConfigurationModel >> patternDate [ 
 	^ '^([0]?[1-9]|[1][0-2])[./-]([0]?[0-9]|[12][0-9]|[3][01])[./-]([0-9]{4}|[0-9]{2})$'
 ]

@@ -1,3 +1,17 @@
+"
+Description
+--------------------
+
+I am a Login Page for esug.
+
+Instance Variables
+--------------------
+
+messageComponent:  <aComponent> ERAlert to show any type of message
+email: 				 instance variable to save value of email field
+password:          instance variable to save value of password field
+
+"
 Class {
 	#name : #ERLoginPage,
 	#superclass : #ERPage,
@@ -9,7 +23,7 @@ Class {
 	#category : #'ESUGApp-View-Page'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERLoginPage >> actionsBody: html [
 	^ [
 	html mdlCardActions with: [	
@@ -33,7 +47,7 @@ ERLoginPage >> initialize [
 	id := 'login-conatiner'.
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> loginUser [
 	| userValidate |
 	self controller conference ifNotNil: [
@@ -51,7 +65,7 @@ ERLoginPage >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> registerAsGroupManager [
 	pageController conference conferenceIsOpenRegistration
 		ifTrue: [ 
@@ -62,7 +76,7 @@ ERLoginPage >> registerAsGroupManager [
 		ifFalse: [ messageComponent errorMessage: 'The registration is not open' ]
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERLoginPage >> registerUser [
 	pageController conference conferenceIsOpenRegistration
 		ifTrue: [ ERAttendeeRegistrationPage content: self content ]
@@ -102,7 +116,7 @@ ERLoginPage >> renderForgotPasswordButtonOn: html [
 	html mdlAnchorButton 
 		class: 'mdl-color-text--blue';
 		id: 'forgot-password';
-		callback: [ self call: ERForgotPasswordPage new"self sendEmailWithResetedPassword" ];
+		callback: [ self call: ERForgotPasswordPage new ];
 		with: 'Forgot Password'
 ]
 
@@ -131,20 +145,24 @@ ERLoginPage >> renderPageOn: html [
 		with: [ 
 			self renderMessageComponent: html.
 			self renderFieldsLoginOn:html.
-			self renderLoginButtonOn: html.].
-			self renderRegisterButtonOn: html
+			self renderLoginButtonOn: html.
+			self renderRegisterButtonOn: html].
+			
 ]
 
 { #category : #rendering }
 ERLoginPage >> renderPasswordFieldOn: html [
-	self
-		createPasswordField: 'Password'
-		id: 'password-login'
-		with: [:mdlTxtInput | 
-			mdlTxtInput "required;"
-			callback: [ :value | 
-			self password: (ERUserAccount hashPassword: value) asString ] ]
-		on: html
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'password-login'; with: 'Password'.
+			html mdlTextFieldInput 
+				id: 'password-login'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [ :value | 
+			self password: (ERUserAccount hashPassword: value) asString ].
+		].
 ]
 
 { #category : #rendering }
@@ -158,15 +176,9 @@ ERLoginPage >> renderRegisterAsGroupManagerButtonOn: html [
 
 { #category : #rendering }
 ERLoginPage >> renderRegisterButtonOn: html [
-	html mdlAnchorButton
-		class: 'mdl-button login-button mdl-color-text-colored';
+	html mdlButton
+		class: 'mdl-button mdl-color-text-colored login-button ';
 		id: 'register-button';
 		callback: [ self registerUser ];
 		with: 'Register'
-]
-
-{ #category : #rendering }
-ERLoginPage >> sendEmailWithResetedPassword [
-	"self resetPasswordFor: anEmail"
-	self wait: [ :cc | self confirm: 'Estas seguro de esto' onAnswer: cc ]
 ]

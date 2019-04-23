@@ -1,35 +1,54 @@
+"
+Description
+--------------------
+
+I am a form for change password of an user
+"
 Class {
 	#name : #ERChangePasswordForm,
-	#superclass : #ERContentAdminTab,
+	#superclass : #ERContainerTab,
 	#instVars : [
 		'password',
 		'passwordChanged',
-		'passwordChangedConfirm'
+		'passwordChangedConfirm',
+		'cancel'
 	],
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #rendering }
-ERChangePasswordForm >> cancel [
-	self updateStateTab: self tabName 
+{ #category : #'instance creation' }
+ERChangePasswordForm class >> on: anAttendee withContent: aContent container: aContainer [
+	| form |
+	form := super on: anAttendee withContent: aContent.
+	form initializeController .
+	form container: aContainer.
+	^ form
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
+ERChangePasswordForm >> cancel [
+	^ cancel
+]
+
+{ #category : #accessing }
+ERChangePasswordForm >> cancel: aBlock [
+	cancel := aBlock
+]
+
+{ #category : #action }
 ERChangePasswordForm >> changePassword [
 	[controller validateCurrentPassword: password.
 	controller validatePatternPassword: passwordChanged.
 	controller validateNewPassword: passwordChanged with: passwordChangedConfirm. 
 	controller changePasswordTo: passwordChanged.
 	messageComponent changeToAlertSuccess.
-	messageComponent errorMessage: 'Change password succesfull'
-	]
+	messageComponent errorMessage: 'Change password succesfull'.
+	self cancel value]
 	on: ERException
 	do: [ :exception |
 		messageComponent changeToAlertOfError.
 		messageComponent errorMessage: exception messageText.
-		].
-	
-self updateStateTab: self tabName
+		]
 ]
 
 { #category : #hooks }
@@ -42,7 +61,13 @@ ERChangePasswordForm >> children [
 { #category : #initialization }
 ERChangePasswordForm >> initialize [
 	super initialize.
-	messageComponent id: 'adminChangePasswordAlert'.
+	messageComponent id: 'changePasswordAlert'.
+]
+
+{ #category : #initialization }
+ERChangePasswordForm >> initializeController [
+	controller := ERLoggedController
+		attendee: attendee
 ]
 
 { #category : #rendering }
@@ -62,18 +87,25 @@ ERChangePasswordForm >> renderButtonsOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderCancelButtonOn: html [
-	html mdlButton
+	html mdlAnchorButton
 		colored;
 		id: 'cancel-change-password';
-		callback: [ self cancel ];
+		callback:  self cancel ;
 		with: 'Cancel'
 ]
 
 { #category : #rendering }
 ERChangePasswordForm >> renderConfirmNewPasswordOn: html [
-	self createPasswordField: 'Confirm password: ' id: 'confirmPassword' with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value | passwordChangedConfirm := value ]. 
-		html mdlTextFieldError: ''] on: html.
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'confirmPassword'; with: 'Confirm password: '.
+			html mdlTextFieldInput 
+				id: 'confirmPassword'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [:value | passwordChangedConfirm := value ].
+			html mdlTextFieldError: ''].
 ]
 
 { #category : #rendering }
@@ -84,9 +116,15 @@ ERChangePasswordForm >> renderContainerOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderCurrentPasswordOn: html [
-	self createPasswordField: 'Current Password: ' id: 'currentPassword' 
-	with: [:mdlTxtInput | mdlTxtInput callback: [:value | password := value ] ] on: html.
-	
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'currentPassword'; with:'Current Password: '.
+			html mdlTextFieldInput 
+				id: 'currentPassword'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [:value | password := value ]].
 ]
 
 { #category : #rendering }
@@ -100,7 +138,7 @@ ERChangePasswordForm >> renderFields: html [
 ERChangePasswordForm >> renderFormOn: html [
 	html form
 		method: 'post';
-		id: 'groupManagerFunctions';
+		id: 'changePasswordForm';
 		with: [ 
 			html render: messageComponent.
 			self renderFields: html.
@@ -110,12 +148,16 @@ ERChangePasswordForm >> renderFormOn: html [
 
 { #category : #rendering }
 ERChangePasswordForm >> renderNewPasswordOn: html [
-	self createPasswordField: 'Password: ' id: 'password' 
-	with: [ :mdlTxtInput | 
-		mdlTxtInput callback: [:value |  passwordChanged := value ].
-		html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'. ]
-	   on: html .
-	
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [
+			html mdlTextFieldLabel for: 'password'; with: 'Password: '.
+			html mdlTextFieldInput 
+				id: 'password'; 
+				type: 'password';
+				pattern: '[A-Za-z0-9._-]{8,}';
+				callback: [:value |  passwordChanged := value ].
+			html mdlTextFieldError: 'Must contain: numbers, letters, ''.'' and/or ''_'', and at least 8 and more characters'].
 ]
 
 { #category : #accessing }

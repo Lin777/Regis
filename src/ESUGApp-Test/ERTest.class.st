@@ -29,7 +29,7 @@ ERTest class >> testAdditionalInformation [
 
 { #category : #tests }
 ERTest class >> testAffiliationInformation [
-	^ ERAffiliationInformation new
+	^ ERBillingInformation new
 		organizationName: 'testOrgName';
 		organizationAddrees1: 'testAddress1';
 		organizationAddrees2: 'testAddress2';
@@ -207,102 +207,8 @@ ERTest >> defaultStore [
 	^ SDMemoryStore new
 ]
 
-{ #category : #running }
-ERTest >> deleteBackupFolderIfExist [
-	self deleteFolder: 'Backup'
-]
-
-{ #category : #running }
-ERTest >> deleteDownloadFolderIfExist [
-	|path|
-	path := ('Download' asFileReference ).
-	path exists ifTrue:
-		 [ path deleteAll ] 
-]
-
-{ #category : #running }
-ERTest >> deleteFolder: aString [
-	|path|
-	path := (Smalltalk imageDirectory / aString).
-	path exists ifTrue:
-		 [ path deleteAll ] .
-]
-
-{ #category : #rendering }
-ERTest >> groupOfUser: anUser [
-	^ ERController new conference groupOfUser: anUser.
-]
-
-{ #category : #rendering }
-ERTest >> registerAsGroupManager [
-	^ (ERRegistrationController
-		attendee: self class testGroupManager) saveGroupManager
-]
-
-{ #category : #rendering }
-ERTest >> registerAsGroupManager: email [
-	^ (ERRegistrationController
-		attendee: (self class testGroupManager: email)) saveGroupManager
-]
-
-{ #category : #rendering }
-ERTest >> registerAttendee [
-	^ (ERRegistrationController attendee:
-			 self class testAttendee) saveAttendee 
-]
-
-{ #category : #rendering }
-ERTest >> registerAttendee: anAttendee [
-	^ (ERRegistrationController attendee: anAttendee)
-		saveAttendee
-]
-
-{ #category : #rendering }
-ERTest >> registerAttendees: aList [
-	aList do: [ :email | self registerAttendee: (self class testAttendee: email) ]
-]
-
-{ #category : #rendering }
-ERTest >> registerGroup [
-	|user group aController|
-	user := self registerAsGroupManager .
-	group := self groupOfUser: user.
-	aController := ERGroupManagerController new group: group.
-	aController addAttendee: (self class testAttendee: 'test1@gmail.com').
-	aController addAttendee: (self class testAttendee: 'test2@gmail.com').
-	aController addAttendee: (self class testAttendee: 'test3@gmail.com').
-	^ group
-]
-
-{ #category : #rendering }
-ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
-	|user group aController|
-	user := self registerAsGroupManager: aString.
-	group := self groupOfUser: user.
-	aController := ERGroupManagerController new group: group.
-	aList do: [ :each | aController addAttendee: (self class testAttendee: each) ].
-	^ group
-]
-
-{ #category : #tests }
-ERTest >> setUp [
-	store := self defaultStore.
-	SDActiveRecord setStore: store.
-	ERUserAccount warmUp.
-	ERAttendee warmUp.
-	ERAward warmUp.
-	ERReductionTicket warmUp.
-	ERFee warmUp.
-	ERGroup warmUp.
-	ERTalk warmUp.
-	ERConference warmUp.
-	ERSandstoneDatabase initialize.
-	ESUGSetUp start.
-	controller := ERController new.
-]
-
-{ #category : #running }
-ERTest >> tearDown [
+{ #category : #modifying }
+ERTest >> deleteAll [ 	
 	ERAttendee
 		do: [ :each | 
 			[ each delete ]
@@ -351,13 +257,112 @@ ERTest >> tearDown [
 				on: Error
 				do: [  ] ].
 	ERConference coolDown.
+]
+
+{ #category : #running }
+ERTest >> deleteBackupFolderIfExist [
+	self deleteFolder: 'Backup'
+]
+
+{ #category : #running }
+ERTest >> deleteDownloadFolderIfExist [
+	|path|
+	path := ('Download' asFileReference ).
+	path exists ifTrue:
+		 [ path deleteAll ] 
+]
+
+{ #category : #running }
+ERTest >> deleteFolder: aString [
+	|path|
+	path := (Smalltalk imageDirectory / aString).
+	path exists ifTrue:
+		 [ path deleteAll ] .
+]
+
+{ #category : #accesing }
+ERTest >> groupOfUser: anUser [
+	^ ERController new conference groupOfUser: anUser.
+]
+
+{ #category : #'test registration' }
+ERTest >> registerAsGroupManager [
+	^ (ERRegistrationController
+		attendee: self class testGroupManager) saveGroupManager
+]
+
+{ #category : #'test registration' }
+ERTest >> registerAsGroupManager: email [
+	^ (ERRegistrationController
+		attendee: (self class testGroupManager: email)) saveGroupManager
+]
+
+{ #category : #'test registration' }
+ERTest >> registerAttendee [
+	^ (ERRegistrationController attendee:
+			 self class testAttendee) saveAttendee 
+]
+
+{ #category : #'test registration' }
+ERTest >> registerAttendee: anAttendee [
+	^ (ERRegistrationController attendee: anAttendee)
+		saveAttendee
+]
+
+{ #category : #'test registration' }
+ERTest >> registerAttendees: aList [
+	aList do: [ :email | self registerAttendee: (self class testAttendee: email) ]
+]
+
+{ #category : #'test registration' }
+ERTest >> registerGroup [
+	|user group aController|
+	user := self registerAsGroupManager .
+	group := self groupOfUser: user.
+	aController := ERGroupManagerController new group: group.
+	aController addAttendee: (self class testAttendee: 'test1@gmail.com').
+	aController addAttendee: (self class testAttendee: 'test2@gmail.com').
+	aController addAttendee: (self class testAttendee: 'test3@gmail.com').
+	^ group
+]
+
+{ #category : #'test registration' }
+ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
+	|user group aController|
+	user := self registerAsGroupManager: aString.
+	group := self groupOfUser: user.
+	aController := ERGroupManagerController new group: group.
+	aList do: [ :each | aController addAttendee: (self class testAttendee: each) ].
+	^ group
+]
+
+{ #category : #tests }
+ERTest >> setUp [
+	store := self defaultStore.
+	SDActiveRecord setStore: store.
+	ERUserAccount warmUp.
+	ERAttendee warmUp.
+	ERAward warmUp.
+	ERReductionTicket warmUp.
+	ERFee warmUp.
+	ERGroup warmUp.
+	ERTalk warmUp.
+	ERConference warmUp.
+	ERSandstoneDatabase initialize.
+	ESUGSetUp start.
+	controller := ERController new.
+]
+
+{ #category : #running }
+ERTest >> tearDown [
+	self deleteAll.
 	ESUGSetUp stop.
 	"Delete folder backup"
 	self deleteBackupFolderIfExist.
 	Smalltalk garbageCollectMost
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accesing }
 ERTest >> validCoupon [
 	^ controller conference reductionTickets first 
 ]

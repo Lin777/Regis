@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tabs'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #accessing }
@@ -23,24 +23,24 @@ ERGroupRegistrationView >> initialize [
 	tabs := OrderedCollection new.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERGroupRegistrationView >> initializeTabForms [
-	tabs add: (ERGroupRegistrationSummaryTab 
+	tabs add: (ERGroupRegistrationSummaryView 
 					on: attendee 
 					withContent: content
 					container: self);
-	add: (ERMembersTab 
+	add: (ERMembersView 
 					on: attendee 
 					withContent: content 
 					container: self).
 	(tabs at: 1) activate
 ]
 
-{ #category : #adding }
+{ #category : #rendering }
 ERGroupRegistrationView >> renderContentPageOn: html [
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: (ERTabs new tabs: tabs) ]
+		with: [ tabs do: [ :each | html render: each ] ]
 ]
 
 { #category : #accessing }

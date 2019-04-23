@@ -1,14 +1,30 @@
+"
+Description
+--------------------
+
+I am a Admin View, I can update my user account and password
+
+Instance Variables
+--------------------
+
+	modifiedUser:			<aComponent> form to update UserAccount.
+	messageComponent:		<aComponent>	ERAlert to show messages of page.
+	changePasswordForm:	<aComponent> form ro update password.
+	controller: 				<aController> controller of this view
+	contentBlock: 			aBlock to change the content of view
+
+"
 Class {
 	#name : #ERAdminView,
 	#superclass : #ERContainer,
 	#instVars : [
 		'controller',
-		'callbackYes',
-		'callbackNo',
-		'tabs',
-		'tabsComponent'
+		'modifiedUser',
+		'messageComponent',
+		'contentBlock',
+		'changePasswordForm'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -18,39 +34,61 @@ ERAdminView class >> on: anAttendee withContent: aContent withController: aContr
 	form attendee: anAttendee.
 	form content: aContent.
 	form controller: aController.
-	form initializeTabForms .
+	form initializeFormUser .
+	form contentBlock: form blockEditUser .
+	form initializeChangePassword.
 	^ form
 ]
 
-{ #category : #initialization }
-ERAdminView >> addTabsForAdmin [
-	controller := ERConfigurationController new.
-	self renderBackupTab.
-	self renderOpenCloseRegistration.
-]
-
-{ #category : #initialization }
-ERAdminView >> backup [
-	[ ERBackupRestore uniqueInstance backup] 
-		on: ERException 
-		do: [ :exc | exc  ]
-]
-
-{ #category : #actions }
-ERAdminView >> cancel: aTab [
-	aTab updateStateTab: aTab tabName 
+{ #category : #adding }
+ERAdminView >> acceptUser [
+	[ controller updateUser: (modifiedUser save) model.
+	messageComponent changeToAlertSuccess .
+	messageComponent errorMessage: 'Successful user update']
+		on: ERException
+		do: [ :exception | 
+			messageComponent changeToAlertOfError .
+			messageComponent errorMessage: exception messageText].
+	
 ]
 
 { #category : #adding }
-ERAdminView >> children [ 
-	^ Array with: tabsComponent
+ERAdminView >> blockChangePassword [
+	^ [:html | 
+		html render: changePasswordForm ] 
 ]
 
-{ #category : #initialization }
-ERAdminView >> closeRegistration [
-	controller closeRegistration
-	
-	
+{ #category : #adding }
+ERAdminView >> blockEditUser [ 
+	^ [:html | html heading level3 with: 'Edit profile'.
+			html horizontalRule .
+			html form
+				method: 'post';
+				id: 'formUpdateProfile';
+				with: [
+					html render: messageComponent.
+					html render: modifiedUser.
+					self renderAnchorToChangePasswordOn: html.
+					html horizontalRule.
+					self renderButtonsOn: html
+				]
+		]
+]
+
+{ #category : #adding }
+ERAdminView >> cancel [
+	attendee abortChanges.
+	self initializeFormUser 
+]
+
+{ #category : #adding }
+ERAdminView >> contentBlock [ 
+	^ contentBlock
+]
+
+{ #category : #adding }
+ERAdminView >> contentBlock: anObject [
+	contentBlock := anObject
 ]
 
 { #category : #accessing }
@@ -61,75 +99,63 @@ ERAdminView >> controller: anObject [
 { #category : #initialization }
 ERAdminView >> initialize [
 	super initialize.
-	tabs := OrderedCollection new.
+	messageComponent := ERAlert warningAlert id: 'adminAlert'.
 ]
 
-{ #category : #initialization }
-ERAdminView >> initializeTabForms [
-   tabs add: (ERAdminUserTab on: attendee withContent: content container: self).
-   tabs add: (ERChangePasswordForm on: attendee withContent: content container: self).
-	self attendee isAdmin ifTrue: [ self addTabsForAdmin ].
-	(tabs at: 1) activate.
-	
+{ #category : #adding }
+ERAdminView >> initializeChangePassword [
+		changePasswordForm := (ERChangePasswordForm 
+										on: attendee 
+										withContent: content 
+										container: self) 
+										cancel: [ contentBlock := self blockEditUser  ].
 ]
 
-{ #category : #initialization }
-ERAdminView >> openRegistration [
-	controller openRegistration
+{ #category : #adding }
+ERAdminView >> initializeFormUser [
+	modifiedUser := attendee asComponent 
+	addDecoration: MAValidationDecoration new;
+	 yourself
 ]
 
-{ #category : #initialization }
-ERAdminView >> renderBackupTab [
-	tabs add:
-			((ERYesNoTab on: attendee withContent: content container: self)
-				tabId: 'tabBackup';
-				tabName: 'Backup';
-				titleTrue: self titleBackup ;
-				callbackTrue: callbackYes;
-				callbackNo: callbackNo).
+{ #category : #adding }
+ERAdminView >> renderAcceptButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'accept-user';
+		callback: [ self acceptUser ];
+		with: 'Accept'
+]
+
+{ #category : #adding }
+ERAdminView >> renderAnchorToChangePasswordOn: html [
+	html paragraph with: [ 
+		html text: 'Do you want '.
+		html anchor 
+			id: 'changePassword';
+			callback: [ contentBlock := self blockChangePassword ]; 
+			with: 'change your password?' ]
+]
+
+{ #category : #adding }
+ERAdminView >> renderButtonsOn: html [
+	self renderCancelButtonOn: html.
+	self renderAcceptButtonOn: html.
+]
+
+{ #category : #adding }
+ERAdminView >> renderCancelButtonOn: html [
+	html mdlButton
+		colored;
+		id: 'cancel-user';
+		callback: [ self cancel ];
+		with: 'Cancel'.
 ]
 
 { #category : #adding }
 ERAdminView >> renderContentPageOn: html [
-	tabsComponent := (ERTabs new tabs: tabs).
 	html div
 		class: 'mdl-tabs mdl-js-tabs mdl-js-ripple-effect';
-		with: [ html render: tabsComponent ]
-]
-
-{ #category : #initialization }
-ERAdminView >> renderOpenCloseRegistration [
-	tabs add:((ERYesNoTab on: attendee withContent: content container: self)
-				tabId: 'tabOpenClose';
-				tabName: 'Open / Close registration';
-				stateBlock: [ controller conference conferenceIsOpenRegistration ];
-				titleTrue: 'Registration is opened. Are you sure you want close it?';
-				titleFalse:  'Registration is closed. Are you sure you want open it?';
-				callbackTrue: [ :aTab | self closeRegistration. self cancel: aTab ];
-				callbackFalse: [ :aTab | self openRegistration. self cancel: aTab ];
-				callbackNo: [ :aTab | self cancel: aTab ])
-]
-
-{ #category : #accessing }
-ERAdminView >> tabs [
-	^ tabs
-]
-
-{ #category : #initialization }
-ERAdminView >> titleBackup [
-	callbackYes := [ :aTab | self backup. self cancel: aTab ].
-	callbackNo := [ :aTab | self cancel: aTab ].
-	^ 'Are you sure want to do a backup?'
-]
-
-{ #category : #initialization }
-ERAdminView >> titleOpenClose [
-	
-	callbackNo := [ :aTab | self cancel: aTab ].
-	controller conference conferenceIsOpenRegistration
-		ifTrue:
-			[ callbackYes := [ :aTab | self closeRegistration. self cancel: aTab ].
-			 ^ 'Registration is opened. Are you sure you want close it?' ]
-		ifFalse: [ callbackYes := [ :aTab | self openRegistration. self cancel: aTab ].
-			 ^ 'Registration is closed. Are you sure you want open it?' ]
+		with: [ contentBlock cull: html]
+		
 ]

@@ -1,3 +1,6 @@
+"
+I am a model of Group
+"
 Class {
 	#name : #ERGroup,
 	#superclass : #ERRegisteredObject,
@@ -13,7 +16,7 @@ ERGroup class >> groupManager: aGroupManager [
 	^ self new groupManager: aGroupManager ; yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #adding }
 ERGroup >> addAttendee: anAttendee [
 	listAttends add: anAttendee
 ]
@@ -95,14 +98,14 @@ ERGroup >> totalAmount [
 	ifEmpty: [ ^ 0 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERGroup >> updateHasPaidOfAll [
 	self listAttends do: [ :each | each paymentInformation hasPaid: 
 												self paymentInformation hasPaid.
 											  each save. ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERGroup >> updatePaymentForAttendees [
 	self listAttends do: [ :att | 
 		att paymentInformation paymentType: self paymentInformation paymentType .
@@ -110,7 +113,7 @@ ERGroup >> updatePaymentForAttendees [
 		att save ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERGroup >> updatePaymentRateWith: aBlock [
 	| amount |
 	amount := self totalAmount.

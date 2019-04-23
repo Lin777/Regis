@@ -1,10 +1,13 @@
+"
+I am a model of User Account for register, I have all necessary fields to create a new user, except role, this model has a default role
+"
 Class {
 	#name : #ERUserAccountForRegister,
 	#superclass : #ERUserAccount,
 	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForRegister >> descriptionConfirmPassword [
 	<magritteDescription>
 	| tmp |
@@ -20,7 +23,7 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForRegister >> descriptionPassword [
 	<magritteDescription>
 	| tmp |

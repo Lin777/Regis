@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an Observer class 
+"
 Class {
 	#name : #ERObserver,
 	#superclass : #Object,

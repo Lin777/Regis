@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Conference Organizers
+"
 Class {
 	#name : #ERConferenceOrganizer,
 	#superclass : #Object,
@@ -20,7 +26,7 @@ ERConferenceOrganizer >> addressString: anObject [
 	addressString := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceOrganizer >> descriptionAddressString [
 	<magritteDescription>
 	| tmp |
@@ -36,7 +42,7 @@ ERConferenceOrganizer >> descriptionAddressString [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceOrganizer >> descriptionFiscalSituation [
 	<magritteDescription>
 	| tmp |
@@ -51,7 +57,7 @@ ERConferenceOrganizer >> descriptionFiscalSituation [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceOrganizer >> descriptionName [
 	<magritteDescription>
 	| tmp |
@@ -66,7 +72,7 @@ ERConferenceOrganizer >> descriptionName [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERConferenceOrganizer >> descriptionWebPageUrl [
 	<magritteDescription>
 	| tmp |

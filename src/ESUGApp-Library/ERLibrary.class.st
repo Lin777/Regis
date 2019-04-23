@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a library for load Css files and JS files to ESUG page
+"
 Class {
 	#name : #ERLibrary,
 	#superclass : #WAFileLibrary,
@@ -9,7 +15,7 @@ ERLibrary class >> applicationName [
 	^ 'ESUG'
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> alertCss [
 	^ '
 	.errors {
@@ -35,7 +41,7 @@ ERLibrary >> alertCss [
   '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #css }
 ERLibrary >> disabledCss [
 	^ 'a[disabled="disabled"] {
         pointer-events: none;
@@ -46,17 +52,17 @@ ERLibrary >> disabledCss [
       }'
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> esugCss [
 	^ self alertCss, self disabledCss 
 ]
 
-{ #category : #updating }
+{ #category : #js }
 ERLibrary >> esugJs [
 	^ self validationRegisterJs", self onChangeTab"
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> generalCss [
 	^ '#all {
 	margin: 0px;
@@ -148,7 +154,7 @@ html, body {
 '
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> loginCss [
 	^ '
 #login-conatiner{
@@ -208,24 +214,7 @@ ERLibrary >> loginCss [
 '
 ]
 
-{ #category : #'as yet unclassified' }
-ERLibrary >> onChangeTab [
-	^ '$().ready(function() {
-	
-			$(".mdl-tabs__tab > span").unbind().click(function(event){
-			
-			debugger;
-			alert("fds");
-				if ((!$("#registerForm").valid())) {
-            		event.preventDefault();
-                return false;
-            }
-event.preventDefault();
-//e.stopImmediatePropagation();
-});});'
-]
-
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> registerCss [
 	^ '
 	.mdl-checkbox {height: auto;}
@@ -269,7 +258,7 @@ ERLibrary >> registerCss [
 	line-height: 56px;
 }
 
-#login-button {
+#login-button, #register-button {
   width: 100%;
   height: 40px;
   min-width: initial;
@@ -295,15 +284,16 @@ ERLibrary >> selectorsToInclude [
 	^ OrderedCollection new 
 	add: 'registerCss';
 	add: 'tabsCss';
-	add: 'loginCss';
 	add: 'generalCss';
 	add: 'esugCss';
 	add: 'esugJs';
 	add: 'validationInputsJs';
+	add: 'validationUpdateProfileJs';
+	add: 'loginCss';
 	yourself
 ]
 
-{ #category : #updating }
+{ #category : #css }
 ERLibrary >> tabsCss [
 	^ '/*Vertical Tabs*/
 .mdl-tabs__panel {
@@ -361,28 +351,24 @@ ERLibrary >> tabsCss [
 '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #js }
 ERLibrary >> validationInputsJs [
-	^ '
-		$(window).bind("load", function(){
-		var newPassword = document.getElementById("password");
-	var confNewPassword = document.getElementById("confirmPassword");
-	
-	function validatePassword(){
-		if(newPassword.value != confNewPassword.value){
-			confNewPassword.setCustomValidity("Passwords Dont Match");
-		} else { 
-			confNewPassword.setCustomValidity("");
-		}
-	}
-	
-	newPassword.onchange = validatePassword;
-	confNewPassword.onkeyup = validatePassword;
+	^ '$().ready(function() {
+	$("#changePasswordForm").validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+    });
+	$("#password").rules("add", {required:true, minlength: 8});
+   $("#confirmPassword").rules("add", {required:true, equalTo: "#password"});
 	});
 	'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #js }
 ERLibrary >> validationRegisterJs [
 	^ '$().ready(function() {
     $("#registerForm").validate({
@@ -394,47 +380,50 @@ ERLibrary >> validationRegisterJs [
         }
     });
         
-    $("#firstName").rules("add", {required:true});
-    $("#lastName").rules("add", {required:true});
-    $("#email").rules("add", {required:true, email: true});
-    $("#passwordRegister").rules("add", {required:true, minlength: 8});
-    $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#passwordRegister"});
-
-    $("#facebookURL").rules("add", {url: true});
-    $("#twitterURL").rules("add", {url: true});
-    $("#homePageURL").rules("add", {url: true});
-
-    $("#organizationName").rules("add", {required:true});
-    $("#organizationAddrees1").rules("add", {required:true});
-    $("#organizationCity").rules("add", {required:true});
-    $("#organizationPostal").rules("add", {required:true});
-
-    $("#paymentType").rules("add", {required:true});
-    $("#paymentCurrency").rules("add", {required:true});
+    $(".btnNext").on("click", function () {
+        $("#firstName").rules("add", {required:true});
+        $("#lastName").rules("add", {required:true});
+        $("#email").rules("add", {required:true, email: true});
+        $("#passwordRegister").rules("add", {required:true, minlength: 8});
+        $("#confirmPasswordRegister").rules("add", {required:true, equalTo: "#passwordRegister"});
     
-    $(".btnNext").click(function(e){
-        e.stopPropagation();
+        $("#facebookURL").rules("add", {url: true});
+        $("#twitterURL").rules("add", {url: true});
+        $("#homePageURL").rules("add", {url: true});
+    
+        $("#organizationName").rules("add", {required:true});
+        $("#organizationAddrees1").rules("add", {required:true});
+        $("#organizationCity").rules("add", {required:true});
+        $("#organizationPostal").rules("add", {required:true});
+        $("#organizationCountry").rules("add", {required:true});
+    
+        $("#paymentType").rules("add", {required:true});
+        $("#paymentCurrency").rules("add", {required:true});
         if ((!$("#registerForm").valid())) {
-            //alert("non valid");
             return false;
         }
         var $active = $(".mdl-tabs__tab-bar > .is-active");
 		$active.next("a").removeAttr("disabled");
-        //alert("remove disabled");
         $active.next("a").find("span").trigger("click");
-        //alert("finish click");
     });
 
     $(".btnPrevious").click(function(){
           $(".mdl-tabs__tab-bar > .is-active").prev("a").find("span").trigger("click");
     });
-     
-    //$("#registerForm").find(".mdl-tabs__tab").find("span").on("click", function(e){
-    /*$("span.mdl-js-ripple-effect").on("click", function(e){
-			alert("click");
-			if ((!$("#registerForm").valid())) {
-                return false;
-            }
-     });*/
 });'
+]
+
+{ #category : #js }
+ERLibrary >> validationUpdateProfileJs [
+	^ '$().ready(function() {
+	$("#formUpdateProfile").validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+    });
+	});
+	'
 ]

@@ -1,10 +1,13 @@
+"
+I am a model of User Account for register, I have all necessary fields to create a new user
+"
 Class {
 	#name : #ERUserAccountForAdminRegister,
 	#superclass : #ERUserAccountForRegister,
 	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccountForAdminRegister >> descriptionRole [
 	<magritteDescription>
 	| tmp1 |

@@ -1,3 +1,9 @@
+"
+Description
+--------------------s
+
+A ERTestConfigurationController is a test class for testing the behavior of Configuration Controller
+"
 Class {
 	#name : #ERTestConfigurationController,
 	#superclass : #ERTest,

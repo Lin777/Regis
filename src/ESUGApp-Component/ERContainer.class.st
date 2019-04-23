@@ -1,25 +1,23 @@
+"
+Description
+--------------------
+
+I am a card component used to show the content of page
+
+
+"
 Class {
 	#name : #ERContainer,
 	#superclass : #ERStateContent,
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERContainer class >> attendee: anAttendee [
 	| instance |
 	instance := self new.
 	instance attendee: anAttendee.
 	^ instance
-]
-
-{ #category : #accessing }
-ERContainer >> attendee [
-	^ attendee
-]
-
-{ #category : #accessing }
-ERContainer >> attendee: anObject [
-	attendee := anObject
 ]
 
 { #category : #rendering }

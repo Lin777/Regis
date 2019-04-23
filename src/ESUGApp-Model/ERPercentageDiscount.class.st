@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of percentage discount
+"
 Class {
 	#name : #ERPercentageDiscount,
 	#superclass : #ERDiscountStrategy,
@@ -19,7 +25,7 @@ ERPercentageDiscount >> description [
 	^ 'Discount of ' , percentage asString , ' %'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPercentageDiscount >> descriptionPercentage [
 	<magritteDescription>
 	| tmp |

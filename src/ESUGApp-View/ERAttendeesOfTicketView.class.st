@@ -5,7 +5,7 @@ Class {
 		'ticket',
 		'tableComponent'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -17,7 +17,7 @@ ERAttendeesOfTicketView class >> on: anAttendee withContent: aContent [
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERAttendeesOfTicketView >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
@@ -57,7 +57,7 @@ ERAttendeesOfTicketView >> listOfAttendees [
 	^ controller conference attendeesForATicket: ticket ticketId
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERAttendeesOfTicketView >> renderButtonsOn: html [
 	html mdlAnchorButton
         colored;
@@ -66,7 +66,7 @@ ERAttendeesOfTicketView >> renderButtonsOn: html [
         with: 'Back'
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERAttendeesOfTicketView >> renderPageOn: html [
 	|list|
 	list := self listOfAttendees.
@@ -76,7 +76,7 @@ ERAttendeesOfTicketView >> renderPageOn: html [
 	self renderButtonsOn: html
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERAttendeesOfTicketView >> renderTableOfAttendsWith: aList on: html [
 	tableComponent := ERTable new
 		headers: self headers;

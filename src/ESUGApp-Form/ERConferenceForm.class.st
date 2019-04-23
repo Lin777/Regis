@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a form for edit options of conference.
+"
 Class {
 	#name : #ERConferenceForm,
 	#superclass : #ERForm,
@@ -13,7 +19,7 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
-{ #category : #rendering }
+{ #category : #actions }
 ERConferenceForm >> cancelForm [
 	controller conference abortChanges .
 	self initializeForms .
@@ -30,13 +36,13 @@ ERConferenceForm >> children [
 		yourself) yourself
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERConferenceForm >> initialize [
 	super initialize.
 	self initializeForms.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERConferenceForm >> initializeForms [
 	configurationForm := self createFormOf: controller conference configuration .
 	emailConfigurationForm := self createFormOf: controller conference configuration emailConfiguration .
@@ -90,14 +96,14 @@ ERConferenceForm >> renderFormOrganizerOn: html [
 	html render: organizerForm 
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERConferenceForm >> save [ 
 	controller saveConferenceWithConfiguration: configurationForm model 
 				 emailConfiguration: emailConfigurationForm model 
 					organizer: organizerForm model.
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERConferenceForm >> saveForms [
 	"Save all forms of conferece"
 	configurationForm save.
@@ -121,7 +127,7 @@ ERConferenceForm >> title [
 	^ 'Conference Configuration'
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERConferenceForm >> validateForms [
 	"Validate forms"
 	controller validateConferenceConfiguration: configurationForm model.

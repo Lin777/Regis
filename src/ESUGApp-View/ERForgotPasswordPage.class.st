@@ -1,3 +1,15 @@
+"
+Description
+--------------------
+
+I am an Page to sent reseted password (Forgot Password Page)
+
+Instance Variables
+--------------------
+
+messageComponent:  <aComponent> ERAlert to show any type of message
+email: 				 instance variable to save value of email field to sent email
+"
 Class {
 	#name : #ERForgotPasswordPage,
 	#superclass : #ERPage,
@@ -7,10 +19,6 @@ Class {
 	],
 	#category : #'ESUGApp-View-Page'
 }
-
-{ #category : #'as yet unclassified' }
-ERForgotPasswordPage >> actionsBody: html [
-]
 
 { #category : #rendering }
 ERForgotPasswordPage >> email: aString [

@@ -1,16 +1,20 @@
+"
+Description
+--------------------
+
+Tab to render all users of ESUG page in a table.
+"
 Class {
 	#name : #ERUsersTab,
 	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'formUser',
-		'newUser',
-		'fileId',
-		'encodeCSVFile'
+		'newUser'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #rendering }
+{ #category : #adding }
 ERUsersTab >> addUser [
 	self initializeFormAddUser.
 	content state: formUser.
@@ -18,7 +22,7 @@ ERUsersTab >> addUser [
 	
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERUsersTab >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
@@ -28,7 +32,7 @@ ERUsersTab >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #creating }
 ERUsersTab >> createUser: anUser [
 	controller conference validateIfEmailIsAlreadyRegistered: anUser. 
 	controller validateNewPassword: anUser password with: anUser confirmPassword.
@@ -40,7 +44,7 @@ ERUsersTab >> createUser: anUser [
 	self cancel
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERUsersTab >> deleteUser: user [
 	[controller deleteUser: user]
 	on: ERException 
@@ -48,27 +52,19 @@ ERUsersTab >> deleteUser: user [
 	self updateStateTab: self tabName
 ]
 
-{ #category : #rendering }
+{ #category : #actions }
 ERUsersTab >> exportUsers [
 	| file |
 	file := controller conference exportUsers: 'users'.
 	self exportFile: file wihtName: 'users.csv'
 ]
 
-{ #category : #rendering }
-ERUsersTab >> fileIdUsers [
-	fileId isNil
-		ifTrue: [ fileId := 0 ].
-	fileId := fileId + 1.
-	^ fileId
-]
-
-{ #category : #rendering }
+{ #category : #accessing }
 ERUsersTab >> headers [
 	^ #('Name' 'Admin Role' 'Email' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERUsersTab >> initializeFormAddUser [
 	newUser := ERUserAccountForAdminRegister new.
 	formUser := (ERTittledFormView 
@@ -79,7 +75,7 @@ ERUsersTab >> initializeFormAddUser [
 							initializeForm
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERUsersTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
@@ -145,10 +141,6 @@ ERUsersTab >> renderTableOfUsersOn: html [
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
 	html render: table
-]
-
-{ #category : #rendering }
-ERUsersTab >> resetPassword: user [
 ]
 
 { #category : #accessing }

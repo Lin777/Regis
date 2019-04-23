@@ -1,3 +1,24 @@
+"
+Description
+--------------------
+
+I am a model of Conference
+
+Instance Variables
+--------------------
+
+attends:                <OrderedCollection> list of ERAttendees registered in conference
+fee: 						  <ERFee> a fee of conference
+reductionTickets:       <OrderedCollection> list of tickets to conference
+submittedTalks:         <OrderedCollection> list of submitted talks to conference
+submittedAwards:        <OrderedCollection> list of submitted awards to conference
+groups:                 <OrderedCollection> list of groups to conference
+users:                  <OrderedCollection> list of users to conference
+configuration:
+active:                 <Boolean> is the state of conference (active for register in conference)
+invoiceNumber:          <Number> is an incremental number of invoices of conference
+configurationOfHomePage:
+"
 Class {
 	#name : #ERConference,
 	#superclass : #SDActiveRecord,
@@ -28,7 +49,7 @@ ERConference >> active: anObject [
 	active := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 ERConference >> addAttendee: anAttendee [
 	| anAttendeeSaved userSaved |
 	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
@@ -40,7 +61,7 @@ ERConference >> addAttendee: anAttendee [
 	^ anAttendeeSaved
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 ERConference >> addGroup: aGroup [
 	groups add: aGroup 
 ]
@@ -50,7 +71,7 @@ ERConference >> addPayPalComissionOn: amount [
 	^ ((fee payPalCommissionPercentage)/100) * amount + (fee staticCommissionPaypal)
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
 ERConference >> addReductionTicket: aReductionTicket [
 	self reductionTicketAlreadyExist: aReductionTicket.
 	aReductionTicket save.
@@ -58,33 +79,33 @@ ERConference >> addReductionTicket: aReductionTicket [
 	self save.
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
 ERConference >> addSubmittedAward: aSubmittedAward [
 	aSubmittedAward submittionDate: Date today.
 	submittedAwards add: aSubmittedAward save.
 	self save.
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
 ERConference >> addSubmittedTalk: aSubmittedTalk [
 	aSubmittedTalk submittionDate: Date today.
 	submittedTalks add: aSubmittedTalk save.
 	self save.
 ]
 
-{ #category : #accessing }
+{ #category : #adding }
 ERConference >> addUser: anUser [
 	users add: anUser 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #search }
 ERConference >> attendeeFromUser: anUser [
 	^ attends detect: [ :each | 
 					each userAccount = anUser ]
 				 ifNone: [ ERException notFoundAttendeeFromUser signal ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #search }
 ERConference >> attendeesForATicket: ticketId [
 	^ self attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
@@ -99,13 +120,13 @@ ERConference >> attends: anObject [
 	attends := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConference >> closeRegistration [
 	self configuration openRegistration: false.
 	self save.
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConference >> conferenceIsOpenRegistration [
 	^ self configuration openRegistration
 ]
@@ -130,13 +151,13 @@ ERConference >> configurationOfHomePage: anObject [
 	configurationOfHomePage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 ERConference >> costPerExtraPerson: anAttendee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
 	ifTrue: [ ^ fee extraPersonSD asNumber]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> decreaseCouponAmountFor: amount to: anAttendee [
 	anAttendee hasCoupon
 		ifTrue: [ | coupon |
@@ -145,12 +166,12 @@ ERConference >> decreaseCouponAmountFor: amount to: anAttendee [
 	^ amount
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConference >> deleteAttendee: anAttendee [
 	self attends removeAllSuchThat: [ :each | anAttendee id = each id ].
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
 	anAttendee idGroup isNotNil ifTrue: [ 
 		|group|
@@ -161,26 +182,26 @@ ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
 	self save
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConference >> deleteAward: anAward [
 	self submittedAwards removeAllSuchThat: [ :each | anAward id = each id ].
 	self save.
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConference >> deleteTalk: aTalk [
 	self submittedTalks removeAllSuchThat: [ :each | aTalk id = each id ].
 	self save.
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERConference >> deleteUser: anUser [
 	self users removeAllSuchThat: [ :each | anUser id = each id ].
 	self save.
 	anUser delete
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> dictionaryForLunch [
 	|dic|
 	dic := OrderedDictionary new.
@@ -189,7 +210,7 @@ ERConference >> dictionaryForLunch [
 	^ dic
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> dictionaryOfFoodPreference [
 	^ Dictionary new 	
 		at: 'Vegan' put: 0;
@@ -198,7 +219,7 @@ ERConference >> dictionaryOfFoodPreference [
 		yourself 
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> dictionaryOfShirts [
 	|dict|
 	dict := OrderedDictionary new.
@@ -208,12 +229,12 @@ ERConference >> dictionaryOfShirts [
 	^ dict
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConference >> existReductionTicketWithName: aString [
 	^ reductionTickets anySatisfy: [ :each | each ticketId = aString  ]
 ]
 
-{ #category : #rendering }
+{ #category : #exporting }
 ERConference >> exportAttends: fileName [
 	| cvs |
 	cvs := String
@@ -235,7 +256,7 @@ ERConference >> exportAttends: fileName [
 	^ cvs
 ]
 
-{ #category : #rendering }
+{ #category : #exporting }
 ERConference >> exportAwards: fileName [
 	|  cvs |
 	cvs := String
@@ -254,7 +275,7 @@ ERConference >> exportAwards: fileName [
 	^ cvs
 ]
 
-{ #category : #rendering }
+{ #category : #exporting }
 ERConference >> exportGroupManagers: fileName [
 	|  cvs |
 	cvs := String
@@ -280,7 +301,7 @@ ERConference >> exportGroupManagers: fileName [
 	^ cvs
 ]
 
-{ #category : #rendering }
+{ #category : #exporting }
 ERConference >> exportTalks: fileName [
 	| cvs |
 	cvs := String
@@ -298,7 +319,7 @@ ERConference >> exportTalks: fileName [
 	^ cvs
 ]
 
-{ #category : #rendering }
+{ #category : #exporting }
 ERConference >> exportUsers: fileName [
 	| cvs |
 	cvs := String
@@ -330,7 +351,7 @@ ERConference >> fee: anObject [
 	fee := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #filtering }
 ERConference >> filterAttendsBy: aSymbol beginsWith: aString [
 	^ self attends select: 
 		[ :att | (att userAccount perform: aSymbol) asLowercase 
@@ -338,27 +359,27 @@ ERConference >> filterAttendsBy: aSymbol beginsWith: aString [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #filtering }
 ERConference >> filterAttendsByEmailWith: aString [
 	^ self filterAttendsBy: #email beginsWith: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #filtering }
 ERConference >> filterAttendsByFirstNameWith: aString [
 	^ self filterAttendsBy: #firstName beginsWith: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #filtering }
 ERConference >> filterAttendsByLastNameWith: aString [
 	^ self filterAttendsBy: #lastName beginsWith: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #search }
 ERConference >> findUserByEmail: aString [
 	^ users detect: [ :each | each email = aString ] ifNone: nil.
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> flat: dictionary with: aString [
 	|list|
 	list := OrderedCollection new.
@@ -369,7 +390,7 @@ ERConference >> flat: dictionary with: aString [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 ERConference >> getGroupOfAttendee: aAttendee [
 	^ aAttendee idGroup 
 	ifNotNil: [ self groups 
@@ -377,7 +398,7 @@ ERConference >> getGroupOfAttendee: aAttendee [
 		ifNone: [ nil ] ].
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 ERConference >> groupOfUser: aGroupManager [
 	^ self groups
 		detect: [ :each | each groupManager userAccount = aGroupManager ].
@@ -393,48 +414,48 @@ ERConference >> groups: anObject [
 	groups := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headerAttendee [
 	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headerGroups [
 	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
 	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headerTalks [
 	^ #('Name' 'Submitted By' 'Uploaded File')
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headerUser [
 	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headersParticipantsToLunches [
-	^ #('Day' 'Normal' 'Vegetarian' 'Vegan')	
+	^ #('Day' 'Normal' 'Vegetarian' 'Vegan' 'Total')	
 ]
 
-{ #category : #rendering }
-ERConference >> headersParticipantsToSocialDinner [
-	^ #( 'Normal' 'Vegetarian' 'Vegan')	
+{ #category : #header }
+ERConference >> headersParticipantsToSocialDinner [ 
+	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> headersShirtsStatistics [
-	^ #('Size of the shirt' 'Female' 'Male')
+	^ #('Size of the shirt' 'Female' 'Male' 'Total')
 ]
 
-{ #category : #rendering }
+{ #category : #header }
 ERConference >> hearderAwards [
 	^ #('Name' 'Submitted by')
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConference >> incrementInvoiceNumber [
 	^ invoiceNumber := self invoiceNumber +1
 ]
@@ -444,7 +465,6 @@ ERConference >> initialize [
 	super initialize.
 	attends := OrderedCollection new.
 	groups := OrderedCollection new.
-	payments := OrderedCollection new.
 	reductionTickets := OrderedCollection new.
 	submittedAwards := OrderedCollection new.
 	submittedTalks := OrderedCollection new.
@@ -459,26 +479,26 @@ ERConference >> invoiceNumber [
 	 ^ invoiceNumber
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERConference >> invoices [
 	^ (self groups), 
 	(self attends 
 		select: [ :each | each idGroup isNil ])
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 ERConference >> isEarlyRegistrationOf: anAttendee [
 	^ self configuration earlyRegistrationDeadline 
 		asDate > anAttendee createdOn asDate
 ]
 
-{ #category : #initialization }
+{ #category : #action }
 ERConference >> openRegistration [
 	self configuration openRegistration: true.
 	self save.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
 	| conferenceFee url |
 	conferenceFee := self paymentAmountFor: anAttendeeOrGroupManager.
@@ -495,7 +515,7 @@ ERConference >> payPalUrlFor: anAttendeeOrGroupManager [
 	^ url
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> paymentAmountFor: anAttendee [
 	|  amount |
 	amount := (self priceAccordingToAttendanceDaysOf: anAttendee).
@@ -504,17 +524,7 @@ ERConference >> paymentAmountFor: anAttendee [
 	^ amount
 ]
 
-{ #category : #accessing }
-ERConference >> payments [
-	^ payments
-]
-
-{ #category : #accessing }
-ERConference >> payments: anObject [
-	payments := anObject
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> priceAccordingToAttendanceDaysOf: anAttendee [
 	|daysOfAssistance |
 	daysOfAssistance := anAttendee daysOfAssistance.
@@ -524,21 +534,21 @@ ERConference >> priceAccordingToAttendanceDaysOf: anAttendee [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> priceForAllDaysOf: anAttendee [
 	(self isEarlyRegistrationOf: anAttendee)
 		ifTrue: [ ^ fee erfAllDaysFee ].
 		^ fee lrfAllDaysFee
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> priceForNDays: aNumber of: anAttendee [
 	(self isEarlyRegistrationOf: anAttendee) 
 		ifTrue: [ ^ fee erfOneDayFee * aNumber ].
 		^ fee lrfOneDayFee * aNumber 
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 ERConference >> reductionTicketAlreadyExist: aReductionTicket [
 	self reductionTickets
 		do: [ :each | 
@@ -547,7 +557,7 @@ ERConference >> reductionTicketAlreadyExist: aReductionTicket [
 						ERException ticketWithIdAlreadyExist signal ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #search }
 ERConference >> reductionTicketWithName: aString [
 	[ ^ self reductionTickets detect: [ :each | 
 			each ticketId = aString] ]
@@ -566,38 +576,43 @@ ERConference >> reductionTickets: anObject [
 	reductionTickets := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERConference >> senderEmailAddress [
 	^ self configuration emailConfiguration senderEmailAddress
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> statisticsOfLuch [
 	|dict|
 	dict := self dictionaryForLunch.
 	self attends do: [ :att |
 		dict := att conferenceInformation addMyPreferenceForLuchTo: dict ].
 	dict := self flat: dict with: 'Day'. 
-	^ dict
+	dict := self sumEachRowOf: dict.
+	dict := self sumEachColumnOf: dict withHeader: self headersParticipantsToLunches .
+	^ dict 
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> statisticsOfSocialDinner [
 	|dict|
 	dict := self dictionaryOfFoodPreference.
 	self attends do: [ :att |
 		dict := att conferenceInformation addMyPreferenceForSocialDinnerTo: dict ].
 	dict := OrderedCollection with: dict.
+	dict := self sumEachRowOf: dict.
 	^ dict
 ]
 
-{ #category : #accessing }
+{ #category : #configurationStatistics }
 ERConference >> statisticsOfTShirts [
 	|dict|
 	dict := self dictionaryOfShirts.
 	self attends do: [ :att |
 		dict := att conferenceInformation addMytShirtTo: dict ].
 	dict := self flat: dict with: 'Size of the shirt'.
+	dict := self sumEachRowOf: dict.
+	dict := self sumEachColumnOf: dict withHeader: self headersShirtsStatistics.
 	^ dict
 ]
 
@@ -611,7 +626,7 @@ ERConference >> submittedAwards: anObject [
 	submittedAwards := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #search }
 ERConference >> submittedAwardsFor: anAttendee [
 	^ self submittedAwards select: [ :each | each submitter = anAttendee ]
 ]
@@ -626,9 +641,27 @@ ERConference >> submittedTalks: anObject [
 	submittedTalks := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #search }
 ERConference >> submittedTalksFor: anAttendee [
 	^ self submittedTalks select: [ :each | each submitter = anAttendee ]
+]
+
+{ #category : #configurationStatistics }
+ERConference >> sumEachColumnOf: aList withHeader: header [
+	|dict|
+	dict := Dictionary new.
+	dict at: header first put: 'Total'.
+	header do: [ :aString | aString = header first 
+		ifFalse: [ dict at: aString put: (aList collect: [ :each | each at: aString ])sum ] ].
+	aList add: dict.
+	^ aList
+]
+
+{ #category : #configurationStatistics }
+ERConference >> sumEachRowOf: aList [
+	aList do: [ :li | li at: 'Total' put: 
+		(li select: [ :each | each isString not ]) sum  ].
+	^ aList
 ]
 
 { #category : #accessing }
@@ -641,7 +674,7 @@ ERConference >> users: anObject [
 	users := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #validations }
 ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
 	self users
 		do: [ :each | 
@@ -650,7 +683,7 @@ ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
 					ERException emailAlreadyRegistered signal ] ]].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
 	reductionTickets 
 		do: [ :each | 
@@ -659,14 +692,14 @@ ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
 					ERException ticketIdAlreadyRegistered signal ] ]].
 ]
 
-{ #category : #accessing }
+{ #category : #validations }
 ERConference >> validateLoginFor: aString1 password: aString2 [
 	^ users detect: [:each | each email = aString1 and: [each password = aString2]] 
 			ifNone: [ nil ]
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERConference >> verifyIfTicketCanApply: ticket [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 

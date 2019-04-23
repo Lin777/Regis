@@ -1,16 +1,16 @@
 Class {
-	#name : #ERGroupRegistrationSummaryTab,
+	#name : #ERGroupRegistrationSummaryView,
 	#superclass : #ERGroupRegistrationTab,
-	#category : #'ESUGApp-View-Tab'
+	#category : #'ESUGApp-View-View'
 }
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> exportInvoice [
+{ #category : #actions }
+ERGroupRegistrationSummaryView >> exportInvoice [
 	self exportInvoiceOf: self group.
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
+{ #category : #initialization }
+ERGroupRegistrationSummaryView >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
 								callback: [:aff | self updateAffiliation: aff on: self group];
@@ -19,8 +19,8 @@ ERGroupRegistrationSummaryTab >> initializeModifyAffiliationForm [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> initializePaymentForm [
+{ #category : #initialization }
+ERGroupRegistrationSummaryView >> initializePaymentForm [
 	^ ( ERPaymentGroupManagerView on: self group
 		withContent: content) 
 	updatePayment: [ :aGroup | self payForGroup: aGroup ];
@@ -31,31 +31,20 @@ ERGroupRegistrationSummaryTab >> initializePaymentForm [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> modifyAffiliation [
+ERGroupRegistrationSummaryView >> modifyAffiliation [
 	self initializeModifyAffiliationForm .
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> pay [
+{ #category : #actions }
+ERGroupRegistrationSummaryView >> pay [
 	|formUpdatePayment|
 	formUpdatePayment := self initializePaymentForm.
 	content state: formUpdatePayment.
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> payForGroup [
-	|group|
-	group := self group.
-	controller updateGroup: group.
-	group paymentInformation  paymentTypeIsBankTransfer
-		ifTrue: [ ^ self redirectViewForBankTransfer ].
-	group paymentInformation paymentTypeIsCreditCard
-		ifTrue: [ ^ self redirectionPayPAL ]
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> payForGroup: aGroup [
+{ #category : #actions }
+ERGroupRegistrationSummaryView >> payForGroup: aGroup [
 	aGroup save.
 	controller updateGroup: aGroup.
 	aGroup paymentInformation  paymentTypeIsBankTransfer
@@ -65,7 +54,7 @@ ERGroupRegistrationSummaryTab >> payForGroup: aGroup [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> paymentStatus [
+ERGroupRegistrationSummaryView >> paymentStatus [
 	| listAttends |
 	listAttends := self attends.
 	listAttends isEmpty
@@ -74,13 +63,13 @@ ERGroupRegistrationSummaryTab >> paymentStatus [
 	( self group paymentInformation hasPaid )
 	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ ^ 'Payment no registered yet. Amount due: '
-			, (self group paymentAmount) asString , ' ', 
+			, (self group paymentAmount ) asString , ' ', 
 			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]].
 		
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> redirectViewForBankTransfer [
+ERGroupRegistrationSummaryView >> redirectViewForBankTransfer [
 	| bankTransferView |
 	bankTransferView := ERBankTransferPaymentInfoView
 		on: self group
@@ -89,21 +78,21 @@ ERGroupRegistrationSummaryTab >> redirectViewForBankTransfer [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> redirectionPayPAL [
+ERGroupRegistrationSummaryView >> redirectionPayPAL [
 	| url |
 	url := controller payPalUrlForGroup: self group.
 	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> redirectionPayPAL: aGroup [
+ERGroupRegistrationSummaryView >> redirectionPayPAL: aGroup [
 	| url |
 	url := controller payPalUrlForGroup: aGroup.
 	self requestContext redirectTo: url
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderContainerOn: html [
+ERGroupRegistrationSummaryView >> renderContainerOn: html [
 	html horizontalRule.
 	self renderOrganizationNameOn: html.
 	self renderPaymentStatus: html.
@@ -111,7 +100,7 @@ ERGroupRegistrationSummaryTab >> renderContainerOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
+ERGroupRegistrationSummaryView >> renderDownloadInvoiceButtonOn: html [
 	html mdlAnchorButton
 		raised; rippleEffect;
 		id: 'exportInvoice';
@@ -120,14 +109,17 @@ ERGroupRegistrationSummaryTab >> renderDownloadInvoiceButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderFormButtonsOn: html [
+ERGroupRegistrationSummaryView >> renderFormButtonsOn: html [
+	
+	self renderRegisterAttendeeButtonOn: html.
+	self renderRegisterMyselfButtonOn: html.
 	self renderModifyAffiliationButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderDownloadInvoiceButtonOn: html.
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
+ERGroupRegistrationSummaryView >> renderModifyAffiliationButtonOn: html [
 	html mdlAnchorButton 
 		raised;
 		rippleEffect;
@@ -137,14 +129,14 @@ ERGroupRegistrationSummaryTab >> renderModifyAffiliationButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderOrganizationNameOn: html [
+ERGroupRegistrationSummaryView >> renderOrganizationNameOn: html [
 	html
 		paragraph: [ html strong: 'Organization Name: '.
 			html text: (self groupManager affiliationInformation organizationName) ]
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
+ERGroupRegistrationSummaryView >> renderPayButtonOn: html [
 	html mdlAnchorButton 
 		raised;
 		rippleEffect;
@@ -155,29 +147,52 @@ ERGroupRegistrationSummaryTab >> renderPayButtonOn: html [
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryTab >> renderPaymentStatus: html [
+ERGroupRegistrationSummaryView >> renderPaymentStatus: html [
 	html
 		paragraph: [ html strong: 'Payment Status: '.
 			html text: self paymentStatus ]
 ]
 
+{ #category : #rendering }
+ERGroupRegistrationSummaryView >> renderRegisterAttendeeButtonOn: html [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerAttendee';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
+		callback: [ self registerAttendee ];
+		with: 'Register Attendee'
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryView >> renderRegisterMyselfButtonOn: html [
+	attendee isAttendee ifFalse: [
+	html mdlAnchorButton 
+		raised;
+		rippleEffect;
+		id: 'registerMyselfAsAttendee';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
+		callback: [ self registerMyselfAsAttendee ];
+		with: 'Register Myself as Attendee']
+]
+
 { #category : #accessing }
-ERGroupRegistrationSummaryTab >> tabId [
+ERGroupRegistrationSummaryView >> tabId [
 	^ 'summary'
 ]
 
 { #category : #accessing }
-ERGroupRegistrationSummaryTab >> tabName [
+ERGroupRegistrationSummaryView >> tabName [
 	^ 'Summary'
 ]
 
 { #category : #accessing }
-ERGroupRegistrationSummaryTab >> title [
-	^ 'Group Manager Short Description'
+ERGroupRegistrationSummaryView >> title [
+	^ 'Group Registration'
 ]
 
-{ #category : #rendering }
-ERGroupRegistrationSummaryTab >> updateAffiliation: aff [
-	controller updateAffiliation: aff.
+{ #category : #updating }
+ERGroupRegistrationSummaryView >> updateBillingInfo: aff [
+	controller updateBillingInfo: aff.
 	self cancel.
 ]

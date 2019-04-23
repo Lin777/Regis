@@ -2,7 +2,7 @@
 Description
 --------------------
 
-I am aa abstract tab object, I know my tab Id and my tabName (necessary for render tab), I have a state active or inactive.
+I am an abstract tab object, I know my tab Id and my tabName (necessary for render tab), I have a state active or inactive.
 
 All my subclasses should be implement the ""renderContentOn: html "" method
 "
@@ -21,14 +21,9 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> activate [
 	active := true.
-]
-
-{ #category : #activation }
-ERTab >> attendee: anObject [
-	attendee := anObject
 ]
 
 { #category : #activation }
@@ -41,7 +36,7 @@ ERTab >> container: aContainer [
 	container := aContainer
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> deactivate [
 	active := false.
 ]
@@ -64,7 +59,7 @@ ERTab >> initialize [
 	messageComponent := ERAlert warningAlert id: 'tabAlert'.
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> isActive [
 	^ active.
 ]
@@ -74,27 +69,27 @@ ERTab >> renderContentOn: html [
 	self subclassResponsibility 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabId [
 	^ tabId 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabId: anObject [
 	tabId := anObject
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabName [
 	^ tabName 
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
 ERTab >> tabName: anObject [
 	tabName := anObject
 ]
 
-{ #category : #activation }
+{ #category : #action }
 ERTab >> updateStateTab: aString [
 	container tabs detect: [ :tab | (tab tabName = aString) ]
 	ifFound: [ :tab | tab activate.

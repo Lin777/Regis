@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+Tab to render all Reduction tickets of ESUG page in a table.
+"
 Class {
 	#name : #ERReductionTicketsTab,
 	#superclass : #ERConfigurationTab,
@@ -15,14 +21,14 @@ ERReductionTicketsTab >> actionModifyTicket: aReductionTicket [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #adding }
 ERReductionTicketsTab >> addTicket [
 	self initializeFormAddTicket.
 	content state: formAddTicket.
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #adding }
 ERReductionTicketsTab >> addTicketToConference [
 	controller addReductionTicketToConference: ticket.
 	self returnToThePreviousState.
@@ -30,7 +36,7 @@ ERReductionTicketsTab >> addTicketToConference [
 
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERReductionTicketsTab >> blockTableToExecute [
 	^ [ :anTicket | 
 	OrderedCollection new
@@ -62,14 +68,14 @@ ERReductionTicketsTab >> headers [
 	^ #('Id'	'Discount Strategy'	'Use Limit Strategy'	'Used Times' '')
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERReductionTicketsTab >> initializeFormAddTicket [
 	ticket := ERReductionTicket new.
 	formAddTicket := (ERReductionTicketForm on: ticket withContent: content).
 	formAddTicket callback: [ self addTicketToConference ].
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 ERReductionTicketsTab >> initializeFormModifyTicket: aReductionTicket [
 	formAddTicket := ERReductionTicketForm
 		on: aReductionTicket
@@ -77,7 +83,7 @@ ERReductionTicketsTab >> initializeFormModifyTicket: aReductionTicket [
 	formAddTicket callback: [ self actionModifyTicket: aReductionTicket  ]
 ]
 
-{ #category : #rendering }
+{ #category : #tableBlock }
 ERReductionTicketsTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
@@ -121,7 +127,7 @@ ERReductionTicketsTab >> listOfTicket: anTicket [
 	self updateStateTab: self tabName.
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 	self initializeFormModifyTicket: aReductionTicket.
 	content state: formAddTicket.
@@ -161,7 +167,7 @@ ERReductionTicketsTab >> tabName [
 	^ 'Tickets'
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 ERReductionTicketsTab >> tickets [
 	^ controller conference reductionTickets
 ]

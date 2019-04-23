@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a class that control the generation of backup of page.
+
+Instance Variables
+--------------------
+	version: a Number with that each backup will be saved
+"
 Class {
 	#name : #ERBackupRestore,
 	#superclass : #Object,
@@ -15,7 +25,7 @@ ERBackupRestore class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'actions api' }
 ERBackupRestore >> backup [ 	
 	[[self lock critical: [ 
 		self backupDirectory .
@@ -26,30 +36,30 @@ ERBackupRestore >> backup [
 		^ ('' join: {self fileNamePrefix.'.'.self version}) 
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> backupDirectory [
 	^ (FileSystem workingDirectory asFileReference / self nameDirectory)
 		 ensureCreateDirectory
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> backupFilenames [
 
 	^ self backupDirectory files select: [ :fileName |
 		(fileName path basename) beginsWith: self fileNamePrefix ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> fileNamePrefix [
 	^ 'esug'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERBackupRestore >> incrementVersionNumber [
 	^ version := self version + 1
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> lastBackup [
 	|lastBackup|
 	lastBackup := self lastBackupFilename .
@@ -58,7 +68,7 @@ ERBackupRestore >> lastBackup [
 	^ SDFuelSerializer new materializeFromFile: ('' join: {self nameDirectory .'/'.lastBackup path basename })
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> lastBackupFilename [
 	^ self backupFilenames detectMax: [ :fileName | 
 		self versionOf: (fileName path basename)]
@@ -69,29 +79,35 @@ ERBackupRestore >> lock [
 	^ Semaphore forMutualExclusion 
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ERBackupRestore >> nameDirectory [
 	^ 'Backup'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERBackupRestore >> objectsToBackup [
-	^ OrderedCollection new 
+	^ OrderedCollection new
 		add: ERFee findAll;
 		add: ERUserAccount findAll;
 		add: ERReductionTicket findAll;
 		add: ERAttendee findAll;
-		add: ERAward findAll ;
+		add: ERAward findAll;
 		add: ERGroup findAll;
 		add: ERTalk findAll;
 		add: ERConference findAll;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'actions api' }
 ERBackupRestore >> restoreBackup [
+	self updateVersionToLastVersionOfBackup.
 	self lastBackup ifNotNil: [ :backup | backup do: 
 		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> updateVersionToLastVersionOfBackup [
+	self version: ( self versionOf: self lastBackupFilename path basename)
 ]
 
 { #category : #accessing }
@@ -100,7 +116,12 @@ ERBackupRestore >> version [
 	 ^ version
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+ERBackupRestore >> version: aNumber [
+	version := aNumber
+]
+
+{ #category : #accessing }
 ERBackupRestore >> versionOf: fileName [
 	^ (fileName substrings: '.' ) last asInteger 
 ]

@@ -1,3 +1,16 @@
+"
+Description
+-----------------------------------
+
+I am a model of ERPDFInvoice, I generate a pdf document of invoive of an attendee.
+
+Example
+-----------------------------------
+
+ERPDFInvoice pdfDocOf: groupOrAttendee.
+
+this script generate a invoice file of an attendee
+"
 Class {
 	#name : #ERPDFInvoice,
 	#superclass : #Object,
@@ -120,7 +133,7 @@ ERPDFInvoice >> addHeader: aPage [
 	self addDateInvoice: aPage.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ERPDFInvoice >> addInfoESUG: aPage [
 	| fontHeader |
 	fontHeader := PDFTimesFont size: 10pt.
@@ -302,17 +315,17 @@ ERPDFInvoice >> addTablePayment: pdfPage of: user [
 		text: 'and it is not subjected to VAT, "TVA non applicable - article 293 B du CGI".').
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorBorder [
 	^ PDFColor r: 255 g: 255 b: 255
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorLink [
 	^ PDFColor r: 230 g: 0 b: 115
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #colors }
 ERPDFInvoice >> colorTitle [
 	^ PDFColor r: 0 g: 0 b: 128
 ]
@@ -327,22 +340,22 @@ ERPDFInvoice >> dateToday [
 	^ Date today monthName asString, ' ', Date today dayOfMonth asString, ', ', Date today year asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontBoldContent [
 	^ (self fontContent) bold: true.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontContent [
 	^ PDFTimesFont size: 13pt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #fonts }
 ERPDFInvoice >> fontFooter [
 	^ PDFTimesFont size: 10 pt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ERPDFInvoice >> lineElementFrom: aPoint1 to: aPoint2 [
 	^ (PDFLineElement
 		from: aPoint1
@@ -356,7 +369,7 @@ ERPDFInvoice >> paymentStatus: user [
 		^ 'Unpaid'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #templates }
 ERPDFInvoice >> templateRegistrationInvoice: aStream of: user [
 	| pharoLogo pdfDoc pdfPage |
 	controller := ERController new .

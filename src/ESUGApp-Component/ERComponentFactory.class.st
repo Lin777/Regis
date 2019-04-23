@@ -31,7 +31,7 @@ ERComponentFactory >> attendee: anObject [
 	attendee := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent [
 	
 	^ ERContentTab new 
@@ -39,33 +39,17 @@ ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent 
 			 tabId: 'additionalInfoForm'; 
 			 tabName: 'Additional';
 			 container: aContent;
-			previousTabName: 'Affiliation';
+			previousTabName: 'Billing Information';
 			nextTabName: 'Payment'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createAdditionalInformationComponent: anAttendee [
 	
 	^ self createFormOf: anAttendee additionalInformation
 ]
 
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createAffiliationInfoTab: anAttendee withContent: aContent [
-	^ ERContentTab new 
-		contentTab: (self createAffiliationInformationComponentOn: anAttendee);
-			 tabId: 'affiliationInfoForm'; 
-			 tabName: 'Affiliation';
-			 container: aContent;
-			nextTabName: 'Additional';
-			previousTabName: 'Conference'
-]
-
-{ #category : #'as yet unclassified' }
-ERComponentFactory >> createAffiliationInformationComponentOn: anAttendee [
-	^ self createFormOf: anAttendee affiliationInformation
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createBasicInformationComponent: anAttendee);
@@ -75,13 +59,29 @@ ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 			nextTabName: 'Contact'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createBasicInformationComponent: anAttendee [
 	^ self createFormOf: ((anAttendee userAccount) 
 	as: ERUserAccountForRegister)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
+ERComponentFactory >> createBillingInfoTab: anAttendee withContent: aContent [
+	^ ERContentTab new 
+		contentTab: (self createBillingInformationComponentOn: anAttendee);
+			 tabId: 'affiliationInfoForm'; 
+			 tabName: 'Billing Information';
+			 container: aContent;
+			nextTabName: 'Additional';
+			previousTabName: 'Conference'
+]
+
+{ #category : #factoryFormMethods }
+ERComponentFactory >> createBillingInformationComponentOn: anAttendee [
+	^ self createFormOf: anAttendee affiliationInformation
+]
+
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createContactInformationComponent: anAttendee);
@@ -92,32 +92,19 @@ ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
 			nextTabName: 'Conference'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createContactInformationComponent: anAttendee [
 	^ self createFormOf: anAttendee contactInformation
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createFormOf: anObject [
 	^ anObject asComponent 
 	addDecoration: MAValidationDecoration new;
 	 yourself.
 ]
 
-{ #category : #building }
-ERComponentFactory >> createPasswordField: aName id: aId with: aBlock on: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [
-			| mdlTxtInput |
-			html mdlTextFieldLabel for: aId; with: aName.
-			mdlTxtInput := html mdlTextFieldInput id: aId; type: 'password';
-			pattern: '[A-Za-z0-9._-]{8,}'.
-			aBlock ifNotNil: [ aBlock cull: mdlTxtInput ].
-		].
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 			contentTab: (self createPaymentInformationComponent: anAttendee );
@@ -131,23 +118,23 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 			previousTabName: 'Additional'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createPaymentInformationComponent: anAttendee [
 	^ self createFormOf: anAttendee paymentInformation 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 			contentTab: (self createRegConferenceInformationComponent: anAttendee);
 			 tabId: 'conferenceOptionsForm'; 
 			 tabName: 'Conference';
 			 container: aContent;
-			nextTabName: 'Affiliation';
+			nextTabName: 'Billing Information';
 			previousTabName: 'Contact'.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factoryFormMethods }
 ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
 	^ self createFormOf: anAttendee conferenceInformation
 ]

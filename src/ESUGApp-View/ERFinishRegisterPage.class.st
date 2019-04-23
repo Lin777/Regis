@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract page for finish register page(Summary page of register)
+"
 Class {
 	#name : #ERFinishRegisterPage,
 	#superclass : #ERPage,
@@ -13,17 +19,7 @@ ERFinishRegisterPage class >> on: anAttendee withContent: content withController
 		
 ]
 
-{ #category : #rendering }
-ERFinishRegisterPage >> backAction [
-	self subclassResponsibility
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> cancelAction [
-	self subclassResponsibility
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERFinishRegisterPage >> colorIcon [
 	^ 'mdl-color--green'
 ]
@@ -31,21 +27,6 @@ ERFinishRegisterPage >> colorIcon [
 { #category : #accessing }
 ERFinishRegisterPage >> content: anObject [
 	content := anObject
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> finishAction [
-	self finishRegister 
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> finishAction: html [
-	self finishRegister
-]
-
-{ #category : #rendering }
-ERFinishRegisterPage >> finishRegister [
-	self subclassResponsibility 
 ]
 
 { #category : #initialization }
@@ -57,12 +38,7 @@ ERFinishRegisterPage >> initialize [
 	classContainer := 'mdl-card-register'
 ]
 
-{ #category : #rendering }
-ERFinishRegisterPage >> nextAction [
-	self finishRegister
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERFinishRegisterPage >> redirectLoggedPage: anUser [
 	anUser
 		ifNotNil: [ self session login: anUser.
@@ -80,29 +56,8 @@ ERFinishRegisterPage >> register [
 
 { #category : #rendering }
 ERFinishRegisterPage >> renderActions: html [
-	html mdlCardActions
-		class: 'mdl-card--border';
-		with: [ 
-			html mdlAnchorButton
-		colored;
-		id: 'back';
-		callback: [ self backAction ];
-		with: 'Back'.
-		html mdlAnchorButton
-		colored;
-		id: 'next';
-		callback:  [ self nextAction ];
-		with: 'Next'.
-		html mdlAnchorButton
-		colored;
-		id: 'cancel';
-		callback: [ self cancelAction ];
-		with: 'Cancel'.
-		html mdlAnchorButton
-		colored;
-		id: 'finish';
-		callback: [ self finishAction ];
-		with: 'Finish']
+	self subclassResponsibility  
+	
 ]
 
 { #category : #rendering }

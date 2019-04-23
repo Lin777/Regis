@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERLoggedPageAsAttendeeTest is a test class for testing the behavior of page when the user sign in as Attendee
 "
 Class {
@@ -37,16 +40,11 @@ ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
 	self selectElementWithID: 'presentation' send: 'https://www.google.com/' 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 	self selectElementWithID: 'email-login' send: attendee userAccount email.
 	self selectElementWithID: 'password-login' send: '12345678'.
 	self clickElementWithID: 'login-button'
-]
-
-{ #category : #tests }
-ERLoggedPageAsAttendeeTest >> pressOptionAdmin [
-	self clickElementWithID: 'Admin-option'
 ]
 
 { #category : #tests }
@@ -65,7 +63,7 @@ ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 
 { #category : #tests }
 ERLoggedPageAsAttendeeTest >> selectChangePasswordTab [
-	self clickElementWithID: 'tab-Change Password'
+	self clickElementWithID: 'changePassword'
 ]
 
 { #category : #tests }
@@ -177,7 +175,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
 	self updateField: 'email' with: 'mike@gmail.com'.
-	self assert: (self textOfElementWithID: 'adminUserAlert') equals: 'This email is already registered'
+	self assert: (self textOfElementWithID: 'adminAlert') equals: 'This email is already registered'
 ]
 
 { #category : #adminUserTests }
@@ -262,8 +260,7 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 { #category : #adminUserTests }
 ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 	self pressOptionAdmin .
-	self assert: (self textOfElementWithID: 'tab-adminUser' andTagName: 'h3') equals: 'User'.
-	
+	self assert: (driver findElementByTagName: 'h3') getText equals: 'Edit profile'.
 ]
 
 { #category : #myRegistrationProposedAwardsTests }
@@ -278,7 +275,8 @@ ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
-	self assert: (self textOfElementWithID: 'tab-changePassword' andTagName: 'h3') equals: 'Modify Password'
+	self assert: (driver findElementByTagName: 'h3')  getText
+		equals: 'Modify Password'
 ]
 
 { #category : #myRegistrationSummaryTests }
@@ -357,5 +355,5 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectCurrentPassword [
 	self fillAllFieldsOfChangePassword .
 	acceptFormButton := 'accept-change-password'.
 	self updateField: 'currentPassword' with: '123456789'.
-	self assert: (self textOfElementWithID: 'adminChangePasswordAlert') equals: 'The password entered does not match the current password'
+	self assert: (self textOfElementWithID: 'changePasswordAlert') equals: 'The password entered does not match the current password'
 ]

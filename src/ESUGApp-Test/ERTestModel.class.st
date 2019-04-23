@@ -101,7 +101,7 @@ ERTestModel class >> testUserExampleAccount [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #assertions }
 ERTestModel >> assertEmptyField: anObject [
 	|errors|
 	errors := anObject asComponent validate; errors.
@@ -109,7 +109,7 @@ ERTestModel >> assertEmptyField: anObject [
 	self assert: messageInputRequired equals: (self messageTextOf: errors)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #assertions }
 ERTestModel >> assertNonValidField: anObject [
 	|errors|
 	errors := anObject asComponent validate; errors.
@@ -117,17 +117,17 @@ ERTestModel >> assertNonValidField: anObject [
 	self assert: self messageInvalidInput equals: (self messageTextOf: errors)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERTestModel >> messageInvalidInput [
 	^ 'Invalid input given'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERTestModel >> messageTextField [
 	^ 'This field only accept a text'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #messages }
 ERTestModel >> messageTextOf: errors [
 	^ ((errors at:1) collection at:1) messageText
 ]

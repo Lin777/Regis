@@ -41,7 +41,7 @@ ERController >> addTalk: aTalk [
 	self notifyAllObservers .
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> applyReductionTicket: aTicket To: anAttendee [
 	|ticket|
 	aTicket = 'No reduction ticket'
@@ -53,12 +53,12 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 	self updateAttendee: anAttendee.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 ERController >> cleanSubDirectory: aSubDir [
 	aSubDir ensureDeleteAll 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 ERController >> cleanZip: zip with: zipFile subDir: subDir [
 	[ zip close ]
 		ensure: [ 
@@ -67,7 +67,7 @@ ERController >> cleanZip: zip with: zipFile subDir: subDir [
 		]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #encoding }
 ERController >> codingZipFile: aString with: nameSubDirectory [
 	| zip subDir zipFile codingZipFile |
 	zip := ZipArchive new.
@@ -94,40 +94,40 @@ ERController >> conference: anObject [
 	conference := anObject
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERController >> deleteAward: anAward [
 	conference deleteAward: anAward.
 	self notifyAllObservers 
 ]
 
-{ #category : #rendering }
+{ #category : #deleting }
 ERController >> deleteTalk: aTalk [
 	conference deleteTalk: aTalk.
 	self notifyAllObservers 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #encoding }
 ERController >> encodeFileToUTF8: aFile [
 	^ aFile exists 
 		ifTrue: [ (ZnUTF8Encoder new encodeString: aFile binaryReadStream upToEnd asString) asString ] 
 		ifFalse: [ nil ]. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #encoding }
 ERController >> encodeFiletoBase64: aFile [
 	^ aFile exists 
 		ifTrue: [ ZnBase64Encoder new encode: aFile binaryReadStream upToEnd ] 
 		ifFalse: [ nil ]. 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERController >> initialize [
 	super initialize.
 	ERBackupObserver of: self.
 	conference := ERConference find: [ :each | each active ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERController >> payPalUrlForGroup: aGroup [
 	^ conference fee urlWithAmount: aGroup paymentInformation paymentAmount asString
 	 invoiceNumber: (aGroup paymentInformation 
@@ -135,7 +135,7 @@ ERController >> payPalUrlForGroup: aGroup [
 				printString
 ]
 
-{ #category : #rendering }
+{ #category : #action }
 ERController >> sendInvoiceTo: user [
 	|stream |
 	stream := NeoJSONWriter toString: (ERInvoiceMailSender on: user) value.
@@ -144,7 +144,7 @@ ERController >> sendInvoiceTo: user [
 		send: stream.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERController >> sendResetPasswordTo: aString [
 	| user stream |
 	user := conference findUserByEmail: aString.
@@ -155,12 +155,19 @@ ERController >> sendResetPasswordTo: aString [
 		send: stream.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 	anAttendee stateUpdatePaidWith: aBoolean actions: { [ :att | self updateGroup: att ] . [ :att | self updateAttendee: att ] }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
+ERController >> updateAffiliation: aff on: aGroup [
+	aGroup groupManager affiliationInformation: aff.
+	aGroup save.
+	self notifyAllObservers 
+]
+
+{ #category : #updating }
 ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
@@ -169,14 +176,14 @@ ERController >> updateAttendee: anAttendee [
 	^ anAttendee 
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERController >> updateAward: anAward [
 	anAward save.
 	conference save.
 	self notifyAllObservers 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup.
 	aGroup updateHasPaidOfAll.
@@ -184,7 +191,7 @@ ERController >> updateGroup: aGroup [
 	^ aGroup save.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
 	amount := conference paymentAmountFor: anAttendee .
@@ -192,19 +199,19 @@ ERController >> updatePaymentRate: anAttendee [
 	anAttendee addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> updatePaymentRateForGroup: aGroup [ 
 	aGroup updatePaymentRateWith: [:amount | conference addPayPalComissionOn: amount]
 ]
 
-{ #category : #rendering }
+{ #category : #updating }
 ERController >> updateTalk: aTalk [
 	aTalk save.
 	conference save.
 	self notifyAllObservers 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERController >> updateUser: anUser [
 	[conference validateIfEmailIsAlreadyRegistered: anUser.
 	anUser save.
@@ -214,12 +221,12 @@ ERController >> updateUser: anUser [
 	do: [ :exp | ^ exp signal ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERController >> validateNewPassword: aString1 with: aString2 [
 	(aString1 = aString2) ifFalse: [ ERException passwordDoesNotMatchWithConfirmPass signal ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERController >> validateRegister: anAttendee [
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 

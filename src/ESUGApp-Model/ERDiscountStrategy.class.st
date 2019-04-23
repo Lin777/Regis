@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of discount strategy
+"
 Class {
 	#name : #ERDiscountStrategy,
 	#superclass : #Object,

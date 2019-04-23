@@ -18,6 +18,13 @@ ERGroupRegistrationTab class >> on: anAttendee withContent: aContent container: 
 	^ form
 ]
 
+{ #category : #rendering }
+ERGroupRegistrationTab >> attendeeFrom: aGroupManager [
+	^ ERAttendee new 
+		userAccount: aGroupManager userAccount; 
+		affiliationInformation: aGroupManager affiliationInformation 
+]
+
 { #category : #accessing }
 ERGroupRegistrationTab >> attends [
 	^ (controller conference groupOfUser: attendee)
@@ -81,6 +88,15 @@ ERGroupRegistrationTab >> registerAttendee [
 ERGroupRegistrationTab >> registerAttendeeToGroupManager: anAttendee [
 	controller addAttendee: newAttendee.
 	content state: content lastState.
+	self updateStateTab: self tabName
+]
+
+{ #category : #rendering }
+ERGroupRegistrationTab >> registerMyselfAsAttendee [
+	callback := [ :att | controller addGroupManagerAsAttendee: att.
+								content state: content lastState ].
+	self initializeFormWithoutBasicInformationFor:
+	 (self attendeeFrom: self groupManager).
 	self updateStateTab: self tabName
 ]
 

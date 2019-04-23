@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERLoggedPageAsAdminTest is a test class for testing the behavior of page when the user sign in as Admin
 "
 Class {
@@ -32,7 +35,7 @@ ERLoggedPageAsAdminTest >> getNameOfConference [
 	^ controller conference configuration name 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> loginAsAdmin [
 	self selectElementWithID: 'email-login' send: 'admin@esug.org'.
 	self selectElementWithID: 'password-login' send: '12345678'.
@@ -44,7 +47,7 @@ ERLoggedPageAsAdminTest >> messageInvalidInputFor: aString [
 	^ aString, ' (Required): Invalid input given'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> messageWrongDateFormatFor: aString [
 	^ aString, ': This field only supports dates with the following format "MM/DD/YYYY"'
 ]
@@ -59,12 +62,6 @@ ERLoggedPageAsAdminTest >> moveToAttendeeOption [
 ERLoggedPageAsAdminTest >> moveToAwardsOption [
 	self pressOptionProposals  .
 	self selectAwardsTab  .
-]
-
-{ #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> moveToBackupTab [
-	self pressOptionAdmin .
-	self selectTabBackup . 
 ]
 
 { #category : #configurationAdminOptionTests }
@@ -88,7 +85,7 @@ ERLoggedPageAsAdminTest >> moveToGroupManagerOption [
 { #category : #configurationInvoicesTests }
 ERLoggedPageAsAdminTest >> moveToInvoicesOption [
 	self pressOptionConfiguration .
-	self selectInovicesTab .
+	self selectInvoicesTab .
 ]
 
 { #category : #configurationTicketTest }
@@ -112,11 +109,6 @@ ERLoggedPageAsAdminTest >> pressEditUser [
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
 	self pressOptionUsers.
 	self clickElementWithID:  user id, '-modify'
-]
-
-{ #category : #tests }
-ERLoggedPageAsAdminTest >> pressOptionAdmin [
-	self clickElementWithID:  'Admin-option'
 ]
 
 { #category : #tests }
@@ -155,6 +147,11 @@ ERLoggedPageAsAdminTest >> selectAwardsTab [
 	self clickElementWithID: 'tab-Awards'
 ]
 
+{ #category : #configurationBackupOpenCloseTests }
+ERLoggedPageAsAdminTest >> selectConfigurationTab [
+	self clickElementWithID: 'tab-Configuration'
+]
+
 { #category : #configurationFeeTests }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	self clickElementWithID: 'tab-Fee'
@@ -166,28 +163,13 @@ ERLoggedPageAsAdminTest >> selectGroupManagerTab [
 ]
 
 { #category : #configurationInvoicesTests }
-ERLoggedPageAsAdminTest >> selectInovicesTab [
+ERLoggedPageAsAdminTest >> selectInvoicesTab [
 	self clickElementWithID: 'tab-Invoices'
 ]
 
 { #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> selectTabBackup [
-	self clickElementWithID: 'tab-Backup'
-]
-
-{ #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> selectTabChangePassword [
-	self clickElementWithID: 'tab-Change Password'
-]
-
-{ #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> selectTabOpenCloseRegistration [
-	self clickElementWithID: 'tab-Open / Close registration'
-]
-
-{ #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> selectTabRestore [
-	self clickElementWithID: 'tab-Restore'
+	self clickElementWithID: 'changePassword'
 ]
 
 { #category : #configurationTicketTest }
@@ -281,34 +263,13 @@ ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericPercentage [
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionModifyPassword [
 	self moveToChangePasswordTab .
-	self shouldnt: [ driver findElementByID: 'groupManagerFunctions' ] raise: BPNoSuchElementException
-]
-
-{ #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> testAdminOptionTabBackup [
-	self moveToBackupTab . 
-	self shouldnt: [ driver findElementByID: 'yes-tabBackup' ] raise: BPNoSuchElementException
-]
-
-{ #category : #configurationAdminOptionTests }
-ERLoggedPageAsAdminTest >> testAdminOptionTabOpenCloseRegistration [
-	|value isOpen|
-	self pressOptionAdmin .
-	self selectTabOpenCloseRegistration .
-	self shouldnt: [ driver findElementByID: 'yes-tabOpenClose' ] raise: BPNoSuchElementException.
-	value := self textOfElementWithID: 'tab-tabOpenClose' andTagName: 'h3'.
-	isOpen := controller conference conferenceIsOpenRegistration .
-	isOpen
-		ifTrue: [ self assert: value equals: 'Registration is opened. Are you sure you want close it?' ]
-		ifFalse: [ self assert: value equals: 'Registration is closed. Are you sure you want open it?' ].
-	self clickElementWithID: 'yes-tabOpenClose'.
-	self deny: controller conference conferenceIsOpenRegistration = isOpen 
+	self shouldnt: [ driver findElementByID: 'currentPassword' ] raise: BPNoSuchElementException
 ]
 
 { #category : #configurationAdminOptionTests }
 ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
 	self pressOptionAdmin.
-	self assert: (self textOfTagName: 'h3') equals: 'User'
+	self assert: (self textOfTagName: 'h3') equals: 'Edit profile'
 ]
 
 { #category : #configurationAttendeesTest }
@@ -419,7 +380,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationName' with: ''.
 	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Organization Name')
+		equals: (self messageIsRequiredFor: 'Name')
 ]
 
 { #category : #configurationGroupManagerTests }

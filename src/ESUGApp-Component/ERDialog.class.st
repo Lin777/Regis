@@ -19,7 +19,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERDialog class >> cancelDialog [
 	| instance |
 	instance := self new title: 'Cancel';
@@ -29,7 +29,7 @@ ERDialog class >> cancelDialog [
 	^ instance
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERDialog class >> deleteDialog [
 	| instance |
 	instance := self new title: 'Delete';

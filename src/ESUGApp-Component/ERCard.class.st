@@ -27,7 +27,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERCard class >> title: aString icon: anIcon content: aBlock id: anId colorIcon: anColor actions: aBlockActions [
 	| instance |
 	instance := self new.

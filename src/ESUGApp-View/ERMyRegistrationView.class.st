@@ -5,7 +5,7 @@ Class {
 		'tabs',
 		'tabsComponent'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #accessing }
@@ -18,7 +18,7 @@ ERMyRegistrationView class >> attendee: anAttendee content: aContent [
 	^ instance
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 ERMyRegistrationView >> children [ 	
 	^ Array with: tabsComponent 
 ]
@@ -37,7 +37,7 @@ ERMyRegistrationView >> initializeTabForms [
 	(tabs at: 1) activate
 ]
 
-{ #category : #adding }
+{ #category : #rendering }
 ERMyRegistrationView >> renderContentPageOn: html [
 	
 	tabsComponent := (ERTabs new tabs: tabs).

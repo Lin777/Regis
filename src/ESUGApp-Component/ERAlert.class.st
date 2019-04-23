@@ -24,7 +24,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ERAlert class >> warningAlert [
 	^ self new
 		class: 'errors';
@@ -32,12 +32,12 @@ ERAlert class >> warningAlert [
 		yourself .
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updateClassOfAlert }
 ERAlert >> changeToAlertOfError [
 	class := 'errors'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updateClassOfAlert }
 ERAlert >> changeToAlertSuccess [
 	class := 'alert-success'
 ]

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestRegisterConferenceInformation is a test class for testing the behavior of ERRegisterConferenceInformation model
+"
 Class {
 	#name : #ERTestRegisterConferenceInformation,
 	#superclass : #ERTestModel,

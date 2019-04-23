@@ -1,3 +1,16 @@
+"
+Description
+--------------------
+
+I am a controller for Group Manager of Conference, this is only use for groupManager user.
+
+I can:
+ 
+- add attendees to group
+- delete attendee from group
+- add a group manager as attendee
+- update billing information
+"
 Class {
 	#name : #ERGroupManagerController,
 	#superclass : #ERLoggedController,
@@ -36,7 +49,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	^ self updateGroup: self group
 ]
 
-{ #category : #accessing }
+{ #category : #deleting }
 ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
@@ -44,6 +57,7 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self conference attends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
+	self updateGroup: self group.
 	self notifyAllObservers .
 ]
 
@@ -62,14 +76,14 @@ ERGroupManagerController >> groupManager [
 	^ group groupManager
 ]
 
-{ #category : #rendering }
-ERGroupManagerController >> updateAffiliation: aff [
+{ #category : #updating }
+ERGroupManagerController >> updateBillingInfo: aff [
 	self groupManager affiliationInformation: aff.
 	self group save.
 	self notifyAllObservers  
 ]
 
-{ #category : #adding }
+{ #category : #updating }
 ERGroupManagerController >> updateGroup: aGroup [
 	aGroup updatePaymentForAttendees.
 	super updateGroup: aGroup 

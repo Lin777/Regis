@@ -1,3 +1,6 @@
+"
+I am a model of User Account, I know how change my password and my role.
+"
 Class {
 	#name : #ERUserAccount,
 	#superclass : #SDActiveRecord,
@@ -99,24 +102,24 @@ ERUserAccount >> confirmPassword: anObject [
 	confirmPassword := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #addRole }
 ERUserAccount >> convertAttendee [
 	self isAttendee ifFalse: [ self roleAdd: 'attendee' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleteRole }
 ERUserAccount >> deleteAttendeeRole [
 	self isAttendee ifTrue: [
 		self deleteRole: 'attendee'
 	]
 ]
 
-{ #category : #testing }
+{ #category : #deleteRole }
 ERUserAccount >> deleteRole: anObject [
 	role removeAllSuchThat: [ :each | each = anObject  ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionEmail [
 	<magritteDescription>
 	| tmp |
@@ -134,7 +137,7 @@ ERUserAccount >> descriptionEmail [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionFirstName [
 	<magritteDescription>
 	| tmp |
@@ -152,7 +155,7 @@ ERUserAccount >> descriptionFirstName [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERUserAccount >> descriptionLastName [
 	<magritteDescription>
 	| tmp |
@@ -180,7 +183,7 @@ ERUserAccount >> email: anObject [
 	email := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 ERUserAccount >> encryptMyPassword [
 	self password: (self class hashPassword: (self password )asString).
 	self confirmPassword: ''.
@@ -210,26 +213,26 @@ ERUserAccount >> initializePasswordHashFrom: aString [
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isAdmin [
 		^ self role anySatisfy: [ :each | each = 'admin']
 
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isAttendee [
 	^ self role anySatisfy: [ :each | each = 'attendee']
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isGroupManager [
 	^ self role
 		anySatisfy: [ :each | each = 'groupManager']
 	
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERUserAccount >> isStudent [
 	^ self role
 		anySatisfy: [ :each | each = 'studentVolunter']
@@ -255,7 +258,7 @@ ERUserAccount >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #converting }
 ERUserAccount >> resetPassword [
     
     | passwordCharacters random newPasswordStream newPassword |
@@ -273,7 +276,7 @@ ERUserAccount >> resetPassword [
     ^ newPassword
 ]
 
-{ #category : #initialization }
+{ #category : #converting }
 ERUserAccount >> resetedPasswordSize [
 	^ 8
 ]
@@ -288,12 +291,12 @@ ERUserAccount >> role: anObject [
 	role := anObject
 ]
 
-{ #category : #testing }
+{ #category : #addRole }
 ERUserAccount >> roleAdd: anObject [
 	role add: anObject 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERUserAccount >> rolesAsString [
 	| roles |
 	roles := ''.

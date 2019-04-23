@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestLoginController is a test class for testing the behavior of Login Controller
+"
 Class {
 	#name : #ERTestLoginController,
 	#superclass : #ERTest,

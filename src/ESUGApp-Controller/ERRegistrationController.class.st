@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a controller for registration page.
+
+Instance Variables
+--------------------
+	attendee: an ERAttendee will registered 
+"
 Class {
 	#name : #ERRegistrationController,
 	#superclass : #ERController,
@@ -7,7 +17,7 @@ Class {
 	#category : #'ESUGApp-Controller'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERRegistrationController class >> attendee: anAtteendee [
 	|controller|
 	controller := self new.
@@ -31,7 +41,7 @@ ERRegistrationController >> initialize [
 	attendee := ERAttendee new.
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> save [
 	| user|
 	conference validateIfEmailIsAlreadyRegistered: attendee userAccount.
@@ -42,7 +52,7 @@ ERRegistrationController >> save [
 	^ user
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> saveAttendee [
 	|savedAttendee|
 	self attendee paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ].
@@ -53,7 +63,7 @@ ERRegistrationController >> saveAttendee [
 	^ savedAttendee userAccount 
 ]
 
-{ #category : #action }
+{ #category : #saving }
 ERRegistrationController >> saveGroupManager [
 	|groupSaved|
 	self attendee userAccount: self save.
@@ -66,7 +76,7 @@ ERRegistrationController >> saveGroupManager [
 	^ self attendee userAccount 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERRegistrationController >> validatePatternPassword: aSymbol [
 	(((attendee perform: aSymbol)
 		matchesRegex: '[A-Za-z0-9._]{8,}')
@@ -74,7 +84,7 @@ ERRegistrationController >> validatePatternPassword: aSymbol [
 		ifFalse: [ ERException passwordFormatException signal ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validations }
 ERRegistrationController >> validateRegister [
 	self validateRegister: attendee
 ]

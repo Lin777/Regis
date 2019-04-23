@@ -8,7 +8,7 @@ Class {
 		'cancel',
 		'messageComponent'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #actions }
@@ -27,7 +27,7 @@ ERApplyReductionTicketView >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #initializing }
 ERApplyReductionTicketView >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert id: 'formTicketAlert'
@@ -38,7 +38,7 @@ ERApplyReductionTicketView >> listOfTickets: anObject [
 	listOfTickets := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERApplyReductionTicketView >> renderAcceptButtonOn: html [	
 	html mdlButton
 		colored;
@@ -58,7 +58,7 @@ ERApplyReductionTicketView >> renderCancelButtonOn: html [
 		with: 'Cancel'
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERApplyReductionTicketView >> renderPageOn: html [
 	html render: messageComponent .
 	html form
@@ -69,7 +69,7 @@ ERApplyReductionTicketView >> renderPageOn: html [
 			self renderAcceptButtonOn: html ]
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERApplyReductionTicketView >> renderSelectorOfTickets: html [
 	html mdlTextFieldContainer
 		floatingLabel;
@@ -93,7 +93,7 @@ ERApplyReductionTicketView >> title [
 	^ 'Apply Reduction Ticket'
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 ERApplyReductionTicketView >> updateTicketAttendee: aBlock [
 	updateTicketAttendee := aBlock 
 	

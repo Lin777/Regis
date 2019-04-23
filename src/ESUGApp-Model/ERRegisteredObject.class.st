@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am an abstract class for registered objects in conference
+"
 Class {
 	#name : #ERRegisteredObject,
 	#superclass : #SDActiveRecord,
@@ -96,7 +102,7 @@ ERRegisteredObject >> paymentInformation: anObject [
 	paymentInformation := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERRegisteredObject >> stateUpdatePaidWith: aBoolean actions: aCollection [
 	self paymentInformation hasPaid: aBoolean.
 	self userAccount isGroupManager ifTrue: [

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Reduction Ticket
+"
 Class {
 	#name : #ERReductionTicket,
 	#superclass : #SDActiveRecord,
@@ -9,7 +15,7 @@ Class {
 	#category : #'ESUGApp-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERReductionTicket >> descriptionTicketId [
 	<magritteDescription>
 	| tmp |
@@ -35,7 +41,7 @@ ERReductionTicket >> discountStrategy: anObject [
 	discountStrategy := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> discountStrategyAsString [
 	self strategyIsFixDiscount
 		ifTrue: [ ^ 'Fix Discount' ].
@@ -43,7 +49,7 @@ ERReductionTicket >> discountStrategyAsString [
 		ifTrue: [ ^ 'Percentage Discount' ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERReductionTicket >> initialize [
 	super initialize.
 	discountStrategy := ERPercentageDiscount new.
@@ -60,7 +66,7 @@ ERReductionTicket >> limitStrategy: anObject [
 	limitStrategy := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> limitStrategyAsString [
 	self limitStrategyIsLimited
 		ifTrue: [ ^ 'Limit Strategy' ].
@@ -68,17 +74,17 @@ ERReductionTicket >> limitStrategyAsString [
 		ifTrue: [ ^ 'Unlimit strategy' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> limitStrategyIsLimited [
 	^ limitStrategy isMemberOf: ERLimitedReductionTicketUse 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> limitStrategyIsUnlimited [
 	^ limitStrategy isMemberOf: ERUnlimitedReductionTicketUse 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> obtainNewAmountAfterDiscountFor: amount [
 	self strategyIsFixDiscount
 		ifTrue: [ | amountWithDiscount |
@@ -88,19 +94,19 @@ ERReductionTicket >> obtainNewAmountAfterDiscountFor: amount [
 		ifTrue: [ ^ amount - (amount * (discountStrategy percentage / 100))]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> roundToZeroIfNegative: amountWithDiscount [
 	amountWithDiscount >= 0
 		ifTrue: [ ^ amountWithDiscount ].
 		 ^ 0 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> strategyIsFixDiscount [
 	^ discountStrategy isMemberOf: ERFixDiscount 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERReductionTicket >> strategyIsPercentageDiscount [
 	^ discountStrategy isMemberOf: ERPercentageDiscount 
 ]

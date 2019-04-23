@@ -1,14 +1,20 @@
+"
+Description
+--------------------
+
+I am factory class to create options for menu
+"
 Class {
-	#name : #ERMenuPage,
+	#name : #ERMenuFactory,
 	#superclass : #Object,
 	#instVars : [
 		'availableItemsOfMenu'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #accessing }
-ERMenuPage class >> availableItemsOfMenu: aList [
+ERMenuFactory class >> availableItemsOfMenu: aList [
 	|instance|
 	instance := self new.
 	instance availableItemsOfMenu: aList .
@@ -16,99 +22,93 @@ ERMenuPage class >> availableItemsOfMenu: aList [
 ]
 
 { #category : #accessing }
-ERMenuPage >> availableItemsOfMenu: anObject [
+ERMenuFactory >> availableItemsOfMenu: anObject [
 	availableItemsOfMenu := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createAdminItem [
+{ #category : #factory }
+ERMenuFactory >> createAdminItem [
 	^ ERItemNav 
-		label: 'Admin' 
+		label: 'Account' 
 		icon: 'person' 
 		callback: (availableItemsOfMenu at: 'admin')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createConfigurationItem [
+{ #category : #factory }
+ERMenuFactory >> createConfigurationItem [
 	^ ERItemNav
 		label: 'Configuration'
 		icon: 'settings'
 		callback: (availableItemsOfMenu at: 'configuration')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createGroupManagerItem [
+{ #category : #factory }
+ERMenuFactory >> createGroupManagerItem [
 	^ ERItemNav 
 		label: 'Group Registration' 
 		icon: 'group' 
 		callback: (availableItemsOfMenu at: 'groupRegistration')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createHomeItem [
+{ #category : #factory }
+ERMenuFactory >> createHomeItem [
 	^ ERItemNav 
 		label: 'Home' 
 		icon: 'home' 
 		callback: (availableItemsOfMenu at: 'home')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createLogoutItem [
+{ #category : #factory }
+ERMenuFactory >> createLogoutItem [
 	^ ERItemNav 
 		label: 'Logout' 
 		icon: 'backspace' 
 		callback: (availableItemsOfMenu at: 'logout')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createMenuWith: aList [
+{ #category : #factory }
+ERMenuFactory >> createMenuWith: aList [
 	^ ERNav new
 		listOptions: aList;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createMyRegistrationItem [
+{ #category : #factory }
+ERMenuFactory >> createMyRegistrationItem [
 	^ ERItemNav 
 		label: 'My Registration' 
 		icon: 'assignment' 
 		callback: (availableItemsOfMenu at: 'myRegistration')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createProposalsItem [
+{ #category : #factory }
+ERMenuFactory >> createProposalsItem [
 	^ ERItemNav
 		label: 'Proposals'
 		icon: 'note'
 		callback: (availableItemsOfMenu at: 'proposal')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createStatisticsItem [
+{ #category : #factory }
+ERMenuFactory >> createStatisticsItem [
 	^ ERItemNav
 		label: 'Statistics'
 		icon: 'show_chart'
 		callback: (availableItemsOfMenu at: 'statistics')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createStudentVolunterSearch [
+{ #category : #factory }
+ERMenuFactory >> createStudentVolunterSearch [
 	^ ERItemNav 
 		label: 'Search' 
 		icon: 'search' 
 		callback: (availableItemsOfMenu at: 'search')
 ]
 
-{ #category : #'as yet unclassified' }
-ERMenuPage >> createUsersItem [
+{ #category : #factory }
+ERMenuFactory >> createUsersItem [
 	^ ERItemNav
 		label: 'Users'
 		icon: 'group'
 		callback: (availableItemsOfMenu at: 'users')
-]
-
-{ #category : #initialization }
-ERMenuPage >> initialize [
-	super initialize.
-	
 ]

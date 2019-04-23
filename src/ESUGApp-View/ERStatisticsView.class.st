@@ -1,10 +1,16 @@
+"
+Description
+--------------------
+
+I am a view to show statistics of participants to lunch, participants to social dinner and statistics of t-shirts in tables
+"
 Class {
 	#name : #ERStatisticsView,
 	#superclass : #ERTittledView,
 	#instVars : [
 		'tables'
 	],
-	#category : #'ESUGApp-View'
+	#category : #'ESUGApp-View-View'
 }
 
 { #category : #'as yet unclassified' }
@@ -28,14 +34,14 @@ ERStatisticsView >> initialize [
 	tables:= OrderedCollection new.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERStatisticsView >> renderPageOn: html [
 	self renderParticipantsToLunchesStatisticsOn: html.
 	self renderShirtsStatisticsOn: html.
 	self renderParticipantsToSocialDinnerStatisticsOn: html
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
@@ -45,7 +51,7 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	self renderTable: tab withTitle: 'Participants to lunches per day' on: html
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	|tab|
 	tab := ERDictionaryTable new
@@ -55,7 +61,7 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	self renderTable: tab withTitle: 'Participants To Social Dinner' on: html
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERStatisticsView >> renderShirtsStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
@@ -65,7 +71,7 @@ ERStatisticsView >> renderShirtsStatisticsOn: html [
 	self renderTable: tab withTitle: 'Shirts' on: html
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 ERStatisticsView >> renderTable: aTable withTitle: aString on: html [
 	html heading
 		level4;

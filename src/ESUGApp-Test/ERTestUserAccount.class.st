@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+A ERTestUserAccount is a test class for testing the behavior of ERUserAccount model
+"
 Class {
 	#name : #ERTestUserAccount,
 	#superclass : #ERTestModel,

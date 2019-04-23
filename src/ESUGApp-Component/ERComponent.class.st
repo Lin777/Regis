@@ -2,7 +2,7 @@
 Description
 --------------------
 
-Abstract superclass of all ESUG components. 
+Abstract superclass of all esug components. 
 
 "
 Class {

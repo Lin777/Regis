@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of an Attendee, an attendee is a composition of: ERUserAccount, ERContactInformation, ERRegisterConferenceInformation , ERAdditionalInformation , ERPaymentInformation , ERAffiliationInformation 
+"
 Class {
 	#name : #ERAttendee,
 	#superclass : #ERRegisteredObject,
@@ -72,13 +78,13 @@ ERAttendee >> contactInformation: anObject [
 	contactInformation := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #addRole }
 ERAttendee >> convertToStudentVolunter [
 	self userAccount isStudent ifFalse:[
 	(self userAccount) roleAdd: 'studentVolunter'; save]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERAttendee >> daysOfAssistance [
  ^ (self conferenceInformation attendance 
 		values count: [ :each | each ])
@@ -115,7 +121,7 @@ ERAttendee >> firstName [
 	^ userAccount firstName
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 ERAttendee >> hasCoupon [
 	self paymentInformation coupon isNil 
 	ifFalse: [ self paymentInformation coupon isEmpty 
@@ -140,16 +146,16 @@ ERAttendee >> initialize [
 	userAccount := ERUserAccount new.
 	contactInformation := ERContactInformation new.
 	conferenceInformation := ERRegisterConferenceInformation new.
-	affiliationInformation := ERAffiliationInformation new.
+	affiliationInformation := ERBillingInformation new.
 	additionalInformation := ERAdditionalInformation new.
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERAttendee >> isAbleToModifyRegister [
 	^ paymentInformation hasPaid
 ]
 
-{ #category : #testing }
+{ #category : #'accessing-state' }
 ERAttendee >> isAbleToPay [
 	^ (idGroup isNotNil) or: (paymentInformation hasPaid)
 ]
@@ -179,13 +185,13 @@ ERAttendee >> organizationPostal [
 	^ affiliationInformation organizationPostal 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleteRole }
 ERAttendee >> removeStudentVolunterRole [
 	self userAccount isStudent ifTrue: [
 	(self userAccount) deleteRole: 'studentVolunter'; save. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERAttendee >> updateValuesFor: aGroup [
 	self paymentInformation invoiceNumber: aGroup paymentInformation invoiceNumber.
 	self idGroup: aGroup id.

@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERLoggedPageAsStudentVolunter is a test class for testing the behavior of page when the user sign in as StudentVolunter
 "
 Class {
@@ -18,7 +21,7 @@ ERLoggedPageAsStudentVolunter >> loginAsStudentVolunter [
 ]
 
 { #category : #tests }
-ERLoggedPageAsStudentVolunter >> pressOptionAdmin [
+ERLoggedPageAsStudentVolunter >> pressOptionSearch [
 	self clickElementWithID: 'Search-option'
 ]
 
@@ -34,8 +37,8 @@ ERLoggedPageAsStudentVolunter >> setUp [
 ]
 
 { #category : #tests }
-ERLoggedPageAsStudentVolunter >> testPressAdminOption [
-	self pressOptionAdmin .
+ERLoggedPageAsStudentVolunter >> testPressSearchOption [
+	self pressOptionSearch .
 	self assert: (self textOfTagName: 'h3') equals: 'Attendees'.
 	self shouldnt: [driver findElementByID: 'selectStrategy'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'stringForStrategy'] raise: BPNoSuchElementException .

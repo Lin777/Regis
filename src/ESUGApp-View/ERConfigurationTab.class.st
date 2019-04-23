@@ -18,7 +18,7 @@ ERConfigurationTab class >> on: anAttendee withContent: aContent container: aCon
 	^ form
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERConfigurationTab >> exportFile: aFile wihtName: aString [
 	self requestContext respond: [ :response |
 		response

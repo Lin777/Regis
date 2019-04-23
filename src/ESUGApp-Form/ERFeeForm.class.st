@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a form for edit a Fee of conference.
+"
 Class {
 	#name : #ERFeeForm,
 	#superclass : #ERForm,
@@ -46,7 +52,7 @@ ERFeeForm >> initializeForms [
 	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
 	aFee bankAccountInformation: anAccountBankInfo.
 	aFee bankAccountInformation bankInformation: aBankInfo.
@@ -86,14 +92,14 @@ ERFeeForm >> renderFormOn: html [
 	self renderButtonsOn: html
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERFeeForm >> save [ 	
 	 self modifyFee: feeForm model
 			withBankInfo: bankInfoForm model
 			withAccountBankInfo: bankAccountInfoForm model
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 ERFeeForm >> saveForms [
 	feeForm save.
 	bankAccountInfoForm save.
@@ -115,6 +121,6 @@ ERFeeForm >> title [
 	^ 'Fee'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validating }
 ERFeeForm >> validateForms [
 ]

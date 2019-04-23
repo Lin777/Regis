@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Group Manager
+"
 Class {
 	#name : #ERGroupManager,
 	#superclass : #Object,
@@ -22,7 +28,7 @@ ERGroupManager >> affiliationInformation: anObject [
 ERGroupManager >> initialize [ 
 	super initialize .
 	userAccount := ERUserAccount asGroupManager.
-	affiliationInformation := ERAffiliationInformation new.
+	affiliationInformation := ERBillingInformation new.
 ]
 
 { #category : #accessing }

@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Bank Account information
+"
 Class {
 	#name : #ERBankAccountInformation,
 	#superclass : #Object,
@@ -21,7 +27,7 @@ ERBankAccountInformation >> bankInformation: anObject [
 	bankInformation := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERBankAccountInformation >> descriptionIban [
 	<magritteDescription>
 	| tmp |
@@ -38,7 +44,7 @@ ERBankAccountInformation >> descriptionIban [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERBankAccountInformation >> descriptionNumber [
 	<magritteDescription>
 	| tmp |
@@ -55,7 +61,7 @@ ERBankAccountInformation >> descriptionNumber [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERBankAccountInformation >> descriptionOwner [
 	<magritteDescription>
 	| tmp |
@@ -72,7 +78,7 @@ ERBankAccountInformation >> descriptionOwner [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERBankAccountInformation >> descriptionRibKey [
 	<magritteDescription>
 	| tmp |

@@ -25,7 +25,7 @@ ERRegisterTest >> fillAllUserFields [
 	self selectElementWithID: 'confirmPasswordRegister' send: '12345678'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERRegisterTest >> pressNextButtonUser [
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'

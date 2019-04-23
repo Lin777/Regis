@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERLoggedPageAsGroupManagerTest is a test class for testing the behavior of page when the user sign in as GroupManager
 "
 Class {
@@ -44,7 +47,7 @@ ERLoggedPageAsGroupManagerTest >> firstName: aString1 lastName: aString2 email: 
 	confirmPassword sendKeys: aString5.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
 	self selectElementWithID: 'email-login' send: group groupManager userAccount email.
 	self selectElementWithID: 'password-login' send: '12345678'.
@@ -94,14 +97,9 @@ ERLoggedPageAsGroupManagerTest >> pressNextButtonUser [
 	self clickElementWithID: 'basicInfoForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
 	self clickElementWithID: 'Group Registration-option'
-]
-
-{ #category : #'as yet unclassified' }
-ERLoggedPageAsGroupManagerTest >> selectMembersTab [
-	self clickElementWithID: 'tab-Members'
 ]
 
 { #category : #accessing }
@@ -125,7 +123,6 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
@@ -139,7 +136,6 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver dismissAlert .
@@ -152,13 +148,11 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
 	attendee := group listAttends detect: [:att | att userAccount id = group groupManager userAccount id].
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: attendee id, '-delete'.
 	driver acceptAlert .
@@ -181,7 +175,7 @@ ERLoggedPageAsGroupManagerTest >> testPressExportInvoiceButtonOfSummary [
 { #category : #groupManagerSumaryTests }
 ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 	self pressOptionGroupRegistration.
-	self assert: (self textOfTagName: 'h3') equals: 'Group Manager Short Description'.
+	self assert: (self textOfTagName: 'h3') equals: 'Group Registration'.
 	self shouldnt: [driver findElementByID: 'modifyAffiliation'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'pay'] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'exportInvoice'] raise: BPNoSuchElementException .
@@ -191,7 +185,6 @@ ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab.
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerMyselfAsAttendee'.
 	self addGroupManagerAsAttendee.
@@ -206,7 +199,6 @@ ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
-	self selectMembersTab .
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerAttendee'.
 	self pressDoneButton .
@@ -241,7 +233,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'organizationName' with: ''.
 	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Organization Name')
+		equals: (self messageIsRequiredFor: 'Name')
 ]
 
 { #category : #groupManagerSumaryTests }

@@ -1,4 +1,7 @@
 "
+Description
+--------------------
+
 A ERRegisterAsAttendeePageTest is a test class for testing the behavior of page when the user is registering as Attendee
 "
 Class {
@@ -25,13 +28,13 @@ ERRegisterAsAttendeePageTest >> fillAllContactFields [
 	self selectElementWithID: 'homePageURL' send: ''
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressDoneButton [
 	self pressNextButtonPayment .
 	self clickElementWithID: 'registerButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonAdditional [
 	self pressNextButtonAffiliation .
 	self selectElementWithID: 'keywords' send: 'Example'.
@@ -39,39 +42,39 @@ ERRegisterAsAttendeePageTest >> pressNextButtonAdditional [
 	self clickElementWithID: 'additionalInfoForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonAffiliation [ 
 	self pressNextButtonConference .
 	self fillAllAffiliationFields.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonConference [
 	self pressNextButtonContact .
 	self clickElementWithID:'conferenceOptionsForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonContact [
 	self pressNextButtonUser.
 	self fillAllContactFields.
 	self clickElementWithID: 'contactInfoForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonPayment [
 	self pressNextButtonAdditional.
 	self clickElementWithID: 'paymentInformationForm-nextButton'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pushRegisterButton [
 	self clickElementWithID: 'register-button'.
 	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ERRegisterAsAttendeePageTest >> setUp [
 	super setUp.
 	self pushRegisterButton 
@@ -82,7 +85,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 	self pressNextButtonAffiliation  .
 	self clickElementWithID: 'additionalInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
 ]
 
 { #category : #registerAdditionalInformationTests }
@@ -192,7 +195,7 @@ ERRegisterAsAttendeePageTest >> testPressConferenceNextButtonWithAllFieldsFilled
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Affiliation')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
 ]
 
 { #category : #tests }

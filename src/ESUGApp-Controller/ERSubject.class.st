@@ -1,3 +1,13 @@
+"
+Description
+--------------------
+
+I am a Subject Class of Observer Pattern
+
+Instance Variables
+--------------------
+	observers: an OrderedCollection of observers
+"
 Class {
 	#name : #ERSubject,
 	#superclass : #Object,

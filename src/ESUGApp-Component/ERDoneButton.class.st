@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a container in tab especific for Done Button, last tab in form of register or edit
+"
 Class {
 	#name : #ERDoneButton,
 	#superclass : #ERTab,
@@ -7,7 +13,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #callbacks }
+{ #category : #'instance creation' }
 ERDoneButton class >> on: anAttendee button: aBlock container: aContainer [
 	| form |
 	form := self new.

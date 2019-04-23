@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am a model of Payment Information
+"
 Class {
 	#name : #ERPaymentInformation,
 	#superclass : #Object,
@@ -32,7 +38,7 @@ ERPaymentInformation >> coupon: anObject [
 	coupon := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionCoupon [
 	<magritteDescription>
 	| tmp |
@@ -51,7 +57,7 @@ ERPaymentInformation >> descriptionCoupon [
 	^ tmp yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionPaymentCurrency [
 	<magritteDescription>
 	| tmp1 |
@@ -67,7 +73,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 	^ tmp1 yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'magrittes-descriptions' }
 ERPaymentInformation >> descriptionPaymentType [
 	<magritteDescription>
 	| tmp1 |
@@ -112,7 +118,7 @@ ERPaymentInformation >> invoiceNumber: anObject [
 	invoiceNumber := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 ERPaymentInformation >> invoiceNumberIfNone: aBlock [
 	invoiceNumber ifNil: [ invoiceNumber := aBlock value ].
 	^ invoiceNumber
@@ -148,17 +154,17 @@ ERPaymentInformation >> paymentType: anObject [
 	paymentType := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> paymentTypeIsBankTransfer [
 	^ 'Bank transfer' = paymentType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> paymentTypeIsCreditCard [
 	^  'Credit Card' = paymentType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERPaymentInformation >> swapPaymentType [
 	self paymentTypeIsBankTransfer ifTrue: [ ^ paymentType := 'Credit Card' ].
 	self paymentTypeIsCreditCard ifTrue: [ ^ paymentType := 'Bank transfer' ]

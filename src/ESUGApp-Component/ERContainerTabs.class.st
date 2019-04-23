@@ -1,3 +1,17 @@
+"
+Description
+--------------------
+
+I am a card component used for render tabs in the container of page.
+
+Instance Variables
+--------------------
+	tabView: a ERTabs component to render in this component
+	messageComponent: a ERAlert component to show errors of this component
+	callback: aBlock to execute after saveTabs
+	tabs: an OrderedCollection of Tab components (this will be rendered in tabView component)
+	saveTabs: a block to execute when press a Done Button
+"
 Class {
 	#name : #ERContainerTabs,
 	#superclass : #ERContainer,
@@ -11,7 +25,7 @@ Class {
 	#category : #'ESUGApp-Component'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -24,7 +38,7 @@ ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -58,13 +72,14 @@ ERContainerTabs >> initialize [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
+	"Initialize tabs for register form"
 	tabs := OrderedCollection new
 	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
 	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true);
 	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true);
-	add: ((self createAffiliationInfoTab: anAttendee withContent: self)disabled: true);
+	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true);
 	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true);
 	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true);
 		add:
@@ -76,13 +91,14 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	saveTabs := [ self saveAttendeeTabs ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
 	tabs := OrderedCollection new
 	add: ((self createContactInfoTab: anAttendee withContent: self ) 
 				activate; previousTabName: nil);
 	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
-	add: (self createAffiliationInfoTab: anAttendee withContent: self);
+	add: (self createBillingInfoTab: anAttendee withContent: self);
 	add: (self createAdditionalInfoTab: anAttendee withContent: self);
 	add: (self createPaymentInfoTab: anAttendee withContent: self );
 		add:
@@ -107,7 +123,7 @@ ERContainerTabs >> renderContentPageOn: html [
 							 html render: tabView] ]]
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 ERContainerTabs >> renderDoneButtonOn: html [
 	html mdlButton
 		beSubmit;
@@ -122,19 +138,19 @@ ERContainerTabs >> renderDoneButtonOn: html [
 		with: 'Save Information'
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveAdditionalInfoAt: index [
 	(tabs at: index)contentTab save.
 	attendee additionalInformation: (tabs at: index)contentTab model 
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveAffiliationInfoAt: index [
 	(tabs at: index)contentTab save.
 	attendee affiliationInformation: (tabs at: index)contentTab model 
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveAttendeeTabs [
 	self saveUserAccountAt: 1.
 	self saveContactInfoAt: 2.
@@ -145,7 +161,7 @@ ERContainerTabs >> saveAttendeeTabs [
 	callback cull: attendee
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveAttendeeToGroupManagerTabs [
 	self saveContactInfoAt: 1.
 	self saveRegConferenceInfoAt: 2.
@@ -155,25 +171,25 @@ ERContainerTabs >> saveAttendeeToGroupManagerTabs [
 	callback cull: attendee
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveContactInfoAt: index [
 	(tabs at: index) contentTab save.
 	attendee contactInformation: (tabs at: index) contentTab model
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> savePaymentInfoAt: index [
 	(tabs at: index)contentTab save.
 	attendee paymentInformation: (tabs at: index)contentTab model 
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveRegConferenceInfoAt: index [
 	(tabs at: index)contentTab save.
 	attendee conferenceInformation: (tabs at: index)contentTab model 
 ]
 
-{ #category : #accessing }
+{ #category : #saving }
 ERContainerTabs >> saveUserAccountAt: index [
 	(tabs at: index) contentTab save.
 	attendee userAccount: (tabs at: index) contentTab model

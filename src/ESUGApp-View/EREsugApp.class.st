@@ -1,3 +1,11 @@
+"
+Description
+--------------------
+
+Root component of ESUG Registration Application.
+ 
+
+"
 Class {
 	#name : #EREsugApp,
 	#superclass : #WAComponent,
@@ -20,8 +28,6 @@ EREsugApp class >> initialize [
 	(WAAdmin register: self asApplicationAt: 'ESUG')
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
-		addLibrary: ERMaterialBlueRedMinCss;
-		addLibrary: ERJQValidateForm;
 		addLibrary: CssForLoginMDL;
 		addLibrary: ERLibrary;
 		preferenceAt: #sessionClass put: ERSession";
@@ -76,11 +82,10 @@ EREsugApp >> initialize [
 EREsugApp >> initializeLoginView [
 	| aFormView |
 	aFormView := ERLoginPage new.
-	aFormView content: self content.
-	^ aFormView
+	aFormView content: self content
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 EREsugApp >> renderContentOn: html [
 	html render: content
 ]
@@ -95,6 +100,5 @@ EREsugApp >> updateRoot: anHtmlRoot [
 	anHtmlRoot link
 				relationship: 'icon';
 				type: 'image/png';
-				url: (CssForLoginMDL urlOf: #esugPng).
-	anHtmlRoot javascript add: 'hljs.initHighlightingOnLoad();'
+				url: (CssForLoginMDL urlOf: #esugPng)
 ]

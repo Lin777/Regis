@@ -1,8 +1,22 @@
+"
+Description
+--------------------
+
+A ERTestController is a test class for testing the behavior of Controller
+"
 Class {
 	#name : #ERTestController,
 	#superclass : #ERTest,
 	#category : #'ESUGApp-Test-UnitTest'
 }
+
+{ #category : #initialization }
+ERTestController >> setUp [
+	| user |
+	super setUp.
+	user := self registerAttendee.
+	controller := ERLoggedController attendee: user
+]
 
 { #category : #tests }
 ERTestController >> testAmountToPay [
