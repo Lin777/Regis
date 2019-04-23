@@ -42,8 +42,8 @@ ERGroupManagerRegistrationPage >> saveRegistration [
 	| user |
 	user := pageController saveGroupManager.
 	pageController attendee userAccount: user.
-	"Coment this line in test mode"
-	self sendEmailTo: user.
+	"Do not send email to group manager when register because this not have a invoice"
+	"self sendEmailTo: user."
 	^ user
 ]
 
