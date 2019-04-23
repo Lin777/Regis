@@ -111,7 +111,9 @@ ERContentTab >> renderGoBackToLogin: html [
 ERContentTab >> renderNextButtonOn: html [
 	nextTabName ifNotNil: [
 	html mdlAnchorButton 
-		colored;
+		style: 'float:right';
+		raised;
+		primaryColor;
 		rippleEffect;
 		class: 'btnNext';
 		id: self tabId ,'-nextButton';

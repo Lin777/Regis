@@ -110,11 +110,12 @@ ERGroupRegistrationSummaryView >> renderDownloadInvoiceButtonOn: html [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryView >> renderFormButtonsOn: html [
+	
+	self renderRegisterAttendeeButtonOn: html.
+	self renderRegisterMyselfButtonOn: html.
 	self renderModifyAffiliationButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderDownloadInvoiceButtonOn: html.
-	self renderRegisterAttendeeButtonOn: html.
-	self renderRegisterMyselfButtonOn: html
 ]
 
 { #category : #rendering }
