@@ -209,7 +209,7 @@ ERUserAccount >> initialize [
 
 { #category : #initialization }
 ERUserAccount >> initializePasswordHashFrom: aString [
-	self password: (self class hashPassword: aString) asString
+	self password: (self class hashPassword: aString) asString.
 	
 ]
 

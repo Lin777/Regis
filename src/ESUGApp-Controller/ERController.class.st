@@ -150,9 +150,14 @@ ERController >> sendResetPasswordTo: aString [
 	user := conference findUserByEmail: aString.
 	user ifNil: [ ERException emailDoesNotExistToResetPassword signal ].
 	stream := NeoJSONWriter toString: (ERResetPasswordMailSender on: user) value.
-	PMInterface new 
+	[PMInterface new 
 		apiKey: conference configuration emailConfiguration apiKey; 
 		send: stream.
+	user save.
+	self notifyAllObservers ]
+	on: ERException 
+	do: [ :exc | user abortChanges ]
+	
 ]
 
 { #category : #updating }
