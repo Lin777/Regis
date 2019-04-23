@@ -117,7 +117,7 @@ ERAttendeeRegistrationPage >> saveRegistration [
 	user := pageController saveAttendee.
 	pageController attendee userAccount: user.
 	"Comentado mientras testeamos"
-	"self sendEmailTo: user."
+	self sendEmailTo: user.
 	^ user
 ]
 
@@ -129,9 +129,4 @@ ERAttendeeRegistrationPage >> saveTabs [
 	self saveAffilInfo.
 	self saveAddInfo.
 	self savePaymentInfo.
-]
-
-{ #category : #actions }
-ERAttendeeRegistrationPage >> sendEmailTo: user [
-	pageController sendInvoiceTo: (pageController conference attendeeFromUser: user)
 ]

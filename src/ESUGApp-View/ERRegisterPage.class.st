@@ -182,6 +182,11 @@ ERRegisterPage >> saveTabs [
 	self subclassResponsibility 
 ]
 
+{ #category : #actions }
+ERRegisterPage >> sendEmailTo: user [
+	pageController sendInvoiceTo: (pageController conference attendeeFromUser: user)
+]
+
 { #category : #accessing }
 ERRegisterPage >> tabs [
 	tabs ifNil: [ tabs:= OrderedCollection new].
