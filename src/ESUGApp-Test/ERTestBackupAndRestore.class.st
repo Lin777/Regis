@@ -67,6 +67,8 @@ ERTestBackupAndRestore >> testRestoreData [
 	self registerAsGroupManager.
 	(Delay forSeconds: 3) wait.
 	stateBefore := ERBackupRestore new objectsToBackup.
+	
+	(Delay forSeconds: 3) wait.
 	"Delete all data of database"
 	self deleteAll.
 	"Restore data"
