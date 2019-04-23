@@ -29,7 +29,7 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
-		add: ([ :att | att contactInformation country ] value: user);
+		add: ([ :att | att affiliationInformation organizationCountry ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);

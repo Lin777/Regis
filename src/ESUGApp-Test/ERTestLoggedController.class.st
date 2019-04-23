@@ -42,11 +42,7 @@ ERTestLoggedController >> testFailValidatePatternPassword [
 { #category : #tests }
 ERTestLoggedController >> testGetAttendeeWhenUserExist [
 	self
-		shouldnt: [
-			| anUserAccountRegistered |
-	anUserAccountRegistered := self registerAttendee.
-	(ERLoggedController user: anUserAccountRegistered)
-		attendeeFromUser]
+		shouldnt: [ (controller user: controller attendee) attendeeFromUser]
 		raise: ERException.
 ]
 

@@ -64,21 +64,11 @@ ERLoggedController >> deleteAttendee: anAttendee [
 	|anUser|
 	anUser := anAttendee userAccount .
 	conference deleteAttendeeFromGroupAndConference: anAttendee .
+	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
 	anUser isGroupManager
 		ifFalse: [ conference deleteUser: anUser]
 		ifTrue: [ anUser deleteAttendeeRole  ].
-	self notifyAllObservers "
-deleteAttendee: anAttendee
-	|anUser idGroup|
-	idGroup := anAttendee idGroup.
-	anUser := anAttendee userAccount.
-	conference deleteAttendeeFromGroupAndConference: anAttendee .
-	idGroup ifNotNil: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
-	anUser isGroupManager
-		ifFalse: [ conference deleteUser: anUser]
-		ifTrue: [ anUser deleteAttendeeRole ].
-	self conference save.
-	self notifyAllObservers "
+	self notifyAllObservers
 ]
 
 { #category : #initialization }
