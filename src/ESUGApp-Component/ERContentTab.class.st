@@ -10,6 +10,7 @@ Class {
 	#instVars : [
 		'contentTab',
 		'previousContentTab',
+		'buttonsOfTab',
 		'action',
 		'nextTabName',
 		'previousTabName',
@@ -21,6 +22,11 @@ Class {
 { #category : #accessing }
 ERContentTab >> action: anObject [
 	action := anObject
+]
+
+{ #category : #accessing }
+ERContentTab >> buttonsOfTab: anObject [
+	buttonsOfTab := anObject
 ]
 
 { #category : #accessing }
@@ -84,7 +90,7 @@ ERContentTab >> renderButtonsOn: html [
 	html horizontalRule.
 	self renderGoBackToLogin: html.
 	self renderBackButtonOn: html.
-	self renderNextButtonOn: html
+	
 ]
 
 { #category : #rendering }
@@ -92,7 +98,9 @@ ERContentTab >> renderContentOn: html [
 	html render: messageComponent.
 	self renderPreviousContentOn: html.
 	html render: contentTab.
-	self renderButtonsOn: html
+	self renderButtonsOn: html .
+	buttonsOfTab ifNil:[self renderNextButtonOn: html]
+		ifNotNil: [ buttonsOfTab cull: html ]
 	
 ]
 

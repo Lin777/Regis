@@ -39,20 +39,10 @@ ERRegisterPage >> addBasicInfoTab [
 { #category : #adding }
 ERRegisterPage >> addBillingInfoTab [
 	affiliationInfo:= (self createBillingInfoTab: pageController attendee
-								withContent: self) disabled: true; cancelCallback: self cancelRegister.
+								withContent: self) disabled: true; 
+								cancelCallback: self cancelRegister.
 	^ self
 		addTab: affiliationInfo .
-]
-
-{ #category : #adding }
-ERRegisterPage >> addDoneTab [
-	doneTab := (ERDoneButton
-				on: self controller attendee
-				button: [ :html | self renderDoneButtonOn: html ]
-				container: self) 
-	disabled: true.
-	^ self
-		addTab: doneTab .
 ]
 
 { #category : #adding }
@@ -125,15 +115,17 @@ ERRegisterPage >> renderBody: html with: aBlock [
 { #category : #rendering }
 ERRegisterPage >> renderDoneButtonOn: html [
 	html mdlButton
+		style: 'float:right';
 		beSubmit;
 		raised;
 		primaryColor;
 		rippleEffect;
 		id: 'registerButton';
+		class: 'btnNext';
 		callback: [ [ self validateAndRegister ]
 				on: ERException
 				do: [ :exception | messageComponent errorMessage: exception messageText ] ];
-		with: 'Save Information'
+		with: 'Finalize Registration'
 ]
 
 { #category : #rendering }

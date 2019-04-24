@@ -35,7 +35,7 @@ ERAttendeeRegistrationPage >> addContactInfoTab [
 { #category : #actions }
 ERAttendeeRegistrationPage >> addPaymentInfoTab [
 	paymentInfoTab := (self createPaymentInfoTab: pageController attendee
-								 withContent: self ) disabled: true;"disabled: false;" cancelCallback: self cancelRegister.
+								 withContent: self ) disabled: true; cancelCallback: self cancelRegister; buttonsOfTab: [ :html | self renderDoneButtonOn: html ]. 
 	^self
 		addTab: paymentInfoTab.
 ]
@@ -62,7 +62,6 @@ ERAttendeeRegistrationPage >> initializeTabForms [
 	self addBillingInfoTab.
 	self addAdditionalInfoTab.
 	self addPaymentInfoTab.
-	self addDoneTab.
 	
 	currentTab := basicInfoTab.
 	currentTab updateStateTab: currentTab tabName.
@@ -117,7 +116,7 @@ ERAttendeeRegistrationPage >> saveRegistration [
 	user := pageController saveAttendee.
 	pageController attendee userAccount: user.
 	"Coment this line in test mode"
-	self sendEmailTo: user.
+	"self sendEmailTo: user."
 	^ user
 ]
 

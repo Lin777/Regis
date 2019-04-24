@@ -12,7 +12,7 @@ ERGroupRegistrationSummaryView >> exportInvoice [
 { #category : #initialization }
 ERGroupRegistrationSummaryView >> initializeModifyAffiliationForm [
 	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
-								withContent: content) title: 'Affiliation Information';
+								withContent: content) title: 'Billing Information';
 								callback: [:aff | self updateAffiliation: aff on: self group];
 								cancelCallback: [self cancel]; initializeForm. 
 	content state: formMofidyAffiliation.
@@ -113,19 +113,19 @@ ERGroupRegistrationSummaryView >> renderFormButtonsOn: html [
 	
 	self renderRegisterAttendeeButtonOn: html.
 	self renderRegisterMyselfButtonOn: html.
-	self renderModifyAffiliationButtonOn: html.
+	self renderModifyBillingInfoButtonOn: html.
 	self renderPayButtonOn: html.
 	self renderDownloadInvoiceButtonOn: html.
 ]
 
 { #category : #rendering }
-ERGroupRegistrationSummaryView >> renderModifyAffiliationButtonOn: html [
+ERGroupRegistrationSummaryView >> renderModifyBillingInfoButtonOn: html [
 	html mdlAnchorButton 
 		raised;
 		rippleEffect;
 		id: 'modifyAffiliation';
 		callback: [ self modifyAffiliation ];
-		with: 'Modify Affiliation'
+		with: 'Modify Billing Information'
 ]
 
 { #category : #rendering }
