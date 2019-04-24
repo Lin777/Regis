@@ -22,7 +22,7 @@ ERRegisterAsGroupManagerPageTest >> setUp [
 ]
 
 { #category : #tests }
-ERRegisterAsGroupManagerPageTest >> testPressAffiliationBackButton [
+ERRegisterAsGroupManagerPageTest >> testPressBillingBackButton [
 	self pressNextButtonUser   .
 	self clickElementWithID: 'affiliationInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
@@ -30,12 +30,11 @@ ERRegisterAsGroupManagerPageTest >> testPressAffiliationBackButton [
 ]
 
 { #category : #tests }
-ERRegisterAsGroupManagerPageTest >> testPressAffiliationNextButtonWithAllFieldsFilledCorrectly [
+ERRegisterAsGroupManagerPageTest >> testPressBillingNextButtonWithAllFieldsFilledCorrectly [
 	self pressNextButtonUser .
 	self fillAllAffiliationFields .
-	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
+	self clickElementWithID: 'registerButton'.
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration Summary'
 ]
 
 { #category : #tests }

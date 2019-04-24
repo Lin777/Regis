@@ -19,7 +19,6 @@ ERLoggedPageAsGroupManagerTest >> addGroupManagerAsAttendee [
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
 	self clickElementWithID: 'additionalInfoForm-nextButton'.
-	self clickElementWithID: 'paymentInformationForm-nextButton'.
 	self clickElementWithID: 'registerButton'.
 ]
 
@@ -55,12 +54,6 @@ ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
 ]
 
 { #category : #accessing }
-ERLoggedPageAsGroupManagerTest >> pressDoneButton [
-	self pressNextButtonPayment .
-	self clickElementWithID: 'registerButton'
-]
-
-{ #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonAdditional [
 	self pressNextButtonAffiliation .
 	self clickElementWithID: 'additionalInfoForm-nextButton'
@@ -88,7 +81,7 @@ ERLoggedPageAsGroupManagerTest >> pressNextButtonContact [
 { #category : #accessing }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonPayment [
 	self pressNextButtonAdditional.
-	self clickElementWithID: 'paymentInformationForm-nextButton'
+	self clickElementWithID:  'registerButton'
 ]
 
 { #category : #accessing }
@@ -112,10 +105,10 @@ ERLoggedPageAsGroupManagerTest >> setUp [
 ]
 
 { #category : #groupManagerSumaryTests }
-ERLoggedPageAsGroupManagerTest >> testModifyAffiliationOfSummary [
+ERLoggedPageAsGroupManagerTest >> testModifyBillingInfoOfSummary [
 	self pressOptionGroupRegistration.
 	self clickElementWithID: 'modifyAffiliation'.
-	self assert: (self textOfTagName: 'h3') equals: 'Affiliation Information'
+	self assert: (self textOfTagName: 'h3') equals: 'Billing Information'
 ]
 
 { #category : #groupManagerMembersTabTests }
@@ -201,13 +194,13 @@ ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 	self pressOptionGroupRegistration .
 	cantOfAttendees := group listAttends size.
 	self clickElementWithID: 'registerAttendee'.
-	self pressDoneButton .
+	self pressNextButtonPayment.
 	self assert: group listAttends size equals: cantOfAttendees + 1
 	
 ]
 
 { #category : #groupManagerSumaryTests }
-ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationAddress [
+ERLoggedPageAsGroupManagerTest >> testUpdateBillingInfoWithEmptyOrganizationAddress [
 	self pressOptionGroupRegistration .
 	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
@@ -217,7 +210,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationAddr
 ]
 
 { #category : #groupManagerSumaryTests }
-ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationCity [
+ERLoggedPageAsGroupManagerTest >> testUpdateBillingInfoWithEmptyOrganizationCity [
 	self pressOptionGroupRegistration .
 	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
@@ -227,7 +220,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationCity
 ]
 
 { #category : #groupManagerSumaryTests }
-ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName [
+ERLoggedPageAsGroupManagerTest >> testUpdateBillingInfoWithEmptyOrganizationName [
 	self pressOptionGroupRegistration .
 	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.
@@ -237,7 +230,7 @@ ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationName
 ]
 
 { #category : #groupManagerSumaryTests }
-ERLoggedPageAsGroupManagerTest >> testUpdateAffiliationWithEmptyOrganizationPostal [
+ERLoggedPageAsGroupManagerTest >> testUpdateBillingInfoWithEmptyOrganizationPostal [
 	self pressOptionGroupRegistration .
 	self clickElementWithID: 'modifyAffiliation'.
 	acceptFormButton := 'accept-change-affiliation'.

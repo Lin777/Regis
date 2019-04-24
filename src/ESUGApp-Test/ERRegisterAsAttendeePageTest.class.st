@@ -29,12 +29,6 @@ ERRegisterAsAttendeePageTest >> fillAllContactFields [
 ]
 
 { #category : #actions }
-ERRegisterAsAttendeePageTest >> pressDoneButton [
-	self pressNextButtonPayment .
-	self clickElementWithID: 'registerButton'
-]
-
-{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonAdditional [
 	self pressNextButtonAffiliation .
 	self selectElementWithID: 'keywords' send: 'Example'.
@@ -99,7 +93,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilled
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
+ERRegisterAsAttendeePageTest >> testPressBillingBackButton [
 	self pressNextButtonConference  .
 	self clickElementWithID: 'affiliationInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
@@ -107,7 +101,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationBackButton [
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFilledCorrectly [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithAllFieldsFilledCorrectly [
 	self pressNextButtonConference .
 	self fillAllAffiliationFields.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
@@ -116,7 +110,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithAllFieldsFille
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutFillingAnyField [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutFillingAnyField [
 	self pressNextButtonConference.
 	self clickElementWithID: 'affiliationInfoForm-nextButton'.
 	self shouldnt: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
@@ -124,7 +118,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutFillingAnyF
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationAddrees1Field [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutOrganizationAddrees1Field [
 	self pressNextButtonConference .
 	self fillAllAffiliationFields .
 	(driver findElementByID: 'organizationAddrees1') clear.
@@ -135,7 +129,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationCityField [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutOrganizationCityField [
 	self pressNextButtonConference .
 	self fillAllAffiliationFields .
 	
@@ -147,7 +141,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationNameField [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutOrganizationNameField [
 	self pressNextButtonConference .
 	self fillAllAffiliationFields .
 	
@@ -159,7 +153,7 @@ ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizatio
 ]
 
 { #category : #registerAffiliationInformationTests }
-ERRegisterAsAttendeePageTest >> testPressAffiliationNextButtonWithoutOrganizationPostalField [
+ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutOrganizationPostalField [
 	self pressNextButtonConference .
 	self fillAllAffiliationFields .
 	(driver findElementByID: 'organizationPostal') clear.
@@ -214,26 +208,19 @@ ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCor
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Conference')
 ]
 
-{ #category : #tests }
-ERRegisterAsAttendeePageTest >> testPressDoneButton [
-	self pressNextButtonPayment .
-	self clickElementWithID: 'registerButton'.
-	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration Summary'
-]
-
 { #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
 	self pressNextButtonAdditional   .
 	self clickElementWithID: 'paymentInformationForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional').
+	
 ]
 
 { #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 	self pressNextButtonAdditional .
 	self coupon: 'invalidCoupon'.
-	self clickElementWithID: 'paymentInformationForm-nextButton'.
 	self clickElementWithID: 'registerButton'.
 	self shouldnt: [ driver findElementByClassName: 'errors' ] raise: BPNoSuchElementException.
 	self assert: self getTextOfError equals: 'Reduction Ticket Code: There is no ticket with the ticket id provided.'
@@ -242,9 +229,8 @@ ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithInvalidCoupon [
 { #category : #registerPaymentInformationTabTests }
 ERRegisterAsAttendeePageTest >> testPressPaymentNextButtonWithoutFillingAnyField [
 	self pressNextButtonAdditional .
-	self clickElementWithID: 'paymentInformationForm-nextButton'.
-	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Done')
+	self clickElementWithID: 'registerButton'.
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration Summary'
 	
 ]
 
