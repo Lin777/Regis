@@ -29,7 +29,7 @@ ERTestController >> testCleanZipFile [
 	nameFile := 'testFiles_zip'.
 	subDir := nameFile asFileReference.
 	subDir ensureCreateDirectory.
-	zip addDirectory: subDir fullName.
+	zip addDirectory: subDir.
 	zipFile := nameFile asFileReference, 'zip'.
 	controller cleanZip: zip with: zipFile subDir: subDir. 
 	self deny: zipFile exists.
