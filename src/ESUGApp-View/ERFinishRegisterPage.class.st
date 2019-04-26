@@ -47,13 +47,6 @@ ERFinishRegisterPage >> redirectLoggedPage: anUser [
 
 ]
 
-{ #category : #'tools registry' }
-ERFinishRegisterPage >> register [
-	| user |
-	user := pageController save.
-	self validateRegister: user
-]
-
 { #category : #rendering }
 ERFinishRegisterPage >> renderActions: html [
 	self subclassResponsibility  
