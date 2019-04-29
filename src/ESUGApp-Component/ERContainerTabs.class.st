@@ -81,7 +81,7 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true);
 	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true);
 	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true; buttonsOfTab: [:html |self renderDoneButtonOn: html ]);
+	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true; buttonsOfTab: [:html |self renderFinalizeButtonOn: html ]);
 		yourself.
 	saveTabs := [ self saveAttendeeTabs ]
 ]
@@ -95,7 +95,7 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
 	add: (self createBillingInfoTab: anAttendee withContent: self);
 	add: (self createAdditionalInfoTab: anAttendee withContent: self);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self ) buttonsOfTab: [ :html | self renderDoneButtonOn: html ]) ;
+	add: ((self createPaymentInfoTab: anAttendee withContent: self ) buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]) ;
 		yourself.
 	saveTabs := [ self saveAttendeeToGroupManagerTabs ]
 ]
@@ -109,12 +109,12 @@ ERContainerTabs >> renderContentPageOn: html [
 	html mdlTabs rippleEffect
 		with: [ html div
 				style: 'overflow-x:auto;';
-				with: [ html render: messageComponent .
-							 html render: tabView] ]]
+				with: [ html render: messageComponent.
+							 html render: tabView]]]
 ]
 
 { #category : #rendering }
-ERContainerTabs >> renderDoneButtonOn: html [
+ERContainerTabs >> renderFinalizeButtonOn: html [
 	html mdlButton
 		style: 'float:right';
 		beSubmit;

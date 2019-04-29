@@ -48,8 +48,7 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 	ifTrue: [ anAttendee paymentInformation coupon: '' ]
 	ifFalse: [ ticket := conference reductionTicketWithName: aTicket.
 		(conference verifyIfTicketCanApply: ticket) 
-		ifTrue: [anAttendee paymentInformation coupon: aTicket].
-		 ].
+		ifTrue: [anAttendee paymentInformation coupon: aTicket]].
 	self updateAttendee: anAttendee.
 ]
 
@@ -73,10 +72,10 @@ ERController >> codingZipFile: aString with: nameSubDirectory [
 	zip := ZipArchive new.
 	subDir := aString asFileReference.
 	subDir ensureCreateDirectory.
-	zip addDirectory: subDir "fullName".
+	zip addDirectory: subDir.
 	zipFile := aString asFileReference, 'zip'.
 	self cleanZip: zip with: zipFile subDir: subDir.
-	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path asFileReference "pathString" as: aString, '/', (aFile path at: 2) ].
+	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path asFileReference as: aString, '/', (aFile path at: 2) ].
 	zip writeToFileNamed: zipFile fullName.
 	codingZipFile := self encodeFiletoBase64: zipFile.
 	self cleanZip: zip with: zipFile subDir: subDir.
@@ -174,6 +173,7 @@ ERController >> updateAffiliation: aff on: aGroup [
 
 { #category : #updating }
 ERController >> updateAttendee: anAttendee [
+	self verifyIfTheTicketIsStillAvailable: anAttendee paymentInformation coupon.
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
@@ -236,13 +236,17 @@ ERController >> validateRegister: anAttendee [
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
 	with: anAttendee userAccount confirmPassword.
-	anAttendee userAccount isAttendee ifTrue: [self updatePaymentRate: anAttendee]
+	anAttendee userAccount isAttendee ifFalse: [ ^ self ].
+	self verifyIfTheTicketIsStillAvailable: anAttendee paymentInformation coupon.
+	self updatePaymentRate: anAttendee
 ]
 
 { #category : #action }
 ERController >> verifyIfTheTicketIsStillAvailable: aString [
-	self conference reductionTickets 
-	detect: [ :each | each ticketId = aString ] 
-	ifFound: [ :ticket | conference verifyIfTicketCanApply: ticket ] 
-	ifNone: [ ERException ticketDoesNotExist signal ]
+	(aString isNil or: [ aString isEmpty ]) ifFalse: [
+		self conference reductionTickets 
+		detect: [ :each | each ticketId = aString ] 
+		ifFound: [ :ticket | conference verifyIfTicketCanApply: ticket ] 
+		ifNone: [ ERException ticketDoesNotExist signal ]
+	]
 ]
