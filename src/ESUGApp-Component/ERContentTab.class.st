@@ -55,7 +55,7 @@ ERContentTab >> contentTab: anObject [
 ERContentTab >> initialize [
 	super initialize.
 	messageComponent := ERAlert warningAlert.
-	cancelCallback := [ container content state: container content lastState ].
+	cancelCallback := [ :anAttendee | container content state: container content lastState ].
 	action := [ :aValue |  ]
 ]
 
@@ -111,7 +111,7 @@ ERContentTab >> renderGoBackToLogin: html [
 		rippleEffect;
 		onClick: 'return confirm(''You are sure to return? You will lose all your changes'');';
 		id: self tabId ,'-goBackLoginButton';
-		callback: cancelCallback;
+		callback: [cancelCallback cull: attendee ];
 		with: 'Cancel'
 ]
 

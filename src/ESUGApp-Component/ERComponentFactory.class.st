@@ -36,6 +36,7 @@ ERComponentFactory >> createAdditionalInfoTab: anAttendee withContent: aContent 
 	
 	^ ERContentTab new 
 	 contentTab: (self createAdditionalInformationComponent: anAttendee);
+			attendee: anAttendee;
 			 tabId: 'additionalInfoForm'; 
 			 tabName: 'Additional';
 			 container: aContent;
@@ -53,6 +54,7 @@ ERComponentFactory >> createAdditionalInformationComponent: anAttendee [
 ERComponentFactory >> createBasicInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createBasicInformationComponent: anAttendee);
+			 attendee: anAttendee;
 			 tabId: 'basicInfoForm'; 
 			 tabName: 'User';
 			 container: aContent;
@@ -69,6 +71,7 @@ ERComponentFactory >> createBasicInformationComponent: anAttendee [
 ERComponentFactory >> createBillingInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createBillingInformationComponentOn: anAttendee);
+			attendee: anAttendee;
 			 tabId: 'affiliationInfoForm'; 
 			 tabName: 'Billing Information';
 			 container: aContent;
@@ -85,6 +88,7 @@ ERComponentFactory >> createBillingInformationComponentOn: anAttendee [
 ERComponentFactory >> createContactInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 		contentTab: (self createContactInformationComponent: anAttendee);
+			attendee: anAttendee ;
 			 tabId: 'contactInfoForm'; 
 			 tabName: 'Contact';
 			 container: aContent;
@@ -111,6 +115,7 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 			previousContentTab: '<br><p>Pay by transfer or pay/card. Pay in euros</p>
                     <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
+			attendee: anAttendee ;
 			 tabId: 'paymentInformationForm'; 
 			 tabName: 'Payment';
 			 container: aContent;
@@ -127,6 +132,7 @@ ERComponentFactory >> createPaymentInformationComponent: anAttendee [
 ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
 			contentTab: (self createRegConferenceInformationComponent: anAttendee);
+			attendee: anAttendee ;
 			 tabId: 'conferenceOptionsForm'; 
 			 tabName: 'Conference';
 			 container: aContent;

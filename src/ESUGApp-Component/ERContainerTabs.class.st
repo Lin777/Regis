@@ -31,7 +31,6 @@ ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
-	
 	form attendee: anAttendee.
 	form initializeTabsRegisterFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
@@ -55,6 +54,12 @@ ERContainerTabs >> callback: anObject [
 	callback := anObject
 ]
 
+{ #category : #initialization }
+ERContainerTabs >> cancelTab [
+	^ [ :anAttendee |  anAttendee abortChanges.
+		self content state: self content lastState  ]
+]
+
 { #category : #rendering }
 ERContainerTabs >> children [ 
 	^ Array with: messageComponent with: tabView 
@@ -76,12 +81,12 @@ ERContainerTabs >> initialize [
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	"Initialize tabs for register form"
 	tabs := OrderedCollection new
-	add: (self createBasicInfoTab: anAttendee withContent: self) activate;
-	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true);
-	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true);
-	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true);
-	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true; buttonsOfTab: [:html |self renderFinalizeButtonOn: html ]);
+	add: ((self createBasicInfoTab: anAttendee withContent: self) activate; cancelCallback: self cancelTab);
+	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true; cancelCallback: self cancelTab);
+	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true; cancelCallback: self cancelTab);
+	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true; cancelCallback: self cancelTab);
+	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true; cancelCallback: self cancelTab);
+	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true; buttonsOfTab: [:html |self renderFinalizeButtonOn: html ]; cancelCallback: self cancelTab);
 		yourself.
 	saveTabs := [ self saveAttendeeTabs ]
 ]
@@ -91,11 +96,11 @@ ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	"Initialize tabs form for update an registration, this tabs do not have a user information"
 	tabs := OrderedCollection new
 	add: ((self createContactInfoTab: anAttendee withContent: self ) 
-				activate; previousTabName: nil);
-	add: (self createRegConferenceInfoTab: anAttendee withContent: self );
-	add: (self createBillingInfoTab: anAttendee withContent: self);
-	add: (self createAdditionalInfoTab: anAttendee withContent: self);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self ) buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]) ;
+				activate; previousTabName: nil; cancelCallback: self cancelTab);
+	add: ((self createRegConferenceInfoTab: anAttendee withContent: self ) cancelCallback: self cancelTab);
+	add: ((self createBillingInfoTab: anAttendee withContent: self) cancelCallback: self cancelTab);
+	add: ((self createAdditionalInfoTab: anAttendee withContent: self) cancelCallback: self cancelTab);
+	add: ((self createPaymentInfoTab: anAttendee withContent: self ) buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; cancelCallback: self cancelTab);
 		yourself.
 	saveTabs := [ self saveAttendeeToGroupManagerTabs ]
 ]
