@@ -110,6 +110,12 @@ ERConference >> attendeesForATicket: ticketId [
 	^ self attends select: [ :each | each paymentInformation coupon = ticketId ]
 ]
 
+{ #category : #search }
+ERConference >> attendeesForATicket: ticket except: anAttendee [
+	^ self attends select: [ :each |  
+		each paymentInformation coupon = ticket ticketId and: [ each ~= anAttendee ] ]
+]
+
 { #category : #accessing }
 ERConference >> attends [
 	^ attends
@@ -700,9 +706,19 @@ ERConference >> validateLoginFor: aString1 password: aString2 [
 ]
 
 { #category : #validations }
-ERConference >> verifyIfTicketCanApply: ticket [
+ERConference >> verifyIfTicket: ticket canApplyTo: anAttendee [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
-	[ ((self attendeesForATicket: ticket ticketId) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
+	[ ((self attendeesForATicket: ticket except: anAttendee) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
+	ifFalse: [ ERException ticketWasExceeded signal ] ]
+]
+
+{ #category : #validations }
+ERConference >> verifyIfTicketCanApply: anAttendee [
+	|ticket|
+	ticket := anAttendee paymentInformation coupon.
+	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
+	ticket limitStrategyIsLimited ifTrue: 
+	[ ((self attendeesForATicket: anAttendee) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ ERException ticketWasExceeded signal ] ]
 ]

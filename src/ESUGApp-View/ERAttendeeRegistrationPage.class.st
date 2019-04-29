@@ -116,7 +116,7 @@ ERAttendeeRegistrationPage >> saveRegistration [
 	user := pageController saveAttendee.
 	pageController attendee userAccount: user.
 	"Coment this line in test mode"
-	self sendEmailTo: user.
+	"self sendEmailTo: user."
 	^ user
 ]
 

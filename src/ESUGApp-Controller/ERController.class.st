@@ -47,7 +47,7 @@ ERController >> applyReductionTicket: aTicket To: anAttendee [
 	aTicket = 'No reduction ticket'
 	ifTrue: [ anAttendee paymentInformation coupon: '' ]
 	ifFalse: [ ticket := conference reductionTicketWithName: aTicket.
-		(conference verifyIfTicketCanApply: ticket) 
+		(conference verifyIfTicket: ticket canApplyTo: anAttendee) 
 		ifTrue: [anAttendee paymentInformation coupon: aTicket]].
 	self updateAttendee: anAttendee.
 ]
@@ -173,7 +173,7 @@ ERController >> updateAffiliation: aff on: aGroup [
 
 { #category : #updating }
 ERController >> updateAttendee: anAttendee [
-	self verifyIfTheTicketIsStillAvailable: anAttendee paymentInformation coupon.
+	self verifyIfTheTicketIsStillAvailable: anAttendee.
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
@@ -237,16 +237,18 @@ ERController >> validateRegister: anAttendee [
 	self validateNewPassword: anAttendee userAccount password 
 	with: anAttendee userAccount confirmPassword.
 	anAttendee userAccount isAttendee ifFalse: [ ^ self ].
-	self verifyIfTheTicketIsStillAvailable: anAttendee paymentInformation coupon.
+	self verifyIfTheTicketIsStillAvailable: anAttendee.
 	self updatePaymentRate: anAttendee
 ]
 
 { #category : #action }
-ERController >> verifyIfTheTicketIsStillAvailable: aString [
-	(aString isNil or: [ aString isEmpty ]) ifFalse: [
+ERController >> verifyIfTheTicketIsStillAvailable: anAttendee [
+	|coupon|
+	coupon := anAttendee paymentInformation coupon.
+	(coupon isNil or: [ coupon isEmpty ]) ifFalse: [
 		self conference reductionTickets 
-		detect: [ :each | each ticketId = aString ] 
-		ifFound: [ :ticket | conference verifyIfTicketCanApply: ticket ] 
+		detect: [ :each | each ticketId = coupon ] 
+		ifFound: [ :ticket | conference verifyIfTicket: ticket canApplyTo: anAttendee ] 
 		ifNone: [ ERException ticketDoesNotExist signal ]
 	]
 ]
