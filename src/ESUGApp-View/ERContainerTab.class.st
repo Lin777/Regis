@@ -187,6 +187,14 @@ ERContainerTab >> modifyRegistrationInformation: anAttendee [
 ]
 
 { #category : #updating }
+ERContainerTab >> modifyRegistrationOf: anAttendee [
+	anAttendee paymentInformation hasPaid 
+		ifFalse:[ self modifyRegistrationInformation: anAttendee ]
+		ifTrue: [messageComponent changeToAlertOfError.
+			messageComponent errorMessage: 'You can not make modifications after having paid.']
+]
+
+{ #category : #updating }
 ERContainerTab >> modifyUserFormGroup: anUser [
 	mofidyUserForm := (ERTittledFormView on: anUser 
 								withContent: content) title: 'User';

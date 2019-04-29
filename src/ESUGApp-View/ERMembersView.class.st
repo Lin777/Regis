@@ -17,8 +17,12 @@ ERMembersView >> blockTableToExecute [
 
 { #category : #deleting }
 ERMembersView >> deleteAttendeeFromGroup: anAttendee [
-	controller user: self session user.
-	controller deleteAttendee: anAttendee
+	
+	anAttendee paymentInformation hasPaid 
+		ifFalse:[ controller user: self session user.
+	controller deleteAttendee: anAttendee ]
+		ifTrue: [messageComponent changeToAlertOfError.
+			messageComponent errorMessage: 'You can not delete an attendee after having paid.']
 ]
 
 { #category : #accessing }
@@ -29,6 +33,7 @@ ERMembersView >> headers [
 { #category : #accessing }
 ERMembersView >> initialize [
 	super initialize .
+	messageComponent id: 'alertOfMembers'.
 	callback := nil
 ]
 
@@ -45,7 +50,7 @@ ERMembersView >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :att | self modifyRegistrationInformation: att ]
+				with: [ :att | self modifyRegistrationOf: att ]
 				with: [ :att | att id , '-modify' ]
 				with: 'Modify'
 				with: ''
@@ -83,6 +88,7 @@ ERMembersView >> renderContainerOn: html [
 		id: 'formMembers';
 		with: [
 			html horizontalRule.
+			html render: messageComponent .
 			self renderTableOfAttendsOn: html]
 ]
 

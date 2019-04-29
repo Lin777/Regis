@@ -80,7 +80,7 @@ ERReductionTicketsTab >> initializeFormModifyTicket: aReductionTicket [
 	formAddTicket := ERReductionTicketForm
 		on: aReductionTicket
 		withContent: content.
-	formAddTicket callback: [ self actionModifyTicket: aReductionTicket  ]
+	formAddTicket callback: [ self actionModifyTicket: aReductionTicket ]
 ]
 
 { #category : #tableBlock }
@@ -131,7 +131,7 @@ ERReductionTicketsTab >> listOfTicket: anTicket [
 ERReductionTicketsTab >> modifyTicket: aReductionTicket [
 	self initializeFormModifyTicket: aReductionTicket.
 	content state: formAddTicket.
-	self updateStateTab: self tabName.
+	self updateStateTab: self tabName
 ]
 
 { #category : #rendering }

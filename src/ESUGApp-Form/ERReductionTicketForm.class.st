@@ -123,7 +123,7 @@ ERReductionTicketForm >> limitStrategy [
 ERReductionTicketForm >> renderAcceptButton: html [
 	html mdlButton
 		colored;
-		id: 'acceptAddTicket' ;
+		id: 'acceptAddTicket';
 		callback: [ [ self saveForms.
 				callback value]
 				on: ERException

@@ -17,7 +17,7 @@ users:                  <OrderedCollection> list of users to conference
 configuration:
 active:                 <Boolean> is the state of conference (active for register in conference)
 invoiceNumber:          <Number> is an incremental number of invoices of conference
-configurationOfHomePage:
+configurationOfHomePage: <ERConfigurationOfHomePage> object to update with html the principal page of page (principal page of logged user)
 "
 Class {
 	#name : #ERConference,
@@ -694,8 +694,8 @@ ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
 	reductionTickets 
 		do: [ :each | 
 			each ticketId = aTicket ticketId
-				ifTrue: [each = aTicket ifFalse:[
-					ERException ticketIdAlreadyRegistered signal ] ]].
+				ifTrue: [ each = aTicket ifFalse: [
+					ERException ticketIdAlreadyRegistered signal ]]]
 ]
 
 { #category : #validations }
@@ -710,15 +710,5 @@ ERConference >> verifyIfTicket: ticket canApplyTo: anAttendee [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
 	[ ((self attendeesForATicket: ticket except: anAttendee) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
-	ifFalse: [ ERException ticketWasExceeded signal ] ]
-]
-
-{ #category : #validations }
-ERConference >> verifyIfTicketCanApply: anAttendee [
-	|ticket|
-	ticket := anAttendee paymentInformation coupon.
-	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
-	ticket limitStrategyIsLimited ifTrue: 
-	[ ((self attendeesForATicket: anAttendee) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ ERException ticketWasExceeded signal ] ]
 ]
