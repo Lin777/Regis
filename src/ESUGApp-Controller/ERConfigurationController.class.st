@@ -96,7 +96,7 @@ ERConfigurationController >> deleteUser: anUser [
 ERConfigurationController >> modifyTicket: aTicket [
 	conference reductionTicketAlreadyExist: aTicket.
 	aTicket save.
-	self notifyAllObservers 
+	self notifyAllObservers
 ]
 
 { #category : #action }

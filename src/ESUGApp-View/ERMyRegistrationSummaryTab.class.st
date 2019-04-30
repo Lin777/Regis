@@ -20,6 +20,12 @@ ERMyRegistrationSummaryTab >> exportInvoice [
 	self exportInvoiceOf: invoice.
 ]
 
+{ #category : #initialization }
+ERMyRegistrationSummaryTab >> initialize [ 
+	super initialize .
+	messageComponent id: 'alertMyRegistration'
+]
+
 { #category : #accessing }
 ERMyRegistrationSummaryTab >> managerOfInvoice [
 	attendee idGroup isNotNil
@@ -27,12 +33,6 @@ ERMyRegistrationSummaryTab >> managerOfInvoice [
 		group := controller conference getGroupOfAttendee: attendee.
 		^ group ]
 	ifFalse: [ ^ attendee ] 
-]
-
-{ #category : #updating }
-ERMyRegistrationSummaryTab >> modifyRegistration [
-	self modifyRegistrationInformation: attendee.
-	
 ]
 
 { #category : #actions }
@@ -80,6 +80,7 @@ ERMyRegistrationSummaryTab >> renderButtonsOn: html [
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderContainerOn: html [ 	
 	html horizontalRule .
+	html render: messageComponent .
 	self renderLabelsSummaryOn: html.
 	self renderButtonsOn: html.
 ]
@@ -110,7 +111,7 @@ ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html. [
 		rippleEffect;
 		id: 'modifyRegistration';
 		disabled: (attendee isAbleToModifyRegister ifTrue: 'disabled');
-		callback: [ self modifyRegistration ];
+		callback: [ self modifyRegistrationOf: attendee ];
 		with: 'Modify Registration Information'.
 ]
 

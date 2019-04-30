@@ -97,20 +97,6 @@ ERTestUserAccount >> testIsGroupManager [
 ]
 
 { #category : #tests }
-ERTestUserAccount >> testNumericValueFirstNameField [
-	| userAccount |
-	userAccount := (self class testUserAccount) firstName: 'Test1'; yourself .
-	self assertNonTextField: userAccount 
-]
-
-{ #category : #tests }
-ERTestUserAccount >> testNumericalValueLastNameField [
-	| userAccount |
-	userAccount := (self class testUserAccount) lastName: 'Test1 test'; yourself .
-	self assertNonTextField: userAccount 
-]
-
-{ #category : #tests }
 ERTestUserAccount >> testValidateUserAccount [
 	| errors |
 	errors := self class testUserAccount asComponent validate; errors.

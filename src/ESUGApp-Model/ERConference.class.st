@@ -17,7 +17,7 @@ users:                  <OrderedCollection> list of users to conference
 configuration:
 active:                 <Boolean> is the state of conference (active for register in conference)
 invoiceNumber:          <Number> is an incremental number of invoices of conference
-configurationOfHomePage:
+configurationOfHomePage: <ERConfigurationOfHomePage> object to update with html the principal page of page (principal page of logged user)
 "
 Class {
 	#name : #ERConference,
@@ -108,6 +108,22 @@ ERConference >> attendeeFromUser: anUser [
 { #category : #search }
 ERConference >> attendeesForATicket: ticketId [
 	^ self attends select: [ :each | each paymentInformation coupon = ticketId ]
+]
+
+{ #category : #search }
+ERConference >> attendeesForATicket: ticket except: anAttendee [
+	^ self attends select: [ :each |  
+		each paymentInformation coupon = ticket ticketId and: [ each ~= anAttendee ] ]
+]
+
+{ #category : #accessing }
+ERConference >> attendeesWhoDidNotPaid [
+	^ attends reject: [ :each | each paymentInformation hasPaid ] 
+]
+
+{ #category : #accessing }
+ERConference >> attendeesWhoPaid [
+	^ attends select: [ :each | each paymentInformation hasPaid ]
 ]
 
 { #category : #accessing }
@@ -244,6 +260,27 @@ ERConference >> exportAttends: fileName [
 			neoWriter writeHeader: self headerAttendee.
 			self attends 
 				do: [ :each | 
+					neoWriter
+						nextPut:
+							{ each paymentInformation invoiceNumber.
+							each userAccount firstName.
+							each userAccount lastName.
+							each userAccount email.
+							each contactInformation country.
+							each affiliationInformation organizationName} ].
+			neoWriter close ].
+	^ cvs
+]
+
+{ #category : #exporting }
+ERConference >> exportAttends: list in: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerAttendee.
+			list do: [ :each | 
 					neoWriter
 						nextPut:
 							{ each paymentInformation invoiceNumber.
@@ -688,8 +725,8 @@ ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
 	reductionTickets 
 		do: [ :each | 
 			each ticketId = aTicket ticketId
-				ifTrue: [each = aTicket ifFalse:[
-					ERException ticketIdAlreadyRegistered signal ] ]].
+				ifTrue: [ each = aTicket ifFalse: [
+					ERException ticketIdAlreadyRegistered signal ]]]
 ]
 
 { #category : #validations }
@@ -700,9 +737,9 @@ ERConference >> validateLoginFor: aString1 password: aString2 [
 ]
 
 { #category : #validations }
-ERConference >> verifyIfTicketCanApply: ticket [
+ERConference >> verifyIfTicket: ticket canApplyTo: anAttendee [
 	ticket limitStrategyIsUnlimited ifTrue: [ ^ true ].
 	ticket limitStrategyIsLimited ifTrue: 
-	[ ((self attendeesForATicket: ticket ticketId) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
+	[ ((self attendeesForATicket: ticket except: anAttendee) size < ticket limitStrategy limit) ifTrue: [ ^ true ]
 	ifFalse: [ ERException ticketWasExceeded signal ] ]
 ]
