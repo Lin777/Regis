@@ -214,24 +214,6 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithInvalidFormatOfEmail [
 		equals: 'Email (Required): Please enter a valid email'
 ]
 
-{ #category : #adminUserTests }
-ERLoggedPageAsAttendeeTest >> testEditUserWithNoValidFirstName [
-	self pressOptionAdmin  .
-	acceptFormButton := 'accept-user'.
-	self updateField: 'firstName' with: 'Evelyn123'.
-	self assert: self getTextOfError 
-		equals: (self messageOnlyTextIsAcceptedFor: 'First Name')
-]
-
-{ #category : #adminUserTests }
-ERLoggedPageAsAttendeeTest >> testEditUserWithNoValidLastName [
-	self pressOptionAdmin  .
-	acceptFormButton := 'accept-user'.
-	self updateField: 'lastName' with: 'Evelyn123'.
-	self assert: self getTextOfError 
-		equals: (self messageOnlyTextIsAcceptedFor: 'Last Name')
-]
-
 { #category : #myRegistrationSummaryTests }
 ERLoggedPageAsAttendeeTest >> testModifyRegistrationOfSummary [
 	self pressOptionMyRegistration.
