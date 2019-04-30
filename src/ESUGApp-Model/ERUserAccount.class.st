@@ -148,8 +148,8 @@ ERUserAccount >> descriptionFirstName [
 		beRequired;
 		label: 'First Name (Required)';
 		withoutLabel: true;
-		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
-		labelled: 'This field only accept a text';
+		"addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
+		labelled: 'This field only accept a text';"
 		id: 'firstName';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
@@ -166,8 +166,8 @@ ERUserAccount >> descriptionLastName [
 		beRequired;
 		label: 'Last Name (Required)';
 		withoutLabel: true;
-		addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
-		labelled: 'This field only accept a text';
+		"addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
+		labelled: 'This field only accept a text';"
 		id: 'lastName';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
