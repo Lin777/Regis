@@ -7,6 +7,9 @@ Tab to render all attendees of ESUG page in a table.
 Class {
 	#name : #ERAttendeesTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'strategy'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -19,7 +22,11 @@ ERAttendeesTab >> applyReductionTicketTo: user [
 
 { #category : #accessing }
 ERAttendeesTab >> attends [
+	self strategyIsByPaidState ifTrue: [ ^ controller conference attendeesWhoPaid ].
+	self strategyIsByUnpaidState ifTrue: [ ^ controller conference attendeesWhoDidNotPaid ].
 	^ controller conference attends
+	
+	
 ]
 
 { #category : #tableBlock }
@@ -52,14 +59,21 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 
 { #category : #actions }
 ERAttendeesTab >> exportAttends [
-	| file |
-	file := controller conference exportAttends: 'attends'.
-	self exportFile: file wihtName: 'attends.csv'
+	| file fileName|
+	fileName := self nameOfExportFile.
+	file := controller conference exportAttends: self attends in: fileName.
+	self exportFile: file wihtName: fileName, '.csv'
 ]
 
 { #category : #accessing }
 ERAttendeesTab >> headers [
 	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Is Volunter?' '')
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> initialize [ 	
+	super initialize.
+	strategy := 'All'.
 ]
 
 { #category : #initialization }
@@ -122,6 +136,13 @@ ERAttendeesTab >> listDataToRenderButton [
 		yourself
 ]
 
+{ #category : #actions }
+ERAttendeesTab >> nameOfExportFile [
+	self strategyIsByPaidState ifTrue: [ ^ 'attendeesWhoPaid' ].
+	self strategyIsByUnpaidState ifTrue: [ ^ 'attendeesWhoDidNotPaid' ].
+	^ 'attendees'
+]
+
 { #category : #rendering }
 ERAttendeesTab >> renderButtonsOn: html [
 	html mdlAnchorButton
@@ -136,11 +157,31 @@ ERAttendeesTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllAttends';
-		with: [ self renderButtonsOn: html.
+		with: [ 
+			self renderSelectorWayToFilterOn: html.
+			self renderButtonsOn: html.
 			html horizontalRule.
 			html render: messageComponent .
 			html break.
 			self renderTableOfAttendsOn: html ]
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> renderSelectorWayToFilterOn: html [
+	html div class: 'half'; with: [
+	html mdlTextFieldContainer
+		style: 'display: block';
+		floatingLabel;
+		with: [ html mdlTextFieldLabel for: 'selectStrategy';
+			 with: 'Strategy of Filter'.
+			html select
+				onChange: 'submit()';
+				class: 'mdl-textfield__input';
+				id: 'selectStrategy';
+				list: #('All' 'Paid' 'Unpaid');
+				selected: strategy;
+				callback: [ :value | strategy := value.
+					self updateStateTab: self tabName. ] ] ]
 ]
 
 { #category : #rendering }
@@ -166,6 +207,21 @@ ERAttendeesTab >> sendInvoiceTo: user [
 		messageComponent class: 'errors'.
 		messageComponent errorMessage: exception messageText.
 		self updateStateTab: self tabName].
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> strategyIsAll [
+	^ strategy = 'All'
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> strategyIsByPaidState [
+	^ strategy = 'Paid'
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> strategyIsByUnpaidState [
+	^ strategy = 'Unpaid'
 ]
 
 { #category : #accessing }

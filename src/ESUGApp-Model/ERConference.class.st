@@ -117,6 +117,16 @@ ERConference >> attendeesForATicket: ticket except: anAttendee [
 ]
 
 { #category : #accessing }
+ERConference >> attendeesWhoDidNotPaid [
+	^ attends reject: [ :each | each paymentInformation hasPaid ] 
+]
+
+{ #category : #accessing }
+ERConference >> attendeesWhoPaid [
+	^ attends select: [ :each | each paymentInformation hasPaid ]
+]
+
+{ #category : #accessing }
 ERConference >> attends [
 	^ attends
 ]
@@ -250,6 +260,27 @@ ERConference >> exportAttends: fileName [
 			neoWriter writeHeader: self headerAttendee.
 			self attends 
 				do: [ :each | 
+					neoWriter
+						nextPut:
+							{ each paymentInformation invoiceNumber.
+							each userAccount firstName.
+							each userAccount lastName.
+							each userAccount email.
+							each contactInformation country.
+							each affiliationInformation organizationName} ].
+			neoWriter close ].
+	^ cvs
+]
+
+{ #category : #exporting }
+ERConference >> exportAttends: list in: fileName [
+	| cvs |
+	cvs := String
+		streamContents: [ :out | 
+			| neoWriter |
+			neoWriter := NeoCSVWriter on: out.
+			neoWriter writeHeader: self headerAttendee.
+			list do: [ :each | 
 					neoWriter
 						nextPut:
 							{ each paymentInformation invoiceNumber.
