@@ -12,6 +12,7 @@ WORKDIR /esug
 COPY createPharoImage.sh createPharoImage.sh
 COPY startPharoImage.sh startPharoImage.sh
 
+RUN chmod +x startPharoImage.sh
 RUN chmod +x createPharoImage.sh
 RUN ./createPharoImage.sh
 
