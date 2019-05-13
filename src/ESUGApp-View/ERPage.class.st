@@ -92,7 +92,7 @@ ERPage >> renderPageOn: html [
 
 { #category : #rendering }
 ERPage >> styleBackgound [
-	^ 'background-image: url(''/files/CssForLoginMDL/profile_city.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; '
+	^ 'background-image: url(''/files/CssForLoginMDL/city_profile1.jpg''); background-repeat: repeat-y; background-size: cover; height: 100vh; alt="Credit: Photo by Glenn Carstens-Peters on Unsplash" title="Credit: Photo by Glenn Carstens-Peters on Unsplash"'
 ]
 
 { #category : #accessing }
