@@ -45,7 +45,22 @@ ERConfiguration >> renderBackupButtonOn: html [
 { #category : #rendering }
 ERConfiguration >> renderContainerOn: html [
 	self renderSwitchOpenCloseOn: html.
-	self renderBackupButtonOn: html
+	self renderBackupButtonOn: html.
+	self renderRestoreButtonOn: html
+]
+
+{ #category : #rendering }
+ERConfiguration >> renderRestoreButtonOn: html [
+	html horizontalRule .
+	html heading level3; with: 'Restore Backup' .
+	html horizontalRule.
+	html render: messageComponent.
+	html heading level6 with: 'This feature allows you restore the last Backup.'.
+	html mdlAnchorButton
+		raised;
+		primaryColor;
+		callback: [ self restore. self updateStateTab: self tabName ];
+		with: 'Restore'
 ]
 
 { #category : #rendering }
@@ -72,6 +87,10 @@ ERConfiguration >> renderSwitchOpenCloseOn: html [
 ERConfiguration >> renderTitleForSwitchOn: html [
 	html horizontalRule .
 	html heading level6 with: 'Change the state of the switch opens or closes the conference registration'
+]
+
+{ #category : #rendering }
+ERConfiguration >> restore [
 ]
 
 { #category : #accessing }
