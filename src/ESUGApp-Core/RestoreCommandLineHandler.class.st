@@ -40,7 +40,7 @@ RestoreCommandLineHandler >> activate [
 				snapshot: true 
 				andQuit: (self hasOption: 'no-quit') not ].
 	
-	(self hasOption: '--no-quit')
+	(self hasOption: 'no-quit')
 		ifFalse: [ self quit ]
 ]
 
@@ -137,7 +137,7 @@ RestoreCommandLineHandler >> initializeAllObjects [
 { #category : #'as yet unclassified' }
 RestoreCommandLineHandler >> restore: aStream [
 	[ self deleteBackupFolder.
-	self deleteAll .
+	self deleteAll.
 	ERBackupRestore uniqueInstance restoreBackup: aStream asString.
 	self hasSessionChanged
 		ifFalse: [ 
