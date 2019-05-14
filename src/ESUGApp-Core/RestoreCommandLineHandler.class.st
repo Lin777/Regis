@@ -112,7 +112,7 @@ RestoreCommandLineHandler >> deleteAll [
 				on: Error
 				do: [  ] ].
 	ERConference coolDown.
-	ERSandstoneDatabase initialize.
+	self initializeAllObjects
 ]
 
 { #category : #'as yet unclassified' }
@@ -131,14 +131,6 @@ RestoreCommandLineHandler >> evaluateArguments [
 
 { #category : #initialization }
 RestoreCommandLineHandler >> initializeAllObjects [	
-	ERUserAccount warmUp.
-	ERAttendee warmUp.
-	ERAward warmUp.
-	ERReductionTicket warmUp.
-	ERFee warmUp.
-	ERGroup warmUp.
-	ERTalk warmUp.
-	ERConference warmUp.
 	ERSandstoneDatabase initialize.
 ]
 
