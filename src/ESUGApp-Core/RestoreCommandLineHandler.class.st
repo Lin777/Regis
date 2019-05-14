@@ -103,6 +103,12 @@ RestoreCommandLineHandler >> deleteAll [
 	ERConference coolDown.
 ]
 
+{ #category : #'as yet unclassified' }
+RestoreCommandLineHandler >> deleteBackupFolder [
+	((FileSystem workingDirectory asFileReference / 'Backup')
+		 ensureCreateDirectory) ensureDeleteAll
+]
+
 { #category : #activation }
 RestoreCommandLineHandler >> evaluateArguments [
 	| argumentString |
@@ -113,7 +119,8 @@ RestoreCommandLineHandler >> evaluateArguments [
 
 { #category : #'as yet unclassified' }
 RestoreCommandLineHandler >> restore: aStream [
-	[ self deleteAll .
+	[ self deleteBackupFolder.
+	self deleteAll .
 	ERBackupRestore uniqueInstance restoreBackup: aStream asString.
 	self hasSessionChanged
 		ifFalse: [ 
