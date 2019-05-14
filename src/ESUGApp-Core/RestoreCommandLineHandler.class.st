@@ -29,9 +29,18 @@ RestoreCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
 		
+	self arguments 
+		ifEmpty: [ ^ self ].
+		
 	self evaluateArguments.
 	
-	(self hasOption: 'no-quit')
+	(self hasOption: 'save')
+		ifTrue: [ 
+			^ Smalltalk 
+				snapshot: true 
+				andQuit: (self hasOption: 'no-quit') not ].
+	
+	(self hasOption: '--no-quit')
 		ifFalse: [ self quit ]
 ]
 
@@ -44,7 +53,8 @@ RestoreCommandLineHandler >> argumentString [
 	arguments := (skipArguments includes: self arguments first)
 		ifFalse: [ self arguments ]
 		ifTrue: [
-			(self arguments size >= 2 and: [ skipArguments includes: self arguments second ])
+			(self arguments size >= 2 and:
+			 [ skipArguments includes: self arguments second ])
 				ifTrue: [ self arguments allButFirst: 2 ]
 				ifFalse: [ self arguments allButFirst ]].
 		
@@ -101,6 +111,7 @@ RestoreCommandLineHandler >> deleteAll [
 				on: Error
 				do: [  ] ].
 	ERConference coolDown.
+	ERSandstoneDatabase initialize.
 ]
 
 { #category : #'as yet unclassified' }
