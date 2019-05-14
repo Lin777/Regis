@@ -39,7 +39,6 @@ RestoreCommandLineHandler >> activate [
 RestoreCommandLineHandler >> argumentString [
 	| arguments skipArguments |
 	
-	"Now this is ugly... Coral would be nice here! Basically we strip skipArguments if, and only if they appear at the beginning of arguments"
 	skipArguments := #( '--no-quit' '--save' '-rlb' '--restore').
 
 	arguments := (skipArguments includes: self arguments first)
@@ -52,6 +51,58 @@ RestoreCommandLineHandler >> argumentString [
 	^ arguments joinUsing: Character space.
 ]
 
+{ #category : #modifying }
+RestoreCommandLineHandler >> deleteAll [ 	
+	ERAttendee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAttendee coolDown.
+	ERAward
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERAward coolDown.	
+	ERFee
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERFee coolDown.
+	ERGroup
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERGroup coolDown.
+	ERReductionTicket
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERReductionTicket coolDown.
+	ERTalk
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERTalk coolDown.
+	ERUserAccount
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERUserAccount coolDown.
+	ERConference
+		do: [ :each | 
+			[ each delete ]
+				on: Error
+				do: [  ] ].
+	ERConference coolDown.
+]
+
 { #category : #activation }
 RestoreCommandLineHandler >> evaluateArguments [
 	| argumentString |
@@ -62,7 +113,8 @@ RestoreCommandLineHandler >> evaluateArguments [
 
 { #category : #'as yet unclassified' }
 RestoreCommandLineHandler >> restore: aStream [
-	[ ERBackupRestore uniqueInstance restoreBackup: aStream asString.
+	[ self deleteAll .
+	ERBackupRestore uniqueInstance restoreBackup: aStream asString.
 	self hasSessionChanged
 		ifFalse: [ 
 			self stdout
