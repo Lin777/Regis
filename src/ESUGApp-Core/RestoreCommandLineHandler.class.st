@@ -63,6 +63,7 @@ RestoreCommandLineHandler >> argumentString [
 
 { #category : #modifying }
 RestoreCommandLineHandler >> deleteAll [ 	
+	self initializeAllObjects.
 	ERAttendee
 		do: [ :each | 
 			[ each delete ]
@@ -126,6 +127,19 @@ RestoreCommandLineHandler >> evaluateArguments [
 	argumentString :=  self argumentString.
 	argumentString ifEmpty: [ ^ self ].
 	self restore: argumentString
+]
+
+{ #category : #initialization }
+RestoreCommandLineHandler >> initializeAllObjects [	
+	ERUserAccount warmUp.
+	ERAttendee warmUp.
+	ERAward warmUp.
+	ERReductionTicket warmUp.
+	ERFee warmUp.
+	ERGroup warmUp.
+	ERTalk warmUp.
+	ERConference warmUp.
+	ERSandstoneDatabase initialize.
 ]
 
 { #category : #'as yet unclassified' }
