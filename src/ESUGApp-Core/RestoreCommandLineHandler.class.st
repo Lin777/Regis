@@ -1,3 +1,18 @@
+"
+Usage: restore [--help] [--save] [ --no-quit ] <path of backup file>
+	--help                   list this help message
+	--save                   save the image after restore
+	--no-quit                if specified, the image continues runing after
+	                         restore data
+	<path of backup file>    path of backup file to restore and 
+	                         the result is printed on stdout
+
+Documentation:
+A CommandLineHandler that reads a string from the command line, outputs the evaluated result and quits the image. 
+
+This handler either evaluates the arguments passed to the image:
+	pharo Pharo.image restore ""/complet/path/of/backup/file.1""
+"
 Class {
 	#name : #RestoreCommandLineHandler,
 	#superclass : #STCommandLineHandler,
