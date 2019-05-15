@@ -50,3 +50,13 @@ The page generates a backup file after each modification to the database, to res
 ```bash
 screen -Sdm esug ./pharo esug.image --no-quit
 ``` 
+
+## Restore data when server stops unexpectedly
+- Connect to the container in which I create the image:
+```bash
+./bashDocker.sh
+``` 
+- Run the following script to restore data and start the server, you must change the path argument to the path of the file you wish to restore (it must have the name with the format: esug.positive_number, eg esug.2, esug.7, etc.)
+```bash
+screen -Sdm esug ./pharo esug.image restore --no-quit "/esug/Backup/esug.13"
+``` 
