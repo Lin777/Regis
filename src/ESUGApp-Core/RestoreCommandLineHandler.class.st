@@ -143,7 +143,7 @@ RestoreCommandLineHandler >> handleError: error [
 	
 	"for syntax errors we can used the default action"	"otherwise resignal it"
 	(error isKindOf: FileDoesNotExistException)
-		ifTrue: [ error defaultAction ]
+		ifTrue: [ UIManager default syntaxErrorNotificationDefaultAction: error ]
 		ifFalse: [ error pass ]
 ]
 
