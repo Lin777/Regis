@@ -10,7 +10,10 @@ Usage: restore [--help] [--save] [ --no-quit ] <path of backup file>
 Documentation:
 
 This handler restore the path (path from root) passed to the image:
-	pharo Pharo.image restore ""/complet/path/of/backup/file.1""
+	pharo Pharo.image restore ""/complet/path/of/backup/file/esug.1""
+	
+You also can use this command whitout especify a path, and this use by default a path of last backup
+	pharo Pharo.image restore
 "
 Class {
 	#name : #RestoreCommandLineHandler,
@@ -133,7 +136,7 @@ RestoreCommandLineHandler >> deleteAll [
 RestoreCommandLineHandler >> evaluateArguments [
 	| argumentString |
 	argumentString :=  self argumentString.
-	argumentString ifEmpty: [ ^ self ].
+	argumentString ifEmpty: [ ^ self restore ].
 	self restore: argumentString
 ]
 
@@ -167,6 +170,19 @@ RestoreCommandLineHandler >> printFileNotFoundWarning: aFileException [
 		nextPutAll: errorMessage; lf;
 		nextPutAll: ('' padLeftTo: errorMessage size with: $=); lf;
 		clear.
+]
+
+{ #category : #'as yet unclassified' }
+RestoreCommandLineHandler >> restore [
+	[ self deleteAll.
+	ERBackupRestore uniqueInstance restoreBackup.
+	self hasSessionChanged
+		ifFalse: [ 
+			self stdout
+				print: 'Restore succesfull';
+				lf ] ]
+		on: Error
+		do: [ :error | self handleError: error]
 ]
 
 { #category : #'as yet unclassified' }
