@@ -124,7 +124,12 @@ ERBackupRestore >> updateVersionToLastVersionOfBackup [
 
 { #category : #'actions api' }
 ERBackupRestore >> updateVersionToLastVersionOfBackup: aFilePath [
-	self version: ( self versionOf: (aFilePath splitOn: '/')last)
+	|lastBackup|
+	lastBackup := ERBackupRestore new lastBackupFilename.
+	lastBackup ifNil: [ 
+		self version: ( self versionOf: (aFilePath splitOn: '/')last) ]
+	ifNotNil: [ 
+		self version: ( self versionOf: lastBackup path basename) ]
 ]
 
 { #category : #accessing }
