@@ -143,7 +143,7 @@ RestoreCommandLineHandler >> handleError: error [
 	
 	"for syntax errors we can used the default action"	"otherwise resignal it"
 	(error isKindOf: FileDoesNotExistException)
-		ifTrue: [ UIManager default fileDoesNotExistErrorNotificationDefaultAction: error ]
+		ifTrue: [ CommandLineUIManager default alert: '' title: error messageText ]
 		ifFalse: [ error pass ]
 ]
 
