@@ -143,13 +143,30 @@ RestoreCommandLineHandler >> handleError: error [
 	
 	"for syntax errors we can used the default action"	"otherwise resignal it"
 	(error isKindOf: FileDoesNotExistException)
-		ifTrue: [ CommandLineUIManager default alert: '' title: error messageText ]
+		ifTrue: [ self printFileNotFoundWarning: error  ]
 		ifFalse: [ error pass ]
 ]
 
 { #category : #initialization }
 RestoreCommandLineHandler >> initializeAllObjects [	
 	ERSandstoneDatabase initialize.
+]
+
+{ #category : #'as yet unclassified' }
+RestoreCommandLineHandler >> printFileNotFoundWarning: aFileException [
+	| errorMessage  |
+	
+	stderr := VTermOutputDriver stderr.
+		
+	"first gather the error title to be able to underline it properly"
+	errorMessage := String streamContents: [ :s|
+		s nextPutAll: 'File does not exist: '; 
+			print: aFileException messageText ].
+	
+	 stderr red;
+		nextPutAll: errorMessage; lf;
+		nextPutAll: ('' padLeftTo: errorMessage size with: $=); lf;
+		clear.
 ]
 
 { #category : #'as yet unclassified' }
