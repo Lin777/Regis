@@ -138,6 +138,15 @@ RestoreCommandLineHandler >> evaluateArguments [
 	self restore: argumentString
 ]
 
+{ #category : #'as yet unclassified' }
+RestoreCommandLineHandler >> handleError: error [	
+	
+	"for syntax errors we can used the default action"	"otherwise resignal it"
+	(error isKindOf: FileDoesNotExistException)
+		ifTrue: [ error defaultAction ]
+		ifFalse: [ error pass ]
+]
+
 { #category : #initialization }
 RestoreCommandLineHandler >> initializeAllObjects [	
 	ERSandstoneDatabase initialize.
