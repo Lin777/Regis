@@ -22,6 +22,7 @@ ERConfigurationController >> addUser: anUser [
 		ifNil: [ | userSaved |
 			userSaved := anUser save.
 			conference addUser: userSaved.
+			self notifyAllObservers .
 			^ userSaved ]
 ]
 

@@ -106,8 +106,30 @@ ERBackupRestore >> restoreBackup [
 ]
 
 { #category : #'actions api' }
+ERBackupRestore >> restoreBackup: aFilePath [
+	|aFile|
+	self updateVersionToLastVersionOfBackup: aFilePath.
+	[aFile := SDFuelSerializer new materializeFromFile: aFilePath.
+	aFile ifNotNil: [ :backup | backup do: 
+		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]]
+	on: FileDoesNotExistException 
+	do: [ :exp | exp signal].
+	
+]
+
+{ #category : #'actions api' }
 ERBackupRestore >> updateVersionToLastVersionOfBackup [
 	self version: ( self versionOf: self lastBackupFilename path basename)
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> updateVersionToLastVersionOfBackup: aFilePath [
+	|lastBackup|
+	lastBackup := ERBackupRestore new lastBackupFilename.
+	lastBackup ifNil: [ 
+		self version: ( self versionOf: (aFilePath splitOn: '/')last) ]
+	ifNotNil: [ 
+		self version: ( self versionOf: lastBackup path basename) ]
 ]
 
 { #category : #accessing }

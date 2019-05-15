@@ -74,6 +74,10 @@ ERConfiguration >> renderTitleForSwitchOn: html [
 	html heading level6 with: 'Change the state of the switch opens or closes the conference registration'
 ]
 
+{ #category : #rendering }
+ERConfiguration >> restore [
+]
+
 { #category : #accessing }
 ERConfiguration >> tabId [
 	^ 'tabConfiguration'
