@@ -143,7 +143,8 @@ RestoreCommandLineHandler >> handleError: error [
 	
 	"for syntax errors we can used the default action"	"otherwise resignal it"
 	(error isKindOf: FileDoesNotExistException)
-		ifTrue: [ self printFileNotFoundWarning: error  ]
+		ifTrue: [ self printFileNotFoundWarning: error .
+			self exitFailure ]
 		ifFalse: [ error pass ]
 ]
 
