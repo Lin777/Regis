@@ -56,7 +56,13 @@ screen -Sdm esug ./pharo esug.image --no-quit
 ```bash
 ./bashDocker.sh
 ``` 
-- Run the following script to restore data and start the server, you must change the path argument to the path of the file you wish to restore (it must have the name with the format: esug.positive_number, eg esug.2, esug.7, etc.)
+- Run the following script to restore data and start the server (exists 2 cases)
+
+1. If you want to use a specific backup file, you must change the path argument to the path of the file you wish to restore (it must have the name with the format: esug.positive_number, eg esug.2, esug.7, etc.)
 ```bash
 screen -Sdm esug ./pharo esug.image restore --no-quit "/esug/Backup/esug.13"
 ``` 
+2. If you want use the last backup path by default (/esug/Backup/esug.lastBackup)
+```bash
+screen -Sdm esug ./pharo esug.image restore --no-quit
+```
