@@ -8,9 +8,8 @@ Usage: restore [--help] [--save] [ --no-quit ] <path of backup file>
 	                         the result is printed on stdout
 
 Documentation:
-A CommandLineHandler that reads a string from the command line, outputs the evaluated result and quits the image. 
 
-This handler either evaluates the arguments passed to the image:
+This handler restore the path (path from root) passed to the image:
 	pharo Pharo.image restore ""/complet/path/of/backup/file.1""
 "
 Class {
