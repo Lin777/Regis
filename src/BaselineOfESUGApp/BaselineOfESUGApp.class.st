@@ -36,11 +36,11 @@ BaselineOfESUGApp >> baseline: spec [
 			spec
 				package: 'ESUGApp-PostMark-Core' with: [ spec requires: 'NeoJSON' ];
 				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
-				package: 'ESUGApp-Controller' with: [ spec requires: #('MaterialDesignLite' 'NeoCSV') ];
+				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View') ];		
-				package: 'ESUGApp-Library' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Model') ];
+				package: 'ESUGApp-Library' with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
 				package: 'ESUGApp-Form' with: [ spec requires: #('ESUGApp-View') ];
-				package: 'ESUGApp-Component' with: [ spec requires: #('ESUGApp-Controller') ];
+				package: 'ESUGApp-Component' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Controller') ];
 				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component') ];
 				package: 'ESUGApp-Test' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
 				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
@@ -51,6 +51,10 @@ BaselineOfESUGApp >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfESUGApp >> setUpDependencies: spec [
+	spec	
+		baseline: 'Seaside3'	
+		with: [ spec	
+				repository: 'github://SeasideSt/Seaside:master/repository' ].
 	spec
 		baseline: 'Parasol'
 		with: [ spec
