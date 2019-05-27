@@ -58,6 +58,8 @@ ERGroupRegistrationTab >> initializeController [
 { #category : #rendering }
 ERGroupRegistrationTab >> initializeFormRegister [
 	newAttendee := (ERAttendee new) affiliationInformation: (self groupManager affiliationInformation).
+	newAttendee paymentInformation: (newAttendee paymentInformation readOnly: true).
+	newAttendee affiliationInformation: (newAttendee affiliationInformation readOnly: true).
 	formRegister := ERContainerTabs
 		formRegisterOn: newAttendee
 		withCallback: callback

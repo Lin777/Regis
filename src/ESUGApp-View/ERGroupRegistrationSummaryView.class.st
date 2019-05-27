@@ -24,8 +24,8 @@ ERGroupRegistrationSummaryView >> initializePaymentForm [
 	^ ( ERPaymentGroupManagerView on: self group
 		withContent: content) 
 	updatePayment: [ :aGroup | self payForGroup: aGroup ];
-	cancel: [ self returnToThePreviousState .
-		self updateStateTab: self tabName. ];
+	cancel: [ self returnToThePreviousState.
+		self updateStateTab: self tabName ];
 	blockForUpdate: [ :aGroup | aGroup save.
 	controller updateGroup: aGroup ]
 ]

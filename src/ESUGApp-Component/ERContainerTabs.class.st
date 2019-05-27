@@ -56,7 +56,8 @@ ERContainerTabs >> callback: anObject [
 
 { #category : #initialization }
 ERContainerTabs >> cancelTab [
-	^ [ :anAttendee |  anAttendee abortChanges.
+	^ [ :anAttendee |  anAttendee version > 0 ifTrue: [
+		anAttendee abortChanges].
 		self content state: self content lastState  ]
 ]
 

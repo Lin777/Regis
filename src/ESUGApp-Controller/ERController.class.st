@@ -192,14 +192,14 @@ ERController >> updateAward: anAward [
 ERController >> updateGroup: aGroup [
 	self updatePaymentRateForGroup: aGroup.
 	aGroup updateHasPaidOfAll.
-	self notifyAllObservers .
+	self notifyAllObservers.
 	^ aGroup save.
 ]
 
 { #category : #updating }
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
-	amount := conference paymentAmountFor: anAttendee .
+	amount := conference paymentAmountFor: anAttendee.
 	anAttendee paymentInformation paymentAmount: amount.
 	anAttendee addPayPalComissionifApply: (conference addPayPalComissionOn: amount)
 ]
