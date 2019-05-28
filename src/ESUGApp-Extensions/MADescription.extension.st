@@ -1,6 +1,22 @@
 Extension { #name : #MADescription }
 
 { #category : #'*ESUGApp-Extensions' }
+MADescription >> beDisabled [
+	self disabled: true
+]
+
+{ #category : #'*ESUGApp-Extensions' }
+MADescription >> disabled [
+
+	^ self propertyAt: #disabled ifAbsent: [ false ]
+]
+
+{ #category : #'*ESUGApp-Extensions' }
+MADescription >> disabled: aBoolean [
+	self propertyAt: #disabled put: aBoolean
+]
+
+{ #category : #'*ESUGApp-Extensions' }
 MADescription >> id [
 	^ self propertyAt: #id 
 	ifAbsent: [ nil ]

@@ -23,6 +23,7 @@ MDLMASelectListComponent >> renderEditorForGroupedOn: html [
 				html select
 		class: 'mdl-textfield__input';
 		id: inputId;
+		addAttributeAt: 'disabled' if: self disabled;
 		dispatchCallback;
 		with: [ self renderGroupsOn: html ] ]
 	
@@ -41,6 +42,7 @@ MDLMASelectListComponent >> renderEditorForUngroupedOn: html [
 	html  select
 		class: 'mdl-textfield__input';
 		id: self labelId;
+		addAttributeAt: 'disabled' if: self disabled;
 		list: self options;
 		selected: self value;
 		callback: [ :arg2 | self value: arg2 ];

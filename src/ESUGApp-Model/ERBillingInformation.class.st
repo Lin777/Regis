@@ -15,7 +15,8 @@ Class {
 		'organizationCountry',
 		'organizationProvince',
 		'organizationPostal',
-		'membershipType'
+		'membershipType',
+		'readOnly'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -38,6 +39,7 @@ ERBillingInformation >> descriptionMembershipType [
 		withoutLabel: true;
 		id: 'membershipType';
 		componentClass: MDLMASelectListComponent .
+	self readOnly ifTrue: [ tmp1 beDisabled ].
 	^ tmp1 yourself
 ]
 
@@ -56,6 +58,7 @@ ERBillingInformation >> descriptionOrganizationAddrees1 [
 		cssClass: 'half';
 		id: 'organizationAddrees1';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -73,6 +76,7 @@ ERBillingInformation >> descriptionOrganizationAddrees2 [
 		cssClass: 'half';
 		id: 'organizationAddrees2';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue:[ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -90,20 +94,23 @@ ERBillingInformation >> descriptionOrganizationCity [
 		cssClass: 'half';
 		id: 'organizationCity';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
 { #category : #'magrittes-descriptions' }
 ERBillingInformation >> descriptionOrganizationCountry [
 	<magritteDescription>
-	^ ERAward new descriptionCountry copy
+	| tmp |
+	tmp := ERAward new descriptionCountry copy
          accessor: #organizationCountry;
 		   beRequired;
 			priority: 50;
 			cssClass: 'half';
 			label: 'Country (Required)';
-		   id: 'organizationCountry';
-         yourself
+		   id: 'organizationCountry'.
+	self readOnly ifTrue: [ tmp beDisabled ].
+   ^ tmp yourself
 ]
 
 { #category : #'magrittes-descriptions' }
@@ -119,6 +126,7 @@ ERBillingInformation >> descriptionOrganizationName [
 		label: 'Name (Required)';
 		id: 'organizationName';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -136,6 +144,7 @@ ERBillingInformation >> descriptionOrganizationPostal [
 		cssClass: 'half';
 		id: 'organizationPostal';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -153,6 +162,7 @@ ERBillingInformation >> descriptionOrganizationProvince [
 		cssClass: 'half';
 		id: 'organizationProvince';
 		componentClass: MDLMATextInputComponent.
+	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -234,4 +244,14 @@ ERBillingInformation >> organizationProvince [
 { #category : #accessing }
 ERBillingInformation >> organizationProvince: anObject [
 	organizationProvince := anObject
+]
+
+{ #category : #accessing }
+ERBillingInformation >> readOnly [ 
+	^ readOnly ifNil: [ false ]
+]
+
+{ #category : #accessing }
+ERBillingInformation >> readOnly: aBoolean [
+	readOnly := aBoolean
 ]

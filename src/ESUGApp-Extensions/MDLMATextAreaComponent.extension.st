@@ -14,5 +14,6 @@ MDLMATextAreaComponent >> renderEditorOn: html [
 			html mdlTextArea
 				id: inputId;
 				rows: self magritteDescription lineCount;
+				addAttributeAt: 'disabled' if: self disabled;
 				on: #string of: self ]
 ]
