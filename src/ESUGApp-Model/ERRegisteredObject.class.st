@@ -18,7 +18,7 @@ Class {
 ERRegisteredObject >> addPayPalComissionifApply: payPalComission [
 	(paymentInformation paymentTypeIsCreditCard)
 	ifTrue: [ paymentInformation paymentAmount: 
-					(paymentInformation paymentAmount + payPalComission ) ]
+					(paymentInformation paymentAmount + payPalComission )]
 ]
 
 { #category : #accessing }
@@ -84,7 +84,7 @@ ERRegisteredObject >> paymentAmount [
 
 { #category : #accessing }
 ERRegisteredObject >> paymentAmount: anObject [
-	^ paymentInformation paymentAmount: anObject
+	^ paymentInformation paymentAmount: (anObject roundDownTo: 0.01)
 ]
 
 { #category : #accessing }

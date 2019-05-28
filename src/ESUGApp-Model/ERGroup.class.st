@@ -119,7 +119,7 @@ ERGroup >> updatePaymentForAttendees [
 ERGroup >> updatePaymentRateWith: aBlock [
 	| amount |
 	amount := self totalAmount.
-	self paymentInformation paymentAmount: amount.
+	self paymentInformation paymentAmount: (amount  roundDownTo: 0.01).
 ]
 
 { #category : #accessing }
