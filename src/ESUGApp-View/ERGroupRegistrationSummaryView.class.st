@@ -11,9 +11,10 @@ ERGroupRegistrationSummaryView >> exportInvoice [
 
 { #category : #initialization }
 ERGroupRegistrationSummaryView >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+	formMofidyAffiliation := (ERTittledFormView on: (controller groupManager affiliationInformation readOnly: false)
 								withContent: content) title: 'Billing Information';
-								callback: [:aff | self updateAffiliation: aff on: self group];
+								callback: [:aff | aff readOnly: true.
+									self updateAffiliation: aff on: self group];
 								cancelCallback: [self cancel]; initializeForm. 
 	content state: formMofidyAffiliation.
 	self updateStateTab: self tabName.
