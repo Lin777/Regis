@@ -91,7 +91,7 @@ ERReductionTicket >> obtainNewAmountAfterDiscountFor: amount [
 			amountWithDiscount := amount - discountStrategy amount.
 			^ self roundToZeroIfNegative: amountWithDiscount ].
 	self strategyIsPercentageDiscount
-		ifTrue: [ ^ amount - (amount * (discountStrategy percentage / 100))]
+		ifTrue: [ ^ amount - (amount * (discountStrategy percentage / 100.0))]
 ]
 
 { #category : #action }

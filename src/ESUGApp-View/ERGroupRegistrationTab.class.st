@@ -57,7 +57,7 @@ ERGroupRegistrationTab >> initializeController [
 
 { #category : #rendering }
 ERGroupRegistrationTab >> initializeFormRegister [
-	newAttendee := (ERAttendee new) affiliationInformation: (self groupManager affiliationInformation).
+	self newAttendee.
 	formRegister := ERContainerTabs
 		formRegisterOn: newAttendee
 		withCallback: callback
@@ -68,6 +68,18 @@ ERGroupRegistrationTab >> initializeFormRegister [
 ERGroupRegistrationTab >> listAttendees [ 
 	^ self group listAttends  
 		
+]
+
+{ #category : #rendering }
+ERGroupRegistrationTab >> newAttendee [
+	newAttendee := ERAttendee new
+		affiliationInformation: self groupManager affiliationInformation.
+	newAttendee paymentInformation paymentType: group paymentInformation paymentType .
+	newAttendee paymentInformation paymentCurrency: group paymentInformation paymentCurrency. 
+	newAttendee
+		paymentInformation: (newAttendee paymentInformation readOnly: true).
+	newAttendee
+		affiliationInformation: (newAttendee affiliationInformation readOnly: true)
 ]
 
 { #category : #accessing }

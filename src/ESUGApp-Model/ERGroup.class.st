@@ -18,7 +18,8 @@ ERGroup class >> groupManager: aGroupManager [
 
 { #category : #adding }
 ERGroup >> addAttendee: anAttendee [
-	listAttends add: anAttendee
+	listAttends add: anAttendee.
+	self updatePaymentForAttendees
 ]
 
 { #category : #rendering }
@@ -110,15 +111,15 @@ ERGroup >> updatePaymentForAttendees [
 	self listAttends do: [ :att | 
 		att paymentInformation paymentType: self paymentInformation paymentType .
 		att paymentInformation paymentCurrency: self paymentInformation paymentCurrency. 
-		att save ]
+		att save ].
+	self save.
 ]
 
 { #category : #updating }
 ERGroup >> updatePaymentRateWith: aBlock [
 	| amount |
 	amount := self totalAmount.
-	self paymentInformation paymentAmount: amount.
-	self addPayPalComissionifApply: (aBlock cull: amount)
+	self paymentInformation paymentAmount: (amount  roundDownTo: 0.01).
 ]
 
 { #category : #accessing }

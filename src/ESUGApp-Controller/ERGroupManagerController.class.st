@@ -86,5 +86,6 @@ ERGroupManagerController >> updateBillingInfo: aff [
 { #category : #updating }
 ERGroupManagerController >> updateGroup: aGroup [
 	aGroup updatePaymentForAttendees.
+	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
 	super updateGroup: aGroup 
 ]

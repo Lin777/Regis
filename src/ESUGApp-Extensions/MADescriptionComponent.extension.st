@@ -12,3 +12,8 @@ MADescriptionComponent >> ajaxId: aString [
 	result ifNil: [ result := super ajaxId: 'label' ].
 	^ result
 ]
+
+{ #category : #'*ESUGApp-Extensions' }
+MADescriptionComponent >> disabled [  
+	^self magritteDescription disabled
+]

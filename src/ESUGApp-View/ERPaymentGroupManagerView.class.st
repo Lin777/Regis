@@ -100,6 +100,7 @@ ERPaymentGroupManagerView >> updatePayment: aBlock [
 ERPaymentGroupManagerView >> updatePaymentInformation: value [
 	({value} includesAnyOf: ERPaymentInformation paymentTypes )
 		ifTrue: [ attendee paymentInformation paymentType: value asString.
+			attendee save.
 			blockForUpdate cull: attendee ]
 		ifFalse: [ ERException paymentTypeNoValid signal ]
 

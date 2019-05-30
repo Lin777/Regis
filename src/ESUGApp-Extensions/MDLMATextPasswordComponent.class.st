@@ -46,5 +46,6 @@ MDLMATextPasswordComponent >> renderInputOn: html [
 			html mdlTextFieldInput
 				id: inputId;
 				type: 'password';
+				addAttributeAt: 'disabled' if: self disabled;
 				on: #string of: self ]
 ]

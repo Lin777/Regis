@@ -16,14 +16,9 @@ Class {
 
 { #category : #accessing }
 ERRegisteredObject >> addPayPalComissionifApply: payPalComission [
-	(self applyToAddComission and: paymentInformation paymentTypeIsCreditCard)
+	(paymentInformation paymentTypeIsCreditCard)
 	ifTrue: [ paymentInformation paymentAmount: 
-					(paymentInformation paymentAmount + payPalComission ) ]
-]
-
-{ #category : #accessing }
-ERRegisteredObject >> applyToAddComission [
-	^ self userAccount isGroupManager or: (self idGroup isNil) 
+					(paymentInformation paymentAmount + payPalComission )]
 ]
 
 { #category : #accessing }
@@ -89,7 +84,7 @@ ERRegisteredObject >> paymentAmount [
 
 { #category : #accessing }
 ERRegisteredObject >> paymentAmount: anObject [
-	^ paymentInformation paymentAmount: anObject
+	^ paymentInformation paymentAmount: (anObject roundDownTo: 0.01)
 ]
 
 { #category : #accessing }

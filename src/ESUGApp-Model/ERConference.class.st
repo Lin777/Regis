@@ -68,7 +68,7 @@ ERConference >> addGroup: aGroup [
 
 { #category : #adding }
 ERConference >> addPayPalComissionOn: amount [
-	^ ((fee payPalCommissionPercentage)/100) * amount + (fee staticCommissionPaypal)
+	^ ((fee payPalCommissionPercentage)/100.0) * amount + (fee staticCommissionPaypal)
 ]
 
 { #category : #adding }

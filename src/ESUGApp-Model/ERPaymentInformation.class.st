@@ -13,7 +13,8 @@ Class {
 		'coupon',
 		'invoiceNumber',
 		'paymentAmount',
-		'hasPaid'
+		'hasPaid',
+		'readOnly'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -70,6 +71,7 @@ ERPaymentInformation >> descriptionPaymentCurrency [
 		withoutLabel: true;
 		id: 'paymentCurrency';
 		componentClass: MDLMASelectListComponent .
+	self readOnly ifTrue: [ tmp1 beDisabled ].
 	^ tmp1 yourself
 ]
 
@@ -86,6 +88,7 @@ ERPaymentInformation >> descriptionPaymentType [
 		withoutLabel: true;
 		id: 'paymentType';
 		componentClass: MDLMASelectListComponent .
+	self readOnly ifTrue: [ tmp1 beDisabled ].
 	^ tmp1 yourself
 ]
 
@@ -162,6 +165,16 @@ ERPaymentInformation >> paymentTypeIsBankTransfer [
 { #category : #accessing }
 ERPaymentInformation >> paymentTypeIsCreditCard [
 	^  'Credit Card' = paymentType
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> readOnly [
+	^ readOnly ifNil: [ false ]
+]
+
+{ #category : #accessing }
+ERPaymentInformation >> readOnly: aBoolean [
+	readOnly := aBoolean
 ]
 
 { #category : #accessing }
