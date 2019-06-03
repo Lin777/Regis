@@ -52,7 +52,7 @@ ERTalk >> descriptionDescription [
 		priority: 20;
 		beRequired;
 		lineCount: 5;
-		label: 'Description (Required)';
+		label: 'Abstract (Required)';
 		withoutLabel: true;
 		id: 'description';
 		componentClass: MDLMATextAreaComponent.
@@ -94,8 +94,7 @@ ERTalk >> descriptionPresentation [
 	tmp 
 		accessor: #presentation; 
 		priority: 50;
-		beRequired;
-		label: 'Presentation Download URL (Required)';
+		label: 'Presentation Download URL';
 		addCondition: [ :value | value asUrl isAbsolute ]
 		labelled: 'Please enter a valid URL';
 		withoutLabel: true;
