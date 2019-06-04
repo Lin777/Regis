@@ -272,7 +272,7 @@ ESUGSetUp class >> installDependencesWithConflicts [
 ESUGSetUp class >> installMDLForMagritte [
 	Metacello new 
 		baseline: 'MaterialDesignLite'; 
-		repository: 'github://DuneSt/MaterialDesignLite:v2.1.2/src';
+		repository: 'github://DuneSt/MaterialDesignLite:v2.1.x/src';
 		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
 		load: 'all'
 ]
