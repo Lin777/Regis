@@ -79,6 +79,11 @@ ERGroup >> organizationAddress1 [
 ]
 
 { #category : #accessing }
+ERGroup >> organizationAddress2 [
+	^ groupManager affiliationInformation organizationAddrees2
+]
+
+{ #category : #accessing }
 ERGroup >> organizationCity [ 	
 	^ groupManager affiliationInformation organizationCity 
 ]
