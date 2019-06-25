@@ -176,7 +176,10 @@ ERPDFInvoice >> addInfoESUG: aPage [
 
 { #category : #adding }
 ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
-	| fullname |
+	| fullname listOfPosition |
+	user organizationAddress2  
+		ifNotNil: [ listOfPosition := #(70 75 80 85 90) ]
+		ifNil: [ listOfPosition := #(70 75 nil 80 85)].
 	fullname := (user organizationName) asString.
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
@@ -190,43 +193,44 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	add: (PDFFormattedTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
-		dimension: (168 - fullname size) mm @ 70 mm;
-		from: 0 mm @ 78 mm;
+		dimension: (168 - fullname size) mm @ (listOfPosition at: 1) mm;
+		from: 0 mm @ ((listOfPosition at: 1) + 8) mm;
 		text: 'Bill to:';
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
-		dimension: 190 mm @ 70 mm;
-		from: 0 mm @ 78 mm;
+		dimension: 190 mm @ (listOfPosition at: 1) mm;
+		from: 0 mm @ ((listOfPosition at: 1) + 8) mm;
 		text: fullname;
 		alignment: (PDFAlignment right));
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
-		dimension: 190 mm @ 75 mm;
-		from: 0 mm @ 83 mm;
+		dimension: 190 mm @ (listOfPosition at: 2) mm;
+		from: 0 mm @ ((listOfPosition at: 2) + 8) mm;
 		text: user organizationAddress1;
-		alignment: (PDFAlignment right));
-	
-	add: (PDFFormattedTextElement new
-		font: self fontContent;
-		dimension: 190 mm @ 80 mm;
-		from: 0 mm @ 88 mm;
-		text: user organizationAddress2;
 		alignment: (PDFAlignment right));
 		
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
-		dimension: 190 mm @ 85 mm;
-		from: 0 mm @ 93 mm;
+		dimension: 190 mm @ (listOfPosition at: 4) mm;
+		from: 0 mm @ ((listOfPosition at: 4)+8) mm;
 		text: user organizationPostal, ' ', user organizationCity;
 		alignment: (PDFAlignment right));
 	
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
-		dimension: 190 mm @ 90 mm;
-		from: 0 mm @ 98 mm;
+		dimension: 190 mm @ (listOfPosition at: 5) mm;
+		from: 0 mm @ ((listOfPosition at: 5) + 8) mm;
 		text: user organizationCountry;
-		alignment: (PDFAlignment right))
+		alignment: (PDFAlignment right)).
+		
+	user organizationAddress2 ifNotNil: [ 
+		pdfPage add:(PDFFormattedTextElement new
+			font: self fontContent;
+			dimension: 190 mm @ (listOfPosition at: 3) mm;
+			from: 0 mm @ ((listOfPosition at: 3) + 8) mm;
+			text: user organizationAddress2;
+			alignment: (PDFAlignment right))]
 ]
 
 { #category : #adding }
