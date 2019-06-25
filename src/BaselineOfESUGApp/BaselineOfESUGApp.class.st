@@ -54,7 +54,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec	
 		baseline: 'Seaside3'	
 		with: [ spec	
-				repository: 'github://SeasideSt/Seaside:v3.3.x/repository' ].
+				repository: 'github://SeasideSt/Seaside:v3.3.2/repository' ].
 	
 	spec
 		baseline: 'Parasol'
@@ -63,7 +63,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 				repository: 'github://Lin777/Parasol:UpdateSeasideVersion/repository' ].
 	spec
 		baseline: 'MaterialDesignLite'
-		with: [ spec repository: 'github://DuneSt/MaterialDesignLite:master/src' ].
+		with: [ spec repository: 'github://Lin777/MaterialDesignLite:master/src' ].
 	
 	spec
 		project: 'SandstoneDb'
