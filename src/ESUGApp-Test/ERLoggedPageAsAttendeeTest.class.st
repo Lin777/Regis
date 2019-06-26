@@ -142,7 +142,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyDescription [
 	self fillAllFieldsOfTalk.
 	acceptFormButton := 'accept-change-affiliation'.
 	self updateField: 'description' with: ''.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Description')
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Abstract')
 ]
 
 { #category : #myRegistrationProposedTalksTest }
