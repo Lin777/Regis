@@ -254,7 +254,7 @@ ESUGSetUp class >> initializeDataFromScratch [
 { #category : #installationOfConflictLibraries }
 ESUGSetUp class >> installArtefact [
 	Metacello new
-        githubUser: 'pharo-contributions' project: 'Artefact' commitish: 'master' path: 'src';
+        githubUser: 'Lin777' project: 'Artefact' commitish: 'master' path: 'src';
         baseline: 'Artefact';
         onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
         load: #('default' 'seaside').
@@ -272,7 +272,7 @@ ESUGSetUp class >> installDependencesWithConflicts [
 ESUGSetUp class >> installMDLForMagritte [
 	Metacello new 
 		baseline: 'MaterialDesignLite'; 
-		repository: 'github://DuneSt/MaterialDesignLite:v2.1.x/src';
+		repository: 'github://Lin777/MaterialDesignLite:master/src';
 		onConflict: [ :ex :a :b | a projectName = b projectName ifTrue: [ a projectSpec 		isBaselineOfProjectSpec ifTrue: [ ex useLoaded ] ifFalse: [ ex useIncoming ] ] ifFalse: [ ex resume ] ];
 		load: 'all'
 ]

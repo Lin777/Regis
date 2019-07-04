@@ -171,8 +171,18 @@ ERAttendee >> organizationAddress1 [
 ]
 
 { #category : #accessing }
+ERAttendee >> organizationAddress2 [
+	^ affiliationInformation organizationAddrees2
+]
+
+{ #category : #accessing }
 ERAttendee >> organizationCity [ 	
 	^ affiliationInformation organizationCity 
+]
+
+{ #category : #accessing }
+ERAttendee >> organizationCountry [
+	^ affiliationInformation organizationCountry
 ]
 
 { #category : #accessing }
