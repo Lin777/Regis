@@ -2,6 +2,8 @@
 
 Regis is Web application for managing ESUG conference registrations.
 
+Regis was initially developed and currently supported by [SEMANTICS S.R.L.](http://semantics.bo/) . It has a [MIT license](https://github.com/Lin777/ESUGConfRegistrationApp/blob/master/LICENSE).
+
 ## Installation 
 
 ### Prerequisites
