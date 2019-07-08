@@ -193,7 +193,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	add: (PDFFormattedTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
-		dimension: (168 - fullname size) mm @ (listOfPosition at: 1) mm;
+		dimension: (190-'Bill to:' size-(fullname size*1.9) ) mm @ (listOfPosition at: 1) mm;
 		from: 0 mm @ ((listOfPosition at: 1) + 8) mm;
 		text: 'Bill to:';
 		alignment: (PDFAlignment right));
