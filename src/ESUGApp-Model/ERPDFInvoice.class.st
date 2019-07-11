@@ -180,7 +180,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 	user organizationAddress2  
 		ifNotNil: [ listOfPosition := #(70 75 80 85 90) ]
 		ifNil: [ listOfPosition := #(70 75 nil 80 85)].
-	fullname := (user organizationName) asString.
+	fullname := (self encode: user organizationName).
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
 		font: self fontContent;
@@ -207,21 +207,21 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 		font: self fontContent;
 		dimension: 190 mm @ (listOfPosition at: 2) mm;
 		from: 0 mm @ ((listOfPosition at: 2) + 8) mm;
-		text: user organizationAddress1;
+		text: (self encode: user organizationAddress1);
 		alignment: (PDFAlignment right));
 		
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ (listOfPosition at: 4) mm;
 		from: 0 mm @ ((listOfPosition at: 4)+8) mm;
-		text: user organizationPostal, ' ', user organizationCity;
+		text: (self encode: user organizationPostal, ' ', user organizationCity);
 		alignment: (PDFAlignment right));
 	
 	add: (PDFFormattedTextElement new
 		font: self fontContent;
 		dimension: 190 mm @ (listOfPosition at: 5) mm;
 		from: 0 mm @ ((listOfPosition at: 5) + 8) mm;
-		text: user organizationCountry;
+		text: (self encode: user organizationCountry);
 		alignment: (PDFAlignment right)).
 		
 	user organizationAddress2 ifNotNil: [ 
@@ -229,7 +229,7 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 			font: self fontContent;
 			dimension: 190 mm @ (listOfPosition at: 3) mm;
 			from: 0 mm @ ((listOfPosition at: 3) + 8) mm;
-			text: user organizationAddress2;
+			text: (self encode: user organizationAddress2);
 			alignment: (PDFAlignment right))]
 ]
 
@@ -351,6 +351,15 @@ ERPDFInvoice >> controller: anObject [
 { #category : #adding }
 ERPDFInvoice >> dateToday [
 	^ Date today monthName asString, ' ', Date today dayOfMonth asString, ', ', Date today year asString
+]
+
+{ #category : #adding }
+ERPDFInvoice >> encode: aString [
+	|encoder|
+	encoder := ZnCharacterEncoder newForEncoding: 'latin2' .
+	^ ByteArray streamContents: [ :stream |
+		aString do: [ :each |
+			encoder nextPut: each toStream: stream ] ]
 ]
 
 { #category : #fonts }
