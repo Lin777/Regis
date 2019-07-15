@@ -91,8 +91,8 @@ ERBackupRestore >> objectsToBackup [
 		add: ERUserAccount findAll;
 		add: ERReductionTicket findAll;
 		add: ERAttendee findAll;
-		add: ERAward findAll;
 		add: ERGroup findAll;
+		add: ERAward findAll;
 		add: ERTalk findAll;
 		add: ERConference findAll;
 		yourself
