@@ -356,7 +356,7 @@ ERPDFInvoice >> dateToday [
 { #category : #adding }
 ERPDFInvoice >> encode: aString [
 	|encoder|
-	encoder := ZnCharacterEncoder newForEncoding: 'latin2' .
+	encoder := ZnCharacterEncoder newForEncoding: 'utf8' .
 	^ ByteArray streamContents: [ :stream |
 		aString do: [ :each |
 			encoder nextPut: each toStream: stream ] ]
