@@ -306,7 +306,16 @@ ERConference >> exportAwards: fileName [
 					neoWriter
 						nextPut:
 					{each nameAward.
-					each submitter userAccount email}].
+					each submitter userAccount firstName, ' ', each submitter userAccount lastName.
+					each otherDevelopers .
+					each affiliation .
+					each country.
+					each smalltalkDialect .
+					each keywords .
+					each licence.
+					each downloadUrl .
+					each demoUrl.
+					each submittionDate }].
 
 			neoWriter close ].
 	^ cvs
@@ -489,7 +498,8 @@ ERConference >> headersShirtsStatistics [
 
 { #category : #header }
 ERConference >> hearderAwards [
-	^ #('Name' 'Submitted by')
+	^ #('Name' 'Submitted by' 'Other Developers' 'Affiliation' 'Country' 'Dialect' 'Keywords'
+	'Licence' 'Download Url' 'Demo Url' 'Submittion Date')
 ]
 
 { #category : #action }
