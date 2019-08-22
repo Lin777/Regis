@@ -45,7 +45,7 @@ ERTestConfigurationController >> testExportAwards [
 	
 	| aFile |
 	aFile := controller conference exportAwards: 'awards'.
-	self assert: aFile equals: '"Name","Submitted by"', String crlf
+	self assert: aFile equals: '"Name","Submitted by","Other Developers","Affiliation","Country","Dialect","Keywords","Licence","Download Url","Demo Url","Submittion Date"', String crlf
 ]
 
 { #category : #tests }
