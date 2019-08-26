@@ -37,7 +37,7 @@ ERTestConfigurationController >> tearDown [
 ERTestConfigurationController >> testExportAttends [
 	| aFile |
 	aFile := controller conference exportAttends: 'attendees'.
-	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Email","Country","Org. Name"', String crlf
+	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Gender","Email","Country","Billing Name","Payment status","T-shirt size","Food preference","Monday","Tuesday","Wednesday","Thursday","Friday","Social event","Additional person","Food preference added person"', String crlf
 ]
 
 { #category : #tests }

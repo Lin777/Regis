@@ -252,24 +252,7 @@ ERConference >> existReductionTicketWithName: aString [
 
 { #category : #exporting }
 ERConference >> exportAttends: fileName [
-	| cvs |
-	cvs := String
-		streamContents: [ :out | 
-			| neoWriter |
-			neoWriter := NeoCSVWriter on: out.
-			neoWriter writeHeader: self headerAttendee.
-			self attends 
-				do: [ :each | 
-					neoWriter
-						nextPut:
-							{ each paymentInformation invoiceNumber.
-							each userAccount firstName.
-							each userAccount lastName.
-							each userAccount email.
-							each contactInformation country.
-							each affiliationInformation organizationName} ].
-			neoWriter close ].
-	^ cvs
+	^ self exportAttends: self attends in: fileName
 ]
 
 { #category : #exporting }
@@ -286,9 +269,21 @@ ERConference >> exportAttends: list in: fileName [
 							{ each paymentInformation invoiceNumber.
 							each userAccount firstName.
 							each userAccount lastName.
+							each conferenceInformation gender .
 							each userAccount email.
 							each contactInformation country.
-							each affiliationInformation organizationName} ].
+							each affiliationInformation organizationName.
+							each paymentInformation hasPaid .
+							each conferenceInformation tshirtSize .
+							each conferenceInformation foodPreference .
+							each conferenceInformation monday .
+							each conferenceInformation tuesday .
+							each conferenceInformation wednesday .
+							each conferenceInformation thursday .
+							each conferenceInformation friday .
+							each conferenceInformation attendSocialEvent .
+							each conferenceInformation addPersonToSocialDinner.
+							each conferenceInformation personAddedFoodPreference} ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -462,7 +457,7 @@ ERConference >> groups: anObject [
 
 { #category : #header }
 ERConference >> headerAttendee [
-	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Gender' 'Email' 'Country' 'Billing Name' 'Payment status' 'T-shirt size' 'Food preference' 'Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Social event' 'Additional person' 'Food preference added person')
 ]
 
 { #category : #header }
