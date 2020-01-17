@@ -1,4 +1,4 @@
-# Regis [![master branch:](https://travis-ci.org/Lin777/ESUGConfRegistrationApp.svg?branch=master)](https://travis-ci.org/Lin777/ESUGConfRegistrationApp/branches)
+# Regis [![master branch:](https://travis-ci.org/Lin777/Regis.svg?branch=master)](https://travis-ci.org/Lin777/ESUGConfRegistrationApp/branches)
 
 Regis is Web application for managing ESUG conference registrations.
 
