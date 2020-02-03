@@ -37,15 +37,17 @@ ERTabs >> renderTabNamesOn: html [
 		class: 'mdl-tabs__tab-bar';
 		with: [ tabs
 				do: [ :tab | 
-					|activeClass anchor|
+					| activeClass anchor |
 					activeClass := ''.
 					tab isActive ifTrue: [ activeClass := ' is-active' ].
+					
 					anchor := html anchor
 						id: 'tab-',tab tabName;
 						url: '#' , 'tab-',tab tabId;
 						class: 'mdl-tabs__tab', activeClass.
+					
 					tab disabled ifTrue: [ anchor disabled: 'disabled' ].
-					anchor with: tab tabName]].
+					anchor with: tab tabName ] ].
 ]
 
 { #category : #rendering }

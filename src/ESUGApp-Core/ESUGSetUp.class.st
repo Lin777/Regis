@@ -298,7 +298,7 @@ ESUGSetUp class >> start [
 	"self start"
 	self startAndCleanSeaside.
 	self existBackupToRestart ifTrue: [ self restoreData ]	
-	ifFalse: [ self initializeDataFromScratch].
+	ifFalse: [ self initializeDataFromScratch ].
 	EREsugApp initialize
 ]
 
