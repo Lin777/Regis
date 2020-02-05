@@ -69,7 +69,7 @@ ERParasolTest >> selectElementWithID: aString1 send: aString2 [
 { #category : #accessing }
 ERParasolTest >> setUp [
 	super setUp.
-	driver := BPRemoteWebDriver withCapabilities: BPDesiredCapabilities chrome.
+	driver := BPRemoteWebDriver withCapabilities: BPChromeOptions new.
 	driver get: self baseURL 
 ]
 
