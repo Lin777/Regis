@@ -54,7 +54,7 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec	
 		baseline: 'Seaside3'	
 		with: [ spec	
-				repository: 'github://SeasideSt/Seaside:3.3.4/repository' ].
+				repository: 'github://SeasideSt/Seaside/repository' ].
 	
 	spec
 		baseline: 'Parasol'
