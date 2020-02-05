@@ -75,9 +75,10 @@ ERParasolTest >> setUp [
 
 { #category : #accessing }
 ERParasolTest >> tearDown [
-	super tearDown .
+	
 	self deleteDownloadFolderIfExist.
-	driver quit
+	driver quit.
+	super tearDown
 ]
 
 { #category : #actions }
