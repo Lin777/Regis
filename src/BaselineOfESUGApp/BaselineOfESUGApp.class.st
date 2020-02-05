@@ -54,13 +54,13 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec	
 		baseline: 'Seaside3'	
 		with: [ spec	
-				repository: 'github://SeasideSt/Seaside:master/repository' ].
+				repository: 'github://SeasideSt/Seaside:3.3.x/repository' ].
 	
 	spec
 		baseline: 'Parasol'
 		with: [ spec
 				loads: 'tests';
-				repository: 'github://Lin777/Parasol:master/repository' ].
+				repository: 'github://Lin777/Parasol:UpdateSeasideVersion/repository' ].
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://Lin777/MaterialDesignLite:master/src' ].
