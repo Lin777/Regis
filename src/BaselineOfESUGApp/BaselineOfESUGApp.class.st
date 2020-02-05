@@ -60,10 +60,10 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 		baseline: 'Parasol'
 		with: [ spec
 				loads: 'tests';
-				repository: 'github://Lin777/Parasol:UpdateSeasideVersion/repository' ].
+				repository: 'github://daniapq/Parasol:master/repository' ].
 	spec
 		baseline: 'MaterialDesignLite'
-		with: [ spec repository: 'github://Lin777/MaterialDesignLite:master/src' ].
+		with: [ spec repository: 'github://daniapq/MaterialDesignLite:master/src' ].
 	
 	spec
 		project: 'SandstoneDb'
