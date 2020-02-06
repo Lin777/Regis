@@ -22,7 +22,7 @@ To load the ESUGApp package into the Pharo image:
 ```Smalltalk
 Metacello new
  baseline:'ESUGApp';
- repository: 'github://Lin777/ESUGConfRegistrationApp:master/src';
+ repository: 'github://Lin777/Regis:master/src';
  load.
  
 #ESUGSetUp asClass start
