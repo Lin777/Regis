@@ -28,7 +28,7 @@ ERBackupRestore class >> uniqueInstance [
 { #category : #'actions api' }
 ERBackupRestore >> backup [ 	
 	[[self lock critical: [ 
-		self backupDirectory .
+		self backupDirectory.
 		SDFuelSerializer new serialize:
 			(self objectsToBackup) toFile: ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber})]] on: Error do: [ :error | ERException backupError signal ]]
 		forkAt: Processor systemBackgroundPriority
