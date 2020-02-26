@@ -11,7 +11,6 @@ Class {
 	#category : #'ESUGApp-Database-Core'
 }
 
-{ #category : #accessing }
 ESUGConcurrentDictionary class >> on: aDictionary 
 	^ self new
 		dictionary: aDictionary;
