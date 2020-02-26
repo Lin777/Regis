@@ -11,10 +11,11 @@ Class {
 	#category : #'ESUGApp-Database-Core'
 }
 
-ESUGConcurrentDictionary class >> on: aDictionary 
+ESUGConcurrentDictionary class >> on: aDictionary [
 	^ self new
 		dictionary: aDictionary;
-		yourself
+		yourself 
+]
 
 { #category : #copying }
 ESUGConcurrentDictionary >> , aCollection [ 
