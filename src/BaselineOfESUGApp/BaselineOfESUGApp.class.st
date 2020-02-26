@@ -5,7 +5,6 @@ Depends on:
 - Seaside3
 - MaterialDesignLite
 - Parasol
-- SandstoneDb
 - NeoJSON
 - NeoCSV
 
@@ -35,7 +34,7 @@ BaselineOfESUGApp >> baseline: spec [
 			self setUpDependencies: spec.
 			spec
 				package: 'ESUGApp-PostMark-Core' with: [ spec requires: 'NeoJSON' ];
-				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
+				package: 'ESUGApp-Model';
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View') ];		
 				package: 'ESUGApp-Library' with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
