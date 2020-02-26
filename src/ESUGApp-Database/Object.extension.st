@@ -48,3 +48,22 @@ Object >> markReferencesVisits: visitedParts [
 			ifFalse: [ var markReferencesVisits: visitedParts ] ].
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+Object >> resolveReferencesVisits: visitedParts [ 
+
+	self class isMeta ifTrue: [ ^ self ].
+	visitedParts at: self ifPresent: [:it | ^ it ].
+	visitedParts at: self put: self.
+	self class allInstVarNames do: 
+		[ :name | 
+		| var |
+		var := self instVarNamed: name.
+		(var isSandstoneMarker) 
+			ifTrue: 
+				[ self 
+					instVarNamed: name
+					put: var asOriginalObject ]
+			ifFalse: [ var sandstoneResolveReferencesVisits: visitedParts ] ].
+	^ self
+]

@@ -10,3 +10,8 @@ Character >> deepCopyVisits: visitedParts [
 Character >> markReferencesVisits: visitedParts [
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+Character >> resolveReferencesVisits: visitedParts [ 
+	^ self
+]

@@ -11,3 +11,8 @@ String >> markReferencesVisits: visitedParts [
 
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+String >> resolveReferencesVisits: visitedParts [ 
+	^ self
+]

@@ -29,8 +29,9 @@ ERBackupRestore class >> uniqueInstance [
 ERBackupRestore >> backup [ 	
 	[[self lock critical: [ 
 		self backupDirectory.
-		SDFuelSerializer new serialize:
-			(self objectsToBackup) toFile: ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber})]] on: Error do: [ :error | ERException backupError signal ]]
+		
+		"SDFuelSerializer new serialize:
+			(self objectsToBackup) toFile: ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber})"]] on: Error do: [ :error | ERException backupError signal ]]
 		forkAt: Processor systemBackgroundPriority
 		named: ('' join: {'backup:'.self version}).
 		^ ('' join: {self fileNamePrefix.'.'.self version}) 
@@ -109,7 +110,7 @@ ERBackupRestore >> restoreBackup [
 ERBackupRestore >> restoreBackup: aFilePath [
 	|aFile|
 	self updateVersionToLastVersionOfBackup: aFilePath.
-	[aFile := SDFuelSerializer new materializeFromFile: aFilePath.
+	["aFile := SDFuelSerializer new materializeFromFile: aFilePath".
 	aFile ifNotNil: [ :backup | backup do: 
 		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]]
 	on: FileDoesNotExistException 

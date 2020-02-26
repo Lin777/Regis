@@ -29,3 +29,17 @@ ArrayedCollection >> markReferencesVisits: visitedParts [
 			ifFalse: [ each markReferencesVisits: visitedParts ] ].
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+ArrayedCollection >> resolveReferencesVisits: visitedParts [ 
+
+	self class isMeta ifTrue: [ ^ self ].
+	visitedParts at: self ifPresent: [ :it | ^ it ].
+	visitedParts at: self put: self.
+	self copy doWithIndex: 
+		[ :each :index | 
+		each isSandstoneMarker 
+			ifTrue: [ self at: index put: each asOriginalObject ]
+			ifFalse: [ each sandstoneResolveReferencesVisits: visitedParts ] ].
+	^ self
+]

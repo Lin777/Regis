@@ -10,3 +10,8 @@ Number >> deepCopyVisits: visitedParts [
 Number >> markReferencesVisits: visitedParts [
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+Number >> resolveReferencesVisits: visitedParts [ 
+	^ self
+]

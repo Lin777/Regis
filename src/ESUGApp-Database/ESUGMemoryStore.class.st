@@ -17,6 +17,20 @@ ESUGMemoryStore class >> initialize [
 	Instances := Dictionary new
 ]
 
+{ #category : #actions }
+ESUGMemoryStore >> loadClass: aClass atId: anId [
+
+	^ (Instances at: anId) sandstoneResolveReferences
+]
+
+{ #category : #actions }
+ESUGMemoryStore >> recoverForClass: aClass [ 
+
+
+	(Instances associationsSelect: [ :a | a value class == aClass ]) 
+		keysDo: [ :e |  self cachedLoadOfClass: aClass from:  e ]
+]
+
 { #category : #removing }
 ESUGMemoryStore >> removeObject: anObject [
 

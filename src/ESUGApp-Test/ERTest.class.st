@@ -339,7 +339,7 @@ ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 { #category : #tests }
 ERTest >> setUp [
 	store := self defaultStore.
-	SDActiveRecord setStore: store.
+	ESUGActiveRecord setStore: store.
 	ERUserAccount warmUp.
 	ERAttendee warmUp.
 	ERAward warmUp.
@@ -348,7 +348,7 @@ ERTest >> setUp [
 	ERGroup warmUp.
 	ERTalk warmUp.
 	ERConference warmUp.
-	ERSandstoneDatabase initialize.
+	ERDatabase initialize.
 	ESUGSetUp start.
 	controller := ERController new.
 ]

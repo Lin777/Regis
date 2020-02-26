@@ -10,3 +10,8 @@ Boolean >> deepCopyVisits: visitedParts [
 Boolean >> markReferencesVisits: visitedParts [
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+Boolean >> resolveReferencesVisits: visitedParts [ 
+	^ self
+]

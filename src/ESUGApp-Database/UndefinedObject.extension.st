@@ -10,3 +10,9 @@ UndefinedObject >> deepCopyVisits: visitedParts [
 UndefinedObject >> markReferencesVisits: visitedParts [
 	^ self
 ]
+
+{ #category : #'*ESUGApp-Database' }
+UndefinedObject >> resolveReferencesVisits: visitedParts [
+
+	^ self
+]

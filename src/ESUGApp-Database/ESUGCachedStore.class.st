@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : #'ESUGApp-Database-Store'
+	#category : #'ESUGApp-Database-Core'
 }
 
 { #category : #actions }
@@ -15,6 +15,13 @@ ESUGCachedStore >> addCachedOfClass: aClass at: anId put: anObject [
 	"Add class to dictionary and put object by object id"
 	
 	(cache at: aClass) at: anId put: anObject
+]
+
+{ #category : #actions }
+ESUGCachedStore >> ensureForClass: aClass [
+	cache 
+		at: aClass 
+		ifAbsentPut: [ ESUGConcurrentDictionary on: (Dictionary new: self defaultCacheSize) ]
 ]
 
 { #category : #initialization }
