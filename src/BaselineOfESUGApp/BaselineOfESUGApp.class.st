@@ -66,13 +66,6 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 		with: [ spec repository: 'github://daniapq/MaterialDesignLite:master/src' ].
 	
 	spec
-		project: 'SandstoneDb'
-		with: [ spec
-				className: 'ConfigurationOfSandstoneDb';
-				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/gnaritas/SandstoneDb/main' ].
-	
-	spec
 		project: 'NeoJSON'
 		with: [ spec
 				className: 'ConfigurationOfNeoJSON';
