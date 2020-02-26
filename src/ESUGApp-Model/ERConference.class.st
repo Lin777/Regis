@@ -21,7 +21,7 @@ configurationOfHomePage: <ERConfigurationOfHomePage> object to update with html 
 "
 Class {
 	#name : #ERConference,
-	#superclass : #SDActiveRecord,
+	#superclass : #ESUGActiveRecord,
 	#instVars : [
 		'attends',
 		'fee',
