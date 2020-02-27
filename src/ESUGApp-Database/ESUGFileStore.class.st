@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'serializer'
 	],
-	#category : #'ESUGApp-Database-Store'
+	#category : #'ESUGApp-Database-Files'
 }
 
 { #category : #accessing }
@@ -52,12 +52,12 @@ ESUGFileStore >> dirForClass: aClass [
 	subclass records as a subdirectory of the superclasses directory 
 	allows ActiveRecord to deal with inheritance"
 	| parentClass lineage |
-	aClass == SDActiveRecord ifTrue: 
+	aClass == ESUGActiveRecord ifTrue: 
 		[ Error signal: 'ActiveRecord itself is abstract, you must only  
  store subclasses' ].
 	lineage := OrderedCollection with: aClass.
 	parentClass := aClass superclass.
-	[ parentClass == SDActiveRecord ] whileFalse: 
+	[ parentClass == ESUGActiveRecord ] whileFalse: 
 		[ lineage addFirst: parentClass.
 		parentClass := parentClass superclass ].
 	^ lineage 
@@ -154,11 +154,11 @@ ESUGFileStore >> loadClass: aClass atId: anId [
 	[ 
 	| obj name |
 	name := (self dirForClass: aClass atId: anId) /  (anId , '.obj').
-	obj := self class serializer materializeFromFile: name.
+	obj := "self class serializer materializeFromFile: name." nil.
 	^ obj
 		onLoad;
 		yourself ] on: Error do: [ :err | 
-			SDLoadError signal: 'loadClass:atId: - loadClass: Loading id=' , anId , '. ' , err messageText ]
+			ESUGDatabaseLoadError signal: 'loadClass:atId: - loadClass: Loading id=' , anId , '. ' , err messageText ]
 ]
 
 { #category : #actions }

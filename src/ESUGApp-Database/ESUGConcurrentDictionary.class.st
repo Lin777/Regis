@@ -11,6 +11,7 @@ Class {
 	#category : #'ESUGApp-Database-Core'
 }
 
+{ #category : #'instance creation' }
 ESUGConcurrentDictionary class >> on: aDictionary [
 	^ self new
 		dictionary: aDictionary;
