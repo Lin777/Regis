@@ -1,7 +1,7 @@
-Extension { #name : #SDCachedStore }
+Extension { #name : #ESUGCachedStore }
 
 { #category : #'*ESUGApp-Extensions' }
-SDCachedStore >> cachedLoadOfClass: aClass from: anId [
+ESUGCachedStore >> cachedLoadOfClass: aClass from: anId [
 	^ (cache at: aClass)
 		at: anId
 		ifAbsent: [ 
@@ -11,11 +11,11 @@ SDCachedStore >> cachedLoadOfClass: aClass from: anId [
 				it's references so any backreferences to it don't try and load from 
 				disk again''"
 					(cache at: aClass) at: anId put: it.
-					it sandstoneResolveReferences ] ]
+					it resolveReferences ] ]
 ]
 
 { #category : #'*ESUGApp-Extensions' }
-SDCachedStore >> forClass: aClass at: anId ifAbsent: aHandler [
+ESUGCachedStore >> forClass: aClass at: anId ifAbsent: aHandler [
 	aClass withAllSubclasses
 		do: [ :class | ((cache at: class) at: anId ifAbsent: [ nil ]) 
 			ifNotNil: [ :result | ^ result ] ].
@@ -23,7 +23,7 @@ SDCachedStore >> forClass: aClass at: anId ifAbsent: aHandler [
 ]
 
 { #category : #'*ESUGApp-Extensions' }
-SDCachedStore >> forClass: aClass detect: aBlock ifFound: aHandler [
+ESUGCachedStore >> forClass: aClass detect: aBlock ifFound: aHandler [
 	aClass withAllSubclasses
 		do: [ :class | 
 			((cache at: class) detect: aBlock ifNone: [ nil ])
@@ -34,7 +34,7 @@ SDCachedStore >> forClass: aClass detect: aBlock ifFound: aHandler [
 ]
 
 { #category : #'*ESUGApp-Extensions' }
-SDCachedStore >> forClass: aClass detect: aBlock ifNone: aHandler [ 
+ESUGCachedStore >> forClass: aClass detect: aBlock ifNone: aHandler [ 
 	aClass withAllSubclasses
 		do: [ :class | 
 			((cache at: class) detect: aBlock ifNone: [ nil ])
