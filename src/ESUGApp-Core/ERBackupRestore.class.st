@@ -26,12 +26,14 @@ ERBackupRestore class >> uniqueInstance [
 ]
 
 { #category : #'actions api' }
-ERBackupRestore >> backup [ 	
+ERBackupRestore >> backup [
+
+	| file |	
 	[[self lock critical: [ 
 		self backupDirectory.
-		
-		"SDFuelSerializer new serialize:
-			(self objectsToBackup) toFile: ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber})"]] on: Error do: [ :error | ERException backupError signal ]]
+		file := ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber}) asFileReference.
+		file writeStreamDo: [ :stream |
+			stream nextPutAll: (STON toStringPretty: self objectsToBackup) ] ]] on: Error do: [ :error | ERException backupError signal ]]
 		forkAt: Processor systemBackgroundPriority
 		named: ('' join: {'backup:'.self version}).
 		^ ('' join: {self fileNamePrefix.'.'.self version}) 
@@ -62,11 +64,13 @@ ERBackupRestore >> incrementVersionNumber [
 
 { #category : #accessing }
 ERBackupRestore >> lastBackup [
-	|lastBackup|
-	lastBackup := self lastBackupFilename .
+	| lastBackup file |
+	lastBackup := self lastBackupFilename.
+	file := ('' join: {self nameDirectory .'/'.lastBackup path basename }) asFileReference.
 	lastBackup ifNil: [ ^ nil ].
 	
-	^ SDFuelSerializer new materializeFromFile: ('' join: {self nameDirectory .'/'.lastBackup path basename })
+	^ (file readStreamDo: [ :stream | 
+			(STON fromString: stream contents) ])
 ]
 
 { #category : #accessing }

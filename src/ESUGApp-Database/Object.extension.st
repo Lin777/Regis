@@ -37,6 +37,11 @@ Object >> isActiveRecord [
 ]
 
 { #category : #'*ESUGApp-Database' }
+Object >> isMarker [
+	^ false
+]
+
+{ #category : #'*ESUGApp-Database' }
 Object >> markReferencesVisits: visitedParts [ 
 
 	self class isMeta ifTrue: [ ^ self ].
@@ -65,11 +70,11 @@ Object >> resolveReferencesVisits: visitedParts [
 		[ :name | 
 		| var |
 		var := self instVarNamed: name.
-		(var isSandstoneMarker) 
+		(var isMarker) 
 			ifTrue: 
 				[ self 
 					instVarNamed: name
 					put: var asOriginalObject ]
-			ifFalse: [ var sandstoneResolveReferencesVisits: visitedParts ] ].
+			ifFalse: [ var resolveReferencesVisits: visitedParts ] ].
 	^ self
 ]

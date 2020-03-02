@@ -230,6 +230,17 @@ ESUGActiveRecord >> critical: aBlock [
 	^ self class lock critical: aBlock
 ]
 
+{ #category : #'submorphs-add/remove' }
+ESUGActiveRecord >> delete [
+	"I'm using monitors for locking so this can be wrapped in larger critical
+	in your application code if you want more scope on the critical'"
+	self critical: 
+		[ self onBeforeDelete.
+		Store removeObject: self.
+		self onAfterDelete.
+		self initialize ]
+]
+
 { #category : #serialization }
 ESUGActiveRecord >> esugDeepCopy [
 
@@ -274,6 +285,18 @@ ESUGActiveRecord >> isActiveRecord [
 ESUGActiveRecord >> isNew [
 
 	^ isNew ifNil: [ isNew := true ]
+]
+
+{ #category : #'as yet unclassified' }
+ESUGActiveRecord >> onAfterDelete [
+	"for overriding in subclasses to hook the objects lifecycle"
+	
+]
+
+{ #category : #'as yet unclassified' }
+ESUGActiveRecord >> onBeforeDelete [
+	"for overriding in subclasses to hook the objects lifecycle"
+	
 ]
 
 { #category : #events }

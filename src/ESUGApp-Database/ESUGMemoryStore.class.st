@@ -20,7 +20,7 @@ ESUGMemoryStore class >> initialize [
 { #category : #actions }
 ESUGMemoryStore >> loadClass: aClass atId: anId [
 
-	^ (Instances at: anId) sandstoneResolveReferences
+	^ (Instances at: anId) resolveReferences
 ]
 
 { #category : #actions }

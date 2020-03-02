@@ -38,8 +38,8 @@ ArrayedCollection >> resolveReferencesVisits: visitedParts [
 	visitedParts at: self put: self.
 	self copy doWithIndex: 
 		[ :each :index | 
-		each isSandstoneMarker 
+		each isMarker 
 			ifTrue: [ self at: index put: each asOriginalObject ]
-			ifFalse: [ each sandstoneResolveReferencesVisits: visitedParts ] ].
+			ifFalse: [ each resolveReferencesVisits: visitedParts ] ].
 	^ self
 ]
