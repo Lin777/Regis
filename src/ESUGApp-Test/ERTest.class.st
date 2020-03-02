@@ -204,7 +204,7 @@ ERTest class >> testUserExampleAccount [
 
 { #category : #tests }
 ERTest >> defaultStore [
-	^ SDMemoryStore new
+	^ ESUGMemoryStore new
 ]
 
 { #category : #modifying }
