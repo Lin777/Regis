@@ -31,6 +31,12 @@ Object >> deepCopyVisits: visitedParts [
 ]
 
 { #category : #'*ESUGApp-Database' }
+Object >> isActiveRecord [
+
+	^ false
+]
+
+{ #category : #'*ESUGApp-Database' }
 Object >> markReferencesVisits: visitedParts [ 
 
 	self class isMeta ifTrue: [ ^ self ].
