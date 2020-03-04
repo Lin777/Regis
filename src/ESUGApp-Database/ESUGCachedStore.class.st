@@ -31,6 +31,8 @@ ESUGCachedStore >> abortChanges: anObject [
 
 { #category : #adding }
 ESUGCachedStore >> addCachedOfClass: aClass at: anId put: anObject [
+	"Cache Memory in a specific Class add or update a Object by Id"
+	
 	(cache at: aClass) at: anId put: anObject
 ]
 
@@ -96,6 +98,7 @@ ESUGCachedStore >> removeObject: anObject [
 
 { #category : #actions }
 ESUGCachedStore >> storeObject: anObject [
+	"Add a object to Cache Dictionary with the class by id"
 
 	self 
 		addCachedOfClass: anObject class

@@ -25,6 +25,7 @@ ERController >> addAttendee: anAttendee [
 	| anAttendeeSaved |
 	anAttendee userAccount encryptMyPassword.
 	anAttendeeSaved := conference addAttendee: anAttendee.
+	conference save.
 	self notifyAllObservers.
 	^ anAttendeeSaved
 ]

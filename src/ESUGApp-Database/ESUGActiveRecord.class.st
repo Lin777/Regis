@@ -181,38 +181,11 @@ ESUGActiveRecord >> abortChanges [
 
 { #category : #converting }
 ESUGActiveRecord >> asReferenceMarker [
+	"If the object is new, launch a error message when try to save it when the class of the object is not saved. If the object is not new, return the a record marker with the id and the class name of object"
+
 	isNew
-		ifTrue: [ 
-			"You may reach this point several times before you get the intended use of this framework. This is 
-		expected **by design** to make atomic saves really small and consistent. Commits of active records
-		which have other active records as parts (at any depth) are restricted intentionally. They are only 
-		allowed when all its sub active records are previously commited.  
-		
-		Only the programmer knows the proper logical commit order for his data! This is not a relational database
-		or an object database, its a filesystem database meant only to make an image crash proof and files
-		aren't transactional, if you absolutely need several objects to be atomically saved, then you should make 
-		them all part of a single aggregate cluster, all of your objects should not be active records, only your aggregate 
-		roots are active records.  
-		
-		For example, an Order would be an ActiveRecord while its LineItem's would simply inherit from Object.  The
-		Order and all its line items would be atomically saved as a single file by Order id.  You could not query for
-		a line item directly to update it, you would query for the order, its aggregate root, do your work, and 
-		commit the order.  An aggregate root is the natural query and transactional boundry for the domain.
-		See Eric Evans Domain Driven Design for more information about this way of thinking.
-		
-		Do not try to rig your objects up to cascade save, to do so is to be missing the point of this 
-		framework: Simplicity. This is not an OODB where you call commit once and you hope everything
-		magically saves correctly.  One record should not be saving another.  Saves are something best done
-		in your controller methods explicitly.  Save your new objects first, then make one reference the other, then
-		save the modified one again. This pattern is simple and it works without magic that will confuse you and it 
-		will force you to confront failure scenarios where one record saves successfully but the other doesn't.  Trying 
-		to hide this behind cascading saves only hides from the programmer the fact that each save is atomic but multiple 
-		saves are not."
-			ESUGDatabaseCommitError
-				signal:
-					'An object is being saved while referencing an unsaved record of type ' , self class name
-						, '.  You must save that record first!' ].
-	^ (ESUGRecordMarker new)
+		ifTrue: [ self triggerErrorInDatabaseCommit ].
+	^ ESUGRecordMarker new
 		id: id;
 		className: self class name;
 		yourself
@@ -287,13 +260,13 @@ ESUGActiveRecord >> isNew [
 	^ isNew ifNil: [ isNew := true ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 ESUGActiveRecord >> onAfterDelete [
 	"for overriding in subclasses to hook the objects lifecycle"
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 ESUGActiveRecord >> onBeforeDelete [
 	"for overriding in subclasses to hook the objects lifecycle"
 	
@@ -301,12 +274,14 @@ ESUGActiveRecord >> onBeforeDelete [
 
 { #category : #events }
 ESUGActiveRecord >> onBeforeFirstSave [
+	"Change creation date and time to the latest"
 
 	createdOn := DateAndTime now
 ]
 
 { #category : #events }
 ESUGActiveRecord >> onBeforeSave [
+	"Update date, version and state"
 
 	updatedOn := DateAndTime now.
 	version := version + 1.
@@ -337,8 +312,9 @@ ESUGActiveRecord >> resolveReferences [
 
 { #category : #actions }
 ESUGActiveRecord >> save [
+	"Save the Object in MemoryStore. If the Object exists, it is updated"
 
-	| isFirstSave |
+	| isFirstSave |	
 	^ self critical: [ 
 		(isFirstSave := isNew) ifTrue: [ self onBeforeFirstSave ].
 		self onBeforeSave.
@@ -354,6 +330,16 @@ ESUGActiveRecord >> save: aBlock [
 	^ self critical: 
 		[ aBlock value.
 		self save ]
+]
+
+{ #category : #converting }
+ESUGActiveRecord >> triggerErrorInDatabaseCommit [
+	"Launch error of Database Commit Error with a message"
+
+	ESUGDatabaseCommitError
+		signal:
+			'An object is being saved while referencing an unsaved record of type '
+				, self class name , '. You must save that record first!'
 ]
 
 { #category : #accessing }

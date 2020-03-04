@@ -105,7 +105,7 @@ ERMyRegistrationSummaryTab >> renderLabelsSummaryOn: html [
 ]
 
 { #category : #rendering }
-ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html. [
+ERMyRegistrationSummaryTab >> renderModifyRegistrationOn: html [.
 	html mdlAnchorButton 
 		raised;
 		rippleEffect;

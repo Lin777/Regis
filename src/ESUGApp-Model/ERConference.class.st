@@ -54,9 +54,9 @@ ERConference >> addAttendee: anAttendee [
 	| anAttendeeSaved userSaved |
 	self validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	userSaved := anAttendee userAccount save.
-	self addUser: userSaved.
+	self addNewUser: userSaved.
 	anAttendeeSaved := (anAttendee userAccount: userSaved) save.
-	attends add: anAttendeeSaved.
+	self addNewAttendee: anAttendeeSaved.
 	self save.
 	^ anAttendeeSaved
 ]
@@ -64,6 +64,16 @@ ERConference >> addAttendee: anAttendee [
 { #category : #adding }
 ERConference >> addGroup: aGroup [
 	groups add: aGroup 
+]
+
+{ #category : #adding }
+ERConference >> addNewAttendee: anAttendee [
+	attends add: anAttendee
+]
+
+{ #category : #adding }
+ERConference >> addNewUser: anUser [
+	users add: anUser 
 ]
 
 { #category : #adding }
@@ -91,11 +101,6 @@ ERConference >> addSubmittedTalk: aSubmittedTalk [
 	aSubmittedTalk submittionDate: Date today.
 	submittedTalks add: aSubmittedTalk save.
 	self save.
-]
-
-{ #category : #adding }
-ERConference >> addUser: anUser [
-	users add: anUser 
 ]
 
 { #category : #search }

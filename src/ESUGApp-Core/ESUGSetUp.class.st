@@ -94,6 +94,12 @@ ESUGSetUp class >> addStudentVolunterTicketTo: conference [
 		addReductionTicket: studentVolunteerReductionTicket.
 ]
 
+{ #category : #setUps }
+ESUGSetUp class >> cleanDatabase [
+
+	ERDatabase initialize
+]
+
 { #category : #accessing }
 ESUGSetUp class >> configurationOfHome [
 	^ (ERConfigurationOfHomePage new 
@@ -152,7 +158,7 @@ ESUGSetUp class >> createAndRegisterConferenceWithConfiguration: esugConferenceC
 	conference configurationOfHomePage: self configurationOfHome.
 	adminPassword := '12345678'.
 	conference
-		addUser: (self createAdminUserWithPassword: adminPassword);
+		addNewUser: (self createAdminUserWithPassword: adminPassword);
 		save.
 	^ conference
 ]
@@ -238,7 +244,7 @@ ESUGSetUp class >> initialize [
 	self installDependencesWithConflicts
 ]
 
-{ #category : #accessing }
+{ #category : #setUps }
 ESUGSetUp class >> initializeDataFromScratch [
 	| esugConferenceConfiguration entryPoint conference |
 	esugConferenceConfiguration := self createESUGConfiguration.
@@ -293,16 +299,19 @@ ESUGSetUp class >> restoreData [
 	do: [ :ex | ex signal ]"
 ]
 
-{ #category : #accessing }
+{ #category : #setUps }
 ESUGSetUp class >> start [
-	"self start"
+	"Initialize the application. If exist a backup, restore the latest version of database. If not exists a backup, initialize all data required"
+
 	self startAndCleanSeaside.
-	self existBackupToRestart ifTrue: [ self restoreData ]	
-	ifFalse: [ self initializeDataFromScratch ].
+	self cleanDatabase.
+	self existBackupToRestart 
+		ifTrue: [ self restoreData ]	
+		ifFalse: [ self initializeDataFromScratch ].
 	EREsugApp initialize
 ]
 
-{ #category : #accessing }
+{ #category : #setUps }
 ESUGSetUp class >> startAndCleanSeaside [
 	ZnZincServerAdaptor startOn: 8000.
 
@@ -322,7 +331,7 @@ ESUGSetUp class >> startAndCleanSeaside [
 	WAConfigurationTool initialize
 ]
 
-{ #category : #accessing }
+{ #category : #setUps }
 ESUGSetUp class >> stop [
 	"STOP and Clean (incomplete)"
 	ZnZincServerAdaptor stop.

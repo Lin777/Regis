@@ -28,7 +28,7 @@ ERTestBackupAndRestore >> setUp [
 
 { #category : #initialization }
 ERTestBackupAndRestore >> testBackupAfterRegisterAttendee [
-	|filesAfterBackup filesBeforeBackup|
+	| filesAfterBackup filesBeforeBackup |
 	filesBeforeBackup := self filesSizeOfBackup.
 	self registerAttendee.
 	(Delay forSeconds: 2) wait.
@@ -63,14 +63,11 @@ ERTestBackupAndRestore >> testBackupAfterRegisterGroupManager [
 { #category : #initialization }
 ERTestBackupAndRestore >> testRestoreData [
 	"This test verify that the state after restore is equal to data was removed"
-	|stateBefore stateAfter|
-	self flag: 'This test is too large, failing often on CI'; skip.
+
+	| stateBefore stateAfter |
 	self registerAsGroupManager.
 	stateBefore := ERBackupRestore new objectsToBackup.
 	(Delay forSeconds: 5) wait.
-	"Delete all data of database"
-	self deleteAll.
-	"Restore data"
 	ESUGSetUp start.
 	(Delay forSeconds: 3) wait.
 	stateAfter := ERBackupRestore new objectsToBackup.

@@ -40,6 +40,7 @@ ESUGMemoryStore >> removeObject: anObject [
 
 { #category : #actions }
 ESUGMemoryStore >> storeObject: anObject [
+	"Do a deep Copy of the Object and mark the references to store a object by id"
 
 	super storeObject: anObject.
 	Instances
@@ -49,6 +50,7 @@ ESUGMemoryStore >> storeObject: anObject [
 
 { #category : #actions }
 ESUGMemoryStore >> updateObject: anObject [
+	"Update the object"
 
 	self storeObject: anObject
 	
