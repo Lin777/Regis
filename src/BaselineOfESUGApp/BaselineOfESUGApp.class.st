@@ -42,7 +42,7 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-Form' with: [ spec requires: #('ESUGApp-View') ];
 				package: 'ESUGApp-Component' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Controller') ];
 				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component') ];
-				package: 'ESUGApp-Test' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
+				package: 'ESUGApp-Tests' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
 				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
 			spec 
 				group: 'Core' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
