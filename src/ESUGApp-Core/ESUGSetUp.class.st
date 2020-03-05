@@ -190,10 +190,10 @@ ESUGSetUp class >> createESUGConfiguration [
 		name: 'ESUG';
 		description: 'ESUG International Smalltalk Conference';
 		homePageUrl: 'http://www.esug.org/wiki/pier/Conferences/2018/';
-		dateFrom: '09/10/2019';
-		dateTo: '09/14/2019';
-		dateSubmissionDeadline:  '09/14/2019';
-		earlyRegistrationDeadline: '07/25/2019';
+		dateFrom: '10/10/2020';
+		dateTo: '10/14/2020';
+		dateSubmissionDeadline:  '10/14/2020';
+		earlyRegistrationDeadline: '09/25/2020';
 		emailConfiguration: self createEsugEmailConfiguration
 ]
 
