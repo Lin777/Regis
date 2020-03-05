@@ -13,7 +13,7 @@ Class {
 	#category : #'ESUGApp-Tests-Parasol'
 }
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfAward [
 	self selectElementWithID: 'nameAward' send: 'Award'.
 	self selectElementWithID: 'otherDevelopers' send: 'Devs'.
@@ -25,14 +25,14 @@ ERLoggedPageAsAttendeeTest >> fillAllFieldsOfAward [
 	self selectElementWithID: 'keywords' send: 'MIT'.
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfChangePassword [
 	self selectElementWithID: 'currentPassword' send: '12345678'.
 	self selectElementWithID: 'password' send: '123456789'.
 	self selectElementWithID: 'confirmPassword' send: '123456789'
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
 	self selectElementWithID: 'name' send: 'Talk Example'.
 	self selectElementWithID: 'description' send: 'This is a talk to ....'.
@@ -47,12 +47,12 @@ ERLoggedPageAsAttendeeTest >> loginAsAttendee [
 	self clickElementWithID: 'login-button'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> pressOptionMyRegistration [
 	self clickElementWithID: 'My Registration-option'
 ]
 
-{ #category : #myRegistrationSummaryTests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 	attendee paymentInformation paymentTypeIsBankTransfer 
 		ifTrue: [ self assert: (self textOfTagName: 'h3') equals: 'Bank Transfer' ]
@@ -61,32 +61,32 @@ ERLoggedPageAsAttendeeTest >> redirectByTypeOfPayment [
 			self assert: (driver getCurrentURL beginsWith: 'https://www.paypal.com')" ]
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> selectChangePasswordTab [
 	self clickElementWithID: 'changePassword'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> selectProposedAwardsTab [
 	self clickElementWithID: 'tab-Proposed Awards'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAttendeeTest >> selectProposedTalksTab [
 	self clickElementWithID: 'tab-Proposed Talks'
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 ERLoggedPageAsAttendeeTest >> setUp [
+
 	super setUp.
-	ERTest generateDataForTest .
+	ERTest generateDataForTest.
 	controller := ERConfigurationController new.
 	attendee := controller conference attends first.
-	self loginAsAttendee .
-	
+	self loginAsAttendee.
 ]
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #'my Registration ProposedAwards Tests' }
 ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyAffiliation [
 	
 	self pressOptionMyRegistration.
@@ -98,7 +98,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyAffiliation [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Affiliation')
 ]
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #'my Registration ProposedAwards Tests' }
 ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyDownloadURL [
 	
 	self pressOptionMyRegistration.
@@ -110,7 +110,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyDownloadURL [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Download Url')
 ]
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #'my Registration ProposedAwards Tests' }
 ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyName [
 	
 	self pressOptionMyRegistration.
@@ -122,7 +122,7 @@ ERLoggedPageAsAttendeeTest >> testAddAwardWithEmptyName [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #'my Registration Proposed Talks Test' }
 ERLoggedPageAsAttendeeTest >> testAddTalkCorrectly [
 	
 	self pressOptionMyRegistration.
@@ -133,7 +133,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkCorrectly [
 	self deny: (ERTalk find: [ :talk | talk name = 'Talk Example' ] ) = nil
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #'my Registration Proposed Talks Test' }
 ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyDescription [
 	
 	self pressOptionMyRegistration.
@@ -145,7 +145,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyDescription [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Abstract')
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #'my Registration Proposed Talks Test' }
 ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyName [
 	
 	self pressOptionMyRegistration.
@@ -157,7 +157,7 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyName [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserObtainAnErrorAndAfterCancelEdition [
 	|emailAfterUpdate|
 	self pressOptionAdmin  .
@@ -170,7 +170,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserObtainAnErrorAndAfterCancelEdition [
 	self deny: emailAfterUpdate email = 'mike@gmail.com'.
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
@@ -178,7 +178,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithAlreadyEmailRegistered [
 	self assert: (self textOfElementWithID: 'adminAlert') equals: 'This email is already registered'
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyEmail [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
@@ -187,7 +187,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyEmail [
 		equals: (self messageIsRequiredFor: 'Email')
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyFirstName [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
@@ -196,7 +196,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyFirstName [
 		equals: (self messageIsRequiredFor: 'First Name')
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyLastName [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
@@ -205,7 +205,7 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithEmptyLastName [
 		equals: (self messageIsRequiredFor: 'Last Name')
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testEditUserWithInvalidFormatOfEmail [
 	self pressOptionAdmin  .
 	acceptFormButton := 'accept-user'.
@@ -214,14 +214,14 @@ ERLoggedPageAsAttendeeTest >> testEditUserWithInvalidFormatOfEmail [
 		equals: 'Email (Required): Please enter a valid email'
 ]
 
-{ #category : #myRegistrationSummaryTests }
+{ #category : #'my Registration Summary Tests' }
 ERLoggedPageAsAttendeeTest >> testModifyRegistrationOfSummary [
 	self pressOptionMyRegistration.
 	self clickElementWithID: 'modifyRegistration'.
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
 ]
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #'my Registration ProposedAwards Tests' }
 ERLoggedPageAsAttendeeTest >> testPressAddAward [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
@@ -230,7 +230,7 @@ ERLoggedPageAsAttendeeTest >> testPressAddAward [
 	
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #'my Registration Proposed Talks Test' }
 ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
@@ -239,13 +239,13 @@ ERLoggedPageAsAttendeeTest >> testPressAddTalk [
 	
 ]
 
-{ #category : #adminUserTests }
+{ #category : #'admin User Tests' }
 ERLoggedPageAsAttendeeTest >> testPressAdminOption [
 	self pressOptionAdmin .
 	self assert: (driver findElementByTagName: 'h3') getText equals: 'Edit profile'.
 ]
 
-{ #category : #myRegistrationProposedAwardsTests }
+{ #category : #'my Registration ProposedAwards Tests' }
 ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 	self pressOptionMyRegistration.
 	self selectProposedAwardsTab .
@@ -253,7 +253,7 @@ ERLoggedPageAsAttendeeTest >> testPressAwardsTab [
 	
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #'admin Change Password Tests' }
 ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
@@ -261,7 +261,7 @@ ERLoggedPageAsAttendeeTest >> testPressChangePasswordTab [
 		equals: 'Modify Password'
 ]
 
-{ #category : #myRegistrationSummaryTests }
+{ #category : #'my Registration Summary Tests' }
 ERLoggedPageAsAttendeeTest >> testPressExportInvoiceButtonOfSummary [
 	|href|
 	self createDownloadDirectory .
@@ -270,7 +270,7 @@ ERLoggedPageAsAttendeeTest >> testPressExportInvoiceButtonOfSummary [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'invoice.pdf'
 ]
 
-{ #category : #myRegistrationSummaryTests }
+{ #category : #'my Registration Summary Tests' }
 ERLoggedPageAsAttendeeTest >> testPressMyRegistrationOption [
 	self pressOptionMyRegistration.
 	self assert: (self textOfTagName:'h3') equals: 'Registration Summary'.
@@ -279,7 +279,7 @@ ERLoggedPageAsAttendeeTest >> testPressMyRegistrationOption [
 	self shouldnt: [driver findElementByID: 'exportInvoice'] raise: BPNoSuchElementException .
 ]
 
-{ #category : #myRegistrationSummaryTests }
+{ #category : #'my Registration Summary Tests' }
 ERLoggedPageAsAttendeeTest >> testPressPayButtonOfSummary [
 	"self pressOptionMyRegistration.
 	(driver findElementByID: 'pay') click.
@@ -291,7 +291,7 @@ ERLoggedPageAsAttendeeTest >> testPressPayButtonOfSummary [
 	self redirectByTypeOfPayment."
 ]
 
-{ #category : #myRegistrationProposedTalksTest }
+{ #category : #'my Registration Proposed Talks Test' }
 ERLoggedPageAsAttendeeTest >> testPressTalksTab [
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
@@ -299,7 +299,7 @@ ERLoggedPageAsAttendeeTest >> testPressTalksTab [
 	
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #'admin Change Password Tests' }
 ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithANewPasswordLessThanEightCharacters [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
@@ -309,7 +309,7 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithANewPasswordLessThanEightCha
 	self shouldnt: [ driver findElementByClassName: 'is-invalid' ] raise: BPNoSuchElementException.
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #'admin Change Password Tests' }
 ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithAllFieldsCorrectly [
 	|newAttendee|
 	self pressOptionAdmin .
@@ -320,7 +320,7 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithAllFieldsCorrectly [
 	self assert: newAttendee password equals: (ERUserAccount hashPassword: '123456789') .
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #'admin Change Password Tests' }
 ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectConfirmPassword [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .
@@ -330,7 +330,7 @@ ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectConfirmPassword [
 	self shouldnt: [ driver findElementByClassName: 'is-invalid' ] raise: BPNoSuchElementException.
 ]
 
-{ #category : #adminChangePasswordTests }
+{ #category : #'admin Change Password Tests' }
 ERLoggedPageAsAttendeeTest >> testUpdatePasswordWithIncorrectCurrentPassword [
 	self pressOptionAdmin .
 	self selectChangePasswordTab .

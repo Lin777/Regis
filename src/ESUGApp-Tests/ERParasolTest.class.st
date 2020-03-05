@@ -56,7 +56,7 @@ ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
 	^  aString ,' (Required): This field only accept a text'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERParasolTest >> pressOptionAdmin [
 	self clickElementWithID: 'Account-option'
 ]
@@ -68,7 +68,7 @@ ERParasolTest >> selectElementWithID: aString1 send: aString2 [
 	element sendKeys: aString2
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 ERParasolTest >> setUp [
 
 	super setUp.
@@ -76,7 +76,7 @@ ERParasolTest >> setUp [
 	driver get: self baseURL
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 ERParasolTest >> tearDown [
 	
 	self deleteDownloadFolderIfExist.

@@ -6,6 +6,7 @@ Class {
 
 { #category : #tests }
 ERRegisterTest >> fillAllAffiliationFields [
+
 	self selectElementWithID: 'organizationName' send: 'Semantics'.
 	self selectElementWithID: 'organizationAddrees1' send: 'Example Av.' .
 	self selectElementWithID: 'organizationAddrees2' send: 'Example St.'.

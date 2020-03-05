@@ -13,19 +13,19 @@ Class {
 	#category : #'ESUGApp-Tests-Parasol'
 }
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsStudentVolunter >> loginAsStudentVolunter [
 	self selectElementWithID: 'email-login' send: studentVolunter userAccount email.
 	self selectElementWithID: 'password-login' send: '12345678'.
 	self clickElementWithID: 'login-button'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsStudentVolunter >> pressOptionSearch [
 	self clickElementWithID: 'Search-option'
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 ERLoggedPageAsStudentVolunter >> setUp [
 	super setUp.
 	ERTest generateDataForTest.

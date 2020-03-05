@@ -10,27 +10,27 @@ Class {
 	#category : #'ESUGApp-Tests-Parasol'
 }
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> fillAmount [
 	self selectElementWithID: 'amount' send: '25'.
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> fillLimit [
 	self selectElementWithID: 'limit' send: '5'.
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> fillPercentage [
 	self selectElementWithID: 'percentage' send: '25'
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> fillTicketId [
 	self selectElementWithID: 'ticketId' send: 'example123'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> getNameOfConference [
 	^ controller conference configuration name 
 ]
@@ -42,7 +42,7 @@ ERLoggedPageAsAdminTest >> loginAsAdmin [
 	self clickElementWithID: 'login-button'
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> messageInvalidInputFor: aString [
 	^ aString, ' (Required): Invalid input given'
 ]
@@ -52,49 +52,49 @@ ERLoggedPageAsAdminTest >> messageWrongDateFormatFor: aString [
 	^ aString, ': This field only supports dates with the following format "MM/DD/YYYY"'
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToAttendeeOption [
 	self pressOptionUsers .
 	self selectAttendeesTab .
 ]
 
-{ #category : #configurationProposalsTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToAwardsOption [
 	self pressOptionProposals  .
 	self selectAwardsTab  .
 ]
 
-{ #category : #configurationAdminOptionTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToChangePasswordTab [
 	self pressOptionAdmin .
 	self selectTabChangePassword 
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self pressOptionConfiguration .
 	self selectFeeTab .
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToGroupManagerOption [
 	self pressOptionUsers .
 	self selectGroupManagerTab  .
 ]
 
-{ #category : #configurationInvoicesTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToInvoicesOption [
 	self pressOptionConfiguration .
 	self selectInvoicesTab .
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
 	self pressOptionConfiguration .
 	self selectTicketTab .
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressEditGroup [
 	| group|
 	group := controller conference groups first.
@@ -103,7 +103,7 @@ ERLoggedPageAsAdminTest >> pressEditGroup [
 	
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressEditUser [
 	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
@@ -111,81 +111,82 @@ ERLoggedPageAsAdminTest >> pressEditUser [
 	self clickElementWithID:  user id, '-modify'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionConfiguration [
 	self clickElementWithID:  'Configuration-option'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionProposals [
 	self clickElementWithID:  'Proposals-option'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionStatistics [
 	self clickElementWithID:  'Statistics-option'
 ]
 
-{ #category : #tests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionUsers [
 	self clickElementWithID: 'Users-option'
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectAddTicket [
 	self moveToTicketsOption.
 	self clickElementWithID: 'addTicket'
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectAttendeesTab [
 	self clickElementWithID: 'tab-Attendees'
 ]
 
-{ #category : #configurationProposalsTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectAwardsTab [
 	self clickElementWithID: 'tab-Awards'
 ]
 
-{ #category : #configurationBackupOpenCloseTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectConfigurationTab [
 	self clickElementWithID: 'tab-Configuration'
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectFeeTab [
 	self clickElementWithID: 'tab-Fee'
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectGroupManagerTab [
 	self clickElementWithID: 'tab-Group Manager'
 ]
 
-{ #category : #configurationInvoicesTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectInvoicesTab [
 	self clickElementWithID: 'tab-Invoices'
 ]
 
-{ #category : #configurationAdminOptionTests }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectTabChangePassword [
 	self clickElementWithID: 'changePassword'
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectTicketTab [
 	self clickElementWithID: 'tab-Tickets'
 ]
 
-{ #category : #tests }
+{ #category : #running }
 ERLoggedPageAsAdminTest >> setUp [
+
 	super setUp.
-	self loginAsAdmin .
-	ERTest generateDataForTest .
+	self loginAsAdmin.
+	ERTest generateDataForTest.
 	controller := ERConfigurationController new.
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketSuccesfull [
 	|amountOfTickets|
 	amountOfTickets := controller conference reductionTickets size.
@@ -200,7 +201,7 @@ ERLoggedPageAsAdminTest >> testAddTicketSuccesfull [
 	
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithAlreadyRegisteredTicketID [
 	|coupon|
 	coupon := self validCoupon.
@@ -213,7 +214,7 @@ ERLoggedPageAsAdminTest >> testAddTicketWithAlreadyRegisteredTicketID [
 			equals: ERException ticketWithIdAlreadyExist messageText
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithEmptyLimit [
 	self selectAddTicket.
 	self fillTicketId .
@@ -222,7 +223,7 @@ ERLoggedPageAsAdminTest >> testAddTicketWithEmptyLimit [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Limit')
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithEmptyPercentage [
 	self selectAddTicket.
 	self fillTicketId .
@@ -231,7 +232,7 @@ ERLoggedPageAsAdminTest >> testAddTicketWithEmptyPercentage [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Percentage')
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithEmptyTicketID [
 	self selectAddTicket.
 	self fillPercentage .
@@ -240,7 +241,7 @@ ERLoggedPageAsAdminTest >> testAddTicketWithEmptyTicketID [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Id')
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericLimit [
 	self selectAddTicket .
 	self fillTicketId .
@@ -250,7 +251,7 @@ ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericLimit [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Limit')
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericPercentage [
 	self selectAddTicket .
 	self fillTicketId .
@@ -260,19 +261,19 @@ ERLoggedPageAsAdminTest >> testAddTicketWithNonNumericPercentage [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Percentage')
 ]
 
-{ #category : #configurationAdminOptionTests }
+{ #category : #'configuration Admin Option Tests' }
 ERLoggedPageAsAdminTest >> testAdminOptionModifyPassword [
 	self moveToChangePasswordTab .
 	self shouldnt: [ driver findElementByID: 'currentPassword' ] raise: BPNoSuchElementException
 ]
 
-{ #category : #configurationAdminOptionTests }
+{ #category : #'configuration Admin Option Tests' }
 ERLoggedPageAsAdminTest >> testAdminOptionTabUser [
 	self pressOptionAdmin.
 	self assert: (self textOfTagName: 'h3') equals: 'Edit profile'
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 	|select attendee coupon|
 	coupon := self validCoupon .
@@ -287,7 +288,7 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 	self assert: attendee paymentInformation coupon equals: coupon ticketId 
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	|attendee updateAttendee|
 	attendee := controller conference attends first.
@@ -304,7 +305,7 @@ ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	self assert: updateAttendee paymentInformation equals: attendee paymentInformation .
 ]
 
-{ #category : #configurationInvoicesTests }
+{ #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 	|invoice|
 	invoice := controller conference invoices first.
@@ -313,7 +314,7 @@ ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 	self assert: (controller conference invoices first paymentInformation hasPaid)
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
 	|user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
@@ -324,7 +325,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserAcceptAlert [
 	self assert: (ERUserAccount find: [ :anUser | anUser id =user id ]) equals: nil
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 	| user|
 	user := controller conference findUserByEmail: 'admin@esug.org'.
@@ -335,7 +336,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserAdminAcceptAlert [
 	ERException adminUserDoesNotDelete messageText
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
@@ -347,7 +348,7 @@ ERLoggedPageAsAdminTest >> testDeleteUserDismissAlert [
 		(ERUserAccount find: [ :anUser | anUser id =user id ]) equals: user
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testEditAttendee [
 	| attendee|
 	attendee := controller conference attends first.
@@ -356,7 +357,7 @@ ERLoggedPageAsAdminTest >> testEditAttendee [
 	self shouldnt: [driver findElementByID: 'tab-Contact'] raise: BPNoSuchElementException 
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroup [
 	| group|
 	group := controller conference groups first.
@@ -365,7 +366,7 @@ ERLoggedPageAsAdminTest >> testEditGroup [
 	self assert: (self textOfTagName: 'h3')equals: 'Affiliation Information'
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -374,7 +375,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
 		equals: (self messageIsRequiredFor: 'Address 1')
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [	
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -383,7 +384,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [
 		equals: (self messageIsRequiredFor: 'Name')
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 	self pressEditGroup  .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -392,7 +393,7 @@ ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
 		equals: (self messageIsRequiredFor: 'Postal/Zipcode')
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testEditTicketSuccesfull [
 	| coupon |
 	coupon := self validCoupon.
@@ -406,7 +407,7 @@ ERLoggedPageAsAdminTest >> testEditTicketSuccesfull [
 	self assert: coupon limitStrategyIsUnlimited
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 	|attendee|
 	attendee := controller conference attends first.
@@ -415,7 +416,7 @@ ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
 	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -424,7 +425,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithAnEmailAlreadyRegistered [
 		ERException emailAlreadyRegistered messageText 
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyEmail [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -433,7 +434,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyEmail [
 		equals: (self messageIsRequiredFor: 'Email')
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyLastName [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -442,7 +443,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyLastName [
 		equals: (self messageIsRequiredFor: 'Last Name')
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 	self pressEditUser .
 	acceptFormButton := 'accept-change-affiliation'.
@@ -451,7 +452,7 @@ ERLoggedPageAsAdminTest >> testEditUserWithEmptyName [
 		equals: (self messageIsRequiredFor: 'First Name')
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 	| attendee|
 	attendee := controller conference attends first.
@@ -460,14 +461,14 @@ ERLoggedPageAsAdminTest >> testIsVolunterAttendee [
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testPressAddTicket [
 	self moveToTicketsOption.
 	self clickElementWithID: 'addTicket'.
 	self assert: (self textOfTagName: 'h3') equals: 'Reduction Tickets'
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	| newValue|
 	newValue := '10/10/dsfd'.
@@ -481,7 +482,7 @@ ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	self deny: controller conference configuration dateTo = newValue 
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	|cancel user userUpdate|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
@@ -497,7 +498,7 @@ ERLoggedPageAsAdminTest >> testPressCancelModifyUserAfterChange [
 	self deny: userUpdate email = ''
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testPressDeleteATicketAcceptAlert [
 	|coupon|
 	coupon := self validCoupon id.
@@ -508,7 +509,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketAcceptAlert [
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: nil
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 	| coupon|
 	coupon := self validCoupon id.
@@ -519,7 +520,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteATicketDismissAlert [
 	self assert: (ERReductionTicket find: [ :ticket | ticket id =coupon ]) equals: self validCoupon
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
 	| attendee|
 	attendee := controller conference attends first.
@@ -530,7 +531,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeAcceptAlert [
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: nil
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 	| attendee|
 	attendee := controller conference attends first.
@@ -541,7 +542,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteAttendeeDismissAlert [
 	self assert: (ERAttendee find: [ :ticket | ticket id =attendee id ]) equals: attendee
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 	| group|
 	group := controller conference groups first.
@@ -552,7 +553,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 	self assert: (ERGroup find: [ :ticket | ticket id =group id ]) equals: nil
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 	| group|
 	group := controller conference groups first.
@@ -563,7 +564,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 	self deny: (ERGroup find: [ :ticket | ticket id =group id ]) = nil
 ]
 
-{ #category : #configurationInvoicesTests }
+{ #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	|invoice href|
 	self createDownloadDirectory .
@@ -573,7 +574,7 @@ ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'invoice.pdf'
 ]
 
-{ #category : #configurationTicketTest }
+{ #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testPressEditTicket [
 	| coupon|
 	coupon := self validCoupon.
@@ -584,7 +585,7 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 	equals: coupon ticketId .
 ]
 
-{ #category : #configurationInvoicesTests }
+{ #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
 	"| href|
 	self moveToInvoicesOption .
@@ -594,7 +595,7 @@ ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
 	self deny: (href = nil)"
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testPressExportAttendeees [
 	| href|
 	self createDownloadDirectory .
@@ -603,7 +604,7 @@ ERLoggedPageAsAdminTest >> testPressExportAttendeees [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'attendees.csv'  
 ]
 
-{ #category : #configurationProposalsTests }
+{ #category : #'configuration Proposals Tests' }
 ERLoggedPageAsAdminTest >> testPressExportAwards [
 	| href|
 	self createDownloadDirectory .
@@ -612,7 +613,7 @@ ERLoggedPageAsAdminTest >> testPressExportAwards [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'awards.csv'
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testPressExportGroups [
 	| href|
 	self createDownloadDirectory .
@@ -621,7 +622,7 @@ ERLoggedPageAsAdminTest >> testPressExportGroups [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'groups.csv'
 ]
 
-{ #category : #configurationProposalsTests }
+{ #category : #'configuration Proposals Tests' }
 ERLoggedPageAsAdminTest >> testPressExportTalks [
 	| href|
 	self createDownloadDirectory .
@@ -630,7 +631,7 @@ ERLoggedPageAsAdminTest >> testPressExportTalks [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'talks.csv'
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testPressExportUsers [
 	| href|
 	self createDownloadDirectory .
@@ -639,7 +640,7 @@ ERLoggedPageAsAdminTest >> testPressExportUsers [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'users.csv'
 ]
 
-{ #category : #configurationGroupManagerTests }
+{ #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
 	| group|
 	group := controller conference groups first.
@@ -648,7 +649,7 @@ ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
 	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
-{ #category : #configurationUsersTests }
+{ #category : #'configuration Users Tests' }
 ERLoggedPageAsAdminTest >> testPressModifyUser [
 	| user|
 	user := controller conference findUserByEmail: 'ana@gmail.com'.
@@ -657,20 +658,20 @@ ERLoggedPageAsAdminTest >> testPressModifyUser [
 	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
-{ #category : #configurationProposalsTests }
+{ #category : #'configuration Proposals Tests' }
 ERLoggedPageAsAdminTest >> testPressProposalsOption [
 	self pressOptionProposals .
 	self assert: (self textOfTagName: 'h3') equals: 'Submitted Talks'
 ]
 
-{ #category : #configurationStatistics }
+{ #category : #'configuration Statistics Tests' }
 ERLoggedPageAsAdminTest >> testStatisticsView [
 	self pressOptionStatistics .
 	self assert: (self textOfTagName: 'h3') equals: 'Statistics'.
 	self assert: (driver findElementsByTagName: 'table') size equals: 3
 ]
 
-{ #category : #configurationAttendeesTest }
+{ #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
 	| attendee|
 	attendee := controller conference attends first.
@@ -680,7 +681,7 @@ ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
 	self deny: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -689,7 +690,7 @@ ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'AddressString')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateApiKeyConferenceWithEmptyValue [
 
 	self pressOptionConfiguration .
@@ -698,7 +699,7 @@ ERLoggedPageAsAdminTest >> testUpdateApiKeyConferenceWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Api key')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateBankPayPalUrlFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -707,7 +708,7 @@ ERLoggedPageAsAdminTest >> testUpdateBankPayPalUrlFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'PayPal URL')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateBicBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -716,7 +717,7 @@ ERLoggedPageAsAdminTest >> testUpdateBicBankInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'BIC')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateCodeBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -725,7 +726,7 @@ ERLoggedPageAsAdminTest >> testUpdateCodeBankInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Code')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateCounterCodeBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -734,7 +735,7 @@ ERLoggedPageAsAdminTest >> testUpdateCounterCodeBankInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Counter code')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWithWrongFormat [
 	
 	self pressOptionConfiguration .
@@ -743,7 +744,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWith
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'Early Registration Deadline (Required)')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -751,7 +752,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 	self assert: controller conference configuration dateFrom equals: '10/10/2019' 
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -759,7 +760,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo 
 	self assert: (self textOfElementWithID: 'formConferenceConfigurationAlert' ) equals: ERException invalidEsugDates messageText
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -767,7 +768,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 	self assert: self getTextOfError equals: ( self messageWrongDateFormatFor: 'From (Required)')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFormat [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -775,7 +776,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFo
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor:'Submission Deadline (Required)')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 	
 	self pressOptionConfiguration .
@@ -784,7 +785,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 	| newValue|
 	newValue := 'The European Smalltalk User Group (ESUG) is a non-profit users organization that supports all kinds of Smalltalk initiatives, especially free-open source ones that benefit the whole Smalltalk community'.
@@ -794,7 +795,7 @@ ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 	self assert: controller conference configuration description equals: newValue 
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
 	| newValue|
 	newValue := 'http://www.esug.org/wiki/'.
@@ -804,7 +805,7 @@ ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
 	self assert: controller conference configuration homePageUrl equals: newValue 
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateIbanBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -813,7 +814,7 @@ ERLoggedPageAsAdminTest >> testUpdateIbanBankAccountInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Iban')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateNameBankInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -822,7 +823,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameBankInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateNameConferenceWithEmptyValue [
 	
 	self pressOptionConfiguration .
@@ -831,7 +832,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameConferenceWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateNumberBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -840,7 +841,7 @@ ERLoggedPageAsAdminTest >> testUpdateNumberBankAccountInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Number')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateOwnerBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -849,7 +850,7 @@ ERLoggedPageAsAdminTest >> testUpdateOwnerBankAccountInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Owner')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -858,7 +859,7 @@ ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Paypal Commission Percentage')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -867,7 +868,7 @@ ERLoggedPageAsAdminTest >> testUpdatePaypalCommisionFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Paypal Commission Percentage')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -876,7 +877,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Price for add person to the Social Dinner')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -885,7 +886,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForAddPersonFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'Price for add person to the Social Dinner')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -894,7 +895,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'All Days Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -903,7 +904,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyAllDaysFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'All Days Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -912,7 +913,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'One Day Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -921,7 +922,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForEarlyOneDayFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'One Day Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -930,7 +931,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'All Days Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -939,7 +940,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateAllDaysFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'All Days Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -948,7 +949,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'One Day Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithNoNumericValue [
 
 	self moveToFeeOption.
@@ -957,7 +958,7 @@ ERLoggedPageAsAdminTest >> testUpdatePriceForLateOneDayFeeWithNoNumericValue [
 	self assert: self getTextOfError equals: (self messageInvalidInputFor: 'One Day Fee')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -966,7 +967,7 @@ ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Rib Key')
 ]
 
-{ #category : #configurationConferenceTests }
+{ #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateSenderEmailAddressConferenceWithEmptyValue [
 	self pressOptionConfiguration .
 	acceptFormButton := 'acceptConferenceConfiguration'.
@@ -974,7 +975,7 @@ ERLoggedPageAsAdminTest >> testUpdateSenderEmailAddressConferenceWithEmptyValue 
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Sender email address')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateStaticCommisionPaypalFeeWithEmptyValue [
 
 	self moveToFeeOption.
@@ -983,7 +984,7 @@ ERLoggedPageAsAdminTest >> testUpdateStaticCommisionPaypalFeeWithEmptyValue [
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Static Commission Paypal')
 ]
 
-{ #category : #configurationFeeTests }
+{ #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateStaticCommisionPaypalFeeWithNoNumericValue [
 
 	self moveToFeeOption.

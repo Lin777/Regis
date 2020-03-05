@@ -13,7 +13,7 @@ Class {
 	#category : #'ESUGApp-Tests-Parasol'
 }
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> addGroupManagerAsAttendee [
 	self clickElementWithID: 'contactInfoForm-nextButton'.
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'.
@@ -22,7 +22,7 @@ ERLoggedPageAsGroupManagerTest >> addGroupManagerAsAttendee [
 	self clickElementWithID: 'registerButton'.
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> fillAllUserFields [
 	self selectElementWithID: 'firstName' send: 'register'.
 	self selectElementWithID: 'lastName' send: 'register'.
@@ -31,7 +31,7 @@ ERLoggedPageAsGroupManagerTest >> fillAllUserFields [
 	self selectElementWithID: 'confirmPasswordRegister' send: '12345678'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> firstName: aString1 lastName: aString2 email: aString3 password: aString4 confirmPassword: aString5 [
 	|firstName lastName email password confirmPassword|
 	firstName := driver findElementByID: 'firstName'.
@@ -53,38 +53,38 @@ ERLoggedPageAsGroupManagerTest >> loginAsGroupManager [
 	self clickElementWithID:'login-button'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonAdditional [
 	self pressNextButtonAffiliation .
 	self clickElementWithID: 'additionalInfoForm-nextButton'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonAffiliation [ 
 	self pressNextButtonConference .
 	self clickElementWithID: 'affiliationInfoForm-nextButton'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonConference [
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-nextButton'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonContact [
 	self pressNextButtonUser.
 	self clickElementWithID: 'contactInfoForm-nextButton'
 	
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonPayment [
 	self pressNextButtonAdditional.
 	self clickElementWithID:  'registerButton'
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressNextButtonUser [
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'
@@ -95,7 +95,7 @@ ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
 	self clickElementWithID: 'Group Registration-option'
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 ERLoggedPageAsGroupManagerTest >> setUp [
 	super setUp.
 	ERTest generateDataForTest .
@@ -104,14 +104,14 @@ ERLoggedPageAsGroupManagerTest >> setUp [
 	self loginAsGroupManager .
 ]
 
-{ #category : #groupManagerSumaryTests }
+{ #category : #'group Manager Sumary Tests' }
 ERLoggedPageAsGroupManagerTest >> testModifyBillingInfoOfSummary [
 	self pressOptionGroupRegistration.
 	self clickElementWithID: 'modifyAffiliation'.
 	self assert: (self textOfTagName: 'h3') equals: 'Billing Information'
 ]
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #'group Manager Members Tab Tests' }
 ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
@@ -124,7 +124,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeAcceptAlert [
 	
 ]
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #'group Manager Members Tab Tests' }
 ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 	|attendee cantOfAttendees|
 	attendee := group listAttends first.
@@ -137,7 +137,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteAttendeeDismissAlert [
 	
 ]
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #'group Manager Members Tab Tests' }
 ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert [
 	|attendee cantOfAttendees|
 	self pressOptionGroupRegistration .
@@ -156,7 +156,7 @@ ERLoggedPageAsGroupManagerTest >> testPressDeleteGroupManagerAttendeeAcceptAlert
 	
 ]
 
-{ #category : #groupManagerSumaryTests }
+{ #category : #'group Manager Sumary Tests' }
 ERLoggedPageAsGroupManagerTest >> testPressExportInvoiceButtonOfSummary [
 	|href|
 	self createDownloadDirectory .
@@ -165,7 +165,7 @@ ERLoggedPageAsGroupManagerTest >> testPressExportInvoiceButtonOfSummary [
 	self downloadFileOf: href to: ( 'Download' asFileReference ) /'invoice.pdf'
 ]
 
-{ #category : #groupManagerSumaryTests }
+{ #category : #'group Manager Sumary Tests' }
 ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 	self pressOptionGroupRegistration.
 	self assert: (self textOfTagName: 'h3') equals: 'Group Registration'.
@@ -174,7 +174,7 @@ ERLoggedPageAsGroupManagerTest >> testPressGroupManagerOption [
 	self shouldnt: [driver findElementByID: 'exportInvoice'] raise: BPNoSuchElementException .
 ]
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #'group Manager Members Tab Tests' }
 ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
@@ -188,7 +188,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterMyselfAsAttendee [
 	
 ]
 
-{ #category : #groupManagerMembersTabTests }
+{ #category : #'group Manager Members Tab Tests' }
 ERLoggedPageAsGroupManagerTest >> testRegisterNewAttendeeToGroup [
 	|cantOfAttendees|
 	self pressOptionGroupRegistration .
