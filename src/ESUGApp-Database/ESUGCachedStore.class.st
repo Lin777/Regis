@@ -11,7 +11,8 @@ Class {
 }
 
 { #category : #actions }
-ESUGCachedStore >> abortChanges: anObject [ 
+ESUGCachedStore >> abortChanges: anObject [
+
 	| diskVersion |
 	anObject critical: 
 		[ self 

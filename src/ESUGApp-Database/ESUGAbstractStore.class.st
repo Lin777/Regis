@@ -20,18 +20,9 @@ ESUGAbstractStore >> abortChanges: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-ESUGAbstractStore >> commit: aBlock [
-	self subclassResponsibility
-]
-
 { #category : #defaults }
 ESUGAbstractStore >> defaultCacheSize [
 	^ 10000
-]
-
-{ #category : #actions }
-ESUGAbstractStore >> ensureDown [
 ]
 
 { #category : #actions }

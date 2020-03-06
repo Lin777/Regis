@@ -27,22 +27,31 @@ ERBackupRestore class >> uniqueInstance [
 
 { #category : #'actions api' }
 ERBackupRestore >> backup [
-
-	| file |	
-	[[self lock critical: [ 
-		self backupDirectory.
-		file := ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber}) asFileReference.
-		file writeStreamDo: [ :stream |
-			stream nextPutAll: (STON toStringPretty: self objectsToBackup) ] ]] on: Error do: [ :error | ERException backupError signal ]]
+	| file |
+	[ [ self lock
+		critical: [ self backupDirectory.
+			file := self referenceFile.
+			self writeSTONFile: file ] ]
+		on: Error
+		do: [ :error | ERException backupError signal ] ]
 		forkAt: Processor systemBackgroundPriority
-		named: ('' join: {'backup:'.self version}).
-		^ ('' join: {self fileNamePrefix.'.'.self version}) 
+		named: self subProcessName.
+	^ self backupFileName
 ]
 
 { #category : #accessing }
 ERBackupRestore >> backupDirectory [
 	^ (FileSystem workingDirectory asFileReference / self nameDirectory)
 		 ensureCreateDirectory
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> backupFileName [
+	^ ''
+		join:
+			{self fileNamePrefix.
+			'.'.
+			self version}
 ]
 
 { #category : #accessing }
@@ -57,7 +66,7 @@ ERBackupRestore >> fileNamePrefix [
 	^ 'esug'
 ]
 
-{ #category : #updating }
+{ #category : #actions }
 ERBackupRestore >> incrementVersionNumber [
 	^ version := self version + 1
 ]
@@ -66,11 +75,9 @@ ERBackupRestore >> incrementVersionNumber [
 ERBackupRestore >> lastBackup [
 	| lastBackup file |
 	lastBackup := self lastBackupFilename.
-	file := ('' join: {self nameDirectory .'/'.lastBackup path basename }) asFileReference.
+	file := self referenceBackupFile: lastBackup.
 	lastBackup ifNil: [ ^ nil ].
-	
-	^ (file readStreamDo: [ :stream | 
-			(STON fromString: stream contents) ])
+	^ self readSTONOf: file
 ]
 
 { #category : #accessing }
@@ -104,6 +111,31 @@ ERBackupRestore >> objectsToBackup [
 ]
 
 { #category : #'actions api' }
+ERBackupRestore >> readSTONOf: aFile [
+	^ aFile readStreamDo: [ :stream | STON fromString: stream contents ]
+]
+
+{ #category : #accessing }
+ERBackupRestore >> referenceBackupFile: lastBackup [
+	^ (''
+		join:
+			{self nameDirectory.
+			'/'.
+			lastBackup path basename}) asFileReference
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> referenceFile [
+	^ (''
+		join:
+			{self nameDirectory.
+			'/'.
+			self fileNamePrefix.
+			'.'.
+			self incrementVersionNumber}) asFileReference
+]
+
+{ #category : #'actions api' }
 ERBackupRestore >> restoreBackup [
 	self updateVersionToLastVersionOfBackup.
 	self lastBackup ifNotNil: [ :backup | backup do: 
@@ -120,6 +152,19 @@ ERBackupRestore >> restoreBackup: aFilePath [
 	on: FileDoesNotExistException 
 	do: [ :exp | exp signal].
 	
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> subProcessName [
+	^ ''
+		join:
+			{'backup:'.
+			self version}
+]
+
+{ #category : #accessing }
+ERBackupRestore >> transformedObjectsToSTON [
+	^ STON toStringPretty: self objectsToBackup
 ]
 
 { #category : #'actions api' }
@@ -151,4 +196,11 @@ ERBackupRestore >> version: aNumber [
 { #category : #accessing }
 ERBackupRestore >> versionOf: fileName [
 	^ (fileName substrings: '.' ) last asInteger 
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> writeSTONFile: file [
+	^ file
+		writeStreamDo:
+			[ :stream | stream nextPutAll: self transformedObjectsToSTON ]
 ]

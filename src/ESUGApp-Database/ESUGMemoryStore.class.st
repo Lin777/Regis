@@ -8,13 +8,19 @@ Class {
 		'Cache',
 		'Instances'
 	],
-	#category : #'ESUGApp-Database-Store'
+	#category : #'ESUGApp-Database-Core'
 }
 
 { #category : #'class initialization' }
 ESUGMemoryStore class >> initialize [
 
 	Instances := Dictionary new
+]
+
+{ #category : #accessing }
+ESUGMemoryStore >> commit [
+
+	self subclassResponsibility
 ]
 
 { #category : #actions }
@@ -31,7 +37,7 @@ ESUGMemoryStore >> recoverForClass: aClass [
 		keysDo: [ :e |  self cachedLoadOfClass: aClass from:  e ]
 ]
 
-{ #category : #removing }
+{ #category : #actions }
 ESUGMemoryStore >> removeObject: anObject [
 
 	super removeObject: anObject.
