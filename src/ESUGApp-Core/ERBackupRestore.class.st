@@ -26,20 +26,32 @@ ERBackupRestore class >> uniqueInstance [
 ]
 
 { #category : #'actions api' }
-ERBackupRestore >> backup [ 	
-	[[self lock critical: [ 
-		self backupDirectory .
-		SDFuelSerializer new serialize:
-			(self objectsToBackup) toFile: ('' join: {self nameDirectory .'/'.self fileNamePrefix.'.'.self incrementVersionNumber})]] on: Error do: [ :error | ERException backupError signal ]]
+ERBackupRestore >> backup [
+	| file |
+	[ [ self lock
+		critical: [ self backupDirectory.
+			file := self referenceFile.
+			self writeSTONFile: file ] ]
+		on: Error
+		do: [ :error | ERException backupError signal ] ]
 		forkAt: Processor systemBackgroundPriority
-		named: ('' join: {'backup:'.self version}).
-		^ ('' join: {self fileNamePrefix.'.'.self version}) 
+		named: self subProcessName.
+	^ self backupFileName
 ]
 
 { #category : #accessing }
 ERBackupRestore >> backupDirectory [
 	^ (FileSystem workingDirectory asFileReference / self nameDirectory)
 		 ensureCreateDirectory
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> backupFileName [
+	^ ''
+		join:
+			{self fileNamePrefix.
+			'.'.
+			self version}
 ]
 
 { #category : #accessing }
@@ -54,18 +66,18 @@ ERBackupRestore >> fileNamePrefix [
 	^ 'esug'
 ]
 
-{ #category : #updating }
+{ #category : #actions }
 ERBackupRestore >> incrementVersionNumber [
 	^ version := self version + 1
 ]
 
 { #category : #accessing }
 ERBackupRestore >> lastBackup [
-	|lastBackup|
-	lastBackup := self lastBackupFilename .
+	| lastBackup file |
+	lastBackup := self lastBackupFilename.
+	file := self referenceBackupFile: lastBackup.
 	lastBackup ifNil: [ ^ nil ].
-	
-	^ SDFuelSerializer new materializeFromFile: ('' join: {self nameDirectory .'/'.lastBackup path basename })
+	^ self readSTONOf: file
 ]
 
 { #category : #accessing }
@@ -99,6 +111,31 @@ ERBackupRestore >> objectsToBackup [
 ]
 
 { #category : #'actions api' }
+ERBackupRestore >> readSTONOf: aFile [
+	^ aFile readStreamDo: [ :stream | STON fromString: stream contents ]
+]
+
+{ #category : #accessing }
+ERBackupRestore >> referenceBackupFile: lastBackup [
+	^ (''
+		join:
+			{self nameDirectory.
+			'/'.
+			lastBackup path basename}) asFileReference
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> referenceFile [
+	^ (''
+		join:
+			{self nameDirectory.
+			'/'.
+			self fileNamePrefix.
+			'.'.
+			self incrementVersionNumber}) asFileReference
+]
+
+{ #category : #'actions api' }
 ERBackupRestore >> restoreBackup [
 	self updateVersionToLastVersionOfBackup.
 	self lastBackup ifNotNil: [ :backup | backup do: 
@@ -109,12 +146,25 @@ ERBackupRestore >> restoreBackup [
 ERBackupRestore >> restoreBackup: aFilePath [
 	|aFile|
 	self updateVersionToLastVersionOfBackup: aFilePath.
-	[aFile := SDFuelSerializer new materializeFromFile: aFilePath.
+	["aFile := SDFuelSerializer new materializeFromFile: aFilePath".
 	aFile ifNotNil: [ :backup | backup do: 
 		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]]
 	on: FileDoesNotExistException 
 	do: [ :exp | exp signal].
 	
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> subProcessName [
+	^ ''
+		join:
+			{'backup:'.
+			self version}
+]
+
+{ #category : #accessing }
+ERBackupRestore >> transformedObjectsToSTON [
+	^ STON toStringPretty: self objectsToBackup
 ]
 
 { #category : #'actions api' }
@@ -146,4 +196,11 @@ ERBackupRestore >> version: aNumber [
 { #category : #accessing }
 ERBackupRestore >> versionOf: fileName [
 	^ (fileName substrings: '.' ) last asInteger 
+]
+
+{ #category : #'actions api' }
+ERBackupRestore >> writeSTONFile: file [
+	^ file
+		writeStreamDo:
+			[ :stream | stream nextPutAll: self transformedObjectsToSTON ]
 ]

@@ -6,7 +6,7 @@ I am a model of Fee
 "
 Class {
 	#name : #ERFee,
-	#superclass : #SDActiveRecord,
+	#superclass : #ESUGActiveRecord,
 	#instVars : [
 		'currency',
 		'erfAllDaysFee',

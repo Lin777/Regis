@@ -5,7 +5,6 @@ Depends on:
 - Seaside3
 - MaterialDesignLite
 - Parasol
-- SandstoneDb
 - NeoJSON
 - NeoCSV
 
@@ -35,18 +34,19 @@ BaselineOfESUGApp >> baseline: spec [
 			self setUpDependencies: spec.
 			spec
 				package: 'ESUGApp-PostMark-Core' with: [ spec requires: 'NeoJSON' ];
-				package: 'ESUGApp-Model' with: [ spec requires: 'SandstoneDb' ];
+				package: 'ESUGApp-Database';
+				package: 'ESUGApp-Model' with: [ spec requires: #('ESUGApp-Database') ];
 				package: 'ESUGApp-Controller' with: [ spec requires: #('Seaside3' 'NeoCSV') ];
 				package: 'ESUGApp-Core' with: [ spec requires: #('ESUGApp-View') ];		
 				package: 'ESUGApp-Library' with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
 				package: 'ESUGApp-Form' with: [ spec requires: #('ESUGApp-View') ];
 				package: 'ESUGApp-Component' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Controller') ];
 				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component') ];
-				package: 'ESUGApp-Test' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
+				package: 'ESUGApp-Tests' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
 				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
 			spec 
 				group: 'Core' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
-				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Test' 'ESUGApp-Extensions' 'ESUGApp-Core')]
+				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Tests' 'ESUGApp-Extensions' 'ESUGApp-Core')]
 ]
 
 { #category : #baselines }
@@ -64,13 +64,6 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://daniapq/MaterialDesignLite:master/src' ].
-	
-	spec
-		project: 'SandstoneDb'
-		with: [ spec
-				className: 'ConfigurationOfSandstoneDb';
-				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/gnaritas/SandstoneDb/main' ].
 	
 	spec
 		project: 'NeoJSON'

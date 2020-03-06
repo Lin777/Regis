@@ -21,7 +21,7 @@ ERConfigurationController >> addUser: anUser [
 	(conference findUserByEmail: anUser email)
 		ifNil: [ | userSaved |
 			userSaved := anUser save.
-			conference addUser: userSaved.
+			conference addNewUser: userSaved.
 			self notifyAllObservers .
 			^ userSaved ]
 ]

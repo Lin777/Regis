@@ -227,7 +227,7 @@ ERContainerTab >> updateAffiliation: aff on: aGroup [
 ]
 
 { #category : #updating }
-ERContainerTab >> updateAward: anAward. [
+ERContainerTab >> updateAward: anAward [.
 	controller updateAward: anAward.
 	self cancel
 	
@@ -240,7 +240,7 @@ ERContainerTab >> updateRegistrationInformation: anAttendee [
 ]
 
 { #category : #updating }
-ERContainerTab >> updateTalk: aTalk. [
+ERContainerTab >> updateTalk: aTalk [.
 	controller updateTalk: aTalk.
 	self cancel
 	

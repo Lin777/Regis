@@ -11,7 +11,8 @@ Class {
 		'contactInfoTab',
 		'regConfInfo',
 		'addInfo',
-		'paymentInfoTab'
+		'paymentInfoTab',
+		'isOnDevelopmentMode'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -51,7 +52,8 @@ ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 { #category : #initialization }
 ERAttendeeRegistrationPage >> initialize [
 	super initialize.
-	title := 'Registration'
+	title := 'Registration'.
+	isOnDevelopmentMode := true.
 ]
 
 { #category : #initialization }
@@ -112,11 +114,13 @@ ERAttendeeRegistrationPage >> saveRegConfInfo [
 
 { #category : #saving }
 ERAttendeeRegistrationPage >> saveRegistration [
+	"Save method to Attendees. Change the isOnDevelopmentMode instance variable if you want to test the application"
+	
 	| user |
 	user := pageController saveAttendee.
 	pageController attendee userAccount: user.
-	"Coment this line in test mode"
-	self sendEmailTo: user.
+	isOnDevelopmentMode
+		ifFalse: [ self sendEmailTo: user ].
 	^ user
 ]
 

@@ -3,7 +3,7 @@ I am a model of Talk
 "
 Class {
 	#name : #ERTalk,
-	#superclass : #SDActiveRecord,
+	#superclass : #ESUGActiveRecord,
 	#instVars : [
 		'name',
 		'description',

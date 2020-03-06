@@ -38,10 +38,11 @@ ERGroupManagerRegistrationPage >> redirectFinishRegister [
 
 { #category : #saving }
 ERGroupManagerRegistrationPage >> saveRegistration [
+	"Save method to Group Manager. Do not send email to group manager when register because this not have a invoice"
+	
 	| user |
 	user := pageController saveGroupManager.
 	pageController attendee userAccount: user.
-	"Do not send email to group manager when register because this not have a invoice"
 	^ user
 ]
 

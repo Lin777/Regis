@@ -152,7 +152,7 @@ RestoreCommandLineHandler >> handleError: error [
 
 { #category : #initialization }
 RestoreCommandLineHandler >> initializeAllObjects [	
-	ERSandstoneDatabase initialize.
+	ERDatabase initialize.
 ]
 
 { #category : #'as yet unclassified' }
