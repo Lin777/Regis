@@ -26,6 +26,10 @@ ESUGAbstractStore >> defaultCacheSize [
 ]
 
 { #category : #actions }
+ESUGAbstractStore >> ensureDown [
+]
+
+{ #category : #actions }
 ESUGAbstractStore >> ensureForClass: aClass [ 
 
 	self subclassResponsibility
