@@ -10,6 +10,7 @@ Class {
 { #category : #'class initialization' }
 ERDatabase class >> initialize [
 
+	ESUGActiveRecord resetStoreForLoad.
 	ESUGActiveRecord setStore: ESUGMemoryStore new.
 	ESUGActiveRecord warmUpAllClasses
 ]

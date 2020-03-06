@@ -45,7 +45,7 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	self group addAttendee: anAttendeeSaved.
 	(conference attends) add: anAttendeeSaved.
 	conference save.
-	self notifyAllObservers .
+	self notifyAllObservers.
 	^ self updateGroup: self group
 ]
 

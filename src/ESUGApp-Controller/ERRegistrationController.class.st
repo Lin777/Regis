@@ -58,7 +58,6 @@ ERRegistrationController >> saveAttendee [
 	self attendee paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ].
 	self updatePaymentRate: self attendee.
 	savedAttendee := self addAttendee: attendee.
-	self notifyAllObservers.
 	^ savedAttendee userAccount 
 ]
 

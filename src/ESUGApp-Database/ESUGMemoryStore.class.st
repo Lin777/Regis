@@ -24,6 +24,12 @@ ESUGMemoryStore >> commit [
 ]
 
 { #category : #actions }
+ESUGMemoryStore >> ensureDown [
+
+	Instances := Dictionary new.
+]
+
+{ #category : #actions }
 ESUGMemoryStore >> loadClass: aClass atId: anId [
 
 	^ (Instances at: anId) resolveReferences

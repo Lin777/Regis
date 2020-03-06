@@ -122,7 +122,6 @@ ESUGActiveRecord class >> lock [
 
 { #category : #initialization }
 ESUGActiveRecord class >> resetStoreForLoad [
-
 	self setStore: self store class new
 ]
 
