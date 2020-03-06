@@ -358,8 +358,6 @@ ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 ERTest >> setUp [
 
 	super setUp.
-	store := self defaultStore.
-	ESUGActiveRecord setStore: store.
 	ESUGSetUp start.
 	controller := ERController new.
 ]
