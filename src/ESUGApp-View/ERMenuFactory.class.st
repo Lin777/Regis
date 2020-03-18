@@ -35,6 +35,14 @@ ERMenuFactory >> createAdminItem [
 ]
 
 { #category : #factory }
+ERMenuFactory >> createConferenceItem [
+	^ ERItemNav 
+		label: 'Conference' 
+		icon: 'record_voice_over' 
+		callback: (availableItemsOfMenu at: 'conference')
+]
+
+{ #category : #factory }
 ERMenuFactory >> createConfigurationItem [
 	^ ERItemNav
 		label: 'Configuration'

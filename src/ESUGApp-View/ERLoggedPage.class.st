@@ -25,7 +25,8 @@ Class {
 		'attendee',
 		'configurationTabs',
 		'proposalTabs',
-		'usersTabs'
+		'usersTabs',
+		'conferenceTabs'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -36,13 +37,22 @@ ERLoggedPage >> children [
 ]
 
 { #category : #accessing }
+ERLoggedPage >> conferenceTabs [ 
+	conferenceTabs ifNil: [
+		conferenceTabs := OrderedCollection new
+			add: (ERConferenceForm on: attendee withContent: content container: self);
+			add: (ERAttendeesTab on: attendee withContent: content container: self);
+			add: (ERFeeForm on: attendee withContent: content container: self);
+			add: (ERReductionTicketsTab on: attendee withContent: content container: self); yourself.
+	(conferenceTabs at: 1) activate].
+	^ conferenceTabs
+]
+
+{ #category : #accessing }
 ERLoggedPage >> configurationTabs [ 
 	configurationTabs ifNil: [
-		configurationTabs := OrderedCollection new add: (ERConferenceForm on: attendee withContent: content container: self);
-	add: (ERFeeForm on: attendee withContent: content container: self);
-	add: (ERReductionTicketsTab on: attendee withContent: content container: self);
-	add: (ERInvoicesTab on: attendee withContent: content container: self);
-	add: (ERConfiguration on: attendee withContent: content container: self); yourself.
+		configurationTabs := OrderedCollection new 
+			add: (ERConfiguration on: attendee withContent: content container: self); yourself.
 	(configurationTabs at: 1) activate].
 	^ configurationTabs
 ]
@@ -99,6 +109,10 @@ ERLoggedPage >> itemList [
 			put: [ ERMyRegistrationView
 				attendee: (pageController conference attendeeFromUser: self session user )
 				content: content ];
+		at: 'conference'
+			put: [ ERTabsOfView
+				content: content
+				tabs: self conferenceTabs ];
 		at: 'configuration'
 			put: [ ERTabsOfView
 				content: content
@@ -129,10 +143,12 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 	self session user isGroupManager
 		ifTrue: [ list add: aMenuFactory createGroupManagerItem ].
 	self session user isAdmin
-		ifTrue: [ list add: aMenuFactory createConfigurationItem.
-			list add: aMenuFactory createUsersItem .
+		ifTrue: [ 
+			list add: aMenuFactory createConfigurationItem.
+			list add: aMenuFactory createConferenceItem.
 			list add: aMenuFactory createProposalsItem.
-			list add: aMenuFactory createStatisticsItem ].
+			list add: aMenuFactory createUsersItem.
+			list add: aMenuFactory createStatisticsItem. ].
 	self session user isStudent
 		ifTrue: [ list add: aMenuFactory createStudentVolunterSearch ].
 	list add: aMenuFactory createAdminItem.
@@ -180,9 +196,9 @@ ERLoggedPage >> states [
 { #category : #rendering }
 ERLoggedPage >> usersTabs [ 
 	usersTabs ifNil: [
-		usersTabs := OrderedCollection new add: (ERUsersTab on: attendee withContent: content container: self);
-	add: (ERAttendeesTab on: attendee withContent: content container: self);
-	add: (ERGroupManagersTab on: attendee withContent: content container: self); yourself.
+		usersTabs := OrderedCollection new 
+		add: (ERUsersTab on: attendee withContent: content container: self);
+		add: (ERGroupManagersTab on: attendee withContent: content container: self); yourself.
 	(usersTabs at: 1) activate].
 	^ usersTabs
 ]
