@@ -90,6 +90,14 @@ ERMenuFactory >> createMyRegistrationItem [
 ]
 
 { #category : #factory }
+ERMenuFactory >> createPaymentItem [
+	^ ERItemNav 
+		label: 'Payment' 
+		icon: 'monetization_on' 
+		callback: (availableItemsOfMenu at: 'payment')
+]
+
+{ #category : #factory }
 ERMenuFactory >> createProposalsItem [
 	^ ERItemNav
 		label: 'Proposals'

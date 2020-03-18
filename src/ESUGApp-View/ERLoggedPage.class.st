@@ -26,7 +26,8 @@ Class {
 		'configurationTabs',
 		'proposalTabs',
 		'usersTabs',
-		'conferenceTabs'
+		'conferenceTabs',
+		'paymentTabs'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -113,6 +114,10 @@ ERLoggedPage >> itemList [
 			put: [ ERTabsOfView
 				content: content
 				tabs: self conferenceTabs ];
+		at: 'payment'
+			put: [ ERTabsOfView
+				content: content
+				tabs: self paymentTabs ];
 		at: 'configuration'
 			put: [ ERTabsOfView
 				content: content
@@ -148,6 +153,7 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 			list add: aMenuFactory createConferenceItem.
 			list add: aMenuFactory createProposalsItem.
 			list add: aMenuFactory createUsersItem.
+			list add: aMenuFactory createPaymentItem.
 			list add: aMenuFactory createStatisticsItem. ].
 	self session user isStudent
 		ifTrue: [ list add: aMenuFactory createStudentVolunterSearch ].
@@ -164,6 +170,15 @@ ERLoggedPage >> navbar: anObject [
 { #category : #accessing }
 ERLoggedPage >> pageController [
 	^ pageController
+]
+
+{ #category : #accessing }
+ERLoggedPage >> paymentTabs [ 
+	paymentTabs ifNil: [
+		paymentTabs := OrderedCollection new
+			add: (ERInvoicesTab on: attendee withContent: content container: self); yourself.
+	(paymentTabs at: 1) activate].
+	^ paymentTabs
 ]
 
 { #category : #accessing }
