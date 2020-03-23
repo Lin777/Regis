@@ -53,7 +53,7 @@ ERMenuFactory >> createConfigurationItem [
 { #category : #factory }
 ERMenuFactory >> createGroupManagerItem [
 	^ ERItemNav 
-		label: 'Group Registration' 
+		label: 'Registration' 
 		icon: 'group' 
 		callback: (availableItemsOfMenu at: 'groupRegistration')
 ]
