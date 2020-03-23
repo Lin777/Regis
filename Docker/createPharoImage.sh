@@ -13,7 +13,6 @@ wget -O- https://get.pharo.org | bash
 
 ./pharo esug.image eval --save "
 | application |
-ERSandstoneDatabase initialize.
 ESUGSetUp start.
 application := WAAdmin defaultDispatcher handlerAt: 'config'.
 application configuration addParent: WAAuthConfiguration instance.
