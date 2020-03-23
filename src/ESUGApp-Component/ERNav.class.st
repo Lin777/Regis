@@ -47,7 +47,7 @@ ERNav >> renderContentOn: html [
 ERNav >> renderHeaderESUGOn: html [
 	html header class: 'demo-drawer-header';
 	with: [ 
-			html heading level4 with: 'ESUG'	
+			html heading level4 class: 'demo-drawer-text'; with: 'ESUG'	
 	]
 ]
 

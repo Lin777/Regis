@@ -99,7 +99,16 @@ html, body {
       -ms-flex-pack: end;
           justify-content: flex-end;
   padding: 16px;
-  height: 151px;
+  height: 90px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.demo-drawer-text {
+	 font-size: 26px;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0px 20px;
 }
 
 .demo-navigation {

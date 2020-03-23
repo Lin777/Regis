@@ -126,7 +126,7 @@ ERGroupRegistrationSummaryView >> renderModifyBillingInfoButtonOn: html [
 		rippleEffect;
 		id: 'modifyAffiliation';
 		callback: [ self modifyAffiliation ];
-		with: 'Modify Billing Information'
+		with: 'Modify Group Information'
 ]
 
 { #category : #rendering }
@@ -144,7 +144,7 @@ ERGroupRegistrationSummaryView >> renderPayButtonOn: html [
 		id: 'pay';
 		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self pay ];
-		with: 'Pay'
+		with: 'Payment information'
 ]
 
 { #category : #rendering }
@@ -189,7 +189,7 @@ ERGroupRegistrationSummaryView >> tabName [
 
 { #category : #accessing }
 ERGroupRegistrationSummaryView >> title [
-	^ 'Group Registration'
+	^ 'Registration'
 ]
 
 { #category : #updating }

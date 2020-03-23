@@ -111,14 +111,6 @@ ERAttendeesTab >> listDataToRenderButton [
 				with:  false);
 		add:
 			(Array
-				with: 'person'
-				with: [ :att | self modifyUserFormGroup: att userAccount]
-				with: [ :att | att id , '-modifyUser' ]
-				with: 'Modify User'
-				with: ''
-				with: false);
-		add:
-			(Array
 				with: 'payment'
 				with: [ :att | self applyReductionTicketTo: att ]
 				with: [ :att | att id , '-applyReduction' ]

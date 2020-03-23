@@ -123,7 +123,7 @@ ERMyRegistrationSummaryTab >> renderPayButtonOn: html [
 		id: 'pay';
 		disabled: (attendee isAbleToPay ifTrue: 'disabled');
 		callback: [ self pay ];
-		with: 'Pay'.
+		with: 'Payment information'.
 ]
 
 { #category : #accessing }
