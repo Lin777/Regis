@@ -125,7 +125,7 @@ ERLoggedPage >> itemList [
 		at: 'proposal'
 			put: [ ERTabsOfView
 				content: content
-				tabs: self proposalTabs];
+				tabs: self proposalTabs ];
 		at: 'users'
 			put: [ ERTabsOfView
 				content: content

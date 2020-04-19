@@ -9,11 +9,10 @@ Class {
 	#superclass : #ERRegisteredObject,
 	#instVars : [
 		'userAccount',
-		'contactInformation',
 		'conferenceInformation',
-		'affiliationInformation',
 		'additionalInformation',
-		'idGroup'
+		'idGroup',
+		'classId'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -40,6 +39,7 @@ ERAttendee class >> rolesForAdminRegister [
 
 { #category : #accessing }
 ERAttendee >> additionalInformation [
+	additionalInformation classId: classId.
 	^ additionalInformation
 ]
 
@@ -49,33 +49,20 @@ ERAttendee >> additionalInformation: anObject [
 ]
 
 { #category : #accessing }
-ERAttendee >> affiliationInformation [
-  ^ affiliationInformation 
-]
+ERAttendee >> classId: anId [
 
-{ #category : #accessing }
-ERAttendee >> affiliationInformation: anObject [
-	affiliationInformation := anObject
+	classId := anId
 ]
 
 { #category : #accessing }
 ERAttendee >> conferenceInformation [
+	conferenceInformation classId: classId.
 	^ conferenceInformation
 ]
 
 { #category : #accessing }
 ERAttendee >> conferenceInformation: anObject [
 	conferenceInformation := anObject
-]
-
-{ #category : #accessing }
-ERAttendee >> contactInformation [
-	^ contactInformation
-]
-
-{ #category : #accessing }
-ERAttendee >> contactInformation: anObject [
-	contactInformation := anObject
 ]
 
 { #category : #addRole }
@@ -140,14 +127,12 @@ ERAttendee >> idGroup: anObject [
 	idGroup := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ERAttendee >> initialize [ 
-	super initialize .
+	super initialize.
 	userAccount := ERUserAccount new.
-	contactInformation := ERContactInformation new.
 	conferenceInformation := ERRegisterConferenceInformation new.
-	affiliationInformation := ERBillingInformation new.
-	additionalInformation := ERAdditionalInformation new.
+	additionalInformation := ERAdditionalInformation new
 ]
 
 { #category : #'accessing-state' }
@@ -209,6 +194,7 @@ ERAttendee >> updateValuesFor: aGroup [
 
 { #category : #accessing }
 ERAttendee >> userAccount [
+	userAccount classId: classId.
 	^ userAccount
 ]
 

@@ -15,7 +15,9 @@ Class {
 		'attendSocialEvent',
 		'addedToMainList',
 		'addPersonToSocialDinner',
-		'personAddedFoodPreference'
+		'personAddedFoodPreference',
+		'id',
+		'classId'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -97,6 +99,12 @@ ERRegisterConferenceInformation >> attendance: anObject [
 ]
 
 { #category : #accessing }
+ERRegisterConferenceInformation >> classId: anId [
+
+	classId := anId
+]
+
+{ #category : #accessing }
 ERRegisterConferenceInformation >> daysOfAssistance [
 	| aString |
 	aString := ''.
@@ -120,8 +128,10 @@ ERRegisterConferenceInformation >> descriptionAddPersonToSocialDinner [
 		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 120;
-		id: 'addPersonToSocialDinner';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'addPersonToSocialDinner' ]
+		ifNotNil: [ tmp2 id: 'addPersonToSocialDinner', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -136,8 +146,10 @@ ERRegisterConferenceInformation >> descriptionAddedToMainList [
 		beRequired;
 		componentClass: MDLMACheckboxComponent;
 		priority: 110;
-		id: 'addedToMainList';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'addedToMainList' ]
+		ifNotNil: [ tmp2 id: 'addedToMainList', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -152,8 +164,10 @@ ERRegisterConferenceInformation >> descriptionAttendSocialEvent [
 		beRequired ;
 		componentClass: MDLMACheckboxComponent;
 		priority: 100;
-		id: 'attendSocialEvent';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'attendSocialEvent' ]
+		ifNotNil: [ tmp2 id: 'attendSocialEvent', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -170,8 +184,10 @@ ERRegisterConferenceInformation >> descriptionFood [
 		default: 'Normal';
 		options: self class foodPreferences;
 		withoutLabel: true;
-		id: 'foodPreference';
-		componentClass: MDLMASelectListComponent .
+		componentClass: MDLMASelectListComponent.
+	classId
+		ifNil: [ tmp1 id: 'foodPreference' ]
+		ifNotNil: [ tmp1 id: 'foodPreference', classId printString ].
 	^ tmp1 yourself
 ]
 
@@ -187,8 +203,10 @@ ERRegisterConferenceInformation >> descriptionFoodPreferenceOfExtraPerson [
 		default: 'Normal';
 		options: self class foodPreferences;
 		withoutLabel: true;
-		id: 'personAddedFoodPreference';
-		componentClass: MDLMASelectListComponent .
+		componentClass: MDLMASelectListComponent.
+	classId
+		ifNil: [ tmp1 id: 'personAddedFoodPreference' ]
+		ifNotNil: [ tmp1 id: 'personAddedFoodPreference', classId printString ].
 	^ tmp1 yourself
 ]
 
@@ -202,8 +220,10 @@ ERRegisterConferenceInformation >> descriptionFriday [
 		accessor: #friday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 50;
-		id: 'friday';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'friday' ]
+		ifNotNil: [ tmp2 id: 'friday', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -219,8 +239,10 @@ ERRegisterConferenceInformation >> descriptionGender [
 		cssClass: 'third';
 		options: self class genders;
 		withoutLabel: true;
-		id: 'gender';
-		componentClass: MDLMASelectListComponent .
+		componentClass: MDLMASelectListComponent.
+	classId
+		ifNil: [ tmp1 id: 'gender' ]
+		ifNotNil: [ tmp1 id: 'gender', classId printString ].
 	^ tmp1 yourself
 ]
 
@@ -235,8 +257,10 @@ ERRegisterConferenceInformation >> descriptionMonday [
 		group: 'Days: ';
 		componentClass: MDLMACheckboxComponent;
 		priority: 10;
-		id: 'monday';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'monday' ]
+		ifNotNil: [ tmp2 id: 'monday', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -250,8 +274,10 @@ ERRegisterConferenceInformation >> descriptionThursday [
 		accessor: #thursday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 40;
-		id: 'thursday';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'thursday' ]
+		ifNotNil: [ tmp2 id: 'thursday', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -268,8 +294,10 @@ ERRegisterConferenceInformation >> descriptionTshirtSize [
 		default: 'L';
 		options: self class tShirtSizes;
 		withoutLabel: true;
-		id: 'tshirtSize';
-		componentClass: MDLMASelectListComponent .
+		componentClass: MDLMASelectListComponent.
+	classId
+		ifNil: [ tmp1 id: 'tshirtSize' ]
+		ifNotNil: [ tmp1 id: 'tshirtSize', classId printString ].
 	^ tmp1 yourself
 ]
 
@@ -283,8 +311,10 @@ ERRegisterConferenceInformation >> descriptionTuesday [
 		accessor: #tuesday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 20;
-		id: 'tuesday';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'tuesday' ]
+		ifNotNil: [ tmp2 id: 'tuesday', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -298,8 +328,10 @@ ERRegisterConferenceInformation >> descriptionWednesday [
 		accessor: #wednesday;
 		componentClass: MDLMACheckboxComponent;
 		priority: 30;
-		id: 'wednesday';
 		withoutLabel: true.
+	classId
+		ifNil: [ tmp2 id: 'wednesday' ]
+		ifNotNil: [ tmp2 id: 'wednesday', classId printString ].
 	^ tmp2 yourself
 ]
 
@@ -331,6 +363,12 @@ ERRegisterConferenceInformation >> gender [
 { #category : #accessing }
 ERRegisterConferenceInformation >> gender: anObject [
 	gender := anObject
+]
+
+{ #category : #accessing }
+ERRegisterConferenceInformation >> id: anObject [
+
+	id := anObject
 ]
 
 { #category : #initialization }

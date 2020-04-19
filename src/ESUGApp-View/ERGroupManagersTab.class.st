@@ -8,22 +8,18 @@ Class {
 	#name : #ERGroupManagersTab,
 	#superclass : #ERConfigurationTab,
 	#instVars : [
-		'groupManagerForm',
-		'newAttendee'
+		'groupManagerForm'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #tableBlock }
 ERGroupManagersTab >> blockTableToExecute [
+
 	^ [ :group :html | 
 	OrderedCollection new
-		add: ([ :att | att groupManager userAccount firstName ] value: group);
-		add: ([ :att | att groupManager userAccount email ] value: group);
-		add: ([ :att | att groupManager affiliationInformation organizationName ] value: group);
-		add:
-			([ :att | att paymentInformation paymentAmount asString ]
-				value: group);
+		add: ([ :att | att affiliationInformation organizationName ] value: group);
+		add: ([ :att | att paymentInformation paymentAmount asString ] value: group);
 		yourself ].
 ]
 
@@ -46,7 +42,7 @@ ERGroupManagersTab >> groups [
 
 { #category : #accessing }
 ERGroupManagersTab >> headers [
-	^ #('Name' 'Email' 'Organization' 'Remaing Fee' '')
+	^ #('Organization' 'Remaing Fee' '')
 ]
 
 { #category : #tableBlock }
@@ -55,9 +51,9 @@ ERGroupManagersTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :aGroup | self modifyAffiliation: aGroup ]
+				with: [ :aGroup | self modifyGroupInformation: aGroup ]
 				with: [ :aGroup | aGroup id , '-modify' ]
-				with: 'Modify'
+				with: 'Modify group information'
 				with: ''
 				with: false);
 		add:
@@ -65,18 +61,19 @@ ERGroupManagersTab >> listDataToRenderButton [
 				with: 'delete'
 				with: [ :aGroup | self deleteGroup: aGroup ]
 				with: [ :aGroup | aGroup id , '-delete' ]
-				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: 'Remove group'
+				with: 'return confirm(''Are you sure you want to delete this group?'');'
 				with:  false);
-		add:
-			(Array
-				with: 'person'
-				with: [ :aGroup | self modifyUserFormGroup: aGroup groupManager userAccount ]
-				with: [ :aGroup | aGroup id , '-modifyUser' ]
-				with: 'Modify user'
-				with: ''
-				with: false);
 		yourself
+]
+
+{ #category : #tableBlock }
+ERGroupManagersTab >> modifyGroupInformation: aGroup [
+
+	(aGroup contactInformation copy) readOnly: false.
+	(aGroup affiliationInformation copy) readOnly: false.
+	(aGroup paymentInformation copy) readOnly: false.
+	self initializeGroupInformationForm: aGroup.
 ]
 
 { #category : #rendering }
@@ -118,10 +115,10 @@ ERGroupManagersTab >> tabId [
 
 { #category : #accessing }
 ERGroupManagersTab >> tabName [
-	^ 'Group Manager'
+	^ 'Group information'
 ]
 
 { #category : #accessing }
 ERGroupManagersTab >> title [
-	^ 'Group Manager'
+	^ 'Group information'
 ]

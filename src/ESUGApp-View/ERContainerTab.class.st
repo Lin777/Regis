@@ -11,8 +11,10 @@ Class {
 		'formApplyReductionTicket',
 		'formMofidyAffiliation',
 		'table',
+		'newUsersTable',
 		'formAward',
-		'formTalk'
+		'formTalk',
+		'formGroupInfo'
 	],
 	#category : #'ESUGApp-View-Tab'
 }
@@ -145,6 +147,16 @@ ERContainerTab >> initializeFormEditTalk: aTalk [
 ]
 
 { #category : #initialization }
+ERContainerTab >> initializeFormToGroupManagerFor: anAttendee [
+
+	formWithoutBasicInfo := ERContainerTabs
+		formToGroupManagerOn: anAttendee
+		withCallback: callback
+		content: content.
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #initialization }
 ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 	formWithoutBasicInfo := ERContainerTabs
 		formWithoutBasicInfoOn: anAttendee
@@ -154,8 +166,35 @@ ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
 ]
 
 { #category : #initialization }
+ERContainerTab >> initializeFormWithoutBasicInformationWithNotGroupFor: anAttendee [
+	formWithoutBasicInfo := ERContainerTabs
+		formWithoutBasicInfoWithNotGroupOn: anAttendee
+		withCallback: callback
+		content: content.
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeGroupInformationFormFor: aGroup [
+	formGroupInfo := ERContainerTabs
+		formGroupInformationFormOn: aGroup
+		withCallback: callback
+		content: content.
+	content state: formGroupInfo
+]
+
+{ #category : #initialization }
+ERContainerTab >> initializeGroupMemberFormWithoutBasicInformationFor: anAttendee [
+	formWithoutBasicInfo := ERContainerTabs
+		formWithoutBasicInfoToGroupMemberOn: anAttendee
+		withCallback: callback
+		content: content.
+	content state: formWithoutBasicInfo
+]
+
+{ #category : #initialization }
 ERContainerTab >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERTittledFormView on: controller groupManager affiliationInformation 
+	formMofidyAffiliation := (ERTittledFormView on: controller affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
 								callback: [:aff | self updateAffiliation: aff on: controller group];
 								cancelCallback: [self cancel]; initializeForm. 
@@ -165,7 +204,7 @@ ERContainerTab >> initializeModifyAffiliationForm [
 
 { #category : #initialization }
 ERContainerTab >> initializeModifyAffiliationForm: aGroup [
-	formMofidyAffiliation := (ERTittledFormView on: aGroup groupManager affiliationInformation 
+	formMofidyAffiliation := (ERTittledFormView on: aGroup affiliationInformation 
 								withContent: content) title: 'Affiliation Information';
 								callback: [:aff | self updateAffiliation: aff on: aGroup];
 								cancelCallback: [self cancel]; initializeForm. 
@@ -175,21 +214,61 @@ ERContainerTab >> initializeModifyAffiliationForm: aGroup [
 
 { #category : #updating }
 ERContainerTab >> modifyAffiliation: aGroup [
-	self initializeModifyAffiliationForm: aGroup .
+	"self initializeModifyAffiliationForm: aGroup."
+	callback := [ self updateRegistrationInformation: aGroup ].
+	
+	self initializeFormWithoutBasicInformationFor: aGroup.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #updating }
+ERContainerTab >> modifyGroupMemberRegistrationInformation: anAttendee [
+
+	callback := [ self updateRegistrationInformation: anAttendee ].
+	self initializeGroupMemberFormWithoutBasicInformationFor: anAttendee.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #updating }
+ERContainerTab >> modifyGroupMemberRegistrationOf: anAttendee [
+	anAttendee paymentInformation hasPaid 
+		ifFalse:[ self modifyGroupMemberRegistrationInformation: anAttendee ]
+		ifTrue: [messageComponent changeToAlertOfError.
+			messageComponent errorMessage: 'You can not make modifications after having paid.']
+]
+
+{ #category : #updating }
+ERContainerTab >> modifyGroupRegistrationInformation: aGroup [
+
+	callback := [ self updateRegistrationInformation: aGroup ].
+	self initializeFormWithoutBasicInformationFor: aGroup.
+	self updateStateTab: self tabName.
 ]
 
 { #category : #updating }
 ERContainerTab >> modifyRegistrationInformation: anAttendee [
+
 	callback := [ self updateRegistrationInformation: anAttendee ].
-	
 	self initializeFormWithoutBasicInformationFor: anAttendee.
+	self updateStateTab: self tabName.
+]
+
+{ #category : #updating }
+ERContainerTab >> modifyRegistrationInformationOfNotGroupAttendeeLike: anAttendee [
+
+	callback := [ self updateRegistrationInformation: anAttendee ].
+	self initializeFormWithoutBasicInformationWithNotGroupFor: anAttendee.
 	self updateStateTab: self tabName.
 ]
 
 { #category : #updating }
 ERContainerTab >> modifyRegistrationOf: anAttendee [
 	anAttendee paymentInformation hasPaid 
-		ifFalse:[ self modifyRegistrationInformation: anAttendee ]
+		ifFalse:[ 
+			(anAttendee idGroup)
+				ifNil: [ self modifyRegistrationInformationOfNotGroupAttendeeLike: anAttendee ] 
+				ifNotNil:  [ self modifyRegistrationInformation: anAttendee ].
+			 ]
 		ifTrue: [messageComponent changeToAlertOfError.
 			messageComponent errorMessage: 'You can not make modifications after having paid.']
 ]
@@ -205,19 +284,9 @@ ERContainerTab >> modifyUserFormGroup: anUser [
 ]
 
 { #category : #rendering }
-ERContainerTab >> renderContainerOn: html [
-	self subclassResponsibility 
-]
-
-{ #category : #rendering }
 ERContainerTab >> renderContentOn: html [
 	html heading level3; with: self title .
 	self renderContainerOn: html
-]
-
-{ #category : #accessing }
-ERContainerTab >> title [
-	self subclassResponsibility 
 ]
 
 { #category : #updating }
@@ -231,6 +300,13 @@ ERContainerTab >> updateAward: anAward [.
 	controller updateAward: anAward.
 	self cancel
 	
+]
+
+{ #category : #updating }
+ERContainerTab >> updateGroupInformation: aGroup [
+
+	controller updateGroupInformation: aGroup.
+	content state: content lastState
 ]
 
 { #category : #updating }

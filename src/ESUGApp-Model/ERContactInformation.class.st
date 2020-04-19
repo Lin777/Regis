@@ -16,7 +16,8 @@ Class {
 		'postal',
 		'facebookURL',
 		'twitterURL',
-		'homePageURL'
+		'homePageURL',
+		'readOnly'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -75,6 +76,7 @@ ERContactInformation >> descriptionAddress [
 		cssClass: 'half';
 		id: 'address';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -91,6 +93,7 @@ ERContactInformation >> descriptionAddress2 [
 		cssClass: 'half';
 		id: 'address2';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -107,17 +110,20 @@ ERContactInformation >> descriptionCity [
 		cssClass: 'half';
 		id: 'city';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
 { #category : #'magrittes-descriptions' }
 ERContactInformation >> descriptionCountry [
 	<magritteDescription>
-	^  ERAward new descriptionCountry copy
-              priority: 40;
-				  cssClass: 'half';
-				id: 'contactCountry';
-              yourself.
+	| tmp |
+	tmp := ERAward new descriptionCountry copy
+				priority: 40;
+				cssClass: 'half';
+				id: 'contactCountry'.
+	self readOnly ifTrue: [ tmp beDisabled ].
+   ^ tmp yourself
 ]
 
 { #category : #'magrittes-descriptions' }
@@ -135,6 +141,7 @@ ERContactInformation >> descriptionFacebookURL [
 		cssClass: 'half';
 		id: 'facebookURL';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -152,6 +159,7 @@ ERContactInformation >> descriptionHomePageURL [
 		labelled: 'Please enter a valid URL';
 		id: 'homePageURL';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -169,6 +177,7 @@ ERContactInformation >> descriptionPostal [
 		cssClass: 'half';
 		id: 'postal';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -186,6 +195,7 @@ ERContactInformation >> descriptionProvince [
 		cssClass: 'half';
 		id: 'province';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -204,6 +214,7 @@ ERContactInformation >> descriptionTwitterURL [
 		labelled: 'Please enter a valid URL';
 		id: 'twitterURL';
 		componentClass: MDLMATextInputComponent.
+		self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
 ]
 
@@ -245,6 +256,16 @@ ERContactInformation >> province [
 { #category : #accessing }
 ERContactInformation >> province: anObject [
 	province := anObject
+]
+
+{ #category : #accessing }
+ERContactInformation >> readOnly [
+	^ readOnly ifNil: [ false ]
+]
+
+{ #category : #accessing }
+ERContactInformation >> readOnly: aBoolean [
+	readOnly := aBoolean
 ]
 
 { #category : #accessing }

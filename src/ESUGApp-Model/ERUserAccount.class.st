@@ -10,7 +10,8 @@ Class {
 		'email',
 		'password',
 		'confirmPassword',
-		'role'
+		'role',
+		'classId'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -93,6 +94,12 @@ ERUserAccount >> asGroupManager [
 ]
 
 { #category : #accessing }
+ERUserAccount >> classId: anId [
+
+	classId := anId
+]
+
+{ #category : #accessing }
 ERUserAccount >> confirmPassword [
 	^ confirmPassword
 ]
@@ -132,8 +139,10 @@ ERUserAccount >> descriptionEmail [
 		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ]
 		labelled: 'Please enter a valid email';
 		withoutLabel: true;
-		id: 'email';
 		componentClass: MDLMATextInputComponent.
+	classId
+		ifNil: [ tmp id: 'email' ]
+		ifNotNil: [ tmp id: 'email', classId printString ].
 	^ tmp yourself
 ]
 
@@ -148,10 +157,10 @@ ERUserAccount >> descriptionFirstName [
 		beRequired;
 		label: 'First Name (Required)';
 		withoutLabel: true;
-		"addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
-		labelled: 'This field only accept a text';"
-		id: 'firstName';
 		componentClass: MDLMATextInputComponent.
+	classId
+		ifNil: [ tmp id: 'firstName' ]
+		ifNotNil: [ tmp id: 'firstName', classId printString ].
 	^ tmp yourself
 ]
 
@@ -166,10 +175,10 @@ ERUserAccount >> descriptionLastName [
 		beRequired;
 		label: 'Last Name (Required)';
 		withoutLabel: true;
-		"addCondition: [ :value | value matchesRegex: '[(a-zA-Z)+\s*]{3,}' ]
-		labelled: 'This field only accept a text';"
-		id: 'lastName';
 		componentClass: MDLMATextInputComponent.
+	classId
+		ifNil: [ tmp id: 'lastName' ]
+		ifNotNil: [ tmp id: 'lastName', classId printString ].
 	^ tmp yourself
 ]
 
@@ -201,7 +210,7 @@ ERUserAccount >> firstName: anObject [
 
 { #category : #initialization }
 ERUserAccount >> initialize [ 
-	super initialize .
+	super initialize.
 	role := Heap new
 		add: 'attendee';
 		yourself
@@ -297,9 +306,25 @@ ERUserAccount >> roleAdd: anObject [
 ]
 
 { #category : #accessing }
+ERUserAccount >> roleStringFrom: aString [
+	(aString = ' groupManager')
+		ifTrue: [ ^ 'Group Manager' ].
+	(aString = ' admin')
+		ifTrue: [ ^ 'Admin' ].
+	(aString = ' attendee')
+		ifTrue: [ ^ 'Attendee' ].
+	(aString = 'studentVolunter')
+		ifTrue: [ ^ 'Student Volunter' ].
+	(aString = 'attendeegroupManager')
+		ifTrue: [ ^ 'Attendee and Group Manager' ]
+		ifFalse: [ ^ aString ]
+]
+
+{ #category : #accessing }
 ERUserAccount >> rolesAsString [
 	| roles |
 	roles := ''.
-	role do: [ :each | roles := roles , ' ' , each ].
+	roles := String streamContents: [:s |
+		role do: [:each | s nextPutAll: each asString ]].
 	^ roles
 ]

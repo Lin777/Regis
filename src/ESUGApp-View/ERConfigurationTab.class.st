@@ -48,6 +48,14 @@ ERConfigurationTab >> initializeController [
 	controller := ERConfigurationController new attendee: attendee
 ]
 
+{ #category : #initialization }
+ERConfigurationTab >> initializeGroupInformationForm: aGroup [
+
+	callback := [ self updateGroupInformation: aGroup ].
+	self initializeGroupInformationFormFor: aGroup.
+	self updateStateTab: self tabName.
+]
+
 { #category : #rendering }
 ERConfigurationTab >> renderDownloadButton: html with: aDictionary [
 	| downloadButton |

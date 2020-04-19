@@ -31,9 +31,11 @@ ERMyRegistrationView >> initialize [
 
 { #category : #initialization }
 ERMyRegistrationView >> initializeTabForms [
-	tabs add: (ERMyRegistrationSummaryTab on: attendee withContent: content container: self);
-	add: (ERProposedTalksTab on: attendee withContent: content container: self);
-	add: (ERProposedAwardsTab on: attendee withContent: content container: self).
+
+	(attendee idGroup)
+		ifNil: [ tabs add: (ERMyRegistrationSummaryTab on: attendee withContent: content container: self) ].
+	tabs add: (ERProposedTalksTab on: attendee withContent: content container: self);
+		add: (ERProposedAwardsTab on: attendee withContent: content container: self).
 	(tabs at: 1) activate
 ]
 

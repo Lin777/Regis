@@ -51,6 +51,7 @@ ERGroup >> idGroup [
 ERGroup >> initialize [
 	super initialize .
 	listAttends := OrderedCollection new.
+	groupManager := ERGroupManager new.
 ]
 
 { #category : #testing }
@@ -75,38 +76,48 @@ ERGroup >> listAttends: anObject [
 
 { #category : #accessing }
 ERGroup >> organizationAddress1 [
-	^ groupManager affiliationInformation organizationAddrees1
+	^ self affiliationInformation organizationAddrees1
 ]
 
 { #category : #accessing }
 ERGroup >> organizationAddress2 [
-	^ groupManager affiliationInformation organizationAddrees2
+	^ self affiliationInformation organizationAddrees2
 ]
 
 { #category : #accessing }
 ERGroup >> organizationCity [ 	
-	^ groupManager affiliationInformation organizationCity 
+	^ self affiliationInformation organizationCity 
 ]
 
 { #category : #accessing }
 ERGroup >> organizationCountry [
-	^ groupManager affiliationInformation organizationCountry
+	^ self affiliationInformation organizationCountry
 ]
 
 { #category : #accessing }
 ERGroup >> organizationName [
-	^ groupManager affiliationInformation organizationName
+	^ self affiliationInformation organizationName
 ]
 
 { #category : #accessing }
 ERGroup >> organizationPostal [
-	^ groupManager affiliationInformation organizationPostal 
+	^ self affiliationInformation organizationPostal 
 ]
 
 { #category : #accessing }
 ERGroup >> totalAmount [
 	self listAttends ifNotEmpty: [ :list | ^ list sum: [ :each | each paymentAmount ]]
 	ifEmpty: [ ^ 0 ]
+]
+
+{ #category : #updating }
+ERGroup >> updateGroupInformationForAttendees [
+	self listAttends do: [ :att | 
+		att contactInformation: self contactInformation copy.
+		att paymentInformation: self paymentInformation copy.
+		att affiliationInformation: self affiliationInformation copy. 
+		att save ].
+	self save.
 ]
 
 { #category : #updating }
@@ -119,7 +130,7 @@ ERGroup >> updateHasPaidOfAll [
 { #category : #updating }
 ERGroup >> updatePaymentForAttendees [
 	self listAttends do: [ :att | 
-		att paymentInformation paymentType: self paymentInformation paymentType .
+		att paymentInformation paymentType: self paymentInformation paymentType.
 		att paymentInformation paymentCurrency: self paymentInformation paymentCurrency. 
 		att save ].
 	self save.
@@ -135,4 +146,9 @@ ERGroup >> updatePaymentRateWith: aBlock [
 { #category : #accessing }
 ERGroup >> userAccount [
 	^ groupManager userAccount
+]
+
+{ #category : #accessing }
+ERGroup >> userAccount: anObject [
+	groupManager userAccount: anObject
 ]

@@ -342,12 +342,12 @@ ERConference >> exportGroupManagers: fileName [
 							each groupManager userAccount firstName.
 							each groupManager userAccount lastName.
 							each groupManager userAccount email.
-							each groupManager affiliationInformation organizationName.
-							each groupManager affiliationInformation organizationAddrees1.
-							each groupManager affiliationInformation organizationCity.
-							each groupManager affiliationInformation organizationCountry.
-							each groupManager affiliationInformation organizationPostal.
-							each groupManager affiliationInformation membershipType} ].
+							each affiliationInformation organizationName.
+							each affiliationInformation organizationAddrees1.
+							each affiliationInformation organizationCity.
+							each affiliationInformation organizationCountry.
+							each affiliationInformation organizationPostal.
+							each affiliationInformation membershipType} ].
 				neoWriter close ].
 	^ cvs
 ]
@@ -386,8 +386,7 @@ ERConference >> exportUsers: fileName [
 							each firstName.
 							each lastName.
 							each email.
-							each password.
-							each rolesAsString} ].
+							self roleStringFrom: (each rolesAsString)} ].
 				neoWriter close ].
 	^ cvs
 ]
@@ -483,7 +482,7 @@ ERConference >> headerTalks [
 
 { #category : #header }
 ERConference >> headerUser [
-	^ #('id' 'firstName' 'lastName' 'email' 'password' 'role')
+	^ #('Id' 'First Name' 'Last Name' 'Email' 'User Role')
 ]
 
 { #category : #header }
@@ -628,6 +627,22 @@ ERConference >> reductionTickets: anObject [
 	reductionTickets := anObject
 ]
 
+{ #category : #actions }
+ERConference >> roleStringFrom: aString [
+
+	(aString = 'groupManager')
+		ifTrue: [ ^ 'Group Manager' ].
+	(aString = 'admin')
+		ifTrue: [ ^ 'Administrator' ].
+	(aString = 'attendee')
+		ifTrue: [ ^ 'Attendee' ].
+	(aString = 'studentVolunter')
+		ifTrue: [ ^ 'Student Volunter' ].
+	(aString = 'attendeegroupManager')
+		ifTrue: [ ^ 'Attendee and Group Manager' ]
+		ifFalse: [ ^ aString ]
+]
+
 { #category : #action }
 ERConference >> senderEmailAddress [
 	^ self configuration emailConfiguration senderEmailAddress
@@ -728,11 +743,12 @@ ERConference >> users: anObject [
 
 { #category : #validations }
 ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
+
 	self users
 		do: [ :each | 
 			each email = anUser email
-				ifTrue: [each = anUser ifFalse:[
-					ERException emailAlreadyRegistered signal ] ]].
+				ifTrue: [each = anUser ifFalse: [
+					ERException emailAlreadyRegistered signal ] ] ].
 ]
 
 { #category : #validations }

@@ -1,3 +1,6 @@
+"
+I render the registration page of group manager user
+"
 Class {
 	#name : #ERGroupRegistrationSummaryView,
 	#superclass : #ERGroupRegistrationTab,
@@ -11,7 +14,7 @@ ERGroupRegistrationSummaryView >> exportInvoice [
 
 { #category : #initialization }
 ERGroupRegistrationSummaryView >> initializeModifyAffiliationForm [
-	formMofidyAffiliation := (ERTittledFormView on: (controller groupManager affiliationInformation readOnly: false)
+	formMofidyAffiliation := (ERTittledFormView on: (controller group affiliationInformation readOnly: false)
 								withContent: content) title: 'Billing Information';
 								callback: [:aff | aff readOnly: true.
 									self updateAffiliation: aff on: self group];
@@ -33,7 +36,15 @@ ERGroupRegistrationSummaryView >> initializePaymentForm [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryView >> modifyAffiliation [
-	self initializeModifyAffiliationForm .
+	self initializeModifyAffiliationForm.
+]
+
+{ #category : #rendering }
+ERGroupRegistrationSummaryView >> modifyGroupInformation [
+	(controller group contactInformation copy) readOnly: false.
+	(controller group affiliationInformation copy) readOnly: false.
+	(controller group paymentInformation copy) readOnly: false.
+	self initializeGroupInformationForm: controller group.
 ]
 
 { #category : #actions }
@@ -112,11 +123,15 @@ ERGroupRegistrationSummaryView >> renderDownloadInvoiceButtonOn: html [
 { #category : #rendering }
 ERGroupRegistrationSummaryView >> renderFormButtonsOn: html [
 	
-	self renderRegisterAttendeeButtonOn: html.
-	self renderRegisterMyselfButtonOn: html.
-	self renderModifyBillingInfoButtonOn: html.
-	self renderPayButtonOn: html.
-	self renderDownloadInvoiceButtonOn: html.
+	html div
+		style: 'display: flex;
+    			justify-content: space-evenly;';
+		with: [
+			self renderRegisterMyselfButtonOn: html.
+			self renderModifyBillingInfoButtonOn: html.
+			self renderPayButtonOn: html.
+			self renderDownloadInvoiceButtonOn: html ].
+	
 ]
 
 { #category : #rendering }
@@ -125,7 +140,7 @@ ERGroupRegistrationSummaryView >> renderModifyBillingInfoButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'modifyAffiliation';
-		callback: [ self modifyAffiliation ];
+		callback: [ self modifyGroupInformation ];
 		with: 'Modify Group Information'
 ]
 
@@ -133,7 +148,7 @@ ERGroupRegistrationSummaryView >> renderModifyBillingInfoButtonOn: html [
 ERGroupRegistrationSummaryView >> renderOrganizationNameOn: html [
 	html
 		paragraph: [ html strong: 'Organization Name: '.
-			html text: (self groupManager affiliationInformation organizationName) ]
+			html text: (self group affiliationInformation organizationName) ]
 ]
 
 { #category : #rendering }
@@ -152,17 +167,6 @@ ERGroupRegistrationSummaryView >> renderPaymentStatus: html [
 	html
 		paragraph: [ html strong: 'Payment Status: '.
 			html text: self paymentStatus ]
-]
-
-{ #category : #rendering }
-ERGroupRegistrationSummaryView >> renderRegisterAttendeeButtonOn: html [
-	html mdlAnchorButton 
-		raised;
-		rippleEffect;
-		id: 'registerAttendee';
-		disabled: (self group isAbleToPay ifTrue: 'disabled');
-		callback: [ self registerAttendee ];
-		with: 'Register Attendee'
 ]
 
 { #category : #rendering }

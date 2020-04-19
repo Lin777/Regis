@@ -53,6 +53,14 @@ ERFinishRegisterPage >> renderActions: html [
 	
 ]
 
+{ #category : #accessing }
+ERFinishRegisterPage >> renderAddress2On: html [
+
+	html strong: 'Address 2: '.
+			html text: (attendee contactInformation address2).
+	html break.
+]
+
 { #category : #rendering }
 ERFinishRegisterPage >> renderAddress2OrgOn: html [
 	html strong: 'Address Line 2: '.
@@ -60,6 +68,14 @@ ERFinishRegisterPage >> renderAddress2OrgOn: html [
 				attendee affiliationInformation organizationAddrees2.
 	html break.
 	
+]
+
+{ #category : #accessing }
+ERFinishRegisterPage >> renderAddressOn: html [
+
+	html strong: 'Address: '.
+			html text: (attendee contactInformation address).
+	html break.
 ]
 
 { #category : #rendering }
@@ -73,23 +89,18 @@ ERFinishRegisterPage >> renderAddressOrgOn: html [
 
 { #category : #rendering }
 ERFinishRegisterPage >> renderAffiliation: html [
-	html mdlCell
+		html mdlCell 
 		class: 'mdl-cell--4-col';
-		with: [ self renderTitle: html with: 'Affiliation'.
-	self renderNameOrgOn: html.
-	self renderAddressOrgOn: html.
-	self renderAddress2OrgOn: html.
-	self renderCityOrgOn: html].
-	html mdlCell
-		class: 'mdl-cell--4-col';
-		with: [ html break.
-			html break. html break.
-			html horizontalRule.
-	self renderProvinceOrgOn: html.
-	self renderPostalOrgOn: html.
-	self renderCountryOrgOn: html.
-	self renderMemberShipTypeOn: html.
-	html break]
+		with: [ 
+			self renderTitle: html with: 'Affiliation'.
+			self renderNameOrgOn: html.
+			self renderAddressOrgOn: html.
+			self renderAddress2OrgOn: html.
+			self renderCityOrgOn: html.
+			self renderProvinceOrgOn: html.
+			self renderPostalOrgOn: html.
+			self renderCountryOrgOn: html.
+			self renderMemberShipTypeOn: html ]
 ]
 
 { #category : #rendering }
@@ -99,6 +110,13 @@ ERFinishRegisterPage >> renderBody: html with: aBlock [
 		with: [ html break.
 			html break.
 			aBlock value ]
+]
+
+{ #category : #accessing }
+ERFinishRegisterPage >> renderCityOn: html [
+	html strong: 'City: '.
+	html text: (attendee contactInformation city).
+	html break.
 ]
 
 { #category : #rendering }
@@ -111,14 +129,25 @@ ERFinishRegisterPage >> renderCityOrgOn: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterPage >> renderConferenceFeeOn: html [
+	html strong: 'Conference Fee: '.
+			html text:  
+				(attendee paymentInformation paymentAmount).
+	html break
+]
+
+{ #category : #rendering }
 ERFinishRegisterPage >> renderContactInformation: html [
-	html mdlCell
-		class: 'mdl-cell--4-col';
-		with: [ self renderTitle: html with: 'Contact Information'.
-			self renderFirstNameOn: html.
-			self renderLastNameOn: html.
-			self renderEmailOn: html.
-			html break]
+	"Render contact information of an user or group"
+
+	self subclassResponsibility.
+]
+
+{ #category : #accessing }
+ERFinishRegisterPage >> renderCountryOn: html [ 
+	html strong: 'Country '.
+	html text: (attendee contactInformation country).
+	html break.
 ]
 
 { #category : #rendering }
@@ -138,9 +167,24 @@ ERFinishRegisterPage >> renderEmailOn: html [
 ]
 
 { #category : #rendering }
+ERFinishRegisterPage >> renderFacebookUrlOn: html [
+
+	html strong: 'Facebook URL: '.
+			html text: (attendee contactInformation facebookURL).
+	html break
+]
+
+{ #category : #rendering }
 ERFinishRegisterPage >> renderFirstNameOn: html [
 	html strong: 'First Name: '.
 			html text: (attendee userAccount firstName).
+	html break.
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderHomePageUrlOn: html [
+	html strong: 'Home Page: '.
+			html text: (attendee contactInformation homePageURL).
 	html break.
 ]
 
@@ -171,7 +215,46 @@ ERFinishRegisterPage >> renderNameOrgOn: html [
 
 { #category : #rendering }
 ERFinishRegisterPage >> renderPageOn: html [
+	"Render page to finish register page"
+
 	self subclassResponsibility 
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderPaymentCurrencyOn: html [
+	html strong: 'Payment Currency: '.
+			html text:  
+				attendee paymentInformation paymentCurrency.
+	html break
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderPaymentInformation: html [
+	"Render payment information of registered user or group"
+
+	html mdlCell
+		class: 'mdl-cell--4-col';
+		with: [ 
+			self renderTitle: html with: 'Payment Information'.
+			self renderPaymentTypeOn: html.
+			self renderPaymentCurrencyOn: html.
+			self renderConferenceFeeOn: html.
+			html break ]
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderPaymentTypeOn: html [
+	html strong: 'Payment Type: '.
+			html text:  
+				attendee paymentInformation paymentType.
+	html break
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderPostalOn: html [
+	html strong: 'Postal: '.
+			html text: (attendee contactInformation postal).
+	html break.
 ]
 
 { #category : #rendering }
@@ -181,6 +264,13 @@ ERFinishRegisterPage >> renderPostalOrgOn: html [
 				attendee affiliationInformation organizationPostal.
 	html break.
 	
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderProvinceOn: html [
+	html strong: 'Province: '.
+			html text: (attendee contactInformation province).
+	html break.
 ]
 
 { #category : #rendering }
@@ -205,4 +295,11 @@ ERFinishRegisterPage >> renderTitle: html with: aString [
 	html heading level6
 		with: [ self renderStrong: html with: aString and: nil ].
 	html horizontalRule
+]
+
+{ #category : #rendering }
+ERFinishRegisterPage >> renderTwitterUrlOn: html [
+	html strong: 'Twitter URL: '.
+			html text: (attendee contactInformation twitterURL).
+	html break.
 ]

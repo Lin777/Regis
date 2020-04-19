@@ -96,6 +96,7 @@ ERMyRegistrationSummaryTab >> renderDownloadInvoiceOn: html [
 
 { #category : #rendering }
 ERMyRegistrationSummaryTab >> renderLabelsSummaryOn: html [
+
 	html
 		paragraph: [ html strong: 'Attendace Day(s): '.
 			html text: attendee conferenceInformation daysOfAssistance ].

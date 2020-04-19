@@ -14,7 +14,9 @@ Class {
 		'messageComponent',
 		'basicInfoTab',
 		'affiliationInfo',
-		'doneTab'
+		'doneTab',
+		'paymentInfoTab',
+		'contactInfoTab'
 	],
 	#category : #'ESUGApp-View-Page'
 }
@@ -30,23 +32,47 @@ ERRegisterPage class >> content: aContent [
 
 { #category : #adding }
 ERRegisterPage >> addBasicInfoTab [
-	basicInfoTab := (self createBasicInfoTab: pageController attendee
-							withContent: self) cancelCallback: self cancelRegister.
-	^ self
-		addTab: basicInfoTab .
+	"Create Basic information tab on all register pages"
+
+	basicInfoTab := (self createBasicInfoTab: self controllerAttendee withContent: self)
+							cancelCallback: self cancelRegister.
+	^ self addTab: basicInfoTab
 ]
 
 { #category : #adding }
 ERRegisterPage >> addBillingInfoTab [
-	affiliationInfo:= (self createBillingInfoTab: pageController attendee
-								withContent: self) disabled: true; 
+	"Create billing information tab on all register pages"
+
+	affiliationInfo := (self createBillingInfoTab: self controllerAttendee withContent: self) 
+								disabled: true; 
 								cancelCallback: self cancelRegister.
-	^ self
-		addTab: affiliationInfo .
+	^ self addTab: affiliationInfo.
+]
+
+{ #category : #adding }
+ERRegisterPage >> addContactInfoTab [
+	"Create Contact information tab on all register pages"
+	
+	contactInfoTab := (self createContactInfoTab: self controllerAttendee withContent: self) 
+								disabled: true;
+								cancelCallback: self cancelRegister.
+	^ self addTab: contactInfoTab.
+]
+
+{ #category : #adding }
+ERRegisterPage >> addPaymentInfoTab [
+	"Add payment information tab in all register pages"
+
+	paymentInfoTab := (self createPaymentInfoTab: self controllerAttendee withContent: self) 
+								disabled: true;
+								cancelCallback: self cancelRegister.
+	^ self addTab: paymentInfoTab.
 ]
 
 { #category : #adding }
 ERRegisterPage >> addTab: aAttendeeTabForm [
+	"Add a tab into a register page"
+	
 	^ self tabs add: aAttendeeTabForm
 ]
 
@@ -54,6 +80,12 @@ ERRegisterPage >> addTab: aAttendeeTabForm [
 ERRegisterPage >> cancelRegister [
 	^ [self session logout.
     ^ self requestContext redirectTo: self application url]
+]
+
+{ #category : #accessing }
+ERRegisterPage >> controllerAttendee [
+
+	^ pageController attendee
 ]
 
 { #category : #initialization }
@@ -149,17 +181,12 @@ ERRegisterPage >> renderPageOn: html [
 
 { #category : #saving }
 ERRegisterPage >> saveAffilInfo [
-	currentTab := affiliationInfo.
-	pageController attendee affiliationInformation: 
-	(affiliationInfo contentTab save) model
-	
+	self subclassResponsibility.
 ]
 
 { #category : #saving }
 ERRegisterPage >> saveBasicInfo [
-	currentTab := basicInfoTab.
-	pageController attendee userAccount: 
-	((basicInfoTab contentTab save) model as: ERUserAccount )
+	self subclassResponsibility.
 	
 ]
 

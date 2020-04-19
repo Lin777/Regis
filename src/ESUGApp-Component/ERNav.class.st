@@ -57,8 +57,6 @@ ERNav >> renderHeaderOn: html [
 	class: 'demo-header mdl-layout__header mdl-color--blue-grey-800 mdl-color-text--white';
 	with: [ 
 		html mdlLayoutHeaderRow with: [ 
-			html span class: 'mdl-layout-title';
-			with: title.
 			html mdlLayoutSpacer.
 		]	
 	].

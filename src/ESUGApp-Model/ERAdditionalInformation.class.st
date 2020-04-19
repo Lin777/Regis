@@ -9,7 +9,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'keywords',
-		'additionalText'
+		'additionalText',
+		'classId'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -24,6 +25,12 @@ ERAdditionalInformation >> additionalText: anObject [
 	additionalText := anObject
 ]
 
+{ #category : #accessing }
+ERAdditionalInformation >> classId: anId [
+
+	classId := anId
+]
+
 { #category : #'magritte descriptions' }
 ERAdditionalInformation >> descriptionAdditionalText [
 	<magritteDescription>
@@ -35,8 +42,10 @@ ERAdditionalInformation >> descriptionAdditionalText [
 		required: false;
 		lineCount: 13;
 		withoutLabel: true;
-		id: 'additionalText';
 		componentClass: MDLMATextAreaComponent.
+	classId
+		ifNil: [ tmp id: 'additionalText' ]
+		ifNotNil: [ tmp id: 'additionalText', classId printString ].
 	^ tmp yourself
 ]
 
@@ -50,8 +59,10 @@ ERAdditionalInformation >> descriptionKeywords [
 		priority: 10;
 		required: false;
 		withoutLabel: true;
-		id: 'keywords';
 		componentClass: MDLMATextInputComponent.
+	classId
+		ifNil: [ tmp id: 'keywords' ]
+		ifNotNil: [ tmp id: 'keywords', classId printString ].
 	^ tmp yourself
 ]
 

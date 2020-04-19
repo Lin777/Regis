@@ -1,3 +1,6 @@
+"
+I am the view to show the registered Attendees of a group
+"
 Class {
 	#name : #ERMembersView,
 	#superclass : #ERGroupRegistrationTab,
@@ -7,7 +10,7 @@ Class {
 { #category : #tableBlock }
 ERMembersView >> blockTableToExecute [
 	^ [:user :html | OrderedCollection new
-		add: ([ :att | att userAccount firstName ] value: user);
+		add: ([ :att | (att userAccount firstName, ' ', att userAccount lastName) ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
@@ -34,7 +37,7 @@ ERMembersView >> headers [
 ERMembersView >> initialize [
 	super initialize .
 	messageComponent id: 'alertOfMembers'.
-	callback := nil
+	callback := nil.
 ]
 
 { #category : #initialization }
@@ -50,9 +53,9 @@ ERMembersView >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :att | self modifyRegistrationOf: att ]
+				with: [ :att | self modifyGroupMemberRegistrationOf: att ]
 				with: [ :att | att id , '-modify' ]
-				with: 'Modify'
+				with: 'Modify group member information'
 				with: ''
 				with:  self group isAbleToPay );
 		add:
@@ -77,19 +80,21 @@ ERMembersView >> listDataToRenderButton [
 { #category : #rendering }
 ERMembersView >> renderButtonsOn: html [
 	self renderRegisterAttendee: html.
-	self alreadyRegisteredAsAttendee ifFalse:[
-	self renderRegisterMyselfAsAttendee: html]
+	self alreadyRegisteredAsAttendee 
+		ifFalse:[
+			self renderRegisterMyselfAsAttendee: html ]
 ]
 
 { #category : #rendering }
 ERMembersView >> renderContainerOn: html [
+
 	html form
 		method: 'post';
 		id: 'formMembers';
 		with: [
 			html horizontalRule.
 			html render: messageComponent .
-			self renderTableOfAttendsOn: html]
+			self renderTableOfAttendsOn: html ]
 ]
 
 { #category : #rendering }

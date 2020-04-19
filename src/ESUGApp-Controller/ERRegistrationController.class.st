@@ -63,14 +63,14 @@ ERRegistrationController >> saveAttendee [
 
 { #category : #saving }
 ERRegistrationController >> saveGroupManager [
-	|groupSaved|
+	| groupSaved |
 	self attendee userAccount: self save.
-	groupSaved := ERGroup groupManager: self attendee.
+	groupSaved := self attendee.
 	groupSaved paymentInformation invoiceNumberIfNone: [ conference incrementInvoiceNumber ]. 		
 	groupSaved := groupSaved save.
 	conference addGroup: groupSaved.
 	self notifyAllObservers.
-	^ self attendee userAccount 
+	^ self attendee userAccount
 ]
 
 { #category : #validations }
