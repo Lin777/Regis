@@ -119,7 +119,7 @@ ERTest class >> testExampleAttendee [
 { #category : #tests }
 ERTest class >> testGroupManager [
 
-	^ ERGroupManager new
+	^ ERGroup new
 		userAccount: (self testUserAccount: 'groupManager@gmail.com') asGroupManager;
 		affiliationInformation: self testAffiliationInformation;
 		yourself

@@ -79,8 +79,7 @@ ERConfigurationControllerTest >> testExportTalks [
 ERConfigurationControllerTest >> testExportUsers [
 	| aFile |
 	aFile := controller conference exportUsers: 'users'.
-	self assert: aFile equals: '"id","firstName","lastName","email","password","role"',
+	self assert: aFile equals: '"Id","First Name","Last Name","Email","User Role"',
 	String crlf,
-'"',self idOfAdmin,'","Admin","Admin","admin@esug.org","|""/²}ò/Y!4è$c|
-"," admin"', String crlf
+'"',self idOfAdmin,'","Admin","Admin","admin@esug.org","Administrator"', String crlf
 ]

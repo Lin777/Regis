@@ -316,11 +316,8 @@ ERLibrary >> selectAccordionRegisterJs [
 
 	^ '
 		$().ready(function() {
-			console.log("Hello");
-			console.log(document.querySelectorAll("div[id^=\"ui-id\"]"));
   			$(document.querySelectorAll("div[id^=\"ui-id-\"]")).each(function() {
 				var clickedAccordion = $(this);
-				console.log($(this));
 				var idAccordion = ($(this)[0].id).charAt(($(this)[0].id).length - 1);
 				$(this).on("click", function() { 
 					var $active = $(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
