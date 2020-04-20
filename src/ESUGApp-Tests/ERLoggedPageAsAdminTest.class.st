@@ -73,12 +73,13 @@ ERLoggedPageAsAdminTest >> moveToChangePasswordTab [
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToConferenceOption [
 	self pressOptionConference.
+	self clickElementWithID: 'tab-Conference'
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
 	self pressOptionConference.
-	self selectFeeTab .
+	self selectFeeTab.
 ]
 
 { #category : #actions }
@@ -516,7 +517,7 @@ ERLoggedPageAsAdminTest >> testPressAddTicket [
 ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	| newValue|
 	newValue := '10/10/dsfd'.
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateTo' with: newValue .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
@@ -599,9 +600,9 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupAcceptAlert [
 
 { #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
-	| group|
+	| group |
 	group := controller conference groups first.
-	self moveToGroupManagerOption .
+	self moveToGroupManagerOption.
 	self clickElementWithID: group id, '-delete'.
 	driver dismissAlert .
 	(Delay forSeconds: 2) wait.
@@ -707,16 +708,6 @@ ERLoggedPageAsAdminTest >> testStatisticsView [
 	self assert: (driver findElementsByTagName: 'table') size equals: 3
 ]
 
-{ #category : #'configuration Attendees Test' }
-ERLoggedPageAsAdminTest >> testUncheckIsVolunterAttendee [
-	| attendee|
-	attendee := controller conference attends first.
-	controller convertToStudentVolunterThis: attendee.
-	self moveToAttendeeOption .
-	self clickElementWithID: attendee id, '-isVolunter'.
-	self deny: (ERAttendee find: [ :ticket | ticket id =attendee id ]) userAccount isStudent 
-]
-
 { #category : #'configuration Fee Tests' }
 ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 
@@ -729,7 +720,7 @@ ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateApiKeyConferenceWithEmptyValue [
 
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'apiKey' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Api key')
@@ -774,7 +765,7 @@ ERLoggedPageAsAdminTest >> testUpdateCounterCodeBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWithWrongFormat [
 	
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'earlyRegistrationDeadline' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'Early Registration Deadline (Required)')
@@ -782,7 +773,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWith
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '10/10/2019' .
 	self assert: controller conference configuration dateFrom equals: '10/10/2019' 
@@ -790,7 +781,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo [
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '12/05/2020'.
 	self assert: (self textOfElementWithID: 'formConferenceConfigurationAlert' ) equals: ERException invalidEsugDates messageText
@@ -798,7 +789,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo 
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: ( self messageWrongDateFormatFor: 'From (Required)')
@@ -806,7 +797,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFormat [
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateSubmissionDeadline' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor:'Submission Deadline (Required)')
@@ -815,7 +806,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFo
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 	
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateTo' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)')
@@ -823,9 +814,9 @@ ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
-	| newValue|
+	| newValue |
 	newValue := 'The European Smalltalk User Group (ESUG) is a non-profit users organization that supports all kinds of Smalltalk initiatives, especially free-open source ones that benefit the whole Smalltalk community'.
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'description' with: newValue .
 	self assert: controller conference configuration description equals: newValue 
@@ -833,9 +824,9 @@ ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
-	| newValue|
+	| newValue |
 	newValue := 'http://www.esug.org/wiki/'.
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'homePageUrl' with: newValue .
 	self assert: controller conference configuration homePageUrl equals: newValue 
@@ -862,7 +853,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateNameConferenceWithEmptyValue [
 	
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'name' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
@@ -1005,7 +996,7 @@ ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateSenderEmailAddressConferenceWithEmptyValue [
-	self pressOptionConference.
+	self moveToConferenceOption.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'senderEmailAddress' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Sender email address')

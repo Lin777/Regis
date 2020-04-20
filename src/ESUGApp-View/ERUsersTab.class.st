@@ -32,8 +32,27 @@ ERUsersTab >> blockTableToExecute [
 		yourself ]
 ]
 
+{ #category : #'as yet unclassified' }
+ERUsersTab >> changeRoleToSaveUser: aString [
+
+	(aString = 'Group Manager')
+		ifTrue: [ ^ 'groupManager' ].
+	(aString = 'Administrator')
+		ifTrue: [ ^ 'admin' ].
+	(aString = 'Attendee')
+		ifTrue: [ ^ 'attendee' ].
+	(aString = 'Student Volunteer')
+		ifTrue: [ ^ 'studentVolunter' ].
+	(aString = 'Attendee and Group Manager')
+		ifTrue: [ ^ 'attendeegroupManager' ].
+	(aString = 'Attendee and Student Volunteer')
+		ifTrue: [ ^ 'attendeestudentVolunter' ]
+		ifFalse: [ ^ aString ]
+]
+
 { #category : #creating }
 ERUsersTab >> createUser: anUser [
+	anUser role: (self changeRoleToSaveUser: anUser role).
 	controller conference validateIfEmailIsAlreadyRegistered: anUser. 
 	controller validateNewPassword: anUser password with: anUser confirmPassword.
 	anUser encryptMyPassword.
@@ -71,7 +90,7 @@ ERUsersTab >> initializeFormAddUser [
 							on: newUser 
 							withContent: content) title: 'User'; 
 							callback: [ :anUser | self createUser: anUser ];
-							cancelCallback: [self cancel];
+							cancelCallback: [ self cancel ];
 							initializeForm
 ]
 
