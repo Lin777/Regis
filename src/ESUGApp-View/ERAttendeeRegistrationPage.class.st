@@ -38,7 +38,7 @@ ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 ERAttendeeRegistrationPage >> initialize [
 	super initialize.
 	title := 'Registration'.
-	isOnDevelopmentMode := true.
+	isOnDevelopmentMode := false.
 ]
 
 { #category : #initialization }
