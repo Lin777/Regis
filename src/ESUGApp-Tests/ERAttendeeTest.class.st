@@ -12,7 +12,7 @@ Class {
 
 { #category : #tests }
 ERAttendeeTest >> testHasCoupon [
-	|attendee|
+	| attendee |
 	attendee := self class testAttendee.
 	self deny: attendee hasCoupon.
 	attendee paymentInformation coupon: ''.

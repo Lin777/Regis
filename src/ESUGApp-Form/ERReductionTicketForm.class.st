@@ -43,8 +43,10 @@ ERReductionTicketForm >> cancel [
 
 { #category : #'change-strategy' }
 ERReductionTicketForm >> changeDiscountStrategy: value [
+
 	(ERDiscountStrategy isPercentageStrategy: value)
-		ifTrue: [ ticket strategyIsPercentageDiscount ifFalse: 
+		ifTrue: [ 
+			ticket strategyIsPercentageDiscount ifFalse: 
 			[  ticket discountStrategy: ERPercentageDiscount new.
 			self initializeDiscountStrategyForm ]].
 	(ERDiscountStrategy isFixStrategy: value)
@@ -56,6 +58,7 @@ ERReductionTicketForm >> changeDiscountStrategy: value [
 
 { #category : #'change-strategy' }
 ERReductionTicketForm >> changeLimitStrategy: value [
+
 	(ERLimitStrategy isUnlimitStrategy: value)
 		ifTrue: [ ticket limitStrategyIsUnlimited
 				ifFalse: [ ticket limitStrategy: ERUnlimitedReductionTicketUse new.
@@ -99,6 +102,7 @@ ERReductionTicketForm >> initialize [
 
 { #category : #initialization }
 ERReductionTicketForm >> initializeDiscountStrategyForm [
+
 	discountStrategyForm := self createFormOf: ticket discountStrategy
 ]
 
@@ -174,7 +178,8 @@ ERReductionTicketForm >> renderSelectDiscountStrategyOn: html [
 	html mdlTextFieldContainer
 		style: 'display: block';
 		floatingLabel;
-		with: [ html mdlTextFieldLabel for: 'selectStrategy';
+		with: [ 
+			html mdlTextFieldLabel for: 'selectStrategy';
 			 with: 'Discount Strategy'.
 			html select
 				onChange: 'submit()';

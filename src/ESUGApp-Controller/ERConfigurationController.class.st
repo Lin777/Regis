@@ -48,10 +48,11 @@ ERConfigurationController >> deleteDependencesOfAttendee: anUser [
 
 { #category : #deleting }
 ERConfigurationController >> deleteDependencesOfGroupManager: anUser [
-	anUser isGroupManager ifTrue: [ |group|
-		group := conference groupOfUser: anUser.
-		self deleteGroup: group
-		 ]
+	| group |
+	anUser isGroupManager
+		ifFalse: [ ^ self ].
+	group := conference groupOfUser: anUser.
+	self deleteGroup: group
 ]
 
 { #category : #deleting }
@@ -130,6 +131,15 @@ ERConfigurationController >> updateFee: aFee [
 	self notifyAllObservers.
 	^ aFee
 	
+]
+
+{ #category : #updating }
+ERConfigurationController >> updateGroupInformation: aGroup [
+
+	aGroup updateGroupInformationForAttendees.
+	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
+	aGroup save.
+	self notifyAllObservers.
 ]
 
 { #category : #validations }

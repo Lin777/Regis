@@ -1,3 +1,6 @@
+"
+I am a state content to register an user
+"
 Class {
 	#name : #ERStateContent,
 	#superclass : #ERComponentFactory,

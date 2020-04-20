@@ -26,6 +26,30 @@ Class {
 }
 
 { #category : #'instance creation' }
+ERContainerTabs class >> formGroupInformationFormOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee.
+	form initializeWithGroupInformationFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #'instance creation' }
+ERContainerTabs class >> formGroupMemberRegisterOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee.
+	form initializeTabsGroupMemberRegisterFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #'instance creation' }
 ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -38,6 +62,18 @@ ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content
 ]
 
 { #category : #'instance creation' }
+ERContainerTabs class >> formToGroupManagerOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee.
+	form initializeTabsToGroupManagerFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #'instance creation' }
 ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock content: aContent [
 	| form |
 	form := self new.
@@ -45,6 +81,30 @@ ERContainerTabs class >> formWithoutBasicInfoOn: anAttendee withCallback: aBlock
 	form callback: aBlock.
 	form attendee: anAttendee.
 	form initializeTabsWithoutBasicInformationFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #'instance creation' }
+ERContainerTabs class >> formWithoutBasicInfoToGroupMemberOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee.
+	form initializeTabsWithoutBasicInformationToGroupMemberFor: anAttendee.
+	form tabView: (ERTabs tabs: form tabs).
+	^ form
+]
+
+{ #category : #'instance creation' }
+ERContainerTabs class >> formWithoutBasicInfoWithNotGroupOn: anAttendee withCallback: aBlock content: aContent [
+	| form |
+	form := self new.
+	form content: aContent.
+	form callback: aBlock.
+	form attendee: anAttendee.
+	form initializeTabsWithoutBasicInformationWithNotGroupFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
 ]
@@ -79,6 +139,22 @@ ERContainerTabs >> initialize [
 ]
 
 { #category : #initialization }
+ERContainerTabs >> initializeTabsGroupMemberRegisterFor: anAttendee [
+	"Initialize tabs for register form"
+	tabs := OrderedCollection new
+				add: ((self createBasicInfoTab: anAttendee withContent: self)
+					activate; cancelCallback: self cancelTab);
+				add: ((self createRegConferenceInfoTab: anAttendee withContent: self)
+					disabled: true; cancelCallback: self cancelTab);
+				add: ((self createAdditionalInfoTab: anAttendee withContent: self)
+					disabled: true; 
+					buttonsOfTab: [:html |self renderFinalizeButtonOn: html ]; 
+					cancelCallback: self cancelTab);
+				yourself.
+	saveTabs := [ self saveGroupAttendeeTabs ]
+]
+
+{ #category : #initialization }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	"Initialize tabs for register form"
 	tabs := OrderedCollection new
@@ -93,30 +169,111 @@ ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 ]
 
 { #category : #initialization }
+ERContainerTabs >> initializeTabsToGroupManagerFor: aGroup [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
+
+	tabs := OrderedCollection new
+		add: (
+			(self createRegConferenceInfoTab: aGroup withContent: self) 
+				activate; 
+				previousTabName: nil; 
+				cancelCallback: self cancelTab);
+		add: (
+			(self createAdditionalInfoTab: aGroup withContent: self) 
+				buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ];
+				cancelCallback: self cancelTab);
+		yourself.
+	saveTabs := [ self saveAttendeeToGroupManagerTabs: aGroup ]
+]
+
+{ #category : #initialization }
 ERContainerTabs >> initializeTabsWithoutBasicInformationFor: anAttendee [
 	"Initialize tabs form for update an registration, this tabs do not have a user information"
 	tabs := OrderedCollection new
-	add: ((self createContactInfoTab: anAttendee withContent: self ) 
-				activate; previousTabName: nil; cancelCallback: self cancelTab);
-	add: ((self createRegConferenceInfoTab: anAttendee withContent: self ) cancelCallback: self cancelTab);
-	add: ((self createBillingInfoTab: anAttendee withContent: self) cancelCallback: self cancelTab);
-	add: ((self createAdditionalInfoTab: anAttendee withContent: self) cancelCallback: self cancelTab);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self ) buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; cancelCallback: self cancelTab);
+		add: ((self createContactInfoTab: anAttendee withContent: self) 
+					activate; 
+					previousTabName: nil; 
+					cancelCallback: self cancelTab);
+		add: ((self createRegConferenceInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createBillingInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createAdditionalInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createPaymentInfoTab: anAttendee withContent: self)
+			buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; 
+			cancelCallback: self cancelTab);
 		yourself.
-	saveTabs := [ self saveAttendeeToGroupManagerTabs ]
+	saveTabs := [ self saveAttendeeToGroupManagerTabs: anAttendee ]
+]
+
+{ #category : #initialization }
+ERContainerTabs >> initializeTabsWithoutBasicInformationToGroupMemberFor: anAttendee [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
+	tabs := OrderedCollection new
+		add: ((self createRegConferenceInfoTab: anAttendee withContent: self)
+			activate; 
+			previousTabName: nil; 
+			cancelCallback: self cancelTab);
+		add: ((self createAdditionalInfoTab: anAttendee withContent: self)
+			buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ];
+			cancelCallback: self cancelTab);
+		yourself.
+	saveTabs := [ self saveAttendeeToGroupManagerTabs: anAttendee ]
+]
+
+{ #category : #initialization }
+ERContainerTabs >> initializeTabsWithoutBasicInformationWithNotGroupFor: anAttendee [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
+	tabs := OrderedCollection new
+		add: ((self createContactInfoTab: anAttendee withContent: self) 
+					activate; 
+					previousTabName: nil; 
+					cancelCallback: self cancelTab);
+		add: ((self createRegConferenceInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createBillingInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createAdditionalInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createPaymentInfoTab: anAttendee withContent: self)
+			buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; 
+			cancelCallback: self cancelTab);
+		yourself.
+	saveTabs := [ self saveAttendeeWithoutGroupTabs ]
+]
+
+{ #category : #initialization }
+ERContainerTabs >> initializeWithGroupInformationFor: anAttendee [
+	"Initialize tabs form for update an registration, this tabs do not have a user information"
+	tabs := OrderedCollection new
+		add: ((self createContactInfoTab: anAttendee withContent: self) 
+					activate; 
+					previousTabName: nil; 
+					cancelCallback: self cancelTab);
+		add: ((self createBillingInfoTab: anAttendee withContent: self)
+			cancelCallback: self cancelTab);
+		add: ((self createPaymentInfoTab: anAttendee withContent: self)
+			buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; 
+			cancelCallback: self cancelTab);
+		yourself.
+	saveTabs := [ self saveGroupInformationTabs ]
 ]
 
 { #category : #rendering }
 ERContainerTabs >> renderContentPageOn: html [
+	
 	html form
 		method: 'post';
 		id: 'registerForm';
 		with: [
-	html mdlTabs rippleEffect
-		with: [ html div
-				style: 'overflow-x:auto;';
-				with: [ html render: messageComponent.
-							 html render: tabView]]]
+			html mdlTabs rippleEffect
+				with: [ 
+					html div
+						style: 'overflow-x:auto;';
+						with: [ 
+							 html render: messageComponent.
+							 html render: tabView ] ] ]
 ]
 
 { #category : #rendering }
@@ -143,8 +300,15 @@ ERContainerTabs >> saveAdditionalInfoAt: index [
 
 { #category : #saving }
 ERContainerTabs >> saveAffiliationInfoAt: index [
-	(tabs at: index)contentTab save.
-	attendee affiliationInformation: (tabs at: index)contentTab model 
+	(tabs at: index) contentTab save.
+	attendee affiliationInformation: (tabs at: index) contentTab model
+]
+
+{ #category : #saving }
+ERContainerTabs >> saveAffiliationInfoOfGroup: aGroup [
+	
+	"(tabs at: index) contentTab save."
+	attendee affiliationInformation: aGroup affiliationInformation copy
 ]
 
 { #category : #saving }
@@ -159,7 +323,17 @@ ERContainerTabs >> saveAttendeeTabs [
 ]
 
 { #category : #saving }
-ERContainerTabs >> saveAttendeeToGroupManagerTabs [
+ERContainerTabs >> saveAttendeeToGroupManagerTabs: aGroup [
+	self saveContactInfoOfGroup: aGroup.
+	self saveRegConferenceInfoAt: 1.
+	self saveAffiliationInfoOfGroup: aGroup.
+	self saveAdditionalInfoAt: 2.
+	callback cull: attendee
+]
+
+{ #category : #saving }
+ERContainerTabs >> saveAttendeeWithoutGroupTabs [
+
 	self saveContactInfoAt: 1.
 	self saveRegConferenceInfoAt: 2.
 	self saveAffiliationInfoAt: 3.
@@ -172,6 +346,30 @@ ERContainerTabs >> saveAttendeeToGroupManagerTabs [
 ERContainerTabs >> saveContactInfoAt: index [
 	(tabs at: index) contentTab save.
 	attendee contactInformation: (tabs at: index) contentTab model
+]
+
+{ #category : #saving }
+ERContainerTabs >> saveContactInfoOfGroup: aGroup [
+
+	"(tabs at: index) contentTab save."
+	attendee contactInformation: aGroup contactInformation copy
+]
+
+{ #category : #saving }
+ERContainerTabs >> saveGroupAttendeeTabs [
+	self saveUserAccountAt: 1.
+	self saveRegConferenceInfoAt: 2.
+	self saveAdditionalInfoAt: 3.
+	callback cull: attendee
+]
+
+{ #category : #saving }
+ERContainerTabs >> saveGroupInformationTabs [
+
+	self saveContactInfoAt: 1.
+	self saveAffiliationInfoAt: 2.
+	self savePaymentInfoAt: 3.
+	callback cull: attendee
 ]
 
 { #category : #saving }

@@ -167,7 +167,7 @@ ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
 
 { #category : #updating }
 ERController >> updateAffiliation: aff on: aGroup [
-	aGroup groupManager affiliationInformation: aff.
+	aGroup affiliationInformation: aff.
 	aGroup save.
 	self notifyAllObservers 
 ]
@@ -178,7 +178,7 @@ ERController >> updateAttendee: anAttendee [
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
-	self notifyAllObservers .
+	self notifyAllObservers.
 	^ anAttendee 
 ]
 
@@ -191,6 +191,7 @@ ERController >> updateAward: anAward [
 
 { #category : #updating }
 ERController >> updateGroup: aGroup [
+
 	self updatePaymentRateForGroup: aGroup.
 	aGroup updateHasPaidOfAll.
 	self notifyAllObservers.
@@ -234,6 +235,7 @@ ERController >> validateNewPassword: aString1 with: aString2 [
 
 { #category : #validations }
 ERController >> validateRegister: anAttendee [
+
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
 	with: anAttendee userAccount confirmPassword.

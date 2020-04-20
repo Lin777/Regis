@@ -15,13 +15,16 @@ Class {
 	#name : #ERGroupManagerController,
 	#superclass : #ERLoggedController,
 	#instVars : [
-		'group'
+		'group',
+		'newAttendees'
 	],
 	#category : #'ESUGApp-Controller'
 }
 
 { #category : #adding }
 ERGroupManagerController >> addAttendee: anAttendee [
+	"Add attendee to group"
+	
 	| anAttendeeSaved |
 	self validateRegister: anAttendee.
 	anAttendee paymentInformation invoiceNumber: self group paymentInformation invoiceNumber.
@@ -47,6 +50,12 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 	conference save.
 	self notifyAllObservers.
 	^ self updateGroup: self group
+]
+
+{ #category : #'instance creation' }
+ERGroupManagerController >> addNewAttendeeToRegister: anAttendee [
+
+	self newAttendees add: anAttendee.
 ]
 
 { #category : #deleting }
@@ -76,9 +85,29 @@ ERGroupManagerController >> groupManager [
 	^ group groupManager
 ]
 
+{ #category : #'instance creation' }
+ERGroupManagerController >> newAttendees [
+
+	^ newAttendees ifNil: [ newAttendees := OrderedCollection new ]
+]
+
+{ #category : #'instance creation' }
+ERGroupManagerController >> removeGroupMemberToRegisterWithIndex: anIndex [
+
+	newAttendees removeAt: anIndex.
+	newAttendees doWithIndex: [ :newAttendee :index |
+		 newAttendee classId: index ]
+]
+
+{ #category : #updating }
+ERGroupManagerController >> updateAttendee: anAttendee inIndex: classId [
+
+	newAttendees at: classId put: anAttendee
+]
+
 { #category : #updating }
 ERGroupManagerController >> updateBillingInfo: aff [
-	self groupManager affiliationInformation: aff.
+	self group affiliationInformation: aff.
 	self group save.
 	self notifyAllObservers  
 ]
@@ -88,4 +117,16 @@ ERGroupManagerController >> updateGroup: aGroup [
 	aGroup updatePaymentForAttendees.
 	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
 	super updateGroup: aGroup 
+]
+
+{ #category : #updating }
+ERGroupManagerController >> updateGroupInformation: aGroup [
+
+	self group affiliationInformation: aGroup affiliationInformation copy.
+	self group paymentInformation: aGroup paymentInformation copy.
+	self group contactInformation: aGroup contactInformation copy.
+	aGroup updateGroupInformationForAttendees.
+	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
+	self group save.
+	self notifyAllObservers  
 ]

@@ -96,9 +96,9 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'edit'
-				with: [ :att | self modifyRegistrationInformation: att ]
+				with: [ :att | self modifyInformation: att ]
 				with: [ :att | att id , '-modify' ]
-				with: 'Modify'
+				with: 'Modify Attendee information'
 				with: ''
 				with: false);
 		add:
@@ -107,7 +107,7 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: [ :att | self deleteAttendee: att ]
 				with: [ :att | att id , '-delete' ]
 				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: 'return confirm(''Are you sure you want to delete this attendee?'');'
 				with:  false);
 		add:
 			(Array
@@ -126,6 +126,14 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: ''
 				with: false);
 		yourself
+]
+
+{ #category : #actions }
+ERAttendeesTab >> modifyInformation: anAttendee [
+
+	(anAttendee idGroup)
+		ifNil: [ self modifyRegistrationInformationOfNotGroupAttendeeLike: anAttendee ]
+		ifNotNil: [ self modifyGroupMemberRegistrationOf: anAttendee ]
 ]
 
 { #category : #actions }

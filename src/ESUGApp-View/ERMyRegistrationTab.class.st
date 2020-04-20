@@ -1,3 +1,6 @@
+"
+I am the principal class to register only one Attendee
+"
 Class {
 	#name : #ERMyRegistrationTab,
 	#superclass : #ERContainerTab,
@@ -24,4 +27,16 @@ ERMyRegistrationTab >> initialize [
 ERMyRegistrationTab >> proposalsAreAllowed [
 	^ controller conference configuration 
 	dateSubmissionDeadline asDate >= Date today 
+]
+
+{ #category : #rendering }
+ERMyRegistrationTab >> renderContainerOn: html [
+
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERMyRegistrationTab >> title [
+
+	self subclassResponsibility 
 ]

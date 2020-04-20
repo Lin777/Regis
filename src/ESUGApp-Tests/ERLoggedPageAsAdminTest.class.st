@@ -54,8 +54,8 @@ ERLoggedPageAsAdminTest >> messageWrongDateFormatFor: aString [
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToAttendeeOption [
-	self pressOptionUsers .
-	self selectAttendeesTab .
+	self pressOptionConference.
+	self selectAttendeesTab.
 ]
 
 { #category : #actions }
@@ -71,34 +71,44 @@ ERLoggedPageAsAdminTest >> moveToChangePasswordTab [
 ]
 
 { #category : #actions }
+ERLoggedPageAsAdminTest >> moveToConferenceOption [
+	self pressOptionConference.
+]
+
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	self selectFeeTab .
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToGroupManagerOption [
-	self pressOptionUsers .
-	self selectGroupManagerTab  .
+	self pressOptionUsers.
+	self selectGroupManagerTab.
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToInvoicesOption [
-	self pressOptionConfiguration .
-	self selectInvoicesTab .
+	self pressOptionInvoice.
+	self selectInvoicesTab.
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
-	self pressOptionConfiguration .
-	self selectTicketTab .
+	self pressOptionConference.
+	self selectTicketTab.
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> moveToUserOption [
+	self pressUserConfiguration.
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> pressEditGroup [
-	| group|
+	| group |
 	group := controller conference groups first.
-	self moveToGroupManagerOption .
+	self moveToGroupManagerOption.
 	self clickElementWithID: group id, '-modify'
 	
 ]
@@ -112,8 +122,28 @@ ERLoggedPageAsAdminTest >> pressEditUser [
 ]
 
 { #category : #actions }
+ERLoggedPageAsAdminTest >> pressNextAffiliationButton [
+	self clickElementWithID: 'affiliationInfoForm-nextButton'
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> pressNextButton [
+	self clickElementWithID:  'Conference-option'
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> pressOptionConference [
+	self clickElementWithID:  'Conference-option'
+]
+
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionConfiguration [
 	self clickElementWithID:  'Configuration-option'
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> pressOptionInvoice [
+	self clickElementWithID:  'Payment-option'
 ]
 
 { #category : #actions }
@@ -129,6 +159,11 @@ ERLoggedPageAsAdminTest >> pressOptionStatistics [
 { #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionUsers [
 	self clickElementWithID: 'Users-option'
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> pressUserConfiguration [
+	self clickElementWithID:  'Users-option'
 ]
 
 { #category : #actions }
@@ -158,13 +193,23 @@ ERLoggedPageAsAdminTest >> selectFeeTab [
 ]
 
 { #category : #actions }
+ERLoggedPageAsAdminTest >> selectGroupBillingInformationTab [
+	self clickElementWithID:  'tab-Billing Information'
+]
+
+{ #category : #actions }
 ERLoggedPageAsAdminTest >> selectGroupManagerTab [
-	self clickElementWithID: 'tab-Group Manager'
+	self clickElementWithID: 'tab-Group information'
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> selectInvoicesTab [
 	self clickElementWithID: 'tab-Invoices'
+]
+
+{ #category : #actions }
+ERLoggedPageAsAdminTest >> selectPaymentInformationTab [
+	self clickElementWithID:  'tab-Payment'
 ]
 
 { #category : #actions }
@@ -292,24 +337,24 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	|attendee updateAttendee|
 	attendee := controller conference attends first.
-	self moveToAttendeeOption .
+	self moveToConferenceOption.
+	self selectAttendeesTab.
 	self clickElementWithID: attendee id, '-modify'.
 	self clickElementWithID: 'contactInfoForm-goBackLoginButton'.
-	driver acceptAlert .
 	updateAttendee := (ERAttendee find: [:att | att id = attendee id]).
-	self assert: updateAttendee userAccount equals: attendee userAccount .
-	self assert: updateAttendee contactInformation equals: attendee contactInformation .
-	self assert: updateAttendee conferenceInformation equals: attendee conferenceInformation .
-	self assert: updateAttendee affiliationInformation equals: attendee affiliationInformation .
-	self assert: updateAttendee additionalInformation equals: attendee additionalInformation .
-	self assert: updateAttendee paymentInformation equals: attendee paymentInformation .
+	self assert: updateAttendee userAccount equals: attendee userAccount.
+	self assert: updateAttendee contactInformation equals: attendee contactInformation.
+	self assert: updateAttendee conferenceInformation equals: attendee conferenceInformation.
+	self assert: updateAttendee affiliationInformation equals: attendee affiliationInformation.
+	self assert: updateAttendee additionalInformation equals: attendee additionalInformation.
+	self assert: updateAttendee paymentInformation equals: attendee paymentInformation.
 ]
 
 { #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testCheckHasPaidInvoice [
 	|invoice|
 	invoice := controller conference invoices first.
-	self moveToInvoicesOption .
+	self moveToInvoicesOption.
 	self clickElementWithID: invoice id, '-hasPaid'.
 	self assert: (controller conference invoices first paymentInformation hasPaid)
 ]
@@ -361,42 +406,50 @@ ERLoggedPageAsAdminTest >> testEditAttendee [
 ERLoggedPageAsAdminTest >> testEditGroup [
 	| group|
 	group := controller conference groups first.
-	self moveToGroupManagerOption .
+	self moveToGroupManagerOption.
 	self clickElementWithID: group id, '-modify'.
-	self assert: (self textOfTagName: 'h3')equals: 'Affiliation Information'
+	self assert: (self textOfElementWithID: 'tab-Contact')equals: 'CONTACT'.
+	self assert: (self textOfElementWithID: 'tab-Billing Information')equals: 'BILLING INFORMATION'.
+	self assert: (self textOfElementWithID: 'tab-Payment')equals: 'PAYMENT'.
 ]
 
 { #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationAddress [
-	self pressEditGroup  .
-	acceptFormButton := 'accept-change-affiliation'.
+
+	self pressEditGroup.
+	self selectGroupBillingInformationTab.
+	acceptFormButton := 'affiliationInfoForm-nextButton'.
 	self updateField: 'organizationAddrees1' with: ''.
-	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Address 1')
+	self assert: (self textOfElementWithID: 'organizationAddrees1-error')
+		equals: 'This field is required.'
 ]
 
 { #category : #'configuration Group Manager Tests' }
 ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationName [	
-	self pressEditGroup  .
-	acceptFormButton := 'accept-change-affiliation'.
+
+	"self pressEditGroup.
+	self selectGroupBillingInformationTab.
+	acceptFormButton := 'affiliationInfoForm-nextButton'.
 	self updateField: 'organizationName' with: ''.
-	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Name')
+	self assert: (self textOfElementWithID: 'organizationName-error')
+		equals: 'This field is required.'"
 ]
 
 { #category : #'configuration Group Manager Tests' }
-ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostla [
-	self pressEditGroup  .
-	acceptFormButton := 'accept-change-affiliation'.
+ERLoggedPageAsAdminTest >> testEditGroupWithEmptyOrganizationPostal [
+
+	self pressEditGroup.
+	self selectGroupBillingInformationTab.
+	acceptFormButton := 'affiliationInfoForm-nextButton'.
 	self updateField: 'organizationPostal' with: ''.
-	self assert: self getTextOfError 
-		equals: (self messageIsRequiredFor: 'Postal/Zipcode')
+	self assert: (self textOfElementWithID: 'organizationPostal-error')
+		equals: 'This field is required.'
 ]
 
 { #category : #'configurationTicket Tests' }
 ERLoggedPageAsAdminTest >> testEditTicketSuccesfull [
 	| coupon |
-	coupon := self validCoupon.
+	"coupon := self validCoupon.
 	self moveToTicketsOption.
 	self clickElementWithID: coupon id, '-modify'.
 	self selectElementWithID: 'selectLimitStrategy' send: 'Unlimit strategy'.
@@ -404,16 +457,7 @@ ERLoggedPageAsAdminTest >> testEditTicketSuccesfull [
 	self fillAmount.
 	self clickElementWithID: 'acceptAddTicket'.
 	self assert: coupon strategyIsFixDiscount.
-	self assert: coupon limitStrategyIsUnlimited
-]
-
-{ #category : #'configuration Attendees Test' }
-ERLoggedPageAsAdminTest >> testEditUserOfAttendee [
-	|attendee|
-	attendee := controller conference attends first.
-	self moveToAttendeeOption .
-	self clickElementWithID: attendee id, '-modifyUser'.
-	self assert: (self textOfTagName: 'h3') equals: 'User'
+	self assert: coupon limitStrategyIsUnlimited"
 ]
 
 { #category : #'configuration Users Tests' }
@@ -472,7 +516,7 @@ ERLoggedPageAsAdminTest >> testPressAddTicket [
 ERLoggedPageAsAdminTest >> testPressCancelAfterUpdateAFieldOfConference [
 	| newValue|
 	newValue := '10/10/dsfd'.
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateTo' with: newValue .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)').
@@ -567,7 +611,7 @@ ERLoggedPageAsAdminTest >> testPressDeleteGroupDismissAlert [
 { #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testPressDownloadButtonOfInvoice [
 	|invoice href|
-	self createDownloadDirectory .
+	self createDownloadDirectory.
 	invoice := controller conference invoices first.
 	self moveToInvoicesOption.
 	href := (driver findElementByID: invoice id, '-export') getAttribute: 'href'.
@@ -598,7 +642,7 @@ ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
 { #category : #'configuration Attendees Test' }
 ERLoggedPageAsAdminTest >> testPressExportAttendeees [
 	| href|
-	self createDownloadDirectory .
+	self createDownloadDirectory.
 	self moveToAttendeeOption.
 	href := (driver findElementByID: 'exportAttends') getAttribute: 'href'.
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'attendees.csv'  
@@ -638,15 +682,6 @@ ERLoggedPageAsAdminTest >> testPressExportUsers [
 	self pressOptionUsers .
 	href := (driver findElementByID: 'exportUsers') getAttribute: 'href'.
 	self downloadFileOf: href to: ( 'Download' asFileReference ) / 'users.csv'
-]
-
-{ #category : #'configuration Group Manager Tests' }
-ERLoggedPageAsAdminTest >> testPressModifyGroupManagerUser [
-	| group|
-	group := controller conference groups first.
-	self moveToGroupManagerOption .
-	self clickElementWithID: group id, '-modifyUser'.
-	self assert: (self textOfTagName: 'h3') equals: 'User'
 ]
 
 { #category : #'configuration Users Tests' }
@@ -693,7 +728,7 @@ ERLoggedPageAsAdminTest >> testUpdateAddressStringBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateApiKeyConferenceWithEmptyValue [
 
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'apiKey' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Api key')
@@ -738,7 +773,7 @@ ERLoggedPageAsAdminTest >> testUpdateCounterCodeBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWithWrongFormat [
 	
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'earlyRegistrationDeadline' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'Early Registration Deadline (Required)')
@@ -746,7 +781,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateEarlyRegistrationDeadlineConferenceWith
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '10/10/2019' .
 	self assert: controller conference configuration dateFrom equals: '10/10/2019' 
@@ -754,7 +789,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConference [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '12/05/2020'.
 	self assert: (self textOfElementWithID: 'formConferenceConfigurationAlert' ) equals: ERException invalidEsugDates messageText
@@ -762,7 +797,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithHigherDateThanDateTo 
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateFrom' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: ( self messageWrongDateFormatFor: 'From (Required)')
@@ -770,7 +805,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateFromConferenceWithWrongFormat [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFormat [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateSubmissionDeadline' with: '10/10/dsfd'.
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor:'Submission Deadline (Required)')
@@ -779,7 +814,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateSubmissionDeadlineConferenceWithWrongFo
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 	
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'dateTo' with: '10/10/dsfd' .
 	self assert: self getTextOfError equals: (self messageWrongDateFormatFor: 'To (Required)')
@@ -789,7 +824,7 @@ ERLoggedPageAsAdminTest >> testUpdateDateToConferenceWithWrongFormat [
 ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 	| newValue|
 	newValue := 'The European Smalltalk User Group (ESUG) is a non-profit users organization that supports all kinds of Smalltalk initiatives, especially free-open source ones that benefit the whole Smalltalk community'.
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'description' with: newValue .
 	self assert: controller conference configuration description equals: newValue 
@@ -799,7 +834,7 @@ ERLoggedPageAsAdminTest >> testUpdateDescriptionConference [
 ERLoggedPageAsAdminTest >> testUpdateHomePageUrlConference [
 	| newValue|
 	newValue := 'http://www.esug.org/wiki/'.
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'homePageUrl' with: newValue .
 	self assert: controller conference configuration homePageUrl equals: newValue 
@@ -826,7 +861,7 @@ ERLoggedPageAsAdminTest >> testUpdateNameBankInfoFeeWithEmptyValue [
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateNameConferenceWithEmptyValue [
 	
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'name' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
@@ -969,7 +1004,7 @@ ERLoggedPageAsAdminTest >> testUpdateRibKeyBankAccountInfoFeeWithEmptyValue [
 
 { #category : #'configuration Conference Tests' }
 ERLoggedPageAsAdminTest >> testUpdateSenderEmailAddressConferenceWithEmptyValue [
-	self pressOptionConfiguration .
+	self pressOptionConference.
 	acceptFormButton := 'acceptConferenceConfiguration'.
 	self updateField: 'senderEmailAddress' with: '' .
 	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Sender email address')

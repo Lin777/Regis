@@ -43,8 +43,7 @@ ERLoggedPage >> conferenceTabs [
 		conferenceTabs := OrderedCollection new
 			add: (ERConferenceForm on: attendee withContent: content container: self);
 			add: (ERAttendeesTab on: attendee withContent: content container: self);
-			add: (ERFeeForm on: attendee withContent: content container: self);
-			add: (ERReductionTicketsTab on: attendee withContent: content container: self); yourself.
+			add: (ERFeeForm on: attendee withContent: content container: self); yourself.
 	(conferenceTabs at: 1) activate].
 	^ conferenceTabs
 ]
@@ -53,7 +52,8 @@ ERLoggedPage >> conferenceTabs [
 ERLoggedPage >> configurationTabs [ 
 	configurationTabs ifNil: [
 		configurationTabs := OrderedCollection new 
-			add: (ERConfiguration on: attendee withContent: content container: self); yourself.
+			add: (ERConfiguration on: attendee withContent: content container: self);
+			add: (ERReductionTicketsTab on: attendee withContent: content container: self); yourself.
 	(configurationTabs at: 1) activate].
 	^ configurationTabs
 ]
@@ -125,7 +125,7 @@ ERLoggedPage >> itemList [
 		at: 'proposal'
 			put: [ ERTabsOfView
 				content: content
-				tabs: self proposalTabs];
+				tabs: self proposalTabs ];
 		at: 'users'
 			put: [ ERTabsOfView
 				content: content

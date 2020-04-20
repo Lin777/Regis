@@ -8,27 +8,15 @@ Class {
 	#name : #ERGroupManager,
 	#superclass : #Object,
 	#instVars : [
-		'userAccount',
-		'affiliationInformation'
+		'userAccount'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
 
-{ #category : #accessing }
-ERGroupManager >> affiliationInformation [
-	^ affiliationInformation
-]
-
-{ #category : #accessing }
-ERGroupManager >> affiliationInformation: anObject [
-	affiliationInformation := anObject
-]
-
-{ #category : #'initialize-release' }
+{ #category : #initialize }
 ERGroupManager >> initialize [ 
-	super initialize .
+	super initialize.
 	userAccount := ERUserAccount asGroupManager.
-	affiliationInformation := ERBillingInformation new.
 ]
 
 { #category : #accessing }

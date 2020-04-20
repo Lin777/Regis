@@ -59,7 +59,7 @@ ERLibrary >> esugCss [
 
 { #category : #js }
 ERLibrary >> esugJs [
-	^ self validationRegisterJs", self onChangeTab"
+	^ self validationRegisterJs
 ]
 
 { #category : #css }
@@ -74,6 +74,28 @@ table { width: 100%; }
 	display: inline-block;}
 .third {width: 33%;
 	display: inline-block;}
+	
+.register-member-option { 
+	background-color: rgba(0,0,1,0.12);
+  	padding: 10px;
+   outline: none;
+   border: 1px solid rgba(0,0,0,.12);
+	cursor: pointer;
+}
+
+#accordion .ui-accordion-content {
+	height: 100%;
+}
+
+.option-text { 
+	cursor: pointer;
+}
+
+.register-member-bar {
+    padding: 5px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,.12); 
+}
 
 html, body {
   font-family: ''Roboto'', ''Helvetica'', sans-serif;
@@ -137,6 +159,7 @@ html, body {
   background-color: #0b7bfc;
   color: white;
 }
+
 .demo-navigation .mdl-navigation__link .material-icons {
   font-size: 24px;
   color: white;
@@ -226,7 +249,7 @@ ERLibrary >> loginCss [
 { #category : #css }
 ERLibrary >> registerCss [
 	^ '
-	.mdl-checkbox {height: auto;}
+	.mdl-checkbox { height: auto; }
 	
 	.body-all {
 	background-image: url("../CssForLoginMDL/profile_city.jpg");
@@ -288,6 +311,23 @@ ERLibrary >> registerCss [
 '
 ]
 
+{ #category : #js }
+ERLibrary >> selectAccordionRegisterJs [
+
+	^ '
+		$().ready(function() {
+  			$(document.querySelectorAll("div[id^=\"ui-id-\"]")).each(function() {
+				var clickedAccordion = $(this);
+				var idAccordion = ($(this)[0].id).charAt(($(this)[0].id).length - 1);
+				$(this).on("click", function() { 
+					var $active = $(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
+					console.log(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
+					$active.find("span").trigger("click");
+				});
+			});
+	})'
+]
+
 { #category : #updating }
 ERLibrary >> selectorsToInclude [
 	^ OrderedCollection new 
@@ -299,12 +339,14 @@ ERLibrary >> selectorsToInclude [
 	add: 'validationInputsJs';
 	add: 'validationUpdateProfileJs';
 	add: 'loginCss';
+	add: 'selectAccordionRegisterJs';
+	add: 'validationAccordionRegisterJs';
 	yourself
 ]
 
 { #category : #css }
 ERLibrary >> tabsCss [
-	^ '/*Vertical Tabs*/
+	^ '
 .mdl-tabs__panel {
   display: none;
 }
@@ -339,7 +381,7 @@ ERLibrary >> tabsCss [
 }
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
     content: inherit;
-    height: 0;
+    /*height: 0;*/
 }
 
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__panel.is-active, .mdl-tabs__panel {
@@ -357,7 +399,44 @@ ERLibrary >> tabsCss [
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
    color: #0b7bfb;
 }
+
 '
+]
+
+{ #category : #js }
+ERLibrary >> validationAccordionRegisterJs [
+
+	^ '$().ready(function() {
+    $("[id^=\"registerAccordionForm\"]").each(function(){
+		var idForm = ($(this)[0].id).charAt(($(this)[0].id).length - 1);
+		var clickedForm = $(this);
+		clickedForm.validate({
+        ignore: ":hidden",
+        errorClass: "mdl-textfield__error",
+        errorElement: "span"    ,
+        highlight: function(element, errorClass) {
+            $(element).parent().addClass("is-invalid");
+        }
+		});
+	
+		$(".btnNextAccordion" + idForm).on("click", function () {
+        $("#firstName" + idForm).rules("add", {required:true});
+        $("#lastName" + idForm).rules("add", {required:true});
+        $("#email" + idForm).rules("add", {required:true, email: true});
+        $("#passwordRegister" + idForm).rules("add", {required:true, minlength: 8});
+        $("#confirmPasswordRegister" + idForm).rules("add", {required:true, equalTo: "#passwordRegister" + idForm});
+        if ((!clickedForm.valid())) {
+            return false;
+        }
+        var $active = $(document.querySelectorAll("a[id$=\" "+ idForm + "\"][class$=\"is-active\"]"));
+		  $active.next("a").removeAttr("disabled");
+        $active.next("a").find("span").trigger("click");
+    });
+
+    $(".btnPreviousAccordion" + idForm).click(function(){
+          $(document.querySelector("a[id$=\" "+ idForm + "\"][class$=\"is-active\"]")).prev("a").find("span").trigger("click");
+    });});
+});'
 ]
 
 { #category : #js }

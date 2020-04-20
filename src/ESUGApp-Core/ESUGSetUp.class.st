@@ -313,6 +313,8 @@ ESUGSetUp class >> start [
 
 { #category : #setUps }
 ESUGSetUp class >> startAndCleanSeaside [
+
+	| application |
 	ZnZincServerAdaptor startOn: 8000.
 
 	"Clear Seaside registered App"
@@ -322,11 +324,14 @@ ESUGSetUp class >> startAndCleanSeaside [
 	WAFileHandler default: WAFileHandler new.
 	WAFileHandler default
 		preferenceAt: #fileHandlerListingClass
-		put: WAHtmlFileHandlerListing.
+		put: WAHtmlFileHandlerListing;
+		preferenceAt: #scriptGeneratorClass 
+		put: JQScriptGenerator.
 	WAAdmin defaultDispatcher
 		register: WAFileHandler default
 		at: 'files'.
-	WAAdmin register: WADispatcherBrowser asApplicationAt: 'browse'.
+	application := WAAdmin register: WADispatcherBrowser asApplicationAt: 'browse'.
+	application	addLibrary: JQUiDeploymentLibrary.
 
 	WAConfigurationTool initialize
 ]

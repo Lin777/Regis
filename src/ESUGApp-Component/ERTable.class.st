@@ -112,7 +112,6 @@ ERTable >> renderContentOn: html [
 			self renderBody: html. 
 		]
 	].
-	self renderTotalRows: html.
 ]
 
 { #category : #rendering }

@@ -18,8 +18,10 @@ ERUserAccountForRegister >> descriptionConfirmPassword [
 		beRequired;
 		label: 'Confirm Password (Required)';
 		withoutLabel: true;
-		id: 'confirmPasswordRegister';
 		componentClass: MDLMATextPasswordComponent.
+	classId
+		ifNil: [ tmp id: 'confirmPasswordRegister' ]
+		ifNotNil: [ tmp id: 'confirmPasswordRegister', classId printString ].
 	^ tmp yourself
 ]
 
@@ -36,7 +38,9 @@ ERUserAccountForRegister >> descriptionPassword [
 		label: 'Password (Required)';
 		addCondition: [ :value | value matchesRegex: '[A-Za-z0-9._]{8,}' ]
 		labelled: 'The password must have at least 8 characters, and only accepts letters, numbers, slash and dots.';
-		id: 'passwordRegister';
 		componentClass: MDLMATextPasswordComponent.
+	classId
+		ifNil: [ tmp id: 'passwordRegister' ]
+		ifNotNil: [ tmp id: 'passwordRegister', classId printString ].
 	^ tmp yourself
 ]

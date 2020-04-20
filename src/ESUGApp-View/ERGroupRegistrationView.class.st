@@ -32,6 +32,10 @@ ERGroupRegistrationView >> initializeTabForms [
 	add: (ERMembersView 
 					on: attendee 
 					withContent: content 
+					container: self);
+	add: (ERMembersRegistrationView 
+					on: attendee 
+					withContent: content 
 					container: self).
 	(tabs at: 1) activate
 ]

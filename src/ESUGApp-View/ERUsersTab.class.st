@@ -26,8 +26,8 @@ ERUsersTab >> addUser [
 ERUsersTab >> blockTableToExecute [
 	^ [ :user | 
 	OrderedCollection new
-		add: ([ :att | att firstName ] value: user);
-		add: ([ :att | att rolesAsString ] value: user);
+		add: ([ :att | (att firstName, ' ', att lastName)] value: user);
+		add: ([ :att | self roleStringFrom: (att rolesAsString) ] value: user);
 		add: ([ :att | att email ] value: user);
 		yourself ]
 ]
@@ -61,7 +61,7 @@ ERUsersTab >> exportUsers [
 
 { #category : #accessing }
 ERUsersTab >> headers [
-	^ #('Name' 'Admin Role' 'Email' '')
+	^ #('Name' 'User Role' 'Email' '')
 ]
 
 { #category : #initialization }
@@ -143,6 +143,22 @@ ERUsersTab >> renderTableOfUsersOn: html [
 	html render: table
 ]
 
+{ #category : #actions }
+ERUsersTab >> roleStringFrom: aString [
+
+	(aString = 'groupManager')
+		ifTrue: [ ^ 'Group Manager' ].
+	(aString = 'admin')
+		ifTrue: [ ^ 'Administrator' ].
+	(aString = 'attendee')
+		ifTrue: [ ^ 'Attendee' ].
+	(aString = 'studentVolunter')
+		ifTrue: [ ^ 'Student Volunter' ].
+	(aString = 'attendeegroupManager')
+		ifTrue: [ ^ 'Attendee and Group Manager' ]
+		ifFalse: [ ^ aString ]
+]
+
 { #category : #accessing }
 ERUsersTab >> tabId [
 	^ 'allUsers'
@@ -155,7 +171,7 @@ ERUsersTab >> tabName [
 
 { #category : #accessing }
 ERUsersTab >> title [
-	^ 'All User'
+	^ 'All users'
 ]
 
 { #category : #rendering }
