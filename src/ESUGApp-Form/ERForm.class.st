@@ -6,44 +6,51 @@ I am an abstract form for objects that have a descriptors of magritte
 "
 Class {
 	#name : #ERForm,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERConferenceTab,
 	#category : #'ESUGApp-Form'
 }
 
 { #category : #accessing }
 ERForm >> acceptAction [
-	^ [[self saveForms.
-	self validateForms.
-	self save.
-	self updateStateTab: self tabName]
-	on: ERException 
-	do: [ :exception | messageComponent errorMessage: exception messageText.
-		self updateStateTab: self tabName ]]
-]
 
-{ #category : #actions }
-ERForm >> action [
-	^ [ self acceptAction
-			on: ERException
-				do: [ :exception | messageComponent 
-					errorMessage: exception messageText.
-					self returnToThePreviousState.
+	^ [ [ self saveForms.
+				self validateForms.
+				self save.
+				self updateStateTab: 'Attendees' ]
+				on: ERException 
+				do: [ :exception | 
+					messageComponent errorMessage: exception messageText.
 					self updateStateTab: self tabName ] ]
 ]
 
 { #category : #actions }
+ERForm >> action [
+
+	^ [ self acceptAction
+			on: ERException
+				do: [ :exception | messageComponent 
+											errorMessage: exception messageText.
+											self returnToThePreviousState.
+											self updateStateTab: self tabName ] ]
+]
+
+{ #category : #actions }
 ERForm >> cancel [
+	"Return to principal page when cancel edition"
+	
 	self cancelForm.
-	self updateStateTab: self tabName
+	self updateStateTab: 'Attendees'
 ]
 
 { #category : #actions }
 ERForm >> cancelForm [
+
 	self subclassResponsibility 
 ]
 
 { #category : #initialization }
 ERForm >> initialize [
+
 	super initialize.
 	self initializeController.
 	messageComponent := ERAlert warningAlert 
@@ -53,19 +60,22 @@ ERForm >> initialize [
 
 { #category : #initialization }
 ERForm >> initializeDialog [
+
 	dialog := ERDialog cancelDialog
 		idOpen: ('cancel', self tabId capitalized);
-		okCallback: [ self cancel  ];
+		okCallback: [ self cancel ];
 		idClose: ('close', self tabId capitalized)
 ]
 
 { #category : #initialization }
 ERForm >> initializeForms [
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #rendering }
 ERForm >> renderAcceptButtonOn: html [
+
 	html mdlButton
 		colored;
 		id: ('accept', self tabId capitalized) ;
@@ -75,6 +85,7 @@ ERForm >> renderAcceptButtonOn: html [
 
 { #category : #rendering }
 ERForm >> renderButtonsOn: html [
+
 	self renderCancelButtonOn: html.
 	self renderAcceptButtonOn: html.
 ]
@@ -99,17 +110,26 @@ ERForm >> renderContentOn: html [
 
 { #category : #rendering }
 ERForm >> renderFormOn: html [
+
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
 ERForm >> save [
+
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
 ERForm >> saveForms [
+
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ERForm >> sectionFormElements [ 
+
+	self subclassResponsibility
 ]
 
 { #category : #actions }

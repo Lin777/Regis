@@ -36,7 +36,7 @@ ERReductionTicketForm >> callback: anObject [
 
 { #category : #actions }
 ERReductionTicketForm >> cancel [
-	ticket version = 0 ifFalse: [ticket := ticket abortChanges] .
+	ticket version = 0 ifFalse: [ ticket := ticket abortChanges ] .
 	self initializeForms .
 	self returnToThePreviousState
 ]

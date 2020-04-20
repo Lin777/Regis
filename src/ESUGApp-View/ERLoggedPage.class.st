@@ -38,13 +38,17 @@ ERLoggedPage >> children [
 ]
 
 { #category : #accessing }
-ERLoggedPage >> conferenceTabs [ 
+ERLoggedPage >> conferenceTabs [
+	"Return all conference tabs"
+
 	conferenceTabs ifNil: [
 		conferenceTabs := OrderedCollection new
-			add: (ERConferenceForm on: attendee withContent: content container: self);
 			add: (ERAttendeesTab on: attendee withContent: content container: self);
-			add: (ERFeeForm on: attendee withContent: content container: self); yourself.
-	(conferenceTabs at: 1) activate].
+			add: (ERConferenceForm on: attendee withContent: content container: self);
+			add: (ERFeeForm on: attendee withContent: content container: self);
+			add: (ERReductionTicketsTab on: attendee withContent: content container: self); 
+			yourself.
+			(conferenceTabs at: 1) activate ].
 	^ conferenceTabs
 ]
 
@@ -52,9 +56,8 @@ ERLoggedPage >> conferenceTabs [
 ERLoggedPage >> configurationTabs [ 
 	configurationTabs ifNil: [
 		configurationTabs := OrderedCollection new 
-			add: (ERConfiguration on: attendee withContent: content container: self);
-			add: (ERReductionTicketsTab on: attendee withContent: content container: self); yourself.
-	(configurationTabs at: 1) activate].
+			add: (ERConfiguration on: attendee withContent: content container: self); yourself.
+	(configurationTabs at: 1) activate ].
 	^ configurationTabs
 ]
 
@@ -108,7 +111,7 @@ ERLoggedPage >> itemList [
 				content: content ];
 		at: 'myRegistration'
 			put: [ ERMyRegistrationView
-				attendee: (pageController conference attendeeFromUser: self session user )
+				attendee: (pageController conference attendeeFromUser: self session user)
 				content: content ];
 		at: 'conference'
 			put: [ ERTabsOfView
@@ -176,7 +179,7 @@ ERLoggedPage >> pageController [
 ERLoggedPage >> paymentTabs [ 
 	paymentTabs ifNil: [
 		paymentTabs := OrderedCollection new
-			add: (ERInvoicesTab on: attendee withContent: content container: self); yourself.
+			add: (ERInvoices on: attendee withContent: content container: self); yourself.
 	(paymentTabs at: 1) activate].
 	^ paymentTabs
 ]
@@ -213,7 +216,7 @@ ERLoggedPage >> usersTabs [
 	usersTabs ifNil: [
 		usersTabs := OrderedCollection new 
 		add: (ERUsersTab on: attendee withContent: content container: self);
-		add: (ERGroupManagersTab on: attendee withContent: content container: self); yourself.
+		add: (ERGroupTab on: attendee withContent: content container: self); yourself.
 	(usersTabs at: 1) activate].
 	^ usersTabs
 ]

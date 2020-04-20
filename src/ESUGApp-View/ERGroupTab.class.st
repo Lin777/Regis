@@ -5,8 +5,8 @@ Description
 Tab to render  all group managers of ESUG page in a table.
 "
 Class {
-	#name : #ERGroupManagersTab,
-	#superclass : #ERConfigurationTab,
+	#name : #ERGroupTab,
+	#superclass : #ERUserOptionsTab,
 	#instVars : [
 		'groupManagerForm'
 	],
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #tableBlock }
-ERGroupManagersTab >> blockTableToExecute [
+ERGroupTab >> blockTableToExecute [
 
 	^ [ :group :html | 
 	OrderedCollection new
@@ -24,29 +24,29 @@ ERGroupManagersTab >> blockTableToExecute [
 ]
 
 { #category : #deleting }
-ERGroupManagersTab >> deleteGroup: user [
+ERGroupTab >> deleteGroup: user [
 	controller deleteGroup: user
 ]
 
 { #category : #actions }
-ERGroupManagersTab >> exportGroups [
+ERGroupTab >> exportGroups [
 	| file |
 	file := controller conference exportGroupManagers: 'groupManagers'.
-	self exportFile: file wihtName: 'groupManagers.csv'
+	self exportFile: file withName: 'groupManagers.csv'
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> groups [
+ERGroupTab >> groups [
 	^ controller conference groups
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> headers [
+ERGroupTab >> headers [
 	^ #('Organization' 'Remaing Fee' '')
 ]
 
 { #category : #tableBlock }
-ERGroupManagersTab >> listDataToRenderButton [
+ERGroupTab >> listDataToRenderButton [
 	^ OrderedCollection new
 		add:
 			(Array
@@ -68,7 +68,7 @@ ERGroupManagersTab >> listDataToRenderButton [
 ]
 
 { #category : #tableBlock }
-ERGroupManagersTab >> modifyGroupInformation: aGroup [
+ERGroupTab >> modifyGroupInformation: aGroup [
 
 	(aGroup contactInformation copy) readOnly: false.
 	(aGroup affiliationInformation copy) readOnly: false.
@@ -77,7 +77,7 @@ ERGroupManagersTab >> modifyGroupInformation: aGroup [
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderButtonsOn: html [
+ERGroupTab >> renderButtonsOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'exportGroups';
@@ -86,18 +86,18 @@ ERGroupManagersTab >> renderButtonsOn: html [
 ]
 
 { #category : #rendering }
-ERGroupManagersTab >> renderContainerOn: html [
+ERGroupTab >> renderContainerOn: html [
 	html form
 		method: 'post';
 		id: 'formAllGroups';
 		with: [
-	self renderButtonsOn: html.
-	html horizontalRule.
-	self renderTableOfGroupsOn: html]
+			self renderButtonsOn: html.
+			html horizontalRule.
+			self renderTableOfGroupsOn: html ]
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> renderTableOfGroupsOn: html [
+ERGroupTab >> renderTableOfGroupsOn: html [
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;
@@ -109,16 +109,16 @@ ERGroupManagersTab >> renderTableOfGroupsOn: html [
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> tabId [
+ERGroupTab >> tabId [
 	^ 'groupManagerList'
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> tabName [
+ERGroupTab >> tabName [
 	^ 'Group information'
 ]
 
 { #category : #accessing }
-ERGroupManagersTab >> title [
+ERGroupTab >> title [
 	^ 'Group information'
 ]

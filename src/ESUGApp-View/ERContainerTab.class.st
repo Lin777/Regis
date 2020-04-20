@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+Principal Class To Create tabs
+"
 Class {
 	#name : #ERContainerTab,
 	#superclass : #ERTab,
@@ -50,7 +56,7 @@ ERContainerTab >> blockTableAwardsToExecute [
 
 { #category : #tableBlock }
 ERContainerTab >> blockTableTalksToExecute [
-	^ [ :talk :html| 
+	^ [ :talk :html | 
 	OrderedCollection new
 		add: ([ :att | att name ] value: talk);
 		add: ([ :att | att submitter userAccount email ] value: talk);

@@ -8,24 +8,30 @@ I can delete talks, export all talks in the database
 "
 Class {
 	#name : #ERTalksTab,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERProposalsTab,
 	#category : #'ESUGApp-View-Tab'
 }
 
 { #category : #actions }
 ERTalksTab >> exportTalks [
+	"Export Talks to csv file"
+
 	| file |
 	file := controller conference exportTalks: 'talks'.
-	self exportFile: file wihtName: 'talks.csv'
+	self exportFile: file withName: 'talks.csv'
 ]
 
 { #category : #accessing }
-ERTalksTab >> headers [ 	
+ERTalksTab >> headers [
+	"Return headers of Talks table"
+	
 	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
 ]
 
 { #category : #rendering }
 ERTalksTab >> listDataToRenderButton [
+	"Render buttons of talks"
+
 	^ OrderedCollection new
 		add:
 			(Array
@@ -33,14 +39,16 @@ ERTalksTab >> listDataToRenderButton [
 				with: [ :talk | self deleteTalk: talk.
 					self updateStateTab: self tabName. ]
 				with: [ :talk | talk id , '-delete' ]
-				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: 'Delete Talk'
+				with: 'return confirm(''Are you sure you want to delete this talk?'');'
 				with: false);
 		yourself
 ]
 
 { #category : #rendering }
 ERTalksTab >> renderButtonOn: html [
+	"Render button to export talks"
+
 	html mdlAnchorButton
 		colored;
 		id: 'exportTalks';
@@ -50,6 +58,8 @@ ERTalksTab >> renderButtonOn: html [
 
 { #category : #rendering }
 ERTalksTab >> renderContainerOn: html [
+	"Render content of tab"
+
 	self renderButtonOn: html.
 	html horizontalRule.
 	self renderTableOfTalksOn: html
@@ -57,6 +67,8 @@ ERTalksTab >> renderContainerOn: html [
 
 { #category : #rendering }
 ERTalksTab >> renderTableOfTalksOn: html [
+	"Render table of talks"
+
 	table := ERTable new
 		headers: self headers;
 		levelTotal: 6;
@@ -68,20 +80,24 @@ ERTalksTab >> renderTableOfTalksOn: html [
 
 { #category : #accessing }
 ERTalksTab >> tabId [
+
 	^ 'talks'
 ]
 
 { #category : #accessing }
 ERTalksTab >> tabName [
+
 	^ 'Talks'
 ]
 
 { #category : #accessing }
 ERTalksTab >> talks [
+
 	^ controller conference submittedTalks
 ]
 
 { #category : #accessing }
 ERTalksTab >> title [
+
 	^ 'Submitted Talks'
 ]

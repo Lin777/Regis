@@ -61,7 +61,7 @@ ERGroupRegistrationTab >> group [
 
 { #category : #initialization }
 ERGroupRegistrationTab >> initializeController [
-	controller := ERGroupManagerController new.
+	controller := ERGroupController new.
 	controller group: (controller conference groupOfUser: attendee)
 ]
 
@@ -208,12 +208,6 @@ ERGroupRegistrationTab >> returnToThePreviousState [
 ERGroupRegistrationTab >> saveNewAttendee: anAttendee [
 
 	controller addNewAttendee: anAttendee
-]
-
-{ #category : #removing }
-ERGroupRegistrationTab >> saveNewAttendee: anAttendee withIndex: anIndex [
-
-	controller addNewAttendee: anAttendee withIndex: anIndex
 ]
 
 { #category : #accessing }

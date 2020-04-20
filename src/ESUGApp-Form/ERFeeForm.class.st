@@ -17,29 +17,38 @@ Class {
 	#category : #'ESUGApp-Form'
 }
 
+{ #category : #accessing }
+ERFeeForm >> bankAccountInformation [
+
+	^ fee bankAccountInformation
+]
+
+{ #category : #accessing }
+ERFeeForm >> bankInformation [
+
+	^ self bankAccountInformation bankInformation
+]
+
 { #category : #actions }
 ERFeeForm >> cancelForm [
-	"feeForm cancel.
-	bankAccountInfoForm cancel .
-	bankInfoForm cancel.
-	fee := fee abortChanges "
-	fee := fee abortChanges .
-	self initializeForms .
+	"Cancel form changes"
+
+	fee := fee abortChanges.
+	self initializeForms.
 ]
 
 { #category : #hooks }
 ERFeeForm >> children [
-	^ super children asOrderedCollection copyWithAll: (OrderedCollection new
-		add: dialog;
-		add: feeForm  ;
-		add: bankAccountInfoForm  ;
-		add: bankInfoForm;
-		add: messageComponent ;
-		yourself) yourself
+
+	^ super children 
+		asOrderedCollection 
+		copyWithAll: (self sectionFormElements) 
+		yourself
 ]
 
 { #category : #initialization }
 ERFeeForm >> initialize [
+
 	super initialize.
 	fee := controller conference fee.
 	self initializeForms.
@@ -47,13 +56,15 @@ ERFeeForm >> initialize [
 
 { #category : #initialization }
 ERFeeForm >> initializeForms [
+
 	feeForm := self createFormOf: fee.
-	bankAccountInfoForm := self createFormOf: fee bankAccountInformation.
-	bankInfoForm := self createFormOf: fee bankAccountInformation bankInformation 
+	bankAccountInfoForm := self createFormOf: self bankAccountInformation.
+	bankInfoForm := self createFormOf: self bankInformation
 ]
 
-{ #category : #updating }
+{ #category : #actions }
 ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAccountBankInfo [
+
 	aFee bankAccountInformation: anAccountBankInfo.
 	aFee bankAccountInformation bankInformation: aBankInfo.
 	controller updateFee: aFee.
@@ -61,24 +72,30 @@ ERFeeForm >> modifyFee: aFee withBankInfo: aBankInfo withAccountBankInfo: anAcco
 
 { #category : #rendering }
 ERFeeForm >> renderFormBankAccountInformation: html [
-	html heading level: 5;
-		with: [ html strong: 'Bank Account Information:'].
+
+	html heading 
+		level: 3;
+		with: 'Bank Account Information'.
 	html horizontalRule.
 	html render: bankAccountInfoForm 
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderFormBankInformation: html [
-	html heading level: 5;
-		with: [ html strong: 'Bank Information:'].
+
+	html heading 
+		level: 3;
+		with: 'Bank Information'.
 	html horizontalRule.
 	html render: bankInfoForm  
 ]
 
 { #category : #rendering }
 ERFeeForm >> renderFormConferenceFee: html [
-	html heading level: 5;
-		with: [ html strong: 'Conference Fee:'].
+
+	html heading 
+		level: 3;
+		with: 'Conference Fee'.
 	html horizontalRule.
 	html render: messageComponent .
 	html render: feeForm .
@@ -86,41 +103,70 @@ ERFeeForm >> renderFormConferenceFee: html [
 
 { #category : #rendering }
 ERFeeForm >> renderFormOn: html [
+
+	self renderFormTitleOn: html.
 	self renderFormConferenceFee: html.
 	self renderFormBankAccountInformation: html.
 	self renderFormBankInformation: html.
 	self renderButtonsOn: html
 ]
 
-{ #category : #saving }
+{ #category : #rendering }
+ERFeeForm >> renderFormTitleOn: html [
+	"Render general title in fee configuration"
+
+	html heading 
+		level: 2;
+		with: self title.
+]
+
+{ #category : #actions }
 ERFeeForm >> save [ 	
+	
 	 self modifyFee: feeForm model
 			withBankInfo: bankInfoForm model
 			withAccountBankInfo: bankAccountInfoForm model
 ]
 
-{ #category : #saving }
+{ #category : #actions }
 ERFeeForm >> saveForms [
+
 	feeForm save.
 	bankAccountInfoForm save.
 	bankInfoForm save.
 ]
 
 { #category : #accessing }
-ERFeeForm >> tabId [ 
+ERFeeForm >> sectionFormElements [
+
+	^ OrderedCollection new
+		add: dialog;
+		add: feeForm;
+		add: bankAccountInfoForm ;
+		add: bankInfoForm;
+		add: messageComponent;
+		yourself
+]
+
+{ #category : #accessing }
+ERFeeForm >> tabId [
+
 	^ 'tabFees'
 ]
 
 { #category : #accessing }
 ERFeeForm >> tabName [
+
 	^ 'Fee'
 ]
 
 { #category : #accessing }
 ERFeeForm >> title [
-	^ 'Fee'
+
+	^ 'Fee Configuration'
 ]
 
 { #category : #validating }
 ERFeeForm >> validateForms [
+	"Need implementation"
 ]

@@ -6,7 +6,7 @@ Tab to render all attendees of ESUG page in a table.
 "
 Class {
 	#name : #ERAttendeesTab,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERConferenceTab,
 	#instVars : [
 		'strategy'
 	],
@@ -15,18 +15,22 @@ Class {
 
 { #category : #initialization }
 ERAttendeesTab >> applyReductionTicketTo: user [
+	"Apply reduction ticket to an user"
+
 	self initializeApplyReductionTicketForm: user.
-	content state: formApplyReductionTicket .
+	content state: formApplyReductionTicket.
 	self updateStateTab: self tabName.
 ]
 
 { #category : #accessing }
 ERAttendeesTab >> attends [
-	self strategyIsByPaidState ifTrue: [ ^ controller conference attendeesWhoPaid ].
-	self strategyIsByUnpaidState ifTrue: [ ^ controller conference attendeesWhoDidNotPaid ].
+	"Get all attendees of conference"
+
+	self strategyIsByPaidState 
+		ifTrue: [ ^ controller conference attendeesWhoPaid ].
+	self strategyIsByUnpaidState
+		ifTrue: [ ^ controller conference attendeesWhoDidNotPaid ].
 	^ controller conference attends
-	
-	
 ]
 
 { #category : #tableBlock }
@@ -39,14 +43,14 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att affiliationInformation organizationCountry ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
-			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox
 				id: att id, '-isVolunter';
 				value: att userAccount isStudent;
 				onTrue: [ controller convertToStudentVolunterThis: att ] 
-				onFalse: [ controller deleteStudentVolunterRoleFrom: att];
+				onFalse: [ controller deleteStudentVolunterRoleFrom: att ];
 				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: {user. html});
+				] ] valueWithArguments: { user. html });
 		yourself ]
 ]
 
@@ -59,15 +63,15 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 
 { #category : #actions }
 ERAttendeesTab >> exportAttends [
-	| file fileName|
+	| file fileName |
 	fileName := self nameOfExportFile.
 	file := controller conference exportAttends: self attends in: fileName.
-	self exportFile: file wihtName: fileName, '.csv'
+	self exportFile: file withName: fileName, '.csv'
 ]
 
 { #category : #accessing }
 ERAttendeesTab >> headers [
-	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Is Volunter?' '')
+	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Volunter' '')
 ]
 
 { #category : #rendering }
@@ -86,8 +90,9 @@ ERAttendeesTab >> initializeApplyReductionTicketForm: user [
 		withContent: content) 
 		listOfTickets: tickets; 
 		updateTicketAttendee: [ :ticket | self updateTicket: ticket from: user ]; 
-		cancel: [ self returnToThePreviousState. 
-			self updateStateTab: self tabName.]
+		cancel: [ 
+			self returnToThePreviousState. 
+			self updateStateTab: self tabName ]
 ]
 
 { #category : #tableBlock }
@@ -106,7 +111,7 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: 'delete'
 				with: [ :att | self deleteAttendee: att ]
 				with: [ :att | att id , '-delete' ]
-				with: 'Delete'
+				with: 'Delete Attendee'
 				with: 'return confirm(''Are you sure you want to delete this attendee?'');'
 				with:  false);
 		add:
@@ -120,9 +125,9 @@ ERAttendeesTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'send'
-				with: [ :att | self sendInvoiceTo: att]
+				with: [ :att | self sendInvoiceTo: att ]
 				with: [ :att | att id , '-sendInvoice' ]
-				with: 'Send invoice'
+				with: 'Send invoice to attendee'
 				with: ''
 				with: false);
 		yourself
@@ -138,6 +143,7 @@ ERAttendeesTab >> modifyInformation: anAttendee [
 
 { #category : #actions }
 ERAttendeesTab >> nameOfExportFile [
+
 	self strategyIsByPaidState ifTrue: [ ^ 'attendeesWhoPaid' ].
 	self strategyIsByUnpaidState ifTrue: [ ^ 'attendeesWhoDidNotPaid' ].
 	^ 'attendees'
@@ -169,19 +175,20 @@ ERAttendeesTab >> renderContainerOn: html [
 { #category : #rendering }
 ERAttendeesTab >> renderSelectorWayToFilterOn: html [
 	html div class: 'half'; with: [
-	html mdlTextFieldContainer
-		style: 'display: block';
-		floatingLabel;
-		with: [ html mdlTextFieldLabel for: 'selectStrategy';
-			 with: 'Strategy of Filter'.
-			html select
-				onChange: 'submit()';
-				class: 'mdl-textfield__input';
-				id: 'selectStrategy';
-				list: #('All' 'Paid' 'Unpaid');
-				selected: strategy;
-				callback: [ :value | strategy := value.
-					self updateStateTab: self tabName. ] ] ]
+		html mdlTextFieldContainer
+			style: 'display: block';
+			floatingLabel;
+			with: [ 
+				html mdlTextFieldLabel for: 'selectStrategy';
+					with: 'Strategy of Filter'.
+					html select
+						onChange: 'submit()';
+						class: 'mdl-textfield__input';
+						id: 'selectStrategy';
+						list: #('All' 'Paid' 'Unpaid');
+						selected: strategy;
+						callback: [ :value | strategy := value.
+							self updateStateTab: self tabName. ] ] ]
 ]
 
 { #category : #rendering }
@@ -198,15 +205,16 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 
 { #category : #actions }
 ERAttendeesTab >> sendInvoiceTo: user [
-	[controller sendInvoiceTo: user.
-	self updateStateTab: self tabName.
-	messageComponent class: 'alert-success'.
-	messageComponent errorMessage: 'Sent succesfull']
-	on: PMException
-	do: [ :exception | 
-		messageComponent class: 'errors'.
-		messageComponent errorMessage: exception messageText.
-		self updateStateTab: self tabName].
+
+	[ controller sendInvoiceTo: user.
+		self updateStateTab: self tabName.
+		messageComponent class: 'alert-success'.
+		messageComponent errorMessage: 'Invoice was sent successfully' ]
+			on: PMException
+			do: [ :exception | 
+				messageComponent class: 'errors'.
+				messageComponent errorMessage: exception messageText.
+				self updateStateTab: self tabName ].
 ]
 
 { #category : #rendering }

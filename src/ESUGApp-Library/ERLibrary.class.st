@@ -458,15 +458,16 @@ ERLibrary >> validationInputsJs [
 
 { #category : #js }
 ERLibrary >> validationRegisterJs [
-	^ '$().ready(function() {
-    $("#registerForm").validate({
-        ignore: ":hidden",
-        errorClass: "mdl-textfield__error",
-        errorElement: "span"    ,
-        highlight: function(element, errorClass) {
-            $(element).parent().addClass("is-invalid");
-        }
-    });
+	^ '
+	$().ready(function() {
+		$("#registerForm").validate({
+			ignore: ":hidden",
+			errorClass: "mdl-textfield__error",
+			errorElement: "span",
+			highlight: function(element, errorClass) {
+				$(element).parent().addClass("is-invalid");
+			}
+		});
         
     $(".btnNext").on("click", function () {
         $("#firstName").rules("add", {required:true});

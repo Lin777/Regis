@@ -30,7 +30,7 @@ ERLoggedPageAsStudentVolunter >> setUp [
 	super setUp.
 	ERTest generateDataForTest.
 	studentVolunter := controller conference attends first.
-	controller := ERConfigurationController new.
+	controller := ERConferenceController new.
 	controller convertToStudentVolunterThis: studentVolunter .
 	self loginAsStudentVolunter
 	
@@ -40,6 +40,6 @@ ERLoggedPageAsStudentVolunter >> setUp [
 ERLoggedPageAsStudentVolunter >> testPressSearchOption [
 	self pressOptionSearch .
 	self assert: (self textOfTagName: 'h3') equals: 'Attendees'.
-	self shouldnt: [driver findElementByID: 'selectStrategy'] raise: BPNoSuchElementException .
+	self shouldnt: [ driver findElementByID: 'selectStrategy' ] raise: BPNoSuchElementException .
 	self shouldnt: [driver findElementByID: 'stringForStrategy'] raise: BPNoSuchElementException .
 ]
