@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+Principal Class To Create tabs
+"
 Class {
 	#name : #ERContainerTab,
 	#superclass : #ERTab,
