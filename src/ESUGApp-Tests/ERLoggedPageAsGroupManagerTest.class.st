@@ -100,7 +100,7 @@ ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
 ERLoggedPageAsGroupManagerTest >> setUp [
 	super setUp.
 	ERTest generateDataForTest.
-	controller := ERGroupManagerController new.
+	controller := ERGroupController new.
 	group := controller conference groups first.
 	self loginAsGroupManager.
 ]

@@ -1,3 +1,9 @@
+"
+Description
+-------------
+
+I am the view to show the bank transfer information
+"
 Class {
 	#name : #ERBankTransferPaymentInfoView,
 	#superclass : #ERTittledView,
@@ -107,7 +113,7 @@ ERBankTransferPaymentInfoView >> renderPageOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'back-state';
-		callback: [self returnToThePreviousState ];
+		callback: [ self returnToThePreviousState ];
 		with: 'Back'.
 ]
 

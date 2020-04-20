@@ -44,7 +44,7 @@ ERBackupAndRestoreTest >> testBackupAfterRegisterAttendeeFromGroup [
 	filesBeforeBackup := self filesSizeOfBackup.
 	user := self registerAsGroupManager.
 	group := self groupOfUser: user.
-	aController := ERGroupManagerController new group: group.
+	aController := ERGroupController new group: group.
 	aController addAttendee: (self class testAttendee: 'test1@gmail.com').
 	(Delay forSeconds: 2) wait.
 	filesAfterBackup := self filesSizeOfBackup.

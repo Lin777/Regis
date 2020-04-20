@@ -61,13 +61,16 @@ ERLoggedController >> changePasswordTo: aString [
 
 { #category : #deleting }
 ERLoggedController >> deleteAttendee: anAttendee [
-	|anUser|
-	anUser := anAttendee userAccount .
-	conference deleteAttendeeFromGroupAndConference: anAttendee .
-	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
+	"Delete Attendee of conference"
+	
+	| anUser |
+	anUser := anAttendee userAccount.
+	conference deleteAttendeeFromGroupAndConference: anAttendee.
+	anAttendee idGroup isNotNil 
+		ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
 	anUser isGroupManager
-		ifFalse: [ conference deleteUser: anUser]
-		ifTrue: [ anUser deleteAttendeeRole  ].
+		ifFalse: [ conference deleteUser: anUser ]
+		ifTrue: [ anUser deleteAttendeeRole ].
 	self notifyAllObservers
 ]
 

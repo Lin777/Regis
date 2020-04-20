@@ -60,7 +60,7 @@ ERAdminView >> blockChangePassword [
 
 { #category : #adding }
 ERAdminView >> blockEditUser [ 
-	^ [:html | html heading level3 with: 'Edit profile'.
+	^ [ :html | html heading level3 with: 'Edit profile'.
 			html horizontalRule .
 			html form
 				method: 'post';
@@ -70,9 +70,7 @@ ERAdminView >> blockEditUser [
 					html render: modifiedUser.
 					self renderAnchorToChangePasswordOn: html.
 					html horizontalRule.
-					self renderButtonsOn: html
-				]
-		]
+					self renderButtonsOn: html ] ]
 ]
 
 { #category : #adding }

@@ -1,3 +1,8 @@
+"
+Description
+------------
+I am the group registration principal view
+"
 Class {
 	#name : #ERGroupRegistrationView,
 	#superclass : #ERContainer,

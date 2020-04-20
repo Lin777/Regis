@@ -631,8 +631,9 @@ ERLoggedPageAsAdminTest >> testPressEditTicket [
 
 { #category : #'configuration Invoices Tests' }
 ERLoggedPageAsAdminTest >> testPressExportAllInvoicesButtonOfInvoice [
-	"| href|
-	self moveToInvoicesOption .
+	
+	"| href |
+	self moveToInvoicesOption.
 	self selectElementWithID: 'exportAllInvoices'.
 	(Delay forSeconds: 5) wait.
 	href := (driver findElementByID: 'downloadAllInvoices') getAttribute: 'href'.

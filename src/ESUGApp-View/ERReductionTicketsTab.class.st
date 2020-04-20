@@ -6,7 +6,7 @@ Tab to render all Reduction tickets of ESUG page in a table.
 "
 Class {
 	#name : #ERReductionTicketsTab,
-	#superclass : #ERConfigurationTab,
+	#superclass : #ERConferenceTab,
 	#instVars : [
 		'formAddTicket',
 		'ticket'
@@ -41,9 +41,9 @@ ERReductionTicketsTab >> blockTableToExecute [
 	^ [ :anTicket | 
 	OrderedCollection new
 		add: ([ :att | att ticketId ] value: anTicket);
-		add: ([ :att | att discountStrategy description ] value: anTicket );
-		add: ([ :att | att limitStrategy description ] value: anTicket );
-		add: ([:att | (self listOfAttendees: att)size] value: anTicket);
+		add: ([ :att | att discountStrategy description ] value: anTicket);
+		add: ([ :att | att limitStrategy description ] value: anTicket);
+		add: ([ :att | (self listOfAttendees: att)size ] value: anTicket);
 		yourself ]
 ]
 
@@ -120,9 +120,11 @@ ERReductionTicketsTab >> listOfAttendees: aTicket [
 
 { #category : #rendering }
 ERReductionTicketsTab >> listOfTicket: anTicket [
-	|list|
-	list := (ERAttendeesOfTicketView on: anTicket withContent: content ) cancelCallback: [ self returnToThePreviousState. 
-			self updateStateTab: self tabName].
+	| list |
+	list := (ERAttendeesOfTicketView on: anTicket withContent: content)
+		cancelCallback: [ 
+			self returnToThePreviousState. 
+			self updateStateTab: self tabName ].
 	content state: list.
 	self updateStateTab: self tabName.
 ]

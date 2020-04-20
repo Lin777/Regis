@@ -44,6 +44,7 @@ ERMembersRegistrationView >> renderOptionRegisterBarOn: html [
 						raised;
 						rippleEffect;
 						id: 'newUserOptionBar';
+						disabled: (self group isAbleToPay ifTrue: 'disabled');
 						callback: [ self addNewAttendeeToRegister ];
 						with: 'Register new group user' ] ] ]
 ]

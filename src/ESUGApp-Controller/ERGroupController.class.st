@@ -12,7 +12,7 @@ I can:
 - update billing information
 "
 Class {
-	#name : #ERGroupManagerController,
+	#name : #ERGroupController,
 	#superclass : #ERLoggedController,
 	#instVars : [
 		'group',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #adding }
-ERGroupManagerController >> addAttendee: anAttendee [
+ERGroupController >> addAttendee: anAttendee [
 	"Add attendee to group"
 	
 	| anAttendeeSaved |
@@ -39,7 +39,7 @@ ERGroupManagerController >> addAttendee: anAttendee [
 ]
 
 { #category : #adding }
-ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
+ERGroupController >> addGroupManagerAsAttendee: anAttendee [
 	| anAttendeeSaved |
 	anAttendee updateValuesFor: self group.
 	(anAttendee userAccount) convertAttendee; save.
@@ -53,13 +53,13 @@ ERGroupManagerController >> addGroupManagerAsAttendee: anAttendee [
 ]
 
 { #category : #'instance creation' }
-ERGroupManagerController >> addNewAttendeeToRegister: anAttendee [
+ERGroupController >> addNewAttendeeToRegister: anAttendee [
 
 	self newAttendees add: anAttendee.
 ]
 
 { #category : #deleting }
-ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
+ERGroupController >> deleteAttendeeFromGroupAndConference: anAttendee [
 	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self group save.
@@ -71,28 +71,28 @@ ERGroupManagerController >> deleteAttendeeFromGroupAndConference: anAttendee [
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> group [
+ERGroupController >> group [
 	^ group
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> group: anObject [
+ERGroupController >> group: anObject [
 	group := anObject
 ]
 
 { #category : #accessing }
-ERGroupManagerController >> groupManager [ 
+ERGroupController >> groupManager [ 
 	^ group groupManager
 ]
 
 { #category : #'instance creation' }
-ERGroupManagerController >> newAttendees [
+ERGroupController >> newAttendees [
 
 	^ newAttendees ifNil: [ newAttendees := OrderedCollection new ]
 ]
 
 { #category : #'instance creation' }
-ERGroupManagerController >> removeGroupMemberToRegisterWithIndex: anIndex [
+ERGroupController >> removeGroupMemberToRegisterWithIndex: anIndex [
 
 	newAttendees removeAt: anIndex.
 	newAttendees doWithIndex: [ :newAttendee :index |
@@ -100,27 +100,27 @@ ERGroupManagerController >> removeGroupMemberToRegisterWithIndex: anIndex [
 ]
 
 { #category : #updating }
-ERGroupManagerController >> updateAttendee: anAttendee inIndex: classId [
+ERGroupController >> updateAttendee: anAttendee inIndex: classId [
 
 	newAttendees at: classId put: anAttendee
 ]
 
 { #category : #updating }
-ERGroupManagerController >> updateBillingInfo: aff [
+ERGroupController >> updateBillingInfo: aff [
 	self group affiliationInformation: aff.
 	self group save.
 	self notifyAllObservers  
 ]
 
 { #category : #updating }
-ERGroupManagerController >> updateGroup: aGroup [
+ERGroupController >> updateGroup: aGroup [
 	aGroup updatePaymentForAttendees.
 	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
 	super updateGroup: aGroup 
 ]
 
 { #category : #updating }
-ERGroupManagerController >> updateGroupInformation: aGroup [
+ERGroupController >> updateGroupInformation: aGroup [
 
 	self group affiliationInformation: aGroup affiliationInformation copy.
 	self group paymentInformation: aGroup paymentInformation copy.

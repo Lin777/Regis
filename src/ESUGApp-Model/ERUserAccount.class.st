@@ -314,9 +314,11 @@ ERUserAccount >> roleStringFrom: aString [
 	(aString = ' attendee')
 		ifTrue: [ ^ 'Attendee' ].
 	(aString = 'studentVolunter')
-		ifTrue: [ ^ 'Student Volunter' ].
+		ifTrue: [ ^ 'Student Volunteer' ].
 	(aString = 'attendeegroupManager')
-		ifTrue: [ ^ 'Attendee and Group Manager' ]
+		ifTrue: [ ^ 'Attendee and Group Manager' ].
+	(aString = 'attendeestudentVolunter')
+		ifTrue: [ ^ 'Attendee and Student Volunteer' ]
 		ifFalse: [ ^ aString ]
 ]
 

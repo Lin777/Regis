@@ -1,3 +1,9 @@
+"
+Description
+--------------------
+
+I am the configuration tab to configure esug app
+"
 Class {
 	#name : #ERConfigurationTab,
 	#superclass : #ERContainerTab,

@@ -55,16 +55,16 @@ ERMembersView >> listDataToRenderButton [
 				with: 'edit'
 				with: [ :att | self modifyGroupMemberRegistrationOf: att ]
 				with: [ :att | att id , '-modify' ]
-				with: 'Modify group member information'
+				with: 'Modify Attendee Information'
 				with: ''
-				with:  self group isAbleToPay );
+				with:  self group isAbleToPay);
 		add:
 			(Array
 				with: 'delete'
 				with: [ :att | self deleteAttendeeFromGroup: att ]
 				with: [ :att | att id , '-delete' ]
-				with: 'Delete'
-				with: 'return confirm(''Are you sure you want to delete this item?'');'
+				with: 'Delete user'
+				with: 'return confirm(''Are you sure you want to delete this user?'');'
 				with:  self group isAbleToPay);
 		add:
 			(Array

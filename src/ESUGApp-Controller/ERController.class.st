@@ -76,8 +76,10 @@ ERController >> codingZipFile: aString with: nameSubDirectory [
 	zip addDirectory: subDir.
 	zipFile := aString asFileReference, 'zip'.
 	self cleanZip: zip with: zipFile subDir: subDir.
-	nameSubDirectory asFileReference files do: [ :aFile | zip addFile: aFile path asFileReference as: aString, '/', (aFile path at: 2) ].
-	zip writeToFileNamed: zipFile fullName.
+	nameSubDirectory asFileReference files do: [ :aFile | zip 
+		addFile: aFile path 
+			asFileReference as: aString, '/', (aFile path at: 2) ].
+	zip writeToFile: zipFile fullName.
 	codingZipFile := self encodeFiletoBase64: zipFile.
 	self cleanZip: zip with: zipFile subDir: subDir.
 	self cleanSubDirectory: nameSubDirectory asFileReference.
@@ -191,6 +193,7 @@ ERController >> updateAward: anAward [
 
 { #category : #updating }
 ERController >> updateGroup: aGroup [
+	"Update group information with all atendees"
 
 	self updatePaymentRateForGroup: aGroup.
 	aGroup updateHasPaidOfAll.

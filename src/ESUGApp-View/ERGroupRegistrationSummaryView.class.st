@@ -14,28 +14,33 @@ ERGroupRegistrationSummaryView >> exportInvoice [
 
 { #category : #initialization }
 ERGroupRegistrationSummaryView >> initializeModifyAffiliationForm [
+
 	formMofidyAffiliation := (ERTittledFormView on: (controller group affiliationInformation readOnly: false)
 								withContent: content) title: 'Billing Information';
-								callback: [:aff | aff readOnly: true.
-									self updateAffiliation: aff on: self group];
-								cancelCallback: [self cancel]; initializeForm. 
+								callback: [ :aff | aff readOnly: true.
+									self updateAffiliation: aff on: self group ];
+								cancelCallback: [ self cancel ]; initializeForm. 
 	content state: formMofidyAffiliation.
 	self updateStateTab: self tabName.
 ]
 
 { #category : #initialization }
 ERGroupRegistrationSummaryView >> initializePaymentForm [
-	^ ( ERPaymentGroupManagerView on: self group
+	^ (ERPaymentGroupManagerView on: self group
 		withContent: content) 
-	updatePayment: [ :aGroup | self payForGroup: aGroup ];
-	cancel: [ self returnToThePreviousState.
-		self updateStateTab: self tabName ];
-	blockForUpdate: [ :aGroup | aGroup save.
-	controller updateGroup: aGroup ]
+		updatePayment: [ :aGroup | self payForGroup: aGroup ];
+		cancel: [ 
+				self halt.
+				self returnToThePreviousState.
+				self halt.
+				self updateStateTab: self tabName ];
+		blockForUpdate: [ :aGroup | aGroup save.
+			controller updateGroup: aGroup ]
 ]
 
 { #category : #rendering }
 ERGroupRegistrationSummaryView >> modifyAffiliation [
+
 	self initializeModifyAffiliationForm.
 ]
 
@@ -49,10 +54,12 @@ ERGroupRegistrationSummaryView >> modifyGroupInformation [
 
 { #category : #actions }
 ERGroupRegistrationSummaryView >> pay [
-	|formUpdatePayment|
+
+	| formUpdatePayment |
+
 	formUpdatePayment := self initializePaymentForm.
 	content state: formUpdatePayment.
-	self updateStateTab: self tabName.
+	"self updateStateTab: self tabName."
 ]
 
 { #category : #actions }
@@ -72,11 +79,11 @@ ERGroupRegistrationSummaryView >> paymentStatus [
 	listAttends isEmpty
 		ifTrue: [ ^ 'No status available. The group has no members ' ]
 		ifFalse: [ 
-	( self group paymentInformation hasPaid )
+	(self group paymentInformation hasPaid)
 	ifTrue: [ ^ 'Payment successfully received.' ]
 	ifFalse: [ ^ 'Payment no registered yet. Amount due: '
-			, (self group paymentAmount ) asString , ' ', 
-			'(s) (NOTE: you could have paid but we could have not registered it yet)' ]].
+			, (self group paymentAmount) asString , ' ', 
+			'(s) (NOTE: you could have paid but we could have not registered it yet)' ] ].
 		
 ]
 
@@ -105,6 +112,7 @@ ERGroupRegistrationSummaryView >> redirectionPayPAL: aGroup [
 
 { #category : #rendering }
 ERGroupRegistrationSummaryView >> renderContainerOn: html [
+
 	html horizontalRule.
 	self renderOrganizationNameOn: html.
 	self renderPaymentStatus: html.
@@ -140,6 +148,7 @@ ERGroupRegistrationSummaryView >> renderModifyBillingInfoButtonOn: html [
 		raised;
 		rippleEffect;
 		id: 'modifyAffiliation';
+		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self modifyGroupInformation ];
 		with: 'Modify Group Information'
 ]
@@ -178,7 +187,7 @@ ERGroupRegistrationSummaryView >> renderRegisterMyselfButtonOn: html [
 		id: 'registerMyselfAsAttendee';
 		disabled: (self group isAbleToPay ifTrue: 'disabled');
 		callback: [ self registerMyselfAsAttendee ];
-		with: 'Register Myself as Attendee']
+		with: 'Register Myself as Attendee' ]
 ]
 
 { #category : #accessing }

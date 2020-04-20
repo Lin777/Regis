@@ -25,22 +25,13 @@ EREsugApp class >> canBeRoot [
 EREsugApp class >> initialize [
 	"self initialize"
 	
-	| application |
-
-	application := (WAAdmin register: self asApplicationAt: 'ESUG').
-	application
-		preferenceAt: #sessionClass put: ERSession;
-		preferenceAt: #scriptGeneratorClass put: JQScriptGenerator.
-	application
+	(WAAdmin register: self asApplicationAt: 'ESUG')
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
 		addLibrary: CssForLoginMDL;
 		addLibrary: ERLibrary;
-		addLibrary: JQUiDeploymentLibrary
-
-		";
-		cache expiryPolicy configuration 
-    at: #cacheTimeout put: 60"
+		addLibrary: JQUiDeploymentLibrary;
+		preferenceAt: #sessionClass put: ERSession
 ]
 
 { #category : #registry }

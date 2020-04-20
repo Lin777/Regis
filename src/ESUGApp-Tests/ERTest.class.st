@@ -341,7 +341,7 @@ ERTest >> registerGroup [
 	| user group aController |
 	user := self registerAsGroupManager.
 	group := self groupOfUser: user.
-	aController := ERGroupManagerController new group: group.
+	aController := ERGroupController new group: group.
 	self addGroupOfAttendees: aController.
 	^ group
 ]
@@ -353,7 +353,7 @@ ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 	
 	user := self registerAsGroupManager: aString.
 	group := self groupOfUser: user.
-	aController := ERGroupManagerController new group: group.
+	aController := ERGroupController new group: group.
 	self addAttendeesTo: aController ofList: aList.
 	^ group
 ]
