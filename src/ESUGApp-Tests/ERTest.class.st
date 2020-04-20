@@ -60,11 +60,8 @@ ERTest class >> testAttendee: email [
 
 	^ ERAttendee new
 		userAccount: (self testUserAccount: email);
-		contactInformation: self testContactInformation ;
 		conferenceInformation: self testRegisterConferenceInformation ;
-		affiliationInformation: self testAffiliationInformation ;
 		additionalInformation: self testAdditionalInformation ;
-		paymentInformation: self testPaymentInformation ;
 		yourself
 ]
 
@@ -122,16 +119,22 @@ ERTest class >> testGroupManager [
 	^ ERGroup new
 		userAccount: (self testUserAccount: 'groupManager@gmail.com') asGroupManager;
 		affiliationInformation: self testAffiliationInformation;
+		contactInformation: self testContactInformation;
+		paymentInformation: self testPaymentInformation;
 		yourself
 ]
 
 { #category : #tests }
 ERTest class >> testGroupManager: aString [
 
-	^ ERGroupManager new
+   | group |
+	group := ERGroup new
 		userAccount: (self testUserAccount: aString) asGroupManager;
 		affiliationInformation: self testAffiliationInformation;
-		yourself
+		contactInformation: self testContactInformation;
+		paymentInformation: self testPaymentInformation;
+		yourself.
+	^ group
 ]
 
 { #category : #tests }
@@ -347,6 +350,7 @@ ERTest >> registerGroup [
 ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 
 	| user group aController |
+	
 	user := self registerAsGroupManager: aString.
 	group := self groupOfUser: user.
 	aController := ERGroupManagerController new group: group.

@@ -36,7 +36,7 @@ ERLoginPageTest >> testLoginUnregisteredUser [
 { #category : #accessing }
 ERLoginPageTest >> testRegisterAsGroupManagerButton [
 	self clickElementWithID: 'register-button-as-group-manager'.
-	self assert: (self textOfElementWithID: 'card-heading') equals: 'Group Manager'
+	self assert: (self textOfElementWithID: 'card-heading') equals: 'Group Registration'
 ]
 
 { #category : #accessing }

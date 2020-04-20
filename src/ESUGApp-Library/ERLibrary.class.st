@@ -336,11 +336,11 @@ ERLibrary >> selectorsToInclude [
 	add: 'generalCss';
 	add: 'esugCss';
 	add: 'esugJs';
-	add: 'loginCss';
-	add: 'validationAccordionRegisterJs';
 	add: 'validationInputsJs';
 	add: 'validationUpdateProfileJs';
+	add: 'loginCss';
 	add: 'selectAccordionRegisterJs';
+	add: 'validationAccordionRegisterJs';
 	yourself
 ]
 

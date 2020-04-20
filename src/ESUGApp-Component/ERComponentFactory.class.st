@@ -104,8 +104,8 @@ ERComponentFactory >> createContactInformationComponent: anAttendee [
 { #category : #factoryFormMethods }
 ERComponentFactory >> createFormOf: anObject [
 	^ anObject asComponent 
-	addDecoration: MAValidationDecoration new;
-	 yourself.
+		addDecoration: MAValidationDecoration new;
+		yourself.
 ]
 
 { #category : #factoryFormMethods }

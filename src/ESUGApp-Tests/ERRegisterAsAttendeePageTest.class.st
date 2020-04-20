@@ -16,44 +16,25 @@ ERRegisterAsAttendeePageTest >> coupon: aString [
 ]
 
 { #category : #actions }
-ERRegisterAsAttendeePageTest >> fillAllContactFields [
-	self selectElementWithID: 'address' send: 'Example Av.'.
-	self selectElementWithID: 'address2' send: 'Example St.'.
-	self selectElementWithID: 'city' send: 'Cochabamba'.
-	self selectElementWithID: 'contactCountry' send: 'Bolivia'.
-	self selectElementWithID: 'province' send: 'Cercado'.
-	self selectElementWithID: 'postal' send: '0000'.
-	self selectElementWithID: 'facebookURL' send: 'https://es-la.facebook.com/'.
-	self selectElementWithID: 'twitterURL' send: ''.
-	self selectElementWithID: 'homePageURL' send: ''
-]
-
-{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonAdditional [
-	self pressNextButtonAffiliation .
+	self pressNextButtonConference.
+	self pressNextButtonAffiliation.
 	self selectElementWithID: 'keywords' send: 'Example'.
 	self selectElementWithID: 'additionalText' send: 'Example'.
 	self clickElementWithID: 'additionalInfoForm-nextButton'
 ]
 
 { #category : #actions }
-ERRegisterAsAttendeePageTest >> pressNextButtonAffiliation [ 
-	self pressNextButtonConference .
-	self fillAllAffiliationFields.
-	self clickElementWithID: 'affiliationInfoForm-nextButton'
-]
-
-{ #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonConference [
-	self pressNextButtonContact .
+
+	self pressNextButtonContact.
 	self clickElementWithID:'conferenceOptionsForm-nextButton'
 ]
 
 { #category : #actions }
 ERRegisterAsAttendeePageTest >> pressNextButtonContact [
 	self pressNextButtonUser.
-	self fillAllContactFields.
-	self clickElementWithID: 'contactInfoForm-nextButton'
+	super pressNextButtonContact
 ]
 
 { #category : #actions }
@@ -77,6 +58,7 @@ ERRegisterAsAttendeePageTest >> setUp [
 { #category : #'register Additional Information Tests' }
 ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 
+	self pressNextButtonConference.
 	self pressNextButtonAffiliation.
 	self clickElementWithID: 'additionalInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
@@ -86,6 +68,7 @@ ERRegisterAsAttendeePageTest >> testPressAdditionalBackButton [
 { #category : #'register Additional Information Tests' }
 ERRegisterAsAttendeePageTest >> testPressAdditionalNextButtonWithAllFieldsFilledCorrectly [
 
+	self pressNextButtonConference.
 	self pressNextButtonAffiliation .
 	self selectElementWithID: 'keywords' send: 'Example'.
 	self selectElementWithID: 'additionalText' send: 'Example'.
@@ -166,20 +149,6 @@ ERRegisterAsAttendeePageTest >> testPressBillingNextButtonWithoutOrganizationPos
 ]
 
 { #category : #'register  Buttons Tests' }
-ERRegisterAsAttendeePageTest >> testPressCancelButtonAcceptAlert [
-	self clickElementWithID: 'basicInfoForm-goBackLoginButton'.
-	driver acceptAlert .
-	self assert: (self textOfElementWithID: 'card-heading') equals: 'User Login'
-]
-
-{ #category : #'register  Buttons Tests' }
-ERRegisterAsAttendeePageTest >> testPressCancelButtonDismissAlert [
-	self clickElementWithID: 'basicInfoForm-goBackLoginButton'.
-	driver dismissAlert .
-	self assert: (self textOfElementWithID: 'card-heading') equals: 'Registration'
-]
-
-{ #category : #'register  Buttons Tests' }
 ERRegisterAsAttendeePageTest >> testPressConferenceBackButton [
 	self pressNextButtonContact .
 	self clickElementWithID: 'conferenceOptionsForm-previousButton'.
@@ -213,7 +182,7 @@ ERRegisterAsAttendeePageTest >> testPressContactNextButtonWithAllFieldsFilledCor
 
 { #category : #'register Payment Information Tab Tests' }
 ERRegisterAsAttendeePageTest >> testPressPaymentBackButton [
-	self pressNextButtonAdditional   .
+	self pressNextButtonAdditional.
 	self clickElementWithID: 'paymentInformationForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Additional').

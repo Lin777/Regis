@@ -43,6 +43,7 @@ ERReductionTicket >> discountStrategy: anObject [
 
 { #category : #action }
 ERReductionTicket >> discountStrategyAsString [
+
 	self strategyIsFixDiscount
 		ifTrue: [ ^ 'Fix Discount' ].
 	self strategyIsPercentageDiscount

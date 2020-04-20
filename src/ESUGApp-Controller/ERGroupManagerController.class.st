@@ -99,7 +99,7 @@ ERGroupManagerController >> removeGroupMemberToRegisterWithIndex: anIndex [
 		 newAttendee classId: index ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 ERGroupManagerController >> updateAttendee: anAttendee inIndex: classId [
 
 	newAttendees at: classId put: anAttendee
