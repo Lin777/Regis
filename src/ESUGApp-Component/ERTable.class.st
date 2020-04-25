@@ -13,13 +13,11 @@ Instance Variables
 "
 Class {
 	#name : #ERTable,
-	#superclass : #ERComponentFactory,
+	#superclass : #PSTableCollectionComponent,
 	#instVars : [
 		'blockToExecute',
 		'listToRenderButton',
-		'listObject',
 		'levelTotal',
-		'headers',
 		'dictToRenderDownloadButton'
 	],
 	#category : #'ESUGApp-Component'
@@ -35,30 +33,18 @@ ERTable >> dictToRenderDownloadButton: aDictionary [
 	dictToRenderDownloadButton := aDictionary 
 ]
 
-{ #category : #accessing }
-ERTable >> headers: anObject [
-	headers := anObject
-]
-
 { #category : #initialization }
 ERTable >> initialize [
 	"blockToExecute listToRenderButton listObject levelTotal headers"
 	super initialize.
 	listToRenderButton := OrderedCollection new.
 	dictToRenderDownloadButton := Dictionary new.
-	listObject := OrderedCollection new.
 	levelTotal := 6.
-	headers := OrderedCollection new.
 ]
 
 { #category : #accessing }
 ERTable >> levelTotal: anObject [
 	levelTotal := anObject
-]
-
-{ #category : #accessing }
-ERTable >> listObject: anObject [
-	listObject := anObject
 ]
 
 { #category : #accessing }
@@ -78,14 +64,6 @@ ERTable >> render: html with: aObject [
 ]
 
 { #category : #rendering }
-ERTable >> renderBody: html [
-	html tableBody: [ 
-		listObject do: [ :object | 
-			html tableRow: [ 
-				self render: html with: object ] ] ]
-]
-
-{ #category : #rendering }
 ERTable >> renderButton: html with: aObject [
 	listToRenderButton
 		do: [ :dataButton | 
@@ -102,19 +80,6 @@ ERTable >> renderButton: html with: aObject [
 ]
 
 { #category : #rendering }
-ERTable >> renderContentOn: html [
-	html div style: 'overflow-x:auto;';
-	with: [ 
-		html mdlTable class: 'mdl-shadow--2p';
-		style: 'width:100%;';
-		with: [ 
-			self renderHeaders: html.
-			self renderBody: html. 
-		]
-	].
-]
-
-{ #category : #rendering }
 ERTable >> renderDownloadButton: html with: aObject [
 	dictToRenderDownloadButton ifNotEmpty: [ 
 		| downloadButton |
@@ -127,14 +92,6 @@ ERTable >> renderDownloadButton: html with: aObject [
 		html div	class: 'mdl-tooltip'; 
 				attributeAt: 'data-mdl-for' put: ((dictToRenderDownloadButton at: 'id') value: aObject) ;
 				with: 'Download invoice'].
-]
-
-{ #category : #rendering }
-ERTable >> renderHeaders: html [
-	html tableHead: [ 
-		html tableRow: [ 
-			headers do: [ :each | 
-				html mdlTableHeading nonNumerical; with: each ] ] ]
 ]
 
 { #category : #rendering }

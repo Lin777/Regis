@@ -150,15 +150,18 @@ ERUsersTab >> renderContainerOn: html [
 		id: 'formAllUsers';
 		with: [ self renderButtonsOn: html.
 			html horizontalRule.
-			html render: messageComponent .
-			self renderTableOfUsersOn: html ]
+			html render: messageComponent ].
+		self renderTableOfUsersOn: html
 ]
 
 { #category : #rendering }
 ERUsersTab >> renderTableOfUsersOn: html [
 	table := ERTable new
 		headers: self headers;
+		tableId: 'users-table';
 		levelTotal: 6;
+		limitPerPage: 5;
+		disablePagination: false;
 		listObject: self users;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
