@@ -17,3 +17,4 @@ If your want to register an award to the conference you need to have an attendee
 4. A form is displayed (see Picture below). Please provide all required information and hit the "Submit" button.
 
 <img src="https://drive.google.com/uc?export=view&id=1xsYpqJGoXc77_HGAw2L3wVkaQyEt5zwl" style="width: 500px; max-width: 100%; height: auto"/>
+
