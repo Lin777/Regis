@@ -112,6 +112,7 @@ ERGroupTab >> renderTableOfGroupsOn: html [
 		tableId: 'group-table';
 		levelTotal: 6;
 		limitPerPage: 5;
+		limitPageShowed: 3;
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;
 		validation: self filterGroupInformation;

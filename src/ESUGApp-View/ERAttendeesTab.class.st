@@ -208,6 +208,7 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		tableId: 'attendee-table';
 		limitPerPage: 15;
+		limitPageShowed: 3;
 		headers: self headers;
 		validation: self filterAttendeeInformation;
 		levelTotal: 6;

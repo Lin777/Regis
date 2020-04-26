@@ -149,6 +149,7 @@ ERInvoices >> renderTableOfInvoicesOn: html [
 		tableId: 'invoices-table';
 		headers: self headers;
 		limitPerPage: 15;
+		limitPageShowed: 3;
 		levelTotal: 6;
 		validation: self filterInvoicesInformation;
 		listObject: self invoices;
