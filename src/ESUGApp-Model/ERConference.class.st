@@ -282,6 +282,7 @@ ERConference >> exportAttends: fileName [
 							each contactInformation country.
 							each affiliationInformation organizationName.
 							each conferenceInformation gender.
+							self paymentToString: each paymentInformation hasPaid.
 							self booleanToString: (each conferenceInformation attendance at: 'monday').
 							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
 							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
@@ -316,6 +317,7 @@ ERConference >> exportAttends: list in: fileName [
 							each contactInformation country.
 							each affiliationInformation organizationName.
 							each conferenceInformation gender.
+							self paymentToString: each paymentInformation hasPaid.
 							self booleanToString: (each conferenceInformation attendance at: 'monday').
 							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
 							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
@@ -500,7 +502,7 @@ ERConference >> groups: anObject [
 
 { #category : #header }
 ERConference >> headerAttendee [
-	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name' 'genre' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'T shirt size' 'Food preference' 'Social Event' 'Added To Mailing List' 'Add person' 'Food preference')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name' 'genre' 'Payment Status' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'T shirt size' 'Food preference' 'Social Event' 'Added To Mailing List' 'Add person' 'Added Person food preference')
 ]
 
 { #category : #header }
@@ -607,6 +609,14 @@ ERConference >> paymentAmountFor: anAttendee [
 	amount := amount + (self costPerExtraPerson: anAttendee).
 	amount := self decreaseCouponAmountFor: amount to: anAttendee.
 	^ amount
+]
+
+{ #category : #exporting }
+ERConference >> paymentToString: aBoolean [
+
+	aBoolean
+		ifTrue: [ ^ 'paid' ]
+		ifFalse: [ ^ 'unpaid' ]
 ]
 
 { #category : #action }
