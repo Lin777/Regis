@@ -18,6 +18,7 @@ configuration:
 active:                 <Boolean> is the state of conference (active for register in conference)
 invoiceNumber:          <Number> is an incremental number of invoices of conference
 configurationOfHomePage: <ERConfigurationOfHomePage> object to update with html the principal page of page (principal page of logged user)
+emailHelp: <String> Email if you want help in your registration
 "
 Class {
 	#name : #ERConference,
@@ -183,7 +184,7 @@ ERConference >> configurationOfHomePage: anObject [
 { #category : #action }
 ERConference >> costPerExtraPerson: anAttendee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
-	ifTrue: [ ^ fee extraPersonSD asNumber]
+	ifTrue: [ ^ fee extraPersonSD asNumber ]
 ]
 
 { #category : #action }

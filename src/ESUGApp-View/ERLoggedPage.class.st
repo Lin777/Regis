@@ -97,8 +97,8 @@ ERLoggedPage >> itemList [
 			put: [ ERHomeView
 				withContent: content
 				withController: pageController ];
-		at: 'other'
-			put: [ ERHomeView
+		at: 'contactUs'
+			put: [ ERContactUsView
 				withContent: content
 				withController: pageController ];
 		at: 'admin'
@@ -165,7 +165,8 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 	self session user isStudent
 		ifTrue: [ list add: aMenuFactory createStudentVolunterSearch ].
 	list add: aMenuFactory createAdminItem.
-	list add: aMenuFactory createLogoutItem .
+	list add: aMenuFactory createContactUsItem.
+	list add: aMenuFactory createLogoutItem.
 	^ list
 ]
 

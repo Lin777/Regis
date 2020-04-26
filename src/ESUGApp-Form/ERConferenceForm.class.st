@@ -14,7 +14,8 @@ Class {
 		'configurationForm',
 		'emailConfigurationForm',
 		'organizerForm',
-		'configurationOfHomeForm'
+		'configurationOfHomeForm',
+		'configurationOfHelpForm'
 	],
 	#category : #'ESUGApp-Form'
 }
@@ -72,7 +73,7 @@ ERConferenceForm >> initializeForms [
 	emailConfigurationForm := self createFormOf: self emailConfiguration.
 	organizerForm := self createFormOf: self organizerInformation.
 	configurationOfHomeForm := self
-		createFormOf: self homePageConfiguration
+		createFormOf: self homePageConfiguration.
 ]
 
 { #category : #accessing }
