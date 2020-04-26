@@ -48,7 +48,7 @@ ERConfigurationControllerTest >> tearDown [
 ERConfigurationControllerTest >> testExportAttends [
 	| aFile |
 	aFile := controller conference exportAttends: 'attendees'.
-	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Email","Country","Org. Name"', String crlf
+	self assert: aFile equals: '"InvoiceNumber","FirstName","LastName","Email","Country","Org. Name","genre","Mon","Tue","Wed","Thu","Fri","T shirt size","Food preference","Social Event","Added To Mailing List","Add person","Food preference"', String crlf
 ]
 
 { #category : #tests }

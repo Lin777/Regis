@@ -97,6 +97,10 @@ ERLoggedPage >> itemList [
 			put: [ ERHomeView
 				withContent: content
 				withController: pageController ];
+		at: 'other'
+			put: [ ERHomeView
+				withContent: content
+				withController: pageController ];
 		at: 'admin'
 			put: [ ERAdminView
 				on: self session user
@@ -180,7 +184,7 @@ ERLoggedPage >> paymentTabs [
 	paymentTabs ifNil: [
 		paymentTabs := OrderedCollection new
 			add: (ERInvoices on: attendee withContent: content container: self); yourself.
-	(paymentTabs at: 1) activate].
+	(paymentTabs at: 1) activate ].
 	^ paymentTabs
 ]
 

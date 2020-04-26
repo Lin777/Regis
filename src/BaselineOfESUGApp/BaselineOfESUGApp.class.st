@@ -41,21 +41,23 @@ BaselineOfESUGApp >> baseline: spec [
 				package: 'ESUGApp-Library' with: [ spec requires: #('Seaside3' 'MaterialDesignLite' 'ESUGApp-Model') ];
 				package: 'ESUGApp-Form' with: [ spec requires: #('ESUGApp-View') ];
 				package: 'ESUGApp-Component' with: [ spec requires: #('MaterialDesignLite' 'ESUGApp-Controller') ];
-				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component') ];
+				package: 'ESUGApp-View' with: [ spec requires: #('ESUGApp-Library' 'ESUGApp-Component' 'PSTableSeaside') ];
 				package: 'ESUGApp-Tests' with: [ spec requires: #('Parasol' 'ESUGApp-Core') ];
-				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core')].
+				package: 'ESUGApp-Extensions' with: [ spec requires: #('ESUGApp-Core') ].
 			spec 
 				group: 'Core' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Extensions' 'ESUGApp-Core');
-				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Tests' 'ESUGApp-Extensions' 'ESUGApp-Core')]
+				group: 'Tests' with: #('ESUGApp-PostMark-Core' 'ESUGApp-Form' 'ESUGApp-Tests' 'ESUGApp-Extensions' 'ESUGApp-Core') ]
 ]
 
 { #category : #baselines }
 BaselineOfESUGApp >> setUpDependencies: spec [
+	spec
+		baseline: 'PSTableSeaside'
+		with: [ spec repository: 'github://daniapq/PSTableSeaside:master/src' ].
 	spec	
 		baseline: 'Seaside3'	
 		with: [ spec	
 				repository: 'github://SeasideSt/Seaside:v3.4.x/repository' ].
-	
 	spec
 		baseline: 'Parasol'
 		with: [ spec
@@ -64,7 +66,6 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://daniapq/MaterialDesignLite:master/src' ].
-	
 	spec
 		project: 'NeoJSON'
 		with: [ spec

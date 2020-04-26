@@ -29,6 +29,15 @@ ERMembersView >> deleteAttendeeFromGroup: anAttendee [
 ]
 
 { #category : #accessing }
+ERMembersView >> filterMemberGroupInformation [
+
+	^ [ :object :text | 
+		((object userAccount firstName) includesSubstring: text caseSensitive: false)
+			or: [ ((object userAccount lastName) includesSubstring: text caseSensitive: false)
+			or: [ ((object userAccount email) includesSubstring: text caseSensitive: false) ] ] ]
+]
+
+{ #category : #accessing }
 ERMembersView >> headers [
 	^ #('Name(D)' 'Email' 'Fee' '')
 ]
@@ -93,8 +102,8 @@ ERMembersView >> renderContainerOn: html [
 		id: 'formMembers';
 		with: [
 			html horizontalRule.
-			html render: messageComponent .
-			self renderTableOfAttendsOn: html ]
+			html render: messageComponent ].
+	self renderTableOfAttendsOn: html
 ]
 
 { #category : #rendering }
@@ -120,6 +129,9 @@ ERMembersView >> renderRegisterMyselfAsAttendee: html [
 { #category : #rendering }
 ERMembersView >> renderTableOfAttendsOn: html [
 	table := ERTable new
+		tableId: 'memberGroup-table';
+		limitPerPage: 15;
+		validation: self filterMemberGroupInformation;
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self attends;

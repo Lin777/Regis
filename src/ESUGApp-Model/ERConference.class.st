@@ -141,6 +141,14 @@ ERConference >> attends: anObject [
 	attends := anObject
 ]
 
+{ #category : #exporting }
+ERConference >> booleanToString: aBoolean [
+
+	aBoolean
+		ifTrue: [ ^ 'Yes' ]
+		ifFalse: [ ^ 'No' ]
+]
+
 { #category : #action }
 ERConference >> closeRegistration [
 	self configuration openRegistration: false.
@@ -272,9 +280,22 @@ ERConference >> exportAttends: fileName [
 							each userAccount lastName.
 							each userAccount email.
 							each contactInformation country.
-							each affiliationInformation organizationName} ].
+							each affiliationInformation organizationName.
+							each conferenceInformation gender.
+							self booleanToString: (each conferenceInformation attendance at: 'monday').
+							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
+							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
+							self booleanToString: (each conferenceInformation attendance at: 'thursday').
+							self booleanToString: (each conferenceInformation attendance at: 'friday').
+							each conferenceInformation tshirtSize.
+							each conferenceInformation foodPreference.
+							self booleanToString: each conferenceInformation attendSocialEvent.
+							self booleanToString: each conferenceInformation addedToMainList.
+							self booleanToString: each conferenceInformation addPersonToSocialDinner.
+							(each conferenceInformation addPersonToSocialDinner)
+								ifTrue: [ each conferenceInformation personAddedFoodPreference. ] } ].
 			neoWriter close ].
-	^ cvs
+		^ cvs
 ]
 
 { #category : #exporting }
@@ -293,7 +314,20 @@ ERConference >> exportAttends: list in: fileName [
 							each userAccount lastName.
 							each userAccount email.
 							each contactInformation country.
-							each affiliationInformation organizationName} ].
+							each affiliationInformation organizationName.
+							each conferenceInformation gender.
+							self booleanToString: (each conferenceInformation attendance at: 'monday').
+							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
+							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
+							self booleanToString: (each conferenceInformation attendance at: 'thursday').
+							self booleanToString: (each conferenceInformation attendance at: 'friday').
+							each conferenceInformation tshirtSize.
+							each conferenceInformation foodPreference.
+							self booleanToString: each conferenceInformation attendSocialEvent.
+							self booleanToString: each conferenceInformation addedToMainList.
+							self booleanToString: each conferenceInformation addPersonToSocialDinner.
+							(each conferenceInformation addPersonToSocialDinner)
+								ifTrue: [ each conferenceInformation personAddedFoodPreference. ] } ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -466,7 +500,7 @@ ERConference >> groups: anObject [
 
 { #category : #header }
 ERConference >> headerAttendee [
-	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name' 'genre' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'T shirt size' 'Food preference' 'Social Event' 'Added To Mailing List' 'Add person' 'Food preference')
 ]
 
 { #category : #header }

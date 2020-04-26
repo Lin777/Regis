@@ -57,21 +57,3 @@ ERRegisterTest >> pressNextButtonUser [
 	self fillAllUserFields.
 	self clickElementWithID: 'basicInfoForm-nextButton'
 ]
-
-{ #category : #accessing }
-ERRegisterTest >> testPressBillingBackButton [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-ERRegisterTest >> testPressBillingNextButtonWithAllFieldsFilledCorrectly [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-ERRegisterTest >> testPressUserNextButtonWithAllFieldsFilledCorrectly [
-
-	^ self subclassResponsibility
-]

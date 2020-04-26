@@ -70,7 +70,11 @@ ERTalksTab >> renderTableOfTalksOn: html [
 	"Render table of talks"
 
 	table := ERTable new
+		tableId: 'talks-table';
+		limitPerPage: 10;
+		validation: self filterTalksInformation;
 		headers: self headers;
+		disablePagination: true;
 		levelTotal: 6;
 		listObject: self talks;
 		blockToExecute: self blockTableTalksToExecute;

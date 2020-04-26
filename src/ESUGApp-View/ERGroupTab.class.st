@@ -35,6 +35,15 @@ ERGroupTab >> exportGroups [
 	self exportFile: file withName: 'groupManagers.csv'
 ]
 
+{ #category : #'as yet unclassified' }
+ERGroupTab >> filterGroupInformation [
+
+	
+	^ [ :object :text | 
+		((object affiliationInformation organizationName) includesSubstring: text caseSensitive: false)
+		or: [ ((object paymentInformation paymentAmount asString) includesSubstring: text caseSensitive: false) ] ]
+]
+
 { #category : #accessing }
 ERGroupTab >> groups [
 	^ controller conference groups
@@ -92,17 +101,20 @@ ERGroupTab >> renderContainerOn: html [
 		id: 'formAllGroups';
 		with: [
 			self renderButtonsOn: html.
-			html horizontalRule.
-			self renderTableOfGroupsOn: html ]
+			html horizontalRule ].
+		self renderTableOfGroupsOn: html
 ]
 
 { #category : #accessing }
 ERGroupTab >> renderTableOfGroupsOn: html [
 	table := ERTable new
 		headers: self headers;
+		tableId: 'group-table';
 		levelTotal: 6;
+		limitPerPage: 5;
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;
+		validation: self filterGroupInformation;
 		listToRenderButton: self listDataToRenderButton;
 		dictToRenderDownloadButton: Dictionary new.
 	html render: table

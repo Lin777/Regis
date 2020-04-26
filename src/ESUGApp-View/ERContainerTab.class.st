@@ -134,6 +134,22 @@ ERContainerTab >> exportInvoiceOf: groupOrAttendee [
             attachmentWithFileName: ('invoice-', groupOrAttendee id asString, '.pdf') ]
 ]
 
+{ #category : #tableBlock }
+ERContainerTab >> filterAwardsInformation [
+
+	^ [ :object :text | 
+		((object nameAward) includesSubstring: text caseSensitive: false)
+			or: [ ((object submitter userAccount email) includesSubstring: text caseSensitive: false) ] ]
+]
+
+{ #category : #tableBlock }
+ERContainerTab >> filterTalksInformation [
+
+	^ [ :object :text | 
+		((object name) includesSubstring: text caseSensitive: false)
+			or: [ ((object submitter userAccount email) includesSubstring: text caseSensitive: false) ] ]
+]
+
 { #category : #initialization }
 ERContainerTab >> initializeFormEditAward: anAward [
 	formAward := (ERTittledFormView 
