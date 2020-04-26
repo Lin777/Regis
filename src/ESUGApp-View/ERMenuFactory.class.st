@@ -90,6 +90,14 @@ ERMenuFactory >> createMyRegistrationItem [
 ]
 
 { #category : #factory }
+ERMenuFactory >> createOtherItem [
+	^ ERItemNav 
+		label: 'Home 2' 
+		icon: 'home' 
+		callback: (availableItemsOfMenu at: 'other')
+]
+
+{ #category : #factory }
 ERMenuFactory >> createPaymentItem [
 	^ ERItemNav 
 		label: 'Payment' 

@@ -63,8 +63,9 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 
 { #category : #actions }
 ERAttendeesTab >> exportAttends [
-	| file fileName |
+	| file fileName attends |
 	fileName := self nameOfExportFile.
+	attends := self attends.
 	file := controller conference exportAttends: self attends in: fileName.
 	self exportFile: file withName: fileName, '.csv'
 ]
