@@ -14,7 +14,7 @@
  
 <img src="https://drive.google.com/uc?export=view&id=1NTnKBP9lK10bozz-LWNu_YEBLRDqympq" style="width: 500px; max-width: 100%; height: auto"/>
 
-<img src="https://drive.google.com/uc?export=view&id=1FssV75XrbIrcBPq0PZJPJGPR8MmJ8sF" style="width: 500px; max-width: 100%; height: auto"/>
+<img src="https://drive.google.com/uc?export=view&id=1FssV75XrbIrcBPq0PZJPJGPR8MmJ8sFx" style="width: 500px; max-width: 100%; height: auto"/>
 
  4. Finally you will see the principal home page of conference.
  
