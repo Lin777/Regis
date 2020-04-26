@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #rendering }
-ERDictionaryTable >> renderBody: html [
+ERDictionaryTable >> renderTableBodyOn: html [
 	html
 		tableBody: [ listObject
 				do: [ :object | html tableRow: [ 

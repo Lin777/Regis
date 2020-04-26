@@ -79,6 +79,9 @@ ERProposedAwardsTab >> modifyAward: anAward [
 { #category : #rendering }
 ERProposedAwardsTab >> renderAwardsTableOn: html [
 	table := ERTable new
+		tableId: 'proposedAwards-table';
+		validation: self filterAwardsInformation;
+		limitPerPage: 10;
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self submittedAwards;

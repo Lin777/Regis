@@ -18,7 +18,8 @@ Class {
 		'blockToExecute',
 		'listToRenderButton',
 		'levelTotal',
-		'dictToRenderDownloadButton'
+		'dictToRenderDownloadButton',
+		'validation'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -100,4 +101,22 @@ ERTable >> renderTotalRows: html [
 		level: levelTotal;
 		with: [ html strong: 'Total: '.
 			html text: listObject size asString ]
+]
+
+{ #category : #'rendering-searching' }
+ERTable >> validateFilterOf: aObject [
+
+	^ self validation value: aObject value: self searchingText
+]
+
+{ #category : #accessing }
+ERTable >> validation [
+
+	^ validation
+]
+
+{ #category : #accessing }
+ERTable >> validation: aObject [
+
+	validation := aObject
 ]

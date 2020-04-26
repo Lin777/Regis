@@ -132,6 +132,9 @@ ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
 { #category : #rendering }
 ERStudentVolunterView >> renderTableOfAttendsOn: html [
 	table := ERTable new
+		tableId: 'table-volunteer';
+		disablePagination: true;
+		disableSearching: true;
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self attends;

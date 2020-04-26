@@ -69,6 +69,17 @@ ERAttendeesTab >> exportAttends [
 	self exportFile: file withName: fileName, '.csv'
 ]
 
+{ #category : #tableBlock }
+ERAttendeesTab >> filterAttendeeInformation [
+
+	^ [ :object :text | 
+		((object paymentInformation invoiceNumber asString) includesSubstring: text caseSensitive: false)
+			or: [ ((object userAccount firstName) includesSubstring: text caseSensitive: false)
+			or: [ ((object userAccount email) includesSubstring: text caseSensitive: false)
+			or: [ ((object affiliationInformation organizationCountry) includesSubstring: text caseSensitive: false) 
+			or: [ ((object affiliationInformation organizationName) includesSubstring: text caseSensitive: false) ] ] ] ] ]
+]
+
 { #category : #accessing }
 ERAttendeesTab >> headers [
 	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Volunter' '')
@@ -194,7 +205,10 @@ ERAttendeesTab >> renderSelectorWayToFilterOn: html [
 { #category : #rendering }
 ERAttendeesTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
+		tableId: 'attendee-table';
+		limitPerPage: 15;
 		headers: self headers;
+		validation: self filterAttendeeInformation;
 		levelTotal: 6;
 		listObject: self attends;
 		blockToExecute: self blockTableToExecute;

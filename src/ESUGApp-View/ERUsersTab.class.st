@@ -78,6 +78,16 @@ ERUsersTab >> exportUsers [
 	self exportFile: file withName: 'users.csv'
 ]
 
+{ #category : #'as yet unclassified' }
+ERUsersTab >> filterUserInformation [
+
+	
+	^ [ :object :text | 
+		((object firstName) includesSubstring: text caseSensitive: false)
+			or: [ ((object lastName) includesSubstring: text caseSensitive: false)
+			or: [ ((object email) includesSubstring: text caseSensitive: false) ] ] ]
+]
+
 { #category : #accessing }
 ERUsersTab >> headers [
 	^ #('Name' 'User Role' 'Email' '')
@@ -162,6 +172,7 @@ ERUsersTab >> renderTableOfUsersOn: html [
 		levelTotal: 6;
 		limitPerPage: 5;
 		disablePagination: false;
+		validation: self filterUserInformation;
 		listObject: self users;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.

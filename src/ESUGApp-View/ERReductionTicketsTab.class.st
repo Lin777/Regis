@@ -64,6 +64,15 @@ ERReductionTicketsTab >> deleteTicket: aTicket [
 ]
 
 { #category : #accessing }
+ERReductionTicketsTab >> filterTicketInformation [
+
+	^ [ :object :text | 
+		((object ticketId) includesSubstring: text caseSensitive: false)
+			or: [ ((object discountStrategy description) includesSubstring: text caseSensitive: false)
+			or: [ ((object limitStrategy description) includesSubstring: text caseSensitive: false) ] ] ]
+]
+
+{ #category : #accessing }
 ERReductionTicketsTab >> headers [ 	
 	^ #('Id'	'Discount Strategy'	'Use Limit Strategy'	'Used Times' '')
 ]
@@ -151,7 +160,10 @@ ERReductionTicketsTab >> renderContainerOn: html [
 { #category : #rendering }
 ERReductionTicketsTab >> renderTableOfTicketsOn: html [
 	table := ERTable new
+		tableId: 'tickets-table';
+		limitPerPage: 7;
 		headers: self headers;
+		validation: self filterTicketInformation;
 		levelTotal: 6;
 		listObject: self tickets;
 		blockToExecute: self blockTableToExecute;

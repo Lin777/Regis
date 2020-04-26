@@ -75,7 +75,11 @@ ERAwardsTab >> renderTableOfAwardsOn: html [
 	"Render table of awards"
 
 	table := ERTable new
+		tableId: 'awards-table';
+		limitPerPage: 10;
+		validation: self filterAwardsInformation;
 		headers: self headers;
+		disablePagination: true;
 		levelTotal: 6;
 		listObject: self awards;
 		blockToExecute: self blockTableAwardsToExecute;

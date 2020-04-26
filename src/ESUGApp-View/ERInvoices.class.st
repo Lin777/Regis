@@ -24,13 +24,17 @@ ERInvoices >> blockTableToExecute [
 		add: ([ :att | att organizationName ] value: anTicket);
 		add: ([ :att | att organizationAddress1 ] value: anTicket);
 		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
-		add: ([ :att :aHtml | [ aHtml mdlCheckbox
-				id: att id, '-hasPaid';
-				value: att paymentInformation hasPaid;
-				onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
-				onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
-				onChange: (html jQuery ajax serializeForm).
-				] ] valueWithArguments: { anTicket. html });
+		add: ([ :att :aHtml | [ 
+				html form
+					method: 'post';
+					with: [
+						aHtml mdlCheckbox
+							id: att id, '-hasPaid';
+							value: att paymentInformation hasPaid;
+							onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+							onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
+							onChange: (html jQuery ajax serializeForm).
+				 	] ] ] valueWithArguments: { anTicket. html });
 		yourself ]
 ]
 
@@ -64,6 +68,17 @@ ERInvoices >> exportAllInvoices [
 	].
 	encodeZipFile := controller codingZipFile: nameZipFile with: subDir.
 	self updateStateTab: self tabName.
+]
+
+{ #category : #accessing }
+ERInvoices >> filterInvoicesInformation [
+
+	^ [ :object :text | 
+		((object invoiceNumber asString) includesSubstring: text caseSensitive: false)
+			or: [ ((object firstName) includesSubstring: text caseSensitive: false)
+			or: [ ((object lastName) includesSubstring: text caseSensitive: false)
+			or: [ ((object organizationName) includesSubstring: text caseSensitive: false) 
+			or: [ ((object organizationAddress1) includesSubstring: text caseSensitive: false) ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -113,8 +128,8 @@ ERInvoices >> renderContainerOn: html [
 		method: 'post';
 		id: 'formAllInvoices';
 		with: [ self renderButtonsOn: html.
-			html horizontalRule.
-			self renderTableOfInvoicesOn: html ]
+			html horizontalRule ].
+		self renderTableOfInvoicesOn: html
 ]
 
 { #category : #rendering }
@@ -131,8 +146,11 @@ ERInvoices >> renderExportAllInvoicesOn: html [
 ERInvoices >> renderTableOfInvoicesOn: html [
 
 	table := ERTable new
+		tableId: 'invoices-table';
 		headers: self headers;
+		limitPerPage: 15;
 		levelTotal: 6;
+		validation: self filterInvoicesInformation;
 		listObject: self invoices;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.
