@@ -37,6 +37,12 @@ ERPage >> controller [
 	^ pageController
 ]
 
+{ #category : #rendering }
+ERPage >> emailHelpContact [
+	^ pageController conference configuration emailConfiguration
+		emailHelp
+]
+
 { #category : #accessing }
 ERPage >> icon [
 	^ icon
@@ -80,8 +86,21 @@ ERPage >> renderContentOn: html [
 				id: id
 				colorIcon: self colorIcon
 				actions: (self actionsBody: html))
-				classContainer: classContainer)].
-	self renderBody: html with: block
+				classContainer: classContainer) ].
+	self renderBody: html with: block.
+]
+
+{ #category : #rendering }
+ERPage >> renderFooterOn: html [
+	^ html div
+		style: self styleFooterCss;
+		with: [ 
+			html span
+				style: self styleSpanFooterCss;
+				with: 'Help: ', self emailHelpContact.
+			html span
+				style: self styleSpanFooterCss;
+				with: 'Version 2.0' ]
 ]
 
 { #category : #rendering }
@@ -98,6 +117,25 @@ ERPage >> styleBackgound [
 		background-size: cover;
 		height: 100vh;
 		alt="Credit: Photo by Glenn Carstens-Peters on Unsplash" title="Credit: Photo by Glenn Carstens-Peters on Unsplash"'
+]
+
+{ #category : #rendering }
+ERPage >> styleFooterCss [
+	^ '
+    position: absolute;
+    background: #1976d2;
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: space-between;'
+]
+
+{ #category : #rendering }
+ERPage >> styleSpanFooterCss [
+	^ '    
+	 color: rgb(255,255,255);
+    padding: 0px 20px;
+	 align-self: center;'
 ]
 
 { #category : #accessing }

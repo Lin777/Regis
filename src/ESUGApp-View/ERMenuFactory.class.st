@@ -51,6 +51,14 @@ ERMenuFactory >> createConfigurationItem [
 ]
 
 { #category : #factory }
+ERMenuFactory >> createContactUsItem [
+	^ ERItemNav 
+		label: 'Help' 
+		icon: 'help' 
+		callback: (availableItemsOfMenu at: 'contactUs')
+]
+
+{ #category : #factory }
 ERMenuFactory >> createGroupManagerItem [
 	^ ERItemNav 
 		label: 'Registration' 
@@ -87,14 +95,6 @@ ERMenuFactory >> createMyRegistrationItem [
 		label: 'My Registration' 
 		icon: 'assignment' 
 		callback: (availableItemsOfMenu at: 'myRegistration')
-]
-
-{ #category : #factory }
-ERMenuFactory >> createOtherItem [
-	^ ERItemNav 
-		label: 'Home 2' 
-		icon: 'home' 
-		callback: (availableItemsOfMenu at: 'other')
 ]
 
 { #category : #factory }

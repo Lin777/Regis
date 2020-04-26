@@ -18,6 +18,7 @@ configuration:
 active:                 <Boolean> is the state of conference (active for register in conference)
 invoiceNumber:          <Number> is an incremental number of invoices of conference
 configurationOfHomePage: <ERConfigurationOfHomePage> object to update with html the principal page of page (principal page of logged user)
+emailHelp: <String> Email if you want help in your registration
 "
 Class {
 	#name : #ERConference,
@@ -183,7 +184,7 @@ ERConference >> configurationOfHomePage: anObject [
 { #category : #action }
 ERConference >> costPerExtraPerson: anAttendee [
 	anAttendee conferenceInformation addPersonToSocialDinner ifFalse: [ ^ 0 ]
-	ifTrue: [ ^ fee extraPersonSD asNumber]
+	ifTrue: [ ^ fee extraPersonSD asNumber ]
 ]
 
 { #category : #action }
@@ -282,6 +283,7 @@ ERConference >> exportAttends: fileName [
 							each contactInformation country.
 							each affiliationInformation organizationName.
 							each conferenceInformation gender.
+							self paymentToString: each paymentInformation hasPaid.
 							self booleanToString: (each conferenceInformation attendance at: 'monday').
 							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
 							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
@@ -316,6 +318,7 @@ ERConference >> exportAttends: list in: fileName [
 							each contactInformation country.
 							each affiliationInformation organizationName.
 							each conferenceInformation gender.
+							self paymentToString: each paymentInformation hasPaid.
 							self booleanToString: (each conferenceInformation attendance at: 'monday').
 							self booleanToString: (each conferenceInformation attendance at: 'tuesday').
 							self booleanToString: (each conferenceInformation attendance at: 'wednesday').
@@ -500,7 +503,7 @@ ERConference >> groups: anObject [
 
 { #category : #header }
 ERConference >> headerAttendee [
-	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name' 'genre' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'T shirt size' 'Food preference' 'Social Event' 'Added To Mailing List' 'Add person' 'Food preference')
+	^ #('InvoiceNumber' 'FirstName' 'LastName' 'Email' 'Country' 'Org. Name' 'genre' 'Payment Status' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'T shirt size' 'Food preference' 'Social Event' 'Added To Mailing List' 'Add person' 'Added Person food preference')
 ]
 
 { #category : #header }
@@ -607,6 +610,14 @@ ERConference >> paymentAmountFor: anAttendee [
 	amount := amount + (self costPerExtraPerson: anAttendee).
 	amount := self decreaseCouponAmountFor: amount to: anAttendee.
 	^ amount
+]
+
+{ #category : #exporting }
+ERConference >> paymentToString: aBoolean [
+
+	aBoolean
+		ifTrue: [ ^ 'paid' ]
+		ifFalse: [ ^ 'unpaid' ]
 ]
 
 { #category : #action }

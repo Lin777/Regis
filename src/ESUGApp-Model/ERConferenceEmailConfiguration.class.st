@@ -10,7 +10,8 @@ Class {
 	#instVars : [
 		'senderEmailAddress',
 		'apiKey',
-		'welcomeText'
+		'welcomeText',
+		'emailHelp'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -37,6 +38,22 @@ ERConferenceEmailConfiguration >> descriptionApiKey [
 		withoutLabel: true;
 		id: 'apiKey';
 		label: 'Api key (Required)';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'magrittes-descriptions' }
+ERConferenceEmailConfiguration >> descriptionEmailHelp [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #emailHelp; 
+		priority: 50;
+		withoutLabel: true;
+		addCondition: [ :value | value matchesRegex: '\S+@\S+\.\S+' ];
+		id: 'emailHelpContact';
+		label: 'Email for Contact Us';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
@@ -73,6 +90,16 @@ ERConferenceEmailConfiguration >> descriptionWelcomeText [
 		id: 'welcomeText';
 		componentClass: MDLMATextAreaComponent.
 	^ tmp yourself
+]
+
+{ #category : #accessing }
+ERConferenceEmailConfiguration >> emailHelp [
+	^ emailHelp
+]
+
+{ #category : #accessing }
+ERConferenceEmailConfiguration >> emailHelp: anObject [
+	emailHelp := anObject
 ]
 
 { #category : #accessing }

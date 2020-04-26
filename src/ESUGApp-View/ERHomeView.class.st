@@ -1,3 +1,10 @@
+"
+Description
+-----------
+
+
+I am the principal view when you enter into your account on ESUG
+"
 Class {
 	#name : #ERHomeView,
 	#superclass : #ERTittledView,

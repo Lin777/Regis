@@ -140,8 +140,7 @@ ERRegisterPage >> renderBody: html with: aBlock [
 	html div style: self styleBackgound ;
 	with: [ 
 		html break. html break. html break. 
-		aBlock value	
-	]
+		aBlock value. ].
 ]
 
 { #category : #rendering }

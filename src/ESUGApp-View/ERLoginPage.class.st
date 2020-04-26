@@ -85,10 +85,10 @@ ERLoginPage >> registerUser [
 
 { #category : #rendering }
 ERLoginPage >> renderBody: html with: aBlock [
-	html div style: self styleBackgound ;
-	with: [ 
-		html mdlLayout	with: aBlock
-	]
+	html div
+		style: self styleBackgound;
+		with: [ html mdlLayout with: aBlock ].
+	self renderFooterOn: html.
 ]
 
 { #category : #rendering }
@@ -102,7 +102,7 @@ ERLoginPage >> renderEmailFieldOn: html [
 				id: 'email-login';
 				"required;"
 				type: 'email';
-				callback: [ :value | self email: value asString ]]
+				callback: [ :value | self email: value asString ] ]
 ]
 
 { #category : #rendering }
@@ -146,8 +146,7 @@ ERLoginPage >> renderPageOn: html [
 			self renderMessageComponent: html.
 			self renderFieldsLoginOn:html.
 			self renderLoginButtonOn: html.
-			self renderRegisterButtonOn: html].
-			
+			self renderRegisterButtonOn: html ].
 ]
 
 { #category : #rendering }

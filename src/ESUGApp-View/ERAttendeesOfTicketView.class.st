@@ -44,7 +44,7 @@ ERAttendeesOfTicketView >> content: anObject [
 
 { #category : #accessing }
 ERAttendeesOfTicketView >> headers [
-	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?')
+	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee'	'Has Paid?' '')
 ]
 
 { #category : #accessing }
@@ -79,7 +79,10 @@ ERAttendeesOfTicketView >> renderPageOn: html [
 { #category : #rendering }
 ERAttendeesOfTicketView >> renderTableOfAttendsWith: aList on: html [
 	tableComponent := ERTable new
+		tableId: 'attendsInvoice';
 		headers: self headers;
+		disablePagination: true;
+		disableSearching: true;
 		levelTotal: 6;
 		listObject: aList ;
 		blockToExecute: self blockTableToExecute;

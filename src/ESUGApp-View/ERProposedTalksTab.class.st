@@ -110,6 +110,7 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 		tableId: 'proposedTalks-table';
 		validation: self filterTalksInformation;
 		limitPerPage: 10;
+		limitPageShowed: 3;
 		headers: self headers;
 		levelTotal: 6;
 		listObject: self submittedTalks;

@@ -32,7 +32,7 @@ ERUsersTab >> blockTableToExecute [
 		yourself ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ERUsersTab >> changeRoleToSaveUser: aString [
 
 	(aString = 'Group Manager')
@@ -78,7 +78,7 @@ ERUsersTab >> exportUsers [
 	self exportFile: file withName: 'users.csv'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tableBlock }
 ERUsersTab >> filterUserInformation [
 
 	
@@ -170,7 +170,8 @@ ERUsersTab >> renderTableOfUsersOn: html [
 		headers: self headers;
 		tableId: 'users-table';
 		levelTotal: 6;
-		limitPerPage: 5;
+		limitPerPage: 10;
+		limitPageShowed: 3;
 		disablePagination: false;
 		validation: self filterUserInformation;
 		listObject: self users;
