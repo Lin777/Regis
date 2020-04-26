@@ -67,6 +67,7 @@ ERBackupAndRestoreTest >> testRestoreData [
 	"This test verify that the state after restore is equal to data was removed"
 
 	| stateBefore stateAfter |
+
 	self registerAsGroupManager.
 	stateBefore := ERBackupRestore new objectsToBackup.
 	(Delay forSeconds: 5) wait.

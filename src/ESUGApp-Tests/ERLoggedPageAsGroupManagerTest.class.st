@@ -228,6 +228,7 @@ ERLoggedPageAsGroupManagerTest >> testRegisterUserInGroup [
 	cantOfAttendees := group listAttends size.
 	self pressOptionGroupRegistration.
 	self clickElementWithID: 'newUserOptionBar'.
+	self fillAllUserFieldsOfIndex: 1.
 	self pressNextButtonUserWithIndex: 1.
 	self pressNextButtonConferenceWithIndex: 1.
 	self clickElementWithID: 'registerButton', 1 printString.

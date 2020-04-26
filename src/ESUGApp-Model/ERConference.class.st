@@ -295,6 +295,7 @@ ERConference >> exportAttends: fileName [
 							(each conferenceInformation addPersonToSocialDinner)
 								ifTrue: [ each conferenceInformation personAddedFoodPreference. ] } ].
 			neoWriter close ].
+		^ cvs
 ]
 
 { #category : #exporting }
