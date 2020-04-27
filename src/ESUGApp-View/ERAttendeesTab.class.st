@@ -44,12 +44,14 @@ ERAttendeesTab >> blockTableToExecute [
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
-		add: ([ :att :aHtml | [ aHtml mdlCheckbox
-				id: att id, '-isVolunter';
-				value: att userAccount isStudent;
-				onTrue: [ controller convertToStudentVolunterThis: att ] 
-				onFalse: [ controller deleteStudentVolunterRoleFrom: att ];
-				onChange: (html jQuery ajax serializeForm).
+		add: ([ :att :aHtml | [
+				html form: [
+					aHtml mdlCheckbox
+						id: att id, '-isVolunter';
+						value: att userAccount isStudent;
+						onTrue: [ controller convertToStudentVolunterThis: att ] 
+						onFalse: [ controller deleteStudentVolunterRoleFrom: att ];
+						onChange: (html jQuery ajax serializeForm). ]
 				] ] valueWithArguments: { user. html });
 		yourself ]
 ]
@@ -180,8 +182,8 @@ ERAttendeesTab >> renderContainerOn: html [
 			self renderButtonsOn: html.
 			html horizontalRule.
 			html render: messageComponent .
-			html break.
-			self renderTableOfAttendsOn: html ]
+			html break ].
+	self renderTableOfAttendsOn: html
 ]
 
 { #category : #rendering }
