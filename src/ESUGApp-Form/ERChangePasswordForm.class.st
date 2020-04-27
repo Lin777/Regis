@@ -37,13 +37,12 @@ ERChangePasswordForm >> cancel: aBlock [
 
 { #category : #action }
 ERChangePasswordForm >> changePassword [
-	[controller validateCurrentPassword: password.
+	[ controller validateCurrentPassword: password.
 	controller validatePatternPassword: passwordChanged.
 	controller validateNewPassword: passwordChanged with: passwordChangedConfirm. 
 	controller changePasswordTo: passwordChanged.
 	messageComponent changeToAlertSuccess.
-	messageComponent errorMessage: 'Change password succesfull'.
-	self cancel value]
+	messageComponent errorMessage: 'Password change done correctly' ]
 	on: ERException
 	do: [ :exception |
 		messageComponent changeToAlertOfError.

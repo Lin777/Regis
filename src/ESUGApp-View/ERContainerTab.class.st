@@ -58,7 +58,7 @@ ERContainerTab >> blockTableAwardsToExecute [
 ERContainerTab >> blockTableTalksToExecute [
 	^ [ :talk :html | 
 	OrderedCollection new
-		add: ([ :att | att name ] value: talk);
+		add: ([ :att | att title ] value: talk);
 		add: ([ :att | att submitter userAccount email ] value: talk);
 		add: ([ :att :aHtml | [ aHtml anchor target: '_blank';
 				url: talk presentation; 
@@ -146,7 +146,7 @@ ERContainerTab >> filterAwardsInformation [
 ERContainerTab >> filterTalksInformation [
 
 	^ [ :object :text | 
-		((object name) includesSubstring: text caseSensitive: false)
+		((object title) includesSubstring: text caseSensitive: false)
 			or: [ ((object submitter userAccount email) includesSubstring: text caseSensitive: false) ] ]
 ]
 

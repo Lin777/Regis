@@ -362,6 +362,7 @@ ERConference >> exportAttends: list in: fileName [
 
 { #category : #exporting }
 ERConference >> exportAwards: fileName [
+
 	|  cvs |
 	cvs := String
 		streamContents: [ :out | 
@@ -374,16 +375,15 @@ ERConference >> exportAwards: fileName [
 						nextPut:
 					{each nameAward.
 					each submitter userAccount firstName, ' ', each submitter userAccount lastName.
-					each otherDevelopers .
-					each affiliation .
+					each otherDevelopers.
+					each affiliation.
 					each country.
-					each smalltalkDialect .
+					each smalltalkDialect.
 					each keywords .
 					each licence.
 					each downloadUrl .
 					each demoUrl.
-					each submittionDate }].
-
+					each submittionDate } ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -425,9 +425,14 @@ ERConference >> exportTalks: fileName [
 			self submittedTalks
 				do: [ :each | neoWriter 
 				nextPut:
-					{each name.
+					{ each title.
+					(each submitter userAccount firstName, ' ', each submitter userAccount lastName).
 					each submitter userAccount email.
-					each presentation} ].
+					each authorsWithoutSubmitter.
+					each description.
+					each bio.
+					each presentation ifNil: [ 'No presentation' ].
+					each submittionDate } ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -539,7 +544,7 @@ ERConference >> headerGroups [
 
 { #category : #header }
 ERConference >> headerTalks [
-	^ #('Name' 'Submitted By' 'Uploaded File')
+	^ #('Talk title' 'Submitted By' 'Submitter Email' 'Other authors' 'Abstract' 'Bio' 'Uploaded File' 'Submittion Date')
 ]
 
 { #category : #header }
@@ -564,7 +569,7 @@ ERConference >> headersShirtsStatistics [
 
 { #category : #header }
 ERConference >> hearderAwards [
-	^ #('Name' 'Submitted by' 'Other Developers' 'Affiliation' 'Country' 'Dialect' 'Keywords'
+	^ #('Award Name' 'Submitted by' 'Other Developers' 'Affiliation' 'Country' 'Dialect' 'Keywords'
 	'Licence' 'Download Url' 'Demo Url' 'Submittion Date')
 ]
 

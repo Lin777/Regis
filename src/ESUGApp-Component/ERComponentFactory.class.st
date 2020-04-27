@@ -111,7 +111,7 @@ ERComponentFactory >> createFormOf: anObject [
 { #category : #factoryFormMethods }
 ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 	^ ERContentTab new 
-			contentTab: (self createPaymentInformationComponent: anAttendee );
+			contentTab: (self createPaymentInformationComponent: anAttendee);
 			previousContentTab: '<br><p>Pay by transfer or pay/card. Pay in euros</p>
                     <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';

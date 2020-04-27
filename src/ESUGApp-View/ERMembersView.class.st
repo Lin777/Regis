@@ -25,7 +25,7 @@ ERMembersView >> deleteAttendeeFromGroup: anAttendee [
 		ifFalse:[ controller user: self session user.
 	controller deleteAttendee: anAttendee ]
 		ifTrue: [messageComponent changeToAlertOfError.
-			messageComponent errorMessage: 'You can not delete an attendee after having paid.']
+			messageComponent errorMessage: 'You can not delete an attendee after having paid.' ]
 ]
 
 { #category : #accessing }

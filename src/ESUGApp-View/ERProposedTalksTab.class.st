@@ -27,7 +27,7 @@ ERProposedTalksTab >> createTalk: aTalk [
 
 { #category : #accessing }
 ERProposedTalksTab >> headers [ 	
-	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
+	^ #('Title'	'Submitted By'	'Presentation Download URL' '')
 ]
 
 { #category : #initialization }

@@ -25,7 +25,7 @@ ERTalksTab >> exportTalks [
 ERTalksTab >> headers [
 	"Return headers of Talks table"
 	
-	^ #('Name'	'Submitted By'	'Presentation Download URL' '')
+	^ #('Title'	'Submitted By'	'Presentation Download URL' '')
 ]
 
 { #category : #rendering }
