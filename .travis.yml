@@ -4,7 +4,6 @@ services:
 addons:
   chrome: stable
 language: smalltalk
-cache: bundler
 before_install:
   # FIX Chrome install error
   - sudo apt-get update
@@ -22,4 +21,8 @@ smalltalk:
 matrix:
   allow_failures:
     - smalltalk: Pharo64-8.0
+
+cache:
+  directories:
+    - $SMALLTALK_CI_CACHE
 
