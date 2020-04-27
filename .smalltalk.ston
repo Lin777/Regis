@@ -6,7 +6,7 @@ SmalltalkCISpec {
       #platforms : [ #pharo],
       #useLatestMetacello : true
     }
-  ]
+  ],
   #testing : {
     #defaultTimeout : 30
   }
