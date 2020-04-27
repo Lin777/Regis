@@ -3,7 +3,8 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #baseline : 'ESUGApp',
       #directory : 'src',
-      #platforms : [ #pharo]
+      #platforms : [ #pharo],
+      #useLatestMetacello : true
     }
   ]
 }
