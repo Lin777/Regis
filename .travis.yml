@@ -4,6 +4,7 @@ services:
 addons:
   chrome: stable
 language: smalltalk
+cache: bundler
 before_install:
   # FIX Chrome install error
   - sudo apt-get update
