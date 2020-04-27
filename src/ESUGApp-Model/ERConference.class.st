@@ -203,10 +203,15 @@ ERConference >> deleteAttendee: anAttendee [
 
 { #category : #deleting }
 ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
-	anAttendee idGroup isNotNil ifTrue: [ 
-		|group|
-		group := self getGroupOfAttendee: anAttendee.
-		group deleteAttendee: anAttendee; save].
+
+	self deleteTalksCreatedByAttendee: anAttendee.
+	self deleteAwardsCreatedByAttendee: anAttendee.
+	anAttendee idGroup isNotNil
+		ifTrue: [ | group |
+			group := self getGroupOfAttendee: anAttendee.
+			group
+				deleteAttendee: anAttendee;
+				save ].
 	self deleteAttendee: anAttendee.
 	anAttendee delete.
 	self save
@@ -214,14 +219,34 @@ ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
 
 { #category : #deleting }
 ERConference >> deleteAward: anAward [
+
 	self submittedAwards removeAllSuchThat: [ :each | anAward id = each id ].
 	self save.
+	anAward delete
+]
+
+{ #category : #deleting }
+ERConference >> deleteAwardsCreatedByAttendee: anAttendee [
+	| attendeeAwards |
+	attendeeAwards := self submittedAwards
+		select: [ :talks | talks submitter id = anAttendee id ].
+	attendeeAwards do: [ :award | self deleteAward: award ]
 ]
 
 { #category : #deleting }
 ERConference >> deleteTalk: aTalk [
+
 	self submittedTalks removeAllSuchThat: [ :each | aTalk id = each id ].
 	self save.
+	aTalk delete
+]
+
+{ #category : #deleting }
+ERConference >> deleteTalksCreatedByAttendee: anAttendee [
+	| attendeeTalks |
+	attendeeTalks := self submittedTalks
+		select: [ :talks | talks submitter id = anAttendee id ].
+	attendeeTalks do: [ :talk | self deleteTalk: talk ]
 ]
 
 { #category : #deleting }

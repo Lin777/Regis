@@ -104,8 +104,9 @@ ERController >> deleteAward: anAward [
 
 { #category : #deleting }
 ERController >> deleteTalk: aTalk [
+
 	conference deleteTalk: aTalk.
-	self notifyAllObservers 
+	self notifyAllObservers
 ]
 
 { #category : #encoding }

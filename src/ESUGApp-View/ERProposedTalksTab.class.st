@@ -32,19 +32,19 @@ ERProposedTalksTab >> headers [
 
 { #category : #initialization }
 ERProposedTalksTab >> initializeFormAddTalk [
-	|talk|
+	| talk |
 	talk := ERTalk submitter: attendee.
 	formTalk := (ERTittledFormView 
 							on: talk 
 							withContent: content) title: 'Talk'; 
-							callback: [:aTalk | self createTalk: aTalk];
-							cancelCallback: [ self cancel]; 
+							callback: [ :aTalk | self createTalk: aTalk ];
+							cancelCallback: [ self cancel ]; 
 							initializeForm
 ]
 
 { #category : #tableBlock }
 ERProposedTalksTab >> listDataToRenderButton [
-	|list|
+	| list |
 	list := OrderedCollection new.
 	self proposalsAreAllowed ifTrue: [ 
 		list add:
@@ -64,7 +64,7 @@ ERProposedTalksTab >> listDataToRenderButton [
 				with: [ :talk | talk id , '-delete' ]
 				with: 'Delete'
 				with: 'return confirm(''Are you sure you want to delete this item?'');'
-				with: false)].
+				with: false) ].
 		^ list
 ]
 
@@ -80,14 +80,14 @@ ERProposedTalksTab >> renderButtonAddOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'addTalk';
-		callback: [self addTalk];
+		callback: [ self addTalk ];
 		with: 'Add'
 ]
 
 { #category : #rendering }
 ERProposedTalksTab >> renderContainerOn: html [ 	
 	html horizontalRule .
-	self proposalsAreAllowed ifTrue: [self renderButtonAddOn: html].
+	self proposalsAreAllowed ifTrue: [ self renderButtonAddOn: html ].
 	self renderTableOn: html.
 ]
 

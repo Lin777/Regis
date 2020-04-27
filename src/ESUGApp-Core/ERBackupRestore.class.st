@@ -31,8 +31,8 @@ ERBackupRestore >> backup [
 	[ [ self lock
 		critical: [ self backupDirectory.
 			file := self referenceFile.
-			self writeSTONFile: file.
-			self truncateVersions. ] ]
+			self truncateVersions.
+			self writeSTONFile: file. ] ]
 		on: Error
 		do: [ :error | ERException backupError signal ] ]
 		forkAt: Processor systemBackgroundPriority

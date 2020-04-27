@@ -60,6 +60,9 @@ ERGroupController >> addNewAttendeeToRegister: anAttendee [
 
 { #category : #deleting }
 ERGroupController >> deleteAttendeeFromGroupAndConference: anAttendee [
+
+	self conference deleteTalksCreatedByAttendee: anAttendee.
+	self conference deleteAwardsCreatedByAttendee: anAttendee.
 	(self group listAttends)
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self group save.
@@ -67,7 +70,7 @@ ERGroupController >> deleteAttendeeFromGroupAndConference: anAttendee [
 		removeAllSuchThat: [ :each | anAttendee id = each id ].
 	self conference save.
 	self updateGroup: self group.
-	self notifyAllObservers .
+	self notifyAllObservers.
 ]
 
 { #category : #accessing }
