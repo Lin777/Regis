@@ -31,7 +31,8 @@ ERBackupRestore >> backup [
 	[ [ self lock
 		critical: [ self backupDirectory.
 			file := self referenceFile.
-			self writeSTONFile: file ] ]
+			self writeSTONFile: file.
+			self truncateVersions. ] ]
 		on: Error
 		do: [ :error | ERException backupError signal ] ]
 		forkAt: Processor systemBackgroundPriority
@@ -83,7 +84,7 @@ ERBackupRestore >> lastBackup [
 { #category : #accessing }
 ERBackupRestore >> lastBackupFilename [
 	^ self backupFilenames detectMax: [ :fileName | 
-		self versionOf: (fileName path basename)]
+		self versionOf: (fileName path basename) ]
 ]
 
 { #category : #'actions api' }
@@ -144,13 +145,12 @@ ERBackupRestore >> restoreBackup [
 
 { #category : #'actions api' }
 ERBackupRestore >> restoreBackup: aFilePath [
-	|aFile|
+	| aFile |
 	self updateVersionToLastVersionOfBackup: aFilePath.
-	["aFile := SDFuelSerializer new materializeFromFile: aFilePath".
-	aFile ifNotNil: [ :backup | backup do: 
-		[ :aClass | aClass do: [ :anObject | anObject save ] ] ]]
+	[ aFile ifNotNil: [ :backup | backup do:
+		[ :aClass | aClass do: [ :anObject | anObject save ] ] ] ]
 	on: FileDoesNotExistException 
-	do: [ :exp | exp signal].
+	do: [ :exp | exp signal ].
 	
 ]
 
@@ -165,6 +165,14 @@ ERBackupRestore >> subProcessName [
 { #category : #accessing }
 ERBackupRestore >> transformedObjectsToSTON [
 	^ STON toStringPretty: self objectsToBackup
+]
+
+{ #category : #actions }
+ERBackupRestore >> truncateVersions [
+
+	| files |
+	files := self backupDirectory allFiles.
+	(files select: [ :n | (n extension asNumber <= (self version - 10)) ]) do: #delete
 ]
 
 { #category : #'actions api' }

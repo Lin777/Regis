@@ -51,8 +51,8 @@ ERAttendeesTab >> blockTableToExecute [
 						value: att userAccount isStudent;
 						onTrue: [ controller convertToStudentVolunterThis: att ] 
 						onFalse: [ controller deleteStudentVolunterRoleFrom: att ];
-						onChange: (html jQuery ajax serializeForm). ]
-				] ] valueWithArguments: { user. html });
+						onChange: (html jQuery ajax serializeForm) ] ] ] 
+			valueWithArguments: { user. html });
 		yourself ]
 ]
 

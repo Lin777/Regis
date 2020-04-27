@@ -164,7 +164,10 @@ ERController >> sendResetPasswordTo: aString [
 
 { #category : #updating }
 ERController >> stateUpdatePaidAttendee: anAttendee with: aBoolean [
-	anAttendee stateUpdatePaidWith: aBoolean actions: { [ :att | self updateGroup: att ] . [ :att | self updateAttendee: att ] }
+
+	anAttendee stateUpdatePaidWith: aBoolean actions: { 
+		[ :att | self updatePaymentGroup: att ] . [ :att | self updatePaymentAttendee: att ] }.
+	self notifyAllObservers
 ]
 
 { #category : #updating }
@@ -202,6 +205,24 @@ ERController >> updateGroup: aGroup [
 ]
 
 { #category : #updating }
+ERController >> updatePaymentAttendee: anAttendee [
+	self verifyIfTheTicketIsStillAvailable: anAttendee.
+	self updatePaymentRate: anAttendee.
+	anAttendee save.
+	anAttendee idGroup isNotNil ifTrue: [ self updatePaymentGroup: (conference getGroupOfAttendee: anAttendee) ].
+	^ anAttendee 
+]
+
+{ #category : #updating }
+ERController >> updatePaymentGroup: aGroup [
+	"Update group information with all atendees"
+
+	self updatePaymentRateForGroup: aGroup.
+	aGroup updateHasPaidOfAll.
+	^ aGroup save.
+]
+
+{ #category : #updating }
 ERController >> updatePaymentRate: anAttendee [
 	|  amount |
 	amount := conference paymentAmountFor: anAttendee.
@@ -211,7 +232,7 @@ ERController >> updatePaymentRate: anAttendee [
 
 { #category : #updating }
 ERController >> updatePaymentRateForGroup: aGroup [ 
-	aGroup updatePaymentRateWith: [:amount | conference addPayPalComissionOn: amount]
+	aGroup updatePaymentRateWith: [ :amount | conference addPayPalComissionOn: amount ]
 ]
 
 { #category : #updating }

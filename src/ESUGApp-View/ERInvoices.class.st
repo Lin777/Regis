@@ -25,16 +25,14 @@ ERInvoices >> blockTableToExecute [
 		add: ([ :att | att organizationAddress1 ] value: anTicket);
 		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
 		add: ([ :att :aHtml | [ 
-				html form
-					method: 'post';
-					with: [
+					html form: [
 						aHtml mdlCheckbox
 							id: att id, '-hasPaid';
 							value: att paymentInformation hasPaid;
-							onTrue: [ controller stateUpdatePaidAttendee: att with: true ] 
+							onTrue: [ controller stateUpdatePaidAttendee: att with: true ]
 							onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
-							onChange: (html jQuery ajax serializeForm).
-				 	] ] ] valueWithArguments: { anTicket. html });
+							onChange: (html jQuery ajax serializeForm) ] ] ] 
+					valueWithArguments: { anTicket. html });
 		yourself ]
 ]
 
