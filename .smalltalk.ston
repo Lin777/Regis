@@ -7,5 +7,8 @@ SmalltalkCISpec {
       #useLatestMetacello : true
     }
   ]
+  #testing : {
+    #defaultTimeout : 30
+  }
 }
 
