@@ -81,11 +81,11 @@ ERUsersTab >> exportUsers [
 { #category : #tableBlock }
 ERUsersTab >> filterUserInformation [
 
-	
 	^ [ :object :text | 
 		((object firstName) includesSubstring: text caseSensitive: false)
 			or: [ ((object lastName) includesSubstring: text caseSensitive: false)
-			or: [ ((object email) includesSubstring: text caseSensitive: false) ] ] ]
+			or: [ ((object email) includesSubstring: text caseSensitive: false)
+			or: [ ((self roleStringFrom: (object rolesAsString)) includesSubstring: text caseSensitive: false) ] ] ] ]
 ]
 
 { #category : #accessing }
