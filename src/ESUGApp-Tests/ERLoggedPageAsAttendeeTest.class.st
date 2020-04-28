@@ -34,8 +34,9 @@ ERLoggedPageAsAttendeeTest >> fillAllFieldsOfChangePassword [
 
 { #category : #actions }
 ERLoggedPageAsAttendeeTest >> fillAllFieldsOfTalk [
-	self selectElementWithID: 'name' send: 'Talk Example'.
+	self selectElementWithID: 'title' send: 'Talk Example'.
 	self selectElementWithID: 'description' send: 'This is a talk to ....'.
+	self selectElementWithID: 'bio' send: 'This is a bio to ....'.
 	self selectElementWithID: 'authorsWithoutSubmitter' send: 'Example Dev'.
 	self selectElementWithID: 'presentation' send: 'https://www.google.com/' 
 ]
@@ -130,7 +131,19 @@ ERLoggedPageAsAttendeeTest >> testAddTalkCorrectly [
 	self clickElementWithID: 'addTalk'.
 	self fillAllFieldsOfTalk.
 	self clickElementWithID: 'accept-change-affiliation'.
-	self deny: (ERTalk find: [ :talk | talk name = 'Talk Example' ] ) = nil
+	self deny: (ERTalk find: [ :talk | talk title = 'Talk Example' ] ) = nil
+]
+
+{ #category : #'my Registration Proposed Talks Test' }
+ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyBio [
+	
+	self pressOptionMyRegistration.
+	self selectProposedTalksTab .
+	self clickElementWithID: 'addTalk'.
+	self fillAllFieldsOfTalk.
+	acceptFormButton := 'accept-change-affiliation'.
+	self updateField: 'bio' with: ''.
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Bio')
 ]
 
 { #category : #'my Registration Proposed Talks Test' }
@@ -146,15 +159,15 @@ ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyDescription [
 ]
 
 { #category : #'my Registration Proposed Talks Test' }
-ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyName [
+ERLoggedPageAsAttendeeTest >> testAddTalkWithEmptyTitle [
 	
 	self pressOptionMyRegistration.
 	self selectProposedTalksTab .
 	self clickElementWithID: 'addTalk'.
 	self fillAllFieldsOfTalk.
 	acceptFormButton := 'accept-change-affiliation'.
-	self updateField: 'name' with: ''.
-	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Name')
+	self updateField: 'title' with: ''.
+	self assert: self getTextOfError equals: (self messageIsRequiredFor: 'Title')
 ]
 
 { #category : #'admin User Tests' }

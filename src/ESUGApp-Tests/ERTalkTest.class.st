@@ -21,6 +21,14 @@ ERTalkTest >> setUp [
 ]
 
 { #category : #tests }
+ERTalkTest >> testEmptyBioField [
+
+	| talk |
+	talk := (self class testTalk: attendee) bio: nil; yourself.
+	self assertEmptyField: talk
+]
+
+{ #category : #tests }
 ERTalkTest >> testEmptyDescriptionField [
 
 	| talk |
@@ -29,9 +37,9 @@ ERTalkTest >> testEmptyDescriptionField [
 ]
 
 { #category : #tests }
-ERTalkTest >> testEmptyNameField [
+ERTalkTest >> testEmptyTitleField [
 
 	| talk |
-	talk := (self class testTalk: attendee) name: nil; yourself.
+	talk := (self class testTalk: attendee) title: nil; yourself.
 	self assertEmptyField: talk
 ]
