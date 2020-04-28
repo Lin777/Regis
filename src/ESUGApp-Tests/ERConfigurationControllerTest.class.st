@@ -56,7 +56,7 @@ ERConfigurationControllerTest >> testExportAwards [
 	
 	| aFile |
 	aFile := controller conference exportAwards: 'awards'.
-	self assert: aFile equals: '"Name","Submitted by","Other Developers","Affiliation","Country","Dialect","Keywords","Licence","Download Url","Demo Url","Submittion Date"', String crlf
+	self assert: aFile equals: '"Award Name","Submitted by","Other Developers","Affiliation","Country","Dialect","Keywords","Licence","Download Url","Demo Url","Submittion Date"', String crlf
 ]
 
 { #category : #tests }
@@ -64,7 +64,7 @@ ERConfigurationControllerTest >> testExportGroupManagers [
 	
 	| aFile |
 	aFile := controller conference exportGroupManagers: 'groupManagers'.
-	self assert: aFile equals: '"Invoice Number","First Name","Last Name","Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership"', String crlf
+	self assert: aFile equals: '"Invoice Number","Group Manager Name","Group Manager Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership","Attendees Registered","Payment Status"', String crlf
 ]
 
 { #category : #tests }
@@ -72,7 +72,7 @@ ERConfigurationControllerTest >> testExportTalks [
 	
 	| aFile |
 	aFile := controller conference exportTalks: 'talks'.
-	self assert: aFile equals: '"Name","Submitted By","Uploaded File"', String crlf 
+	self assert: aFile equals: '"Talk title","Submitted By","Submitter Email","Other authors","Abstract","Bio","Uploaded File","Submittion Date"', String crlf 
 ]
 
 { #category : #tests }

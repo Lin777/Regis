@@ -43,15 +43,30 @@ ERTest class >> testAffiliationInformation [
 ]
 
 { #category : #tests }
+ERTest class >> testAffiliationInformationWith: anEmail [
+
+	^ ERBillingInformation new
+		organizationName: 'testOrgName', (anEmail substrings: '@') first capitalized;
+		organizationAddrees1: 'testAddress1';
+		organizationAddrees2: 'testAddress2';
+		organizationCity: 'testCity';
+		organizationCountry: 'Bolivia';
+		organizationProvince: 'testProvince';
+		organizationPostal: '0000';
+		membershipType: 'Academic';
+		yourself
+]
+
+{ #category : #tests }
 ERTest class >> testAttendee [
 
 	^ ERAttendee new
 		userAccount: self testUserAccount;
-		contactInformation: self testContactInformation ;
-		conferenceInformation: self testRegisterConferenceInformation ;
-		affiliationInformation: self testAffiliationInformation ;
-		additionalInformation: self testAdditionalInformation ;
-		paymentInformation: self testPaymentInformation ;
+		contactInformation: self testContactInformation;
+		conferenceInformation: self testRegisterConferenceInformation;
+		affiliationInformation: self testAffiliationInformation;
+		additionalInformation: self testAdditionalInformation;
+		paymentInformation: self testPaymentInformation;
 		yourself
 ]
 
@@ -60,8 +75,24 @@ ERTest class >> testAttendee: email [
 
 	^ ERAttendee new
 		userAccount: (self testUserAccount: email);
-		conferenceInformation: self testRegisterConferenceInformation ;
-		additionalInformation: self testAdditionalInformation ;
+		conferenceInformation: self testContactInformation;
+		affiliationInformation: (self testAffiliationInformationWith: email);
+		conferenceInformation: self testRegisterConferenceInformation;
+		additionalInformation: self testAdditionalInformation;
+		paymentInformation: self testPaymentInformation;
+		yourself
+]
+
+{ #category : #tests }
+ERTest class >> testAttendee: email withGroup: aGroup [
+
+	^ ERAttendee new
+		userAccount: (self testUserAccount: email);
+		contactInformation: aGroup contactInformation copy;
+		affiliationInformation: aGroup affiliationInformation copy;
+		conferenceInformation: self testRegisterConferenceInformation;
+		additionalInformation: self testAdditionalInformation;
+		paymentInformation: aGroup paymentInformation copy;
 		yourself
 ]
 
@@ -130,7 +161,7 @@ ERTest class >> testGroupManager: aString [
    | group |
 	group := ERGroup new
 		userAccount: (self testUserAccount: aString) asGroupManager;
-		affiliationInformation: self testAffiliationInformation;
+		affiliationInformation: (self testAffiliationInformationWith: aString);
 		contactInformation: self testContactInformation;
 		paymentInformation: self testPaymentInformation;
 		yourself.
@@ -173,8 +204,9 @@ ERTest class >> testRegisterConferenceInformation [
 ERTest class >> testTalk: anAttendee [
 
 	^ (ERTalk submitter: anAttendee) 
-			name: 'Talk test';
+			title: 'Talk test';
 			description: 'Description test';
+			bio: 'Bio test';
 			presentation: 'https://www.google.com/';
 			authorsWithoutSubmitter: nil;
 			submittionDate: Date today;
@@ -224,6 +256,13 @@ ERTest >> addAttendeesTo: aController ofList: aList [
 
 	aList
 		do: [ :each | aController addAttendee: (self class testAttendee: each) ]
+]
+
+{ #category : #'test registration' }
+ERTest >> addAttendeesTo: aController ofList: aList withGroup: aGroup [
+
+	aList
+		do: [ :each | aController addAttendee: (self class testAttendee: each withGroup: aGroup) ]
 ]
 
 { #category : #'test registration' }
@@ -354,7 +393,7 @@ ERTest >> registerGroupWithGroupManager: aString listOfAttendees: aList [
 	user := self registerAsGroupManager: aString.
 	group := self groupOfUser: user.
 	aController := ERGroupController new group: group.
-	self addAttendeesTo: aController ofList: aList.
+	self addAttendeesTo: aController ofList: aList withGroup: group.
 	^ group
 ]
 

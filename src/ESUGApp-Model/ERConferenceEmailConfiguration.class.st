@@ -94,7 +94,7 @@ ERConferenceEmailConfiguration >> descriptionWelcomeText [
 
 { #category : #accessing }
 ERConferenceEmailConfiguration >> emailHelp [
-	^ emailHelp ifNil: [ emailHelp := '' ]
+	^ emailHelp ifNil: [ emailHelp := 'example@mail.com' ]
 ]
 
 { #category : #accessing }

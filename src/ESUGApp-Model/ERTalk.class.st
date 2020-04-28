@@ -1,16 +1,20 @@
 "
+Description
+-----------
+
 I am a model of Talk
 "
 Class {
 	#name : #ERTalk,
 	#superclass : #ESUGActiveRecord,
 	#instVars : [
-		'name',
+		'title',
 		'description',
 		'submitter',
 		'presentation',
 		'authorsWithoutSubmitter',
-		'submittionDate'
+		'submittionDate',
+		'bio'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -33,6 +37,16 @@ ERTalk >> authorsWithoutSubmitter: anObject [
 ]
 
 { #category : #accessing }
+ERTalk >> bio [
+	^ bio
+]
+
+{ #category : #accessing }
+ERTalk >> bio: anObject [
+	bio := anObject
+]
+
+{ #category : #accessing }
 ERTalk >> description [
 	^ description
 ]
@@ -43,13 +57,30 @@ ERTalk >> description: anObject [
 ]
 
 { #category : #'acessing-magritte' }
+ERTalk >> descriptionBio [
+	<magritteDescription>
+	| tmp |
+	tmp := MAMemoDescription new.
+	tmp 
+		accessor: #bio; 
+		priority: 40;
+		beRequired;
+		lineCount: 5;
+		label: 'Bio (Required)';
+		withoutLabel: true;
+		id: 'bio';
+		componentClass: MDLMATextAreaComponent.
+	^ tmp yourself
+]
+
+{ #category : #'acessing-magritte' }
 ERTalk >> descriptionDescription [
 	<magritteDescription>
 	| tmp |
 	tmp := MAMemoDescription new.
 	tmp 
 		accessor: #description; 
-		priority: 20;
+		priority: 30;
 		beRequired;
 		lineCount: 5;
 		label: 'Abstract (Required)';
@@ -60,28 +91,13 @@ ERTalk >> descriptionDescription [
 ]
 
 { #category : #'acessing-magritte' }
-ERTalk >> descriptionName [
-	<magritteDescription>
-	| tmp |
-	tmp := MAStringDescription new.
-	tmp 
-		accessor: #name; 
-		priority: 10;
-		beRequired;
-		label: 'Name (Required)';
-		withoutLabel: true;
-		id: 'name';
-		componentClass: MDLMATextInputComponent.
-	^ tmp yourself
-]
-
-{ #category : #'acessing-magritte' }
 ERTalk >> descriptionOtherAuthors [
 	<magritteDescription>
 	^ ERAdditionalInformation new descriptionAdditionalText copy
          accessor: #authorsWithoutSubmitter; 
-			priority: 40;
+			priority: 20;
 		   lineCount: 5;
+			label: 'Authors without the submitter';
 			id: 'authorsWithoutSubmitter';
          yourself
 ]
@@ -103,14 +119,20 @@ ERTalk >> descriptionPresentation [
 	^ tmp yourself
 ]
 
-{ #category : #accessing }
-ERTalk >> name [
-	^ name
-]
-
-{ #category : #accessing }
-ERTalk >> name: anObject [
-	name := anObject
+{ #category : #'acessing-magritte' }
+ERTalk >> descriptionTitle [
+	<magritteDescription>
+	| tmp |
+	tmp := MAStringDescription new.
+	tmp 
+		accessor: #title; 
+		priority: 10;
+		beRequired;
+		label: 'Title (Required)';
+		withoutLabel: true;
+		id: 'title';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
 ]
 
 { #category : #accessing }
@@ -146,6 +168,16 @@ ERTalk >> submittionDate [
 { #category : #accessing }
 ERTalk >> submittionDate: anObject [
 	submittionDate := anObject
+]
+
+{ #category : #accessing }
+ERTalk >> title [
+	^ title
+]
+
+{ #category : #accessing }
+ERTalk >> title: anObject [
+	title := anObject
 ]
 
 { #category : #accessing }

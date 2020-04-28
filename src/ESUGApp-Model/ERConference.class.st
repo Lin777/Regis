@@ -203,10 +203,15 @@ ERConference >> deleteAttendee: anAttendee [
 
 { #category : #deleting }
 ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
-	anAttendee idGroup isNotNil ifTrue: [ 
-		|group|
-		group := self getGroupOfAttendee: anAttendee.
-		group deleteAttendee: anAttendee; save].
+
+	self deleteTalksCreatedByAttendee: anAttendee.
+	self deleteAwardsCreatedByAttendee: anAttendee.
+	anAttendee idGroup isNotNil
+		ifTrue: [ | group |
+			group := self getGroupOfAttendee: anAttendee.
+			group
+				deleteAttendee: anAttendee;
+				save ].
 	self deleteAttendee: anAttendee.
 	anAttendee delete.
 	self save
@@ -214,14 +219,34 @@ ERConference >> deleteAttendeeFromGroupAndConference: anAttendee [
 
 { #category : #deleting }
 ERConference >> deleteAward: anAward [
+
 	self submittedAwards removeAllSuchThat: [ :each | anAward id = each id ].
 	self save.
+	anAward delete
+]
+
+{ #category : #deleting }
+ERConference >> deleteAwardsCreatedByAttendee: anAttendee [
+	| attendeeAwards |
+	attendeeAwards := self submittedAwards
+		select: [ :talks | talks submitter id = anAttendee id ].
+	attendeeAwards do: [ :award | self deleteAward: award ]
 ]
 
 { #category : #deleting }
 ERConference >> deleteTalk: aTalk [
+
 	self submittedTalks removeAllSuchThat: [ :each | aTalk id = each id ].
 	self save.
+	aTalk delete
+]
+
+{ #category : #deleting }
+ERConference >> deleteTalksCreatedByAttendee: anAttendee [
+	| attendeeTalks |
+	attendeeTalks := self submittedTalks
+		select: [ :talks | talks submitter id = anAttendee id ].
+	attendeeTalks do: [ :talk | self deleteTalk: talk ]
 ]
 
 { #category : #deleting }
@@ -337,6 +362,7 @@ ERConference >> exportAttends: list in: fileName [
 
 { #category : #exporting }
 ERConference >> exportAwards: fileName [
+
 	|  cvs |
 	cvs := String
 		streamContents: [ :out | 
@@ -349,16 +375,15 @@ ERConference >> exportAwards: fileName [
 						nextPut:
 					{each nameAward.
 					each submitter userAccount firstName, ' ', each submitter userAccount lastName.
-					each otherDevelopers .
-					each affiliation .
+					each otherDevelopers.
+					each affiliation.
 					each country.
-					each smalltalkDialect .
+					each smalltalkDialect.
 					each keywords .
 					each licence.
 					each downloadUrl .
 					each demoUrl.
-					each submittionDate }].
-
+					each submittionDate } ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -376,15 +401,16 @@ ERConference >> exportGroupManagers: fileName [
 					neoWriter
 						nextPut:
 							{each paymentInformation invoiceNumber.
-							each groupManager userAccount firstName.
-							each groupManager userAccount lastName.
+							(each groupManager userAccount firstName, ' ', each groupManager userAccount lastName).
 							each groupManager userAccount email.
 							each affiliationInformation organizationName.
 							each affiliationInformation organizationAddrees1.
 							each affiliationInformation organizationCity.
 							each affiliationInformation organizationCountry.
 							each affiliationInformation organizationPostal.
-							each affiliationInformation membershipType} ].
+							each affiliationInformation membershipType.
+							each listAttends size.
+							self paymentToString: each paymentInformation hasPaid } ].
 				neoWriter close ].
 	^ cvs
 ]
@@ -400,9 +426,14 @@ ERConference >> exportTalks: fileName [
 			self submittedTalks
 				do: [ :each | neoWriter 
 				nextPut:
-					{each name.
+					{ each title.
+					(each submitter userAccount firstName, ' ', each submitter userAccount lastName).
 					each submitter userAccount email.
-					each presentation} ].
+					each authorsWithoutSubmitter.
+					each description.
+					each bio.
+					each presentation ifNil: [ 'No presentation' ].
+					each submittionDate } ].
 			neoWriter close ].
 	^ cvs
 ]
@@ -508,13 +539,13 @@ ERConference >> headerAttendee [
 
 { #category : #header }
 ERConference >> headerGroups [
-	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
-	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
+	^ #('Invoice Number' 'Group Manager Name' 'Group Manager Email' 'Org. Name' 'Org. Address1' 
+	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership' 'Attendees Registered' 'Payment Status')
 ]
 
 { #category : #header }
 ERConference >> headerTalks [
-	^ #('Name' 'Submitted By' 'Uploaded File')
+	^ #('Talk title' 'Submitted By' 'Submitter Email' 'Other authors' 'Abstract' 'Bio' 'Uploaded File' 'Submittion Date')
 ]
 
 { #category : #header }
@@ -539,7 +570,7 @@ ERConference >> headersShirtsStatistics [
 
 { #category : #header }
 ERConference >> hearderAwards [
-	^ #('Name' 'Submitted by' 'Other Developers' 'Affiliation' 'Country' 'Dialect' 'Keywords'
+	^ #('Award Name' 'Submitted by' 'Other Developers' 'Affiliation' 'Country' 'Dialect' 'Keywords'
 	'Licence' 'Download Url' 'Demo Url' 'Submittion Date')
 ]
 

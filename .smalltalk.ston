@@ -5,6 +5,9 @@ SmalltalkCISpec {
       #directory : 'src',
       #platforms : [ #pharo]
     }
-  ]
+  ],
+  #testing : {
+    #defaultTimeout : 30
+  }
 }
 

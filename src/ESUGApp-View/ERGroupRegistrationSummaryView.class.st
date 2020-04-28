@@ -30,9 +30,7 @@ ERGroupRegistrationSummaryView >> initializePaymentForm [
 		withContent: content) 
 		updatePayment: [ :aGroup | self payForGroup: aGroup ];
 		cancel: [ 
-				self halt.
 				self returnToThePreviousState.
-				self halt.
 				self updateStateTab: self tabName ];
 		blockForUpdate: [ :aGroup | aGroup save.
 			controller updateGroup: aGroup ]

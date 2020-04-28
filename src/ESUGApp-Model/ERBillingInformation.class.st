@@ -168,7 +168,7 @@ ERBillingInformation >> descriptionOrganizationProvince [
 
 { #category : #accessing }
 ERBillingInformation >> membershipType [
-	^ membershipType ifNil: [ membershipType := '' ]
+	^ membershipType
 ]
 
 { #category : #accessing }
@@ -178,7 +178,7 @@ ERBillingInformation >> membershipType: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationAddrees1 [
-	^ organizationAddrees1 ifNil: [ organizationAddrees1 := '' ]
+	^ organizationAddrees1
 ]
 
 { #category : #accessing }
@@ -188,7 +188,7 @@ ERBillingInformation >> organizationAddrees1: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationAddrees2 [
-	^ organizationAddrees2 ifNil: [ organizationAddrees2 := '' ]
+	^ organizationAddrees2
 ]
 
 { #category : #accessing }
@@ -198,7 +198,7 @@ ERBillingInformation >> organizationAddrees2: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationCity [
-	^ organizationCity ifNil: [ organizationCity := '' ]
+	^ organizationCity
 ]
 
 { #category : #accessing }
@@ -208,7 +208,7 @@ ERBillingInformation >> organizationCity: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationCountry [
-	^ organizationCountry ifNil: [ organizationCountry := '' ]
+	^ organizationCountry
 ]
 
 { #category : #accessing }
@@ -218,7 +218,7 @@ ERBillingInformation >> organizationCountry: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationName [
-	^ organizationName ifNil: [ organizationName := '' ]
+	^ organizationName
 ]
 
 { #category : #accessing }
@@ -228,7 +228,7 @@ ERBillingInformation >> organizationName: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationPostal [
-	^ organizationPostal ifNil: [ organizationPostal := '' ]
+	^ organizationPostal
 ]
 
 { #category : #accessing }
@@ -238,7 +238,7 @@ ERBillingInformation >> organizationPostal: anObject [
 
 { #category : #accessing }
 ERBillingInformation >> organizationProvince [
-	^ organizationProvince ifNil: [ organizationProvince := '' ]
+	^ organizationProvince
 ]
 
 { #category : #accessing }
