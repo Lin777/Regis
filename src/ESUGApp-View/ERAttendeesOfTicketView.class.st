@@ -1,3 +1,9 @@
+"
+Description
+-----------
+
+I am the view to render all attendees with a specific reduction ticket
+"
 Class {
 	#name : #ERAttendeesOfTicketView,
 	#superclass : #ERTittledView,
@@ -28,7 +34,7 @@ ERAttendeesOfTicketView >> blockTableToExecute [
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
 			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
-		add: ([ :att | att paymentInformation hasPaid ] value: user);
+		add: ([ :att | (self paymentToString: att paymentInformation hasPaid) ] value: user);
 		yourself ]
 ]
 
@@ -40,6 +46,16 @@ ERAttendeesOfTicketView >> children [
 { #category : #accessing }
 ERAttendeesOfTicketView >> content: anObject [
 	content := anObject
+]
+
+{ #category : #rendering }
+ERAttendeesOfTicketView >> filterAttendeesWithTicket [
+
+	^ [ :object :text | 
+		((object userAccount firstName) includesSubstring: text caseSensitive: false)
+			or: [ ((object userAccount email) includesSubstring: text caseSensitive: false) 
+			or: [ ((object affiliationInformation organizationCountry) includesSubstring: text caseSensitive: false) 
+			or: [ ((object affiliationInformation organizationName) includesSubstring: text caseSensitive: false) ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -57,6 +73,14 @@ ERAttendeesOfTicketView >> listOfAttendees [
 	^ controller conference attendeesForATicket: ticket ticketId
 ]
 
+{ #category : #accessing }
+ERAttendeesOfTicketView >> paymentToString: aBoolean [
+
+	aBoolean
+		ifTrue: [ ^ 'Yes' ]
+		ifFalse: [ ^ 'No' ]
+]
+
 { #category : #rendering }
 ERAttendeesOfTicketView >> renderButtonsOn: html [
 	html mdlAnchorButton
@@ -68,10 +92,11 @@ ERAttendeesOfTicketView >> renderButtonsOn: html [
 
 { #category : #rendering }
 ERAttendeesOfTicketView >> renderPageOn: html [
-	|list|
+	| list |
 	list := self listOfAttendees.
-	list isEmpty ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
-	ifFalse: [self renderTableOfAttendsWith: list on: html ].
+	list isEmpty 
+		ifTrue: [ html heading level5 with: 'This ticket is currently not used by any assistant' ]
+		ifFalse: [ self renderTableOfAttendsWith: list on: html ].
 	html horizontalRule .
 	self renderButtonsOn: html
 ]
@@ -81,8 +106,9 @@ ERAttendeesOfTicketView >> renderTableOfAttendsWith: aList on: html [
 	tableComponent := ERTable new
 		tableId: 'attendsInvoice';
 		headers: self headers;
-		disablePagination: true;
-		disableSearching: true;
+		validation: self filterAttendeesWithTicket;
+		limitPerPage: 15;
+		limitPageShowed: 3;
 		levelTotal: 6;
 		listObject: aList ;
 		blockToExecute: self blockTableToExecute;

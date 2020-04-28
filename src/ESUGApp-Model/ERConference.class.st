@@ -401,15 +401,16 @@ ERConference >> exportGroupManagers: fileName [
 					neoWriter
 						nextPut:
 							{each paymentInformation invoiceNumber.
-							each groupManager userAccount firstName.
-							each groupManager userAccount lastName.
+							(each groupManager userAccount firstName, ' ', each groupManager userAccount lastName).
 							each groupManager userAccount email.
 							each affiliationInformation organizationName.
 							each affiliationInformation organizationAddrees1.
 							each affiliationInformation organizationCity.
 							each affiliationInformation organizationCountry.
 							each affiliationInformation organizationPostal.
-							each affiliationInformation membershipType} ].
+							each affiliationInformation membershipType.
+							each listAttends size.
+							self paymentToString: each paymentInformation hasPaid } ].
 				neoWriter close ].
 	^ cvs
 ]
@@ -538,8 +539,8 @@ ERConference >> headerAttendee [
 
 { #category : #header }
 ERConference >> headerGroups [
-	^ #('Invoice Number' 'First Name' 'Last Name' 'Email' 'Org. Name' 'Org. Address1' 
-	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership')
+	^ #('Invoice Number' 'Group Manager Name' 'Group Manager Email' 'Org. Name' 'Org. Address1' 
+	'Org. City' 'Org. Country' 'Org. Postal' 'Org. Membership' 'Attendees Registered' 'Payment Status')
 ]
 
 { #category : #header }
