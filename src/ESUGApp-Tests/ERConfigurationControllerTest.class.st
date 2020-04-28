@@ -64,7 +64,7 @@ ERConfigurationControllerTest >> testExportGroupManagers [
 	
 	| aFile |
 	aFile := controller conference exportGroupManagers: 'groupManagers'.
-	self assert: aFile equals: '"Invoice Number","First Name","Last Name","Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership"', String crlf
+	self assert: aFile equals: '"Invoice Number","Group Manager Name","Group Manager Email","Org. Name","Org. Address1","Org. City","Org. Country","Org. Postal","Org. Membership","Attendees Registered","Payment Status"', String crlf
 ]
 
 { #category : #tests }
