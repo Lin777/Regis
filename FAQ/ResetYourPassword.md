@@ -2,11 +2,11 @@
 
  If your forgot your password, you need to follow the next steps:
  
- 1. Click in **FORGOT PASSWORD** button.
+1. Click in **FORGOT PASSWORD** button.
  
- <img src="https://drive.google.com/uc?export=view&id=1bTPrGRRktFFzddtIUdPZ-McUNhn_iA__" style="width: 500px; max-width: 100%; height: auto"/>
+![Forgot password 1](https://github.com/Lin777/Regis/blob/master/FAQ/images/resetPassword1.png?raw=true)
  
-  1. You will see a form that you need to fill. An email will send when your temporary password. Remember change your password after this.
+2. You will see a form that you need to fill. An email will send when your temporary password. Remember change your password after this.
  
- <img src="https://drive.google.com/uc?export=view&id=1jMbC1QLbjJXI8bZzSlPQsgUQJDLaiksw" style="width: 500px; max-width: 100%; height: auto"/>
+![Forgot password 2](https://github.com/Lin777/Regis/blob/master/FAQ/images/resetPassword2.png?raw=true)
  
