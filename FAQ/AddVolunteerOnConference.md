@@ -10,7 +10,7 @@ In this steps we explain how to assign an attendee as a volunteer.
  
 You need to follow the next steps to assign an attendee as volunteer:
  
-1. Go to **Conference** option and click it. You will see a table with all ateendees of conference (see image below). Now you need to click in **Volunter** check box.
+1. Logged as Administrator, go to **Conference** option and click it. You will see a table with all ateendees of conference (see image below). Now you need to click in **Volunter** check box.
  
 ![Assign volunteer 1](https://github.com/Lin777/Regis/blob/master/FAQ/images/assignVolunteer1.png?raw=true)
  
