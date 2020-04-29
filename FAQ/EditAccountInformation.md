@@ -1,11 +1,23 @@
 # Edit Account Information
 
-When you want to edit your account information, you need to follow the next steps:
+## Edit account
 
-1. When you are logged, you need to click in **Account**. You can edit the email, your first name or last name.
+If you want to edit your account information, you need to follow the next steps:
 
-<img src="https://drive.google.com/uc?export=view&id=1vVSTjjFRdCKQPxd0bwhUyV6Bbpl1VUVf" style="width: 500px; max-width: 100%; height: auto"/>
+1. When you are logged, you need to click in **Account**. You can edit the email, your first name or last name in the form.
 
-2. When you want to change your password, click in **Change your password?** anchor link.
+![Edit Account 1](https://github.com/Lin777/Regis/blob/master/FAQ/images/editAccount1.png?raw=true)
 
-<img src="https://drive.google.com/uc?export=view&id=1zzuQaSGyJxc4lIiXum_uaneE_Xqli4h8" style="width: 500px; max-width: 100%; height: auto"/>
+2. Click in **ACCEPT** button and you will see the next message:
+
+![Edit Account 2](https://github.com/Lin777/Regis/blob/master/FAQ/images/editAccount2.png?raw=true)
+
+## Change password
+
+1. If you want to change your password, click in **Change your password?** anchor link.
+
+![Edit Account 3](https://github.com/Lin777/Regis/blob/master/FAQ/images/editAccount3.png?raw=true)
+
+1. You will see a form that you need to fill. When you click in **ACCEPT** button, you will see a successful message in changing your password
+
+![Edit Account 4](https://github.com/Lin777/Regis/blob/master/FAQ/images/changePassword3.png?raw=true)
