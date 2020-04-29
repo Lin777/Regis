@@ -4,4 +4,4 @@ If you want to see how many attendees are registered, the quantity of t shirt wi
 
 1. Logged as Administrator, you need to click in **Statistics** option.
 
-<img src="https://drive.google.com/uc?export=view&id=1qcr60UG5FZJ-5V1aaBE9gROnNeUZLUjk" style="width: 500px; max-width: 100%; height: auto"/>
+![Show statistics](https://github.com/Lin777/Regis/blob/master/FAQ/images/showStatistics.png?raw=true)
