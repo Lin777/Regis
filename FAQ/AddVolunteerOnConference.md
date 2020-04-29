@@ -2,7 +2,7 @@
 
 When you want to register a volunteer or you want to assign someone like a volunteer, you have two options:
  
- * Create a new user with a voluntary role, which are the same steps as [create an user](https://github.com/Lin777/Regis/blob/master/FAQ/CreateAnUser.md).
+ * Create a new user with a *Student Volunteer* role, which are the same steps as [create an user](https://github.com/Lin777/Regis/blob/master/FAQ/CreateAnUser.md).
  
  * Assign an attendee as a volunteer.
  
