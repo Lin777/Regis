@@ -15,4 +15,4 @@ You need to follow the next steps to create an user:
  
 ![Create user 2](https://github.com/Lin777/Regis/blob/master/FAQ/images/addUser2.png?raw=true)
  
-3. When you finalize the creation you will see in the users table the new user registered.
+3. When you finalize the creation you will see the new registered user in the users table.
