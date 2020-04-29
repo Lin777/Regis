@@ -8,7 +8,7 @@ If your want to register an award to the conference you need to have an attendee
 
 2. Click on **PROPOSED TALKS** tab. Next, click on the **Add** anchor link.
 
-![Register talk 2](https://github.com/Lin777/Regis/blob/master/FAQ/images/registerTalks2.png?raw=true)
+![Register talk 2](https://github.com/Lin777/Regis/blob/master/FAQ/images/registerTalks3.png?raw=true)
 
 3. A form is displayed (see Picture below). Please provide all required information and hit the "Submit" button.
 
