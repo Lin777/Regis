@@ -51,3 +51,7 @@ All the users generated automatically have as password: 12345678
 ## Deploy with Docker
 
 See documentation in [Docker/README.md](Docker/README.md)
+
+## FAQ
+
+See documentation in [FAQ/README.md](FAQ/README.md)
