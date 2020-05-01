@@ -17,7 +17,8 @@ Class {
 		'bankPayPalUrl',
 		'payPalCommissionPercentage',
 		'staticCommissionPaypal',
-		'extraPersonSD'
+		'extraPersonSD',
+		'creditCardCommissionPercentage'
 	],
 	#category : #'ESUGApp-Model'
 }
@@ -43,6 +44,18 @@ ERFee >> bankPayPalUrl: anObject [
 ]
 
 { #category : #accessing }
+ERFee >> creditCardCommissionPercentage [
+
+	^ creditCardCommissionPercentage
+]
+
+{ #category : #accessing }
+ERFee >> creditCardCommissionPercentage: anObject [
+
+	creditCardCommissionPercentage := anObject
+]
+
+{ #category : #accessing }
 ERFee >> currency [
 	^ currency
 ]
@@ -64,6 +77,23 @@ ERFee >> descriptionBankPayPalUrl [
 		label: 'PayPal URL (Required)';
 		withoutLabel: true;
 		id: 'bankPayPalUrl';
+		componentClass: MDLMATextInputComponent.
+	^ tmp yourself
+]
+
+{ #category : #'magrittes-descriptions' }
+ERFee >> descriptionCreditCardCommissionPercentage [
+	<magritteDescription>
+	| tmp |
+	tmp := MANumberDescription new.
+	tmp 
+		accessor: #creditCardCommissionPercentage; 
+		priority: 80;
+		beRequired;
+		label: 'Credit card Commission Percentage (Required)';
+		withoutLabel: true;
+		cssClass: 'half';
+		id: 'creditCardCommissionPercentage';
 		componentClass: MDLMATextInputComponent.
 	^ tmp yourself
 ]
