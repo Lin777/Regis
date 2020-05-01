@@ -164,6 +164,7 @@ ERPaymentInformation >> paymentTypeIsBankTransfer [
 
 { #category : #accessing }
 ERPaymentInformation >> paymentTypeIsCreditCard [
+
 	^  'Credit Card' = paymentType
 ]
 

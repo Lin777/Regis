@@ -26,11 +26,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-ERContainerTabs class >> formGroupInformationFormOn: anAttendee withCallback: aBlock content: aContent [
+ERContainerTabs class >> formGroupInformationFormOn: anAttendee withCallback: aBlock content: aContent conference: aConference [
 	| form |
+
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
+	form conference: aConference.
 	form attendee: anAttendee.
 	form initializeWithGroupInformationFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
@@ -38,24 +40,26 @@ ERContainerTabs class >> formGroupInformationFormOn: anAttendee withCallback: aB
 ]
 
 { #category : #'instance creation' }
-ERContainerTabs class >> formGroupMemberRegisterOn: anAttendee withCallback: aBlock content: aContent [
+ERContainerTabs class >> formGroupMemberRegisterOn: anAttendee withCallback: aBlock content: aContent conference: aConference [
 	| form |
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
 	form attendee: anAttendee.
+	form conference: aConference.
 	form initializeTabsGroupMemberRegisterFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
 ]
 
 { #category : #'instance creation' }
-ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent [
+ERContainerTabs class >> formRegisterOn: anAttendee withCallback: aBlock content: aContent conference: aConference [
 	| form |
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
 	form attendee: anAttendee.
+	form conference: aConference.
 	form initializeTabsRegisterFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
@@ -98,12 +102,13 @@ ERContainerTabs class >> formWithoutBasicInfoToGroupMemberOn: anAttendee withCal
 ]
 
 { #category : #'instance creation' }
-ERContainerTabs class >> formWithoutBasicInfoWithNotGroupOn: anAttendee withCallback: aBlock content: aContent [
+ERContainerTabs class >> formWithoutBasicInfoWithNotGroupOn: anAttendee withCallback: aBlock content: aContent conference: aConference [
 	| form |
 	form := self new.
 	form content: aContent.
 	form callback: aBlock.
 	form attendee: anAttendee.
+	form conference: aConference.
 	form initializeTabsWithoutBasicInformationWithNotGroupFor: anAttendee.
 	form tabView: (ERTabs tabs: form tabs).
 	^ form
@@ -157,13 +162,14 @@ ERContainerTabs >> initializeTabsGroupMemberRegisterFor: anAttendee [
 { #category : #initialization }
 ERContainerTabs >> initializeTabsRegisterFor: anAttendee [
 	"Initialize tabs for register form"
+	
 	tabs := OrderedCollection new
 	add: ((self createBasicInfoTab: anAttendee withContent: self) activate; cancelCallback: self cancelTab);
 	add: ((self createContactInfoTab: anAttendee withContent: self ) disabled: true; cancelCallback: self cancelTab);
 	add: ((self createRegConferenceInfoTab: anAttendee withContent: self )disabled: true; cancelCallback: self cancelTab);
 	add: ((self createBillingInfoTab: anAttendee withContent: self)disabled: true; cancelCallback: self cancelTab);
 	add: ((self createAdditionalInfoTab: anAttendee withContent: self)disabled: true; cancelCallback: self cancelTab);
-	add: ((self createPaymentInfoTab: anAttendee withContent: self )disabled: true; buttonsOfTab: [:html |self renderFinalizeButtonOn: html ]; cancelCallback: self cancelTab);
+	add: ((self createPaymentInfoTab: anAttendee withContent: self) disabled: true; buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ]; cancelCallback: self cancelTab);
 		yourself.
 	saveTabs := [ self saveAttendeeTabs ]
 ]

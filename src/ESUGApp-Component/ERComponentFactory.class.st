@@ -8,7 +8,8 @@ Class {
 	#name : #ERComponentFactory,
 	#superclass : #WAComponent,
 	#instVars : [
-		'attendee'
+		'attendee',
+		'conference'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -29,6 +30,18 @@ ERComponentFactory >> attendee [
 { #category : #accessing }
 ERComponentFactory >> attendee: anObject [
 	attendee := anObject
+]
+
+{ #category : #accessing }
+ERComponentFactory >> conference [
+
+	^ conference
+]
+
+{ #category : #accessing }
+ERComponentFactory >> conference: anObject [
+
+	conference := anObject
 ]
 
 { #category : #factoryFormMethods }
@@ -110,17 +123,40 @@ ERComponentFactory >> createFormOf: anObject [
 
 { #category : #factoryFormMethods }
 ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
-	^ ERContentTab new 
-			contentTab: (self createPaymentInformationComponent: anAttendee);
-			previousContentTab: '<br><p>Pay by transfer or pay/card. Pay in euros</p>
+
+	^ ERContentTab new
+		contentTab: (self createPaymentInformationComponent: anAttendee);
+		previousContentTab:
+			'<br><p>Pay by transfer or pay/card. Pay in euros. Credit card implies additional fee of '
+				, self creditCardCommissionOf asString, '%</p>
                     <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
-			attendee: anAttendee ;
-			 tabId: 'paymentInformationForm'; 
-			 tabName: 'Payment';
-			 container: aContent;
-			nextTabName: 'Done';
-			previousTabName: 'Additional'
+		attendee: anAttendee;
+		tabId: 'paymentInformationForm';
+		tabName: 'Payment';
+		container: aContent;
+		nextTabName: 'Done';
+		previousTabName: 'Additional'
+]
+
+{ #category : #factoryFormMethods }
+ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent andConference: aConference [
+	
+	self conference: aConference.
+
+	^ ERContentTab new
+		contentTab: (self createPaymentInformationComponent: anAttendee);
+		previousContentTab:
+			'<br><p>Pay by transfer or pay/card. Pay in euros. Credit card implies additional fee of '
+				, self creditCardCommissionOf asString, '%</p>
+                    <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
+                    <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
+		attendee: anAttendee;
+		tabId: 'paymentInformationForm';
+		tabName: 'Payment';
+		container: aContent;
+		nextTabName: 'Done';
+		previousTabName: 'Additional'
 ]
 
 { #category : #factoryFormMethods }
@@ -143,4 +179,10 @@ ERComponentFactory >> createRegConferenceInfoTab: anAttendee withContent: aConte
 { #category : #factoryFormMethods }
 ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
 	^ self createFormOf: anAttendee conferenceInformation
+]
+
+{ #category : #factoryFormMethods }
+ERComponentFactory >> creditCardCommissionOf [
+
+	^ self conference fee creditCardCommissionPercentage * 100
 ]
