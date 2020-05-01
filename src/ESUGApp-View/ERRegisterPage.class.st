@@ -63,7 +63,7 @@ ERRegisterPage >> addContactInfoTab [
 ERRegisterPage >> addPaymentInfoTab [
 	"Add payment information tab in all register pages"
 
-	paymentInfoTab := (self createPaymentInfoTab: self controllerAttendee withContent: self) 
+	paymentInfoTab := (self createPaymentInfoTab: self controllerAttendee withContent: self andConference: pageController conference) 
 								disabled: true;
 								cancelCallback: self cancelRegister.
 	^ self addTab: paymentInfoTab.

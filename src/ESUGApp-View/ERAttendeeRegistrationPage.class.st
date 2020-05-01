@@ -28,7 +28,7 @@ ERAttendeeRegistrationPage >> addAdditionalInfoTab [
 ERAttendeeRegistrationPage >> addRegisterConferenceInfoTab [
 	"Add conference tab to attendee registration page"
 
-	regConfInfo := (self createRegConferenceInfoTab: self controllerAttendee withContent: self )
+	regConfInfo := (self createRegConferenceInfoTab: self controllerAttendee withContent: self)
 							disabled: true;
 							cancelCallback: self cancelRegister.
 	^ self addTab: regConfInfo .

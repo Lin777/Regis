@@ -180,6 +180,7 @@ ERContainerTab >> initializeFormToGroupManagerFor: anAttendee [
 
 { #category : #initialization }
 ERContainerTab >> initializeFormWithoutBasicInformationFor: anAttendee [
+
 	formWithoutBasicInfo := ERContainerTabs
 		formWithoutBasicInfoOn: anAttendee
 		withCallback: callback
@@ -192,16 +193,19 @@ ERContainerTab >> initializeFormWithoutBasicInformationWithNotGroupFor: anAttend
 	formWithoutBasicInfo := ERContainerTabs
 		formWithoutBasicInfoWithNotGroupOn: anAttendee
 		withCallback: callback
-		content: content.
+		content: content
+		conference: controller conference.
 	content state: formWithoutBasicInfo
 ]
 
 { #category : #initialization }
 ERContainerTab >> initializeGroupInformationFormFor: aGroup [
+
 	formGroupInfo := ERContainerTabs
 		formGroupInformationFormOn: aGroup
 		withCallback: callback
-		content: content.
+		content: content
+		conference: controller conference.
 	content state: formGroupInfo
 ]
 
@@ -285,14 +289,15 @@ ERContainerTab >> modifyRegistrationInformationOfNotGroupAttendeeLike: anAttende
 
 { #category : #updating }
 ERContainerTab >> modifyRegistrationOf: anAttendee [
+
 	anAttendee paymentInformation hasPaid 
 		ifFalse:[ 
 			(anAttendee idGroup)
 				ifNil: [ self modifyRegistrationInformationOfNotGroupAttendeeLike: anAttendee ] 
 				ifNotNil:  [ self modifyRegistrationInformation: anAttendee ].
 			 ]
-		ifTrue: [messageComponent changeToAlertOfError.
-			messageComponent errorMessage: 'You can not make modifications after having paid.']
+		ifTrue: [ messageComponent changeToAlertOfError.
+			messageComponent errorMessage: 'You can not make modifications after having paid.' ]
 ]
 
 { #category : #updating }

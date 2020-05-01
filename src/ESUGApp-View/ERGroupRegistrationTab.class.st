@@ -72,6 +72,7 @@ ERGroupRegistrationTab >> initializeFormRegister [
 		formRegisterOn: newAttendee
 		withCallback: callback
 		content: content
+		conference: controller conference.
 ]
 
 { #category : #rendering }
@@ -88,7 +89,8 @@ ERGroupRegistrationTab >> initializeGroupMemberFormRegister [
 	formRegister := ERContainerTabs
 		formGroupMemberRegisterOn: newAttendee
 		withCallback: callback
-		content: content.
+		content: content
+		conference: controller conference.
 ]
 
 { #category : #accessing }
