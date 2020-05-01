@@ -128,7 +128,7 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent [
 		contentTab: (self createPaymentInformationComponent: anAttendee);
 		previousContentTab:
 			'<br><p>Pay by transfer or pay/card. Pay in euros. Credit card implies additional fee of '
-				, self creditCardCommissionOf asString, '%</p>
+				, self creditCardCommission asString, '%</p>
                     <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
 		attendee: anAttendee;
@@ -148,7 +148,7 @@ ERComponentFactory >> createPaymentInfoTab: anAttendee withContent: aContent and
 		contentTab: (self createPaymentInformationComponent: anAttendee);
 		previousContentTab:
 			'<br><p>Pay by transfer or pay/card. Pay in euros. Credit card implies additional fee of '
-				, self creditCardCommissionOf asString, '%</p>
+				, self creditCardCommission asString, '%</p>
                     <p><strong>IMPORTANT: Bank transfer should mention "ESUG" & the registrant name(s) as comment (e.g "Esug John Johnson")</strong></p>
                     <p>Use the inter-country IBAN / BIC data (may need to ask your bank to process he payment)</p>';
 		attendee: anAttendee;
@@ -182,7 +182,7 @@ ERComponentFactory >> createRegConferenceInformationComponent: anAttendee [
 ]
 
 { #category : #factoryFormMethods }
-ERComponentFactory >> creditCardCommissionOf [
+ERComponentFactory >> creditCardCommission [
 
 	^ self conference fee creditCardCommissionPercentage * 100
 ]

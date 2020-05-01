@@ -88,7 +88,7 @@ ERFee >> descriptionCreditCardCommissionPercentage [
 	tmp := MANumberDescription new.
 	tmp 
 		accessor: #creditCardCommissionPercentage; 
-		priority: 80;
+		priority: 100;
 		beRequired;
 		label: 'Credit card Commission Percentage (Required)';
 		withoutLabel: true;
