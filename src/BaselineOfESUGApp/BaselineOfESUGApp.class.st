@@ -74,10 +74,9 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 				className: 'ConfigurationOfNeoJSON';
 				version: #stable;
 				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
-	spec
-		project: 'NeoCSV'
+	spec 
+		baseline: 'NeoCSV' 
 		with: [ spec
 				className: 'ConfigurationOfNeoCSV';
-				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+				repository: 'github://svenvc/NeoCSV/repository' ].
 ]
