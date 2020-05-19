@@ -68,14 +68,10 @@ BaselineOfESUGApp >> setUpDependencies: spec [
 	spec
 		baseline: 'MaterialDesignLite'
 		with: [ spec repository: 'github://daniapq/MaterialDesignLite:master/src' ].
-	spec
-		project: 'NeoJSON'
-		with: [ spec
-				className: 'ConfigurationOfNeoJSON';
-				repository: 'github://svenvc/NeoJSON/repository' ].
+	spec 
+		baseline: 'NeoJSON' 
+		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ].
 	spec 
 		baseline: 'NeoCSV' 
-		with: [ spec
-				className: 'ConfigurationOfNeoCSV';
-				repository: 'github://svenvc/NeoCSV/repository' ].
+		with: [ spec repository: 'github://svenvc/NeoCSV/repository' ].
 ]
