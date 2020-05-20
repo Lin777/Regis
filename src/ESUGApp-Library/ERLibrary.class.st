@@ -321,10 +321,17 @@ ERLibrary >> selectAccordionRegisterJs [
 				var idAccordion = ($(this)[0].id).charAt(($(this)[0].id).length - 1);
 				$(this).on("click", function() { 
 					var $active = $(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
-					console.log(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
 					$active.find("span").trigger("click");
 				});
-			});
+				clickedAccordion.on("click", 
+					function() {
+						var idAccordion = ($(this)[0].id).charAt(($(this)[0].id).length - 1);
+						$(this).on("click", function() { 
+							var $active = $(document.querySelector("a[id$=\" "+ idAccordion + "\"]"));
+							$active.find("span").trigger("click");
+						});
+				});
+			})
 	})'
 ]
 
