@@ -470,26 +470,26 @@ ERConference >> fee: anObject [
 ]
 
 { #category : #filtering }
-ERConference >> filterAttendsBy: aSymbol beginsWith: aString [
+ERConference >> filterAttendsBy: aSymbol matchesWith: aString [
 	^ self attends select: 
 		[ :att | (att userAccount perform: aSymbol) asLowercase 
-		beginsWith: aString asLowercase ]
+		includesSubstring: aString asLowercase ]
 
 ]
 
 { #category : #filtering }
 ERConference >> filterAttendsByEmailWith: aString [
-	^ self filterAttendsBy: #email beginsWith: aString
+	^ self filterAttendsBy: #email matchesWith: aString
 ]
 
 { #category : #filtering }
 ERConference >> filterAttendsByFirstNameWith: aString [
-	^ self filterAttendsBy: #firstName beginsWith: aString
+	^ self filterAttendsBy: #firstName matchesWith: aString
 ]
 
 { #category : #filtering }
 ERConference >> filterAttendsByLastNameWith: aString [
-	^ self filterAttendsBy: #lastName beginsWith: aString
+	^ self filterAttendsBy: #lastName matchesWith: aString
 ]
 
 { #category : #search }
