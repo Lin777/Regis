@@ -48,6 +48,8 @@ ERFixDiscount >> descriptionAmount [
 		accessor: #amount; 
 		priority: 30;
 		required: true;
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		id: 'amount';
 		label: 'Amount (Required)';

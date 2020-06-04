@@ -35,6 +35,8 @@ ERPercentageDiscount >> descriptionPercentage [
 		priority: 30;
 		required: true;
 		withoutLabel: true;
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		id: 'percentage';
 		label: 'Percentage (Required)';
 		componentClass: MDLMATextInputComponent.

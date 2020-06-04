@@ -58,10 +58,11 @@ ERUserOptionsController >> deleteUser: anUser [
 	"The admin user can not be deleted"
 	
 	anUser isAdmin ifFalse: [ 
-		self deleteDependencesOfAttendee: anUser.
+		self halt.
+		"self deleteDependencesOfAttendee: anUser.
 		self deleteDependencesOfGroupManager: anUser.
 		conference deleteUser: anUser.
-		self notifyAllObservers ]
+		self notifyAllObservers" ]
 	ifTrue: [ ERException adminUserDoesNotDelete signal ]
 ]
 
