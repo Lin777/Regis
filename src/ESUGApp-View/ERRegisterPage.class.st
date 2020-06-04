@@ -212,12 +212,10 @@ ERRegisterPage >> tabs [
 
 { #category : #validating }
 ERRegisterPage >> validateAndRegister [
-	 [self saveTabs.
-		currentTab := tabs first. 
-	pageController validateRegister.
-	self saveRegistration.
-	"pageController attendee: nil"
-	"Add validator to when go back and press register not save this again"] 
+	[ self saveTabs.
+		currentTab := tabs first.
+		pageController validateRegister.
+		self saveRegistration. ] 
 	on: ERException 
 	do: [ :exception | messageComponent errorMessage: exception messageText.
 		currentTab updateStateTab: currentTab tabName.

@@ -40,16 +40,16 @@ ERFinishRegisterAttendeePage >> renderActions: html [
 		class: 'mdl-card--border';
 		with: [ 
 			html mdlAnchorButton
-		colored;
-		id: 'okButton';
-		callback: [ self okAction ];
-		with: 'Ok'.
+				colored;
+				id: 'okButton';
+				callback: [ self okAction ];
+				with: 'Ok'.
 		
-		html mdlAnchorButton
-		colored;
-		id: 'next';
-		callback:  [ self downloadInvoice ];
-		with: 'Get Invoice'.]
+			html mdlAnchorButton
+				colored;
+				id: 'next';
+				callback:  [ self downloadInvoice ];
+				with: 'Get Invoice'. ]
 ]
 
 { #category : #rendering }
