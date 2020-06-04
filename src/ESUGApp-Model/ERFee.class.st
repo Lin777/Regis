@@ -91,6 +91,8 @@ ERFee >> descriptionCreditCardCommissionPercentage [
 		priority: 100;
 		beRequired;
 		label: 'Credit card Commission Percentage (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'creditCardCommissionPercentage';
@@ -109,6 +111,8 @@ ERFee >> descriptionErfAllDaysFee [
 		beRequired;
 		group: 'Early Registration Fee:';
 		label: 'All Days Fee (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'erfAllDaysFee';
@@ -126,6 +130,8 @@ ERFee >> descriptionErfOneDayFee [
 		priority: 40;
 		beRequired;
 		label: 'One Day Fee (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'erfOneDayFee';
@@ -143,6 +149,8 @@ ERFee >> descriptionExtraPersonSD [
 		priority: 20;
 		beRequired;
 		label: 'Price for add person to the Social Dinner (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'extraPersonSD';
@@ -161,6 +169,8 @@ ERFee >> descriptionLrfAllDaysFee [
 		beRequired;
 		group: 'Late Registration Fee:';
 		label: 'All Days Fee (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'lrfAllDaysFee';
@@ -178,6 +188,8 @@ ERFee >> descriptionLrfOneDayFee [
 		priority: 60;
 		beRequired;
 		label: 'One Day Fee (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'lrfOneDayFee';
@@ -195,6 +207,8 @@ ERFee >> descriptionPayPalCommissionPercentage [
 		priority: 80;
 		beRequired;
 		label: 'Paypal Commission Percentage (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'payPalCommissionPercentage';
@@ -229,6 +243,8 @@ ERFee >> descriptionStaticPayPalCommission [
 		priority: 90;
 		beRequired;
 		label: 'Static Commission Paypal (Required)';
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		cssClass: 'half';
 		id: 'staticCommissionPaypal';

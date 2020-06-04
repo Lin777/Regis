@@ -32,6 +32,8 @@ ERLimitedReductionTicketUse >> descriptionLimit [
 		accessor: #limit; 
 		priority: 50;
 		required: true;
+		addCondition: [ :value | value >= 0 ]
+  		labelled: 'Need to be a positive number';
 		withoutLabel: true;
 		id: 'limit';
 		label: 'Limit (Required)';

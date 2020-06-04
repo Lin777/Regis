@@ -110,10 +110,10 @@ ERInvoices >> listDataToRenderButton [
 ERInvoices >> renderButtonsOn: html [
 	"Render buttons of invoice section"
 
-	self renderExportAllInvoicesOn: html.		
+	self renderExportAllInvoicesOn: html.
 	self renderDownloadButton: html with:  (Dictionary new 
 		at: 'id' put: 'downloadAllInvoices';
-		at: 'disabled' put: encodeZipFile isNil;
+		at: 'disabled' put: (encodeZipFile isNil or: [ self invoices isEmpty ]);
 		at: 'encodeFile' put: 'data:text/zip;base64,', (encodeZipFile ifNil: [ '' ]);
 		at: 'nameFile' put: 'Invoices.zip';
 		at: 'nameButton' put: 'Download Invoices';
