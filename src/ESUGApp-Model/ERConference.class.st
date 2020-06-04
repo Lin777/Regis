@@ -825,7 +825,7 @@ ERConference >> validateIfEmailIsAlreadyRegistered: anUser [
 	self users
 		do: [ :each | 
 			each email = anUser email
-				ifTrue: [each = anUser ifFalse: [
+				ifTrue: [ each = anUser ifFalse: [
 					ERException emailAlreadyRegistered signal ] ] ].
 ]
 
@@ -835,7 +835,7 @@ ERConference >> validateIfTicketIDIsAlreadyRegistered: aTicket [
 		do: [ :each | 
 			each ticketId = aTicket ticketId
 				ifTrue: [ each = aTicket ifFalse: [
-					ERException ticketIdAlreadyRegistered signal ]]]
+					ERException ticketIdAlreadyRegistered signal ] ] ]
 ]
 
 { #category : #validations }

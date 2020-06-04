@@ -181,6 +181,7 @@ ERController >> updateAffiliation: aff on: aGroup [
 { #category : #updating }
 ERController >> updateAttendee: anAttendee [
 	self verifyIfTheTicketIsStillAvailable: anAttendee.
+	self verifyIfAttendeeHasADaysOfConference: anAttendee.
 	self updatePaymentRate: anAttendee.
 	anAttendee save.
 	anAttendee idGroup isNotNil ifTrue: [ self updateGroup: (conference getGroupOfAttendee: anAttendee) ].
@@ -263,15 +264,25 @@ ERController >> validateRegister: anAttendee [
 
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
-	with: anAttendee userAccount confirmPassword.
+		with: anAttendee userAccount confirmPassword.
+	self verifyIfAttendeeHasADaysOfConference: anAttendee.
 	anAttendee userAccount isAttendee ifFalse: [ ^ self ].
 	self verifyIfTheTicketIsStillAvailable: anAttendee.
 	self updatePaymentRate: anAttendee
 ]
 
 { #category : #action }
+ERController >> verifyIfAttendeeHasADaysOfConference: anAttendee [
+	| daysOfConference totalDays |
+
+	daysOfConference := anAttendee conferenceInformation attendance.
+	totalDays := daysOfConference select: [ :day | day value = true ].
+	totalDays isEmpty ifTrue: [ ERException noDaysOfConference signal ]
+]
+
+{ #category : #action }
 ERController >> verifyIfTheTicketIsStillAvailable: anAttendee [
-	|coupon|
+	| coupon |
 	coupon := anAttendee paymentInformation coupon.
 	(coupon isNil or: [ coupon isEmpty ]) ifFalse: [
 		self conference reductionTickets 

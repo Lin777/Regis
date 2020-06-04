@@ -89,6 +89,13 @@ ERException class >> loginFailed [
 ]
 
 { #category : #'instance creation' }
+ERException class >> noDaysOfConference [
+		^ self new
+			messageText: 'Select the days you will attend the conference';
+			yourself
+]
+
+{ #category : #'instance creation' }
 ERException class >> notFoundAttendeeFromUser [
 		^ self new
 			messageText: 'Not exist Attendee from this user ';
