@@ -41,6 +41,7 @@ ERGroupController >> addAttendee: anAttendee [
 { #category : #adding }
 ERGroupController >> addGroupManagerAsAttendee: anAttendee [
 	| anAttendeeSaved |
+	self verifyIfAttendeeHasADaysOfConference: anAttendee.
 	anAttendee updateValuesFor: self group.
 	(anAttendee userAccount) convertAttendee; save.
 	self updatePaymentRate: anAttendee.

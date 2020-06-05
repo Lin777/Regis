@@ -71,7 +71,7 @@ ERMyRegistrationSummaryTab >> redirectViewForBankTransfer [
 	bankTransferView := ERBankTransferPaymentInfoView
 		on: attendee
 		withContent: content.
-	content state: bankTransferView 
+	content state: bankTransferView
 ]
 
 { #category : #actions }

@@ -61,7 +61,7 @@ ERMenuFactory >> createContactUsItem [
 { #category : #factory }
 ERMenuFactory >> createGroupManagerItem [
 	^ ERItemNav 
-		label: 'Registration' 
+		label: 'Group Management' 
 		icon: 'group' 
 		callback: (availableItemsOfMenu at: 'groupRegistration')
 ]
