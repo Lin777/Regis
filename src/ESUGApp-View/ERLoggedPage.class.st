@@ -152,6 +152,7 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 	| list |
 	list := OrderedCollection new.
 	list add: aMenuFactory createHomeItem.
+	list add: aMenuFactory createAdminItem.
 	self session user isAttendee
 		ifTrue: [ list add: aMenuFactory createMyRegistrationItem ].
 	self session user isGroupManager
@@ -159,14 +160,13 @@ ERLoggedPage >> listOptionsFor: aMenuFactory [
 	self session user isAdmin
 		ifTrue: [ 
 			list add: aMenuFactory createConfigurationItem.
-			list add: aMenuFactory createConferenceItem.
-			list add: aMenuFactory createProposalsItem.
 			list add: aMenuFactory createUsersItem.
+			list add: aMenuFactory createConferenceItem.
 			list add: aMenuFactory createPaymentItem.
+			list add: aMenuFactory createProposalsItem.
 			list add: aMenuFactory createStatisticsItem. ].
 	self session user isStudent
 		ifTrue: [ list add: aMenuFactory createStudentVolunterSearch ].
-	list add: aMenuFactory createAdminItem.
 	list add: aMenuFactory createContactUsItem.
 	list add: aMenuFactory createLogoutItem.
 	^ list

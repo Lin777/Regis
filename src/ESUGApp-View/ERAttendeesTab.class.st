@@ -35,15 +35,25 @@ ERAttendeesTab >> attends [
 
 { #category : #tableBlock }
 ERAttendeesTab >> blockTableToExecute [
-	^ [ :user :html | 
+	^ [ :user :html |
 	OrderedCollection new
 		add: ([ :att | att paymentInformation invoiceNumber ] value: user);
 		add: ([ :att | att userAccount firstName ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att affiliationInformation organizationCountry ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
+		add: ([ :att :aHtml | [
+					html form: [
+						aHtml mdlCheckbox
+							id: att id, '-hasPaid';
+							value: att paymentInformation hasPaid;
+							disabled: att idGroup isNotNil;
+							onTrue: [ controller stateUpdatePaidAttendee: att with: true ]
+							onFalse: [ controller stateUpdatePaidAttendee: att with: false ];
+							onChange: (html jQuery ajax serializeForm) ] ] ] 
+					valueWithArguments: { user. html });
 		add: ([ :att | att paymentInformation paymentAmount asString
-			, ' ', att paymentInformation paymentCurrency, '(s)' ] value: user);
+			, ' €' ] value: user);
 		add: ([ :att :aHtml | [
 				html form: [
 					aHtml mdlCheckbox
@@ -61,6 +71,12 @@ ERAttendeesTab >> deleteAttendee: anAttendee [
 	controller user: self session user.
 	controller deleteAttendee: anAttendee.
 	self updateStateTab: self tabName.
+]
+
+{ #category : #actions }
+ERAttendeesTab >> downloadInvoiceOf: user [
+	
+	self exportInvoiceOf: user
 ]
 
 { #category : #actions }
@@ -85,7 +101,7 @@ ERAttendeesTab >> filterAttendeeInformation [
 
 { #category : #accessing }
 ERAttendeesTab >> headers [
-	^ #('#Invoice'	'Name'	 'Email'	'Country'	'Affiliation	' 'Fee' 'Volunter' '')
+	^ #('Id'	'Name'	 'Email'	'Country'	'Affiliation	' 'Has Paid' 'Fee' 'Volunter' '')
 ]
 
 { #category : #rendering }
@@ -136,6 +152,14 @@ ERAttendeesTab >> listDataToRenderButton [
 				with: 'Apply reduction'
 				with: ''
 				with:  false);
+		add:
+			(Array
+				with: 'get_app'
+				with: [ :invoice | self downloadInvoiceOf: invoice ]
+				with: [ :invoice | invoice id , '-export' ]
+				with: 'Download invoice'
+				with: ''
+				with: false);
 		add:
 			(Array
 				with: 'send'

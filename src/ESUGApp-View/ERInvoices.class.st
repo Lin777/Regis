@@ -23,7 +23,7 @@ ERInvoices >> blockTableToExecute [
 		add: ([ :att | att firstName , ' ', att lastName ] value: anTicket);
 		add: ([ :att | att organizationName ] value: anTicket);
 		add: ([ :att | att organizationAddress1 ] value: anTicket);
-		add: ([ :att | att paymentInformation paymentAmount ] value: anTicket);
+		add: ([ :att | att paymentInformation paymentAmount asString, ' €' ] value: anTicket);
 		add: ([ :att :aHtml | [ 
 					html form: [
 						aHtml mdlCheckbox
@@ -81,7 +81,7 @@ ERInvoices >> filterInvoicesInformation [
 
 { #category : #accessing }
 ERInvoices >> headers [
-	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Payment amount' 'Has paid?' '')
+	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Fee' 'Has paid' '')
 ]
 
 { #category : #accessing }

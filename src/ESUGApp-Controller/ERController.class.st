@@ -246,10 +246,10 @@ ERController >> updateTalk: aTalk [
 
 { #category : #updating }
 ERController >> updateUser: anUser [
-	[conference validateIfEmailIsAlreadyRegistered: anUser.
+	[ conference validateIfEmailIsAlreadyRegistered: anUser.
 	anUser save.
-	self notifyAllObservers .
-	^ anUser]
+	self notifyAllObservers.
+	^ anUser ]
 	on: ERException 
 	do: [ :exp | ^ exp signal ]
 ]
@@ -265,7 +265,7 @@ ERController >> validateRegister: anAttendee [
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
 		with: anAttendee userAccount confirmPassword.
-	anAttendee userAccount isAttendee 
+	anAttendee userAccount isAttendee
 		ifFalse: [ ^ self ]
 		ifTrue: [ self verifyIfAttendeeHasADaysOfConference: anAttendee ].
 	self verifyIfTheTicketIsStillAvailable: anAttendee.
