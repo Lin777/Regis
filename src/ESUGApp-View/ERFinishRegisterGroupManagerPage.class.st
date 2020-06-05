@@ -68,6 +68,5 @@ ERFinishRegisterGroupManagerPage >> renderPageOn: html [
 			self renderContactInformation: html.
 			self renderGroupContactInformation: html.
 			self renderAffiliation: html.
-			self renderPaymentInformation: html.
 			self renderActions: html ]
 ]

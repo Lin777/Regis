@@ -26,8 +26,7 @@ ERGroupManagerRegistrationPage >> initializeTabForms [
 		tabName: 'Group Manager'.
 	self addContactInfoTab 
 		tabName: 'Group Contact'.
-	self addBillingInfoTab.
-	self addPaymentInfoTab 
+	self addBillingInfoTab
 		buttonsOfTab: [ :html | self renderDoneButtonOn: html ].
 	currentTab := basicInfoTab.
 	currentTab updateStateTab: currentTab tabName.

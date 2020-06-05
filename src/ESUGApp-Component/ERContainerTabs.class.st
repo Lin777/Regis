@@ -179,13 +179,11 @@ ERContainerTabs >> initializeTabsToGroupManagerFor: aGroup [
 	"Initialize tabs form for update an registration, this tabs do not have a user information"
 
 	tabs := OrderedCollection new
-		add: (
-			(self createRegConferenceInfoTab: aGroup withContent: self) 
+		add: ((self createRegConferenceInfoTab: aGroup withContent: self) 
 				activate; 
 				previousTabName: nil; 
 				cancelCallback: self cancelTab);
-		add: (
-			(self createAdditionalInfoTab: aGroup withContent: self) 
+		add: ((self createAdditionalInfoTab: aGroup withContent: self) 
 				buttonsOfTab: [ :html | self renderFinalizeButtonOn: html ];
 				cancelCallback: self cancelTab);
 		yourself.

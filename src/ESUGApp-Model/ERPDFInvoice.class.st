@@ -36,7 +36,7 @@ ERPDFInvoice class >> demoPath: aString [
 { #category : #'as yet unclassified' }
 ERPDFInvoice class >> pdfDocOf: user [
 	<script>
-	| nameFile|
+	| nameFile |
 	nameFile := 'RegistrationInvoice_', user id, '.pdf'.
 	^ self new templateRegistrationInvoice: (self streamNamed: nameFile) of: user
 ]
@@ -288,12 +288,15 @@ ERPDFInvoice >> addInfoPayment: pdfPage of: user [
 
 { #category : #adding }
 ERPDFInvoice >> addTablePayment: pdfPage of: user [
-	| fontLegend currency |
+	| fontLegend currency showedInfo |
+	showedInfo := 'Full Registration to ESUG19'.
+	(user isKindOf: ERGroup)
+		ifTrue: [ showedInfo := user listAttends size asString, ' registrations to ESUG19' ].
 	currency :=  (128 asCharacter) asString, ' ', (user paymentAmount ifNil: [ 0 ]) asString.
 	fontLegend := PDFTimesFont size: 10pt.
 	pdfPage add: (PDFDataTableWithColumnsCaptionElement new 
 		captions: #('Description' 'Total');
-		data: (Array with: (Array with: 'Full Registration to ESUG19' with: currency));
+		data: (Array with: (Array with: showedInfo with: currency));
 		from: 20 mm @ 115 mm;
 		dimension: 170 mm @ 22 mm;
 		customizationBlock: [ :cell :x :y :data | 
