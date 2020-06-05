@@ -6,7 +6,7 @@ Tab to render all Reduction tickets of ESUG page in a table.
 "
 Class {
 	#name : #ERReductionTicketsTab,
-	#superclass : #ERConferenceTab,
+	#superclass : #ERConfigurationTab,
 	#instVars : [
 		'formAddTicket',
 		'ticket'

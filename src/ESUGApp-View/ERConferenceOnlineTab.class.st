@@ -2,54 +2,30 @@
 Description
 --------------------
 
-Tab of configuration of page.
+Tab of open or close the registration of conference.
 
 - I can Open and Close the registration of conference.
-- I can do a manual Backup
 "
 Class {
-	#name : #ERConfiguration,
+	#name : #ERConferenceOnlineTab,
 	#superclass : #ERConfigurationTab,
 	#category : #'ESUGApp-View-Tab'
 }
 
-{ #category : #actions }
-ERConfiguration >> backup [
-	[ ERBackupRestore uniqueInstance backup.] 
-		on: ERException 
-		do: [ :exc | messageComponent changeToAlertOfError .
-			messageComponent errorMessage: 'The backup could not be made' ]
-]
-
 { #category : #initialization }
-ERConfiguration >> initialize [
+ERConferenceOnlineTab >> initialize [
 	super initialize.
 	messageComponent := messageComponent id: 'tabAlertOfconfiguration'.
 
 ]
 
 { #category : #rendering }
-ERConfiguration >> renderBackupButtonOn: html [
-	html horizontalRule .
-	html heading level3; with: 'Back up' .
-	html horizontalRule .
-	html render: messageComponent .
-	html heading level6 with: 'This feature allows you take a snapshot of page.'.
-	html mdlAnchorButton
-		raised;
-		primaryColor;
-		callback: [ self backup. self updateStateTab: self tabName ];
-		with: 'Back up now'
-]
-
-{ #category : #rendering }
-ERConfiguration >> renderContainerOn: html [
+ERConferenceOnlineTab >> renderContainerOn: html [
 	self renderSwitchOpenCloseOn: html.
-	self renderBackupButtonOn: html
 ]
 
 { #category : #rendering }
-ERConfiguration >> renderSwitchOpenCloseOn: html [
+ERConferenceOnlineTab >> renderSwitchOpenCloseOn: html [
 	html form
 		method: 'post';
 		with: [
@@ -65,30 +41,27 @@ ERConfiguration >> renderSwitchOpenCloseOn: html [
 				onFalse: [ controller closeRegistration ];
 				onChange: (html jQuery ajax serializeForm).
 			html mdlSwitchLabel: 'Close / Open' ]
-		]
+		].
+	html horizontalRule.
 ]
 
 { #category : #rendering }
-ERConfiguration >> renderTitleForSwitchOn: html [
+ERConferenceOnlineTab >> renderTitleForSwitchOn: html [
 	html horizontalRule .
 	html heading level6 with: 'Change the state of the switch opens or closes the conference registration'
 ]
 
-{ #category : #rendering }
-ERConfiguration >> restore [
+{ #category : #accessing }
+ERConferenceOnlineTab >> tabId [
+	^ 'tabOnline'
 ]
 
 { #category : #accessing }
-ERConfiguration >> tabId [
-	^ 'tabConfiguration'
+ERConferenceOnlineTab >> tabName [
+	^ 'Online'
 ]
 
 { #category : #accessing }
-ERConfiguration >> tabName [
-	^ 'Configuration'
-]
-
-{ #category : #accessing }
-ERConfiguration >> title [ 	
+ERConferenceOnlineTab >> title [ 	
 	^ 'Open / Close Registration'
 ]

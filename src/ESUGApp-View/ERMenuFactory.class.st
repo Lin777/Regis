@@ -29,7 +29,7 @@ ERMenuFactory >> availableItemsOfMenu: anObject [
 { #category : #factory }
 ERMenuFactory >> createAdminItem [
 	^ ERItemNav 
-		label: 'Account' 
+		label: 'My Account' 
 		icon: 'person' 
 		callback: (availableItemsOfMenu at: 'admin')
 ]
@@ -37,7 +37,7 @@ ERMenuFactory >> createAdminItem [
 { #category : #factory }
 ERMenuFactory >> createConferenceItem [
 	^ ERItemNav 
-		label: 'Conference' 
+		label: 'Attendees' 
 		icon: 'record_voice_over' 
 		callback: (availableItemsOfMenu at: 'conference')
 ]
@@ -100,7 +100,7 @@ ERMenuFactory >> createMyRegistrationItem [
 { #category : #factory }
 ERMenuFactory >> createPaymentItem [
 	^ ERItemNav 
-		label: 'Payment' 
+		label: 'Invoices' 
 		icon: 'monetization_on' 
 		callback: (availableItemsOfMenu at: 'payment')
 ]

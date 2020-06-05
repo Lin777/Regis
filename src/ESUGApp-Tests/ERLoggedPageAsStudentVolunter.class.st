@@ -30,7 +30,7 @@ ERLoggedPageAsStudentVolunter >> setUp [
 	super setUp.
 	ERTest generateDataForTest.
 	studentVolunter := controller conference attends first.
-	controller := ERConferenceController new.
+	controller := ERAttendeeController new.
 	controller convertToStudentVolunterThis: studentVolunter .
 	self loginAsStudentVolunter
 	
