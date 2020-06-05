@@ -265,8 +265,9 @@ ERController >> validateRegister: anAttendee [
 	conference validateIfEmailIsAlreadyRegistered: anAttendee userAccount.
 	self validateNewPassword: anAttendee userAccount password 
 		with: anAttendee userAccount confirmPassword.
-	self verifyIfAttendeeHasADaysOfConference: anAttendee.
-	anAttendee userAccount isAttendee ifFalse: [ ^ self ].
+	anAttendee userAccount isAttendee 
+		ifFalse: [ ^ self ]
+		ifTrue: [ self verifyIfAttendeeHasADaysOfConference: anAttendee ].
 	self verifyIfTheTicketIsStillAvailable: anAttendee.
 	self updatePaymentRate: anAttendee
 ]
