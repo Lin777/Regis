@@ -29,9 +29,8 @@ ERGroupRegistrationSummaryView >> initializePaymentForm [
 	^ (ERPaymentGroupManagerView on: self group
 		withContent: content) 
 		updatePayment: [ :aGroup | self payForGroup: aGroup ];
-		cancel: [ 
-				self returnToThePreviousState.
-				self updateStateTab: self tabName ];
+		cancel: [
+				self returnToThePreviousState ];
 		blockForUpdate: [ :aGroup | aGroup save.
 			controller updateGroup: aGroup ]
 ]
@@ -91,7 +90,7 @@ ERGroupRegistrationSummaryView >> redirectViewForBankTransfer [
 	bankTransferView := ERBankTransferPaymentInfoView
 		on: self group
 		withContent: content.
-	content state: bankTransferView 
+	content state: bankTransferView
 ]
 
 { #category : #rendering }

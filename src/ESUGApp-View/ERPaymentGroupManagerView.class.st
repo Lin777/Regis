@@ -46,7 +46,9 @@ ERPaymentGroupManagerView >> renderCancelButtonOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'cancel-change-affiliation';
-		callback: cancel;
+		callback: [ ERGroupRegistrationView
+				attendee: self session user
+				content: content ];
 		with: 'Cancel'
 ]
 

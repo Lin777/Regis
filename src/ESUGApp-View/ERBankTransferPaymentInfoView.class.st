@@ -113,7 +113,7 @@ ERBankTransferPaymentInfoView >> renderPageOn: html [
 	html mdlAnchorButton
 		colored;
 		id: 'back-state';
-		callback: [ self returnToThePreviousState ];
+		callback: [ content state: content lastState ];
 		with: 'Back'.
 ]
 
