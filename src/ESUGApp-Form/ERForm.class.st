@@ -6,7 +6,7 @@ I am an abstract form for objects that have a descriptors of magritte
 "
 Class {
 	#name : #ERForm,
-	#superclass : #ERConferenceTab,
+	#superclass : #ERConfigurationTab,
 	#category : #'ESUGApp-Form'
 }
 

@@ -44,9 +44,6 @@ ERLoggedPage >> conferenceTabs [
 	conferenceTabs ifNil: [
 		conferenceTabs := OrderedCollection new
 			add: (ERAttendeesTab on: attendee withContent: content container: self);
-			add: (ERConferenceForm on: attendee withContent: content container: self);
-			add: (ERFeeForm on: attendee withContent: content container: self);
-			add: (ERReductionTicketsTab on: attendee withContent: content container: self); 
 			yourself.
 			(conferenceTabs at: 1) activate ].
 	^ conferenceTabs
@@ -55,8 +52,13 @@ ERLoggedPage >> conferenceTabs [
 { #category : #accessing }
 ERLoggedPage >> configurationTabs [ 
 	configurationTabs ifNil: [
-		configurationTabs := OrderedCollection new 
-			add: (ERConfiguration on: attendee withContent: content container: self); yourself.
+		configurationTabs := OrderedCollection new
+			add: (ERConferenceForm on: attendee withContent: content container: self);
+			add: (ERFeeForm on: attendee withContent: content container: self);
+			add: (ERReductionTicketsTab on: attendee withContent: content container: self);
+			add: (ERConferenceOnlineTab on: attendee withContent: content container: self);
+			add: (ERBackupTab on: attendee withContent: content container: self);
+			yourself.
 	(configurationTabs at: 1) activate ].
 	^ configurationTabs
 ]

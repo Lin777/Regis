@@ -58,5 +58,5 @@ ERConferenceTab >> initialize [
 { #category : #initialization }
 ERConferenceTab >> initializeController [
 
-	controller := ERConferenceController new attendee: attendee
+	controller := ERAttendeeController new attendee: attendee
 ]
