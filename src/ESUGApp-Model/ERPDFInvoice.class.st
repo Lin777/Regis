@@ -176,10 +176,11 @@ ERPDFInvoice >> addInfoESUG: aPage [
 
 { #category : #adding }
 ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
+
 	| fullname listOfPosition |
 	user organizationAddress2  
-		ifNotNil: [ listOfPosition := #(70 75 80 85 90) ]
-		ifNil: [ listOfPosition := #(70 75 nil 80 85)].
+		ifNotNil: [ listOfPosition := #(70 75 80 85 90 95) ]
+		ifNil: [ listOfPosition := #(70 75 nil 80 85 90) ].
 	fullname := (self encode: user organizationName).
 	pdfPage add: (PDFTextElement new
 		textColor: self colorTitle;
@@ -230,7 +231,15 @@ ERPDFInvoice >> addInfoInvoice: pdfPage of: user [
 			dimension: 190 mm @ (listOfPosition at: 3) mm;
 			from: 0 mm @ ((listOfPosition at: 3) + 8) mm;
 			text: (self encode: user organizationAddress2);
-			alignment: (PDFAlignment right))]
+			alignment: (PDFAlignment right)) ].
+
+	(user affiliationInformation extraInformation) ifNotNil: [ 
+		pdfPage add:(PDFFormattedTextElement new
+			font: self fontContent;
+			dimension: 190 mm @ (listOfPosition at: 6) mm;
+			from: 0 mm @ ((listOfPosition at: 6) + 8) mm;
+			text: (self encode: (user affiliationInformation extraInformation));
+			alignment: (PDFAlignment right)) ]
 ]
 
 { #category : #adding }

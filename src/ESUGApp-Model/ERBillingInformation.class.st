@@ -16,7 +16,8 @@ Class {
 		'organizationProvince',
 		'organizationPostal',
 		'membershipType',
-		'readOnly'
+		'readOnly',
+		'extraInformation'
 	],
 	#category : #'ESUGApp-Model-Magritte'
 }
@@ -26,6 +27,22 @@ ERBillingInformation class >> membershipTypes [
 	^ #('Industrial' 'Other' 'Academic')
 ]
 
+{ #category : #accessing }
+ERBillingInformation >> descriptionExtraInformation [
+	<magritteDescription>
+	| tmp |
+	tmp := MAMemoDescription new.
+	tmp 
+		accessor: #extraInformation;
+		priority: 80;
+		lineCount: 5;
+		label: 'Extra Information';
+		withoutLabel: true;
+		id: 'extraInformation';
+		componentClass: MDLMATextAreaComponent.
+	^ tmp yourself
+]
+
 { #category : #'magrittes-descriptions' }
 ERBillingInformation >> descriptionMembershipType [
 	<magritteDescription>
@@ -33,7 +50,7 @@ ERBillingInformation >> descriptionMembershipType [
 	tmp1 := MASingleOptionDescription new.
 	tmp1
 		accessor: #membershipType;
-		priority: 80;
+		priority: 90;
 		required: false;
 		options: self class membershipTypes;
 		withoutLabel: true;
@@ -164,6 +181,16 @@ ERBillingInformation >> descriptionOrganizationProvince [
 		componentClass: MDLMATextInputComponent.
 	self readOnly ifTrue: [ tmp beDisabled ].
 	^ tmp yourself
+]
+
+{ #category : #accessing }
+ERBillingInformation >> extraInformation [
+	^ extraInformation
+]
+
+{ #category : #accessing }
+ERBillingInformation >> extraInformation: anObject [
+	extraInformation := anObject
 ]
 
 { #category : #accessing }
