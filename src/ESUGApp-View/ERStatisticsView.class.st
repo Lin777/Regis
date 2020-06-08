@@ -29,7 +29,7 @@ ERStatisticsView >> children [
 
 { #category : #initialization }
 ERStatisticsView >> initialize [ 	
-	super initialize .
+	super initialize.
 	controller := ERConfigurationController new.
 	tables:= OrderedCollection new.
 ]
