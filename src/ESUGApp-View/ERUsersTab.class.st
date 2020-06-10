@@ -170,9 +170,7 @@ ERUsersTab >> renderTableOfUsersOn: html [
 		headers: self headers;
 		tableId: 'users-table';
 		levelTotal: 6;
-		limitPerPage: 10;
 		limitPageShowed: 3;
-		disablePagination: false;
 		validation: self filterUserInformation;
 		listObject: self users;
 		blockToExecute: self blockTableToExecute;

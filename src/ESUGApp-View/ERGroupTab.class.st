@@ -35,7 +35,7 @@ ERGroupTab >> exportGroups [
 	self exportFile: file withName: 'groupManagers.csv'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 ERGroupTab >> filterGroupInformation [
 
 	
@@ -111,7 +111,6 @@ ERGroupTab >> renderTableOfGroupsOn: html [
 		headers: self headers;
 		tableId: 'group-table';
 		levelTotal: 6;
-		limitPerPage: 5;
 		limitPageShowed: 3;
 		listObject: self groups;
 		blockToExecute: self blockTableToExecute;

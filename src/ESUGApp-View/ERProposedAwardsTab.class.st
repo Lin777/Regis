@@ -81,7 +81,6 @@ ERProposedAwardsTab >> renderAwardsTableOn: html [
 	table := ERTable new
 		tableId: 'proposedAwards-table';
 		validation: self filterAwardsInformation;
-		limitPerPage: 10;
 		limitPageShowed: 3;
 		headers: self headers;
 		levelTotal: 6;

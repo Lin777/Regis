@@ -130,7 +130,6 @@ ERMembersView >> renderRegisterMyselfAsAttendee: html [
 ERMembersView >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		tableId: 'memberGroup-table';
-		limitPerPage: 15;
 		limitPageShowed: 3;
 		validation: self filterMemberGroupInformation;
 		headers: self headers;
