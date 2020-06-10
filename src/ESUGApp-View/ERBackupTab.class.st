@@ -10,6 +10,9 @@ Tab of configuration of page.
 Class {
 	#name : #ERBackupTab,
 	#superclass : #ERConfigurationTab,
+	#instVars : [
+		'uploadFile'
+	],
 	#category : #'ESUGApp-View-Tab'
 }
 
@@ -88,7 +91,7 @@ ERBackupTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'backup'
-				with: [ :att | "Add functionality" ]
+				with: [ :att | self restoreByFile: att ]
 				with: [ :att | self idOfBackup: att path basename, '-load' ]
 				with: 'Load Backup'
 				with: ''
@@ -104,24 +107,58 @@ ERBackupTab >> listDataToRenderButton [
 		yourself
 ]
 
+{ #category : #accessing }
+ERBackupTab >> receiveFile: aFile [
+	| contentFile backup uploadFileName |
+	
+	uploadFileName := aFile fileName.
+	(uploadFileName matchesRegex: '^\b(esug)\b(\.[0-9]+)$')
+		ifTrue: [ 
+				contentFile := (aFile contentType: 'text/plain; charset=utf-8' seasideMimeType) 
+							contentsDecoded.
+				backup := STON fromString: contentFile.
+				backup do: [ :aClass | aClass do: [ :anObject | anObject save ] ].
+				self updateStateTab: self tabName.
+						messageComponent class: 'alert-success'.
+						messageComponent errorMessage: 'Successful restoration, log out and enter again' ]
+		ifFalse: [ self updateStateTab: self tabName.
+						messageComponent class: 'errors'.
+						messageComponent errorMessage: 'Backup file error: Select a valid backup file' ].
+]
+
 { #category : #rendering }
 ERBackupTab >> renderBackupButtonOn: html [
-
-	html render: messageComponent.
-	html heading level6 with: 'This feature allows you to save all data.'.
-	"html mdlAnchorButton
-		raised;
-		primaryColor;
-		callback: [ self backup. self updateStateTab: self tabName ];
-		with: 'Back up now'."
-	html horizontalRule.
+	
+	html div
+		style: 'display: flex; justify-content: space-around;';
+		with: [
+		html form
+			id: 'backup-form';
+			style: 'display: flex; align-items: center;';
+			multipart; 
+			with: [
+				html fileUpload
+					id: 'backup-upload-file';
+					style: 'margin: 0px 50px 0px 0px';
+					callback: [ :value | self receiveFile: value ].
+				html submitButton
+					id: 'backup-upload-button';
+					class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--primary';
+					with: 'Upload external backup' ].
+		html mdlAnchorButton
+			id: 'backup-now-button';
+			raised;
+			primaryColor;
+			callback: [ self backup. self updateStateTab: self tabName ];
+			with: 'Backup now'. ]
 ]
 
 { #category : #rendering }
 ERBackupTab >> renderContainerOn: html [
 
 	html render: messageComponent.
-	html heading level6 with: 'This feature allows you to save all data.'.
+	html heading level6 with: 'This feature allows you to save all data. Only backups created on this page can be loaded.'.
+	self renderBackupButtonOn: html.
 	html horizontalRule.
 	self renderTableBackupOn: html
 ]
@@ -144,7 +181,20 @@ ERBackupTab >> renderTableBackupOn: html [
 ]
 
 { #category : #rendering }
-ERBackupTab >> restore [
+ERBackupTab >> restoreByFile: aFile [
+	
+	| backup |
+	[ 
+		backup := aFile readStreamDo: [ :stream | STON fromString: stream contents ].
+		backup do: [ :aClass | aClass do: [ :anObject | anObject save ] ].
+		self updateStateTab: self tabName.
+		messageComponent class: 'alert-success'.
+		messageComponent errorMessage: 'Successful restoration, log out and enter again' ]
+			on: PMException
+			do: [ :exception | 
+				messageComponent class: 'errors'.
+				messageComponent errorMessage: exception messageText.
+				self updateStateTab: self tabName ].
 ]
 
 { #category : #accessing }
