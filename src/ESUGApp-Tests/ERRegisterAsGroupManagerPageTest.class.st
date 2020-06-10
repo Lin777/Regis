@@ -39,8 +39,8 @@ ERRegisterAsGroupManagerPageTest >> testPressBillingNextButtonWithAllFieldsFille
 	self pressNextButtonUser.
 	self pressNextButtonContact.
 	self fillAllAffiliationFields.
-	self clickElementWithID: 'affiliationInfoForm-nextButton'.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Payment')
+	self clickElementWithID: 'registerButton'.
+	self assert: ((driver findElementByID: 'card-heading') getText) equals: 'Registration Summary'
 ]
 
 { #category : #tests }
@@ -59,27 +59,6 @@ ERRegisterAsGroupManagerPageTest >> testPressContactNextButton [
 	self clickElementWithID: 'contactInfoForm-nextButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
 	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
-]
-
-{ #category : #tests }
-ERRegisterAsGroupManagerPageTest >> testPressPaymentBackButton [
-
-	self pressNextButtonUser.
-	self pressNextButtonContact.
-	self pressNextButtonAffiliation.
-	self clickElementWithID: 'paymentInformationForm-previousButton'.
-	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Billing Information')
-]
-
-{ #category : #tests }
-ERRegisterAsGroupManagerPageTest >> testPressPaymentFinalizeButton [
-
-	self pressNextButtonUser.
-	self pressNextButtonContact.
-	self pressNextButtonAffiliation.
-	self clickElementWithID: 'registerButton'.
-	self assert: ((driver findElementByID: 'card-heading') getText) equals: 'Registration Summary'
 ]
 
 { #category : #tests }

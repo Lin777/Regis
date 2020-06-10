@@ -72,13 +72,13 @@ ERLoggedPageAsAdminTest >> moveToChangePasswordTab [
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToConferenceOption [
-	self pressOptionConference.
+	self pressOptionConfiguration.
 	self clickElementWithID: 'tab-Conference'
 ]
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToFeeOption [
-	self pressOptionConference.
+	self pressOptionConfiguration.
 	self selectFeeTab.
 ]
 
@@ -96,7 +96,7 @@ ERLoggedPageAsAdminTest >> moveToInvoicesOption [
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> moveToTicketsOption [
-	self pressOptionConference.
+	self pressOptionConfiguration.
 	self selectTicketTab.
 ]
 
@@ -134,7 +134,7 @@ ERLoggedPageAsAdminTest >> pressNextButton [
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionConference [
-	self clickElementWithID:  'Conference-option'
+	self clickElementWithID:  'Attendees-option'
 ]
 
 { #category : #actions }
@@ -144,7 +144,7 @@ ERLoggedPageAsAdminTest >> pressOptionConfiguration [
 
 { #category : #actions }
 ERLoggedPageAsAdminTest >> pressOptionInvoice [
-	self clickElementWithID:  'Payment-option'
+	self clickElementWithID:  'Invoices-option'
 ]
 
 { #category : #actions }
@@ -338,7 +338,7 @@ ERLoggedPageAsAdminTest >> testApplyReductionToAttendee [
 ERLoggedPageAsAdminTest >> testCancelEditAttendee [
 	|attendee updateAttendee|
 	attendee := controller conference attends first.
-	self moveToConferenceOption.
+	self moveToAttendeeOption.
 	self selectAttendeesTab.
 	self clickElementWithID: attendee id, '-modify'.
 	self clickElementWithID: 'contactInfoForm-goBackLoginButton'.
