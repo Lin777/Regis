@@ -14,8 +14,18 @@ ERMembersRegistrationView >> newUserAttendees [
 ]
 
 { #category : #rendering }
-ERMembersRegistrationView >> renderContainerOn: html [
+ERMembersRegistrationView >> register: att onIndex: anIndex [
+	^ [ self registerAttendeeToGroup: att withIndex: anIndex ]
+		on: ERException
+		do: [ :exception | 
+			messageComponent errorMessage: exception messageText.
+			self updateStateTab: tabName ]
+]
 
+{ #category : #rendering }
+ERMembersRegistrationView >> renderContainerOn: html [
+	
+	html render: messageComponent.
 	self renderRegistrationSectionOn: html.
 	self renderOptionRegisterBarOn: html
 ]
@@ -51,13 +61,12 @@ ERMembersRegistrationView >> renderOptionRegisterBarOn: html [
 
 { #category : #rendering }
 ERMembersRegistrationView >> renderRegisterTabsOn: html withUser: anUser andIndex: anIndex [
-
 	| form |
-	form := ERAccordionContainerTabs 
-				formGroupMemberRegisterOn: anUser
-				withClassId: anIndex
-				cancelCallback: [ self removeNewAttendeeToRegisterWithIndex: anIndex ]
-				saveCallback: [ :att | self registerAttendeeToGroup: att withIndex: anIndex ].
+	form := ERAccordionContainerTabs
+		formGroupMemberRegisterOn: anUser
+		withClassId: anIndex
+		cancelCallback: [ self removeNewAttendeeToRegisterWithIndex: anIndex ]
+		saveCallback: [ :att | self register: att onIndex: anIndex ].
 	html render: form
 ]
 
