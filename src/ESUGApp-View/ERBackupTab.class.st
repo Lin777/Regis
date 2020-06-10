@@ -88,7 +88,7 @@ ERBackupTab >> listDataToRenderButton [
 		add:
 			(Array
 				with: 'backup'
-				with: [ :att | "Add functionality" ]
+				with: [ :att | self restoreByFile: att ]
 				with: [ :att | self idOfBackup: att path basename, '-load' ]
 				with: 'Load Backup'
 				with: ''
@@ -144,7 +144,20 @@ ERBackupTab >> renderTableBackupOn: html [
 ]
 
 { #category : #rendering }
-ERBackupTab >> restore [
+ERBackupTab >> restoreByFile: aFile [
+	
+	| backup |
+	[ 
+		backup := aFile readStreamDo: [ :stream | STON fromString: stream contents ].
+		backup do: [ :aClass | aClass do: [ :anObject | anObject save ] ].
+		self updateStateTab: self tabName.
+		messageComponent class: 'alert-success'.
+		messageComponent errorMessage: 'Successful restoration, log out and enter again' ]
+			on: PMException
+			do: [ :exception | 
+				messageComponent class: 'errors'.
+				messageComponent errorMessage: exception messageText.
+				self updateStateTab: self tabName ].
 ]
 
 { #category : #accessing }
