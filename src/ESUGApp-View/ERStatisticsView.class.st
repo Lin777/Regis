@@ -46,9 +46,9 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'lunches';
-		limitPerPage: 1;
-		disableSearching: true;
 		disablePagination: true;
+		disableSearching: true;
+		disableLimitPerPage: true;
 		headers: controller conference headersParticipantsToLunches;
 		levelTotal: 6;
 		listObject: controller conference statisticsOfLuch.
@@ -60,9 +60,9 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'participants';
-		limitPerPage: 1;
-		disableSearching: true;
 		disablePagination: true;
+		disableSearching: true;
+		disableLimitPerPage: true;
 		headers: controller conference headersParticipantsToSocialDinner;
 		levelTotal: 6;
 		listObject: controller conference statisticsOfSocialDinner.
@@ -74,9 +74,9 @@ ERStatisticsView >> renderShirtsStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'statistics';
-		limitPerPage: 1;
-		disableSearching: true;
 		disablePagination: true;
+		disableSearching: true;
+		disableLimitPerPage: true;
 		headers: controller conference headersShirtsStatistics;
 		levelTotal: 6;
 		listObject: controller conference statisticsOfTShirts .

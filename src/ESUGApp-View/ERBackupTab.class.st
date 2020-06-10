@@ -168,12 +168,11 @@ ERBackupTab >> renderTableBackupOn: html [
 
 	table := ERTable new
 		tableId: 'backup-table';
-		limitPerPage: 10;
-		limitPageShowed: 3;
 		headers: self headers;
 		levelTotal: 6;
 		disablePagination: true;
 		disableSearching: true;
+		disableLimitPerPage: true;
 		listObject: self backupFiles;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton.

@@ -109,7 +109,6 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 	table := ERTable new
 		tableId: 'proposedTalks-table';
 		validation: self filterTalksInformation;
-		limitPerPage: 10;
 		limitPageShowed: 3;
 		headers: self headers;
 		levelTotal: 6;

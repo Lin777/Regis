@@ -26,11 +26,11 @@ ERRegisterAsGroupManagerPageTest >> setUp [
 { #category : #tests }
 ERRegisterAsGroupManagerPageTest >> testPressBillingBackButton [
 
-	self pressNextButtonUser.
+	"self pressNextButtonUser.
 	self pressNextButtonContact.
 	self clickElementWithID: 'affiliationInfoForm-previousButton'.
 	self should: [ driver findElementByClassName: 'mdl-textfield__error' ] raise: BPNoSuchElementException.
-	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Group Contact')
+	self assert: (driver findElementByClassName: 'is-active') equals: (driver findElementByID: 'tab-Group Contact')"
 ]
 
 { #category : #tests }

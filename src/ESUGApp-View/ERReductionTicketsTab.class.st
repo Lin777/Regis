@@ -161,7 +161,6 @@ ERReductionTicketsTab >> renderContainerOn: html [
 ERReductionTicketsTab >> renderTableOfTicketsOn: html [
 	table := ERTable new
 		tableId: 'tickets-table';
-		limitPerPage: 7;
 		limitPageShowed: 3;
 		headers: self headers;
 		validation: self filterTicketInformation;
