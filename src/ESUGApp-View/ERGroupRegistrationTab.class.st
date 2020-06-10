@@ -169,7 +169,7 @@ ERGroupRegistrationTab >> registerAttendee [
 
 { #category : #adding }
 ERGroupRegistrationTab >> registerAttendeeToGroup: anAttendee withIndex: anIndex [
-
+	
 	controller addAttendee: anAttendee.
 	self removeNewAttendeeToRegisterWithIndex: anIndex
 ]
