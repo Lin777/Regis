@@ -92,7 +92,7 @@ ERLoggedPageAsGroupManagerTest >> pressNextButtonUserWithIndex: anIndex [
 
 { #category : #actions }
 ERLoggedPageAsGroupManagerTest >> pressOptionGroupRegistration [
-	self clickElementWithID: 'Registration-option'
+	self clickElementWithID: 'Group Management-option'
 ]
 
 { #category : #running }

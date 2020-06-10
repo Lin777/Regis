@@ -58,7 +58,7 @@ ERParasolTest >> messageOnlyTextIsAcceptedFor: aString [
 
 { #category : #actions }
 ERParasolTest >> pressOptionAdmin [
-	self clickElementWithID: 'Account-option'
+	self clickElementWithID: 'My Account-option'
 ]
 
 { #category : #actions }
