@@ -90,7 +90,7 @@ ERUsersTab >> filterUserInformation [
 
 { #category : #accessing }
 ERUsersTab >> headers [
-	^ #('Name' 'User Role' 'Email' '')
+	^ {'Name' . 'User Role' . 'Email' .  PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #initialization }
@@ -167,14 +167,15 @@ ERUsersTab >> renderContainerOn: html [
 { #category : #rendering }
 ERUsersTab >> renderTableOfUsersOn: html [
 	table := ERTable new
-		headers: self headers;
+		header: self headers;
 		tableId: 'users-table';
 		levelTotal: 6;
 		limitPageShowed: 3;
 		validation: self filterUserInformation;
-		listObject: self users;
+		rows: self users;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodUsers.
 	html render: table
 ]
 
@@ -194,6 +195,13 @@ ERUsersTab >> roleStringFrom: aString [
 	(aString = 'attendeestudentVolunter')
 		ifTrue: [ ^ 'Attendee and Student Volunteer' ]
 		ifFalse: [ ^ aString ]
+]
+
+{ #category : #accessing }
+ERUsersTab >> sortingMethodUsers [
+	^ { [ :att | (att firstName, ' ', att lastName) ]
+		. [ :att | self roleStringFrom: (att rolesAsString) ]
+		. [ :att | att email ] }
 ]
 
 { #category : #accessing }

@@ -13,13 +13,14 @@ Instance Variables
 "
 Class {
 	#name : #ERTable,
-	#superclass : #PSTableCollectionComponent,
+	#superclass : #PSSortedTableCollectionComponent,
 	#instVars : [
 		'blockToExecute',
 		'listToRenderButton',
 		'levelTotal',
 		'dictToRenderDownloadButton',
-		'validation'
+		'validation',
+		'sortingMethod'
 	],
 	#category : #'ESUGApp-Component'
 }
@@ -40,6 +41,7 @@ ERTable >> initialize [
 	super initialize.
 	listToRenderButton := OrderedCollection new.
 	dictToRenderDownloadButton := Dictionary new.
+	sortingMethod := #().
 	levelTotal := 6.
 ]
 
@@ -100,7 +102,36 @@ ERTable >> renderTotalRows: html [
 	html heading
 		level: levelTotal;
 		with: [ html strong: 'Total: '.
-			html text: listObject size asString ]
+			html text: rows size asString ]
+]
+
+{ #category : #sorting }
+ERTable >> sortCollectionwith: aSelector OnRowIndex: aRowIndex [
+	| method cellValue anotherCellValue |
+	
+	self filteredRows
+		sort: [ :cell :anotherCell |
+			method := (self sortingMethod at: aRowIndex).
+			cellValue := method value: cell.
+			anotherCellValue := method value: anotherCell.
+			[
+				cellValue
+				perform: aSelector
+				with: anotherCellValue ]
+				on: MessageNotUnderstood
+				do: [ true ] ]
+]
+
+{ #category : #accessing }
+ERTable >> sortingMethod [
+
+	^ sortingMethod
+]
+
+{ #category : #accessing }
+ERTable >> sortingMethod: aCollection [
+
+	sortingMethod := aCollection
 ]
 
 { #category : #'rendering-searching' }

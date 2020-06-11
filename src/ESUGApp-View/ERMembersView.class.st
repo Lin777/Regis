@@ -13,7 +13,7 @@ ERMembersView >> blockTableToExecute [
 		add: ([ :att | (att userAccount firstName, ' ', att userAccount lastName) ] value: user);
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
-			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+			, ' €'  ] value: user);
 		yourself
 	]
 ]
@@ -39,7 +39,7 @@ ERMembersView >> filterMemberGroupInformation [
 
 { #category : #accessing }
 ERMembersView >> headers [
-	^ #('Name(D)' 'Email' 'Fee' '')
+	^ { 'Name(D)' . 'Email' . 'Fee' . PSTableSortableHeaderOptions new cell: '' }
 ]
 
 { #category : #accessing }
@@ -132,13 +132,21 @@ ERMembersView >> renderTableOfAttendsOn: html [
 		tableId: 'memberGroup-table';
 		limitPageShowed: 3;
 		validation: self filterMemberGroupInformation;
-		headers: self headers;
+		header: self headers;
 		levelTotal: 6;
-		listObject: self attends;
+		rows: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: Dictionary new.
+		dictToRenderDownloadButton: Dictionary new;
+		sortingMethod: self sortingMethodMembers.
 	html render: table
+]
+
+{ #category : #accessing }
+ERMembersView >> sortingMethodMembers [
+	^ { [ :att | (att userAccount firstName, ' ', att userAccount lastName) ] 
+		. [ :att | att userAccount email ]
+		. [ :att | att paymentInformation paymentAmount asString, ' €' ] }
 ]
 
 { #category : #accessing }

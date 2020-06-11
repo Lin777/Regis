@@ -46,12 +46,11 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'lunches';
-		disablePagination: true;
-		disableSearching: true;
-		disableLimitPerPage: true;
-		headers: controller conference headersParticipantsToLunches;
-		levelTotal: 6;
-		listObject: controller conference statisticsOfLuch.
+		showPaginationBar: false;
+		showSelectionLimit:  false;
+		showSearchingField: false;
+		header: controller conference headersParticipantsToLunches;
+		rows: controller conference statisticsOfLuch.
 	self renderTable: tab withTitle: 'Participants to lunches per day' on: html
 ]
 
@@ -60,12 +59,11 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'participants';
-		disablePagination: true;
-		disableSearching: true;
-		disableLimitPerPage: true;
-		headers: controller conference headersParticipantsToSocialDinner;
-		levelTotal: 6;
-		listObject: controller conference statisticsOfSocialDinner.
+		showPaginationBar: false;
+		showSelectionLimit:  false;
+		showSearchingField: false;
+		header: controller conference headersParticipantsToSocialDinner;
+		rows: controller conference statisticsOfSocialDinner.
 	self renderTable: tab withTitle: 'Participants To Social Dinner' on: html
 ]
 
@@ -74,12 +72,11 @@ ERStatisticsView >> renderShirtsStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
 		tableId: 'statistics';
-		disablePagination: true;
-		disableSearching: true;
-		disableLimitPerPage: true;
-		headers: controller conference headersShirtsStatistics;
-		levelTotal: 6;
-		listObject: controller conference statisticsOfTShirts .
+		showPaginationBar: false;
+		showSelectionLimit:  false;
+		showSearchingField: false;
+		header: controller conference headersShirtsStatistics;
+		rows: controller conference statisticsOfTShirts.
 	self renderTable: tab withTitle: 'Shirts' on: html
 ]
 

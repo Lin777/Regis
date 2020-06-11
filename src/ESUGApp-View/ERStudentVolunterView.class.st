@@ -46,7 +46,7 @@ ERStudentVolunterView >> blockTableToExecute [
 		add: ([ :att | att userAccount email ] value: user);
 		add: ([ :att | att affiliationInformation organizationName ] value: user);
 		add: ([ :att | att paymentInformation paymentAmount asString
-			, ' ', att paymentInformation paymentCurrency, '(s)'  ] value: user);
+			, ' €'  ] value: user);
 		add: ([ :att :aHtml | [ aHtml mdlCheckbox disabled
 				value: att paymentInformation hasPaid
 				] ] valueWithArguments: {user. html});
@@ -78,7 +78,7 @@ ERStudentVolunterView >> filteredAssistants [
 
 { #category : #accessing }
 ERStudentVolunterView >> headers [
-	^ #('#Invoice'	'First Name'	 'Last Name' 'Email'	'Affiliation	' 'Fee' 'Has paid?' '')
+	^ { '#Invoice' .	'First Name' .	 'Last Name' . 'Email' .	'Affiliation	' . 'Fee' . PSTableSortableHeaderOptions new cell: 'Has paid?' . PSTableSortableHeaderOptions new cell: '' }
 ]
 
 { #category : #initialization }
@@ -133,15 +133,27 @@ ERStudentVolunterView >> renderSelectorWayToSearchOn: html [
 ERStudentVolunterView >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		tableId: 'table-volunteer';
-		disablePagination: true;
-		disableSearching: true;
-		headers: self headers;
+		showPaginationBar: false;
+		showSearchingField: false;
+		showSelectionLimit: false;
+		header: self headers;
 		levelTotal: 6;
-		listObject: self attends;
+		rows: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: OrderedCollection new;
-		dictToRenderDownloadButton: Dictionary new.
+		dictToRenderDownloadButton: Dictionary new;
+		sortingMethod: self sortingMethodVolunteer.
 	html render: table
+]
+
+{ #category : #accessing }
+ERStudentVolunterView >> sortingMethodVolunteer [
+	^ { [ :att | att paymentInformation invoiceNumber ]
+		. [ :att | att userAccount firstName ]
+		. [ :att | att userAccount lastName ]
+		. [ :att | att userAccount email ]
+		. [ :att | att affiliationInformation organizationName ]
+		. [ :att | att paymentInformation paymentAmount asString, ' €' ] }
 ]
 
 { #category : #accessing }

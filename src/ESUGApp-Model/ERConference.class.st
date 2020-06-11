@@ -555,17 +555,17 @@ ERConference >> headerUser [
 
 { #category : #header }
 ERConference >> headersParticipantsToLunches [
-	^ #('Day' 'Normal' 'Vegetarian' 'Vegan' 'Total')	
+	^	{ 'Day' . 'Normal' . 'Vegetarian' . 'Vegan' . 'Total' }
 ]
 
 { #category : #header }
 ERConference >> headersParticipantsToSocialDinner [ 
-	^ #( 'Normal' 'Vegetarian' 'Vegan' 'Total')	
+	^ { 'Normal' . 'Vegetarian' . 'Vegan' . 'Total' }	
 ]
 
 { #category : #header }
 ERConference >> headersShirtsStatistics [
-	^ #('Size of the shirt' 'Female' 'Male' 'Total')
+	^ { 'Size of the shirt' . 'Female' . 'Male' . 'Total' }
 ]
 
 { #category : #header }
