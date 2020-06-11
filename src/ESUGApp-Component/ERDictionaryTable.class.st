@@ -6,9 +6,28 @@ I am a personalized table, I render a dictionary in tab format
 "
 Class {
 	#name : #ERDictionaryTable,
-	#superclass : #PSSortedTableDictionaryComponent,
+	#superclass : #WAComponent,
+	#instVars : [
+		'rows',
+		'header',
+		'tableId'
+	],
 	#category : #'ESUGApp-Component'
 }
+
+{ #category : #accessing }
+ERDictionaryTable >> header: aCollection [
+
+	header := aCollection
+]
+
+{ #category : #initialization }
+ERDictionaryTable >> initialize [
+
+	tableId := ''.
+	rows := OrderedDictionary new.
+	header := OrderedCollection new.
+]
 
 { #category : #'rendering-table' }
 ERDictionaryTable >> render: html with: anObject [
@@ -18,12 +37,13 @@ ERDictionaryTable >> render: html with: anObject [
 ]
 
 { #category : #rendering }
-ERDictionaryTable >> renderRowsOn: html [
-	html
-		tableBody: [ rows
-				do: [ :object | html tableRow: [ 
-						header do: 
-							[ :each | html mdlTableCell nonNumerical; with:(object at: each) ] ] ] ]
+ERDictionaryTable >> renderContentOn: html [
+
+	html mdlTable
+		id: self tableId;
+		with: [
+			self renderTableHeaderOn: html.
+			self renderTableBodyOn: html ]
 ]
 
 { #category : #rendering }
@@ -36,11 +56,26 @@ ERDictionaryTable >> renderTableBodyOn: html [
 ]
 
 { #category : #rendering }
-ERDictionaryTable >> renderTotalRows: html [
+ERDictionaryTable >> renderTableHeaderOn: html [
+	html
+		tableHead: [ html
+				tableRow: [ header do: [ :each | html mdlTableCell nonNumerical; with: each ] ] ]
 ]
 
-{ #category : #'rendering-searching' }
-ERDictionaryTable >> validateFilterOf: anObject [
-	
-	""
+{ #category : #accessing }
+ERDictionaryTable >> rows: aCollection [
+
+	rows := aCollection
+]
+
+{ #category : #accessing }
+ERDictionaryTable >> tableId [
+
+	^ tableId
+]
+
+{ #category : #accessing }
+ERDictionaryTable >> tableId: anId [
+
+	tableId := anId
 ]

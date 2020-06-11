@@ -45,10 +45,7 @@ ERStatisticsView >> renderPageOn: html [
 ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
-		tableId: 'lunches';
-		showPaginationBar: false;
-		showSelectionLimit:  false;
-		showSearchingField: false;
+		tableId: 'participant-to-lunches-table';
 		header: controller conference headersParticipantsToLunches;
 		rows: controller conference statisticsOfLuch.
 	self renderTable: tab withTitle: 'Participants to lunches per day' on: html
@@ -58,10 +55,7 @@ ERStatisticsView >> renderParticipantsToLunchesStatisticsOn: html [
 ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
-		tableId: 'participants';
-		showPaginationBar: false;
-		showSelectionLimit:  false;
-		showSearchingField: false;
+		tableId: 'participant-to-social-dinner-table';
 		header: controller conference headersParticipantsToSocialDinner;
 		rows: controller conference statisticsOfSocialDinner.
 	self renderTable: tab withTitle: 'Participants To Social Dinner' on: html
@@ -71,10 +65,7 @@ ERStatisticsView >> renderParticipantsToSocialDinnerStatisticsOn: html [
 ERStatisticsView >> renderShirtsStatisticsOn: html [
 	| tab |
 	tab := ERDictionaryTable new
-		tableId: 'statistics';
-		showPaginationBar: false;
-		showSelectionLimit:  false;
-		showSearchingField: false;
+		tableId: 'shirts-table';
 		header: controller conference headersShirtsStatistics;
 		rows: controller conference statisticsOfTShirts.
 	self renderTable: tab withTitle: 'Shirts' on: html
