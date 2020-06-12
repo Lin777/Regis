@@ -74,7 +74,7 @@ ERReductionTicketsTab >> filterTicketInformation [
 
 { #category : #accessing }
 ERReductionTicketsTab >> headers [ 	
-	^ #('Id'	'Discount Strategy'	'Use Limit Strategy'	'Used Times' '')
+	^ {'Id' .	'Discount Strategy' .	'Use Limit Strategy'	. 'Used Times' . PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #initialization }
@@ -162,13 +162,22 @@ ERReductionTicketsTab >> renderTableOfTicketsOn: html [
 	table := ERTable new
 		tableId: 'tickets-table';
 		limitPageShowed: 3;
-		headers: self headers;
+		header: self headers;
 		validation: self filterTicketInformation;
 		levelTotal: 6;
-		listObject: self tickets;
+		rows: self tickets;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodTickets.
 	html render: table
+]
+
+{ #category : #accessing }
+ERReductionTicketsTab >> sortingMethodTickets [
+	^ { [ :att | att ticketId ] 
+		. [ :att | att discountStrategy description]
+		. [ :att | att limitStrategy description ]
+		. [ :att | (self listOfAttendees: att)size ] }
 ]
 
 { #category : #accessing }

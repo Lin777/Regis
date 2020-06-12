@@ -81,7 +81,7 @@ ERInvoices >> filterInvoicesInformation [
 
 { #category : #accessing }
 ERInvoices >> headers [
-	^ #('Number' 'Fullname' 'Org. Name' 'Org. Address' 'Fee' 'Has paid' '')
+	^ { 'Number' . 'Fullname' . 'Org. Name' . 'Org. Address' . 'Fee' . PSTableSortableHeaderOptions new cell: 'Has paid' . PSTableSortableHeaderOptions new cell: '' }
 ]
 
 { #category : #accessing }
@@ -145,14 +145,25 @@ ERInvoices >> renderTableOfInvoicesOn: html [
 
 	table := ERTable new
 		tableId: 'invoices-table';
-		headers: self headers;
+		header: self headers;
 		limitPageShowed: 3;
 		levelTotal: 6;
 		validation: self filterInvoicesInformation;
-		listObject: self invoices;
+		rows: self invoices;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodInvoices.
 	html render: table
+]
+
+{ #category : #accessing }
+ERInvoices >> sortingMethodInvoices [
+	^ { [ :att | att invoiceNumber ] 
+		. [ :att | att firstName , ' ', att lastName ]
+		. [ :att | att organizationName ]
+		. [ :att | att organizationAddress1 ]
+		. [ :att | att paymentInformation paymentAmount asString, ' €' ]
+		. [ :att |  ] }
 ]
 
 { #category : #accessing }

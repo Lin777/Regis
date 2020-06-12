@@ -25,7 +25,7 @@ ERTalksTab >> exportTalks [
 ERTalksTab >> headers [
 	"Return headers of Talks table"
 	
-	^ #('Title'	'Submitted By'	'Presentation Download URL' '')
+	^ { 'Title' .	'Submitted By' . PSTableSortableHeaderOptions new cell: 'Presentation Download URL' . PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #rendering }
@@ -73,12 +73,21 @@ ERTalksTab >> renderTableOfTalksOn: html [
 		tableId: 'talks-table';
 		limitPageShowed: 3;
 		validation: self filterTalksInformation;
-		headers: self headers;
+		header: self headers;
 		levelTotal: 6;
-		listObject: self talks;
+		rows: self talks;
 		blockToExecute: self blockTableTalksToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodTalks.
 	html render: table
+]
+
+{ #category : #accessing }
+ERTalksTab >> sortingMethodTalks [
+	
+	^ { [ :att | att title ] 
+		. [ :att | att submitter userAccount email ]
+		. [ :att | ] }
 ]
 
 { #category : #accessing }

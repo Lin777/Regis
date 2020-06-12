@@ -68,7 +68,7 @@ ERBackupTab >> fileReference [
 { #category : #accessing }
 ERBackupTab >> headers [
 
-	^ #('Backup File' 'Date/Time' '')
+	^ {'Backup File' . 'Date/Time' . PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #accessing }
@@ -168,14 +168,15 @@ ERBackupTab >> renderTableBackupOn: html [
 
 	table := ERTable new
 		tableId: 'backup-table';
-		headers: self headers;
+		header: self headers;
 		levelTotal: 6;
-		disablePagination: true;
-		disableSearching: true;
-		disableLimitPerPage: true;
-		listObject: self backupFiles;
+		showPaginationBar: false;
+		showSearchingField: false;
+		showSelectionLimit: false;
+		rows: self backupFiles;
 		blockToExecute: self blockTableToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodBackup. 
 	html render: table
 ]
 
@@ -194,6 +195,12 @@ ERBackupTab >> restoreByFile: aFile [
 				messageComponent class: 'errors'.
 				messageComponent errorMessage: exception messageText.
 				self updateStateTab: self tabName ].
+]
+
+{ #category : #accessing }
+ERBackupTab >> sortingMethodBackup [
+	^ { [ :att | att path basename ]
+		. [ :att | att asFileReference creationTime asDate ddmmyyyy, ' - ', att asFileReference creationTime asTime asString ] }
 ]
 
 { #category : #accessing }

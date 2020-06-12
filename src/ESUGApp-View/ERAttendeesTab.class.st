@@ -101,7 +101,7 @@ ERAttendeesTab >> filterAttendeeInformation [
 
 { #category : #accessing }
 ERAttendeesTab >> headers [
-	^ #('Id'	'Name'	 'Email'	'Country'	'Affiliation	' 'Has Paid' 'Fee' 'Volunter' '')
+	^ {'Id'	. 'Name'	. 'Email'	 . 'Country' . 	'Affiliation	' . PSTableSortableHeaderOptions new cell: 'Has Paid' . 'Fee' . PSTableSortableHeaderOptions new cell: 'Volunter' . PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #rendering }
@@ -234,13 +234,14 @@ ERAttendeesTab >> renderTableOfAttendsOn: html [
 	table := ERTable new
 		tableId: 'attendee-table';
 		limitPageShowed: 3;
-		headers: self headers;
+		header: self headers;
 		validation: self filterAttendeeInformation;
 		levelTotal: 6;
-		listObject: self attends;
+		rows: self attends;
 		blockToExecute: self blockTableToExecute;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: Dictionary new.
+		dictToRenderDownloadButton: Dictionary new;
+		sortingMethod: self sortingMethodAttendees.
 	html render: table
 ]
 
@@ -256,6 +257,19 @@ ERAttendeesTab >> sendInvoiceTo: user [
 				messageComponent class: 'errors'.
 				messageComponent errorMessage: exception messageText.
 				self updateStateTab: self tabName ].
+]
+
+{ #category : #rendering }
+ERAttendeesTab >> sortingMethodAttendees [
+	^ { [ :att | att paymentInformation invoiceNumber ] 
+		. [ :att | att userAccount firstName ]
+		. [ :att | att userAccount email ]
+		. [ :att | att affiliationInformation organizationCountry ]
+		. [ :att | att affiliationInformation organizationName ]
+		. [ :att |  ]
+		. [ :att | att paymentInformation paymentAmount asString, ' €' ]
+		. [ :att |  ]
+		. [ :att |  ] }
 ]
 
 { #category : #rendering }

@@ -30,7 +30,7 @@ ERAwardsTab >> exportAwards [
 ERAwardsTab >> headers [
 	"Return the headers of table"
 
-	^ #('Name'	'Submitted By' 'Download URL' 'Demo URL' '')
+	^ {'Name' . 'Submitted By' . PSTableSortableHeaderOptions new cell: 'Download URL' . PSTableSortableHeaderOptions new cell: 'Demo URL' . PSTableSortableHeaderOptions new cell:''}
 ]
 
 { #category : #tableBlock }
@@ -78,12 +78,21 @@ ERAwardsTab >> renderTableOfAwardsOn: html [
 		tableId: 'awards-table';
 		limitPageShowed: 3;
 		validation: self filterAwardsInformation;
-		headers: self headers;
+		header: self headers;
 		levelTotal: 6;
-		listObject: self awards;
+		rows: self awards;
 		blockToExecute: self blockTableAwardsToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodAwards.
 	html render: table
+]
+
+{ #category : #accessing }
+ERAwardsTab >> sortingMethodAwards [
+	^ { [ :att | att nameAward ] 
+		. [ :att | att submitter userAccount email ]
+		. [ :att | ]
+		. [ :att | ] }
 ]
 
 { #category : #accessing }

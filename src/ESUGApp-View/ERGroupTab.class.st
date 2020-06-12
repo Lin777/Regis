@@ -51,7 +51,7 @@ ERGroupTab >> groups [
 
 { #category : #accessing }
 ERGroupTab >> headers [
-	^ #('Organization' 'Remaing Fee' '')
+	^ {'Organization' . 'Remaing Fee' .  PSTableSortableHeaderOptions new cell: ''}
 ]
 
 { #category : #tableBlock }
@@ -108,16 +108,23 @@ ERGroupTab >> renderContainerOn: html [
 { #category : #accessing }
 ERGroupTab >> renderTableOfGroupsOn: html [
 	table := ERTable new
-		headers: self headers;
+		header: self headers;
 		tableId: 'group-table';
 		levelTotal: 6;
 		limitPageShowed: 3;
-		listObject: self groups;
+		rows: self groups;
 		blockToExecute: self blockTableToExecute;
 		validation: self filterGroupInformation;
 		listToRenderButton: self listDataToRenderButton;
-		dictToRenderDownloadButton: Dictionary new.
+		dictToRenderDownloadButton: Dictionary new;
+		sortingMethod: self sortingMethodGroup.
 	html render: table
+]
+
+{ #category : #accessing }
+ERGroupTab >> sortingMethodGroup [
+	^ { [ :att | att affiliationInformation organizationName ]
+		. [ :att | att paymentInformation paymentAmount asString ] }
 ]
 
 { #category : #accessing }

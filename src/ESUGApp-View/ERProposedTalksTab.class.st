@@ -27,7 +27,7 @@ ERProposedTalksTab >> createTalk: aTalk [
 
 { #category : #accessing }
 ERProposedTalksTab >> headers [ 	
-	^ #('Title'	'Submitted By'	'Presentation Download URL' '')
+	^ {'Title' .	'Submitted By'	. PSTableSortableHeaderOptions new cell:  'Presentation Download URL' . PSTableSortableHeaderOptions new cell:  '' }
 ]
 
 { #category : #initialization }
@@ -110,12 +110,21 @@ ERProposedTalksTab >> renderTalksTableOn: html [
 		tableId: 'proposedTalks-table';
 		validation: self filterTalksInformation;
 		limitPageShowed: 3;
-		headers: self headers;
+		header: self headers;
 		levelTotal: 6;
-		listObject: self submittedTalks;
+		rows: self submittedTalks;
 		blockToExecute: self blockTableTalksToExecute;
-		listToRenderButton: self listDataToRenderButton.
+		listToRenderButton: self listDataToRenderButton;
+		sortingMethod: self sortingMethodTalks.
 	html render: table
+]
+
+{ #category : #accessing }
+ERProposedTalksTab >> sortingMethodTalks [
+	
+	^ { [ :att | att title ] 
+		. [ :att | att submitter userAccount email ]
+		. [ :att | ] }
 ]
 
 { #category : #accessing }
