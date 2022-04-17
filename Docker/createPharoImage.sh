@@ -5,7 +5,7 @@ screen -S esug -X quit
 # clean the place
 rm -rf {esug.*,pharo*,*.sources,Pharo*}
 
-wget -O- https://get.pharo.org | bash
+wget -O- https://get.pharo.org/70+vm | bash
 
 ./pharo Pharo.image save esug
 
