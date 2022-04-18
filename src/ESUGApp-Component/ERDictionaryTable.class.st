@@ -23,7 +23,7 @@ ERDictionaryTable >> header: aCollection [
 
 { #category : #initialization }
 ERDictionaryTable >> initialize [
-
+	super initialize.
 	tableId := ''.
 	rows := OrderedDictionary new.
 	header := OrderedCollection new.
