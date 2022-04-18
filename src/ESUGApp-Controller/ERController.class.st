@@ -79,7 +79,7 @@ ERController >> codingZipFile: aString with: nameSubDirectory [
 	nameSubDirectory asFileReference files do: [ :aFile | zip 
 		addFile: aFile path 
 			asFileReference as: aString, '/', (aFile path at: 2) ].
-	zip writeToFile: zipFile fullName.
+	zip writeToFileNamed: zipFile fullName.
 	codingZipFile := self encodeFiletoBase64: zipFile.
 	self cleanZip: zip with: zipFile subDir: subDir.
 	self cleanSubDirectory: nameSubDirectory asFileReference.
