@@ -131,6 +131,9 @@ ERGroupController >> updateGroupInformation: aGroup [
 	self group contactInformation: aGroup contactInformation copy.
 	aGroup updateGroupInformationForAttendees.
 	aGroup listAttends do: [ :att | self updatePaymentRate: att ].
+	self updateGroup: aGroup.
 	self group save.
-	self notifyAllObservers  
+	self notifyAllObservers 
+	
+	
 ]
