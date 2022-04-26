@@ -103,18 +103,163 @@ ESUGSetUp class >> cleanDatabase [
 { #category : #accessing }
 ESUGSetUp class >> configurationOfHome [
 	^ (ERConfigurationOfHomePage new 
-		title: 'ESUG 2019 Date and Location Announced';
-		htmlContent: '<article id="post-19044" class="blog-single">
-<div class="blog-meta"><p>Smalltalk users from around the world will be coming to Cologne, Germany to attend ESUG 2019. German software development company, ZWEIDENKER, will be hosting the conference, which will take place on August 26-30.</p>
-<p>The address of the conference venue (Stadtgarten) is:</p>
-<blockquote><p>Venloer Strasse 40, 50672 Köln/Germany<br>
-<a href="https://www.stadtgarten.de/en/stadtgarten/anfahrt" target="_blank">https://www.stadtgarten.de/en/stadtgarten/anfahrt</a></p></blockquote>
-<p>As soon as more information regarding hotel accommodations and how to make reservations develops, we will be sure to pass it along.</p>
-<p><strong>About ESUG</strong></p>
-<p><img src="http://www.cincomsmalltalk.com/main/wp-content/uploads/2015/02/esug-logo-e1423067433765.png" alt="" width="250" height="102" align="right">ESUG (European Smalltalk User Group) is a non-profit association that gathers European users of all Smalltalk dialects. With goals of promoting the use of the Smalltalk programming language and communication between Smalltalk users, the association also helps in creating and linking Smalltalk user groups and representing Smalltalk users in discussions with vendors.</p>
-<p>This is the 27<sup>th</sup> ESUG Conference, and it promises to be one of the best in its successful history.</p>
-<p>We hope to see you there!</p>
-</article>')
+		title: 'ESUG 2022';
+		htmlContent: '<p>
+The ESUG board is pleased to announce that the 28th ESUG conference/summer-school will be held in Novi Sad, Serbia from 22.8.2022. to 26.8.2022 (with Camp Smalltalk 20/21.8.). The conference is organised by the Faculty of Sciences, University of Novi Sad.
+</p>
+<section>
+<h3>Conference calls</h3>
+
+<ul>
+<li> <a href="https://esug.github.io/2022-Conference/call2022.html" target="_blank">Call for Presentations</a></li>
+<li> <a href="https://esug.github.io/2022-Conference/callForStudents2022.html" target="_blank">Call for Student Volunteers</a></li>
+<li> <a href="https://esug.github.io/2022-Conference/cfpIWST2022.html" target="_blank">IWST22</a> </li>
+<li> <a href="https://esug.github.io/2022-Conference/awardsSubmissions.html" target="_blank">Innovation award call: Submissions and Winners</a></li>
+<li> <a href="https://esug.github.io/2022-Conference/camp2022.html" target="_blank">Camp Smalltalk</a></li>
+</ul>
+
+
+</section><section>
+<h3> Conference registration</h3>
+<a id="registration"></a>
+<p>
+The conference registration will be open soon on our portal. 
+</p>
+
+
+<p>
+Orientational conference prices from ESUG 2019 in Euros:
+</p>
+<ul>
+<li> Early Registration Fee: 500€ (all days) / 180€ (per day)</li>
+<li> Late Registration Fee: 660€ (all days) / 210€ (per day)</li>
+<li> Extra person to social dinner: 60€</li>
+<li> Payment by bank transfer: free of charge</li>
+<li> Payment by credit card: +6% fees</li>
+</ul>
+
+
+</section><section>
+<h3>Conference Program</h3>
+
+<p>
+Slides will be uploaded <a href="https://github.com/ESUG/esug.github.io/tree/source/2022-Conference/slides/"  target="_blank">here</a> 
+</p>
+<p>
+Videos will be on <a href="https://www.youtube.com/" target="_blank">youtube</a>
+</p>
+
+
+
+</section><section>
+<h3>International Workshop on Smalltalk Technologies IWST</h3>
+
+<ul>
+<li> CfP: <a href="https://esug.github.io/2022-Conference/cfpIWST2022.html" target="_blank">IWST22</a></li>
+<li> The workshop proceedings will be published in <a href="http://dl.acm.org/citation.cfm?id=2991041&amp;preflayout=flat" target="_blank">ACM Digital Library- Download IWST-Proceedings (to be announced)</a></li>
+</ul>
+
+
+
+
+
+
+
+</section><section>
+<h3>Innovation Technology Awards - 18th Edition</h3>
+<p>
+Share your Smalltalk related code with the community, and enter the contest to win up to 500 Euros! All you have to do is submit your project along with  a 3-5 min videos and post it to youtube!
+</p>
+<ul>
+<li> <a href="https://esug.github.io/2022-Conference/awardsCall2022.html" target="_blank">2022 Innovation award call</a></li>
+<li> <a href="https://esug.github.io/2022-Conference/awardsSubmissions.html" target="_blank">list of submitted Projects: Winners Inside!</a></li>
+<li> Dates:<ul>
+<li> Demos: Monday, XXX evening.</li>
+<li> Results Announcement Ceremony: Wednesday, XXX, during the social event dinner</li>
+</ul>
+</li>
+</ul>
+
+
+</section><section>
+<h3>Student volunteer call</h3>
+<p>
+See <a href="https://esug.github.io/2022-Conference/callForStudents2022.html" target="_blank">Call for Student Volunteers</a>
+</p>
+</section><section>
+<h3>Conference live</h3>
+
+<ul>
+<li> Videos will be on Youtube</li>
+<li> SlideShare: <a href="http://www.slideshare.net/esug/presentations" target="_blank">http://www.slideshare.net/esug/presentations</a></li>
+<li> Archive: <a href="http://www.esug.org/data/ESUG2022/" target="_blank">http://www.esug.org/data/ESUG2022/</a></li>
+</ul>
+
+</section><section>
+<h3>NoviSad</h3>
+<p>
+<a href="https://novisad.travel/en/" target="_blank">General (tourist) Information</a>
+</p>
+
+</section><section>
+<h3>Venue and Maps</h3>
+
+
+<section>
+<h4>Conference venue</h4>
+
+<p>
+The conference will be held at the <a href="https://goo.gl/maps/b3RAqZYXtvsFGx2h7" target="_blank">building of the Department of Matehmatics and Informatics, Faculty of Sciences, University of Novi Sad</a>.
+</p>
+
+</section><section>
+<h4> Social Event</h4>
+<a id="social"></a>
+
+
+<p>
+During the diner, results of the various ESUG awards will be announced.
+</p>
+
+
+<p>
+If you want to attend the social event with your partner you can pay an extra fee for him/her directly during your registration for the conference.
+</p>
+
+</section><section>
+<h4> Staying in Novi Sad</h4>
+
+<p>
+Here is a list of hotels that would allow you to easily reach the conference venue, with the walking distance.
+</p><ul>
+<li> <a href="http://www.voyagerns.co.rs/index.html" target="_blank">Voyager B&amp;B</a>, 5 minutes</li>
+<li> <a href="https://hotelzenit.co.rs/en/" target="_blank">Zenit</a>, 15 minutes</li>
+<li> <a href="https://www.hotelputnik.rs/index.php?langiso3=GBR" target="_blank">Putnik</a>, 15 minutes</li>
+<li> <a href="https://hotelmediteraneo.rs/" target="_blank">Mediteraneo</a>, 15 minutes</li>
+<li> <a href="https://hotel-centar.rs/homepage-1/" target="_blank">Centar</a>, 20 minutes</li>
+<li> <a href="https://hotelpupin.rs/en/" target="_blank">Pupin</a>, 20 minutes</li>
+<li> <a href="https://hotelvelikinovisad.com/en/" target="_blank">Veliki</a>, 20 minutes</li>
+<li> <a href="https://www.restoranfontana.com/en/prenociste-smestaj-apartmani-novi-sad/" target="_blank">Fontana</a>, 20 minutes</li>
+<li> <a href="http://www.leopoldns.com/" target="_blank">Leopold I</a>, 25 minutes + stairs to the fortress</li>
+<li> <a href="http://en.planetainn.com/" target="_blank">Planeta Inn</a>, 25 minutes</li>
+<li> <a href="https://www.hotelparkns.com/en/" target="_blank">Park</a>, 30 minutes</li>
+<li> <a href="https://vila-park-novi-sad-rs.book.direct/en-gb" target="_blank">Vila Park</a>, 30 minutes </li>
+</ul>
+
+
+
+<p>
+There are also many Bed &amp; Breakfasts and short let flats.
+Look for them on sites such as <a href="http://booking.com" target="_blank">Booking.com</a> or <a href="http://airbnb.com" target="_blank">Airbnb</a>.
+</p>
+</section><section>
+<h4>Student volunteer hosting</h4>
+<p>
+If you are student volunteer, do not book yourself, we have arranged the booking already!
+</p>
+
+</section></section>
+')
 ]
 
 { #category : #configurationOfFee }
@@ -218,11 +363,11 @@ ESUGSetUp class >> createEsugEmailConfiguration [
 { #category : #configurationOfFee }
 ESUGSetUp class >> createFee [
 	^ ERFee new
-		erfAllDaysFee: 470;
-		erfOneDayFee: 170;
+		erfAllDaysFee: 500;
+		erfOneDayFee: 180;
 		lrfAllDaysFee: 660;
 		lrfOneDayFee: 210;
-		extraPersonSD: 50;
+		extraPersonSD: 60;
 		currency: 'Euro';
 		payPalCommissionPercentage: 5.4;
 		staticCommissionPaypal: 0.3;
