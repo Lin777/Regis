@@ -298,9 +298,9 @@ ERPDFInvoice >> addInfoPayment: pdfPage of: user [
 { #category : #adding }
 ERPDFInvoice >> addTablePayment: pdfPage of: user [
 	| fontLegend currency showedInfo |
-	showedInfo := 'Full Registration to ESUG19'.
+	showedInfo := 'Full Registration to ESUG22'.
 	(user isKindOf: ERGroup)
-		ifTrue: [ showedInfo := user listAttends size asString, ' registrations to ESUG19' ].
+		ifTrue: [ showedInfo := user listAttends size asString, ' registrations to ESUG22' ].
 	currency :=  (128 asCharacter) asString, ' ', (user paymentAmount ifNil: [ 0 ]) asString.
 	fontLegend := PDFTimesFont size: 10pt.
 	pdfPage add: (PDFDataTableWithColumnsCaptionElement new 
